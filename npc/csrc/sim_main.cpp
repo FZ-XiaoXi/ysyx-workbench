@@ -39,7 +39,7 @@ int main(int argc, char** argv) {
 		single_cycle();
 		nvboard_update();
 		tfp->dump(contextp->time());
-		//contextp->timeInc(1);
+		contextp->timeInc(10);
 		//printf("a=%d b=%d f=%d\n",a,b,top->f);
 		//assert(top->f == (a^b));
 	}
