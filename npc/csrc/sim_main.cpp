@@ -6,7 +6,7 @@
 #include "verilated.h"
 #include <nvboard.h>
 Vtop* top;
-
+void nvboard_bind_all_pins(Vtop* top);
 
 void single_cycle(){
 	top->clk=0;top->eval();
