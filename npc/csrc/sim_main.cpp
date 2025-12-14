@@ -16,9 +16,8 @@ int main(int argc, char** argv) {
 	tfp->open("wave.vcd");
 	nvboard_bind_all_pins(top);
 	nvboard_init();
+	int a,b;
 	while (!contextp->gotFinish()) {
-		int a=rand()&1;
-		int b=rand()&1;
 		top->a=a;
 		top->b=b;
 		top->eval();
