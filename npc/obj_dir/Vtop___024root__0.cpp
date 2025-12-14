@@ -56,10 +56,10 @@ void Vtop___024root___nba_sequent__TOP__0(Vtop___024root* vlSelf) {
         __Vdly__top__DOT__count = 0U;
     } else {
         if ((0U == vlSelfRef.top__DOT__count)) {
-            __Vdly__led = ((0x0000fffeU & ((IData)(vlSelfRef.led) 
-                                           << 1U)) 
-                           | (1U & ((IData)(vlSelfRef.led) 
-                                    >> 0x0fU)));
+            __Vdly__led = ((0x00008000U & ((IData)(vlSelfRef.led) 
+                                           << 0x0000000fU)) 
+                           | (0x00007fffU & ((IData)(vlSelfRef.led) 
+                                             >> 1U)));
         }
         __Vdly__top__DOT__count = ((0x004c4b40U <= vlSelfRef.top__DOT__count)
                                     ? 0U : ((IData)(1U) 

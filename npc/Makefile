@@ -17,7 +17,7 @@ INCFLAGS=$(addprefix -I, $(INC_PATH))
 CXXFLAGS += $(INCFLAGS) -DTOP_NAME="\"V$(TOPNAME)\""
 sim: $(SRC_AUTO_BIND) $(SIM_C) $(SIM_V) $(NVBOARD_ARCHIVE)
 	$(call git_commit, "sim RTL") # DO NOT REMOVE THIS LINE!!!
-	verilator $(VERILATOR_FLAGS) --top-module $(TOPNAME) $^ $(addprefix -CFLAGS , $(CXXFLAGS)) $(addprefix -LDFLAGS , $(LDFLAGS))
+	verilator $(VERILATOR_FLAGS) -Wall --top-module $(TOPNAME) $^ $(addprefix -CFLAGS , $(CXXFLAGS)) $(addprefix -LDFLAGS , $(LDFLAGS))
 	./obj_dir/Vtop
 	@echo "Write this Makefile by your self."
 wave:
