@@ -7,7 +7,7 @@ module top(
   always @(posedge clk) begin
     if (rst) begin led <= 1; count <= 0; end
     else begin
-      if (count == 0) led <= {led[14:0], led[15]};
+      if (count == 0) led <= {led[0], led[15:1]};
       count <= (count >= 5000000 ? 32'b0 : count + 1);
     end
   end
