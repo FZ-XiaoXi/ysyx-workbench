@@ -5,27 +5,43 @@
 #include <assert.h>
 #include "verilated.h"
 #include <nvboard.h>
-void nvboard_bind_all_pins(Vtop* top);
+Vtop* top;
+
+
+void single_cycle(){
+	top->clk=0;top->eval();
+	top->clk=1;top->eval();
+}
+
+
+void reset(int n){
+	top->rst=1;
+	while(n-- >0) single_cycle();
+	top->rst=0;
+}
+
+
 int main(int argc, char** argv) {
     VerilatedContext* contextp = new VerilatedContext;
     contextp->commandArgs(argc, argv);
 	Verilated::traceEverOn(true);
-    Vtop* top = new Vtop{contextp};
+    top = new Vtop{contextp};
 	VerilatedVcdC* tfp = new VerilatedVcdC;
 	top->trace(tfp,99);
 	tfp->open("wave.vcd");
 	nvboard_bind_all_pins(top);
 	nvboard_init();
-	int a,b;
+	//int a,b;
+	reset(10);
 	while (!contextp->gotFinish()) {
-		top->a=a;
-		top->b=b;
-		top->eval();
+		//top->a=a;
+		//top->b=b;
+		single_cycle();
 		nvboard_update();
 		tfp->dump(contextp->time());
-		contextp->timeInc(1);
-		printf("a=%d b=%d f=%d\n",a,b,top->f);
-		assert(top->f == (a^b));
+		//contextp->timeInc(1);
+		//printf("a=%d b=%d f=%d\n",a,b,top->f);
+		//assert(top->f == (a^b));
 	}
 	tfp->close();
     delete top;

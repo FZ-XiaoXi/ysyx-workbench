@@ -14,13 +14,14 @@ class alignas(VL_CACHE_LINE_BYTES) Vtop___024root final : public VerilatedModule
   public:
 
     // DESIGN SPECIFIC STATE
-    VL_IN8(a,0,0);
-    VL_IN8(b,0,0);
-    VL_OUT8(f,0,0);
-    CData/*0:0*/ __VstlFirstIteration;
-    CData/*0:0*/ __VicoFirstIteration;
-    VlUnpacked<QData/*63:0*/, 1> __VstlTriggered;
-    VlUnpacked<QData/*63:0*/, 1> __VicoTriggered;
+    VL_IN8(clk,0,0);
+    VL_IN8(rst,0,0);
+    CData/*0:0*/ __Vtrigprevexpr___TOP__clk__0;
+    VL_OUT16(led,15,0);
+    IData/*31:0*/ top__DOT__count;
+    IData/*31:0*/ __VactIterCount;
+    VlUnpacked<QData/*63:0*/, 1> __VactTriggered;
+    VlUnpacked<QData/*63:0*/, 1> __VnbaTriggered;
 
     // INTERNAL VARIABLES
     Vtop__Syms* const vlSymsp;
