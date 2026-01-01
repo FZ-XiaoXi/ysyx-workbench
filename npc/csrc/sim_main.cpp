@@ -4,7 +4,7 @@
 #include <stdio.h>
 #include <assert.h>
 #include "verilated.h"
-Vtop* top;
+Vencode42* top;
 void step_and_dump_wave(){
   top->eval();
   contextp->timeInc(1);
@@ -27,7 +27,7 @@ int main(int argc, char** argv) {
     VerilatedContext* contextp = new VerilatedContext;
     contextp->commandArgs(argc, argv);
 	Verilated::traceEverOn(true);
-    top = new Vtop{contextp};
+    top = new Vencode42{contextp};
 	VerilatedVcdC* tfp = new VerilatedVcdC;
 	top->trace(tfp,99);
 	tfp->open("wave.vcd");
