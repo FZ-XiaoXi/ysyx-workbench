@@ -14,4 +14,5 @@ module encode83(x,en,y,s,seg);
     else  y = 0;
   end
   assign s=x||0;
+  assign seg=0;
 endmodule
