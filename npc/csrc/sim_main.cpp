@@ -22,6 +22,8 @@ int main(int argc, char** argv) {
     top = new Vencode42{contextp};
 	top->trace(tfp,99);
 	tfp->open("wave.vcd");
+	top->en=0;
+	top->x=0;
 	nvboard_bind_all_pins(top);
 	nvboard_init();
 	
@@ -52,6 +54,7 @@ int main(int argc, char** argv) {
 	while (!contextp->gotFinish()) {
 		//top->a=a;
 		//top->b=b;
+		printf("en=%d, x=%d, y=%d\n", top->en, top->x, top->y);
 		tfp->dump(contextp->time());
 		contextp->timeInc(10);
 		//printf("a=%d b=%d f=%d\n",a,b,top->f);
