@@ -1,5 +1,5 @@
-module encode42(x,en,y);
-  input  [3:0] x;
+module encode83(x,en,y);
+  input  [7:0] x;
   input  en;
   output reg [1:0]y;
   integer i;

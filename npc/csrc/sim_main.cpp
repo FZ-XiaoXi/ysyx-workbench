@@ -1,12 +1,12 @@
-#include "Vencode42.h"
+#include "Vencode83.h"
 #include <stdlib.h>
 #include "verilated_vcd_c.h"
 #include <stdio.h>
 #include <assert.h>
 #include "verilated.h"
 #include <nvboard.h>
-Vencode42* top;
-void nvboard_bind_all_pins(Vencode42* top);
+Vencode83* top;
+void nvboard_bind_all_pins(Vencode83* top);
 VerilatedVcdC* tfp = new VerilatedVcdC;
 VerilatedContext* contextp = new VerilatedContext;
 void step_and_dump_wave(){
