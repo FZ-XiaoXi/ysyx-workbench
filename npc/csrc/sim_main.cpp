@@ -22,7 +22,7 @@ int main(int argc, char** argv) {
 	top->en=0b0;
 	top->x=0b1111;step_and_dump_wave();printf("en=%d, x=%d, y=%d\n", top->en, top->x, top->y);
 	for(int j=0;j<4;j++){
-		top->x = top->x << 1;step_and_dump_wave();printf("en=%d, x=%d, y=%d\n", top->en, top->x, top->y);
+		top->x = (top->x << 1)&0xF;step_and_dump_wave();printf("en=%d, x=%d, y=%d\n", top->en, top->x, top->y);
 	}
 	top->x=0b1111;step_and_dump_wave();printf("en=%d, x=%d, y=%d\n", top->en, top->x, top->y);
 	for(int j=0;j<4;j++){
