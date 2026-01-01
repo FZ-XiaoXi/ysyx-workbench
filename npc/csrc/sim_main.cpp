@@ -45,7 +45,7 @@ int main(int argc, char** argv) {
 	step_and_dump_wave();
 	
 	
-	while (0) {
+	while (1) {
 	//while (!contextp->gotFinish()) {
 		//top->a=a;
 		//top->b=b;
