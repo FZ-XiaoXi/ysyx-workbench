@@ -11,18 +11,6 @@ void step_and_dump_wave(){
   contextp->timeInc(1);
   tfp->dump(contextp->time());
 }
-void single_cycle(){
-	//top->clk=0;top->eval();
-	//top->clk=1;top->eval();
-}
-
-
-void reset(int n){
-	top->rst=1;
-	while(n-- >0) single_cycle();
-	top->rst=0;
-}
-
 
 int main(int argc, char** argv) {
     VerilatedContext* contextp = new VerilatedContext;
@@ -31,9 +19,6 @@ int main(int argc, char** argv) {
     top = new Vencode42{contextp};
 	top->trace(tfp,99);
 	tfp->open("wave.vcd");
-	//int a,b;
-	reset(10);
-
 	top->en=0b0;
 	top->x=0b1111;step_and_dump_wave();	
 	for(int i=0;i<4;i++){
