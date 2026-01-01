@@ -4,11 +4,14 @@
 #include <stdio.h>
 #include <assert.h>
 #include "verilated.h"
+#include <nvboard.h>
 Vencode42* top;
+void nvboard_bind_all_pins(Vencode42* top);
 VerilatedVcdC* tfp = new VerilatedVcdC;
 VerilatedContext* contextp = new VerilatedContext;
 void step_and_dump_wave(){
   top->eval();
+  nvboard_update();
   contextp->timeInc(1);
   tfp->dump(contextp->time());
 }
@@ -19,6 +22,8 @@ int main(int argc, char** argv) {
     top = new Vencode42{contextp};
 	top->trace(tfp,99);
 	tfp->open("wave.vcd");
+	nvboard_bind_all_pins(top);
+	nvboard_init();
 	top->en=0b0;
 	top->x=0b1111;step_and_dump_wave();printf("en=%d, x=%d, y=%d\n", top->en, top->x, top->y);
 	for(int j=0;j<4;j++){
@@ -50,6 +55,7 @@ int main(int argc, char** argv) {
 		//assert(top->f == (a^b));
 	}
 	tfp->close();
+	nvboard_quit();
     delete top;
     delete contextp;
     return 0;
