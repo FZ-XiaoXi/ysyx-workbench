@@ -41,7 +41,7 @@ VL_ATTR_COLD void Vencode42___024root___eval_settle(Vencode42___024root* vlSelf)
 #ifdef VL_DEBUG
             Vencode42___024root___dump_triggers__stl(vlSelfRef.__VstlTriggered, "stl"s);
 #endif
-            VL_FATAL_MT("vsrc/top.v", 1, "", "Settle region did not converge after 100 tries");
+            VL_FATAL_MT("vsrc/encode42.v", 1, "", "Settle region did not converge after 100 tries");
         }
         __VstlIterCount = ((IData)(1U) + __VstlIterCount);
     } while (Vencode42___024root___eval_phase__stl(vlSelf));

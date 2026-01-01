@@ -1,4 +1,4 @@
-#include "Vtop.h"
+#include "Vencode42.h"
 #include <stdlib.h>
 #include "verilated_vcd_c.h"
 #include <stdio.h>
