@@ -21,20 +21,20 @@ int main(int argc, char** argv) {
 	tfp->open("wave.vcd");
 	top->en=0b0;
 	top->x=0b1111;step_and_dump_wave();
-	for(int i=0;i<4;i++){
+	for(int j=0;j<4;j++){
 		top->x = top->x << 1;step_and_dump_wave();
 	}
 	top->x=0b1111;step_and_dump_wave();
-	for(int i=0;i<4;i++){
+	for(int j=0;j<4;j++){
 		top->x = (unsigned)(top->x) >> 1;step_and_dump_wave();
 	}
 	top->en=0b1;
 	top->x=0b1111;step_and_dump_wave();
-	for(int i=0;i<4;i++){
+	for(int j=0;j<4;j++){
 		top->x = top->x << 1;step_and_dump_wave();
 	}
 	top->x=0b1111;step_and_dump_wave();
-	for(int i=0;i<4;i++){
+	for(int j=0;j<4;j++){
 		top->x = (unsigned)(top->x) >> 1;step_and_dump_wave();
 	}
 	step_and_dump_wave();
