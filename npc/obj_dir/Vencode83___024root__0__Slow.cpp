@@ -10,10 +10,22 @@ VL_ATTR_COLD void Vencode83___024root___eval_static(Vencode83___024root* vlSelf)
     auto& vlSelfRef = std::ref(*vlSelf).get();
 }
 
+VL_ATTR_COLD void Vencode83___024root___eval_initial__TOP(Vencode83___024root* vlSelf);
+
 VL_ATTR_COLD void Vencode83___024root___eval_initial(Vencode83___024root* vlSelf) {
     VL_DEBUG_IF(VL_DBG_MSGF("+    Vencode83___024root___eval_initial\n"); );
     Vencode83__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
     auto& vlSelfRef = std::ref(*vlSelf).get();
+    // Body
+    Vencode83___024root___eval_initial__TOP(vlSelf);
+}
+
+VL_ATTR_COLD void Vencode83___024root___eval_initial__TOP(Vencode83___024root* vlSelf) {
+    VL_DEBUG_IF(VL_DBG_MSGF("+    Vencode83___024root___eval_initial__TOP\n"); );
+    Vencode83__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
+    auto& vlSelfRef = std::ref(*vlSelf).get();
+    // Body
+    vlSelfRef.seg = 0U;
 }
 
 VL_ATTR_COLD void Vencode83___024root___eval_final(Vencode83___024root* vlSelf) {
