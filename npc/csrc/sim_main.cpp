@@ -19,7 +19,7 @@ void step_and_dump_wave(){
 int main(int argc, char** argv) {
     contextp->commandArgs(argc, argv);
 	Verilated::traceEverOn(true);
-    top = new Vencode42{contextp};
+    top = new Vencode83{contextp};
 	top->trace(tfp,99);
 	tfp->open("wave.vcd");
 	top->en=0;
