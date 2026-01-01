@@ -6,6 +6,7 @@
 #include "verilated.h"
 Vencode42* top;
 VerilatedVcdC* tfp = new VerilatedVcdC;
+VerilatedContext* contextp = new VerilatedContext;
 void step_and_dump_wave(){
   top->eval();
   contextp->timeInc(1);
@@ -13,27 +14,26 @@ void step_and_dump_wave(){
 }
 
 int main(int argc, char** argv) {
-    VerilatedContext* contextp = new VerilatedContext;
     contextp->commandArgs(argc, argv);
 	Verilated::traceEverOn(true);
     top = new Vencode42{contextp};
 	top->trace(tfp,99);
 	tfp->open("wave.vcd");
 	top->en=0b0;
-	top->x=0b1111;step_and_dump_wave();	
+	top->x=0b1111;
 	for(int i=0;i<4;i++){
 		top->x = top->x << 1;step_and_dump_wave();
 	}
-	top->x=0b1111;step_and_dump_wave();	
+	top->x=0b1111;
 	for(int i=0;i<4;i++){
 		top->x = (unsigned)(top->x) >> 1;step_and_dump_wave();
 	}
 	top->en=0b1;
-	top->x=0b1111;step_and_dump_wave();	
+	top->x=0b1111;
 	for(int i=0;i<4;i++){
 		top->x = top->x << 1;step_and_dump_wave();
 	}
-	top->x=0b1111;step_and_dump_wave();	
+	top->x=0b1111;
 	for(int i=0;i<4;i++){
 		top->x = (unsigned)(top->x) >> 1;step_and_dump_wave();
 	}
