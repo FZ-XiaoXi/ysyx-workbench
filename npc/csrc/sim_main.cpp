@@ -24,6 +24,9 @@ int main(int argc, char** argv) {
 	tfp->open("wave.vcd");
 	nvboard_bind_all_pins(top);
 	nvboard_init();
+	
+
+/*
 	top->en=0b0;
 	top->x=0b1111;step_and_dump_wave();printf("en=%d, x=%d, y=%d\n", top->en, top->x, top->y);
 	for(int j=0;j<4;j++){
@@ -44,9 +47,9 @@ int main(int argc, char** argv) {
 	}
 	step_and_dump_wave();
 	
-	
-	while (1) {
-	//while (!contextp->gotFinish()) {
+*/	
+	//while (1) {
+	while (!contextp->gotFinish()) {
 		//top->a=a;
 		//top->b=b;
 		tfp->dump(contextp->time());
