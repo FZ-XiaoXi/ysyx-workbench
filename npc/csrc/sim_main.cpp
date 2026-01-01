@@ -54,7 +54,7 @@ int main(int argc, char** argv) {
 	while (!contextp->gotFinish()) {
 		//top->a=a;
 		//top->b=b;
-		printf("en=%d, x=%d, y=%d\n", top->en, top->x, top->y);
+		step_and_dump_wave();
 		tfp->dump(contextp->time());
 		contextp->timeInc(10);
 		//printf("a=%d b=%d f=%d\n",a,b,top->f);
