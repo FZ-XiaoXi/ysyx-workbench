@@ -3,7 +3,7 @@ module encode83(x,en,y,s,seg);
   input  en;
   output reg [2:0]y;
   output s;
-  output [6:0]seg;
+  output reg [6:0]seg;
   integer i;
   always @(x or en) begin
     if (en) begin
