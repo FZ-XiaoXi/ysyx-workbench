@@ -13,6 +13,26 @@ module encode83(x,en,y,s,seg);
     end
     else  y = 0;
   end
-  assign s=(x==0)?0:1;
-  assign seg=0;
+  assign s=(x==0||en==0)?0:1;
+  always @(*)begin
+	case (y)
+		3'b000:seg=7'b1111110;
+		3'b001:seg=7'b0110000;
+		3'b010:seg=7'b1101101;
+		3'b011:seg=7'b1111001;
+		3'b100:seg=7'b0110011;
+		3'b101:seg=7'b1011011;
+		3'b110:seg=7'b1011111;
+		3'b111:seg=7'b1110000;
+		default:seg=7'b0000000;
+	endcase	
+
+
+  end
 endmodule
+
+
+
+
+
+
