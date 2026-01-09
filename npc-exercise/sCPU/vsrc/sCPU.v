@@ -2,8 +2,8 @@ module sCPU(
 	input clk,
 	output [6:0]segH,
 	output [6:0]segL,
-	output reg [7:0]segnum
-	output reg [3:0]PC;
+	output reg [7:0]segnum,
+	output reg [3:0]PC
 );
 reg [7:0]R [0:3];
 reg [1:0]CLKcounter;
