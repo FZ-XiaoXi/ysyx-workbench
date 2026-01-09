@@ -14,7 +14,7 @@ VerilatedContext* contextp = new VerilatedContext;
 void step_and_dump_wave(){
   timecount++;
   if(timecount>10000){
-	//top->clk=!top->clk;
+	top->clk=!top->clk;
 	timecount=0;
   }
   top->eval();
