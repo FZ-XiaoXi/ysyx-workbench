@@ -7,10 +7,16 @@
 #include "verilated.h"
 #include <nvboard.h>
 VsCPU* top;
+int timecount=0;
 void nvboard_bind_all_pins(VsCPU* top);
 VerilatedVcdC* tfp = new VerilatedVcdC;
 VerilatedContext* contextp = new VerilatedContext;
 void step_and_dump_wave(){
+  timecount++;
+  if(timecount>500){
+	top->clk=!top->clk;
+	timecount=0;
+  }
   top->eval();
   nvboard_update();
   contextp->timeInc(1);
@@ -34,16 +40,7 @@ int main(int argc, char** argv) {
 	while (!contextp->gotFinish()) {
 		//top->a=a;
 		//top->b=b;
-		top->clk=0;
 		step_and_dump_wave();
-		tfp->dump(contextp->time());
-		contextp->timeInc(10);
-		usleep(100000);
-		top->clk=1;
-		step_and_dump_wave();
-		tfp->dump(contextp->time());
-		contextp->timeInc(10);
-		usleep(100000);
 		//printf("a=%d b=%d f=%d\n",a,b,top->f);
 		//assert(top->f == (a^b));
 	}
