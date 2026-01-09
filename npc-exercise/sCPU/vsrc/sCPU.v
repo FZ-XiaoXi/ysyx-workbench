@@ -8,7 +8,9 @@ module sCPU(
 	output [7:0] tempR1,
 	output [7:0] tempR2,
 	output [7:0] tempR3,
-	output [7:0] tempR0
+	output [7:0] tempR0,
+	output [7:0] regA,
+	output [7:0] regB
 );
 reg [7:0]R [0:3];
 reg [1:0]CLKcounter;
@@ -22,7 +24,7 @@ wire [7:0]instant;
 wire regWEN;
 wire [1:0]regWCH;
 wire PCJFlag;
-reg [7:0] regA,regB;
+//reg [7:0] regA,regB;
 wire [1:0] regAAdd,regBAdd;
 wire [7:0] added;
 SevenSegDecoder SegL(segnum[3:0],segL);
