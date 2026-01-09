@@ -11,7 +11,7 @@ module ALU(
 	wire [3:0]inB_modified=(mode==3'b001)?~inB:inB;
 	wire [4:0]sum;
 	wire [3:0] diff = inA + ~inB + 4'b0001;
-	assign sum={1'b0,inA}+{1'b0,inB_modified}+{4'b0000,cin};
+	assign sum={1'b0,inA}+{1'b0,inB_modified}+{4'b0000,mode[0]};
 	assign CF=(mode==3'b001)?~sum[4]:sum[4];
 	assign OF=(inA[3]==inB_modified[3])&&(sum[3] != inA[3]);
 	always @(*)	begin
