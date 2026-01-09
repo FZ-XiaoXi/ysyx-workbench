@@ -52,6 +52,11 @@ int main(int argc, char** argv) {
 	while (!contextp->gotFinish()) {
 		//top->a=a;
 		//top->b=b;
+		top->clk=1;
+		step_and_dump_wave();
+		tfp->dump(contextp->time());
+		contextp->timeInc(10);
+		top->clk=0;
 		step_and_dump_wave();
 		tfp->dump(contextp->time());
 		contextp->timeInc(10);
