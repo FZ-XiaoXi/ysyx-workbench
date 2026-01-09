@@ -41,7 +41,7 @@ int main(int argc, char** argv) {
 		//top->a=a;
 		//top->b=b;
 		step_and_dump_wave();
-		//printf("a=%d b=%d f=%d\n",a,b,top->f);
+		printf("R0=%x R1=%x R2=%x R3=%x\n",top->tempR0,top->tempR1,top->tempR2,top->tempR3);
 		//assert(top->f == (a^b));
 	}
 	tfp->close();
