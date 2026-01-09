@@ -20,7 +20,7 @@ wire [1:0]regWCH;
 wire PCJFlag;
 reg [7:0] regA,regB;
 wire [1:0] regAAdd,regBAdd;
-wire [7:0] added;
+wire reg [7:0] added;
 SevenSegDecoder SegL(segnum[3:0],segL);
 SevenSegDecoder SegH(segnum[7:4],segH);
 parameter [7:0] PROGRAM [0:8] = '{
