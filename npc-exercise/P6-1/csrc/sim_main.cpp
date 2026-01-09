@@ -6,7 +6,7 @@
 #include "verilated.h"
 #include <nvboard.h>
 VBarrelShifter* top;
-void nvboard_bind_all_pins(VALU* top);
+void nvboard_bind_all_pins(VBarrelShifter* top);
 VerilatedVcdC* tfp = new VerilatedVcdC;
 VerilatedContext* contextp = new VerilatedContext;
 void step_and_dump_wave(){
