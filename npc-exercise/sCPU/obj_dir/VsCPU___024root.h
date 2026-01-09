@@ -55,7 +55,7 @@ class alignas(VL_CACHE_LINE_BYTES) VsCPU___024root final : public VerilatedModul
 
     // PARAMETERS
     static constexpr VlUnpacked<CData/*7:0*/, 9> sCPU__DOT__PROGRAM = {{
-        0x8aU, 0x90U, 0xa0U, 0xb1U, 0x17U, 0x29U, 0xd1U, 0x42U,
+        0x83U, 0x90U, 0xa0U, 0xb1U, 0x17U, 0x29U, 0xd1U, 0x42U,
         0xe3U
     }};
 
