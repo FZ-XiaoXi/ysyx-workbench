@@ -12,6 +12,6 @@ module ALU(
 	assign CF=1;
 	assign ZF=1;
 	assign OF=1;
-	assign out[3:0]=4'b4'b4'b4'b1;
+	assign out[3:0]=4'b1010;
 
 endmodule
