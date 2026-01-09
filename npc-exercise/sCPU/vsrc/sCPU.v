@@ -42,7 +42,7 @@ assign outFlag=~opcode[1]&opcode[0];
 assign instant={4'b0000,PROGRAM[PC][3:0]};
 assign regWEN=addFlag|liFlag;
 assign regWCH=PROGRAM[PC][5:4];
-assign PCJFlag=bner0Flag& (regA==regB);
+assign PCJFlag=bner0Flag& (regA!=regB);
 assign regAAdd=PROGRAM[PC][1:0];
 assign regBAdd=bner0Flag?2'b00:PROGRAM[PC][3:2];
 always @(posedge clk)begin
