@@ -66,7 +66,7 @@ always @(*)begin
 	endcase
 end
 always @(posedge step[1])begin
-	R[regWCH]<=(addFlag)?added:instant;
+	R[regWCH]<=(regWEN)?((addFlag)?added:instant):R[regWCH];
 	segnum<=outFlag?regA:segnum;
 end
 
