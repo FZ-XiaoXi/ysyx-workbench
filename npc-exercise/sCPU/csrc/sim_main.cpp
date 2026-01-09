@@ -56,12 +56,12 @@ int main(int argc, char** argv) {
 		step_and_dump_wave();
 		tfp->dump(contextp->time());
 		contextp->timeInc(10);
-		for(int i=0;i<999999;i++);
+		for(int i=0;i<999999999;i++);
 		top->clk=1;
 		step_and_dump_wave();
 		tfp->dump(contextp->time());
 		contextp->timeInc(10);
-		for(int i=0;i<999999;i++);
+		for(int i=0;i<999999999;i++);
 		//printf("a=%d b=%d f=%d\n",a,b,top->f);
 		//assert(top->f == (a^b));
 	}
