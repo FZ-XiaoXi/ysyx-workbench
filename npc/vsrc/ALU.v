@@ -9,7 +9,7 @@ module ALU(
 	output reg OF	
 );
 	reg [3:0]notB=inA+~inB+1'b1;
-	wire [3:0]inB_modified=cin?~inB:B;
+	wire [3:0]inB_modified=cin?~inB:inB;
 	wire [4:0]sum;
 	assign sum={1'b0,inA}+{1'b0,inB_modified}+{4'b0000,cin};
 	assign CF=cin?~sum[4]:sum[4];
