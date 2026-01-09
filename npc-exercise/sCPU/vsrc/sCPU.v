@@ -20,7 +20,7 @@ wire [1:0]regWCH;
 wire PCJFlag;
 reg [7:0] regA,regB;
 wire [1:0] regAAdd,regBAdd;
-wire reg [7:0] added;
+wire [7:0] added;
 SevenSegDecoder SegL(segnum[3:0],segL);
 SevenSegDecoder SegH(segnum[7:4],segH);
 parameter [7:0] PROGRAM [0:8] = '{
@@ -73,10 +73,9 @@ end
 always @(*)begin
 	regA=R[regAAdd];
 	regB=R[regBAdd];
-	temp=R[1];
-	added=regA+regB;
+	temp=added;
 end
-//adder8 adder8_0 (regA,regB,added);
+adder8 adder8_0 (regA,regB,added);
 endmodule
 
 module SevenSegDecoder(
