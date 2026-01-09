@@ -1,12 +1,12 @@
-#include "Vencode83.h"
+#include "VALU.h"
 #include <stdlib.h>
 #include "verilated_vcd_c.h"
 #include <stdio.h>
 #include <assert.h>
 #include "verilated.h"
 #include <nvboard.h>
-Vencode83* top;
-void nvboard_bind_all_pins(Vencode83* top);
+VALU* top;
+void nvboard_bind_all_pins(VALU* top);
 VerilatedVcdC* tfp = new VerilatedVcdC;
 VerilatedContext* contextp = new VerilatedContext;
 void step_and_dump_wave(){
@@ -19,11 +19,9 @@ void step_and_dump_wave(){
 int main(int argc, char** argv) {
     contextp->commandArgs(argc, argv);
 	Verilated::traceEverOn(true);
-    top = new Vencode83{contextp};
+    top = new VALU{contextp};
 	top->trace(tfp,99);
 	tfp->open("wave.vcd");
-	top->en=0;
-	top->x=0;
 	nvboard_bind_all_pins(top);
 	nvboard_init();
 	
