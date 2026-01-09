@@ -24,4 +24,4 @@ wave:
 	gtkwave wave.vcd
 clean:
 	rm -rf obj_dir wave.vcd wave.fst
-include ../Makefile
+include ~/ysyx-workbench/Makefile

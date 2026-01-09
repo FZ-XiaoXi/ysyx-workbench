@@ -1,4 +1,4 @@
-TOPNAME=ALU
+TOPNAME=sCPU
 NXDC_FILES=./top.nxdc
 include $(NVBOARD_HOME)/scripts/nvboard.mk
 VERILATOR_FLAGS=--cc --exe --build --trace --top-module $(TOPNAME) -Wall
@@ -24,4 +24,4 @@ wave:
 	gtkwave wave.vcd
 clean:
 	rm -rf obj_dir wave.vcd wave.fst
-include ../Makefile
+include ~/ysyx-workbench/Makefile
