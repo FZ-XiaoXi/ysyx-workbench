@@ -55,11 +55,11 @@ int main(int argc, char** argv) {
 		top->clk=0;
 		step_and_dump_wave();
 		tfp->dump(contextp->time());
-		contextp->timeInc(1000);
+		contextp->timeInc(100000);
 		top->clk=1;
 		step_and_dump_wave();
 		tfp->dump(contextp->time());
-		contextp->timeInc(1000);
+		contextp->timeInc(100000);
 		//printf("a=%d b=%d f=%d\n",a,b,top->f);
 		//assert(top->f == (a^b));
 	}
