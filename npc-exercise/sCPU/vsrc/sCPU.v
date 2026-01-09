@@ -64,7 +64,7 @@ always @(posedge step[1])begin
 end
 
 always @(posedge step[2])begin
-	if(PCJFalg)
+	if(PCJFlag)
 		PC<=PROGRAM[PC][5:2];
 	else
 		PC<=PC+4'b0001;
