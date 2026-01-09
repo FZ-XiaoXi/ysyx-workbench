@@ -3,7 +3,8 @@ module sCPU(
 	output [6:0]segH,
 	output [6:0]segL,
 	output reg [7:0]segnum,
-	output reg [3:0]PC
+	output reg [3:0]PC,
+	output [7:0] temp
 );
 reg [7:0]R [0:3];
 reg [1:0]CLKcounter;
@@ -72,6 +73,7 @@ end
 always @(*)begin
 	regA=R[regAAdd];
 	regB=R[regBAdd];
+	temp=R[2];
 end
 adder8 adder8_0 (regA,regB,added);
 endmodule
