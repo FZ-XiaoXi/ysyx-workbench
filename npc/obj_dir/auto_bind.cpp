@@ -1,7 +1,7 @@
 #include <nvboard.h>
-#include "VALU4.h"
+#include "VALU.h"
 
-void nvboard_bind_all_pins(VALU4* top) {
+void nvboard_bind_all_pins(VALU* top) {
 	nvboard_bind_pin( &top->inA, 4, SW7, SW6, SW5, SW4);
 	nvboard_bind_pin( &top->inB, 4, SW3, SW2, SW1, SW0);
 	nvboard_bind_pin( &top->mode, 3, SW15, SW14, SW13);
