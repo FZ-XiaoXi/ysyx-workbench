@@ -1,4 +1,4 @@
-TOPNAME=encode83
+TOPNAME=ALU
 NXDC_FILES=./top.nxdc
 include $(NVBOARD_HOME)/scripts/nvboard.mk
 VERILATOR_FLAGS=--cc --exe --build --trace --top-module $(TOPNAME) -Wall
