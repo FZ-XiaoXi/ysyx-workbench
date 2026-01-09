@@ -1,12 +1,12 @@
-#include "VALU.h"
+#include "VsCPU.h"
 #include <stdlib.h>
 #include "verilated_vcd_c.h"
 #include <stdio.h>
 #include <assert.h>
 #include "verilated.h"
 #include <nvboard.h>
-VALU* top;
-void nvboard_bind_all_pins(VALU* top);
+VsCPU* top;
+void nvboard_bind_all_pins(VsCPU* top);
 VerilatedVcdC* tfp = new VerilatedVcdC;
 VerilatedContext* contextp = new VerilatedContext;
 void step_and_dump_wave(){
