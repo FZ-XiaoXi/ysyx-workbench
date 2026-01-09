@@ -1,17 +1,17 @@
 module ALU(
 	input cin,
-	input [3:0]inA,
-	input [3:0]inB,
-	input [2:0]mode,
+	input reg [3:0]inA,
+	input reg [3:0]inB,
+	input reg [2:0]mode,
 	output [3:0]out,
 	output CF,
 	output ZF,
 	output OF	
 );
-
-	assign CF=1;
-	assign ZF=1;
-	assign OF=1;
-	assign out[3:0]=4'b1010;
+	
+	assign CF=cin;
+	assign ZF=inA[0:0];
+	assign OF=mode[0:0];
+	assign out[3:0]=inA[3:0];
 
 endmodule
