@@ -43,7 +43,7 @@ assign regWEN=addFlag|liFlag;
 assign regWCH=PROGRAM[PC][5:4];
 assign PCJFlag=bner0Flag& (|(regA^regB));
 assign regAAdd=PROGRAM[PC][1:0];
-assign regBAdd=bner0Flag?4'b0000:PROGRAM[PC][3:2];
+assign regBAdd=bner0Flag?2'b00:PROGRAM[PC][3:2];
 always @(posedge clk)begin
 	if(CLKcounter==2'b10)
 		CLKcounter<=2'b00;
