@@ -30,7 +30,7 @@ wire [7:0] added;
 SevenSegDecoder SegL(segnum[3:0],segL);
 SevenSegDecoder SegH(segnum[7:4],segH);
 parameter [7:0] PROGRAM [0:8] = '{
-    8'h83,  // 0: li r0, 10
+    8'h8A,  // 0: li r0, 10
     8'h90,  // 1: li r1, 0
     8'hA0,  // 2: li r2, 0
     8'hB1,  // 3: li r3, 1
