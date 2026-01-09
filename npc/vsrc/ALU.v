@@ -24,7 +24,7 @@ module ALU(
 			3'b101:out=inA^inB;
 			3'b110:
                 out = {3'b000,{(inA[3] != inB[3]) ? inA[3] : diff[3]}};
-			3'b111:out= ~|(inA +(~inB+1'b1));
+			3'b111:out=(diff[3:0]==4'b0000)?4'b0001:4'b0000;
 			default:out=4'b0000;
 		endcase
 	end
