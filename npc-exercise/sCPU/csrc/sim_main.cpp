@@ -52,14 +52,14 @@ int main(int argc, char** argv) {
 	while (!contextp->gotFinish()) {
 		//top->a=a;
 		//top->b=b;
-		top->clk=1;
-		step_and_dump_wave();
-		tfp->dump(contextp->time());
-		contextp->timeInc(10);
 		top->clk=0;
 		step_and_dump_wave();
 		tfp->dump(contextp->time());
-		contextp->timeInc(10);
+		contextp->timeInc(1000);
+		top->clk=1;
+		step_and_dump_wave();
+		tfp->dump(contextp->time());
+		contextp->timeInc(1000);
 		//printf("a=%d b=%d f=%d\n",a,b,top->f);
 		//assert(top->f == (a^b));
 	}
