@@ -19,7 +19,7 @@ void step_and_dump_wave(){
 int main(int argc, char** argv) {
     contextp->commandArgs(argc, argv);
 	Verilated::traceEverOn(true);
-    top = new VALU{contextp};
+    top = new VsCPU{contextp};
 	top->trace(tfp,99);
 	tfp->open("wave.vcd");
 	nvboard_bind_all_pins(top);
