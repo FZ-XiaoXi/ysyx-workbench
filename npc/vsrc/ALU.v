@@ -8,7 +8,6 @@ module ALU(
 	output reg ZF,
 	output reg OF	
 );
-	reg [3:0]notB=inA+~inB+1'b1;
 	wire [3:0]inB_modified=cin?~inB:inB;
 	wire [4:0]sum;
 	assign sum={1'b0,inA}+{1'b0,inB_modified}+{4'b0000,cin};
@@ -22,10 +21,13 @@ module ALU(
 			3'b011:out=inA&inB;
 			3'b100:out=inA|inB;
 			3'b101:out=inA^inB;
-			3'b110:out=notB[3] ^ ((inA[3]!=inB[3])&&notB[3]!=inA[3]);
+			3'b110:begin
+				wire [4:0] diff = {1'b0, inA} + {1'b0, ~inB} + 5'b00001;
+                out = {3'b000,{(inA[3] != inB[3]) ? inA[3] : diff[3]}};
+            end
 			3'b111:out= ~|(inA +(~inB+1'b1));
+			default:out=4'b0000;
 		endcase
-		
 	end
 	assign ZF= ~|out[3:0];
 endmodule
