@@ -1,5 +1,4 @@
 module ALU(
-	input cin,
 	input [3:0]inA,
 	input [3:0]inB,
 	input [2:0]mode,
@@ -8,11 +7,13 @@ module ALU(
 	output reg ZF,
 	output reg OF	
 );
-	wire [3:0]inB_modified=(mode==3'b001)?~inB:inB;
+	wire cin;
+	assign cin=(mode[0]==3'b001) ? 1 : 0;
+	wire [3:0]inB_modified=cin?~inB:inB;
 	wire [4:0]sum;
 	wire [3:0] diff = inA + ~inB + 4'b0001;
-	assign sum={1'b0,inA}+{1'b0,inB_modified}+{4'b0000,mode[0]};
-	assign CF=(mode==3'b001)?~sum[4]:sum[4];
+	assign sum={1'b0,inA}+{1'b0,inB_modified}+{4'b0000,cin};
+	assign CF=cin?~sum[4]:sum[4];
 	assign OF=(inA[3]==inB_modified[3])&&(sum[3] != inA[3]);
 	always @(*)	begin
 		case(mode)
