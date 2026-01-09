@@ -1,7 +1,7 @@
 TOPNAME=sCPU
 NXDC_FILES=./top.nxdc
 include $(NVBOARD_HOME)/scripts/nvboard.mk
-VERILATOR_FLAGS=--cc --exe --build --trace --top-module $(TOPNAME) -Wall
+VERILATOR_FLAGS=--cc --exe --build --trace --top-module $(TOPNAME) 
 INC_PATH ?=
 SRC_AUTO_BIND = $(abspath ./obj_dir/auto_bind.cpp)
 $(SRC_AUTO_BIND): $(NXDC_FILES)
