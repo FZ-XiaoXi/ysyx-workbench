@@ -9,6 +9,9 @@ module ALU(
 	output OF	
 );
 
-
+	assign CF=1;
+	assign ZF=1;
+	assign OF=1;
+	assign out[3:0]=4'b4'b4'b4'b1;
 
 endmodule
