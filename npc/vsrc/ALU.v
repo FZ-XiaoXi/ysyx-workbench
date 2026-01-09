@@ -10,8 +10,8 @@ module ALU(
 );
 	
 	assign CF=cin;
-	assign ZF=inA[0:0];
-	assign OF=mode[0:0];
+	assign ZF= |inA;
+	assign OF= |mode;
 	assign out[3:0]=inB[3:0];
 
 endmodule
