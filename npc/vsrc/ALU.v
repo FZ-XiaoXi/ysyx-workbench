@@ -10,7 +10,7 @@ module ALU(
 );
 	wire [3:0]inB_modified=cin?~inB:inB;
 	wire [4:0]sum;
-	wire [3:0] diff = {1'b0, inA} + {1'b0, ~inB} + 4'b0001;
+	wire [3:0] diff = inA + ~inB + 4'b0001;
 	assign sum={1'b0,inA}+{1'b0,inB_modified}+{4'b0000,cin};
 	assign CF=cin?~sum[4]:sum[4];
 	assign OF=(inA[3]==inB_modified[3])&&(sum[3] != inA[3]);
