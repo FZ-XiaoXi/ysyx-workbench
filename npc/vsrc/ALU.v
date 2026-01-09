@@ -8,7 +8,7 @@ module ALU(
 	output reg OF	
 );
 	wire cin;
-	assign cin=(mode[0]==3'b001) ? 1 : 0;
+	assign cin=(mode==3'b001) ? 1 : 0;
 	wire [3:0]inB_modified=cin?~inB:inB;
 	wire [4:0]sum;
 	wire [3:0] diff = inA + ~inB + 4'b0001;
