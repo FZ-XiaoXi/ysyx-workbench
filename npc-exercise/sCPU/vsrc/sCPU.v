@@ -74,8 +74,9 @@ always @(*)begin
 	regA=R[regAAdd];
 	regB=R[regBAdd];
 	temp=R[1];
+	added=regA+regB;
 end
-adder8 adder8_0 (regA,regB,added);
+//adder8 adder8_0 (regA,regB,added);
 endmodule
 
 module SevenSegDecoder(
