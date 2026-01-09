@@ -73,7 +73,7 @@ end
 always @(*)begin
 	regA=R[regAAdd];
 	regB=R[regBAdd];
-	temp=R[3];
+	temp=R[2];
 end
 adder8 adder8_0 (regA,regB,added);
 endmodule
