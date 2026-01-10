@@ -66,7 +66,7 @@ always @(posedge CLK)begin
 			ifPressed<=0;
 		end else if(status==0&&ready==1&&ifPressed==0)begin
 			ifPressed<=1;
-			count=count+1;
+			count<=count+1;
 		end
 		status<=nextstatus;
 		if(nextdata_n==0)begin

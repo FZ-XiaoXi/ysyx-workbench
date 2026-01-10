@@ -18,7 +18,7 @@ VPS2__Syms::VPS2__Syms(VerilatedContext* contextp, const char* namep, VPS2* mode
     , TOP{this, namep}
 {
     // Check resources
-    Verilated::stackCheck(312);
+    Verilated::stackCheck(234);
     // Configure time unit / time precision
     _vm_contextp__->timeunit(-12);
     _vm_contextp__->timeprecision(-12);

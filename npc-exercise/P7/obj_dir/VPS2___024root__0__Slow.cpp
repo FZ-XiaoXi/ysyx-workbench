@@ -9,10 +9,6 @@ VL_ATTR_COLD void VPS2___024root___eval_static(VPS2___024root* vlSelf) {
     VPS2__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
     auto& vlSelfRef = std::ref(*vlSelf).get();
     // Body
-    vlSelfRef.__Vtrigprevexpr___TOP__PS2__DOT____Vcellout__u_keycode_to_ascii__ascii__0 
-        = vlSelfRef.PS2__DOT____Vcellout__u_keycode_to_ascii__ascii;
-    vlSelfRef.__Vtrigprevexpr___TOP__PS2__DOT____Vcellout__u_keycode_to_ascii__ascii__1 
-        = vlSelfRef.PS2__DOT____Vcellout__u_keycode_to_ascii__ascii;
     vlSelfRef.__Vtrigprevexpr___TOP__CLK__0 = vlSelfRef.CLK;
 }
 
@@ -42,7 +38,7 @@ VL_ATTR_COLD void VPS2___024root___eval_final(VPS2___024root* vlSelf) {
 }
 
 #ifdef VL_DEBUG
-VL_ATTR_COLD void VPS2___024root___dump_triggers__stl(const VlUnpacked<QData/*63:0*/, 2> &triggers, const std::string &tag);
+VL_ATTR_COLD void VPS2___024root___dump_triggers__stl(const VlUnpacked<QData/*63:0*/, 1> &triggers, const std::string &tag);
 #endif  // VL_DEBUG
 VL_ATTR_COLD bool VPS2___024root___eval_phase__stl(VPS2___024root* vlSelf);
 
@@ -71,20 +67,10 @@ VL_ATTR_COLD void VPS2___024root___eval_triggers__stl(VPS2___024root* vlSelf) {
     VPS2__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
     auto& vlSelfRef = std::ref(*vlSelf).get();
     // Body
-    vlSelfRef.__VstlTriggered[1U] = ((0xfffffffffffffffeULL 
+    vlSelfRef.__VstlTriggered[0U] = ((0xfffffffffffffffeULL 
                                       & vlSelfRef.__VstlTriggered
-                                      [1U]) | (IData)((IData)(vlSelfRef.__VstlFirstIteration)));
+                                      [0U]) | (IData)((IData)(vlSelfRef.__VstlFirstIteration)));
     vlSelfRef.__VstlFirstIteration = 0U;
-    vlSelfRef.__VstlTriggered[0U] = (QData)((IData)(
-                                                    ((IData)(vlSelfRef.PS2__DOT____Vcellout__u_keycode_to_ascii__ascii) 
-                                                     != (IData)(vlSelfRef.__Vtrigprevexpr___TOP__PS2__DOT____Vcellout__u_keycode_to_ascii__ascii__0))));
-    vlSelfRef.__Vtrigprevexpr___TOP__PS2__DOT____Vcellout__u_keycode_to_ascii__ascii__0 
-        = vlSelfRef.PS2__DOT____Vcellout__u_keycode_to_ascii__ascii;
-    if (VL_UNLIKELY(((1U & (~ (IData)(vlSelfRef.__VstlDidInit)))))) {
-        vlSelfRef.__VstlDidInit = 1U;
-        vlSelfRef.__VstlTriggered[0U] = (1ULL | vlSelfRef.__VstlTriggered
-                                         [0U]);
-    }
 #ifdef VL_DEBUG
     if (VL_UNLIKELY(vlSymsp->_vm_contextp__->debug())) {
         VPS2___024root___dump_triggers__stl(vlSelfRef.__VstlTriggered, "stl"s);
@@ -92,25 +78,22 @@ VL_ATTR_COLD void VPS2___024root___eval_triggers__stl(VPS2___024root* vlSelf) {
 #endif
 }
 
-VL_ATTR_COLD bool VPS2___024root___trigger_anySet__stl(const VlUnpacked<QData/*63:0*/, 2> &in);
+VL_ATTR_COLD bool VPS2___024root___trigger_anySet__stl(const VlUnpacked<QData/*63:0*/, 1> &in);
 
 #ifdef VL_DEBUG
-VL_ATTR_COLD void VPS2___024root___dump_triggers__stl(const VlUnpacked<QData/*63:0*/, 2> &triggers, const std::string &tag) {
+VL_ATTR_COLD void VPS2___024root___dump_triggers__stl(const VlUnpacked<QData/*63:0*/, 1> &triggers, const std::string &tag) {
     VL_DEBUG_IF(VL_DBG_MSGF("+    VPS2___024root___dump_triggers__stl\n"); );
     // Body
     if ((1U & (~ (IData)(VPS2___024root___trigger_anySet__stl(triggers))))) {
         VL_DBG_MSGS("         No '" + tag + "' region triggers active\n");
     }
     if ((1U & (IData)(triggers[0U]))) {
-        VL_DBG_MSGS("         '" + tag + "' region trigger index 0 is active: @([hybrid] PS2.__Vcellout__u_keycode_to_ascii__ascii)\n");
-    }
-    if ((1U & (IData)(triggers[1U]))) {
-        VL_DBG_MSGS("         '" + tag + "' region trigger index 64 is active: Internal 'stl' trigger - first iteration\n");
+        VL_DBG_MSGS("         '" + tag + "' region trigger index 0 is active: Internal 'stl' trigger - first iteration\n");
     }
 }
 #endif  // VL_DEBUG
 
-VL_ATTR_COLD bool VPS2___024root___trigger_anySet__stl(const VlUnpacked<QData/*63:0*/, 2> &in) {
+VL_ATTR_COLD bool VPS2___024root___trigger_anySet__stl(const VlUnpacked<QData/*63:0*/, 1> &in) {
     VL_DEBUG_IF(VL_DBG_MSGF("+    VPS2___024root___trigger_anySet__stl\n"); );
     // Locals
     IData/*31:0*/ n;
@@ -121,54 +104,17 @@ VL_ATTR_COLD bool VPS2___024root___trigger_anySet__stl(const VlUnpacked<QData/*6
             return (1U);
         }
         n = ((IData)(1U) + n);
-    } while ((2U > n));
+    } while ((1U > n));
     return (0U);
-}
-
-extern const VlUnpacked<CData/*6:0*/, 16> VPS2__ConstPool__TABLE_h0ee5ce4f_0;
-
-VL_ATTR_COLD void VPS2___024root___stl_sequent__TOP__0(VPS2___024root* vlSelf) {
-    VL_DEBUG_IF(VL_DBG_MSGF("+    VPS2___024root___stl_sequent__TOP__0\n"); );
-    VPS2__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
-    auto& vlSelfRef = std::ref(*vlSelf).get();
-    // Locals
-    CData/*3:0*/ __Vtableidx6;
-    __Vtableidx6 = 0;
-    CData/*3:0*/ __Vtableidx7;
-    __Vtableidx7 = 0;
-    // Body
-    vlSelfRef.data = vlSelfRef.PS2__DOT__inst__DOT__fifo
-        [vlSelfRef.PS2__DOT__inst__DOT__r_ptr];
-    __Vtableidx6 = (0x0000000fU & (IData)(vlSelfRef.PS2__DOT__count));
-    vlSelfRef.PS2__DOT____Vcellout__segdec6____pinNumber2 
-        = VPS2__ConstPool__TABLE_h0ee5ce4f_0[__Vtableidx6];
-    __Vtableidx7 = (0x0000000fU & ((IData)(vlSelfRef.PS2__DOT__count) 
-                                   >> 4U));
-    vlSelfRef.PS2__DOT____Vcellout__segdec7____pinNumber2 
-        = VPS2__ConstPool__TABLE_h0ee5ce4f_0[__Vtableidx7];
-    vlSelfRef.seg3L = (1U | ((IData)(vlSelfRef.PS2__DOT____Vcellout__segdec6____pinNumber2) 
-                             << 1U));
-    vlSelfRef.seg3H = (1U | ((IData)(vlSelfRef.PS2__DOT____Vcellout__segdec7____pinNumber2) 
-                             << 1U));
-}
-
-VL_ATTR_COLD void VPS2___024root___stl_sequent__TOP__1(VPS2___024root* vlSelf) {
-    VL_DEBUG_IF(VL_DBG_MSGF("+    VPS2___024root___stl_sequent__TOP__1\n"); );
-    VPS2__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
-    auto& vlSelfRef = std::ref(*vlSelf).get();
-    // Body
-    vlSelfRef.PS2__DOT__receiveData = ((0x00ff00ffU 
-                                        & vlSelfRef.PS2__DOT__receiveData) 
-                                       | ((IData)(vlSelfRef.PS2__DOT____Vcellout__u_keycode_to_ascii__ascii) 
-                                          << 8U));
 }
 
 extern const VlUnpacked<CData/*0:0*/, 256> VPS2__ConstPool__TABLE_hdaf6d84f_0;
 extern const VlUnpacked<CData/*7:0*/, 256> VPS2__ConstPool__TABLE_h433c6e94_0;
+extern const VlUnpacked<CData/*6:0*/, 16> VPS2__ConstPool__TABLE_h0ee5ce4f_0;
 extern const VlUnpacked<CData/*6:0*/, 32> VPS2__ConstPool__TABLE_hfa5a6cbf_0;
 
-VL_ATTR_COLD void VPS2___024root___stl_comb__TOP__0(VPS2___024root* vlSelf) {
-    VL_DEBUG_IF(VL_DBG_MSGF("+    VPS2___024root___stl_comb__TOP__0\n"); );
+VL_ATTR_COLD void VPS2___024root___stl_sequent__TOP__0(VPS2___024root* vlSelf) {
+    VL_DEBUG_IF(VL_DBG_MSGF("+    VPS2___024root___stl_sequent__TOP__0\n"); );
     VPS2__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
     auto& vlSelfRef = std::ref(*vlSelf).get();
     // Locals
@@ -182,15 +128,28 @@ VL_ATTR_COLD void VPS2___024root___stl_comb__TOP__0(VPS2___024root* vlSelf) {
     __Vtableidx4 = 0;
     CData/*4:0*/ __Vtableidx5;
     __Vtableidx5 = 0;
+    CData/*3:0*/ __Vtableidx6;
+    __Vtableidx6 = 0;
+    CData/*3:0*/ __Vtableidx7;
+    __Vtableidx7 = 0;
     // Body
+    vlSelfRef.data = vlSelfRef.PS2__DOT__inst__DOT__fifo
+        [vlSelfRef.PS2__DOT__inst__DOT__r_ptr];
     vlSelfRef.PS2__DOT__nextstatus = ((~ (IData)(vlSelfRef.PS2__DOT__status)) 
                                       & (0xf0U == (0x000000ffU 
                                                    & vlSelfRef.PS2__DOT__receiveData)));
     __Vtableidx1 = (0x000000ffU & vlSelfRef.PS2__DOT__receiveData);
     vlSelfRef.PS2__DOT__u_keycode_to_ascii__DOT__valid 
         = VPS2__ConstPool__TABLE_hdaf6d84f_0[__Vtableidx1];
-    vlSelfRef.PS2__DOT____Vcellout__u_keycode_to_ascii__ascii 
-        = VPS2__ConstPool__TABLE_h433c6e94_0[__Vtableidx1];
+    vlSelfRef.PS2__DOT__ascii = VPS2__ConstPool__TABLE_h433c6e94_0
+        [__Vtableidx1];
+    __Vtableidx6 = (0x0000000fU & (IData)(vlSelfRef.PS2__DOT__count));
+    vlSelfRef.PS2__DOT____Vcellout__segdec6____pinNumber2 
+        = VPS2__ConstPool__TABLE_h0ee5ce4f_0[__Vtableidx6];
+    __Vtableidx7 = (0x0000000fU & ((IData)(vlSelfRef.PS2__DOT__count) 
+                                   >> 4U));
+    vlSelfRef.PS2__DOT____Vcellout__segdec7____pinNumber2 
+        = VPS2__ConstPool__TABLE_h0ee5ce4f_0[__Vtableidx7];
     __Vtableidx2 = ((0x0000001eU & (vlSelfRef.PS2__DOT__receiveData 
                                     << 1U)) | (IData)(vlSelfRef.PS2__DOT__ifPressed));
     vlSelfRef.PS2__DOT____Vcellout__segdec0____pinNumber2 
@@ -208,6 +167,10 @@ VL_ATTR_COLD void VPS2___024root___stl_comb__TOP__0(VPS2___024root* vlSelf) {
                     | (IData)(vlSelfRef.PS2__DOT__ifPressed));
     vlSelfRef.PS2__DOT____Vcellout__segdec3____pinNumber2 
         = VPS2__ConstPool__TABLE_hfa5a6cbf_0[__Vtableidx5];
+    vlSelfRef.seg3L = (1U | ((IData)(vlSelfRef.PS2__DOT____Vcellout__segdec6____pinNumber2) 
+                             << 1U));
+    vlSelfRef.seg3H = (1U | ((IData)(vlSelfRef.PS2__DOT____Vcellout__segdec7____pinNumber2) 
+                             << 1U));
     vlSelfRef.seg0L = (1U | ((IData)(vlSelfRef.PS2__DOT____Vcellout__segdec0____pinNumber2) 
                              << 1U));
     vlSelfRef.seg0H = (1U | ((IData)(vlSelfRef.PS2__DOT____Vcellout__segdec1____pinNumber2) 
@@ -225,17 +188,8 @@ VL_ATTR_COLD void VPS2___024root___eval_stl(VPS2___024root* vlSelf) {
     VPS2__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
     auto& vlSelfRef = std::ref(*vlSelf).get();
     // Body
-    if ((1ULL & vlSelfRef.__VstlTriggered[1U])) {
-        VPS2___024root___stl_sequent__TOP__0(vlSelf);
-        VPS2___024root____Vm_traceActivitySetAll(vlSelf);
-    }
     if ((1ULL & vlSelfRef.__VstlTriggered[0U])) {
-        VPS2___024root___stl_sequent__TOP__1(vlSelf);
-        VPS2___024root____Vm_traceActivitySetAll(vlSelf);
-    }
-    if ((1ULL & (vlSelfRef.__VstlTriggered[1U] | vlSelfRef.__VstlTriggered
-                 [0U]))) {
-        VPS2___024root___stl_comb__TOP__0(vlSelf);
+        VPS2___024root___stl_sequent__TOP__0(vlSelf);
         VPS2___024root____Vm_traceActivitySetAll(vlSelf);
     }
 }
@@ -265,10 +219,7 @@ VL_ATTR_COLD void VPS2___024root___dump_triggers__act(const VlUnpacked<QData/*63
         VL_DBG_MSGS("         No '" + tag + "' region triggers active\n");
     }
     if ((1U & (IData)(triggers[0U]))) {
-        VL_DBG_MSGS("         '" + tag + "' region trigger index 0 is active: @([hybrid] PS2.__Vcellout__u_keycode_to_ascii__ascii)\n");
-    }
-    if ((1U & (IData)((triggers[0U] >> 1U)))) {
-        VL_DBG_MSGS("         '" + tag + "' region trigger index 1 is active: @(posedge CLK)\n");
+        VL_DBG_MSGS("         '" + tag + "' region trigger index 0 is active: @(posedge CLK)\n");
     }
 }
 #endif  // VL_DEBUG
@@ -280,7 +231,6 @@ VL_ATTR_COLD void VPS2___024root____Vm_traceActivitySetAll(VPS2___024root* vlSel
     // Body
     vlSelfRef.__Vm_traceActivity[0U] = 1U;
     vlSelfRef.__Vm_traceActivity[1U] = 1U;
-    vlSelfRef.__Vm_traceActivity[2U] = 1U;
 }
 
 VL_ATTR_COLD void VPS2___024root___ctor_var_reset(VPS2___024root* vlSelf) {
@@ -308,10 +258,10 @@ VL_ATTR_COLD void VPS2___024root___ctor_var_reset(VPS2___024root* vlSelf) {
     vlSelf->PS2__DOT__receiveData = VL_SCOPED_RAND_RESET_I(24, __VscopeHash, 3692022758504256563ull);
     vlSelf->PS2__DOT__ascii_out = VL_SCOPED_RAND_RESET_I(8, __VscopeHash, 12991514828456308389ull);
     vlSelf->PS2__DOT__ifPressed = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 15267341614126649828ull);
+    vlSelf->PS2__DOT__ascii = VL_SCOPED_RAND_RESET_I(8, __VscopeHash, 1518560196194778577ull);
     vlSelf->PS2__DOT__count = VL_SCOPED_RAND_RESET_I(8, __VscopeHash, 2356200659246663752ull);
     vlSelf->PS2__DOT__status = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 16674500561003301515ull);
     vlSelf->PS2__DOT__nextstatus = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 5715361001832252886ull);
-    vlSelf->PS2__DOT____Vcellout__u_keycode_to_ascii__ascii = VL_SCOPED_RAND_RESET_I(8, __VscopeHash, 9746617642062634548ull);
     vlSelf->PS2__DOT____Vcellout__segdec0____pinNumber2 = VL_SCOPED_RAND_RESET_I(7, __VscopeHash, 17620811450238286239ull);
     vlSelf->PS2__DOT____Vcellout__segdec1____pinNumber2 = VL_SCOPED_RAND_RESET_I(7, __VscopeHash, 13501945712177408783ull);
     vlSelf->PS2__DOT____Vcellout__segdec2____pinNumber2 = VL_SCOPED_RAND_RESET_I(7, __VscopeHash, 6911948471428592439ull);
@@ -328,21 +278,17 @@ VL_ATTR_COLD void VPS2___024root___ctor_var_reset(VPS2___024root* vlSelf) {
     vlSelf->PS2__DOT__inst__DOT__count = VL_SCOPED_RAND_RESET_I(4, __VscopeHash, 14753660847783073548ull);
     vlSelf->PS2__DOT__inst__DOT__ps2_clk_sync = VL_SCOPED_RAND_RESET_I(3, __VscopeHash, 13821521405913241214ull);
     vlSelf->PS2__DOT__inst__DOT____Vlvbound_hf7a7b477__0 = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 11025139509255349132ull);
-    for (int __Vi0 = 0; __Vi0 < 2; ++__Vi0) {
+    for (int __Vi0 = 0; __Vi0 < 1; ++__Vi0) {
         vlSelf->__VstlTriggered[__Vi0] = 0;
     }
-    vlSelf->__Vtrigprevexpr___TOP__PS2__DOT____Vcellout__u_keycode_to_ascii__ascii__0 = VL_SCOPED_RAND_RESET_I(8, __VscopeHash, 12160720168649344210ull);
-    vlSelf->__VstlDidInit = 0;
     for (int __Vi0 = 0; __Vi0 < 1; ++__Vi0) {
         vlSelf->__VactTriggered[__Vi0] = 0;
     }
-    vlSelf->__Vtrigprevexpr___TOP__PS2__DOT____Vcellout__u_keycode_to_ascii__ascii__1 = VL_SCOPED_RAND_RESET_I(8, __VscopeHash, 3206611818754735766ull);
     vlSelf->__Vtrigprevexpr___TOP__CLK__0 = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 18225951476332272534ull);
-    vlSelf->__VactDidInit = 0;
     for (int __Vi0 = 0; __Vi0 < 1; ++__Vi0) {
         vlSelf->__VnbaTriggered[__Vi0] = 0;
     }
-    for (int __Vi0 = 0; __Vi0 < 3; ++__Vi0) {
+    for (int __Vi0 = 0; __Vi0 < 2; ++__Vi0) {
         vlSelf->__Vm_traceActivity[__Vi0] = 0;
     }
 }

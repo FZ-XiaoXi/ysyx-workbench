@@ -32,10 +32,10 @@ class alignas(VL_CACHE_LINE_BYTES) VPS2___024root final : public VerilatedModule
     CData/*0:0*/ PS2__DOT__nextdata_n;
     CData/*7:0*/ PS2__DOT__ascii_out;
     CData/*0:0*/ PS2__DOT__ifPressed;
+    CData/*7:0*/ PS2__DOT__ascii;
     CData/*7:0*/ PS2__DOT__count;
     CData/*0:0*/ PS2__DOT__status;
     CData/*0:0*/ PS2__DOT__nextstatus;
-    CData/*7:0*/ PS2__DOT____Vcellout__u_keycode_to_ascii__ascii;
     CData/*6:0*/ PS2__DOT____Vcellout__segdec0____pinNumber2;
     CData/*6:0*/ PS2__DOT____Vcellout__segdec1____pinNumber2;
     CData/*6:0*/ PS2__DOT____Vcellout__segdec2____pinNumber2;
@@ -48,20 +48,16 @@ class alignas(VL_CACHE_LINE_BYTES) VPS2___024root final : public VerilatedModule
     CData/*3:0*/ PS2__DOT__inst__DOT__count;
     CData/*2:0*/ PS2__DOT__inst__DOT__ps2_clk_sync;
     CData/*0:0*/ PS2__DOT__inst__DOT____Vlvbound_hf7a7b477__0;
-    CData/*7:0*/ __Vtrigprevexpr___TOP__PS2__DOT____Vcellout__u_keycode_to_ascii__ascii__0;
-    CData/*0:0*/ __VstlDidInit;
     CData/*0:0*/ __VstlFirstIteration;
-    CData/*7:0*/ __Vtrigprevexpr___TOP__PS2__DOT____Vcellout__u_keycode_to_ascii__ascii__1;
     CData/*0:0*/ __Vtrigprevexpr___TOP__CLK__0;
-    CData/*0:0*/ __VactDidInit;
     SData/*9:0*/ PS2__DOT__inst__DOT__buffer;
     IData/*23:0*/ PS2__DOT__receiveData;
     IData/*31:0*/ __VactIterCount;
     VlUnpacked<CData/*7:0*/, 8> PS2__DOT__inst__DOT__fifo;
-    VlUnpacked<QData/*63:0*/, 2> __VstlTriggered;
+    VlUnpacked<QData/*63:0*/, 1> __VstlTriggered;
     VlUnpacked<QData/*63:0*/, 1> __VactTriggered;
     VlUnpacked<QData/*63:0*/, 1> __VnbaTriggered;
-    VlUnpacked<CData/*0:0*/, 3> __Vm_traceActivity;
+    VlUnpacked<CData/*0:0*/, 2> __Vm_traceActivity;
 
     // INTERNAL VARIABLES
     VPS2__Syms* const vlSymsp;
