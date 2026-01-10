@@ -16,19 +16,30 @@ module PS2(
 wire ready,overflow;
 reg nextdata_n;
 reg [23:0]receiveData;
-
+wire [7:0] ascii_out;
+reg ifPressed;
+reg status,nextstatus;
+keycode_to_ascii u_keycode_to_ascii (
+    .scancode(receiveData[7:0]),
+    .ascii(receiveData[15:8]),
+    .valid()
+);
 assign seg0L[0]=1;
 assign seg0H[0]=1;
 assign seg1L[0]=1;
 assign seg1H[0]=1;
 assign seg2L[0]=1;
 assign seg2H[0]=1;
-SevenSegDecoder segdec0(receiveData[03:00],seg0L[7:1]);
-SevenSegDecoder segdec1(receiveData[07:04],seg0H[7:1]);
-SevenSegDecoder segdec2(receiveData[11:08],seg1L[7:1]);
-SevenSegDecoder segdec3(receiveData[15:12],seg1H[7:1]);
-SevenSegDecoder segdec4(receiveData[19:16],seg2L[7:1]);
-SevenSegDecoder segdec5(receiveData[23:20],seg2H[7:1]);
+assign seg3L[0]=1;
+assign seg3H[0]=1;
+SevenSegDecoder segdec0(receiveData[03:00],seg0L[7:1],displayEnable);
+SevenSegDecoder segdec1(receiveData[07:04],seg0H[7:1],displayEnable);
+SevenSegDecoder segdec2(receiveData[11:08],seg1L[7:1],displayEnable);
+SevenSegDecoder segdec3(receiveData[15:12],seg1H[7:1],displayEnable);
+SevenSegDecoder segdec4(receiveData[19:16],seg2L[7:1],0);
+SevenSegDecoder segdec5(receiveData[23:20],seg2H[7:1],0);
+SevenSegDecoder segdec6(count[7:0],seg3L[7:1],1);
+SevenSegDecoder segdec7(count[15:8],seg3H[7:1],1);
 
 
 ps2_keyboard inst(
@@ -46,7 +57,10 @@ always @(posedge CLK)begin
 	if(CLRN==0)begin
 		receiveData[23:0]<=24'h000000;
 		nextdata_n<=1;
+		ifPressed<=0;
+		status<=0;
 	end else begin
+		status<=nextstatus;
 		if(nextdata_n==0)begin
 			nextdata_n<=1;
 		end
@@ -57,4 +71,22 @@ always @(posedge CLK)begin
 		end
 	end
 end
+always @(*)begin
+	if(status)begin
+		nextstatus=0;
+	end else begin
+		if(receiveData[7:0]==8'hF0)
+			nextstatus=1;
+		else
+			nextstatus=0;
+	end
+end
+
+always @(*)begin
+	if(status)
+		displayEnable=0;
+	else if(status==0 && ready==1)
+		displayEnable=1;
+end
+
 endmodule
