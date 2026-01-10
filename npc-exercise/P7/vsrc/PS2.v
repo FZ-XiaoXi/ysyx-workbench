@@ -17,7 +17,7 @@ wire ready,overflow;
 reg nextdata_n;
 reg [23:0]receiveData;
 wire [7:0] ascii_out;
-reg ifPressed;
+reg displayEnable;
 reg [7:0]count;
 reg status,nextstatus;
 keycode_to_ascii u_keycode_to_ascii (
