@@ -47,9 +47,10 @@ always @(posedge CLK)begin
 		receiveData[23:0]<=24'h000000;
 		nextdata_n<=1;
 	end else begin
-		if(nextdata_n==0)
+		if(nextdata_n==0)begin
 			nextdata_n<=1;
-		if(ready) begin
+		end
+		else if(ready) begin
 			receiveData[23:8]<=receiveData[15:0];
 			receiveData[7:0]<=data;
 			nextdata_n<=0;
