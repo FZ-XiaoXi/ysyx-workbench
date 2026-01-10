@@ -32,7 +32,6 @@ class alignas(VL_CACHE_LINE_BYTES) Vvga___024root final : public VerilatedModule
     SData/*9:0*/ vga__DOT__u_vga_ctrl__DOT__x_cnt;
     SData/*9:0*/ vga__DOT__u_vga_ctrl__DOT__y_cnt;
     SData/*9:0*/ __Vdly__vga__DOT__u_vga_ctrl__DOT__x_cnt;
-    IData/*23:0*/ vga__DOT__vga_data;
     IData/*31:0*/ vga__DOT__my_vgaclk__DOT__clkcount;
     IData/*31:0*/ __VactIterCount;
     VlUnpacked<QData/*63:0*/, 1> __VstlTriggered;

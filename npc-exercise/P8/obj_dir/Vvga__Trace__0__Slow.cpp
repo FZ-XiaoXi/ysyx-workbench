@@ -31,7 +31,7 @@ VL_ATTR_COLD void Vvga___024root__trace_init_sub__TOP__0(Vvga___024root* vlSelf,
     tracep->declBus(c+14,0,"vga_b",-1, VerilatedTraceSigDirection::OUTPUT, VerilatedTraceSigKind::WIRE, VerilatedTraceSigType::LOGIC, false,-1, 7,0);
     tracep->declBus(c+1,0,"v_addr",-1, VerilatedTraceSigDirection::NONE, VerilatedTraceSigKind::WIRE, VerilatedTraceSigType::LOGIC, false,-1, 9,0);
     tracep->declBus(c+4,0,"h_addr",-1, VerilatedTraceSigDirection::NONE, VerilatedTraceSigKind::WIRE, VerilatedTraceSigType::LOGIC, false,-1, 9,0);
-    tracep->declBus(c+17,0,"vga_data",-1, VerilatedTraceSigDirection::NONE, VerilatedTraceSigKind::VAR, VerilatedTraceSigType::LOGIC, false,-1, 23,0);
+    tracep->declBus(c+17,0,"vga_data",-1, VerilatedTraceSigDirection::NONE, VerilatedTraceSigKind::WIRE, VerilatedTraceSigType::LOGIC, false,-1, 23,0);
     tracep->declBit(c+15,0,"pclk",-1, VerilatedTraceSigDirection::NONE, VerilatedTraceSigKind::WIRE, VerilatedTraceSigType::LOGIC, false,-1);
     tracep->pushPrefix("my_vgaclk", VerilatedTracePrefixType::SCOPE_MODULE);
     tracep->declBit(c+7,0,"clkin",-1, VerilatedTraceSigDirection::INPUT, VerilatedTraceSigKind::WIRE, VerilatedTraceSigType::LOGIC, false,-1);
@@ -110,7 +110,7 @@ VL_ATTR_COLD void Vvga___024root__trace_const_0_sub_0(Vvga___024root* vlSelf, Ve
     auto& vlSelfRef = std::ref(*vlSelf).get();
     // Body
     uint32_t* const oldp VL_ATTR_UNUSED = bufp->oldp(vlSymsp->__Vm_baseCode);
-    bufp->fullIData(oldp+17,(vlSelfRef.vga__DOT__vga_data),24);
+    bufp->fullIData(oldp+17,(0x00f00fffU),24);
     bufp->fullBit(oldp+18,(1U));
     bufp->fullIData(oldp+19,(0x017d7840U),32);
     bufp->fullIData(oldp+20,(1U),32);

@@ -11,7 +11,7 @@ module vga(
 wire [9:0] v_addr;
 wire [9:0] h_addr;
 wire [23:0] vga_data;
-assign vga_data=24'hF00FFF;
+assign vga_data=24'hF567FF;
 wire pclk;
 clkgen #(25000000) my_vgaclk(clk,reset,1'b1,pclk);
 vga_ctrl u_vga_ctrl (pclk,reset,vga_data,h_addr,v_addr,hsync,vsync,valid,vga_r,vga_g,vga_b);

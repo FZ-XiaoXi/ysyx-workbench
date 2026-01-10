@@ -15,10 +15,24 @@ VL_ATTR_COLD void Vvga___024root___eval_static(Vvga___024root* vlSelf) {
         = vlSelfRef.vga__DOT__pclk;
 }
 
+VL_ATTR_COLD void Vvga___024root___eval_initial__TOP(Vvga___024root* vlSelf);
+
 VL_ATTR_COLD void Vvga___024root___eval_initial(Vvga___024root* vlSelf) {
     VL_DEBUG_IF(VL_DBG_MSGF("+    Vvga___024root___eval_initial\n"); );
     Vvga__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
     auto& vlSelfRef = std::ref(*vlSelf).get();
+    // Body
+    Vvga___024root___eval_initial__TOP(vlSelf);
+}
+
+VL_ATTR_COLD void Vvga___024root___eval_initial__TOP(Vvga___024root* vlSelf) {
+    VL_DEBUG_IF(VL_DBG_MSGF("+    Vvga___024root___eval_initial__TOP\n"); );
+    Vvga__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
+    auto& vlSelfRef = std::ref(*vlSelf).get();
+    // Body
+    vlSelfRef.vga_r = 0xf0U;
+    vlSelfRef.vga_g = 0x0fU;
+    vlSelfRef.vga_b = 0xffU;
 }
 
 VL_ATTR_COLD void Vvga___024root___eval_final(Vvga___024root* vlSelf) {
@@ -105,11 +119,6 @@ VL_ATTR_COLD void Vvga___024root___stl_sequent__TOP__0(Vvga___024root* vlSelf) {
     // Body
     vlSelfRef.vsync = (2U < (IData)(vlSelfRef.vga__DOT__u_vga_ctrl__DOT__y_cnt));
     vlSelfRef.hsync = (0x0060U < (IData)(vlSelfRef.vga__DOT__u_vga_ctrl__DOT__x_cnt));
-    vlSelfRef.vga_r = (0x000000ffU & (vlSelfRef.vga__DOT__vga_data 
-                                      >> 0x00000010U));
-    vlSelfRef.vga_g = (0x000000ffU & (vlSelfRef.vga__DOT__vga_data 
-                                      >> 8U));
-    vlSelfRef.vga_b = (0x000000ffU & vlSelfRef.vga__DOT__vga_data);
     vlSelfRef.vga__DOT__u_vga_ctrl__DOT__h_valid = 
         ((0x0090U < (IData)(vlSelfRef.vga__DOT__u_vga_ctrl__DOT__x_cnt)) 
          & (0x0310U >= (IData)(vlSelfRef.vga__DOT__u_vga_ctrl__DOT__x_cnt)));
@@ -193,7 +202,6 @@ VL_ATTR_COLD void Vvga___024root___ctor_var_reset(Vvga___024root* vlSelf) {
     vlSelf->vga_r = VL_SCOPED_RAND_RESET_I(8, __VscopeHash, 2055607138462276192ull);
     vlSelf->vga_g = VL_SCOPED_RAND_RESET_I(8, __VscopeHash, 5773750216550251743ull);
     vlSelf->vga_b = VL_SCOPED_RAND_RESET_I(8, __VscopeHash, 17771436561197612375ull);
-    vlSelf->vga__DOT__vga_data = VL_SCOPED_RAND_RESET_I(24, __VscopeHash, 18024704970730073684ull);
     vlSelf->vga__DOT__pclk = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 12093150891704825437ull);
     vlSelf->vga__DOT__my_vgaclk__DOT__clkcount = VL_SCOPED_RAND_RESET_I(32, __VscopeHash, 18053118581327613891ull);
     vlSelf->vga__DOT__u_vga_ctrl__DOT__x_cnt = VL_SCOPED_RAND_RESET_I(10, __VscopeHash, 17377035439822976665ull);
