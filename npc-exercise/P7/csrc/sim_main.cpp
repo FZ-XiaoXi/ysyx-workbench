@@ -20,7 +20,7 @@ void step_and_dump_wave(){
   top->eval();
   nvboard_update();
   contextp->timeInc(1);
-  tfp->dump(contextp->time());
+  //tfp->dump(contextp->time());
 }
 
 int main(int argc, char** argv) {
