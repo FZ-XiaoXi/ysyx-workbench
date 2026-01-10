@@ -178,6 +178,10 @@ void VPS2___024root___nba_sequent__TOP__0(VPS2___024root* vlSelf) {
         vlSelfRef.PS2__DOT__inst__DOT__fifo[__VdlyDim0__PS2__DOT__inst__DOT__fifo__v0] 
             = __VdlyVal__PS2__DOT__inst__DOT__fifo__v0;
     }
+    vlSelfRef.PS2__DOT__ifPressed = __Vdly__PS2__DOT__ifPressed;
+    vlSelfRef.PS2__DOT__ready = __Vdly__PS2__DOT__ready;
+    vlSelfRef.data = vlSelfRef.PS2__DOT__inst__DOT__fifo
+        [vlSelfRef.PS2__DOT__inst__DOT__r_ptr];
     __Vtableidx6 = (0x0000000fU & (IData)(vlSelfRef.PS2__DOT__count));
     vlSelfRef.PS2__DOT____Vcellout__segdec6____pinNumber2 
         = VPS2__ConstPool__TABLE_h0ee5ce4f_0[__Vtableidx6];
@@ -185,14 +189,6 @@ void VPS2___024root___nba_sequent__TOP__0(VPS2___024root* vlSelf) {
                                    >> 4U));
     vlSelfRef.PS2__DOT____Vcellout__segdec7____pinNumber2 
         = VPS2__ConstPool__TABLE_h0ee5ce4f_0[__Vtableidx7];
-    vlSelfRef.PS2__DOT__ifPressed = __Vdly__PS2__DOT__ifPressed;
-    vlSelfRef.PS2__DOT__ready = __Vdly__PS2__DOT__ready;
-    vlSelfRef.data = vlSelfRef.PS2__DOT__inst__DOT__fifo
-        [vlSelfRef.PS2__DOT__inst__DOT__r_ptr];
-    vlSelfRef.seg3L = (1U | ((IData)(vlSelfRef.PS2__DOT____Vcellout__segdec6____pinNumber2) 
-                             << 1U));
-    vlSelfRef.seg3H = (1U | ((IData)(vlSelfRef.PS2__DOT____Vcellout__segdec7____pinNumber2) 
-                             << 1U));
     vlSelfRef.PS2__DOT__status = ((IData)(vlSelfRef.CLRN) 
                                   && (IData)(vlSelfRef.PS2__DOT__nextstatus));
     __Vtableidx1 = (0x000000ffU & vlSelfRef.PS2__DOT__receiveData);
@@ -217,6 +213,10 @@ void VPS2___024root___nba_sequent__TOP__0(VPS2___024root* vlSelf) {
                     | (IData)(vlSelfRef.PS2__DOT__ifPressed));
     vlSelfRef.PS2__DOT____Vcellout__segdec3____pinNumber2 
         = VPS2__ConstPool__TABLE_hfa5a6cbf_0[__Vtableidx5];
+    vlSelfRef.seg3L = (1U | ((IData)(vlSelfRef.PS2__DOT____Vcellout__segdec6____pinNumber2) 
+                             << 1U));
+    vlSelfRef.seg3H = (1U | ((IData)(vlSelfRef.PS2__DOT____Vcellout__segdec7____pinNumber2) 
+                             << 1U));
     vlSelfRef.seg0L = (1U | ((IData)(vlSelfRef.PS2__DOT____Vcellout__segdec0____pinNumber2) 
                              << 1U));
     vlSelfRef.seg0H = (1U | ((IData)(vlSelfRef.PS2__DOT____Vcellout__segdec1____pinNumber2) 
