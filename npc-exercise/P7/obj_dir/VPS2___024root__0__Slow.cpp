@@ -189,7 +189,8 @@ VL_ATTR_COLD void VPS2___024root___stl_comb__TOP__0(VPS2___024root* vlSelf) {
     __Vtableidx6 = (0x0000000fU & (IData)(vlSelfRef.PS2__DOT__count));
     vlSelfRef.PS2__DOT____Vcellout__segdec6____pinNumber2 
         = VPS2__ConstPool__TABLE_h0ee5ce4f_0[__Vtableidx6];
-    __Vtableidx7 = (0x0000000fU & (IData)(vlSelfRef.PS2__DOT__count));
+    __Vtableidx7 = (0x0000000fU & ((IData)(vlSelfRef.PS2__DOT__count) 
+                                   >> 4U));
     vlSelfRef.PS2__DOT____Vcellout__segdec7____pinNumber2 
         = VPS2__ConstPool__TABLE_h0ee5ce4f_0[__Vtableidx7];
     vlSelfRef.seg3L = (1U | ((IData)(vlSelfRef.PS2__DOT____Vcellout__segdec6____pinNumber2) 
