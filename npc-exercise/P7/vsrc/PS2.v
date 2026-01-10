@@ -58,7 +58,7 @@ always @(posedge CLK)begin
 	if(CLRN==0)begin
 		receiveData[23:0]<=24'h000000;
 		nextdata_n<=1;
-		ifPressed<=0;
+		displayEnable<=0;
 		status<=0;
 		count<=0;
 	end else begin
