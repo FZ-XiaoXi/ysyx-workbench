@@ -11,8 +11,6 @@ module vga(
 wire [9:0] v_addr;
 wire [9:0] h_addr;
 reg [23:0] vga_data;
-wire pclk;
-image_rom_640x480 u_rom(pclk,reset,v_addr,h_addr,vga_data);
-clkgen #(25000000) my_vgaclk(clk,reset,1'b1,pclk);
-vga_ctrl u_vga_ctrl (pclk,reset,vga_data,h_addr,v_addr,hsync,vsync,valid,vga_r,vga_g,vga_b);
+image_rom_640x480 u_rom(clk,reset,v_addr,h_addr,vga_data);
+vga_ctrl u_vga_ctrl (clk,reset,vga_data,h_addr,v_addr,hsync,vsync,valid,vga_r,vga_g,vga_b);
 endmodule
