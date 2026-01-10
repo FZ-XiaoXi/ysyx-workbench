@@ -32,7 +32,6 @@ class alignas(VL_CACHE_LINE_BYTES) VPS2___024root final : public VerilatedModule
     CData/*0:0*/ PS2__DOT__nextdata_n;
     CData/*7:0*/ PS2__DOT__ascii_out;
     CData/*0:0*/ PS2__DOT__ifPressed;
-    CData/*7:0*/ PS2__DOT__ascii;
     CData/*7:0*/ PS2__DOT__count;
     CData/*0:0*/ PS2__DOT__status;
     CData/*0:0*/ PS2__DOT__nextstatus;

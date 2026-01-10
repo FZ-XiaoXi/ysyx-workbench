@@ -40,9 +40,9 @@ bool VPS2___024root___trigger_anySet__act(const VlUnpacked<QData/*63:0*/, 1> &in
 }
 
 extern const VlUnpacked<CData/*6:0*/, 16> VPS2__ConstPool__TABLE_h0ee5ce4f_0;
+extern const VlUnpacked<CData/*6:0*/, 32> VPS2__ConstPool__TABLE_hfa5a6cbf_0;
 extern const VlUnpacked<CData/*0:0*/, 256> VPS2__ConstPool__TABLE_hdaf6d84f_0;
 extern const VlUnpacked<CData/*7:0*/, 256> VPS2__ConstPool__TABLE_h433c6e94_0;
-extern const VlUnpacked<CData/*6:0*/, 32> VPS2__ConstPool__TABLE_hfa5a6cbf_0;
 
 void VPS2___024root___nba_sequent__TOP__0(VPS2___024root* vlSelf) {
     VL_DEBUG_IF(VL_DBG_MSGF("+    VPS2___024root___nba_sequent__TOP__0\n"); );
@@ -192,11 +192,6 @@ void VPS2___024root___nba_sequent__TOP__0(VPS2___024root* vlSelf) {
         = VPS2__ConstPool__TABLE_h0ee5ce4f_0[__Vtableidx7];
     vlSelfRef.PS2__DOT__status = ((IData)(vlSelfRef.CLRN) 
                                   && (IData)(vlSelfRef.PS2__DOT__nextstatus));
-    __Vtableidx1 = (0x000000ffU & vlSelfRef.PS2__DOT__receiveData);
-    vlSelfRef.PS2__DOT__u_keycode_to_ascii__DOT__valid 
-        = VPS2__ConstPool__TABLE_hdaf6d84f_0[__Vtableidx1];
-    vlSelfRef.PS2__DOT__ascii = VPS2__ConstPool__TABLE_h433c6e94_0
-        [__Vtableidx1];
     __Vtableidx2 = ((0x0000001eU & (vlSelfRef.PS2__DOT__receiveData 
                                     << 1U)) | (IData)(vlSelfRef.PS2__DOT__ifPressed));
     vlSelfRef.PS2__DOT____Vcellout__segdec0____pinNumber2 
@@ -205,15 +200,11 @@ void VPS2___024root___nba_sequent__TOP__0(VPS2___024root* vlSelf) {
                                     >> 3U)) | (IData)(vlSelfRef.PS2__DOT__ifPressed));
     vlSelfRef.PS2__DOT____Vcellout__segdec1____pinNumber2 
         = VPS2__ConstPool__TABLE_hfa5a6cbf_0[__Vtableidx3];
-    __Vtableidx4 = ((0x0000001eU & (vlSelfRef.PS2__DOT__receiveData 
-                                    >> 7U)) | (IData)(vlSelfRef.PS2__DOT__ifPressed));
-    vlSelfRef.PS2__DOT____Vcellout__segdec2____pinNumber2 
-        = VPS2__ConstPool__TABLE_hfa5a6cbf_0[__Vtableidx4];
-    __Vtableidx5 = ((0x0000001eU & (vlSelfRef.PS2__DOT__receiveData 
-                                    >> 0x0000000bU)) 
-                    | (IData)(vlSelfRef.PS2__DOT__ifPressed));
-    vlSelfRef.PS2__DOT____Vcellout__segdec3____pinNumber2 
-        = VPS2__ConstPool__TABLE_hfa5a6cbf_0[__Vtableidx5];
+    __Vtableidx1 = (0x000000ffU & vlSelfRef.PS2__DOT__receiveData);
+    vlSelfRef.PS2__DOT__u_keycode_to_ascii__DOT__valid 
+        = VPS2__ConstPool__TABLE_hdaf6d84f_0[__Vtableidx1];
+    vlSelfRef.PS2__DOT__ascii_out = VPS2__ConstPool__TABLE_h433c6e94_0
+        [__Vtableidx1];
     vlSelfRef.seg3L = (1U | ((IData)(vlSelfRef.PS2__DOT____Vcellout__segdec6____pinNumber2) 
                              << 1U));
     vlSelfRef.seg3H = (1U | ((IData)(vlSelfRef.PS2__DOT____Vcellout__segdec7____pinNumber2) 
@@ -222,13 +213,21 @@ void VPS2___024root___nba_sequent__TOP__0(VPS2___024root* vlSelf) {
                              << 1U));
     vlSelfRef.seg0H = (1U | ((IData)(vlSelfRef.PS2__DOT____Vcellout__segdec1____pinNumber2) 
                              << 1U));
+    __Vtableidx4 = ((0x0000001eU & ((IData)(vlSelfRef.PS2__DOT__ascii_out) 
+                                    << 1U)) | (IData)(vlSelfRef.PS2__DOT__ifPressed));
+    vlSelfRef.PS2__DOT____Vcellout__segdec2____pinNumber2 
+        = VPS2__ConstPool__TABLE_hfa5a6cbf_0[__Vtableidx4];
+    __Vtableidx5 = ((0x0000001eU & ((IData)(vlSelfRef.PS2__DOT__ascii_out) 
+                                    << 1U)) | (IData)(vlSelfRef.PS2__DOT__ifPressed));
+    vlSelfRef.PS2__DOT____Vcellout__segdec3____pinNumber2 
+        = VPS2__ConstPool__TABLE_hfa5a6cbf_0[__Vtableidx5];
+    vlSelfRef.PS2__DOT__nextstatus = ((~ (IData)(vlSelfRef.PS2__DOT__status)) 
+                                      & (0xf0U == (0x000000ffU 
+                                                   & vlSelfRef.PS2__DOT__receiveData)));
     vlSelfRef.seg1L = (1U | ((IData)(vlSelfRef.PS2__DOT____Vcellout__segdec2____pinNumber2) 
                              << 1U));
     vlSelfRef.seg1H = (1U | ((IData)(vlSelfRef.PS2__DOT____Vcellout__segdec3____pinNumber2) 
                              << 1U));
-    vlSelfRef.PS2__DOT__nextstatus = ((~ (IData)(vlSelfRef.PS2__DOT__status)) 
-                                      & (0xf0U == (0x000000ffU 
-                                                   & vlSelfRef.PS2__DOT__receiveData)));
 }
 
 void VPS2___024root___eval_nba(VPS2___024root* vlSelf) {

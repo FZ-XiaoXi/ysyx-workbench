@@ -26,8 +26,8 @@ void VPS2___024root__trace_chg_0_sub_0(VPS2___024root* vlSelf, VerilatedVcd::Buf
         bufp->chgBit(oldp+1,(vlSelfRef.PS2__DOT__overflow));
         bufp->chgBit(oldp+2,(vlSelfRef.PS2__DOT__nextdata_n));
         bufp->chgIData(oldp+3,(vlSelfRef.PS2__DOT__receiveData),24);
-        bufp->chgBit(oldp+4,(vlSelfRef.PS2__DOT__ifPressed));
-        bufp->chgCData(oldp+5,(vlSelfRef.PS2__DOT__ascii),8);
+        bufp->chgCData(oldp+4,(vlSelfRef.PS2__DOT__ascii_out),8);
+        bufp->chgBit(oldp+5,(vlSelfRef.PS2__DOT__ifPressed));
         bufp->chgCData(oldp+6,(vlSelfRef.PS2__DOT__count),8);
         bufp->chgBit(oldp+7,(vlSelfRef.PS2__DOT__status));
         bufp->chgBit(oldp+8,(vlSelfRef.PS2__DOT__nextstatus));
@@ -50,37 +50,34 @@ void VPS2___024root__trace_chg_0_sub_0(VPS2___024root* vlSelf, VerilatedVcd::Buf
         bufp->chgCData(oldp+25,((0x0000000fU & (vlSelfRef.PS2__DOT__receiveData 
                                                 >> 4U))),4);
         bufp->chgCData(oldp+26,(vlSelfRef.PS2__DOT____Vcellout__segdec1____pinNumber2),7);
-        bufp->chgCData(oldp+27,((0x0000000fU & (vlSelfRef.PS2__DOT__receiveData 
-                                                >> 8U))),4);
+        bufp->chgCData(oldp+27,((0x0000000fU & (IData)(vlSelfRef.PS2__DOT__ascii_out))),4);
         bufp->chgCData(oldp+28,(vlSelfRef.PS2__DOT____Vcellout__segdec2____pinNumber2),7);
-        bufp->chgCData(oldp+29,((0x0000000fU & (vlSelfRef.PS2__DOT__receiveData 
-                                                >> 0x0000000cU))),4);
-        bufp->chgCData(oldp+30,(vlSelfRef.PS2__DOT____Vcellout__segdec3____pinNumber2),7);
-        bufp->chgCData(oldp+31,((0x0000000fU & (vlSelfRef.PS2__DOT__receiveData 
+        bufp->chgCData(oldp+29,(vlSelfRef.PS2__DOT____Vcellout__segdec3____pinNumber2),7);
+        bufp->chgCData(oldp+30,((0x0000000fU & (vlSelfRef.PS2__DOT__receiveData 
                                                 >> 0x00000010U))),4);
-        bufp->chgCData(oldp+32,((0x0000000fU & (vlSelfRef.PS2__DOT__receiveData 
+        bufp->chgCData(oldp+31,((0x0000000fU & (vlSelfRef.PS2__DOT__receiveData 
                                                 >> 0x00000014U))),4);
-        bufp->chgCData(oldp+33,((0x0000000fU & (IData)(vlSelfRef.PS2__DOT__count))),4);
-        bufp->chgCData(oldp+34,(vlSelfRef.PS2__DOT____Vcellout__segdec6____pinNumber2),7);
-        bufp->chgCData(oldp+35,((0x0000000fU & ((IData)(vlSelfRef.PS2__DOT__count) 
+        bufp->chgCData(oldp+32,((0x0000000fU & (IData)(vlSelfRef.PS2__DOT__count))),4);
+        bufp->chgCData(oldp+33,(vlSelfRef.PS2__DOT____Vcellout__segdec6____pinNumber2),7);
+        bufp->chgCData(oldp+34,((0x0000000fU & ((IData)(vlSelfRef.PS2__DOT__count) 
                                                 >> 4U))),4);
-        bufp->chgCData(oldp+36,(vlSelfRef.PS2__DOT____Vcellout__segdec7____pinNumber2),7);
-        bufp->chgCData(oldp+37,((0x000000ffU & vlSelfRef.PS2__DOT__receiveData)),8);
-        bufp->chgBit(oldp+38,(vlSelfRef.PS2__DOT__u_keycode_to_ascii__DOT__valid));
+        bufp->chgCData(oldp+35,(vlSelfRef.PS2__DOT____Vcellout__segdec7____pinNumber2),7);
+        bufp->chgCData(oldp+36,((0x000000ffU & vlSelfRef.PS2__DOT__receiveData)),8);
+        bufp->chgBit(oldp+37,(vlSelfRef.PS2__DOT__u_keycode_to_ascii__DOT__valid));
     }
-    bufp->chgBit(oldp+39,(vlSelfRef.CLK));
-    bufp->chgBit(oldp+40,(vlSelfRef.CLRN));
-    bufp->chgCData(oldp+41,(vlSelfRef.seg0L),8);
-    bufp->chgCData(oldp+42,(vlSelfRef.seg0H),8);
-    bufp->chgCData(oldp+43,(vlSelfRef.seg1L),8);
-    bufp->chgCData(oldp+44,(vlSelfRef.seg1H),8);
-    bufp->chgCData(oldp+45,(vlSelfRef.seg2L),8);
-    bufp->chgCData(oldp+46,(vlSelfRef.seg2H),8);
-    bufp->chgCData(oldp+47,(vlSelfRef.seg3L),8);
-    bufp->chgCData(oldp+48,(vlSelfRef.seg3H),8);
-    bufp->chgCData(oldp+49,(vlSelfRef.data),8);
-    bufp->chgBit(oldp+50,(vlSelfRef.PS2_CLK));
-    bufp->chgBit(oldp+51,(vlSelfRef.PS2_DAT));
+    bufp->chgBit(oldp+38,(vlSelfRef.CLK));
+    bufp->chgBit(oldp+39,(vlSelfRef.CLRN));
+    bufp->chgCData(oldp+40,(vlSelfRef.seg0L),8);
+    bufp->chgCData(oldp+41,(vlSelfRef.seg0H),8);
+    bufp->chgCData(oldp+42,(vlSelfRef.seg1L),8);
+    bufp->chgCData(oldp+43,(vlSelfRef.seg1H),8);
+    bufp->chgCData(oldp+44,(vlSelfRef.seg2L),8);
+    bufp->chgCData(oldp+45,(vlSelfRef.seg2H),8);
+    bufp->chgCData(oldp+46,(vlSelfRef.seg3L),8);
+    bufp->chgCData(oldp+47,(vlSelfRef.seg3H),8);
+    bufp->chgCData(oldp+48,(vlSelfRef.data),8);
+    bufp->chgBit(oldp+49,(vlSelfRef.PS2_CLK));
+    bufp->chgBit(oldp+50,(vlSelfRef.PS2_DAT));
 }
 
 void VPS2___024root__trace_cleanup(void* voidSelf, VerilatedVcd* /*unused*/) {
