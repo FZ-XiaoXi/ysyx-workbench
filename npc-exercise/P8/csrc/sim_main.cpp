@@ -1,52 +1,29 @@
-#include "Vvga.h"
-#include <unistd.h>
-#include <stdlib.h>
-#include "verilated_vcd_c.h"
-#include <stdio.h>
-#include <assert.h>
-#include "verilated.h"
 #include <nvboard.h>
-Vvga* top;
-int timecount=0;
-void nvboard_bind_all_pins(Vvga* top);
-VerilatedVcdC* tfp = new VerilatedVcdC;
-VerilatedContext* contextp = new VerilatedContext;
-void step_and_dump_wave(){
-  timecount++;
-  if(timecount>999){
-	top->clk=!top->clk;
-	timecount=0;
-  }
-  top->eval();
-  nvboard_update();
-  contextp->timeInc(1);
-  //tfp->dump(contextp->time());
+#include <Vvga.h>
+
+static TOP_NAME dut;
+
+void nvboard_bind_all_pins(TOP_NAME* top);
+
+static void single_cycle() {
+  dut.clk = 0; dut.eval();
+  dut.clk = 1; dut.eval();
 }
 
-int main(int argc, char** argv) {
-    contextp->commandArgs(argc, argv);
-	Verilated::traceEverOn(true);
-    top = new Vvga{contextp};
-	top->trace(tfp,99);
-	tfp->open("wave.vcd");
-	nvboard_bind_all_pins(top);
-	nvboard_init();
-	
+static void reset(int n) {
+  dut.rst = 1;
+  while (n -- > 0) single_cycle();
+  dut.rst = 0;
+}
 
-/*
-	
-*/	
-	//while (1) {
-	while (!contextp->gotFinish()) {
-		//top->a=a;
-		//top->b=b;
-		step_and_dump_wave();
-		//printf("R0=%x R1=%x R2=%x R3=%x RA=%x RB=%x\n",top->tempR0,top->tempR1,top->tempR2,top->tempR3,top->regA,top->regB);
-		//assert(top->f == (a^b));
-	}
-	tfp->close();
-	nvboard_quit();
-    delete top;
-    delete contextp;
-    return 0;
+int main() {
+  nvboard_bind_all_pins(&dut);
+  nvboard_init();
+
+  reset(10);
+
+  while(1) {
+    nvboard_update();
+    single_cycle();
+  }
 }
