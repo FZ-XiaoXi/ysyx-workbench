@@ -18,17 +18,17 @@ wire ready,overflow,nextdata_n;
 reg [23:0]receiveData;
 
 assign seg0L[0]=1;
-assign seg0R[0]=1;
+assign seg0H[0]=1;
 assign seg1L[0]=1;
-assign seg1R[0]=1;
+assign seg1H[0]=1;
 assign seg2L[0]=1;
-assign seg2R[0]=1;
+assign seg2H[0]=1;
 SevenSegDecoder segdec0(receiveData[03:00],seg0L[7:1]);
-SevenSegDecoder segdec1(receiveData[07:04],seg0R[7:1]);
+SevenSegDecoder segdec1(receiveData[07:04],seg0H[7:1]);
 SevenSegDecoder segdec2(receiveData[11:08],seg1L[7:1]);
-SevenSegDecoder segdec3(receiveData[15:12],seg1R[7:1]);
+SevenSegDecoder segdec3(receiveData[15:12],seg1H[7:1]);
 SevenSegDecoder segdec4(receiveData[19:16],seg2L[7:1]);
-SevenSegDecoder segdec5(receiveData[23:20],seg2R[7:1]);
+SevenSegDecoder segdec5(receiveData[23:20],seg2H[7:1]);
 
 
 ps2_keyboard inst(
