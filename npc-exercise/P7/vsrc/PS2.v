@@ -56,7 +56,6 @@ ps2_keyboard inst(
 
 always @(posedge CLK)begin
 	if(CLRN==0)begin
-		receiveData[23:0]<=24'h000000;
 		nextdata_n<=1;
 		status<=0;
 	end else begin
