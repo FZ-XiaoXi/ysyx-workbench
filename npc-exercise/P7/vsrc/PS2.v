@@ -13,7 +13,7 @@ module PS2(
 	input PS2_CLK,
 	input PS2_DAT
 );
-wire ready,overflow
+wire ready,overflow;
 reg nextdata_n;
 reg [23:0]receiveData;
 
