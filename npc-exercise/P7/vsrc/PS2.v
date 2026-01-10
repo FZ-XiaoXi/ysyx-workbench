@@ -19,11 +19,12 @@ reg [23:0]receiveData;
 wire [7:0] ascii_out;
 reg displayEnable;
 reg ifPressed;
+reg [7:0]ascii;
 reg [7:0]count;
 reg status,nextstatus;
 keycode_to_ascii u_keycode_to_ascii (
     .scancode(receiveData[7:0]),
-    .ascii(receiveData[15:8]),
+    .ascii(ascii),
     .valid()
 );
 assign seg0L[0]=1;
@@ -63,8 +64,9 @@ always @(posedge CLK)begin
 	end else begin
 		if(status==1)begin
 			ifPressed<=0;
-		end else if(status==0&&ready==1)begin
+		end else if(status==0&&ready==1&&ifPressed==0)begin
 			ifPressed<=1;
+			count=count+1;
 		end
 		status<=nextstatus;
 		if(nextdata_n==0)begin
