@@ -18,6 +18,7 @@ reg nextdata_n;
 reg [23:0]receiveData;
 wire [7:0] ascii_out;
 reg ifPressed;
+reg [7:0]count;
 reg status,nextstatus;
 keycode_to_ascii u_keycode_to_ascii (
     .scancode(receiveData[7:0]),
@@ -59,6 +60,7 @@ always @(posedge CLK)begin
 		nextdata_n<=1;
 		ifPressed<=0;
 		status<=0;
+		count<=0;
 	end else begin
 		status<=nextstatus;
 		if(nextdata_n==0)begin
@@ -87,6 +89,7 @@ always @(*)begin
 		displayEnable=0;
 	else if(status==0 && ready==1)
 		displayEnable=1;
+		count=count+1;
 end
 
 endmodule
