@@ -189,9 +189,7 @@ VL_ATTR_COLD void VPS2___024root__trace_full_0_sub_0(VPS2___024root* vlSelf, Ver
     bufp->fullCData(oldp+6,(vlSelfRef.PS2__DOT__ascii),8);
     bufp->fullCData(oldp+7,(vlSelfRef.PS2__DOT__count),8);
     bufp->fullBit(oldp+8,(vlSelfRef.PS2__DOT__status));
-    bufp->fullBit(oldp+9,(((~ (IData)(vlSelfRef.PS2__DOT__status)) 
-                           & (0xf0U == (0x000000ffU 
-                                        & vlSelfRef.PS2__DOT__receiveData)))));
+    bufp->fullBit(oldp+9,(vlSelfRef.PS2__DOT__nextstatus));
     bufp->fullSData(oldp+10,(vlSelfRef.PS2__DOT__inst__DOT__buffer),10);
     bufp->fullCData(oldp+11,(vlSelfRef.PS2__DOT__inst__DOT__fifo[0]),8);
     bufp->fullCData(oldp+12,(vlSelfRef.PS2__DOT__inst__DOT__fifo[1]),8);

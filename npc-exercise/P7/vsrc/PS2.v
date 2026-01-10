@@ -19,12 +19,12 @@ reg [23:0]receiveData;
 wire [7:0] ascii_out;
 reg displayEnable;
 reg ifPressed;
-reg [7:0]ascii;
+//reg [7:0]ascii;
 reg [7:0]count;
 reg status,nextstatus;
 keycode_to_ascii u_keycode_to_ascii (
     .scancode(receiveData[7:0]),
-    .ascii(ascii),
+    .ascii(ascii_out),
     .valid()
 );
 assign seg0L[0]=1;
@@ -37,8 +37,8 @@ assign seg3L[0]=1;
 assign seg3H[0]=1;
 SevenSegDecoder segdec0(receiveData[03:00],seg0L[7:1],displayEnable);
 SevenSegDecoder segdec1(receiveData[07:04],seg0H[7:1],displayEnable);
-SevenSegDecoder segdec2(receiveData[11:08],seg1L[7:1],displayEnable);
-SevenSegDecoder segdec3(receiveData[15:12],seg1H[7:1],displayEnable);
+SevenSegDecoder segdec2(ascii_out,seg1L[7:1],displayEnable);
+SevenSegDecoder segdec3(ascii_out,seg1H[7:1],displayEnable);
 SevenSegDecoder segdec4(receiveData[19:16],seg2L[7:1],0);
 SevenSegDecoder segdec5(receiveData[23:20],seg2H[7:1],0);
 SevenSegDecoder segdec6(count[3:0],seg3L[7:1],1);

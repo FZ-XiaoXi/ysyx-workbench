@@ -142,9 +142,10 @@ void VPS2___024root___nba_sequent__TOP__0(VPS2___024root* vlSelf) {
         }
         if (vlSelfRef.PS2__DOT__status) {
             __Vdly__PS2__DOT__ifPressed = 0U;
-        } else if ((((~ (IData)(vlSelfRef.PS2__DOT__status)) 
-                     & (IData)(vlSelfRef.PS2__DOT__ready)) 
-                    & (~ (IData)(vlSelfRef.PS2__DOT__ifPressed)))) {
+        } else if (((((~ (IData)(vlSelfRef.PS2__DOT__status)) 
+                      & (IData)(vlSelfRef.PS2__DOT__ready)) 
+                     & (~ (IData)(vlSelfRef.PS2__DOT__ifPressed))) 
+                    & (~ (IData)(vlSelfRef.PS2__DOT__nextstatus)))) {
             vlSelfRef.PS2__DOT__count = (0x000000ffU 
                                          & ((IData)(1U) 
                                             + (IData)(vlSelfRef.PS2__DOT__count)));
