@@ -1,38 +1,36 @@
 module image_rom_640x480 (
     input wire clk,
-    input wire rst,
-    input wire [18:0] addr,
-    output reg [23:0] rgb_data,
-    output wire [7:0] r,
-    output wire [7:0] g,
-    output wire [7:0] b
+    input wire reset,
+    input wire [9:0] v_addr,
+    input wire [9:0] h_addr,
+    output reg [23:0] vga_data
 );
-
 
 localparam WIDTH = 640;
 localparam HEIGHT = 480;
 localparam TOTAL_PIXELS = WIDTH * HEIGHT;
-localparam ADDR_WIDTH = 19;
-localparam DATA_WIDTH = 24;
 
-reg [DATA_WIDTH-1:0] rom [0:TOTAL_PIXELS-1];
+reg [23:0] rom [0:TOTAL_PIXELS-1];
 
-assign r = rgb_data[23:16];
-assign g = rgb_data[15:8];
-assign b = rgb_data[7:0];
+wire [18:0] linear_addr; 
+reg [18:0] addr_reg;
 
-always @(posedge clk or posedge rst) begin
-    if (rst) begin
-        rgb_data <= 24'h000000; 
+assign linear_addr = v_addr * 10'd640 + h_addr;
+
+always @(posedge clk or posedge reset) begin
+    if (reset) begin
+        vga_data <= 24'h000000;
+        addr_reg <= 19'd0;
     end else begin
-        if (addr < TOTAL_PIXELS) begin
-            rgb_data <= rom[addr];
+        addr_reg <= linear_addr;
+        
+        if (v_addr < HEIGHT && h_addr < WIDTH) begin
+            vga_data <= rom[addr_reg];
         end else begin
-            rgb_data <= 24'h000000;
+            vga_data <= 24'h000000;
         end
     end
 end
-
 
 initial begin
     $readmemh("image_data.mif", rom);
