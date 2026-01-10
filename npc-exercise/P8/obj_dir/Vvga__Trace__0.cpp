@@ -40,12 +40,10 @@ void Vvga___024root__trace_chg_0_sub_0(Vvga___024root* vlSelf, VerilatedVcd::Buf
     bufp->chgCData(oldp+12,(vlSelfRef.vga_g),8);
     bufp->chgCData(oldp+13,(vlSelfRef.vga_b),8);
     bufp->chgIData(oldp+14,(vlSelfRef.vga__DOT__vga_data),24);
-    bufp->chgBit(oldp+15,(vlSelfRef.vga__DOT__pclk));
-    bufp->chgIData(oldp+16,(vlSelfRef.vga__DOT__my_vgaclk__DOT__clkcount),32);
-    bufp->chgIData(oldp+17,((0x0007ffffU & (((IData)(0x00000280U) 
+    bufp->chgIData(oldp+15,((0x0007ffffU & (((IData)(0x00000280U) 
                                              * (IData)(vlSelfRef.vga__DOT__u_rom__DOT__v_addr)) 
                                             + (IData)(vlSelfRef.vga__DOT__u_rom__DOT__h_addr)))),19);
-    bufp->chgIData(oldp+18,(vlSelfRef.vga__DOT__u_rom__DOT__addr_reg),19);
+    bufp->chgIData(oldp+16,(vlSelfRef.vga__DOT__u_rom__DOT__addr_reg),19);
 }
 
 void Vvga___024root__trace_cleanup(void* voidSelf, VerilatedVcd* /*unused*/) {

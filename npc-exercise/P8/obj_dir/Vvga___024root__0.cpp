@@ -14,18 +14,13 @@ void Vvga___024root___eval_triggers__act(Vvga___024root* vlSelf) {
     auto& vlSelfRef = std::ref(*vlSelf).get();
     // Body
     vlSelfRef.__VactTriggered[0U] = (QData)((IData)(
-                                                    ((((IData)(vlSelfRef.vga__DOT__pclk) 
-                                                       & (~ (IData)(vlSelfRef.__Vtrigprevexpr___TOP__vga__DOT__pclk__0))) 
-                                                      << 2U) 
-                                                     | ((((IData)(vlSelfRef.reset) 
-                                                          & (~ (IData)(vlSelfRef.__Vtrigprevexpr___TOP__reset__0))) 
-                                                         << 1U) 
-                                                        | ((IData)(vlSelfRef.clk) 
-                                                           & (~ (IData)(vlSelfRef.__Vtrigprevexpr___TOP__clk__0)))))));
+                                                    ((((IData)(vlSelfRef.reset) 
+                                                       & (~ (IData)(vlSelfRef.__Vtrigprevexpr___TOP__reset__0))) 
+                                                      << 1U) 
+                                                     | ((IData)(vlSelfRef.clk) 
+                                                        & (~ (IData)(vlSelfRef.__Vtrigprevexpr___TOP__clk__0))))));
     vlSelfRef.__Vtrigprevexpr___TOP__clk__0 = vlSelfRef.clk;
     vlSelfRef.__Vtrigprevexpr___TOP__reset__0 = vlSelfRef.reset;
-    vlSelfRef.__Vtrigprevexpr___TOP__vga__DOT__pclk__0 
-        = vlSelfRef.vga__DOT__pclk;
 #ifdef VL_DEBUG
     if (VL_UNLIKELY(vlSymsp->_vm_contextp__->debug())) {
         Vvga___024root___dump_triggers__act(vlSelfRef.__VactTriggered, "act"s);
@@ -46,34 +41,6 @@ bool Vvga___024root___trigger_anySet__act(const VlUnpacked<QData/*63:0*/, 1> &in
         n = ((IData)(1U) + n);
     } while ((1U > n));
     return (0U);
-}
-
-void Vvga___024root___act_sequent__TOP__0(Vvga___024root* vlSelf) {
-    VL_DEBUG_IF(VL_DBG_MSGF("+    Vvga___024root___act_sequent__TOP__0\n"); );
-    Vvga__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
-    auto& vlSelfRef = std::ref(*vlSelf).get();
-    // Body
-    if (vlSelfRef.reset) {
-        vlSelfRef.vga__DOT__my_vgaclk__DOT__clkcount = 0U;
-        vlSelfRef.vga__DOT__pclk = 0U;
-    } else {
-        vlSelfRef.vga__DOT__my_vgaclk__DOT__clkcount 
-            = ((IData)(1U) + vlSelfRef.vga__DOT__my_vgaclk__DOT__clkcount);
-        if ((1U <= vlSelfRef.vga__DOT__my_vgaclk__DOT__clkcount)) {
-            vlSelfRef.vga__DOT__pclk = (1U & (~ (IData)(vlSelfRef.vga__DOT__pclk)));
-            vlSelfRef.vga__DOT__my_vgaclk__DOT__clkcount = 0U;
-        }
-    }
-}
-
-void Vvga___024root___eval_act(Vvga___024root* vlSelf) {
-    VL_DEBUG_IF(VL_DBG_MSGF("+    Vvga___024root___eval_act\n"); );
-    Vvga__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
-    auto& vlSelfRef = std::ref(*vlSelf).get();
-    // Body
-    if ((1ULL & vlSelfRef.__VactTriggered[0U])) {
-        Vvga___024root___act_sequent__TOP__0(vlSelf);
-    }
 }
 
 void Vvga___024root___nba_sequent__TOP__0(Vvga___024root* vlSelf) {
@@ -172,18 +139,18 @@ void Vvga___024root___eval_nba(Vvga___024root* vlSelf) {
     Vvga__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
     auto& vlSelfRef = std::ref(*vlSelf).get();
     // Body
-    if ((6ULL & vlSelfRef.__VnbaTriggered[0U])) {
+    if ((3ULL & vlSelfRef.__VnbaTriggered[0U])) {
         Vvga___024root___nba_sequent__TOP__0(vlSelf);
     }
-    if ((4ULL & vlSelfRef.__VnbaTriggered[0U])) {
+    if ((1ULL & vlSelfRef.__VnbaTriggered[0U])) {
         Vvga___024root___nba_sequent__TOP__1(vlSelf);
         vlSelfRef.__Vm_traceActivity[1U] = 1U;
     }
-    if ((6ULL & vlSelfRef.__VnbaTriggered[0U])) {
+    if ((3ULL & vlSelfRef.__VnbaTriggered[0U])) {
         Vvga___024root___nba_sequent__TOP__2(vlSelf);
         vlSelfRef.__Vm_traceActivity[2U] = 1U;
     }
-    if ((6ULL & vlSelfRef.__VnbaTriggered[0U])) {
+    if ((3ULL & vlSelfRef.__VnbaTriggered[0U])) {
         Vvga___024root___nba_comb__TOP__0(vlSelf);
     }
 }
@@ -204,16 +171,10 @@ bool Vvga___024root___eval_phase__act(Vvga___024root* vlSelf) {
     VL_DEBUG_IF(VL_DBG_MSGF("+    Vvga___024root___eval_phase__act\n"); );
     Vvga__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
     auto& vlSelfRef = std::ref(*vlSelf).get();
-    // Locals
-    CData/*0:0*/ __VactExecute;
     // Body
     Vvga___024root___eval_triggers__act(vlSelf);
     Vvga___024root___trigger_orInto__act(vlSelfRef.__VnbaTriggered, vlSelfRef.__VactTriggered);
-    __VactExecute = Vvga___024root___trigger_anySet__act(vlSelfRef.__VactTriggered);
-    if (__VactExecute) {
-        Vvga___024root___eval_act(vlSelf);
-    }
-    return (__VactExecute);
+    return (0U);
 }
 
 void Vvga___024root___trigger_clear__act(VlUnpacked<QData/*63:0*/, 1> &out) {

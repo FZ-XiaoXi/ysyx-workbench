@@ -22,13 +22,11 @@ class alignas(VL_CACHE_LINE_BYTES) Vvga___024root final : public VerilatedModule
     VL_OUT8(vga_r,7,0);
     VL_OUT8(vga_g,7,0);
     VL_OUT8(vga_b,7,0);
-    CData/*0:0*/ vga__DOT__pclk;
     CData/*0:0*/ vga__DOT__u_vga_ctrl__DOT__h_valid;
     CData/*0:0*/ vga__DOT__u_vga_ctrl__DOT__v_valid;
     CData/*0:0*/ __VstlFirstIteration;
     CData/*0:0*/ __Vtrigprevexpr___TOP__clk__0;
     CData/*0:0*/ __Vtrigprevexpr___TOP__reset__0;
-    CData/*0:0*/ __Vtrigprevexpr___TOP__vga__DOT__pclk__0;
     SData/*9:0*/ vga__DOT__u_rom__DOT__v_addr;
     SData/*9:0*/ vga__DOT__u_rom__DOT__h_addr;
     SData/*9:0*/ vga__DOT__u_vga_ctrl__DOT__x_cnt;
@@ -36,7 +34,6 @@ class alignas(VL_CACHE_LINE_BYTES) Vvga___024root final : public VerilatedModule
     SData/*9:0*/ __Vdly__vga__DOT__u_vga_ctrl__DOT__x_cnt;
     IData/*23:0*/ vga__DOT__vga_data;
     IData/*18:0*/ vga__DOT__u_rom__DOT__addr_reg;
-    IData/*31:0*/ vga__DOT__my_vgaclk__DOT__clkcount;
     IData/*31:0*/ __VactIterCount;
     VlUnpacked<IData/*23:0*/, 307200> vga__DOT__u_rom__DOT__rom;
     VlUnpacked<QData/*63:0*/, 1> __VstlTriggered;

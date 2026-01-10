@@ -18,7 +18,7 @@ Vvga__Syms::Vvga__Syms(VerilatedContext* contextp, const char* namep, Vvga* mode
     , TOP{this, namep}
 {
     // Check resources
-    Verilated::stackCheck(218);
+    Verilated::stackCheck(192);
     // Configure time unit / time precision
     _vm_contextp__->timeunit(-12);
     _vm_contextp__->timeprecision(-12);

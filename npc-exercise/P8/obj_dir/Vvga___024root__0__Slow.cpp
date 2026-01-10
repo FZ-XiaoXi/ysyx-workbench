@@ -11,8 +11,6 @@ VL_ATTR_COLD void Vvga___024root___eval_static(Vvga___024root* vlSelf) {
     // Body
     vlSelfRef.__Vtrigprevexpr___TOP__clk__0 = vlSelfRef.clk;
     vlSelfRef.__Vtrigprevexpr___TOP__reset__0 = vlSelfRef.reset;
-    vlSelfRef.__Vtrigprevexpr___TOP__vga__DOT__pclk__0 
-        = vlSelfRef.vga__DOT__pclk;
 }
 
 VL_ATTR_COLD void Vvga___024root___eval_initial__TOP(Vvga___024root* vlSelf);
@@ -189,9 +187,6 @@ VL_ATTR_COLD void Vvga___024root___dump_triggers__act(const VlUnpacked<QData/*63
     if ((1U & (IData)((triggers[0U] >> 1U)))) {
         VL_DBG_MSGS("         '" + tag + "' region trigger index 1 is active: @(posedge reset)\n");
     }
-    if ((1U & (IData)((triggers[0U] >> 2U)))) {
-        VL_DBG_MSGS("         '" + tag + "' region trigger index 2 is active: @(posedge vga.pclk)\n");
-    }
 }
 #endif  // VL_DEBUG
 
@@ -220,14 +215,12 @@ VL_ATTR_COLD void Vvga___024root___ctor_var_reset(Vvga___024root* vlSelf) {
     vlSelf->vga_g = VL_SCOPED_RAND_RESET_I(8, __VscopeHash, 5773750216550251743ull);
     vlSelf->vga_b = VL_SCOPED_RAND_RESET_I(8, __VscopeHash, 17771436561197612375ull);
     vlSelf->vga__DOT__vga_data = VL_SCOPED_RAND_RESET_I(24, __VscopeHash, 18024704970730073684ull);
-    vlSelf->vga__DOT__pclk = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 12093150891704825437ull);
     vlSelf->vga__DOT__u_rom__DOT__v_addr = VL_SCOPED_RAND_RESET_I(10, __VscopeHash, 13118048935629117416ull);
     vlSelf->vga__DOT__u_rom__DOT__h_addr = VL_SCOPED_RAND_RESET_I(10, __VscopeHash, 846058289357962931ull);
     for (int __Vi0 = 0; __Vi0 < 307200; ++__Vi0) {
         vlSelf->vga__DOT__u_rom__DOT__rom[__Vi0] = VL_SCOPED_RAND_RESET_I(24, __VscopeHash, 13161800137001564796ull);
     }
     vlSelf->vga__DOT__u_rom__DOT__addr_reg = VL_SCOPED_RAND_RESET_I(19, __VscopeHash, 4753636336874347453ull);
-    vlSelf->vga__DOT__my_vgaclk__DOT__clkcount = VL_SCOPED_RAND_RESET_I(32, __VscopeHash, 18053118581327613891ull);
     vlSelf->vga__DOT__u_vga_ctrl__DOT__x_cnt = VL_SCOPED_RAND_RESET_I(10, __VscopeHash, 17377035439822976665ull);
     vlSelf->vga__DOT__u_vga_ctrl__DOT__y_cnt = VL_SCOPED_RAND_RESET_I(10, __VscopeHash, 15644639189649670144ull);
     vlSelf->vga__DOT__u_vga_ctrl__DOT__h_valid = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 9788500083632136934ull);
@@ -241,7 +234,6 @@ VL_ATTR_COLD void Vvga___024root___ctor_var_reset(Vvga___024root* vlSelf) {
     }
     vlSelf->__Vtrigprevexpr___TOP__clk__0 = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 9526919608049418986ull);
     vlSelf->__Vtrigprevexpr___TOP__reset__0 = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 1487628987237401141ull);
-    vlSelf->__Vtrigprevexpr___TOP__vga__DOT__pclk__0 = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 5476719959675298406ull);
     for (int __Vi0 = 0; __Vi0 < 1; ++__Vi0) {
         vlSelf->__VnbaTriggered[__Vi0] = 0;
     }
