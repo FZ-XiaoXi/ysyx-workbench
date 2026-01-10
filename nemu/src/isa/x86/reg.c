@@ -26,7 +26,7 @@ void reg_test() {
   cpu.pc = pc_sample;
 
   int i;
-  for (i = R_EAX; i <= R_ESP; i ++) {
+  for (i = R_EAX; i <= R_EDI; i ++) {
     sample[i] = rand();
     reg_l(i) = sample[i];
     assert(reg_w(i) == (sample[i] & 0xffff));

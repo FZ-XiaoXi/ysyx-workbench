@@ -43,14 +43,13 @@ typedef struct {
       struct
       {
         uint32_t eax;
-        uint32_t edx;
         uint32_t ecx;
+        uint32_t edx;
         uint32_t ebx;
+        uint32_t esp;
         uint32_t ebp;
         uint32_t esi;
         uint32_t edi;
-        uint32_t esp;
-        
       };
     };
   };
@@ -63,9 +62,9 @@ typedef struct {
   uint8_t *p_inst;
 } x86_ISADecodeInfo;
 
-enum { R_EAX, R_EDX, R_ECX, R_EBX, R_EBP, R_ESI, R_EDI, R_ESP };
-enum { R_AX, R_DX, R_CX, R_BX, R_BP, R_SI, R_DI, R_SP };
-enum { R_AL, R_DL, R_CL, R_BL, R_AH, R_DH, R_CH, R_BH };
+enum { R_EAX, R_ECX, R_EDX, R_EBX, R_ESP, R_EBP, R_ESI, R_EDI };
+enum { R_AX, R_CX, R_DX, R_BX, R_SP, R_BP, R_SI, R_DI };
+enum { R_AL, R_CL, R_DL, R_BL, R_AH, R_CH, R_DH, R_BH };
 
 #define isa_mmu_check(vaddr, len, type) (MMU_DIRECT)
 #endif
