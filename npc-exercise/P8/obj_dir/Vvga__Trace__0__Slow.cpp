@@ -45,8 +45,8 @@ VL_ATTR_COLD void Vvga___024root__trace_init_sub__TOP__0(Vvga___024root* vlSelf,
     tracep->pushPrefix("u_rom", VerilatedTracePrefixType::SCOPE_MODULE);
     tracep->declBit(c+16,0,"clk",-1, VerilatedTraceSigDirection::INPUT, VerilatedTraceSigKind::WIRE, VerilatedTraceSigType::LOGIC, false,-1);
     tracep->declBit(c+8,0,"reset",-1, VerilatedTraceSigDirection::INPUT, VerilatedTraceSigKind::WIRE, VerilatedTraceSigType::LOGIC, false,-1);
-    tracep->declBus(c+4,0,"v_addr",-1, VerilatedTraceSigDirection::INPUT, VerilatedTraceSigKind::WIRE, VerilatedTraceSigType::LOGIC, false,-1, 9,0);
-    tracep->declBus(c+1,0,"h_addr",-1, VerilatedTraceSigDirection::INPUT, VerilatedTraceSigKind::WIRE, VerilatedTraceSigType::LOGIC, false,-1, 9,0);
+    tracep->declBus(c+1,0,"v_addr",-1, VerilatedTraceSigDirection::INPUT, VerilatedTraceSigKind::WIRE, VerilatedTraceSigType::LOGIC, false,-1, 9,0);
+    tracep->declBus(c+4,0,"h_addr",-1, VerilatedTraceSigDirection::INPUT, VerilatedTraceSigKind::WIRE, VerilatedTraceSigType::LOGIC, false,-1, 9,0);
     tracep->declBus(c+15,0,"vga_data",-1, VerilatedTraceSigDirection::OUTPUT, VerilatedTraceSigKind::WIRE, VerilatedTraceSigType::LOGIC, false,-1, 23,0);
     tracep->declBus(c+23,0,"WIDTH",-1, VerilatedTraceSigDirection::NONE, VerilatedTraceSigKind::PARAMETER, VerilatedTraceSigType::LOGIC, false,-1, 31,0);
     tracep->declBus(c+24,0,"HEIGHT",-1, VerilatedTraceSigDirection::NONE, VerilatedTraceSigKind::PARAMETER, VerilatedTraceSigType::LOGIC, false,-1, 31,0);
@@ -154,10 +154,10 @@ VL_ATTR_COLD void Vvga___024root__trace_full_0_sub_0(Vvga___024root* vlSelf, Ver
     auto& vlSelfRef = std::ref(*vlSelf).get();
     // Body
     uint32_t* const oldp VL_ATTR_UNUSED = bufp->oldp(vlSymsp->__Vm_baseCode);
-    bufp->fullSData(oldp+1,(vlSelfRef.vga__DOT__u_rom__DOT__h_addr),10);
+    bufp->fullSData(oldp+1,(vlSelfRef.vga__DOT__u_rom__DOT__v_addr),10);
     bufp->fullSData(oldp+2,(vlSelfRef.vga__DOT__u_vga_ctrl__DOT__y_cnt),10);
     bufp->fullBit(oldp+3,(vlSelfRef.vga__DOT__u_vga_ctrl__DOT__v_valid));
-    bufp->fullSData(oldp+4,(vlSelfRef.vga__DOT__u_rom__DOT__v_addr),10);
+    bufp->fullSData(oldp+4,(vlSelfRef.vga__DOT__u_rom__DOT__h_addr),10);
     bufp->fullSData(oldp+5,(vlSelfRef.vga__DOT__u_vga_ctrl__DOT__x_cnt),10);
     bufp->fullBit(oldp+6,(vlSelfRef.vga__DOT__u_vga_ctrl__DOT__h_valid));
     bufp->fullBit(oldp+7,(vlSelfRef.clk));

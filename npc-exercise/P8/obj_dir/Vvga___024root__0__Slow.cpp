@@ -124,25 +124,25 @@ VL_ATTR_COLD void Vvga___024root___stl_sequent__TOP__0(Vvga___024root* vlSelf) {
     vlSelfRef.vga_g = (0x000000ffU & (vlSelfRef.vga__DOT__vga_data 
                                       >> 8U));
     vlSelfRef.vga_b = (0x000000ffU & vlSelfRef.vga__DOT__vga_data);
-    vlSelfRef.vga__DOT__u_vga_ctrl__DOT__h_valid = 
-        ((0x0090U < (IData)(vlSelfRef.vga__DOT__u_vga_ctrl__DOT__x_cnt)) 
-         & (0x0310U >= (IData)(vlSelfRef.vga__DOT__u_vga_ctrl__DOT__x_cnt)));
     vlSelfRef.vga__DOT__u_vga_ctrl__DOT__v_valid = 
         ((0x0023U < (IData)(vlSelfRef.vga__DOT__u_vga_ctrl__DOT__y_cnt)) 
          & (0x0203U >= (IData)(vlSelfRef.vga__DOT__u_vga_ctrl__DOT__y_cnt)));
-    if (vlSelfRef.vga__DOT__u_vga_ctrl__DOT__h_valid) {
+    vlSelfRef.vga__DOT__u_vga_ctrl__DOT__h_valid = 
+        ((0x0090U < (IData)(vlSelfRef.vga__DOT__u_vga_ctrl__DOT__x_cnt)) 
+         & (0x0310U >= (IData)(vlSelfRef.vga__DOT__u_vga_ctrl__DOT__x_cnt)));
+    if (vlSelfRef.vga__DOT__u_vga_ctrl__DOT__v_valid) {
         vlSelfRef.vga__DOT__u_rom__DOT__v_addr = (0x000003ffU 
-                                                  & ((IData)(vlSelfRef.vga__DOT__u_vga_ctrl__DOT__x_cnt) 
-                                                     - (IData)(0x0091U)));
-        vlSelfRef.valid = vlSelfRef.vga__DOT__u_vga_ctrl__DOT__v_valid;
+                                                  & ((IData)(vlSelfRef.vga__DOT__u_vga_ctrl__DOT__y_cnt) 
+                                                     - (IData)(0x0024U)));
+        vlSelfRef.valid = vlSelfRef.vga__DOT__u_vga_ctrl__DOT__h_valid;
     } else {
         vlSelfRef.vga__DOT__u_rom__DOT__v_addr = 0U;
         vlSelfRef.valid = 0U;
     }
-    vlSelfRef.vga__DOT__u_rom__DOT__h_addr = ((IData)(vlSelfRef.vga__DOT__u_vga_ctrl__DOT__v_valid)
+    vlSelfRef.vga__DOT__u_rom__DOT__h_addr = ((IData)(vlSelfRef.vga__DOT__u_vga_ctrl__DOT__h_valid)
                                                ? (0x000003ffU 
-                                                  & ((IData)(vlSelfRef.vga__DOT__u_vga_ctrl__DOT__y_cnt) 
-                                                     - (IData)(0x0024U)))
+                                                  & ((IData)(vlSelfRef.vga__DOT__u_vga_ctrl__DOT__x_cnt) 
+                                                     - (IData)(0x0091U)))
                                                : 0U);
 }
 

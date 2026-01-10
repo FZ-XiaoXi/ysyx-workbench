@@ -134,7 +134,7 @@ void Vvga___024root___nba_sequent__TOP__1(Vvga___024root* vlSelf) {
     vlSelfRef.vga__DOT__u_vga_ctrl__DOT__v_valid = 
         ((0x0023U < (IData)(vlSelfRef.vga__DOT__u_vga_ctrl__DOT__y_cnt)) 
          & (0x0203U >= (IData)(vlSelfRef.vga__DOT__u_vga_ctrl__DOT__y_cnt)));
-    vlSelfRef.vga__DOT__u_rom__DOT__h_addr = ((IData)(vlSelfRef.vga__DOT__u_vga_ctrl__DOT__v_valid)
+    vlSelfRef.vga__DOT__u_rom__DOT__v_addr = ((IData)(vlSelfRef.vga__DOT__u_vga_ctrl__DOT__v_valid)
                                                ? (0x000003ffU 
                                                   & ((IData)(vlSelfRef.vga__DOT__u_vga_ctrl__DOT__y_cnt) 
                                                      - (IData)(0x0024U)))
@@ -151,7 +151,7 @@ void Vvga___024root___nba_sequent__TOP__2(Vvga___024root* vlSelf) {
     vlSelfRef.vga__DOT__u_vga_ctrl__DOT__h_valid = 
         ((0x0090U < (IData)(vlSelfRef.vga__DOT__u_vga_ctrl__DOT__x_cnt)) 
          & (0x0310U >= (IData)(vlSelfRef.vga__DOT__u_vga_ctrl__DOT__x_cnt)));
-    vlSelfRef.vga__DOT__u_rom__DOT__v_addr = ((IData)(vlSelfRef.vga__DOT__u_vga_ctrl__DOT__h_valid)
+    vlSelfRef.vga__DOT__u_rom__DOT__h_addr = ((IData)(vlSelfRef.vga__DOT__u_vga_ctrl__DOT__h_valid)
                                                ? (0x000003ffU 
                                                   & ((IData)(vlSelfRef.vga__DOT__u_vga_ctrl__DOT__x_cnt) 
                                                      - (IData)(0x0091U)))

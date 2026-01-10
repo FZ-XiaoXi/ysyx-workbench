@@ -22,12 +22,12 @@ void Vvga___024root__trace_chg_0_sub_0(Vvga___024root* vlSelf, VerilatedVcd::Buf
     // Body
     uint32_t* const oldp VL_ATTR_UNUSED = bufp->oldp(vlSymsp->__Vm_baseCode + 1);
     if (VL_UNLIKELY((vlSelfRef.__Vm_traceActivity[1U]))) {
-        bufp->chgSData(oldp+0,(vlSelfRef.vga__DOT__u_rom__DOT__h_addr),10);
+        bufp->chgSData(oldp+0,(vlSelfRef.vga__DOT__u_rom__DOT__v_addr),10);
         bufp->chgSData(oldp+1,(vlSelfRef.vga__DOT__u_vga_ctrl__DOT__y_cnt),10);
         bufp->chgBit(oldp+2,(vlSelfRef.vga__DOT__u_vga_ctrl__DOT__v_valid));
     }
     if (VL_UNLIKELY((vlSelfRef.__Vm_traceActivity[2U]))) {
-        bufp->chgSData(oldp+3,(vlSelfRef.vga__DOT__u_rom__DOT__v_addr),10);
+        bufp->chgSData(oldp+3,(vlSelfRef.vga__DOT__u_rom__DOT__h_addr),10);
         bufp->chgSData(oldp+4,(vlSelfRef.vga__DOT__u_vga_ctrl__DOT__x_cnt),10);
         bufp->chgBit(oldp+5,(vlSelfRef.vga__DOT__u_vga_ctrl__DOT__h_valid));
     }
