@@ -15,8 +15,7 @@ reg [23:0] rom [0:TOTAL_PIXELS-1];
 wire [18:0] linear_addr; 
 reg [18:0] addr_reg;
 
-assign linear_addr = v_addr * 10'd640 + h_addr;
-
+assign linear_addr = v_addr * 10'd640 + {9'd0, h_addr};
 always @(posedge clk or posedge reset) begin
     if (reset) begin
         vga_data <= 24'h000000;
