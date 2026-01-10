@@ -10,8 +10,7 @@ module vga(
 );
 wire [9:0] v_addr;
 wire [9:0] h_addr;
-wire [23:0] vga_data;
-assign vga_data=24'hF56706;
+reg [23:0] vga_data;
 wire pclk;
 image_rom_640x480 u_rom(pclk,reset,h_addr,v_addr,vga_data);
 clkgen #(25000000) my_vgaclk(clk,reset,1'b1,pclk);
