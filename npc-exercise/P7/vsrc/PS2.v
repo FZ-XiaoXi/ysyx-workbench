@@ -39,8 +39,8 @@ SevenSegDecoder segdec2(receiveData[11:08],seg1L[7:1],displayEnable);
 SevenSegDecoder segdec3(receiveData[15:12],seg1H[7:1],displayEnable);
 SevenSegDecoder segdec4(receiveData[19:16],seg2L[7:1],0);
 SevenSegDecoder segdec5(receiveData[23:20],seg2H[7:1],0);
-SevenSegDecoder segdec6(count[7:0],seg3L[7:1],1);
-SevenSegDecoder segdec7(count[15:8],seg3H[7:1],1);
+SevenSegDecoder segdec6(count[3:0],seg3L[7:1],1);
+SevenSegDecoder segdec7(count[7:4],seg3H[7:1],1);
 
 
 ps2_keyboard inst(
