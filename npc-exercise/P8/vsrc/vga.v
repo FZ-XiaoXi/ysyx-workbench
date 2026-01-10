@@ -13,7 +13,7 @@ wire [9:0] h_addr;
 wire [23:0] vga_data;
 assign vga_data=24'hF56706;
 wire pclk;
-image_rom_640x480 u_rom(pclk,reset,h_addr,v_addr,vga_data,,,);
+image_rom_640x480 u_rom(pclk,reset,h_addr,v_addr,vga_data);
 clkgen #(25000000) my_vgaclk(clk,reset,1'b1,pclk);
 vga_ctrl u_vga_ctrl (pclk,reset,vga_data,h_addr,v_addr,hsync,vsync,valid,vga_r,vga_g,vga_b);
 endmodule
