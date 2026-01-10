@@ -13,7 +13,7 @@ VerilatedVcdC* tfp = new VerilatedVcdC;
 VerilatedContext* contextp = new VerilatedContext;
 void step_and_dump_wave(){
   timecount++;
-  if(timecount>0){
+  if(timecount>999){
 	top->clk=!top->clk;
 	timecount=0;
   }
