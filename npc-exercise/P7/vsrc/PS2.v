@@ -13,7 +13,8 @@ module PS2(
 	input PS2_CLK,
 	input PS2_DAT
 );
-wire ready,overflow,nextdata_n;
+wire ready,overflow
+reg nextdata_n;
 reg [23:0]receiveData;
 
 assign seg0L[0]=1;
@@ -45,7 +46,6 @@ always @(posedge CLK)begin
 	if(CLRN==0)begin
 		receiveData[23:0]<=24'h000000;
 		nextdata_n<=1;
-		overflow<=0;
 	end else begin
 		if(nextdata_n==0)
 			nextdata_n<=1;
