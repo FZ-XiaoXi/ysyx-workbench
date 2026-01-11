@@ -140,6 +140,7 @@ uint32_t eval(int p, int q, bool *success) {
   if (p > q) {
     /* Bad expression */
     success=false;
+    return 0;
     //assert(0);
   }
   else if (p == q) {
@@ -191,6 +192,7 @@ bool check_parentheses(int p, int q,bool* success){
       if(tokens[i].type==')'){
         success=false;
         printf("()ERROR1()\n");
+        return 0;
         //assert(0);
       }
     }
@@ -202,6 +204,7 @@ bool check_parentheses(int p, int q,bool* success){
       if(tokens[i].type=='('){
         success=false;
         printf("()ERROR2()\n");
+        return 0;
         //assert(0);
       }
     }
@@ -231,6 +234,7 @@ bool check_parentheses(int p, int q,bool* success){
   else{
     success=false;
     printf("()ERROR3()\n");
+    return 0;
     //assert(0);
   }
   return false;
