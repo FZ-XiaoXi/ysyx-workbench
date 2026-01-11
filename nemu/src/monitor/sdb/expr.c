@@ -126,7 +126,7 @@ static bool make_token(char *e) {
 
 
 word_t expr(char *e, bool *success) {
-
+  if(false==*success) return 0;
   /* TODO: Insert codes to evaluate the expression. */
   //TODO();
   if (!make_token(e)) {
@@ -137,6 +137,7 @@ word_t expr(char *e, bool *success) {
 }
 
 uint32_t eval(int p, int q, bool *success) {
+  if(false==*success) return 0;
   if (p > q) {
     /* Bad expression */
     success=false;
@@ -185,6 +186,7 @@ uint32_t eval(int p, int q, bool *success) {
 //         ------------
 // ----------------------- ----
 bool check_parentheses(int p, int q,bool* success){
+  if(false==*success) return 0;
   int count=0,flag=0;
   for(int i=p;i<=q;i++){
     if(tokens[i].type=='('){
