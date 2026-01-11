@@ -205,16 +205,30 @@ bool check_parentheses(int p, int q){
       }
     }
   }
-
+  if(tokens[p].type=='(' && tokens[q].type==')'){
+    count=0;
+    for(int i=p+1;i<=q-1;i++){
+      if(tokens[i].type=='(') count++;
+      if(tokens[i].type==')') count--;
+    }
+    if(count==0) return true;
+  }
+  count=0;
   for(int i=p;i<=q;i++){
     if(tokens[i].type=='(') count++;
     if(tokens[i].type==')') count--;
   }
-  if(count==0){
-    if(tokens[p].type=='(' && tokens[q].type==')' && tokens[p+1].type=='(' && tokens[q-1].type==')') return true;
-  }else{
+  if(count==0) return false;
+  else{
     printf("()ERROR()\n");
     assert(0);
   }
+
+  // if(count==0){
+  //   if(tokens[p].type=='(' && tokens[q].type==')' && (tokens[p+1].type!=TK_NUM_10 || tokens[q-1].type!=TK_NUM_10)) return true;
+  // }else{
+  //   printf("()ERROR()\n");
+  //   assert(0);
+  // }
   return false;
 }
