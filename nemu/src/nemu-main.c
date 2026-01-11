@@ -26,7 +26,7 @@ int main(int argc, char *argv[]) {
   am_init_monitor();
 #else
   init_monitor(argc, argv);
-  char s[100]="((4) +10*((2- 1)*2))";
+  char s[100]="(4) +10*((2- 1)*2)";
   bool good=0;
   expr(s,&good);
 #endif
