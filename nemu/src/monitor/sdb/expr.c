@@ -105,10 +105,53 @@ static bool make_token(char *e) {
           tokens[nr_token].str[substr_len]='\0';
           nr_token++;
         }
-
-        switch (rules[i].token_type) {
-          //default: TODO();
+        if(nr_token!=0){
+          switch (tokens[nr_token-1].type) {
+            case '-':
+              if(nr_token!=1){
+                if(tokens[nr_token-2].type!=')' || tokens[nr_token-2].type!=TK_NUM_10 || tokens[nr_token-2].type!='('){
+                  printf("Error expression '-'\n");
+                  return false;
+                }
+              }
+              break;
+            case '+':
+              //
+            case '*':
+              if(nr_token==1){
+                printf("Error expression '*' 1\n");
+                return false;
+              }else if(tokens[nr_token-2].type!=')' || tokens[nr_token-2].type!=TK_NUM_10){
+                printf("Error expression '*' 2\n");
+                return false;
+              }
+              break;
+            case '/':
+              if(nr_token==1){
+                printf("Error expression '/' 1\n");
+                return false;
+              }else if(tokens[nr_token-2].type!=')' || tokens[nr_token-2].type!=TK_NUM_10){
+                printf("Error expression '/' 2\n");
+                return false;
+              }
+              break;
+            case TK_NUM_10:
+              if(tokens[nr_token-2].type==')'){
+                printf("Error expression 'num'\n");
+                return false;
+              }
+              if(tokens[nr_token-2].type=='-' && tokens[nr_token-3].type=='('){
+                tokens[nr_token-2].type=TK_NUM_10;
+                strncpy(tokens[nr_token-2].str+1,substr_start,substr_len);
+                tokens[nr_token-2].str[0]='-';
+                tokens[nr_token-2].str[1+substr_len]='\0';
+                nr_token--;
+              }
+              break;
+            //default: TODO();
+          }
         }
+        
 
 
         break;
