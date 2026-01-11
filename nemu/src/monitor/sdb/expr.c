@@ -221,7 +221,7 @@ bool check_parentheses(int p, int q){
   }
   if(count==0) return false;
   else{
-    printf("()ERROR()\n");
+    printf("()ER-R-OR()\n");
     assert(0);
   }
 
