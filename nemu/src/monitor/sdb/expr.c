@@ -185,7 +185,7 @@ uint32_t eval(int p, int q) {
 bool check_parentheses(int p, int q){
   for(int i=p;i<=q;i++)printf("%s",tokens[i].str);
   printf("\n");
-  int count=0;
+  int count=0,flag=0;
   for(int i=p;i<=q;i++){
     if(tokens[i].type=='('){
       break;
@@ -211,21 +211,15 @@ bool check_parentheses(int p, int q){
     for(int i=p+1;i<=q-1;i++){
       if(tokens[i].type=='('){
         break;
-      }else{
-        if(tokens[i].type==')'){
-          printf("()ERROR1()\n");
-          assert(0);
-        }
+      }else if(tokens[i].type==')'){
+        flag=1;
       }
     }
     for(int i=q-1;i>=p+1;i--){
       if(tokens[i].type==')'){
         break;
-      }else{
-        if(tokens[i].type=='('){
-          printf("()ERROR2()\n");
-          assert(0);
-        }
+      }else if(tokens[i].type=='('){
+        flag=1;
       }
     }
     count=0;
@@ -233,7 +227,7 @@ bool check_parentheses(int p, int q){
       if(tokens[i].type=='(') count++;
       if(tokens[i].type==')') count--;
     }
-    if(count==0) return true;
+    if(count==0&&flag==0) return true;
   }
   count=0;
   for(int i=p;i<=q;i++){
