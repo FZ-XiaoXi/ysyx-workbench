@@ -213,7 +213,7 @@ bool check_parentheses(int p, int q){
         break;
       }else{
         if(tokens[i].type==')'){
-          printf("()ERROR()\n");
+          printf("()ERROR1()\n");
           assert(0);
         }
       }
@@ -223,7 +223,7 @@ bool check_parentheses(int p, int q){
         break;
       }else{
         if(tokens[i].type=='('){
-          printf("()ERROR()\n");
+          printf("()ERROR2()\n");
           assert(0);
         }
       }
@@ -242,7 +242,7 @@ bool check_parentheses(int p, int q){
   }
   if(count==0) return false;
   else{
-    printf("()ER-R-OR()\n");
+    printf("()ERROR3()\n");
     assert(0);
   }
 
