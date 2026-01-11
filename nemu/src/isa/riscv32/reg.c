@@ -24,10 +24,10 @@ const char *regs[] = {
 };
 
 void isa_reg_display() {
-  int i=0;
+  int i=-1;
   do{
-    printf("%s\t%x\t%d\n",regs[i],isa_reg_str2val(regs[i],NULL),isa_reg_str2val(regs[i],NULL));
     i++;
+    printf("%s\t%x\t%d\n",regs[i],isa_reg_str2val(regs[i],NULL),isa_reg_str2val(regs[i],NULL));
   }while(0!=strcmp(regs[i],"t6"));
     
 }
