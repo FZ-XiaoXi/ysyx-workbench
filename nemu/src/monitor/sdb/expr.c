@@ -205,6 +205,7 @@ bool check_parentheses(int p, int q){
       }
     }
   }
+  printf("xsdfsdf");
   if(tokens[p].type=='(' && tokens[q].type==')'){
     count=0;
     for(int i=p+1;i<=q-1;i++){
