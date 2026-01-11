@@ -122,7 +122,7 @@ static bool make_token(char *e) {
               if(nr_token==1){
                 printf("Error expression '*' 1\n");
                 return false;
-              }else if(!(tokens[nr_token-2].type!=')' && tokens[nr_token-2].type!=TK_NUM_10)){
+              }else if((tokens[nr_token-2].type!=')' && tokens[nr_token-2].type!=TK_NUM_10)){
                 printf("Error expression '*' 2\n");
                 return false;
               }
@@ -131,7 +131,7 @@ static bool make_token(char *e) {
               if(nr_token==1){
                 printf("Error expression '/' 1\n");
                 return false;
-              }else if(!(tokens[nr_token-2].type!=')' && tokens[nr_token-2].type!=TK_NUM_10)){
+              }else if((tokens[nr_token-2].type!=')' && tokens[nr_token-2].type!=TK_NUM_10)){
                 printf("Error expression '/' 2\n");
                 return false;
               }
