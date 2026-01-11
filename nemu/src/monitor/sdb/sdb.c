@@ -87,20 +87,26 @@ static int cmd_info(char *args) {
 }
 
 static int cmd_x(char *args) {
-  if(args!=NULL){
+    int num;
     const char s[2]=" ";
     char* argument;
-
     argument=strtok(args,s);
-    while(1) {
-      if(argument[0]!='\0') break;
-      argument = strtok(NULL, s);
+    if(argument==NULL){
+      printf("NULL argument!\n");
+      return 0;
     }
-    
-  }else{
-    printf("NULL argument!\n");
-  }
-  return 0;
+    num=atoi(argument);
+    if(num<=0){
+      printf("Error NUMBER!\n");
+      return 0;
+    }
+    argument=strtok(NULL,s);
+    if(argument==NULL){
+      printf("NULL address!\n");
+      return 0;
+    }
+    printf("%s\n",argument);
+    return 0;
 }
 
 
