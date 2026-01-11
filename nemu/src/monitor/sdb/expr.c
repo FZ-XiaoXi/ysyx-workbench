@@ -196,7 +196,6 @@ bool check_parentheses(int p, int q){
       }
     }
   }
-
   for(int i=q;i>=p;i--){
     if(tokens[i].type==')'){
       break;
@@ -209,6 +208,26 @@ bool check_parentheses(int p, int q){
   }
   printf("xsdfsdf");
   if(tokens[p].type=='(' && tokens[q].type==')'){
+    for(int i=p+1;i<=q-1;i++){
+      if(tokens[i].type=='('){
+        break;
+      }else{
+        if(tokens[i].type==')'){
+          printf("()ERROR()\n");
+          assert(0);
+        }
+      }
+    }
+    for(int i=q-1;i>=p+1;i--){
+      if(tokens[i].type==')'){
+        break;
+      }else{
+        if(tokens[i].type=='('){
+          printf("()ERROR()\n");
+          assert(0);
+        }
+      }
+    }
     count=0;
     for(int i=p+1;i<=q-1;i++){
       if(tokens[i].type=='(') count++;
