@@ -24,14 +24,12 @@ const char *regs[] = {
 };
 
 void isa_reg_display() {
-  int i=-1;
-  do{
-    i++;
-    printf("%s\t%x\t%d\n",regs[i],isa_reg_str2val(regs[i],NULL),isa_reg_str2val(regs[i],NULL));
-  }while(0!=strcmp(regs[i],"t6"));
-    
+  for(int i=0;i<32;i++){
+    printf("%s\t%x\t%d\n",regs[i],cpu.gpr[i],cpu.gpr[i]);
+  }
 }
 
 word_t isa_reg_str2val(const char *s, bool *success) {
+
   return 0;
 }
