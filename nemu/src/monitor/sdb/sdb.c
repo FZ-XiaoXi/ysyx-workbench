@@ -65,12 +65,10 @@ static int cmd_info(char *args) {
     char* argument;
 
     argument=strtok(args,s);
-    while( argument != NULL ) {
-      printf( "%s\n", argument );
-    
+    while(1) {
+      if(argument[0]!='\0') break;
       argument = strtok(NULL, s);
     }
-    if(argument!=NULL){
       switch (argument[0])
       {
       case 'r':
@@ -82,7 +80,6 @@ static int cmd_info(char *args) {
         printf("Incorrect argument! Please input 'r' or 'w'\n");
         break;
       }
-    }
   }else{
     printf("NULL argument! Please input 'r' or 'w'\n");
   }
