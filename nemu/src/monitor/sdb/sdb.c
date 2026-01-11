@@ -69,19 +69,36 @@ static int cmd_info(char *args) {
       if(argument[0]!='\0') break;
       argument = strtok(NULL, s);
     }
-      switch (argument[0])
-      {
-      case 'r':
-        isa_reg_display();
-        break;
-      case 'w':
-        break;
-      default:
-        printf("Incorrect argument! Please input 'r' or 'w'\n");
-        break;
-      }
+    switch (argument[0])
+    {
+    case 'r':
+      isa_reg_display();
+      break;
+    case 'w':
+      break;
+    default:
+      printf("Incorrect argument! Please input 'r' or 'w'\n");
+      break;
+    }
   }else{
     printf("NULL argument! Please input 'r' or 'w'\n");
+  }
+  return 0;
+}
+
+static int cmd_x(char *args) {
+  if(args!=NULL){
+    const char s[2]=" ";
+    char* argument;
+
+    argument=strtok(args,s);
+    while(1) {
+      if(argument[0]!='\0') break;
+      argument = strtok(NULL, s);
+    }
+    
+  }else{
+    printf("NULL argument!\n");
   }
   return 0;
 }
@@ -102,6 +119,7 @@ static struct {
   { "c", "Continue the execution of the program", cmd_c },
   { "si", "Single-step execution", cmd_si },
   { "info", "Print program status", cmd_info },
+  { "x", "Scan memory", cmd_x },
   { "q", "Exit NEMU", cmd_q },
 
   /* TODO: Add more commands */
