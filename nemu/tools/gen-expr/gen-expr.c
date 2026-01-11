@@ -66,11 +66,15 @@ void gen_rand_op(){
   buf_index++;
 }
 
-static void gen_rand_expr() {
-  switch (choose(3)) {
-    case 0: gen_num(); break;
-    case 1: gen('('); gen_rand_expr(); gen(')'); break;
-    default: gen_rand_expr(); gen_rand_op(); gen_rand_expr(); break;
+static void gen_rand_expr(int depth){
+  if(depth>100){
+    gen_num();
+  }else{
+    switch (choose(3)) {
+      case 0: gen_num(); break;
+      case 1: gen('('); gen_rand_expr(depth+1); gen(')'); break;
+      default: gen_rand_expr(depth+1); gen_rand_op(depth+1); gen_rand_expr(depth+1); break;
+    }
   }
 }
 
@@ -85,7 +89,7 @@ int main(int argc, char *argv[]) {
   for (i = 0; i < loop; i ++) {
     for(int i=0;i<65536;i++) buf[i]='\0';
     buf_index=0;
-    gen_rand_expr();
+    gen_rand_expr(0);
 
     sprintf(code_buf, code_format, buf);
 
@@ -103,12 +107,13 @@ int main(int argc, char *argv[]) {
     ret = fscanf(fp, "%d", &result);
     if(ret<=0){
       //printf("XXXXX\n");
-      loop++;
+      i--;
       continue;
     }else{
       printf("%u %s\n", result, buf);
     }   
     pclose(fp);
   }
+
   return 0;
 }
