@@ -191,7 +191,7 @@ bool check_parentheses(int p, int q){
       break;
     }else{
       if(tokens[i].type==')'){
-        printf("()ERROR()\n");
+        printf("()ERROR1()\n");
         assert(0);
       }
     }
@@ -201,26 +201,19 @@ bool check_parentheses(int p, int q){
       break;
     }else{
       if(tokens[i].type=='('){
-        printf("()ERROR()\n");
+        printf("()ERROR2()\n");
         assert(0);
       }
     }
   }
-  printf("xsdfsdf");
   if(tokens[p].type=='(' && tokens[q].type==')'){
     for(int i=p+1;i<=q-1;i++){
-      if(tokens[i].type=='('){
-        break;
-      }else if(tokens[i].type==')'){
-        flag=1;
-      }
+      if(tokens[i].type=='(') break;
+      else if(tokens[i].type==')') flag=1;
     }
     for(int i=q-1;i>=p+1;i--){
-      if(tokens[i].type==')'){
-        break;
-      }else if(tokens[i].type=='('){
-        flag=1;
-      }
+      if(tokens[i].type==')') break;
+      else if(tokens[i].type=='(')  flag=1;
     }
     count=0;
     for(int i=p+1;i<=q-1;i++){
@@ -239,12 +232,5 @@ bool check_parentheses(int p, int q){
     printf("()ERROR3()\n");
     assert(0);
   }
-
-  // if(count==0){
-  //   if(tokens[p].type=='(' && tokens[q].type==')' && (tokens[p+1].type!=TK_NUM_10 || tokens[q-1].type!=TK_NUM_10)) return true;
-  // }else{
-  //   printf("()ERROR()\n");
-  //   assert(0);
-  // }
   return false;
 }
