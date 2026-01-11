@@ -183,8 +183,6 @@ uint32_t eval(int p, int q) {
 //         ------------
 // ----------------------- ----
 bool check_parentheses(int p, int q){
-  for(int i=p;i<=q;i++)printf("%s",tokens[i].str);
-  printf("\n");
   int count=0,flag=0;
   for(int i=p;i<=q;i++){
     if(tokens[i].type=='('){
