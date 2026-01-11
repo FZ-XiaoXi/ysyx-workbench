@@ -109,7 +109,7 @@ static bool make_token(char *e) {
           switch (tokens[nr_token-1].type) {
             case '-':
               if(nr_token!=1){
-                if(tokens[nr_token-2].type!=')' || tokens[nr_token-2].type!=TK_NUM_10 || tokens[nr_token-2].type!='('){
+                if(!(tokens[nr_token-2].type==')' || tokens[nr_token-2].type==TK_NUM_10 || tokens[nr_token-2].type=='(')){
                   printf("Error expression '-'\n");
                   return false;
                 }
