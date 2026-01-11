@@ -219,13 +219,14 @@ uint32_t eval(int p, int q, bool *success) {
     if(false==*success) return 0;
     int count=0;
     int op=0;
-    uint32_t val1,val2;
+    uint32_t val1,val2;//
     for(int i=p;i<=q;i++){
       if(tokens[i].type=='(') count++;
       if(tokens[i].type==')') count--;
       if((tokens[i].type=='+' || tokens[i].type=='-')&&count==0) op=i;
       if((tokens[i].type=='*' || tokens[i].type=='/')&&count==0&&(tokens[op].type!='+' && tokens[op].type!='-')) op=i;
     }
+    printf("op=%s\n",tokens[op].str);
     val1 = eval(p, op - 1,success);
     val2 = eval(op + 1, q,success);
 
