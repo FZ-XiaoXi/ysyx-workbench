@@ -47,8 +47,8 @@ static struct rule {
 };
 
 #define NR_REGEX ARRLEN(rules)
-uint32_t eval(int p, int q);
-bool check_parentheses(int p, int q);
+uint32_t eval(int p, int q, bool *success);
+bool check_parentheses(int p, int q,bool* success);
 static regex_t re[NR_REGEX] = {};
 
 /* Rules are used for many times.
@@ -133,14 +133,13 @@ word_t expr(char *e, bool *success) {
     *success = false;
     return 0;
   }
-  //for(int i=0;i<nr_token;i++)printf("%s\n",tokens[i].str);
-  printf("---%d---\n",eval(0,nr_token-1));;
-  return 0;
+  return eval(0,nr_token-1,success);
 }
 
-uint32_t eval(int p, int q) {
+uint32_t eval(int p, int q, bool *success) {
   if (p > q) {
     /* Bad expression */
+    success=false;
     assert(0);
   }
   else if (p == q) {
@@ -151,11 +150,11 @@ uint32_t eval(int p, int q) {
      */
     return atoi(tokens[p].str);
   }
-  else if (check_parentheses(p, q) == true) {
+  else if (check_parentheses(p, q,success) == true) {
     /* The expression is surrounded by a matched pair of parentheses.
      * If that is the case, just throw away the parentheses.
      */
-    return eval(p + 1, q - 1);
+    return eval(p + 1, q - 1,success);
   }
   else {
     int count=0;
@@ -167,28 +166,29 @@ uint32_t eval(int p, int q) {
       if((tokens[i].type=='+' || tokens[i].type=='-')&&count==0) op=i;
       if((tokens[i].type=='*' || tokens[i].type=='/')&&count==0&&(tokens[op].type!='+' && tokens[op].type!='-')) op=i;
     }
-    val1 = eval(p, op - 1);
-    val2 = eval(op + 1, q);
+    val1 = eval(p, op - 1,success);
+    val2 = eval(op + 1, q,success);
 
     switch (tokens[op].type) {
       case '+': return val1 + val2;
       case '-': return val1 - val2;
       case '*': return val1 * val2;
       case '/': return val1 / val2;
-      default: assert(0);
+      default: success=false;assert(0);
     }
   }
 }
 // ( () () (  ()  ()  )  ) (  )
 //         ------------
 // ----------------------- ----
-bool check_parentheses(int p, int q){
+bool check_parentheses(int p, int q,bool* success){
   int count=0,flag=0;
   for(int i=p;i<=q;i++){
     if(tokens[i].type=='('){
       break;
     }else{
       if(tokens[i].type==')'){
+        success=false;
         printf("()ERROR1()\n");
         assert(0);
       }
@@ -199,6 +199,7 @@ bool check_parentheses(int p, int q){
       break;
     }else{
       if(tokens[i].type=='('){
+        success=false;
         printf("()ERROR2()\n");
         assert(0);
       }
@@ -227,6 +228,7 @@ bool check_parentheses(int p, int q){
   }
   if(count==0) return false;
   else{
+    success=false;
     printf("()ERROR3()\n");
     assert(0);
   }

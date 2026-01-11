@@ -120,6 +120,19 @@ static int cmd_x(char *args) {
     return 0;
 }
 
+static int cmd_p(char *args) {
+  bool good=true;
+  uint32_t expval;
+  if(args!=NULL){
+    expval=expr(args,&good);
+    if(good==false) printf("Error experiment!\n");
+    else printf("%d\n",expval);
+  }else{
+    printf("NULL argument!\n");
+  }
+  
+  return 0;
+}
 
 static int cmd_q(char *args) {
   return -1;
@@ -137,6 +150,7 @@ static struct {
   { "si", "Single-step execution", cmd_si },
   { "info", "Print program status", cmd_info },
   { "x", "Scan memory", cmd_x },
+  { "p", "Expression evaluation", cmd_p },
   { "q", "Exit NEMU", cmd_q },
 
   /* TODO: Add more commands */
