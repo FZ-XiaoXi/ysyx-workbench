@@ -211,7 +211,7 @@ bool check_parentheses(int p, int q){
     if(tokens[i].type==')') count--;
   }
   if(count==0){
-    if(tokens[p].type=='(' && tokens[q].type==')') return true;
+    if(tokens[p].type=='(' && tokens[q].type==')' && tokens[p+1].type=='(' && tokens[q-1].type==')') return true;
   }else{
     printf("()ERROR()\n");
     assert(0);
