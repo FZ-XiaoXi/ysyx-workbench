@@ -63,7 +63,13 @@ static int cmd_info(char *args) {
   if(args!=NULL){
     const char s[2]=" ";
     char* argument;
+
     argument=strtok(args,s);
+    while( argument != NULL ) {
+      printf( "%s\n", argument );
+    
+      argument = strtok(NULL, s);
+    }
     if(argument!=NULL){
       switch (argument[0])
       {
