@@ -106,6 +106,13 @@ static int cmd_x(char *args) {
       return 0;
     }
     printf("%s\n",argument);
+    char *endptr;
+    int val = strtol(argument, &endptr, 16);
+    if (endptr == argument) {
+        printf("NULL address: %s\n", argument);
+        return 0;
+    }
+    printf("%x\n",val);
     return 0;
 }
 
