@@ -234,7 +234,7 @@ uint32_t eval(int p, int q, bool *success) {
       case '-': return val1 - val2;
       case '*': return val1 * val2;
       case '/': return val1 / val2;
-      default: printf("Error OP: %c\n",tokens[op].type);*success=false;//assert(0);
+      default: printf("Error OP: %d\n",tokens[op].type);*success=false;//assert(0);
     }
   }
   //printf("NULL address!\n");
