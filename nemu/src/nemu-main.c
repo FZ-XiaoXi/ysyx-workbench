@@ -35,17 +35,24 @@ int main(int argc, char *argv[]) {
 }
 void test_args(){
   int res=0,count=0;
-  uint32_t val;
+  uint32_t val,ans;
   char s[65536]={};
   FILE* fp = fopen("/home/seaber/ysyx-workbench/nemu/tools/gen-expr/input","r");
   if(fp!=NULL){
 
     while(1){
-      res=fscanf(fp,"%u %s\n",&val,s);
+      
+      res=fscanf(fp,"%u %s\n",&ans,s);
       if(res==EOF)break;
       if(res==2){
+        bool success=true;
         count++;
-        printf("Get[%d]!\t%u\t%s\n",count,val,s);
+        //printf("Get[%d]!\t%u\t%s\n",count,ans,s);
+        val=expr(s,&success);
+        if(success==true){
+          if(val==ans) printf("PASS[%d]\n",count);
+          else printf("WRONG[%d]\tANS:%u\tVAL:%u\t%s\n",count,ans,val,s);
+        }
       }
     }
   }else{
