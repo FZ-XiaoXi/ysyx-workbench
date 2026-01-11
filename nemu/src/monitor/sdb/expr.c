@@ -195,6 +195,7 @@ uint32_t eval(int p, int q, bool *success) {
   if(false==*success) return 0;
   if (p > q) {
     /* Bad expression */
+    printf("Bad expression\n");
     *success=false;
     return 0;
     //assert(0);
@@ -232,9 +233,10 @@ uint32_t eval(int p, int q, bool *success) {
       case '-': return val1 - val2;
       case '*': return val1 * val2;
       case '/': return val1 / val2;
-      default: *success=false;//assert(0);
+      default: printf("Error OP\n");*success=false;//assert(0);
     }
   }
+  //printf("NULL address!\n");
   *success=false;
   return 0;
 }
