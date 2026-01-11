@@ -59,6 +59,29 @@ static int cmd_si(char *args) {
   return 0;
 }
 
+static int cmd_info(char *args) {
+  if(args!=NULL){
+    const char s[2]=" ";
+    char* argument;
+    argument=strtok(args,s);
+    if(argument!=NULL){
+      switch (argument[0])
+      {
+      case 'r':
+        break;
+      case 'w':
+        break;
+      default:
+        printf("Incorrect argument! Please input 'r' or 'w'\n");
+        break;
+      }
+    }
+  }else{
+    printf("NULL argument! Please input 'r' or 'w'\n");
+  }
+  return 0;
+}
+
 
 static int cmd_q(char *args) {
   return -1;
@@ -74,6 +97,7 @@ static struct {
   { "help", "Display information about all supported commands", cmd_help },
   { "c", "Continue the execution of the program", cmd_c },
   { "si", "Single-step execution", cmd_si },
+  { "info", "Print program status", cmd_info },
   { "q", "Exit NEMU", cmd_q },
 
   /* TODO: Add more commands */
