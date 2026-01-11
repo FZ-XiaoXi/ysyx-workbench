@@ -106,7 +106,6 @@ static int cmd_x(char *args) {
       printf("NULL address!\n");
       return 0;
     }
-    printf("%s\n",argument);
     char *endptr;
     int val = strtol(argument, &endptr, 16);
     if (endptr == argument || val==0) {
@@ -115,7 +114,7 @@ static int cmd_x(char *args) {
     }
     printf("%x\n",val);
     for(int i=0;i<num;i++){
-      printf("%d\t%x\t%x\t%d",i,val+i*4,vaddr_read((vaddr_t)val+i*4,4),vaddr_read((vaddr_t)val+i*4,4));
+      printf("%d\t%x\t%x\t%d\n",i,val+i*4,vaddr_read((vaddr_t)val+i*4,4),vaddr_read((vaddr_t)val+i*4,4));
     }
     
     return 0;
