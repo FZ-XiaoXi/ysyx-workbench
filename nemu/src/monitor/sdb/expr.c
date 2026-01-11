@@ -180,6 +180,7 @@ uint32_t eval(int p, int q, bool *success) {
       default: success=false;//assert(0);
     }
   }
+  if(false==*success) return 0;
   return 0;
 }
 // ( () () (  ()  ()  )  ) (  )
