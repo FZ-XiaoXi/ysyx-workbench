@@ -27,7 +27,7 @@ int main(int argc, char *argv[]) {
 #else
   init_monitor(argc, argv);
 #endif
-  test_args();
+  //test_args();
   /* Start engine. */
   engine_start();
 
