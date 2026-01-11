@@ -35,7 +35,7 @@ static struct rule {
   /* TODO: Add more rules.
    * Pay attention to the precedence level of different rules.
    */
-  {"\\(]", '('},         // (
+  {"\\(]dfsef43wrt4et", '('},         // (
   {"\\)", ')'},         // )
   {" +", TK_NOTYPE},    // spaces
   {"\\*", '*'},         // times
