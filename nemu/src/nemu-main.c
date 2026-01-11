@@ -14,7 +14,7 @@
 ***************************************************************************************/
 
 #include <common.h>
-
+#include "monitor/sdb/sdb.h"
 void init_monitor(int, char *[]);
 void am_init_monitor();
 void engine_start();
@@ -26,6 +26,9 @@ int main(int argc, char *argv[]) {
   am_init_monitor();
 #else
   init_monitor(argc, argv);
+  char s[100]="((5*8+2)-6)*3";
+  bool good=0;
+  expr(s,&good);
 #endif
 
   /* Start engine. */

@@ -81,9 +81,9 @@ static bool make_token(char *e) {
   regmatch_t pmatch;
 
   nr_token = 0;
-
   while (e[position] != '\0') {
     /* Try all rules one by one. */
+    
     for (i = 0; i < NR_REGEX; i ++) {
       if (regexec(&re[i], e + position, 1, &pmatch, 0) == 0 && pmatch.rm_so == 0) {
         char *substr_start = e + position;
@@ -93,12 +93,17 @@ static bool make_token(char *e) {
             i, rules[i].regex, position, substr_len, substr_len, substr_start);
 
         position += substr_len;
-
+        
         /* TODO: Now a new token is recognized with rules[i]. Add codes
          * to record the token in the array `tokens'. For certain types
          * of tokens, some extra actions should be performed.
          */
-        
+        if(rules[i].token_type!=TK_NOTYPE){
+          tokens[nr_token].type=rules[i].token_type;
+          strcpy(tokens[nr_token].str,substr_start);
+          nr_token++;
+        }
+
         switch (rules[i].token_type) {
           default: TODO();
         }
