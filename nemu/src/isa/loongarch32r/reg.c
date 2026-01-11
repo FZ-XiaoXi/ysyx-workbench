@@ -25,11 +25,11 @@ const char *regs[] = {
 
 void isa_reg_display() {
   for(int i=0;0!=strcmp(regs[i],"s8"),i++){
-    printf("%s\t%x\t%ld\n",regs[i],isa_reg_str2val(regs[i]),isa_reg_str2val(regs[i]));
+    printf("%s\t%x\t%ld\n",regs[i],isa_reg_str2val(regs[i],NULL),isa_reg_str2val(regs[i],NULL));
   }
 }
 
 word_t isa_reg_str2val(const char *s, bool *success) {
-  
+
   return 0;
 }

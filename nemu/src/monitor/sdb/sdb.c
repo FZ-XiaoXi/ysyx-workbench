@@ -68,6 +68,7 @@ static int cmd_info(char *args) {
       switch (argument[0])
       {
       case 'r':
+        isa_reg_display();
         break;
       case 'w':
         break;
