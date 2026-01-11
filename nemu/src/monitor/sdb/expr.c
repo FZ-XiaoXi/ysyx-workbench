@@ -140,7 +140,7 @@ uint32_t eval(int p, int q, bool *success) {
   if(false==*success) return 0;
   if (p > q) {
     /* Bad expression */
-    success=false;
+    *success=false;
     return 0;
     //assert(0);
   }
@@ -177,10 +177,10 @@ uint32_t eval(int p, int q, bool *success) {
       case '-': return val1 - val2;
       case '*': return val1 * val2;
       case '/': return val1 / val2;
-      default: success=false;//assert(0);
+      default: *success=false;//assert(0);
     }
   }
-  success=false;
+  *success=false;
   return 0;
 }
 // ( () () (  ()  ()  )  ) (  )
@@ -194,7 +194,7 @@ bool check_parentheses(int p, int q,bool* success){
       break;
     }else{
       if(tokens[i].type==')'){
-        success=false;
+        *success=false;
         printf("()ERROR1()\n");
         return 0;
         //assert(0);
@@ -206,7 +206,7 @@ bool check_parentheses(int p, int q,bool* success){
       break;
     }else{
       if(tokens[i].type=='('){
-        success=false;
+        *success=false;
         printf("()ERROR2()\n");
         return 0;
         //assert(0);
@@ -236,7 +236,7 @@ bool check_parentheses(int p, int q,bool* success){
   }
   if(count==0) return false;
   else{
-    success=false;
+    *success=false;
     printf("()ERROR3()\n");
     return 0;
     //assert(0);
