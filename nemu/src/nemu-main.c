@@ -52,6 +52,8 @@ void test_args(){
         if(success==true){
           if(val==ans) printf("PASS[%d]\n",count);
           else printf("WRONG[%d]\tANS:%u\tVAL:%u\t%s\n",count,ans,val,s);
+        }else{
+          printf("ERROR[%d]\tANS:%u\tVAL:%u\t%s\n",count,ans,val,s);
         }
       }
     }
