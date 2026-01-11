@@ -47,7 +47,8 @@ static struct rule {
 };
 
 #define NR_REGEX ARRLEN(rules)
-
+uint32_t eval(int p, int q);
+bool check_parentheses(int p, int q);
 static regex_t re[NR_REGEX] = {};
 
 /* Rules are used for many times.
@@ -109,6 +110,7 @@ static bool make_token(char *e) {
           //default: TODO();
         }
 
+
         break;
       }
     }
@@ -118,19 +120,101 @@ static bool make_token(char *e) {
       return false;
     }
   }
-  for(int i=0;i<nr_token;i++){printf("%s\n",tokens[i].str);}
+  
   return true;
 }
 
 
 word_t expr(char *e, bool *success) {
+
+  /* TODO: Insert codes to evaluate the expression. */
+  //TODO();
   if (!make_token(e)) {
     *success = false;
     return 0;
   }
-
-  /* TODO: Insert codes to evaluate the expression. */
-  //TODO();
-
+  for(int i=0;i<nr_token;i++)printf("%s\n",tokens[i].str);
+  printf("---%d---\n",eval(0,nr_token-1));;
   return 0;
+}
+
+uint32_t eval(int p, int q) {
+  if (p > q) {
+    /* Bad expression */
+    assert(0);
+  }
+  else if (p == q) {
+    printf("CALC:%s>>>%d",tokens[p].str,atoi(tokens[p].str));
+    /* Single token.
+     * For now this token should be a number.
+     * Return the value of the number.
+     */
+    return atoi(tokens[p].str);
+  }
+  else if (check_parentheses(p, q) == true) {
+    /* The expression is surrounded by a matched pair of parentheses.
+     * If that is the case, just throw away the parentheses.
+     */
+    return eval(p + 1, q - 1);
+  }
+  else {
+    int count=0;
+    int op=0;
+    uint32_t val1,val2;
+    for(int i=p;i<=q;i++){
+      if(tokens[i].type=='(') count++;
+      if(tokens[i].type==')') count--;
+      if((tokens[i].type=='+' || tokens[i].type=='-')&&count==0) op=i;
+      if((tokens[i].type=='*' || tokens[i].type=='/')&&count==0&&(tokens[op].type!='+' && tokens[op].type!='-')) op=i;
+    }
+    val1 = eval(p, op - 1);
+    val2 = eval(op + 1, q);
+
+    switch (tokens[op].type) {
+      case '+': return val1 + val2;
+      case '-': return val1 - val2;
+      case '*': return val1 * val2;
+      case '/': return val1 / val2;
+      default: assert(0);
+    }
+  }
+}
+// ( () () (  ()  ()  )  ) (  )
+//         ------------
+// ----------------------- ----
+bool check_parentheses(int p, int q){
+  int count=0;
+  for(int i=p;i<=q;i++){
+    if(tokens[i].type=='('){
+      break;
+    }else{
+      if(tokens[i].type==')'){
+        printf("()ERROR()\n");
+        assert(0);
+      }
+    }
+  }
+
+  for(int i=q;i>=p;i--){
+    if(tokens[i].type==')'){
+      break;
+    }else{
+      if(tokens[i].type=='('){
+        printf("()ERROR()\n");
+        assert(0);
+      }
+    }
+  }
+
+  for(int i=p;i<=q;i++){
+    if(tokens[i].type=='(') count++;
+    if(tokens[i].type==')') count--;
+  }
+  if(count==0){
+    if(tokens[p].type=='(' && tokens[q].type==')') return true;
+  }else{
+    printf("()ERROR()\n");
+    assert(0);
+  }
+  return false;
 }
