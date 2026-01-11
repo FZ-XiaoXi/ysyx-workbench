@@ -126,7 +126,7 @@ static int cmd_p(char *args) {
   if(args!=NULL){
     expval=expr(args,&good);
     if(good==false) printf("Error experiment!\n");
-    else printf("=%d\n",expval);
+    else printf("=%u\n",expval);
   }else{
     printf("NULL argument!\n");
   }

@@ -21,18 +21,57 @@
 #include <string.h>
 
 // this should be enough
-static char buf[65536] = {};
-static char code_buf[65536 + 128] = {}; // a little larger than `buf`
+int buf_index=0;
+static char buf[65536] = {'\0'};
+static char code_buf[65536 + 1280] = {}; // a little larger than `buf`
 static char *code_format =
 "#include <stdio.h>\n"
+"#include <stdlib.h>\n"
+"#include <signal.h>\n"
+"#include <setjmp.h>\n"
+"static jmp_buf env;"
+"void handle_div_zero(int sig) {"
+"    longjmp(env, 1);"
+"}"
 "int main() { "
-"  unsigned result = %s; "
-"  printf(\"%%u\", result); "
+"  signal(SIGFPE, handle_div_zero);"
+"  if (setjmp(env) == 0) {"
+"    unsigned result = %s; "
+"    printf(\"%%u\", result);"
+"  } else {"
+"    printf(\"x\");"
+"  }"
 "  return 0; "
 "}";
 
+uint32_t choose(uint32_t n){
+  return rand()%n;
+}
+void gen_num(){
+  buf[buf_index]=(char)(choose(10)+'0');
+  buf_index++;
+}
+void gen(char c){
+  buf[buf_index]=c;
+  buf_index++;
+}
+void gen_rand_op(){
+  switch (choose(4))
+  {
+  case 0:buf[buf_index]='+';break;
+  case 1:buf[buf_index]='-';break;
+  case 2:buf[buf_index]='*';break;
+  default:buf[buf_index]='/';break;
+  }
+  buf_index++;
+}
+
 static void gen_rand_expr() {
-  buf[0] = '\0';
+  switch (choose(3)) {
+    case 0: gen_num(); break;
+    case 1: gen('('); gen_rand_expr(); gen(')'); break;
+    default: gen_rand_expr(); gen_rand_op(); gen_rand_expr(); break;
+  }
 }
 
 int main(int argc, char *argv[]) {
@@ -44,6 +83,8 @@ int main(int argc, char *argv[]) {
   }
   int i;
   for (i = 0; i < loop; i ++) {
+    for(int i=0;i<65536;i++) buf[i]='\0';
+    buf_index=0;
     gen_rand_expr();
 
     sprintf(code_buf, code_format, buf);
@@ -58,12 +99,16 @@ int main(int argc, char *argv[]) {
 
     fp = popen("/tmp/.expr", "r");
     assert(fp != NULL);
-
     int result;
     ret = fscanf(fp, "%d", &result);
+    if(ret<=0){
+      //printf("XXXXX\n");
+      loop++;
+      continue;
+    }else{
+      printf("%u %s\n", result, buf);
+    }   
     pclose(fp);
-
-    printf("%u %s\n", result, buf);
   }
   return 0;
 }
