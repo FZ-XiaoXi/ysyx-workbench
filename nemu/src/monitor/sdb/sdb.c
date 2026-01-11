@@ -48,10 +48,14 @@ static int cmd_c(char *args) {
 }
 
 static int cmd_si(char *args) {
-  if(atoi(args)>=1)
-    cpu_exec(atoi(args));
-  else
+  if(args!=NULL){
+    if(atoi(args)>=1)
+      cpu_exec(atoi(args));
+    else
+      printf("Unknown argumenet '%s'\n", args);
+  }else{
     cpu_exec(1);
+  }
   return 0;
 }
 
