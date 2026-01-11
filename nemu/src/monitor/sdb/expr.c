@@ -117,7 +117,7 @@ static bool make_token(char *e) {
       return false;
     }
   }
-
+  for(int i=0;i<nr_token;i++){printf("%s\n",tokens[i].str);}
   return true;
 }
 
