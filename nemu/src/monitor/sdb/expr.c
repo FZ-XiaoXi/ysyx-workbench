@@ -144,7 +144,7 @@ uint32_t eval(int p, int q) {
     assert(0);
   }
   else if (p == q) {
-    printf("CALC:%s>>>%d",tokens[p].str,atoi(tokens[p].str));
+    //printf("CALC:%s>>>%d",tokens[p].str,atoi(tokens[p].str));
     /* Single token.
      * For now this token should be a number.
      * Return the value of the number.
