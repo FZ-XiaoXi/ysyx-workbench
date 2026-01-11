@@ -72,7 +72,6 @@ static int cmd_info(char *args) {
       switch (argument[0])
       {
       case 'r':
-        printf("RRR\n");
         isa_reg_display();
         break;
       case 'w':

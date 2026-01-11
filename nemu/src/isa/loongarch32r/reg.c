@@ -24,11 +24,7 @@ const char *regs[] = {
 };
 
 void isa_reg_display() {
-  printf("2222R\n");
-  for(int i=0;0!=strcmp(regs[i],"s8");i++){
-    printf("%s\t%x\t%ld\n",regs[i],isa_reg_str2val(regs[i],NULL),isa_reg_str2val(regs[i],NULL));
-  }
-  printf("end\n");
+  
 }
 
 word_t isa_reg_str2val(const char *s, bool *success) {
