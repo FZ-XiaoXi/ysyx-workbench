@@ -133,7 +133,7 @@ word_t expr(char *e, bool *success) {
     *success = false;
     return 0;
   }
-  for(int i=0;i<nr_token;i++)printf("%s\n",tokens[i].str);
+  //for(int i=0;i<nr_token;i++)printf("%s\n",tokens[i].str);
   printf("---%d---\n",eval(0,nr_token-1));;
   return 0;
 }
