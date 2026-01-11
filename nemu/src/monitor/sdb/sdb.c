@@ -114,7 +114,7 @@ static int cmd_x(char *args) {
     }
     printf("%x\n",val);
     for(int i=0;i<num;i++){
-      printf("%d\t%x\t%x\t%d\n",i,val+i*4,vaddr_read((vaddr_t)val+i*4,4),vaddr_read((vaddr_t)val+i*4,4));
+      printf("%.4d\t0x%x\t0x%x\t%d\n",i,val+i*4,vaddr_read((vaddr_t)val+i*4,4),vaddr_read((vaddr_t)val+i*4,4));
     }
     
     return 0;
