@@ -158,6 +158,7 @@ uint32_t eval(int p, int q, bool *success) {
     return eval(p + 1, q - 1,success);
   }
   else {
+    if(false==*success) return 0;
     int count=0;
     int op=0;
     uint32_t val1,val2;
