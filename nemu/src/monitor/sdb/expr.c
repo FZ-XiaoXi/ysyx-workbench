@@ -233,10 +233,10 @@ uint32_t eval(int p, int q, bool *success) {
       if((tokens[i].type=='+' || tokens[i].type=='-')&&count==0) op=i;
       if((tokens[i].type=='*' || tokens[i].type=='/')&&count==0&&(tokens[op].type!='+' && tokens[op].type!='-')) op=i;
     }
-    
+    printf("\n");
     val1 = eval(p, op - 1,success);
     val2 = eval(op + 1, q,success);
-    printf("\n  %u %s %u\n",val1,tokens[op].str,val2);
+    printf("%u %s %u\n",val1,tokens[op].str,val2);
     switch (tokens[op].type) {
       case '+': return val1 + val2;
       case '-': return val1 - val2;
