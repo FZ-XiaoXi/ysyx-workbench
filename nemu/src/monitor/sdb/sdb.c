@@ -15,6 +15,7 @@
 
 #include <isa.h>
 #include <cpu/cpu.h>
+#include <memory/vaddr.h>
 #include <readline/readline.h>
 #include <readline/history.h>
 #include "sdb.h"
@@ -108,11 +109,15 @@ static int cmd_x(char *args) {
     printf("%s\n",argument);
     char *endptr;
     int val = strtol(argument, &endptr, 16);
-    if (endptr == argument) {
+    if (endptr == argument || val==0) {
         printf("NULL address: %s\n", argument);
         return 0;
     }
     printf("%x\n",val);
+    for(int i=0;i<num;i++){
+      printf("%d\t%x\t%x\t%d",i,val+i*4,vaddr_read((vaddr_t)val+i*4,4),vaddr_read((vaddr_t)val+i*4,4));
+    }
+    
     return 0;
 }
 
