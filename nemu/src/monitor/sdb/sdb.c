@@ -68,7 +68,7 @@ static int cmd_info(char *args) {
     while(1) {
       if(argument[0]!='\0') break;
       argument = strtok(NULL, s);
-    }
+    }printf("2222%c\n",argument[0]);
       switch (argument[0])
       {
       case 'r':
