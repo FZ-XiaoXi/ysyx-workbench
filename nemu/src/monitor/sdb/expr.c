@@ -117,6 +117,7 @@ static bool make_token(char *e) {
               break;
             case '+':
               //
+              break;
             case '*':
               if(nr_token==1){
                 printf("Error expression '*' 1\n");
