@@ -137,17 +137,28 @@ static bool make_token(char *e) {
               }
               break;
             case TK_NUM_10:
-              if(tokens[nr_token-2].type==')'){
-                printf("Error expression 'num'\n");
-                return false;
+              if(nr_token==2){
+                if(tokens[0].type=='-'){
+                  tokens[0].type=TK_NUM_10;
+                  strncpy(tokens[0].str+1,substr_start,substr_len);
+                  tokens[0].str[0]='-';
+                  tokens[0].str[1+substr_len]='\0';
+                  nr_token--;
+                }
+              }else if(nr_token>2){
+                if(tokens[nr_token-2].type==')'){
+                  printf("Error expression 'num'\n");
+                  return false;
+                }
+                if(tokens[nr_token-2].type=='-' && tokens[nr_token-3].type=='('){
+                  tokens[nr_token-2].type=TK_NUM_10;
+                  strncpy(tokens[nr_token-2].str+1,substr_start,substr_len);
+                  tokens[nr_token-2].str[0]='-';
+                  tokens[nr_token-2].str[1+substr_len]='\0';
+                  nr_token--;
+                }
               }
-              if(tokens[nr_token-2].type=='-' && tokens[nr_token-3].type=='('){
-                tokens[nr_token-2].type=TK_NUM_10;
-                strncpy(tokens[nr_token-2].str+1,substr_start,substr_len);
-                tokens[nr_token-2].str[0]='-';
-                tokens[nr_token-2].str[1+substr_len]='\0';
-                nr_token--;
-              }
+              
               break;
             //default: TODO();
           }
