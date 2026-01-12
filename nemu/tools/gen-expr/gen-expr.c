@@ -53,7 +53,12 @@ uint32_t choose(uint32_t n){
 void gen_num(){
   int n=choose(7);
   for(int i=0;i<=n;i++){
-    buf[buf_index]=(char)(choose(10)+'0');
+    int k;
+    if(i==0)
+      k=1+choose(9);
+    else
+      k=choose(10);
+    buf[buf_index]=(char)(k+'0');
     buf_index++;
   }
 }
