@@ -76,7 +76,7 @@ static void gen_rand_expr(int depth){
   if(depth>100){
     gen_num();
   }else{
-    //if(choose(2)) gen(' ');
+    if(choose(2)) gen(' ');
     switch (choose(3)) {
       case 0: gen_num(); break;
       case 1: gen('('); gen_rand_expr(depth+1); gen(')'); break;
