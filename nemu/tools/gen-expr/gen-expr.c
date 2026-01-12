@@ -105,9 +105,9 @@ int main(int argc, char *argv[]) {
     assert(fp != NULL);
     int result;
     ret = fscanf(fp, "%d\n", &result);
-    //printf("%d=",ret);
+    fprintf(stderr,"%d=",ret);
     if(ret<=0){
-      //printf("XXXXX\n");
+      fprintf(stderr,"XXXXX\n");
       i--;
       pclose(fp);
       continue;
