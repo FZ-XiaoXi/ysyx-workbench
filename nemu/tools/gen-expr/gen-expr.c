@@ -113,15 +113,15 @@ int main(int argc, char *argv[]) {
       continue;
     }
     int result;
-    ret = fscanf(fp, "%d\n", &result);
+    ret = fscanf(fp, "%d", &result);
     fprintf(stderr,"%d=",ret);
     if(ret<=0){
-      fprintf(stderr,"XXXXX");
+      fprintf(stderr,"XXXXX\n");
       i--;
       pclose(fp);
       continue;
     }else{
-      printf("%u %s", result, buf);
+      printf("%u %s\n", result, buf);
     }   
     pclose(fp);
   }
