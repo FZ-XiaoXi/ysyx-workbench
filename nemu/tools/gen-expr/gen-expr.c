@@ -98,8 +98,11 @@ int main(int argc, char *argv[]) {
     fputs(code_buf, fp);
     fclose(fp);
     int ret=system("rm -f /tmp/.expr");
-    ret = system("gcc -O0 /tmp/.code.c -o /tmp/.expr");
-    //if (ret != 0) continue;
+    ret = system("gcc -Werror /tmp/.code.c -o /tmp/.expr");
+    if (ret != 0){
+      i--;
+      continue;
+    }
 
     fp = popen("/tmp/.expr", "r");
     if(fp == NULL){
