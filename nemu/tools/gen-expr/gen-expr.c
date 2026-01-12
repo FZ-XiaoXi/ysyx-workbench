@@ -29,19 +29,21 @@ static char *code_format =
 "#include <stdlib.h>\n"
 "#include <signal.h>\n"
 "#include <setjmp.h>\n"
-"static jmp_buf env;"
-"void handle_div_zero(int sig) {"
-"    longjmp(env, 1);"
-"}"
-"int main() { "
-"  signal(SIGFPE, handle_div_zero);"
-"  if (setjmp(env) == 0) {"
-"    unsigned result = %s; "
-"    printf(\"%%u\\n\", result);"
-"  } else {"
-"    printf(\"xxxxxxxxxx\\n\");"
-"  }"
-"  return 0; "
+"static jmp_buf env;\n"
+"void handle_div_zero(int sig) {\n"
+"    longjmp(env, 1);\n"
+"}\n"
+"__attribute__((constructor)) void init() {\n"
+"    signal(SIGFPE, handle_div_zero);\n"
+"}\n"
+"int main() {\n"
+"    if (setjmp(env) == 0) {\n"
+"        unsigned result = %s;\n"
+"        printf(\"%%u\", result);\n"
+"    } else {\n"
+"        printf(\"xxxxxxxxxx\");\n"
+"    }\n"
+"    return 0;\n"
 "}";
 
 uint32_t choose(uint32_t n){
@@ -114,12 +116,12 @@ int main(int argc, char *argv[]) {
     ret = fscanf(fp, "%d\n", &result);
     fprintf(stderr,"%d=",ret);
     if(ret<=0){
-      fprintf(stderr,"XXXXX\n");
+      fprintf(stderr,"XXXXX");
       i--;
       pclose(fp);
       continue;
     }else{
-      printf("%u %s\n", result, buf);
+      printf("%u %s", result, buf);
     }   
     pclose(fp);
   }
