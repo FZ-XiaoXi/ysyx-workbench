@@ -90,7 +90,7 @@ static bool make_token(char *e) {
   int position = 0;
   int i;
   regmatch_t pmatch;
-
+  bool success=true;
   nr_token = 0;
   while (e[position] != '\0') {
     /* Try all rules one by one. */
@@ -181,6 +181,16 @@ static bool make_token(char *e) {
               sprintf(tmp,"%u",(uint32_t)strtoul(tokens[nr_token-1].str, &endptr, 16));
               memset(tokens[nr_token-1].str,0,sizeof(tokens[nr_token-1].str));
               strcpy(tokens[nr_token-1].str,tmp);
+              break;
+            case TK_REG:
+              tokens[nr_token-1].type=TK_NUM_10;
+              uint32_t v = isa_reg_str2val(tokens[nr_token-1].str,&success);
+              memset(tokens[nr_token-1].str,0,sizeof(tokens[nr_token-1].str));
+              sprintf(tokens[nr_token-1].str,"%u",v);
+              if(success==false){
+                printf("Error expression '%s'\n",tokens[nr_token-1].str);
+                return false;
+              }
               break;
             //default: TODO();
           }
