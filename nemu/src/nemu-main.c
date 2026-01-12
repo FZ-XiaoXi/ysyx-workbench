@@ -42,6 +42,7 @@ void test_args(){
   if(fp!=NULL){
 
     while(1){
+      memset(s,0,sizeof(s));
       char buffer[65600];
       if (fgets(buffer, sizeof(buffer), fp) != NULL) {
           printf("%s", buffer);
