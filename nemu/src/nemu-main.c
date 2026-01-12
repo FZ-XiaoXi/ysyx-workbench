@@ -38,14 +38,15 @@ void test_args(){
   int count=0;
   uint32_t val,ans;
   char s[65600]={};
+  char buffer[65600]={};
   FILE* fp = fopen("/home/seaber/ysyx-workbench/nemu/tools/gen-expr/input","r");
   if(fp!=NULL){
 
     while(1){
       memset(s,0,sizeof(s));
-      char buffer[65600];
+      memset(buffer,0,sizeof(s));
       if (fgets(buffer, sizeof(buffer), fp) != NULL) {
-          printf("%s", buffer);
+          //printf("%s", buffer);
       }else{
         break;
       }
@@ -56,6 +57,7 @@ void test_args(){
       count++;
       //printf("Get[%d]!\t%u\t%s\n",count,ans,s);
       //printf("%s\n",s);
+      printf("---%s---", s);
       val=expr(s,&success);
       if(success==true){
         if(val==ans) printf("PASS[%d]\n",count);
