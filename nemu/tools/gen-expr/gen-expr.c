@@ -51,11 +51,11 @@ uint32_t choose(uint32_t n){
   return rand()%n;
 }
 void gen_num(){
-  //int n=choose(7);
-  //for(int i=0;i<n;i++){
+  int n=choose(7);
+  for(int i=0;i<=n;i++){
     buf[buf_index]=(char)(choose(10)+'0');
     buf_index++;
-  //}
+  }
 }
 void gen(char c){
   buf[buf_index]=c;
