@@ -85,9 +85,9 @@ int main(int argc, char *argv[]) {
   if (argc > 1) {
     sscanf(argv[1], "%d", &loop);
   }
-  int i;
-  for (i = 0; i < loop; i ++) {
-    for(int i=0;i<65536;i++) buf[i]='\0';
+  
+  for (int i = 0; i < loop; i ++) {
+    memset(buf, 0, sizeof(buf));
     buf_index=0;
     gen_rand_expr(0);
 
@@ -97,12 +97,16 @@ int main(int argc, char *argv[]) {
     assert(fp != NULL);
     fputs(code_buf, fp);
     fclose(fp);
-
-    int ret = system("gcc /tmp/.code.c -o /tmp/.expr");
-    if (ret != 0) continue;
+    int ret=system("rm -f /tmp/.expr");
+    ret = system("gcc -O0 -w /tmp/.code.c -o /tmp/.expr");
+    //if (ret != 0) continue;
 
     fp = popen("/tmp/.expr", "r");
-    assert(fp != NULL);
+    if(fp == NULL){
+      i--;
+      fprintf(stderr,"No file(/0)\n");
+      continue;
+    }
     int result;
     ret = fscanf(fp, "%d\n", &result);
     fprintf(stderr,"%d=",ret);
