@@ -98,7 +98,7 @@ int main(int argc, char *argv[]) {
     fputs(code_buf, fp);
     fclose(fp);
     int ret=system("rm -f /tmp/.expr");
-    ret = system("gcc -O0 -w /tmp/.code.c -o /tmp/.expr");
+    ret = system("gcc -O0 /tmp/.code.c -o /tmp/.expr");
     //if (ret != 0) continue;
 
     fp = popen("/tmp/.expr", "r");
