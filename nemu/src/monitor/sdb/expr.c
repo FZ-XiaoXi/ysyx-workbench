@@ -90,8 +90,8 @@ static bool make_token(char *e) {
         char *substr_start = e + position;
         int substr_len = pmatch.rm_eo;
 
-        Log("match rules[%d] = \"%s\" at position %d with len %d: %.*s",
-            i, rules[i].regex, position, substr_len, substr_len, substr_start);
+        //Log("match rules[%d] = \"%s\" at position %d with len %d: %.*s",
+            //i, rules[i].regex, position, substr_len, substr_len, substr_start);
 
         position += substr_len;
         
@@ -227,16 +227,16 @@ uint32_t eval(int p, int q, bool *success) {
     //    -----------------------------------
     //     (((5))))/((4/3)
     for(int i=p;i<=q;i++){
-      printf("%s",tokens[i].str);
+      //printf("%s",tokens[i].str);
       if(tokens[i].type=='(') count++;
       if(tokens[i].type==')') count--;
       if((tokens[i].type=='+' || tokens[i].type=='-')&&count==0) op=i;
       if((tokens[i].type=='*' || tokens[i].type=='/')&&count==0&&(tokens[op].type!='+' && tokens[op].type!='-')) op=i;
     }
-    printf("\n");
+    //printf("\n");
     val1 = eval(p, op - 1,success);
     val2 = eval(op + 1, q,success);
-    printf("%u %s %u\n",val1,tokens[op].str,val2);
+    //printf("%u %s %u\n",val1,tokens[op].str,val2);
     switch (tokens[op].type) {
       case '+': return (uint32_t)val1 + (uint32_t)val2;
       case '-': return (uint32_t)val1 - (uint32_t)val2;
