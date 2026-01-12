@@ -57,7 +57,7 @@ void test_args(){
       count++;
       //printf("Get[%d]!\t%u\t%s\n",count,ans,s);
       //printf("%s\n",s);
-      *strchr(buffer,'\n')='\0';
+      *strchr(s,'\n')='\0';
       printf("---%s---", s);
       val=expr(s,&success);
       if(success==true){
