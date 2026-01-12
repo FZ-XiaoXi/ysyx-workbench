@@ -83,6 +83,8 @@ typedef struct token {
 static Token tokens[65536] __attribute__((used)) = {};
 static int nr_token __attribute__((used))  = 0;
 
+
+
 static bool make_token(char *e) {
   int position = 0;
   int i;
@@ -215,6 +217,22 @@ word_t expr(char *e, bool *success) {
   return eval(0,nr_token-1,success);
 }
 
+int get_op_rank(int op){
+  switch (tokens[op].type)
+  {
+    case 0: return 0;
+    case '+':return 4;
+    case '-':return 4;
+    case '*':return 3;
+    case '/':return 3;
+    case TK_EQ:return 7;
+    case TK_NEQ:return 7;
+    case TK_AND:return 11;
+    default:  return -1;
+  }
+
+}
+
 uint32_t eval(int p, int q, bool *success) {
   if(false==*success) return 0;
   if (p > q) {
@@ -257,20 +275,26 @@ uint32_t eval(int p, int q, bool *success) {
     //     (((5))))/((4/3)
     for(int i=p;i<=q;i++){
       //printf("%s",tokens[i].str);
+      
       if(tokens[i].type=='(') count++;
-      if(tokens[i].type==')') count--;
-      if((tokens[i].type=='+' || tokens[i].type=='-')&&count==0) op=i;
-      if((tokens[i].type=='*' || tokens[i].type=='/')&&count==0&&(tokens[op].type!='+' && tokens[op].type!='-')) op=i;
+      else if(tokens[i].type==')') count--;
+      else if(count==0 && get_op_rank(op)<=get_op_rank(i)){op=i;}
     }
     //printf("\n");
     val1 = eval(p, op - 1,success);
     val2 = eval(op + 1, q,success);
     //printf("%u %s %u\n",val1,tokens[op].str,val2);
     switch (tokens[op].type) {
-      case '+': return (uint32_t)val1 + (uint32_t)val2;
-      case '-': return (uint32_t)val1 - (uint32_t)val2;
-      case '*': return (uint32_t)val1 * (uint32_t)val2;
-      case '/': return (uint32_t)val1 / (uint32_t)val2;
+
+      case '+':     return (uint32_t)val1 + (uint32_t)val2;
+      case '-':     return (uint32_t)val1 - (uint32_t)val2;
+      case '*':     return (uint32_t)val1 * (uint32_t)val2;
+      case '/':     return (uint32_t)val1 / (uint32_t)val2;
+      case TK_AND:  return (uint32_t)val1 && (uint32_t)val2;
+      case TK_EQ:   return (uint32_t)val1 == (uint32_t)val2;
+      case TK_NEQ:  return (uint32_t)val1 != (uint32_t)val2;
+      case TK_DEREF:
+      case TK_REG:  
       default: printf("Error OP: %d %s\n",tokens[op].type,tokens[op].str);*success=false;//assert(0);
     }
   }
