@@ -106,7 +106,7 @@ int main(int argc, char *argv[]) {
     int result;
     ret = fscanf(fp, "%d", &result);
     if(ret<=0){
-      //printf("XXXXX\n");
+      printf("XXXXX\n");
       i--;
       pclose(fp);
       continue;
