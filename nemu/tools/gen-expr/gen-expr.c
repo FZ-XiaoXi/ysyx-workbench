@@ -39,7 +39,7 @@ static char *code_format =
 "    unsigned result = %s; "
 "    printf(\"%%u\", result);"
 "  } else {"
-"    printf(\"x\");"
+"    printf(\"xxxxxxxxxx\");"
 "  }"
 "  return 0; "
 "}";
@@ -108,6 +108,7 @@ int main(int argc, char *argv[]) {
     if(ret<=0){
       //printf("XXXXX\n");
       i--;
+      pclose(fp);
       continue;
     }else{
       printf("%u %s\n", result, buf);
