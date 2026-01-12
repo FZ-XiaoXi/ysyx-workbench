@@ -18,6 +18,7 @@
 /* We use the POSIX regex functions to process regular expressions.
  * Type 'man regex' for more information about POSIX regex functions.
  */
+#include <memory/vaddr.h>
 #include <regex.h>
 #include <errno.h>
 enum {
@@ -228,6 +229,7 @@ int get_op_rank(int op){
     case TK_EQ:return 7;
     case TK_NEQ:return 7;
     case TK_AND:return 11;
+    case TK_DEREF:return 2;
     default:  return -1;
   }
 
@@ -280,23 +282,29 @@ uint32_t eval(int p, int q, bool *success) {
       else if(tokens[i].type==')') count--;
       else if(count==0 && get_op_rank(op)<=get_op_rank(i)){op=i;}
     }
-    //printf("\n");
-    val1 = eval(p, op - 1,success);
-    val2 = eval(op + 1, q,success);
-    //printf("%u %s %u\n",val1,tokens[op].str,val2);
-    switch (tokens[op].type) {
+    if(tokens[op].type==TK_DEREF){
+      val1 = eval(op + 1, q,success);
+      return vaddr_read((vaddr_t)val1,4);
+    }else{
+      //printf("\n");
+      val1 = eval(p, op - 1,success);
+      val2 = eval(op + 1, q,success);
+      //printf("%u %s %u\n",val1,tokens[op].str,val2);
+      switch (tokens[op].type) {
 
-      case '+':     return (uint32_t)val1 + (uint32_t)val2;
-      case '-':     return (uint32_t)val1 - (uint32_t)val2;
-      case '*':     return (uint32_t)val1 * (uint32_t)val2;
-      case '/':     return (uint32_t)val1 / (uint32_t)val2;
-      case TK_AND:  return (uint32_t)val1 && (uint32_t)val2;
-      case TK_EQ:   return (uint32_t)val1 == (uint32_t)val2;
-      case TK_NEQ:  return (uint32_t)val1 != (uint32_t)val2;
-      case TK_DEREF:
-      case TK_REG:  
-      default: printf("Error OP: %d %s\n",tokens[op].type,tokens[op].str);*success=false;//assert(0);
+        case '+':     return (uint32_t)val1 + (uint32_t)val2;
+        case '-':     return (uint32_t)val1 - (uint32_t)val2;
+        case '*':     return (uint32_t)val1 * (uint32_t)val2;
+        case '/':     return (uint32_t)val1 / (uint32_t)val2;
+        case TK_AND:  return (uint32_t)val1 && (uint32_t)val2;
+        case TK_EQ:   return (uint32_t)val1 == (uint32_t)val2;
+        case TK_NEQ:  return (uint32_t)val1 != (uint32_t)val2;
+        case TK_DEREF:return (uint32_t)val1 != (uint32_t)val2;
+        case TK_REG:  
+        default: printf("Error OP: %d %s\n",tokens[op].type,tokens[op].str);*success=false;//assert(0);
+      }
     }
+    
   }
   printf("NULL address!\n");
   *success=false;
