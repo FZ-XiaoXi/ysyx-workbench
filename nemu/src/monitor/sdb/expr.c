@@ -169,6 +169,7 @@ static bool make_token(char *e) {
                   nr_token--;
                 }
               }
+              break;
             case TK_NUM_16:
               tokens[nr_token-1].type=TK_NUM_10;
               char *endptr;
