@@ -57,10 +57,12 @@ void test_args(){
         }else{
           printf("ERROR[%d]\tANS:%u\tVAL:%u\t%s\n",count,ans,val,s);
         }
+      }else{
+        continue;
       }
     }
   }else{
     printf("No args tests.\n");
   }
-
+  fclose(fp);
 }
