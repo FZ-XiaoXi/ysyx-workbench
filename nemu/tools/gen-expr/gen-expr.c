@@ -21,8 +21,9 @@
 #include <string.h>
 
 // this should be enough
-int buf_index=0;
-static char buf[65536] = {'\0'};
+int buf_index=0,unsignedbuf_index=0;
+static char buf[32768] = {'\0'};
+static char unsignedbuf[65536] = {'\0'};
 static char code_buf[65536 + 1280] = {}; // a little larger than `buf`
 static char *code_format =
 "#include <stdio.h>\n"
@@ -90,10 +91,19 @@ int main(int argc, char *argv[]) {
   
   for (int i = 0; i < loop; i ++) {
     memset(buf, 0, sizeof(buf));
-    buf_index=0;
+    memset(unsignedbuf, 0, sizeof(unsignedbuf));
+    buf_index=0,unsignedbuf_index=0;
     gen_rand_expr(0);
-
-    sprintf(code_buf, code_format, buf);
+    for(int i=0;i<buf_index;i++){
+      if(!(buf[i]>='0'&&buf[i]<='9')&&(buf[i+1]>='0'&&buf[i+1]<='9')){
+        unsignedbuf[unsignedbuf_index]=buf[i];
+        memcpy(unsignedbuf+unsignedbuf_index+1,"(unsigned)",10);
+        unsignedbuf_index+=11;
+      }else{
+        unsignedbuf[unsignedbuf_index++]=buf[i];
+      }
+    }
+    sprintf(code_buf, code_format, unsignedbuf);
 
     FILE *fp = fopen("/tmp/.code.c", "w");
     assert(fp != NULL);
