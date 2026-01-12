@@ -85,22 +85,16 @@ int main(int argc, char *argv[]) {
     assert(fp != NULL);
     fputs(code_buf, fp);
     fclose(fp);
-    int ret=system("rm -f /tmp/.expr");
-    ret = system("gcc -Werror /tmp/.code.c -o /tmp/.expr");
+    int ret = system("gcc -Werror /tmp/.code.c -o /tmp/.expr");
     if (ret != 0){
       i--;
       continue;
     }
-
     fp = popen("/tmp/.expr", "r");
-    if(fp == NULL){
-      i--;
-      fprintf(stderr,"No file(/0)\n");
-      continue;
-    }
+    assert(fp!=NULL);
     int result;
     ret = fscanf(fp, "%d\n", &result);
-    fprintf(stderr,"%d=",ret);
+    //fprintf(stderr,"%d=",ret);
     printf("%u %s\n", result, buf);
     pclose(fp);
   }
