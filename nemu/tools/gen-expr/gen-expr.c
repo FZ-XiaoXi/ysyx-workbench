@@ -37,9 +37,9 @@ static char *code_format =
 "  signal(SIGFPE, handle_div_zero);"
 "  if (setjmp(env) == 0) {"
 "    unsigned result = %s; "
-"    printf(\"%%u\", result);"
+"    printf(\"%%u\\n\", result);"
 "  } else {"
-"    printf(\"xxxxxxxxxx\");"
+"    printf(\"xxxxxxxxxx\\n\");"
 "  }"
 "  return 0; "
 "}";
@@ -104,9 +104,10 @@ int main(int argc, char *argv[]) {
     fp = popen("/tmp/.expr", "r");
     assert(fp != NULL);
     int result;
-    ret = fscanf(fp, "%d", &result);
+    ret = fscanf(fp, "%d\n", &result);
+    //printf("%d=",ret);
     if(ret<=0){
-      printf("XXXXX\n");
+      //printf("XXXXX\n");
       i--;
       pclose(fp);
       continue;
