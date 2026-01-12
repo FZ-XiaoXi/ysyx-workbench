@@ -42,8 +42,11 @@ void test_args(){
   if(fp!=NULL){
 
     while(1){
-      
-      res=fscanf(fp,"%u %s\n",&ans,s);
+      char buffer[65536];
+      while (fgets(buffer, sizeof(buffer), fp) != NULL) {
+          printf("%s\n", buffer);
+      }
+      //res=fscanf(fp,"%u %s\n",&ans,s);
       if(res==EOF)break;
       if(res==2){
         bool success=true;
