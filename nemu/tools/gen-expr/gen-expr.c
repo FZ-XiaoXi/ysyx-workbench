@@ -26,9 +26,21 @@ static char buf[65536] = {'\0'};
 static char code_buf[65536 + 1280] = {}; // a little larger than `buf`
 static char *code_format =
 "#include <stdio.h>\n"
+"#include <stdlib.h>\n"
+"#include <signal.h>\n"
+"#include <setjmp.h>\n"
+"static jmp_buf env;"
+"void handle_div_zero(int sig) {"
+"    longjmp(env, 1);"
+"}"
 "int main() { "
+"  signal(SIGFPE, handle_div_zero);"
+"  if (setjmp(env) == 0) {"
 "    unsigned result = %s; "
 "    printf(\"%%u\\n\", result);"
+"  } else {"
+"    printf(\"xxxxxxxxxx\\n\");"
+"  }"
 "  return 0; "
 "}";
 
@@ -85,17 +97,30 @@ int main(int argc, char *argv[]) {
     assert(fp != NULL);
     fputs(code_buf, fp);
     fclose(fp);
-    int ret = system("gcc -Werror /tmp/.code.c -o /tmp/.expr");
+    int ret=system("rm -f /tmp/.expr");
+    ret = system("gcc -Werror /tmp/.code.c -o /tmp/.expr");
     if (ret != 0){
       i--;
       continue;
     }
+
     fp = popen("/tmp/.expr", "r");
-    assert(fp!=NULL);
+    if(fp == NULL){
+      i--;
+      fprintf(stderr,"No file(/0)\n");
+      continue;
+    }
     int result;
     ret = fscanf(fp, "%d\n", &result);
-    //fprintf(stderr,"%d=",ret);
-    printf("%u %s\n", result, buf);
+    fprintf(stderr,"%d=",ret);
+    if(ret<=0){
+      fprintf(stderr,"XXXXX\n");
+      i--;
+      pclose(fp);
+      continue;
+    }else{
+      printf("%u %s\n", result, buf);
+    }   
     pclose(fp);
   }
 
