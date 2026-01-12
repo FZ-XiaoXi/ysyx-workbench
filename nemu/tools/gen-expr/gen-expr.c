@@ -51,8 +51,11 @@ uint32_t choose(uint32_t n){
   return rand()%n;
 }
 void gen_num(){
-  buf[buf_index]=(char)(choose(10)+'0');
-  buf_index++;
+  int n=choose(7);
+  for(int i=0;i<n;i++){
+    buf[buf_index]=(char)(choose(10)+'0');
+    buf_index++;
+  }
 }
 void gen(char c){
   buf[buf_index]=c;
@@ -73,6 +76,7 @@ static void gen_rand_expr(int depth){
   if(depth>100){
     gen_num();
   }else{
+    if(choose(2)) gen(' ');
     switch (choose(3)) {
       case 0: gen_num(); break;
       case 1: gen('('); gen_rand_expr(depth+1); gen(')'); break;
