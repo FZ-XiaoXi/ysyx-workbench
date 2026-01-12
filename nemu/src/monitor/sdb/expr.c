@@ -19,9 +19,9 @@
  * Type 'man regex' for more information about POSIX regex functions.
  */
 #include <regex.h>
-
+#include <errno.h>
 enum {
-  TK_NOTYPE = 256, TK_EQ, TK_NUM_10
+  TK_NOTYPE = 256, TK_EQ, TK_NEQ, TK_NUM_10 , TK_DEREF, TK_AND, TK_REG, TK_NUM_16
 
   /* TODO: Add more token types */
 
@@ -35,6 +35,7 @@ static struct rule {
   /* TODO: Add more rules.
    * Pay attention to the precedence level of different rules.
    */
+  {"\\$\\w+", TK_REG},        // $reg
   {"\\(", '('},         // (
   {"\\)", ')'},         // )
   {" +", TK_NOTYPE},    // spaces
@@ -42,12 +43,18 @@ static struct rule {
   {"\\/", '/'},         // div
   {"\\+", '+'},         // plus
   {"\\-", '-'},         // minus
-  {"==", TK_EQ},        // equal
+  {"\\=\\=", TK_EQ},        // equal
+  {"\\!\\=", TK_NEQ},        // not equal
+  {"\\&\\&", TK_AND},        // and
+  //{"\\*", DEREF},        // dereference
+  {"0[xX][AaBbCcDdEeFf0123456789]+", TK_NUM_16},// number16
   {"[0-9]+", TK_NUM_10},// number10
+  
 };
 
 #define NR_REGEX ARRLEN(rules)
 uint32_t eval(int p, int q, bool *success);
+int parse_uint32(const char *str, uint32_t *result);
 bool check_parentheses(int p, int q,bool* success);
 static regex_t re[NR_REGEX] = {};
 
@@ -109,7 +116,11 @@ static bool make_token(char *e) {
           switch (tokens[nr_token-1].type) {
             case '-':
               if(nr_token!=1){
-                if(!(tokens[nr_token-2].type==')' || tokens[nr_token-2].type==TK_NUM_10 || tokens[nr_token-2].type=='(')){
+                if(
+                  ! (tokens[nr_token-2].type==')' 
+                  || tokens[nr_token-2].type==TK_NUM_10
+                  || tokens[nr_token-2].type=='(')
+                ){
                   printf("Error expression '-'\n");
                   return false;
                 }
@@ -119,22 +130,22 @@ static bool make_token(char *e) {
               //
               break;
             case '*':
-              if(nr_token==1){
-                printf("Error expression '*' 1\n");
-                return false;
-              }else if((tokens[nr_token-2].type!=')' && tokens[nr_token-2].type!=TK_NUM_10)){
-                printf("Error expression '*' 2\n");
-                return false;
-              }
+              // if(nr_token==1){
+              //   printf("Error expression '*' 1\n");
+              //   return false;
+              // }else if((tokens[nr_token-2].type!=')' && tokens[nr_token-2].type!=TK_NUM_10 && tokens[nr_token-2].type!=TK_NUM_16)){
+              //   printf("Error expression '*' 2\n");
+              //   return false;
+              // }
               break;
             case '/':
-              if(nr_token==1){
-                printf("Error expression '/' 1\n");
-                return false;
-              }else if((tokens[nr_token-2].type!=')' && tokens[nr_token-2].type!=TK_NUM_10)){
-                printf("Error expression '/' 2\n");
-                return false;
-              }
+              // if(nr_token==1){
+              //   printf("Error expression '/' 1\n");
+              //   return false;
+              // }else if((tokens[nr_token-2].type!=')' && tokens[nr_token-2].type!=TK_NUM_10 && tokens[nr_token-2].type!=TK_NUM_16)){
+              //   printf("Error expression '/' 2\n");
+              //   return false;
+              // }
               break;
             case TK_NUM_10:
               if(nr_token==2){
@@ -158,7 +169,14 @@ static bool make_token(char *e) {
                   nr_token--;
                 }
               }
-              
+            case TK_NUM_16:
+              tokens[nr_token-1].type=TK_NUM_10;
+              char *endptr;
+              char tmp[32];
+              memset(tmp,0,sizeof(tmp));
+              sprintf(tmp,"%u",(uint32_t)strtoul(tokens[nr_token-1].str, &endptr, 16));
+              memset(tokens[nr_token-1].str,0,sizeof(tokens[nr_token-1].str));
+              strcpy(tokens[nr_token-1].str,tmp);
               break;
             //default: TODO();
           }
@@ -188,7 +206,11 @@ word_t expr(char *e, bool *success) {
     *success = false;
     return 0;
   }
-  
+  for (int i = 0; i < nr_token; i ++) {
+    if (tokens[i].type == '*' && (i == 0 || (tokens[i - 1].type != TK_NUM_10 && tokens[i - 1].type != ')')) ) {
+      tokens[i].type = TK_DEREF;
+    }
+  }
   return eval(0,nr_token-1,success);
 }
 
@@ -207,7 +229,13 @@ uint32_t eval(int p, int q, bool *success) {
      * For now this token should be a number.
      * Return the value of the number.
      */
-    return atoi(tokens[p].str);
+    u_int32_t val;
+    if(parse_uint32(tokens[p].str,&val)==0){
+    }else{
+      printf("ERROR number:%s\n",tokens[p].str);
+      assert(0);
+    }
+    return val;
   }
   else if (check_parentheses(p, q,success) == true) {
     /* The expression is surrounded by a matched pair of parentheses.
@@ -314,4 +342,33 @@ bool check_parentheses(int p, int q,bool* success){
     //assert(0);
   }
   return false;
+}
+
+int parse_uint32(const char *str, uint32_t *result) {
+    char *endptr;
+    // 检查是否为负号（无符号数不应有负号）
+    if (*str == '-') {
+        return -1;  // 错误：负数
+    }
+    // 检查是否有正号（可选）
+    if (*str == '+') {
+        str++;
+    }
+    // 使用strtoul转换
+    errno = 0;  // 清除错误标志
+    unsigned long value = strtoul(str, &endptr, 10);  // 基数10表示十进制
+    // 检查是否没有数字被转换
+    if (endptr == str) {
+        return -2;  // 错误：没有数字
+    }
+    // 检查转换过程中是否发生溢出
+    if (errno == ERANGE) {
+        return -4;  // 错误：超出范围
+    }
+    // 检查是否在uint32_t范围内
+    if (value > UINT32_MAX) {
+        return -5;  // 错误：超出uint32_t范围
+    }
+    *result = (uint32_t)value;
+    return 0;  // 成功
 }
