@@ -35,33 +35,32 @@ int main(int argc, char *argv[]) {
   return is_exit_status_bad();
 }
 void test_args(){
-  int res=0,count=0;
+  int count=0;
   uint32_t val,ans;
-  char s[65536]={};
+  char s[65600]={};
   FILE* fp = fopen("/home/seaber/ysyx-workbench/nemu/tools/gen-expr/input","r");
   if(fp!=NULL){
 
     while(1){
-      char buffer[65536];
-      while (fgets(buffer, sizeof(buffer), fp) != NULL) {
-          printf("%s\n", buffer);
-      }
-      //res=fscanf(fp,"%u %s\n",&ans,s);
-      if(res==EOF)break;
-      if(res==2){
-        bool success=true;
-        count++;
-        //printf("Get[%d]!\t%u\t%s\n",count,ans,s);
-        //printf("%s\n",s);
-        val=expr(s,&success);
-        if(success==true){
-          if(val==ans) printf("PASS[%d]\n",count);
-          else printf("WRONG[%d]\tANS:%u\tVAL:%u\t%s\n",count,ans,val,s);
-        }else{
-          printf("ERROR[%d]\tANS:%u\tVAL:%u\t%s\n",count,ans,val,s);
-        }
+      char buffer[65600];
+      if (fgets(buffer, sizeof(buffer), fp) != NULL) {
+          printf("%s", buffer);
       }else{
-        continue;
+        break;
+      }
+      sscanf(buffer,"%u",&ans);
+      strcpy(s,strchr(buffer,' ')+1);
+      //res=fscanf(fp,"%u %s\n",&ans,s);
+      bool success=true;
+      count++;
+      //printf("Get[%d]!\t%u\t%s\n",count,ans,s);
+      //printf("%s\n",s);
+      val=expr(s,&success);
+      if(success==true){
+        if(val==ans) printf("PASS[%d]\n",count);
+        else printf("WRONG[%d]\tANS:%u\tVAL:%u\t%s\n",count,ans,val,s);
+      }else{
+        printf("ERROR[%d]\tANS:%u\tVAL:%u\t%s\n",count,ans,val,s);
       }
     }
   }else{
