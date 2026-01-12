@@ -36,7 +36,7 @@ static struct rule {
   /* TODO: Add more rules.
    * Pay attention to the precedence level of different rules.
    */
-  {"\\$\\w+", TK_REG},        // $reg
+  {"\\${1,2}\\w+", TK_REG},        // $reg
   {"\\(", '('},         // (
   {"\\)", ')'},         // )
   {" +", TK_NOTYPE},    // spaces
