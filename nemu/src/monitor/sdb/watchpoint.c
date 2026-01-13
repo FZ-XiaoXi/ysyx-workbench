@@ -96,7 +96,7 @@ void print_wp(){
     if(wp==NULL)  break;
     uint32_t val=expr(wp->expr,&success);
     if(success==false) printf("Error experiment!\n");
-    printf("%d\t%u\t%s\n",wp->NO,val,wp->expr);
+    printf("%d\t%u\t\t%s\n",wp->NO,val,wp->expr);
     wp=wp->next;
   }
   wp=free_;
