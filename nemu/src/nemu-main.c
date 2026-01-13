@@ -28,8 +28,6 @@ int main(int argc, char *argv[]) {
   init_monitor(argc, argv);
 #endif
   //test_args();
-  char s[10]={};
-  printf("%c",s[10]);
   /* Start engine. */
   engine_start();
 //0-5+(2+(2*9-(((5))))/((4/3))/(1+8)+0*0)
