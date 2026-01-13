@@ -109,7 +109,7 @@ void print_wp(){
 }
 
 int diff_wp(int n){
-  bool success;
+  bool success=true;
   WP *wp=find_wp(n);
   if(wp!=NULL){
     if(expr(wp->expr,&success)!=wp->val){
