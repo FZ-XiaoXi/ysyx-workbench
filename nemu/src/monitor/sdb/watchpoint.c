@@ -91,10 +91,10 @@ void print_wp(){
   printf("Used:\n");
   WP *wp=head;
   bool success;
-  printf("id\tnow\tprev\texp\n");
+  printf("id\tvalue\texp\n");
   while(1){
     if(wp==NULL)  break;
-    printf("%d\t%u\t%u\t%s\n",wp->NO,expr(wp->expr,&success),wp->val,wp->expr);
+    printf("%d\t%u\t%s\n",wp->NO,expr(wp->expr,&success),wp->expr);
     wp=wp->next;
   }
   wp=free_;
@@ -106,5 +106,18 @@ void print_wp(){
   }
 }
 
+int diff_wp(int n){
+  bool success;
+  WP *wp=find_wp(n);
+  if(wp!=NULL){
+    if(expr(wp->expr,&success)!=wp->val){
+      return 1;
+    }
+    return 0;
+  }else{
+    return -1;
+  }
+
+}
 /* TODO: Implement the functionality of watchpoint */
 
