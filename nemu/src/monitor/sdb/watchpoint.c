@@ -90,7 +90,7 @@ WP *find_wp(int n){
 void print_wp(){
   printf("Used:\n");
   WP *wp=head;
-  bool success;
+  bool success=true;
   printf("id\tvalue\texp\n");
   while(1){
     if(wp==NULL)  break;
