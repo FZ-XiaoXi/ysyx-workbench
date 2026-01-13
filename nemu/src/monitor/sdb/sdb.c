@@ -157,7 +157,7 @@ static int cmd_w(char *args) {
 
 static int cmd_d(char *args) {
   if(args!=NULL){
-    int n=atoi(args);
+    int n=atoi(args);printf("n [%d].\n",n);
     if(n>=0){
       free_wp(find_wp(n));
       printf("Deleted watchpoint [%d].\n",n);
