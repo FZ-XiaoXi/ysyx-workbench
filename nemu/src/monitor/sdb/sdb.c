@@ -134,6 +134,27 @@ static int cmd_p(char *args) {
   return 0;
 }
 
+static int cmd_w(char *args) {
+  bool good=true;
+  uint32_t expval;
+  if(args!=NULL){
+    expval=expr(args,&good);
+    if(good==false) printf("Error experiment!\n");
+    else{
+      int no=new_wp(args,expval);
+      if(no>=0){
+        printf("Watchpoint [%d] was added. \"%s\"=%u\n",no,args,expval);
+      }else{
+      printf("Watchpoint FULL!\n");
+      }
+    }
+  }else{
+    printf("NULL argument!\n");
+  }
+  
+  return 0;
+}
+
 static int cmd_q(char *args) {
   return -1;
 }
@@ -151,6 +172,7 @@ static struct {
   { "info", "Print program status", cmd_info },
   { "x", "Scan memory", cmd_x },
   { "p", "Expression evaluation", cmd_p },
+  { "w", "Set watchpoint", cmd_w },
   { "q", "Exit NEMU", cmd_q },
 
   /* TODO: Add more commands */

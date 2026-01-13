@@ -17,26 +17,59 @@
 
 #define NR_WP 32
 
-typedef struct watchpoint {
-  int NO;
-  struct watchpoint *next;
-
-  /* TODO: Add more members if necessary */
-
-} WP;
 
 static WP wp_pool[NR_WP] = {};
-static WP *head = NULL, *free_ = NULL;
+static WP *head = NULL, *free_ = NULL, *tail = NULL;
 
 void init_wp_pool() {
   int i;
   for (i = 0; i < NR_WP; i ++) {
     wp_pool[i].NO = i;
     wp_pool[i].next = (i == NR_WP - 1 ? NULL : &wp_pool[i + 1]);
+
   }
 
   head = NULL;
   free_ = wp_pool;
+}
+
+int new_wp(char *arg,uint32_t val){
+  if(free_==NULL){
+    return -1;
+  }
+  if(head==NULL){
+    head=free_;
+  }else{
+    WP* tmp;
+    tmp=free_;
+    free_=free_->next;
+    tmp->next=head;
+    head=tmp;
+  }
+  head->val=val;
+  memset(head->expr,0,sizeof(head->expr));
+  strcpy(head->expr,arg);
+  return head->NO;
+}
+void free_wp(WP *wp){
+  WP *i=head;
+  if(head==wp){
+    WP* tmp;
+    tmp=head;
+    head=head->next;
+    tmp->next=free_;
+    free_=tmp;
+  }
+  while(i->next!=wp){
+    if(i==tail){
+      printf("No watchpoint!\n");
+      return;
+    }
+    i=i->next;
+  }
+  i->next=wp->next;
+  wp->next=free_;
+  free_=wp;
 }
 
 /* TODO: Implement the functionality of watchpoint */
