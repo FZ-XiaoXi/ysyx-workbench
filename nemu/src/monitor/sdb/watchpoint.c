@@ -61,6 +61,7 @@ void free_wp(WP *wp){
     head=head->next;
     tmp->next=free_;
     free_=tmp;
+    return;
   }
 
   while(i->next!=wp){
