@@ -40,6 +40,7 @@ int new_wp(char *arg,uint32_t val){
   if(head==NULL){
     head=free_;
     free_=free_->next;
+    head->next=NULL;
   }else{
     WP* tmp;
     tmp=free_;
