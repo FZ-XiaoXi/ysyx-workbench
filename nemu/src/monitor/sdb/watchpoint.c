@@ -73,5 +73,14 @@ void free_wp(WP *wp){
   free_=wp;
 }
 
+WP *find_wp(int n){
+  WP *i=head;
+  while(i->NO!=n){
+    if(i==NULL) return NULL;
+    i=i->next;
+  }
+  return i;
+}
+
 /* TODO: Implement the functionality of watchpoint */
 

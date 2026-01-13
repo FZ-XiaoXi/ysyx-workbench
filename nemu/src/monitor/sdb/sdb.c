@@ -155,6 +155,20 @@ static int cmd_w(char *args) {
   return 0;
 }
 
+static int cmd_d(char *args) {
+  if(args!=NULL){
+    int n=atoi(args);
+    if(n>=0){
+      free_wp(find_wp(n));
+      printf("Deleted watchpoint [%d].\n",n);
+    }else
+      printf("Unknown argumenet '%s'\n", args);
+  }else{
+    printf("Unknown argumenet '%s'\n", args);
+  }
+  return 0;
+}
+
 static int cmd_q(char *args) {
   return -1;
 }
@@ -173,6 +187,7 @@ static struct {
   { "x", "Scan memory", cmd_x },
   { "p", "Expression evaluation", cmd_p },
   { "w", "Set watchpoint", cmd_w },
+  { "d", "Delete watchpoint", cmd_d },
   { "q", "Exit NEMU", cmd_q },
 
   /* TODO: Add more commands */

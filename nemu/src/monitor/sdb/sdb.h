@@ -28,4 +28,5 @@ typedef struct watchpoint {
 word_t expr(char *e, bool *success);
 int new_wp(char *arg,uint32_t val);
 void free_wp(WP *wp);
+WP *find_wp(int n);
 #endif
