@@ -98,7 +98,6 @@ void print_wp(){
   printf("Unused:\n");
   while(1){
     if(wp==NULL)  break;
-    printf("id\tnow\tprev\texp\n");
     printf("%d\n",wp->NO);
     wp=wp->next;
   }
