@@ -62,12 +62,13 @@ void free_wp(WP *wp){
     tmp->next=free_;
     free_=tmp;
   }
+
   while(i->next!=wp){
+    i=i->next;
     if(i==tail){
       printf("No watchpoint!\n");
       return;
     }
-    i=i->next;
   }
   i->next=wp->next;
   wp->next=free_;
