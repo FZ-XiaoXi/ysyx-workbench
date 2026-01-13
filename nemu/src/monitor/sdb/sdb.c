@@ -157,12 +157,16 @@ static int cmd_w(char *args) {
 
 static int cmd_d(char *args) {
   if(args!=NULL){
-    int n=atoi(args);printf("n [%d].\n",n);
+    int n=atoi(args);
     if(n>=0){
-      free_wp(find_wp(n));
-      printf("Deleted watchpoint [%d].\n",n);
-    }else
-      printf("Unknown argumenet '%s'\n", args);
+      WP* t=find_wp(n);
+      if(t==NULL){
+        printf("Cannot find watchpoint [%d].\n",n);
+      }else{
+        free_wp(t);
+        printf("Deleted watchpoint [%d].\n",n);
+      }
+    }else printf("Unknown argumenet '%s'\n", args);
   }else{
     printf("Unknown argumenet '%s'\n", args);
   }
