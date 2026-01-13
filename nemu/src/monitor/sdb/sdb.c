@@ -158,6 +158,7 @@ static int cmd_w(char *args) {
 static int cmd_d(char *args) {
   if(args!=NULL){
     int n=atoi(args);
+    printf("n=%d",n);
     if(n>=0){
       WP* t=find_wp(n);
       if(t==NULL){
