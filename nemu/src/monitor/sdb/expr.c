@@ -213,6 +213,7 @@ static bool make_token(char *e) {
 
 
 word_t expr(char *e, bool *success) {
+  printf("TEST:%s\n",e);
   if(false==*success) return 0;
   /* TODO: Insert codes to evaluate the expression. */
   //TODO();
