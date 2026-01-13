@@ -96,16 +96,17 @@ void print_wp(){
     if(wp==NULL)  break;
     uint32_t val=expr(wp->expr,&success);
     if(success==false) printf("Error experiment!\n");
-    printf("%d\t%u\t%u\t%s\n",wp->NO,val,wp->val,wp->expr);
+    printf("%d\t%u\t%s\n",wp->NO,val,wp->expr);
     wp=wp->next;
   }
   wp=free_;
   printf("Unused:\n");
   while(1){
     if(wp==NULL)  break;
-    printf("%d\n",wp->NO);
+    printf("%d  ",wp->NO);
     wp=wp->next;
   }
+  printf("\n");
 }
 
 int diff_wp(int n){
