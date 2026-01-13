@@ -94,7 +94,7 @@ void print_wp(){
   printf("id\tvalue\texp\n");
   while(1){
     if(wp==NULL)  break;
-    printf("%d\t%u\t%s\n",wp->NO,expr(wp->expr,&success),wp->expr);
+    printf("%d\t%u\t%u\t%s\n",wp->NO,expr(wp->expr,&success),wp->val,wp->expr);
     wp=wp->next;
   }
   wp=free_;
