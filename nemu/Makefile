@@ -62,3 +62,19 @@ else
 # Include rules to build NEMU
 include $(NEMU_HOME)/scripts/native.mk
 endif
+
+count:
+	@echo "$$(pwd)"
+	@current_branch=$$(git branch --show-current 2>/dev/null || git rev-parse --abbrev-ref HEAD); \
+	if git show-ref --verify --quiet refs/heads/PA0; then \
+		git checkout PA0 > /dev/null 2>&1; \
+		echo "$$(pwd)"; \
+		pa0_count=$$(find $$(pwd) -name "*.c" -o -name "*.h" -exec grep -v '^$$' {} + 2>/dev/null | wc -l); \
+		git checkout $$current_branch > /dev/null 2>&1; \
+		now_count=$$(find $$(pwd) -name "*.c" -o -name "*.h" -exec grep -v '^$$' {} + 2>/dev/null | wc -l); \
+		echo "PA0分支: $$pa0_count 行"; \
+		echo "当前分支($$current_branch): $$now_count 行"; \
+	else \
+		echo "错误: PA0分支不存在"; \
+	fi
+.PHONY: count
