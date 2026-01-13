@@ -43,9 +43,8 @@ printf("aaa\n");
   for(int i=0;i<32;i++){
     
     if(1==diff_wp(i)){
-      printf("xsadsfsdfdsfdsfdsfdsfd");
       WP *wp=find_wp(i);
-      bool success;
+      bool success=true;
       uint32_t nval=expr(wp->expr,&success);
       printf("watchpoint[%d]\t%u\t->\t%u\t%s\n",i,wp->val,nval,wp->expr);
       wp->val=nval;
