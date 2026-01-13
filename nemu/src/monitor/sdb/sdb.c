@@ -156,7 +156,7 @@ static int cmd_w(char *args) {
 }
 
 static int cmd_d(char *args) {
-  if(args!=NULL){printf("s=%s",args);
+  if(args!=NULL){printf("s=");
     int n=atoi(args);
     printf("n=%d",n);
     if(n>=0){
