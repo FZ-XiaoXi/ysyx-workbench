@@ -94,7 +94,9 @@ void print_wp(){
   printf("id\tvalue\texp\n");
   while(1){
     if(wp==NULL)  break;
-    printf("%d\t%u\t%u\t%s\n",wp->NO,expr(wp->expr,&success),wp->val,wp->expr);
+    uint32_t val=expr(wp->expr,&success);
+    if(success==false) printf("Error experiment!\n");
+    printf("%d\t%u\t%u\t%s\n",wp->NO,val,wp->val,wp->expr);
     wp=wp->next;
   }
   wp=free_;
