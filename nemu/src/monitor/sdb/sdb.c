@@ -163,6 +163,7 @@ static int cmd_d(char *args) {
       if(t==NULL){
         printf("Cannot find watchpoint [%d].\n",n);
       }else{
+        printf("Finded watchpoint [%d].\n",n);
         free_wp(t);
         printf("Deleted watchpoint [%d].\n",n);
       }
