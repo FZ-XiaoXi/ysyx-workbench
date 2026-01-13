@@ -15,6 +15,7 @@
 
 #include <isa.h>
 #include <cpu/cpu.h>
+#include <memory/vaddr.h>
 #include <readline/readline.h>
 #include <readline/history.h>
 #include "sdb.h"
@@ -47,6 +48,132 @@ static int cmd_c(char *args) {
   return 0;
 }
 
+static int cmd_si(char *args) {
+  if(args!=NULL){
+    if(atoi(args)>=1)
+      cpu_exec(atoi(args));
+    else
+      printf("Unknown argumenet '%s'\n", args);
+  }else{
+    cpu_exec(1);
+  }
+  return 0;
+}
+
+static int cmd_info(char *args) {
+  if(args!=NULL){
+    const char s[2]=" ";
+    char* argument;
+
+    argument=strtok(args,s);
+    while(1) {
+      if(argument[0]!='\0') break;
+      argument = strtok(NULL, s);
+    }
+    switch (argument[0])
+    {
+    case 'r':
+      isa_reg_display();
+      break;
+    case 'w':
+      print_wp();
+      break;
+    default:
+      printf("Incorrect argument! Please input 'r' or 'w'\n");
+      break;
+    }
+  }else{
+    printf("NULL argument! Please input 'r' or 'w'\n");
+  }
+  return 0;
+}
+
+static int cmd_x(char *args) {
+    int num;
+    const char s[2]=" ";
+    char* argument;
+    argument=strtok(args,s);
+    if(argument==NULL){
+      printf("NULL argument!\n");
+      return 0;
+    }
+    num=atoi(argument);
+    if(num<=0){
+      printf("Error NUMBER!\n");
+      return 0;
+    }
+    argument=strtok(NULL,s);
+    if(argument==NULL){
+      printf("NULL address!\n");
+      return 0;
+    }
+    char *endptr;
+    int val = strtol(argument, &endptr, 16);
+    if (endptr == argument || val==0) {
+        printf("NULL address: %s\n", argument);
+        return 0;
+    }
+    printf("%x\n",val);
+    for(int i=0;i<num;i++){
+      printf("%.4d\t0x%.8x\t0x%.8x\t%d\n",i,val+i*4,vaddr_read((vaddr_t)val+i*4,4),vaddr_read((vaddr_t)val+i*4,4));
+    }
+    
+    return 0;
+}
+
+static int cmd_p(char *args) {
+  bool good=true;
+  uint32_t expval;
+  if(args!=NULL){
+    expval=expr(args,&good);
+    if(good==false) printf("Error experiment!\n");
+    else printf("=%u\n",expval);
+  }else{
+    printf("NULL argument!\n");
+  }
+  
+  return 0;
+}
+
+static int cmd_w(char *args) {
+  bool good=true;
+  uint32_t expval;
+  if(args!=NULL){
+    expval=expr(args,&good);
+    if(good==false) printf("Error experiment!\n");
+    else{
+      int no=new_wp(args,expval);
+      if(no>=0){
+        printf("Watchpoint [%d] was added. \"%s\"=%u\n",no,args,expval);
+      }else{
+      printf("Watchpoint FULL!\n");
+      }
+    }
+  }else{
+    printf("NULL argument!\n");
+  }
+  
+  return 0;
+}
+
+static int cmd_d(char *args) {
+  if(args!=NULL){
+    int n=atoi(args);
+    if(n>=0){
+      WP* t=find_wp(n);
+      if(t==NULL){
+        printf("Cannot find watchpoint [%d].\n",n);
+      }else{
+        printf("Finded watchpoint [%d].\n",n);
+        free_wp(t);
+        printf("Deleted watchpoint [%d].\n",n);
+      }
+    }else printf("Unknown argumenet '%s'\n", args);
+  }else{
+    printf("Unknown argumenet '%s'\n", args);
+  }
+  return 0;
+}
 
 static int cmd_q(char *args) {
   return -1;
@@ -61,6 +188,12 @@ static struct {
 } cmd_table [] = {
   { "help", "Display information about all supported commands", cmd_help },
   { "c", "Continue the execution of the program", cmd_c },
+  { "si", "Single-step execution", cmd_si },
+  { "info", "Print program status", cmd_info },
+  { "x", "Scan memory", cmd_x },
+  { "p", "Expression evaluation", cmd_p },
+  { "w", "Set watchpoint", cmd_w },
+  { "d", "Delete watchpoint", cmd_d },
   { "q", "Exit NEMU", cmd_q },
 
   /* TODO: Add more commands */

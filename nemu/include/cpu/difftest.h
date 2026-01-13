@@ -18,7 +18,6 @@
 
 #include <common.h>
 #include <difftest-def.h>
-
 #ifdef CONFIG_DIFFTEST
 void difftest_skip_ref();
 void difftest_skip_dut(int nr_ref, int nr_dut);

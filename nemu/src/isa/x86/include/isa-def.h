@@ -27,15 +27,32 @@
  */
 
 typedef struct {
-  struct {
-    uint32_t _32;
-    uint16_t _16;
-    uint8_t _8[2];
-  } gpr[8];
+  
 
   /* Do NOT change the order of the GPRs' definitions. */
-  uint32_t eax, ecx, edx, ebx, esp, ebp, esi, edi;
-
+  
+  union{
+    struct {
+      union{
+        uint32_t _32;
+        uint16_t _16;
+        uint8_t _8[2];
+      };
+    } gpr[8];
+    union{
+      struct
+      {
+        uint32_t eax;
+        uint32_t ecx;
+        uint32_t edx;
+        uint32_t ebx;
+        uint32_t esp;
+        uint32_t ebp;
+        uint32_t esi;
+        uint32_t edi;
+      };
+    };
+  };
   vaddr_t pc;
 } x86_CPU_state;
 
