@@ -69,12 +69,13 @@ count:
 	if git show-ref --verify --quiet refs/heads/PA0; then \
 		git checkout PA0 > /dev/null 2>&1; \
 		echo "$$(pwd)"; \
-		pa0_count=$$(find $$(pwd) -name "*.c" -o -name "*.h" -exec grep -v '^$$' {} + 2>/dev/null | wc -l); \
+		pa0_count=$$(find $$(pwd) \( -name "*.c" -o -name "*.h" \) -exec grep -v '^$$' {} + 2>/dev/null | wc -l); \
 		git checkout $$current_branch > /dev/null 2>&1; \
-		now_count=$$(find $$(pwd) -name "*.c" -o -name "*.h" -exec grep -v '^$$' {} + 2>/dev/null | wc -l); \
-		echo "PA0分支: $$pa0_count 行"; \
-		echo "当前分支($$current_branch): $$now_count 行"; \
+		now_count=$$(find $$(pwd) \( -name "*.c" -o -name "*.h" \) -exec grep -v '^$$' {} + 2>/dev/null | wc -l); \
+		echo "PA0: $$pa0_count"; \
+		echo "NOW: ($$current_branch): $$now_count"; \
+		echo "ADD: $$((now_count - pa0_count))"; \
 	else \
-		echo "错误: PA0分支不存在"; \
+		echo "ERROR"; \
 	fi
 .PHONY: count
