@@ -76,6 +76,7 @@ static int cmd_info(char *args) {
       isa_reg_display();
       break;
     case 'w':
+      print_wp();
       break;
     default:
       printf("Incorrect argument! Please input 'r' or 'w'\n");

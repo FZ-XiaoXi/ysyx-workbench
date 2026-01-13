@@ -84,5 +84,23 @@ WP *find_wp(int n){
   return i;
 }
 
+void print_wp(){
+  printf("Used:\n");
+  WP *wp=head;
+  bool success;
+  while(1){
+    if(wp==NULL)  break;
+    printf("id\tnow\tprev\texp\n");
+    printf("%d\t%u\t%u\t%s\n",wp->NO,expr(wp->expr,&success),wp->val,wp->expr);
+  }
+  wp=free_;
+  printf("Unused:\n");
+  while(1){
+    if(wp==NULL)  break;
+    printf("id\tnow\tprev\texp\n");
+    printf("%d\n",wp->NO);
+  }
+}
+
 /* TODO: Implement the functionality of watchpoint */
 
