@@ -53,8 +53,8 @@ int main(int argc, char** argv) {
 		//top->a=a;
 		//top->b=b;
 		step_and_dump_wave();
-		tfp->dump(contextp->time());
-		contextp->timeInc(10);
+	//	tfp->dump(contextp->time());
+	//	contextp->timeInc(10);
 		//printf("a=%d b=%d f=%d\n",a,b,top->f);
 		//assert(top->f == (a^b));
 	}
