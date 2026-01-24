@@ -37,29 +37,17 @@ VM_PREFIX = Vtop
 VM_MODPREFIX = Vtop
 # User CFLAGS (from -CFLAGS on Verilator command line)
 VM_USER_CFLAGS = \
-  -MMD \
-  -O3 \
-  -I/usr/include/SDL2 \
-  -D_REENTRANT \
-  -I/home/seaber/ysyx-workbench/nvboard/usr/include \
   -DTOP_NAME="Vtop" \
 
 # User LDLIBS (from -LDFLAGS on Verilator command line)
 VM_USER_LDLIBS = \
-  /home/seaber/ysyx-workbench/nvboard/build/nvboard.a \
-  -lSDL2 \
-  -lSDL2_image \
-  -lSDL2_ttf \
 
 # User .cpp files (from .cpp's on Verilator command line)
 VM_USER_CLASSES = \
-  auto_bind \
   sim_main \
-  auto_bind \
 
 # User .cpp directories (from .cpp's on Verilator command line)
 VM_USER_DIR = \
-  . \
   .. \
   ../csrc \
 
@@ -72,11 +60,7 @@ include $(VERILATOR_ROOT)/include/verilated.mk
 ### Executable rules... (from --exe)
 VPATH += $(VM_USER_DIR)
 
-auto_bind.o: /home/seaber/ysyx-workbench/npc/obj_dir/auto_bind.cpp 
-	$(OBJCACHE) $(CXX) $(CXXFLAGS) $(CPPFLAGS) $(OPT_FAST)  -c -o $@ $<
 sim_main.o: csrc/sim_main.cpp 
-	$(OBJCACHE) $(CXX) $(CXXFLAGS) $(CPPFLAGS) $(OPT_FAST)  -c -o $@ $<
-auto_bind.o: obj_dir/auto_bind.cpp 
 	$(OBJCACHE) $(CXX) $(CXXFLAGS) $(CPPFLAGS) $(OPT_FAST)  -c -o $@ $<
 
 ### Link rules... (from --exe)
