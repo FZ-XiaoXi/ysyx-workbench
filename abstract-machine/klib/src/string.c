@@ -12,9 +12,8 @@ char *strcpy(char *dst, const char *src) {
   //panic("Not implemented");
   //char *p;
   //p=memcpy(dst,src,strlen(src));
-  strlen(src);
   //*p='\0';
-  return dst;
+  return dst+strlen(src);
 }
 
 char *strncpy(char *dst, const char *src, size_t n) {
@@ -27,7 +26,7 @@ char *strcat(char *dst, const char *src) {
 
 int strcmp(const char *s1, const char *s2) {
   //panic("Not implemented");
-  return strlen(s1);
+  return (int)strlen(s1);
 }
 
 int strncmp(const char *s1, const char *s2, size_t n) {
