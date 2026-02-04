@@ -30,6 +30,7 @@ int vsprintf(char *out, const char *fmt, va_list ap) {
         default:
           panic("Error ARGUMENT");
       }
+      fmt++;
     }else if(*fmt=='\\'){
       fmt++;
       switch(*fmt){
@@ -42,6 +43,7 @@ int vsprintf(char *out, const char *fmt, va_list ap) {
         default:
           panic("Error ARGUMENT");
       }
+      fmt++;
     }else{
       *(out++)=*(fmt++);
     }
