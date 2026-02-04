@@ -9,7 +9,11 @@ size_t strlen(const char *s) {
 }
 
 char *strcpy(char *dst, const char *src) {
-  panic("Not implemented");
+  //panic("Not implemented");
+  char *p;
+  p=memcpy(dst,src,strlen(src));
+  *p='\0';
+  return dst;
 }
 
 char *strncpy(char *dst, const char *src, size_t n) {
