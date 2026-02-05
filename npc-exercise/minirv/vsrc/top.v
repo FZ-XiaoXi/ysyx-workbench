@@ -60,8 +60,6 @@ module clkdiv(
 endmodule
 
 
-module
-
 module GPR(
   input clk,
   input rst,
