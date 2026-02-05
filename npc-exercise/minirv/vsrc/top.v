@@ -11,7 +11,7 @@ module top(
   input [31:0]PC_command
 
 );
-  verilator lint_off PINMISSING
+  verilator -Wno-fatal top.v
   wire clk0,clk1,clk2;
   clkdiv clkdiv_0(clk,rst,clk0,clk1,clk2);
   wire [31:0] imm;
@@ -71,7 +71,7 @@ module GPR(
   input [31:0]inData,
   input WEN
 );
-  reg [31:0]GPR[15:0];
+  reg [31:0]GPR[31:0];
 
   assign outA=(addRA==0)?{32{1'b0}}:GPR[addRA];
   assign outB=(addRB==0)?{32{1'b0}}:GPR[addRB];
