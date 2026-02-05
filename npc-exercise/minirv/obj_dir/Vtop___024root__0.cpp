@@ -47,16 +47,29 @@ void Vtop___024root___nba_sequent__TOP__0(Vtop___024root* vlSelf) {
     VL_DEBUG_IF(VL_DBG_MSGF("+    Vtop___024root___nba_sequent__TOP__0\n"); );
     Vtop__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
     auto& vlSelfRef = std::ref(*vlSelf).get();
+    // Locals
+    CData/*2:0*/ __Vdly__top__DOT__clkdiv_0__DOT__cnt;
+    __Vdly__top__DOT__clkdiv_0__DOT__cnt = 0;
     // Body
-    vlSelfRef.cnt = ((IData)(vlSelfRef.rst) ? 1U : 
-                     ((6U & ((IData)(vlSelfRef.cnt) 
-                             << 1U)) | (1U & ((IData)(vlSelfRef.cnt) 
-                                              >> 2U))));
-    vlSelfRef.clk0 = (1U & (IData)(vlSelfRef.cnt));
-    vlSelfRef.clk1 = (1U & ((IData)(vlSelfRef.cnt) 
-                            >> 1U));
-    vlSelfRef.clk2 = (1U & ((IData)(vlSelfRef.cnt) 
-                            >> 2U));
+    __Vdly__top__DOT__clkdiv_0__DOT__cnt = vlSelfRef.top__DOT__clkdiv_0__DOT__cnt;
+    __Vdly__top__DOT__clkdiv_0__DOT__cnt = ((IData)(vlSelfRef.rst)
+                                             ? 1U : 
+                                            ((6U & 
+                                              ((IData)(vlSelfRef.top__DOT__clkdiv_0__DOT__cnt) 
+                                               << 1U)) 
+                                             | (1U 
+                                                & ((IData)(vlSelfRef.top__DOT__clkdiv_0__DOT__cnt) 
+                                                   >> 2U))));
+    VL_WRITEF_NX("clkdiv: cnt=%b, clk0=%b, clk1=%b, clk2=%b\n",0,
+                 3,vlSelfRef.top__DOT__clkdiv_0__DOT__cnt,
+                 1,(IData)(vlSelfRef.top__DOT__clk0),
+                 1,vlSelfRef.top__DOT__clk1,1,(IData)(vlSelfRef.top__DOT__clk2));
+    vlSelfRef.top__DOT__clkdiv_0__DOT__cnt = __Vdly__top__DOT__clkdiv_0__DOT__cnt;
+    vlSelfRef.top__DOT__clk0 = (1U & (IData)(vlSelfRef.top__DOT__clkdiv_0__DOT__cnt));
+    vlSelfRef.top__DOT__clk1 = (1U & ((IData)(vlSelfRef.top__DOT__clkdiv_0__DOT__cnt) 
+                                      >> 1U));
+    vlSelfRef.top__DOT__clk2 = (1U & ((IData)(vlSelfRef.top__DOT__clkdiv_0__DOT__cnt) 
+                                      >> 2U));
 }
 
 void Vtop___024root___eval_nba(Vtop___024root* vlSelf) {
@@ -66,6 +79,7 @@ void Vtop___024root___eval_nba(Vtop___024root* vlSelf) {
     // Body
     if ((3ULL & vlSelfRef.__VnbaTriggered[0U])) {
         Vtop___024root___nba_sequent__TOP__0(vlSelf);
+        vlSelfRef.__Vm_traceActivity[1U] = 1U;
     }
 }
 
