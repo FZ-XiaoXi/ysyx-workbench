@@ -39,7 +39,7 @@ int main(int argc, char** argv) {
 	while (!contextp->gotFinish()) {
 		i++;
 		top->eval();
-		if(i<999) continue;
+		if(i<9999) continue;
 		i=0;
 		top->PC_command=mem_read(top->PC,top->LSU_range);
 		top->LSU_readdata=mem_read(top->LSU_address,top->LSU_range);
