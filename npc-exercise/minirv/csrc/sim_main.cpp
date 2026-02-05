@@ -22,7 +22,7 @@ int main(int argc, char** argv) {
     contextp->commandArgs(argc, argv);
     Vtop* top = new Vtop{contextp};
 	memset(MEM,0,MAX_PC*4);
-	MEM[0]=00000000001100000000000010010011b;
+	MEM[0]=b00000000001100000000000010010011;
 	top->clk=0;
 	top->rst=0;
 	top->eval();
