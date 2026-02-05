@@ -4,7 +4,7 @@ module top(
   output clk0,
   output clk1,
   output clk2,
-  output [2:0] cnt;
+  output [2:0] cnt
 );
 //wire clk0,clk1,clk2;
 clkdiv clkdiv_0(clk,rst,clk0,clk1,cnt);
@@ -18,7 +18,7 @@ module clkdiv(
   output clk0,
   output clk1,
   output clk2,
-  output reg [2:0] cnt;
+  output reg [2:0] cnt
 );
   
   always @(posedge clk,posedge rst) begin
