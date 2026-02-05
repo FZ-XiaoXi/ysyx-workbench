@@ -35,17 +35,16 @@ int main(int argc, char** argv) {
 	top->rst=0;
 	top->eval();
 	contextp->timeInc(10);
-	
-	while(1)printf("ss\n");;
-	// while (!contextp->gotFinish()) {
-	// 	top->PC_command=mem_read(top->PC,top->LSU_range);
-	// 	top->LSU_readdata=mem_read(top->LSU_address,top->LSU_range);
-	// 	mem_write(top->clk,top->LSU_address,top->LSU_writedata,top->LSU_range,top->LSU_WEN);
-	// 	top->clk=!top->clk;
-	// 	top->eval();
+	while (!contextp->gotFinish()) {
+		top->PC_command=mem_read(top->PC,top->LSU_range);
+		top->LSU_readdata=mem_read(top->LSU_address,top->LSU_range);
+		mem_write(top->clk,top->LSU_address,top->LSU_writedata,top->LSU_range,top->LSU_WEN);
+		printf("%d PC:%x CMD:%x\n",top->clk,top->PC,top->PC_command);
+		top->clk=!top->clk;
+		top->eval();
 		
-	// 	contextp->timeInc(5);
-	// }
+		contextp->timeInc(5);
+	}
     delete top;
     delete contextp;
     return 0;
