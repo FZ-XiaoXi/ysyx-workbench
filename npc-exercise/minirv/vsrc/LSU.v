@@ -9,8 +9,8 @@ module LSU(
     input clk,
     input writeEN
 );
-    assign LSU_address=address;
-    assign data=LSU_data;
-    assign LSU_PC_address=PC_address;
-    assign PC_data=LSU_PC_data;
+    // assign LSU_address=address;
+    // assign data=LSU_data;
+    // assign LSU_PC_address=PC_address;
+    // assign PC_data=LSU_PC_data;
 endmodule
