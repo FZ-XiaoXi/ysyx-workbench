@@ -8,7 +8,7 @@ module top(
   output LSU_WEN,
   input [31:0]LSU_readdata,
   output [31:0]PC,
-  input [31:0]PC_command,
+  input [31:0]PC_command
 
 );
 
