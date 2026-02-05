@@ -16,7 +16,7 @@ module IDU(
     output isLOAD,
     output isWRITE,
     output [9:0]op,
-    output [5:0]type,
+    output [5:0]type
 );
     wire isR,isI,isS,isB,isU,isJ;
     assign type={isR,isI,isS,isB,isU,isJ};
