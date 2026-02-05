@@ -7,7 +7,7 @@ module top(
   output [2:0] cnt
 );
 //wire clk0,clk1,clk2;
-clkdiv clkdiv_0(clk,rst,clk0,clk1,cnt);
+clkdiv clkdiv_0(clk,rst,clk0,clk1,clk2,cnt);
   
 endmodule
 

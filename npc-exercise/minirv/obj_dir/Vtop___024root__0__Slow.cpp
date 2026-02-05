@@ -44,7 +44,7 @@ VL_ATTR_COLD void Vtop___024root___eval_settle(Vtop___024root* vlSelf) {
 #ifdef VL_DEBUG
             Vtop___024root___dump_triggers__stl(vlSelfRef.__VstlTriggered, "stl"s);
 #endif
-            VL_FATAL_MT("vsrc/top.v", 17, "", "Settle region did not converge after 100 tries");
+            VL_FATAL_MT("vsrc/top.v", 1, "", "Settle region did not converge after 100 tries");
         }
         __VstlIterCount = ((IData)(1U) + __VstlIterCount);
     } while (Vtop___024root___eval_phase__stl(vlSelf));
@@ -104,8 +104,7 @@ VL_ATTR_COLD void Vtop___024root___stl_sequent__TOP__0(Vtop___024root* vlSelf) {
     vlSelfRef.clk0 = (1U & (IData)(vlSelfRef.top__DOT__clkdiv_0__DOT__cnt));
     vlSelfRef.clk1 = (1U & ((IData)(vlSelfRef.top__DOT__clkdiv_0__DOT__cnt) 
                             >> 1U));
-    vlSelfRef.clk2 = (1U & ((IData)(vlSelfRef.top__DOT__clkdiv_0__DOT__cnt) 
-                            >> 2U));
+    vlSelfRef.cnt = (7U & VL_SHIFTR_III(3,3,32, (IData)(vlSelfRef.top__DOT__clkdiv_0__DOT__cnt), 2U));
 }
 
 VL_ATTR_COLD void Vtop___024root___eval_stl(Vtop___024root* vlSelf) {
@@ -162,6 +161,7 @@ VL_ATTR_COLD void Vtop___024root___ctor_var_reset(Vtop___024root* vlSelf) {
     vlSelf->clk0 = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 17739559317957316560ull);
     vlSelf->clk1 = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 9289893111844944303ull);
     vlSelf->clk2 = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 16293252662025357808ull);
+    vlSelf->cnt = VL_SCOPED_RAND_RESET_I(3, __VscopeHash, 11575427343217569569ull);
     vlSelf->top__DOT__clkdiv_0__DOT__cnt = VL_SCOPED_RAND_RESET_I(3, __VscopeHash, 9445685417435492161ull);
     for (int __Vi0 = 0; __Vi0 < 1; ++__Vi0) {
         vlSelf->__VstlTriggered[__Vi0] = 0;

@@ -59,8 +59,7 @@ void Vtop___024root___nba_sequent__TOP__0(Vtop___024root* vlSelf) {
     vlSelfRef.clk0 = (1U & (IData)(vlSelfRef.top__DOT__clkdiv_0__DOT__cnt));
     vlSelfRef.clk1 = (1U & ((IData)(vlSelfRef.top__DOT__clkdiv_0__DOT__cnt) 
                             >> 1U));
-    vlSelfRef.clk2 = (1U & ((IData)(vlSelfRef.top__DOT__clkdiv_0__DOT__cnt) 
-                            >> 2U));
+    vlSelfRef.cnt = (7U & VL_SHIFTR_III(3,3,32, (IData)(vlSelfRef.top__DOT__clkdiv_0__DOT__cnt), 2U));
 }
 
 void Vtop___024root___eval_nba(Vtop___024root* vlSelf) {
@@ -135,7 +134,7 @@ void Vtop___024root___eval(Vtop___024root* vlSelf) {
 #ifdef VL_DEBUG
             Vtop___024root___dump_triggers__act(vlSelfRef.__VnbaTriggered, "nba"s);
 #endif
-            VL_FATAL_MT("vsrc/top.v", 17, "", "NBA region did not converge after 100 tries");
+            VL_FATAL_MT("vsrc/top.v", 1, "", "NBA region did not converge after 100 tries");
         }
         __VnbaIterCount = ((IData)(1U) + __VnbaIterCount);
         vlSelfRef.__VactIterCount = 0U;
@@ -144,7 +143,7 @@ void Vtop___024root___eval(Vtop___024root* vlSelf) {
 #ifdef VL_DEBUG
                 Vtop___024root___dump_triggers__act(vlSelfRef.__VactTriggered, "act"s);
 #endif
-                VL_FATAL_MT("vsrc/top.v", 17, "", "Active region did not converge after 100 tries");
+                VL_FATAL_MT("vsrc/top.v", 1, "", "Active region did not converge after 100 tries");
             }
             vlSelfRef.__VactIterCount = ((IData)(1U) 
                                          + vlSelfRef.__VactIterCount);
