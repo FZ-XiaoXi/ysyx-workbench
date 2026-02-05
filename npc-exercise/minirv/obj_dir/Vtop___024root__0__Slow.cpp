@@ -115,10 +115,13 @@ VL_ATTR_COLD void Vtop___024root___stl_sequent__TOP__0(Vtop___024root* vlSelf) {
     Vtop__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
     auto& vlSelfRef = std::ref(*vlSelf).get();
     // Body
-    vlSelfRef.top__DOT__IFU_0__DOT__snpc = (1U & vlSelfRef.PC);
+    vlSelfRef.top__DOT__IFU_0__DOT__snpc = ((IData)(4U) 
+                                            + vlSelfRef.PC);
     vlSelfRef.top__DOT__IDU_0__DOT__isADDI = (IData)(
                                                      (0x00000013U 
-                                                      == vlSelfRef.PC_command));
+                                                      == 
+                                                      (0x0000707fU 
+                                                       & vlSelfRef.PC_command)));
     vlSelfRef.top__DOT__rs1_val = ((0U == (0x0000001fU 
                                            & (vlSelfRef.PC_command 
                                               >> 0x0000000fU)))
@@ -126,16 +129,7 @@ VL_ATTR_COLD void Vtop___024root___stl_sequent__TOP__0(Vtop___024root* vlSelf) {
                                    [(0x0000001fU & 
                                      (vlSelfRef.PC_command 
                                       >> 0x0000000fU))]);
-    if (vlSelfRef.top__DOT__IDU_0__DOT__isADDI) {
-        vlSelfRef.top__DOT__EXU_data = (((IData)(vlSelfRef.top__DOT__IDU_0__DOT__isADDI)
-                                          ? (((- (IData)(
-                                                         (vlSelfRef.PC_command 
-                                                          >> 0x0000001fU))) 
-                                              << 0x0000000cU) 
-                                             | (vlSelfRef.PC_command 
-                                                >> 0x00000014U))
-                                          : vlSelfRef.top__DOT__rs1_val) 
-                                        + ((IData)(vlSelfRef.top__DOT__IDU_0__DOT__isADDI)
+    vlSelfRef.top__DOT__EXU_0__DOT__inB = ((IData)(vlSelfRef.top__DOT__IDU_0__DOT__isADDI)
                                             ? vlSelfRef.top__DOT__rs1_val
                                             : ((0U 
                                                 == 
@@ -146,8 +140,7 @@ VL_ATTR_COLD void Vtop___024root___stl_sequent__TOP__0(Vtop___024root* vlSelf) {
                                                 : vlSelfRef.top__DOT__GPR_0__DOT__GPR
                                                [(0x0000001fU 
                                                  & (vlSelfRef.PC_command 
-                                                    >> 0x00000014U))])));
-    }
+                                                    >> 0x00000014U))]));
 }
 
 VL_ATTR_COLD void Vtop___024root____Vm_traceActivitySetAll(Vtop___024root* vlSelf);
@@ -240,14 +233,14 @@ VL_ATTR_COLD void Vtop___024root___ctor_var_reset(Vtop___024root* vlSelf) {
     vlSelf->top__DOT__dnpc = VL_SCOPED_RAND_RESET_I(32, __VscopeHash, 3608326066998884506ull);
     vlSelf->top__DOT__ifJUMP = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 8025233968268381387ull);
     vlSelf->top__DOT__rs1_val = VL_SCOPED_RAND_RESET_I(32, __VscopeHash, 2187221350439557998ull);
-    vlSelf->top__DOT__EXU_data = VL_SCOPED_RAND_RESET_I(32, __VscopeHash, 12899001511929431967ull);
     vlSelf->top__DOT__clkdiv_0__DOT__cnt = VL_SCOPED_RAND_RESET_I(3, __VscopeHash, 9445685417435492161ull);
     for (int __Vi0 = 0; __Vi0 < 32; ++__Vi0) {
         vlSelf->top__DOT__GPR_0__DOT__GPR[__Vi0] = VL_SCOPED_RAND_RESET_I(32, __VscopeHash, 18271363982738575805ull);
     }
     vlSelf->top__DOT__GPR_0__DOT__unnamedblk1__DOT__i = 0;
-    vlSelf->top__DOT__IFU_0__DOT__snpc = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 12889190132087663053ull);
+    vlSelf->top__DOT__IFU_0__DOT__snpc = VL_SCOPED_RAND_RESET_I(32, __VscopeHash, 12889190132087663053ull);
     vlSelf->top__DOT__IDU_0__DOT__isADDI = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 14054335011428621801ull);
+    vlSelf->top__DOT__EXU_0__DOT__inB = VL_SCOPED_RAND_RESET_I(32, __VscopeHash, 2917099968439915909ull);
     for (int __Vi0 = 0; __Vi0 < 1; ++__Vi0) {
         vlSelf->__VstlTriggered[__Vi0] = 0;
     }
