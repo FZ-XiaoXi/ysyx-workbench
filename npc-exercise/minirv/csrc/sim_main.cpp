@@ -14,8 +14,8 @@ uint32_t mem_read(uint32_t add,uint8_t range){
 	return 0;
 }
 void mem_write(uint8_t clk,uint32_t add,uint32_t wdata,uint8_t range,uint8_t en){
-	//if(!clk) return;
-	//if(en) MEM[add>>2]=wdata;
+	if(!clk) return;
+	if(en) MEM[add>>2]=wdata;
 }
 int main(int argc, char** argv) {
     VerilatedContext* contextp = new VerilatedContext;
