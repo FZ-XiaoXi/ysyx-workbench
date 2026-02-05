@@ -5,7 +5,7 @@
 #include <assert.h>
 #include "verilated.h"
 
-#define MAX_PC 0xffffff
+#define MAX_PC 0xffff
 
 uint32_t MEM[MAX_PC];
 
