@@ -35,13 +35,16 @@ int main(int argc, char** argv) {
 	top->rst=0;
 	top->eval();
 	contextp->timeInc(10);
+	int i=0;
 	while (!contextp->gotFinish()) {
+		i++;
+		if(i<10000) continue;
+		i=0;
 		top->PC_command=mem_read(top->PC,top->LSU_range);
 		top->LSU_readdata=mem_read(top->LSU_address,top->LSU_range);
 		mem_write(top->clk,top->LSU_address,top->LSU_writedata,top->LSU_range,top->LSU_WEN);
 		printf("%d PC:%x CMD:%x\n",top->clk,top->PC,top->PC_command);
 		top->clk=!top->clk;
-		for(int i=0;i<10000000;i++);
 		top->eval();
 		
 		contextp->timeInc(5);
