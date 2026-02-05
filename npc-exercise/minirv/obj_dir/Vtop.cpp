@@ -19,6 +19,7 @@ Vtop::Vtop(VerilatedContext* _vcontextp__, const char* _vcname__)
     , LSU_readdata{vlSymsp->TOP.LSU_readdata}
     , PC{vlSymsp->TOP.PC}
     , PC_command{vlSymsp->TOP.PC_command}
+    , GPRTEST{vlSymsp->TOP.GPRTEST}
     , rootp{&(vlSymsp->TOP)}
 {
     // Register model with the context

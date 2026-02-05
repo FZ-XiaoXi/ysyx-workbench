@@ -37,6 +37,9 @@ class alignas(VL_CACHE_LINE_BYTES) Vtop___024root final : public VerilatedModule
     IData/*31:0*/ top__DOT__IFU_0__DOT__snpc;
     IData/*31:0*/ top__DOT__EXU_0__DOT__inB;
     IData/*31:0*/ __VactIterCount;
+    VL_OUT(GPRTEST[32],31,0);
+    VlUnpacked<IData/*31:0*/, 32> top__DOT__GPRTEST;
+    VlUnpacked<IData/*31:0*/, 32> top__DOT__GPR_0__DOT__GPRTEST;
     VlUnpacked<IData/*31:0*/, 32> top__DOT__GPR_0__DOT__GPR;
     VlUnpacked<QData/*63:0*/, 1> __VstlTriggered;
     VlUnpacked<QData/*63:0*/, 1> __VicoTriggered;

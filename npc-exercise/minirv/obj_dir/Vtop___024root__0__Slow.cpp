@@ -117,6 +117,70 @@ VL_ATTR_COLD void Vtop___024root___stl_sequent__TOP__0(Vtop___024root* vlSelf) {
     // Body
     vlSelfRef.top__DOT__IFU_0__DOT__snpc = ((IData)(4U) 
                                             + vlSelfRef.PC);
+    vlSelfRef.GPRTEST[0x0000001fU] = vlSelfRef.top__DOT__GPR_0__DOT__GPR
+        [0x0000001fU];
+    vlSelfRef.GPRTEST[0x0000001eU] = vlSelfRef.top__DOT__GPR_0__DOT__GPR
+        [0x0000001eU];
+    vlSelfRef.GPRTEST[0x0000001dU] = vlSelfRef.top__DOT__GPR_0__DOT__GPR
+        [0x0000001dU];
+    vlSelfRef.GPRTEST[0x0000001cU] = vlSelfRef.top__DOT__GPR_0__DOT__GPR
+        [0x0000001cU];
+    vlSelfRef.GPRTEST[0x0000001bU] = vlSelfRef.top__DOT__GPR_0__DOT__GPR
+        [0x0000001bU];
+    vlSelfRef.GPRTEST[0x0000001aU] = vlSelfRef.top__DOT__GPR_0__DOT__GPR
+        [0x0000001aU];
+    vlSelfRef.GPRTEST[0x00000019U] = vlSelfRef.top__DOT__GPR_0__DOT__GPR
+        [0x00000019U];
+    vlSelfRef.GPRTEST[0x00000018U] = vlSelfRef.top__DOT__GPR_0__DOT__GPR
+        [0x00000018U];
+    vlSelfRef.GPRTEST[0x00000017U] = vlSelfRef.top__DOT__GPR_0__DOT__GPR
+        [0x00000017U];
+    vlSelfRef.GPRTEST[0x00000016U] = vlSelfRef.top__DOT__GPR_0__DOT__GPR
+        [0x00000016U];
+    vlSelfRef.GPRTEST[0x00000015U] = vlSelfRef.top__DOT__GPR_0__DOT__GPR
+        [0x00000015U];
+    vlSelfRef.GPRTEST[0x00000014U] = vlSelfRef.top__DOT__GPR_0__DOT__GPR
+        [0x00000014U];
+    vlSelfRef.GPRTEST[0x00000013U] = vlSelfRef.top__DOT__GPR_0__DOT__GPR
+        [0x00000013U];
+    vlSelfRef.GPRTEST[0x00000012U] = vlSelfRef.top__DOT__GPR_0__DOT__GPR
+        [0x00000012U];
+    vlSelfRef.GPRTEST[0x00000011U] = vlSelfRef.top__DOT__GPR_0__DOT__GPR
+        [0x00000011U];
+    vlSelfRef.GPRTEST[0x00000010U] = vlSelfRef.top__DOT__GPR_0__DOT__GPR
+        [0x00000010U];
+    vlSelfRef.GPRTEST[0x0000000fU] = vlSelfRef.top__DOT__GPR_0__DOT__GPR
+        [0x0000000fU];
+    vlSelfRef.GPRTEST[0x0000000eU] = vlSelfRef.top__DOT__GPR_0__DOT__GPR
+        [0x0000000eU];
+    vlSelfRef.GPRTEST[0x0000000dU] = vlSelfRef.top__DOT__GPR_0__DOT__GPR
+        [0x0000000dU];
+    vlSelfRef.GPRTEST[0x0000000cU] = vlSelfRef.top__DOT__GPR_0__DOT__GPR
+        [0x0000000cU];
+    vlSelfRef.GPRTEST[0x0000000bU] = vlSelfRef.top__DOT__GPR_0__DOT__GPR
+        [0x0000000bU];
+    vlSelfRef.GPRTEST[0x0000000aU] = vlSelfRef.top__DOT__GPR_0__DOT__GPR
+        [0x0000000aU];
+    vlSelfRef.GPRTEST[9U] = vlSelfRef.top__DOT__GPR_0__DOT__GPR
+        [9U];
+    vlSelfRef.GPRTEST[8U] = vlSelfRef.top__DOT__GPR_0__DOT__GPR
+        [8U];
+    vlSelfRef.GPRTEST[7U] = vlSelfRef.top__DOT__GPR_0__DOT__GPR
+        [7U];
+    vlSelfRef.GPRTEST[6U] = vlSelfRef.top__DOT__GPR_0__DOT__GPR
+        [6U];
+    vlSelfRef.GPRTEST[5U] = vlSelfRef.top__DOT__GPR_0__DOT__GPR
+        [5U];
+    vlSelfRef.GPRTEST[4U] = vlSelfRef.top__DOT__GPR_0__DOT__GPR
+        [4U];
+    vlSelfRef.GPRTEST[3U] = vlSelfRef.top__DOT__GPR_0__DOT__GPR
+        [3U];
+    vlSelfRef.GPRTEST[2U] = vlSelfRef.top__DOT__GPR_0__DOT__GPR
+        [2U];
+    vlSelfRef.GPRTEST[1U] = vlSelfRef.top__DOT__GPR_0__DOT__GPR
+        [1U];
+    vlSelfRef.GPRTEST[0U] = vlSelfRef.top__DOT__GPR_0__DOT__GPR
+        [0U];
     vlSelfRef.top__DOT__IDU_0__DOT__isADDI = (IData)(
                                                      (0x00000013U 
                                                       == 
@@ -129,6 +193,134 @@ VL_ATTR_COLD void Vtop___024root___stl_sequent__TOP__0(Vtop___024root* vlSelf) {
                                    [(0x0000001fU & 
                                      (vlSelfRef.PC_command 
                                       >> 0x0000000fU))]);
+    vlSelfRef.top__DOT__GPRTEST[0x0000001fU] = vlSelfRef.GPRTEST
+        [0x0000001fU];
+    vlSelfRef.top__DOT__GPRTEST[0x0000001eU] = vlSelfRef.GPRTEST
+        [0x0000001eU];
+    vlSelfRef.top__DOT__GPRTEST[0x0000001dU] = vlSelfRef.GPRTEST
+        [0x0000001dU];
+    vlSelfRef.top__DOT__GPRTEST[0x0000001cU] = vlSelfRef.GPRTEST
+        [0x0000001cU];
+    vlSelfRef.top__DOT__GPRTEST[0x0000001bU] = vlSelfRef.GPRTEST
+        [0x0000001bU];
+    vlSelfRef.top__DOT__GPRTEST[0x0000001aU] = vlSelfRef.GPRTEST
+        [0x0000001aU];
+    vlSelfRef.top__DOT__GPRTEST[0x00000019U] = vlSelfRef.GPRTEST
+        [0x00000019U];
+    vlSelfRef.top__DOT__GPRTEST[0x00000018U] = vlSelfRef.GPRTEST
+        [0x00000018U];
+    vlSelfRef.top__DOT__GPRTEST[0x00000017U] = vlSelfRef.GPRTEST
+        [0x00000017U];
+    vlSelfRef.top__DOT__GPRTEST[0x00000016U] = vlSelfRef.GPRTEST
+        [0x00000016U];
+    vlSelfRef.top__DOT__GPRTEST[0x00000015U] = vlSelfRef.GPRTEST
+        [0x00000015U];
+    vlSelfRef.top__DOT__GPRTEST[0x00000014U] = vlSelfRef.GPRTEST
+        [0x00000014U];
+    vlSelfRef.top__DOT__GPRTEST[0x00000013U] = vlSelfRef.GPRTEST
+        [0x00000013U];
+    vlSelfRef.top__DOT__GPRTEST[0x00000012U] = vlSelfRef.GPRTEST
+        [0x00000012U];
+    vlSelfRef.top__DOT__GPRTEST[0x00000011U] = vlSelfRef.GPRTEST
+        [0x00000011U];
+    vlSelfRef.top__DOT__GPRTEST[0x00000010U] = vlSelfRef.GPRTEST
+        [0x00000010U];
+    vlSelfRef.top__DOT__GPRTEST[0x0000000fU] = vlSelfRef.GPRTEST
+        [0x0000000fU];
+    vlSelfRef.top__DOT__GPRTEST[0x0000000eU] = vlSelfRef.GPRTEST
+        [0x0000000eU];
+    vlSelfRef.top__DOT__GPRTEST[0x0000000dU] = vlSelfRef.GPRTEST
+        [0x0000000dU];
+    vlSelfRef.top__DOT__GPRTEST[0x0000000cU] = vlSelfRef.GPRTEST
+        [0x0000000cU];
+    vlSelfRef.top__DOT__GPRTEST[0x0000000bU] = vlSelfRef.GPRTEST
+        [0x0000000bU];
+    vlSelfRef.top__DOT__GPRTEST[0x0000000aU] = vlSelfRef.GPRTEST
+        [0x0000000aU];
+    vlSelfRef.top__DOT__GPRTEST[9U] = vlSelfRef.GPRTEST
+        [9U];
+    vlSelfRef.top__DOT__GPRTEST[8U] = vlSelfRef.GPRTEST
+        [8U];
+    vlSelfRef.top__DOT__GPRTEST[7U] = vlSelfRef.GPRTEST
+        [7U];
+    vlSelfRef.top__DOT__GPRTEST[6U] = vlSelfRef.GPRTEST
+        [6U];
+    vlSelfRef.top__DOT__GPRTEST[5U] = vlSelfRef.GPRTEST
+        [5U];
+    vlSelfRef.top__DOT__GPRTEST[4U] = vlSelfRef.GPRTEST
+        [4U];
+    vlSelfRef.top__DOT__GPRTEST[3U] = vlSelfRef.GPRTEST
+        [3U];
+    vlSelfRef.top__DOT__GPRTEST[2U] = vlSelfRef.GPRTEST
+        [2U];
+    vlSelfRef.top__DOT__GPRTEST[1U] = vlSelfRef.GPRTEST
+        [1U];
+    vlSelfRef.top__DOT__GPRTEST[0U] = vlSelfRef.GPRTEST
+        [0U];
+    vlSelfRef.top__DOT__GPR_0__DOT__GPRTEST[0x0000001fU] 
+        = vlSelfRef.GPRTEST[0x0000001fU];
+    vlSelfRef.top__DOT__GPR_0__DOT__GPRTEST[0x0000001eU] 
+        = vlSelfRef.GPRTEST[0x0000001eU];
+    vlSelfRef.top__DOT__GPR_0__DOT__GPRTEST[0x0000001dU] 
+        = vlSelfRef.GPRTEST[0x0000001dU];
+    vlSelfRef.top__DOT__GPR_0__DOT__GPRTEST[0x0000001cU] 
+        = vlSelfRef.GPRTEST[0x0000001cU];
+    vlSelfRef.top__DOT__GPR_0__DOT__GPRTEST[0x0000001bU] 
+        = vlSelfRef.GPRTEST[0x0000001bU];
+    vlSelfRef.top__DOT__GPR_0__DOT__GPRTEST[0x0000001aU] 
+        = vlSelfRef.GPRTEST[0x0000001aU];
+    vlSelfRef.top__DOT__GPR_0__DOT__GPRTEST[0x00000019U] 
+        = vlSelfRef.GPRTEST[0x00000019U];
+    vlSelfRef.top__DOT__GPR_0__DOT__GPRTEST[0x00000018U] 
+        = vlSelfRef.GPRTEST[0x00000018U];
+    vlSelfRef.top__DOT__GPR_0__DOT__GPRTEST[0x00000017U] 
+        = vlSelfRef.GPRTEST[0x00000017U];
+    vlSelfRef.top__DOT__GPR_0__DOT__GPRTEST[0x00000016U] 
+        = vlSelfRef.GPRTEST[0x00000016U];
+    vlSelfRef.top__DOT__GPR_0__DOT__GPRTEST[0x00000015U] 
+        = vlSelfRef.GPRTEST[0x00000015U];
+    vlSelfRef.top__DOT__GPR_0__DOT__GPRTEST[0x00000014U] 
+        = vlSelfRef.GPRTEST[0x00000014U];
+    vlSelfRef.top__DOT__GPR_0__DOT__GPRTEST[0x00000013U] 
+        = vlSelfRef.GPRTEST[0x00000013U];
+    vlSelfRef.top__DOT__GPR_0__DOT__GPRTEST[0x00000012U] 
+        = vlSelfRef.GPRTEST[0x00000012U];
+    vlSelfRef.top__DOT__GPR_0__DOT__GPRTEST[0x00000011U] 
+        = vlSelfRef.GPRTEST[0x00000011U];
+    vlSelfRef.top__DOT__GPR_0__DOT__GPRTEST[0x00000010U] 
+        = vlSelfRef.GPRTEST[0x00000010U];
+    vlSelfRef.top__DOT__GPR_0__DOT__GPRTEST[0x0000000fU] 
+        = vlSelfRef.GPRTEST[0x0000000fU];
+    vlSelfRef.top__DOT__GPR_0__DOT__GPRTEST[0x0000000eU] 
+        = vlSelfRef.GPRTEST[0x0000000eU];
+    vlSelfRef.top__DOT__GPR_0__DOT__GPRTEST[0x0000000dU] 
+        = vlSelfRef.GPRTEST[0x0000000dU];
+    vlSelfRef.top__DOT__GPR_0__DOT__GPRTEST[0x0000000cU] 
+        = vlSelfRef.GPRTEST[0x0000000cU];
+    vlSelfRef.top__DOT__GPR_0__DOT__GPRTEST[0x0000000bU] 
+        = vlSelfRef.GPRTEST[0x0000000bU];
+    vlSelfRef.top__DOT__GPR_0__DOT__GPRTEST[0x0000000aU] 
+        = vlSelfRef.GPRTEST[0x0000000aU];
+    vlSelfRef.top__DOT__GPR_0__DOT__GPRTEST[9U] = vlSelfRef.GPRTEST
+        [9U];
+    vlSelfRef.top__DOT__GPR_0__DOT__GPRTEST[8U] = vlSelfRef.GPRTEST
+        [8U];
+    vlSelfRef.top__DOT__GPR_0__DOT__GPRTEST[7U] = vlSelfRef.GPRTEST
+        [7U];
+    vlSelfRef.top__DOT__GPR_0__DOT__GPRTEST[6U] = vlSelfRef.GPRTEST
+        [6U];
+    vlSelfRef.top__DOT__GPR_0__DOT__GPRTEST[5U] = vlSelfRef.GPRTEST
+        [5U];
+    vlSelfRef.top__DOT__GPR_0__DOT__GPRTEST[4U] = vlSelfRef.GPRTEST
+        [4U];
+    vlSelfRef.top__DOT__GPR_0__DOT__GPRTEST[3U] = vlSelfRef.GPRTEST
+        [3U];
+    vlSelfRef.top__DOT__GPR_0__DOT__GPRTEST[2U] = vlSelfRef.GPRTEST
+        [2U];
+    vlSelfRef.top__DOT__GPR_0__DOT__GPRTEST[1U] = vlSelfRef.GPRTEST
+        [1U];
+    vlSelfRef.top__DOT__GPR_0__DOT__GPRTEST[0U] = vlSelfRef.GPRTEST
+        [0U];
     vlSelfRef.top__DOT__EXU_0__DOT__inB = ((IData)(vlSelfRef.top__DOT__IDU_0__DOT__isADDI)
                                             ? vlSelfRef.top__DOT__rs1_val
                                             : ((0U 
@@ -229,11 +421,20 @@ VL_ATTR_COLD void Vtop___024root___ctor_var_reset(Vtop___024root* vlSelf) {
     vlSelf->LSU_readdata = VL_SCOPED_RAND_RESET_I(32, __VscopeHash, 5454595947310901637ull);
     vlSelf->PC = VL_SCOPED_RAND_RESET_I(32, __VscopeHash, 12700755172620096637ull);
     vlSelf->PC_command = VL_SCOPED_RAND_RESET_I(32, __VscopeHash, 1288837359877173570ull);
+    for (int __Vi0 = 0; __Vi0 < 32; ++__Vi0) {
+        vlSelf->GPRTEST[__Vi0] = VL_SCOPED_RAND_RESET_I(32, __VscopeHash, 8972673220147066468ull);
+    }
+    for (int __Vi0 = 0; __Vi0 < 32; ++__Vi0) {
+        vlSelf->top__DOT__GPRTEST[__Vi0] = VL_SCOPED_RAND_RESET_I(32, __VscopeHash, 4409814679699310879ull);
+    }
     vlSelf->top__DOT__command = VL_SCOPED_RAND_RESET_I(32, __VscopeHash, 8116531040203228024ull);
     vlSelf->top__DOT__dnpc = VL_SCOPED_RAND_RESET_I(32, __VscopeHash, 3608326066998884506ull);
     vlSelf->top__DOT__ifJUMP = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 8025233968268381387ull);
     vlSelf->top__DOT__rs1_val = VL_SCOPED_RAND_RESET_I(32, __VscopeHash, 2187221350439557998ull);
     vlSelf->top__DOT__clkdiv_0__DOT__cnt = VL_SCOPED_RAND_RESET_I(3, __VscopeHash, 9445685417435492161ull);
+    for (int __Vi0 = 0; __Vi0 < 32; ++__Vi0) {
+        vlSelf->top__DOT__GPR_0__DOT__GPRTEST[__Vi0] = VL_SCOPED_RAND_RESET_I(32, __VscopeHash, 5581750006903562700ull);
+    }
     for (int __Vi0 = 0; __Vi0 < 32; ++__Vi0) {
         vlSelf->top__DOT__GPR_0__DOT__GPR[__Vi0] = VL_SCOPED_RAND_RESET_I(32, __VscopeHash, 18271363982738575805ull);
     }
