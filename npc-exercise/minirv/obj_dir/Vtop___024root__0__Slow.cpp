@@ -123,7 +123,7 @@ VL_ATTR_COLD void Vtop___024root___stl_sequent__TOP__0(Vtop___024root* vlSelf) {
                                            & (vlSelfRef.PC_command 
                                               >> 0x0000000fU)))
                                     ? 0U : vlSelfRef.top__DOT__GPR_0__DOT__GPR
-                                   [(0x0000000fU & 
+                                   [(0x0000001fU & 
                                      (vlSelfRef.PC_command 
                                       >> 0x0000000fU))]);
     if (vlSelfRef.top__DOT__IDU_0__DOT__isADDI) {
@@ -144,7 +144,7 @@ VL_ATTR_COLD void Vtop___024root___stl_sequent__TOP__0(Vtop___024root* vlSelf) {
                                                     >> 0x00000014U)))
                                                 ? 0U
                                                 : vlSelfRef.top__DOT__GPR_0__DOT__GPR
-                                               [(0x0000000fU 
+                                               [(0x0000001fU 
                                                  & (vlSelfRef.PC_command 
                                                     >> 0x00000014U))])));
     }
@@ -242,7 +242,7 @@ VL_ATTR_COLD void Vtop___024root___ctor_var_reset(Vtop___024root* vlSelf) {
     vlSelf->top__DOT__rs1_val = VL_SCOPED_RAND_RESET_I(32, __VscopeHash, 2187221350439557998ull);
     vlSelf->top__DOT__EXU_data = VL_SCOPED_RAND_RESET_I(32, __VscopeHash, 12899001511929431967ull);
     vlSelf->top__DOT__clkdiv_0__DOT__cnt = VL_SCOPED_RAND_RESET_I(3, __VscopeHash, 9445685417435492161ull);
-    for (int __Vi0 = 0; __Vi0 < 16; ++__Vi0) {
+    for (int __Vi0 = 0; __Vi0 < 32; ++__Vi0) {
         vlSelf->top__DOT__GPR_0__DOT__GPR[__Vi0] = VL_SCOPED_RAND_RESET_I(32, __VscopeHash, 18271363982738575805ull);
     }
     vlSelf->top__DOT__GPR_0__DOT__unnamedblk1__DOT__i = 0;

@@ -7,7 +7,7 @@ module IFU(
     input [31:0]PC_command,
     output reg [31:0]command
 );
-    wire snpc;
+    wire [31:0]snpc;
     always @(posedge clk,posedge rst) begin
         if (rst) begin
             PC<=0;

@@ -33,7 +33,7 @@ module IDU(
     assign immU = {command[31:12]                                             };
     assign immJ = {command[31:31],command[19:12],command[20:20],command[30:21]};
 
-    assign isADDI = (command == 7'b0010011 && funct3 == 3'b000) ? 1 : 0;
+    assign isADDI = (opcode == 7'b0010011 && funct3 == 3'b000) ? 1 : 0;
 
     assign isLOAD = 0;
     assign isWRITE = (isADDI)?1:0;

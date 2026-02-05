@@ -51,7 +51,7 @@ void Vtop___024root___ico_sequent__TOP__0(Vtop___024root* vlSelf) {
                                            & (vlSelfRef.PC_command 
                                               >> 0x0000000fU)))
                                     ? 0U : vlSelfRef.top__DOT__GPR_0__DOT__GPR
-                                   [(0x0000000fU & 
+                                   [(0x0000001fU & 
                                      (vlSelfRef.PC_command 
                                       >> 0x0000000fU))]);
     if (vlSelfRef.top__DOT__IDU_0__DOT__isADDI) {
@@ -72,7 +72,7 @@ void Vtop___024root___ico_sequent__TOP__0(Vtop___024root* vlSelf) {
                                                     >> 0x00000014U)))
                                                 ? 0U
                                                 : vlSelfRef.top__DOT__GPR_0__DOT__GPR
-                                               [(0x0000000fU 
+                                               [(0x0000001fU 
                                                  & (vlSelfRef.PC_command 
                                                     >> 0x00000014U))])));
     }
@@ -152,7 +152,7 @@ void Vtop___024root___nba_sequent__TOP__0(Vtop___024root* vlSelf) {
     __VdlySet__top__DOT__GPR_0__DOT__GPR__v0 = 0;
     IData/*31:0*/ __VdlyVal__top__DOT__GPR_0__DOT__GPR__v32;
     __VdlyVal__top__DOT__GPR_0__DOT__GPR__v32 = 0;
-    CData/*3:0*/ __VdlyDim0__top__DOT__GPR_0__DOT__GPR__v32;
+    CData/*4:0*/ __VdlyDim0__top__DOT__GPR_0__DOT__GPR__v32;
     __VdlyDim0__top__DOT__GPR_0__DOT__GPR__v32 = 0;
     CData/*0:0*/ __VdlySet__top__DOT__GPR_0__DOT__GPR__v32;
     __VdlySet__top__DOT__GPR_0__DOT__GPR__v32 = 0;
@@ -174,7 +174,7 @@ void Vtop___024root___nba_sequent__TOP__0(Vtop___024root* vlSelf) {
                                                         >> 2U)));
         __VdlyVal__top__DOT__GPR_0__DOT__GPR__v32 = vlSelfRef.top__DOT__EXU_data;
         __VdlyDim0__top__DOT__GPR_0__DOT__GPR__v32 
-            = (0x0000000fU & (vlSelfRef.PC_command 
+            = (0x0000001fU & (vlSelfRef.PC_command 
                               >> 7U));
         __VdlySet__top__DOT__GPR_0__DOT__GPR__v32 = 1U;
         vlSelfRef.PC = ((IData)(vlSelfRef.top__DOT__ifJUMP)
@@ -198,22 +198,22 @@ void Vtop___024root___nba_sequent__TOP__0(Vtop___024root* vlSelf) {
         vlSelfRef.top__DOT__GPR_0__DOT__GPR[0x0dU] = 0U;
         vlSelfRef.top__DOT__GPR_0__DOT__GPR[0x0eU] = 0U;
         vlSelfRef.top__DOT__GPR_0__DOT__GPR[0x0fU] = 0U;
-        vlSelfRef.top__DOT__GPR_0__DOT__GPR[0U] = 0U;
-        vlSelfRef.top__DOT__GPR_0__DOT__GPR[1U] = 0U;
-        vlSelfRef.top__DOT__GPR_0__DOT__GPR[2U] = 0U;
-        vlSelfRef.top__DOT__GPR_0__DOT__GPR[3U] = 0U;
-        vlSelfRef.top__DOT__GPR_0__DOT__GPR[4U] = 0U;
-        vlSelfRef.top__DOT__GPR_0__DOT__GPR[5U] = 0U;
-        vlSelfRef.top__DOT__GPR_0__DOT__GPR[6U] = 0U;
-        vlSelfRef.top__DOT__GPR_0__DOT__GPR[7U] = 0U;
-        vlSelfRef.top__DOT__GPR_0__DOT__GPR[8U] = 0U;
-        vlSelfRef.top__DOT__GPR_0__DOT__GPR[9U] = 0U;
-        vlSelfRef.top__DOT__GPR_0__DOT__GPR[0x0aU] = 0U;
-        vlSelfRef.top__DOT__GPR_0__DOT__GPR[0x0bU] = 0U;
-        vlSelfRef.top__DOT__GPR_0__DOT__GPR[0x0cU] = 0U;
-        vlSelfRef.top__DOT__GPR_0__DOT__GPR[0x0dU] = 0U;
-        vlSelfRef.top__DOT__GPR_0__DOT__GPR[0x0eU] = 0U;
-        vlSelfRef.top__DOT__GPR_0__DOT__GPR[0x0fU] = 0U;
+        vlSelfRef.top__DOT__GPR_0__DOT__GPR[0x10U] = 0U;
+        vlSelfRef.top__DOT__GPR_0__DOT__GPR[0x11U] = 0U;
+        vlSelfRef.top__DOT__GPR_0__DOT__GPR[0x12U] = 0U;
+        vlSelfRef.top__DOT__GPR_0__DOT__GPR[0x13U] = 0U;
+        vlSelfRef.top__DOT__GPR_0__DOT__GPR[0x14U] = 0U;
+        vlSelfRef.top__DOT__GPR_0__DOT__GPR[0x15U] = 0U;
+        vlSelfRef.top__DOT__GPR_0__DOT__GPR[0x16U] = 0U;
+        vlSelfRef.top__DOT__GPR_0__DOT__GPR[0x17U] = 0U;
+        vlSelfRef.top__DOT__GPR_0__DOT__GPR[0x18U] = 0U;
+        vlSelfRef.top__DOT__GPR_0__DOT__GPR[0x19U] = 0U;
+        vlSelfRef.top__DOT__GPR_0__DOT__GPR[0x1aU] = 0U;
+        vlSelfRef.top__DOT__GPR_0__DOT__GPR[0x1bU] = 0U;
+        vlSelfRef.top__DOT__GPR_0__DOT__GPR[0x1cU] = 0U;
+        vlSelfRef.top__DOT__GPR_0__DOT__GPR[0x1dU] = 0U;
+        vlSelfRef.top__DOT__GPR_0__DOT__GPR[0x1eU] = 0U;
+        vlSelfRef.top__DOT__GPR_0__DOT__GPR[0x1fU] = 0U;
     }
     if (__VdlySet__top__DOT__GPR_0__DOT__GPR__v32) {
         vlSelfRef.top__DOT__GPR_0__DOT__GPR[__VdlyDim0__top__DOT__GPR_0__DOT__GPR__v32] 
@@ -223,7 +223,7 @@ void Vtop___024root___nba_sequent__TOP__0(Vtop___024root* vlSelf) {
                                            & (vlSelfRef.PC_command 
                                               >> 0x0000000fU)))
                                     ? 0U : vlSelfRef.top__DOT__GPR_0__DOT__GPR
-                                   [(0x0000000fU & 
+                                   [(0x0000001fU & 
                                      (vlSelfRef.PC_command 
                                       >> 0x0000000fU))]);
     vlSelfRef.top__DOT__IFU_0__DOT__snpc = (1U & vlSelfRef.PC);
@@ -245,7 +245,7 @@ void Vtop___024root___nba_sequent__TOP__0(Vtop___024root* vlSelf) {
                                                     >> 0x00000014U)))
                                                 ? 0U
                                                 : vlSelfRef.top__DOT__GPR_0__DOT__GPR
-                                               [(0x0000000fU 
+                                               [(0x0000001fU 
                                                  & (vlSelfRef.PC_command 
                                                     >> 0x00000014U))])));
     }

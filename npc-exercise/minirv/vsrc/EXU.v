@@ -9,6 +9,7 @@ assign add=inA+inB;
 
 always @(*) begin
     if(op[9]) out=add;
+    else out=add;
     // case(op)
     // endcase
         
