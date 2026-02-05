@@ -38,12 +38,12 @@ module IDU(
     assign isLOAD = 0;
     assign isWRITE = (isADDI)?1:0;
 
-    assign isI=(isADDI)1:0;
-    assign isR=(0)1:0;
-    assign isS=(0)1:0;
-    assign isB=(0)1:0;
-    assign isU=(0)1:0;
-    assign isJ=(0)1:0;
+    assign isI=(isADDI)?1:0;
+    assign isR=(0)?1:0;
+    assign isS=(0)?1:0;
+    assign isB=(0)?1:0;
+    assign isU=(0)?1:0;
+    assign isJ=(0)?1:0;
 
     always @(*) begin
         if     (isI)    imm={20{immI[11:11]},immI[11:0]};
