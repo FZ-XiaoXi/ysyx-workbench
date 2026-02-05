@@ -41,6 +41,7 @@ int main(int argc, char** argv) {
 		mem_write(top->clk,top->LSU_address,top->LSU_writedata,top->LSU_range,top->LSU_WEN);
 		printf("%d PC:%x CMD:%x\n",top->clk,top->PC,top->PC_command);
 		top->clk=!top->clk;
+		for(int i=0;i<100000;i++);
 		top->eval();
 		
 		contextp->timeInc(5);
