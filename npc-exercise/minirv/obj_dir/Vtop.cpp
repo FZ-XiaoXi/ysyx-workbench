@@ -12,6 +12,14 @@ Vtop::Vtop(VerilatedContext* _vcontextp__, const char* _vcname__)
     , vlSymsp{new Vtop__Syms(contextp(), _vcname__, this)}
     , clk{vlSymsp->TOP.clk}
     , rst{vlSymsp->TOP.rst}
+    , LSU_range{vlSymsp->TOP.LSU_range}
+    , LSU_WEN{vlSymsp->TOP.LSU_WEN}
+    , __pinNumber10{vlSymsp->TOP.__pinNumber10}
+    , LSU_address{vlSymsp->TOP.LSU_address}
+    , LSU_writedata{vlSymsp->TOP.LSU_writedata}
+    , LSU_readdata{vlSymsp->TOP.LSU_readdata}
+    , PC{vlSymsp->TOP.PC}
+    , PC_command{vlSymsp->TOP.PC_command}
     , rootp{&(vlSymsp->TOP)}
 {
     // Register model with the context
