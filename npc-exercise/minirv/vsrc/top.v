@@ -33,7 +33,7 @@ module top(
   WBU WBU_0(.clk(clk),.rst(rst),.LSU_data(LSU_readdata),.EXU_data(EXU_data),.address(rd_add),isLOAD(isLOAD),.isWRITE(isWRITE),.gpr_WEN(gpr_WEN),.gpr_data(gpr_data),.gpr_address(gpr_address));
   IFU IFU_0(.clk(clk),.rst(rst),.PC(PC),.dnpc(dnpc),.ifJUMP(ifJUMP),.PC_command(PC_command),.command(command));
   LSU LSU_0(.address({2'b00,value[31:2]}),.data(LSU_readdata),.wdata(LSU_writedata),.range(LSU_range),.clk(clk),.writeEN(LSU_WEN),.PC_address({2'b00,PC[31:2]}),PC_data(PC_command));
-  IDU IDU_0(.command(PC_command),.opcode(),.imm(imm),.rd(rd_add),.rs1(rs1_add),.rs2(rs2_add),.op(op),.type({isR,isI,isS,isB,isU,isJ}),.isLOAD(isLOAD),.isWRITE(isWRITE));
+  IDU IDU_0(.command(PC_command),.opcode(),.imm(imm),.rd(rd_add),.rs1(rs1_add),.rs2(rs2_add),.op(op),.ctype({isR,isI,isS,isB,isU,isJ}),.isLOAD(isLOAD),.isWRITE(isWRITE));
   assign EXU_inA=(isI|isU|isB)?imm:rs1_val;
   assign EXU_inB=(isI|isU|isB)?rs1_val:rs2_val;
   EXU EXU_0(.inA(EXU_inA),.inB(EXU_inB),.op(op),.out(EXU_data));

@@ -16,10 +16,10 @@ module IDU(
     output isLOAD,
     output isWRITE,
     output [9:0]op,
-    output [5:0]type
+    output [5:0]ctype
 );
     wire isR,isI,isS,isB,isU,isJ;
-    assign type={isR,isI,isS,isB,isU,isJ};
+    assign ctype={isR,isI,isS,isB,isU,isJ};
     assign opcode=  command[ 6: 0];
     assign rd=      command[11: 7];
     assign rs1=     command[19:15];
