@@ -4,7 +4,9 @@ module top(
 
   output [31:0]LSU_address,
   output [3:0]LSU_range,
-  input [31:0]LSU_data,
+  output [31:0]LSU_writedata,
+  output LSU_WEN,
+  input [31:0]LSU_readdata,
   output [31:0]PC,
   input [31:0]PC_command,
 
@@ -24,10 +26,13 @@ module top(
   wire gpr_WEN;
   wire isLOAD,isWRITE;
   wire [9:0]op;
+  assign LSU_range=4'b1111;
+  assign LSU_writedata=0;
+  assign LSU_WEN=0;
   GPR GPR_0(.clk(clk),.rst(rst),.addRA(rs1_add),.addRB(rs2_add),.addW(gpr_address),.outA(rs1_val),.outB(rs2_val),.inData(gpr_data),.WEN(gpr_WEN));
-  WBU WBU_0(.clk(clk),.rst(rst),.LSU_data(LSU_data),.EXU_data(EXU_data),.address(rd_add),isLOAD(isLOAD),.isWRITE(isWRITE),.gpr_WEN(gpr_WEN),.gpr_data(gpr_data),.gpr_address(gpr_address));
+  WBU WBU_0(.clk(clk),.rst(rst),.LSU_data(LSU_readdata),.EXU_data(EXU_data),.address(rd_add),isLOAD(isLOAD),.isWRITE(isWRITE),.gpr_WEN(gpr_WEN),.gpr_data(gpr_data),.gpr_address(gpr_address));
   IFU IFU_0(.clk(clk),.rst(rst),.PC(PC),.dnpc(dnpc),.ifJUMP(ifJUMP),.PC_command(PC_command),.command(command));
-  LSU LSU_0(.address({2'b00,value[31:2]}),.data(LSU_data),.wdata(),.range(),.clk(clk),.writeEN(0),.PC_address({2'b00,PC[31:2]}),PC_data(PC_command));
+  LSU LSU_0(.address({2'b00,value[31:2]}),.data(LSU_readdata),.wdata(LSU_writedata),.range(LSU_range),.clk(clk),.writeEN(LSU_WEN),.PC_address({2'b00,PC[31:2]}),PC_data(PC_command));
   IDU IDU_0(.command(PC_command),.opcode(),.imm(imm),.rd(rd_add),.rs1(rs1_add),.rs2(rs2_add),.op(op),.type({isR,isI,isS,isB,isU,isJ}),.isLOAD(isLOAD),.isWRITE(isWRITE));
   assign EXU_inA=(isI|isU|isB)?imm:rs1_val;
   assign EXU_inB=(isI|isU|isB)?rs1_val:rs2_val;

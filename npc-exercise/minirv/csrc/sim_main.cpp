@@ -6,10 +6,15 @@
 #include "verilated.h"
 
 #define MAX_PC 0xfffffff
-#define pmem_read(pc) MEM[pc>>2]
+
 uint32_t MEM[MAX_PC];
 
-
+uint32_t mem_read(uint32_t add,uint8_t range){
+	return MEM[add>>2];
+}
+void mem_write(uint32_t add,uint32_t wdata,uint8_t range,uint8_t en){
+	if(en) MEM[add>>2]=wdata;
+}
 int main(int argc, char** argv) {
     VerilatedContext* contextp = new VerilatedContext;
     contextp->commandArgs(argc, argv);
@@ -27,6 +32,8 @@ int main(int argc, char** argv) {
 	top->eval();
 	contextp->timeInc(10);
 	while (!contextp->gotFinish()) {
+		top->PC_command=mem_read(top->PC,top->LSU_range);
+		top->LSU_readdata=mem_read(top->LSU_address,top->LSU_range);
 		top->clk=!top->clk;
 		top->eval();
 		
