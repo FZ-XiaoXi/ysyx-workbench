@@ -11,7 +11,7 @@ module IDU(
     output [12: 1]immB,
     output [31:12]immU,
     output [20: 1]immJ,
-    output [31: 0]imm,
+    output reg [31: 0]imm,
     output isADDI,
     output isLOAD,
     output isWRITE,
