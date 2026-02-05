@@ -35,8 +35,8 @@ int main(int argc, char** argv) {
 	top->rst=0;
 	top->eval();
 	contextp->timeInc(10);
-	printf("ss\n");
-	while(1);
+	
+	while(1)printf("ss\n");;
 	// while (!contextp->gotFinish()) {
 	// 	top->PC_command=mem_read(top->PC,top->LSU_range);
 	// 	top->LSU_readdata=mem_read(top->LSU_address,top->LSU_range);
