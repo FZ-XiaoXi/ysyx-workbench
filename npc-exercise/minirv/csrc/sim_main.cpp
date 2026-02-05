@@ -46,6 +46,7 @@ int main(int argc, char** argv) {
 		mem_write(top->clk,top->LSU_address,top->LSU_writedata,top->LSU_range,top->LSU_WEN);
 		printf("%d PC:%x CMD:%x | ",top->clk,top->PC,top->PC_command);
 		for(int i=0;i<16;i++) printf("R[%d]:%d ",i,top->GPRTEST[i]);
+		printf("\n");
 		top->clk=!top->clk;
 		top->eval();
 		
