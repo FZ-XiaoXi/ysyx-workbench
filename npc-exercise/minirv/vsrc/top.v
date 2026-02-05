@@ -1,16 +1,3 @@
-module top(
-  input clk,
-  input rst,
-  output clk0,
-  output clk1,
-  output clk2
-);
-//wire clk0,clk1,clk2;
-clkdiv clkdiv_0(clk,rst,clk0,clk1,clk2);
-  
-endmodule
-
-
 module clkdiv(
   input clk,
   input rst,
@@ -27,3 +14,16 @@ module clkdiv(
   assign clk1=cnt[1];
   assign clk2=cnt[2];
 endmodule
+module top(
+  input clk,
+  input rst,
+  output clk0,
+  output clk1,
+  output clk2
+);
+//wire clk0,clk1,clk2;
+clkdiv clkdiv_0(clk,rst,clk0,clk1,clk2);
+  
+endmodule
+
+
