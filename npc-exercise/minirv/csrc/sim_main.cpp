@@ -25,7 +25,7 @@ int main(int argc, char** argv) {
 	while (!contextp->gotFinish()) {
 		top->clk=!top->clk;
 		top->eval();
-		printf("%d,%d,%d\n",top->clk0,top->clk1,top->clk2);
+		printf("%d/%d,%d,%d\n",top->clk,top->clk0,top->clk1,top->clk2);
 		contextp->timeInc(5);
 	}
     delete top;
