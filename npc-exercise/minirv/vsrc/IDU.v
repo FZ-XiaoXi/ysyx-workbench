@@ -49,7 +49,7 @@ module IDU(
         if     (isI)    imm={{20{immI[11:11]}},immI[11:0]};
         else if(isJ)    imm={{11{immJ[20:20]}},immJ[20:1],1'b0};
         else if(isS)    imm={{20{immS[11:11]}},immS[11:0]};
-        else if(isU)    imm={   {immU[31:12]} ,12{1'b0}};
+        else if(isU)    imm={   {immU[31:12]} ,{12{1'b0}}};
         else if(isB)    imm={{19{immB[12:12]}},immB[12:1],1'b0};
         else imm=0;
 
