@@ -1,0 +1,68 @@
+module IDU(
+    input [31:0]command,
+    output [ 6: 0]opcode,
+    output [ 4: 0]rd,
+    output [ 4: 0]rs1,
+    output [ 4: 0]rs2,
+    output [ 2: 0]funct3,
+    output [ 6: 0]funct7,
+    output [11: 0]immI,
+    output [11: 0]immS,
+    output [12: 1]immB,
+    output [31:12]immU,
+    output [20: 1]immJ,
+    output [31: 0]imm,
+    output isADDI,
+    output isLOAD,
+    output isWRITE,
+    output [9:0]op,
+    output [5:0]type,
+);
+    wire isR,isI,isS,isB,isU,isJ;
+    assign type={isR,isI,isS,isB,isU,isJ};
+    assign opcode=  command[ 6: 0];
+    assign rd=      command[11: 7];
+    assign rs1=     command[19:15];
+    assign rs2=     command[24:20];
+    assign funct3=  command[14:12];
+    assign funct7=  command[31:25];
+    
+    assign immI = {command[31:20]                                             };
+    assign immS = {command[31:25],command[11: 7]                              };
+    assign immB = {command[31:31],command[ 7: 7],command[30:25],command[11: 8]};
+    assign immU = {command[31:12]                                             };
+    assign immJ = {command[31:31],command[19:12],command[20:20],command[30:21]};
+
+    assign isADDI = (command == 7'b0010011 && funct3 == 3'b000) ? 1 : 0;
+
+    assign isLOAD = 0;
+    assign isWRITE = (isADDI)?1:0;
+
+    assign isI=(isADDI)1:0;
+    assign isR=(0)1:0;
+    assign isS=(0)1:0;
+    assign isB=(0)1:0;
+    assign isU=(0)1:0;
+    assign isJ=(0)1:0;
+
+    always @(*) begin
+        if     (isI)    imm={20{immI[11:11]},immI[11:0]};
+        else if(isJ)    imm={11{immJ[20:20]},immJ[20:1],1'b0};
+        else if(isS)    imm={20{immS[11:11]},immS[11:0]};
+        else if(isU)    imm={  {immU[31:12]},12{1'b0}};
+        else if(isB)    imm={19{immB[12:12]},immB[12:1],1'b0};
+        else imm=0;
+
+    end
+    //9-add sub mul div LL LR AR AND OR XOR-0
+    assign op[9]=(isADDI)?1:0;
+    assign op[8]=(0)?1:0;
+    assign op[7]=(0)?1:0;
+    assign op[6]=(0)?1:0;
+    assign op[5]=(0)?1:0;
+    assign op[4]=(0)?1:0;
+    assign op[3]=(0)?1:0;
+    assign op[2]=(0)?1:0;
+    assign op[1]=(0)?1:0;
+    assign op[0]=(0)?1:0;
+endmodule
