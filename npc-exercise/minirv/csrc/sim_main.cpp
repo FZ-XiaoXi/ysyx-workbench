@@ -10,7 +10,7 @@
 uint32_t MEM[MAX_PC];
 
 uint32_t mem_read(uint32_t add,uint8_t range){
-	//return MEM[add>>2];
+	return MEM[add>>2];
 	return 0;
 }
 void mem_write(uint8_t clk,uint32_t add,uint32_t wdata,uint8_t range,uint8_t en){
