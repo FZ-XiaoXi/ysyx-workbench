@@ -33,7 +33,6 @@ class alignas(VL_CACHE_LINE_BYTES) Vtop VL_NOT_FINAL : public VerilatedModel {
     VL_IN8(&rst,0,0);
     VL_OUT8(&LSU_range,3,0);
     VL_OUT8(&LSU_WEN,0,0);
-    VL_IN8(&__pinNumber10,0,0);
     VL_OUT(&LSU_address,31,0);
     VL_OUT(&LSU_writedata,31,0);
     VL_IN(&LSU_readdata,31,0);

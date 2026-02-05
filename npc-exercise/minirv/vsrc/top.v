@@ -11,7 +11,7 @@ module top(
   input [31:0]PC_command
 
 );
-
+  verilator lint_off PINMISSING
   wire clk0,clk1,clk2;
   clkdiv clkdiv_0(clk,rst,clk0,clk1,clk2);
   wire [31:0] imm;

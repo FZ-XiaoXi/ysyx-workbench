@@ -236,7 +236,6 @@ VL_ATTR_COLD void Vtop___024root___ctor_var_reset(Vtop___024root* vlSelf) {
     vlSelf->LSU_readdata = VL_SCOPED_RAND_RESET_I(32, __VscopeHash, 5454595947310901637ull);
     vlSelf->PC = VL_SCOPED_RAND_RESET_I(32, __VscopeHash, 12700755172620096637ull);
     vlSelf->PC_command = VL_SCOPED_RAND_RESET_I(32, __VscopeHash, 1288837359877173570ull);
-    vlSelf->__pinNumber10 = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 4924369107448073990ull);
     vlSelf->top__DOT__command = VL_SCOPED_RAND_RESET_I(32, __VscopeHash, 8116531040203228024ull);
     vlSelf->top__DOT__dnpc = VL_SCOPED_RAND_RESET_I(32, __VscopeHash, 3608326066998884506ull);
     vlSelf->top__DOT__ifJUMP = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 8025233968268381387ull);

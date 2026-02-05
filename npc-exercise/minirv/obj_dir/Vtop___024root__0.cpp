@@ -365,8 +365,5 @@ void Vtop___024root___eval_debug_assertions(Vtop___024root* vlSelf) {
     if (VL_UNLIKELY(((vlSelfRef.rst & 0xfeU)))) {
         Verilated::overWidthError("rst");
     }
-    if (VL_UNLIKELY(((vlSelfRef.__pinNumber10 & 0xfeU)))) {
-        Verilated::overWidthError("__pinNumber10");
-    }
 }
 #endif  // VL_DEBUG
