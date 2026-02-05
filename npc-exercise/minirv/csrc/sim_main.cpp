@@ -15,6 +15,10 @@ int main(int argc, char** argv) {
     contextp->commandArgs(argc, argv);
     Vtop* top = new Vtop{contextp};
 	top->clk=0;
+	top->rst=0;
+	top->eval();
+	contextp->timeInc(10);
+	top->clk=0;
 	top->rst=1;
 	top->eval();
 	contextp->timeInc(10);

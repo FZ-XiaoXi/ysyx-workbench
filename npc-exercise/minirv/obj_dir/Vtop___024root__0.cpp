@@ -48,18 +48,15 @@ void Vtop___024root___nba_sequent__TOP__0(Vtop___024root* vlSelf) {
     Vtop__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
     auto& vlSelfRef = std::ref(*vlSelf).get();
     // Body
-    vlSelfRef.top__DOT__clkdiv_0__DOT__cnt = ((IData)(vlSelfRef.rst)
-                                               ? 1U
-                                               : ((6U 
-                                                   & ((IData)(vlSelfRef.top__DOT__clkdiv_0__DOT__cnt) 
-                                                      << 1U)) 
-                                                  | (1U 
-                                                     & ((IData)(vlSelfRef.top__DOT__clkdiv_0__DOT__cnt) 
-                                                        >> 2U))));
-    vlSelfRef.clk0 = (1U & (IData)(vlSelfRef.top__DOT__clkdiv_0__DOT__cnt));
-    vlSelfRef.clk1 = (1U & ((IData)(vlSelfRef.top__DOT__clkdiv_0__DOT__cnt) 
+    vlSelfRef.cnt = ((IData)(vlSelfRef.rst) ? 1U : 
+                     ((6U & ((IData)(vlSelfRef.cnt) 
+                             << 1U)) | (1U & ((IData)(vlSelfRef.cnt) 
+                                              >> 2U))));
+    vlSelfRef.clk0 = (1U & (IData)(vlSelfRef.cnt));
+    vlSelfRef.clk1 = (1U & ((IData)(vlSelfRef.cnt) 
                             >> 1U));
-    vlSelfRef.cnt = (7U & VL_SHIFTR_III(3,3,32, (IData)(vlSelfRef.top__DOT__clkdiv_0__DOT__cnt), 2U));
+    vlSelfRef.clk2 = (1U & ((IData)(vlSelfRef.cnt) 
+                            >> 2U));
 }
 
 void Vtop___024root___eval_nba(Vtop___024root* vlSelf) {

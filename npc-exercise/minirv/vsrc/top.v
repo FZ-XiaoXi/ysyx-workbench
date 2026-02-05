@@ -22,7 +22,7 @@ module clkdiv(
 );
   
   always @(posedge clk,posedge rst) begin
-    if(rst) cnt<=3'b001;
+    if(rst) cnt<=3'b001;d
     else cnt<={cnt[1:0],cnt[2:2]};
   end
   assign clk0=cnt[0];
