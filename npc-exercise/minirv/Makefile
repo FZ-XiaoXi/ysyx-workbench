@@ -3,6 +3,7 @@ VERILATOR_FLAGS=--cc --exe --build --trace --top-module $(TOPNAME)
 INC_PATH ?=
 SIM_C = csrc/*.cpp
 SIM_V=vsrc/*.v
+ARGS ?=
 all:
 	@echo "Write this Makefile by your self."
 
@@ -11,7 +12,7 @@ CXXFLAGS += $(INCFLAGS) -DTOP_NAME="\"V$(TOPNAME)\"" -ggdb
 sim: $(SIM_C) $(SIM_V) 
 	$(call git_commit, "sim RTL") # DO NOT REMOVE THIS LINE!!!
 	verilator $(VERILATOR_FLAGS) --top-module $(TOPNAME) $^ $(addprefix -CFLAGS , $(CXXFLAGS)) $(addprefix -LDFLAGS , $(LDFLAGS))
-	./obj_dir/V$(TOPNAME)
+	./obj_dir/V$(TOPNAME) $(ARGS)
 	@echo "Write this Makefile by your self."
 wave:
 	gtkwave wave.vcd

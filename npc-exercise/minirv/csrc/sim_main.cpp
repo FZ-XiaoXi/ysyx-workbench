@@ -7,11 +7,12 @@
 #include "Vtop__Dpi.h"
 #include "verilated.h"
 
-#define FILE_NAME "dummy-minirv-npc.bin"
+
 #define MAX_MEM 0xaffffff
 #define _EBREAK 0b00000000000100000000000001110011
 uint32_t MEM[MAX_MEM];
 int READ=0;
+char *IMAGE_NAME;
 int isEBREAK=0;
 int i=0;
 int count=0;
@@ -65,8 +66,12 @@ void setmem(){
 		// MEM[4]=0x00a50513;
 		// MEM[5]=0x00008067;
 	}else{
-		FILE *fp=fopen(FILE_NAME,"rb");
-		if(fp == NULL) exit(-1);
+		FILE *fp=fopen(IMAGE_NAME,"rb");
+		if(fp == NULL){
+			printf("CANNOT OPEN IMAGE:%s\n",IMAGE_NAME);
+			exit(-1);
+		}
+		printf("OPEN IMAGE:%s\n",IMAGE_NAME);
 		uint32_t c;
 		uint32_t i=0;
 		while(fread(&c,sizeof(uint32_t),1,fp)==1){
@@ -121,7 +126,15 @@ void onecyc(VerilatedContext* contextp,Vtop* top){
 }
 
 int main(int argc, char** argv) {
-	printf("%d\n",argc);
+	
+	if(argc>=2){
+		READ=1;
+		IMAGE_NAME=argv[1];
+		printf("USE IMAGE:%s",IMAGE_NAME);
+
+	}else{
+		printf("DEFAULT RUN\n");
+	}
     contextp->commandArgs(argc, argv);
 	setmem();
 	top->clk=0;
