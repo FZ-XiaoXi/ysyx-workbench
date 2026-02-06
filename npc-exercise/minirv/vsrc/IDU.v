@@ -13,8 +13,11 @@ module IDU(
     output [20: 1]immJ,
     output reg [31: 0]imm,
     output isADDI,
+    output isJALR,
+
     output isLOAD,
     output isWRITE,
+    output isJUMP,
     output [9:0]op,
     output [5:0]ctype
 );
@@ -34,11 +37,13 @@ module IDU(
     assign immJ = {command[31:31],command[19:12],command[20:20],command[30:21]};
 
     assign isADDI = (opcode == 7'b0010011 && funct3 == 3'b000) ? 1 : 0;
+    assign isJALR = (opcode == 7'b1100111 && funct3 == 3'b000) ? 1 : 0;
 
     assign isLOAD = 0;
-    assign isWRITE = (isADDI)?1:0;
+    assign isWRITE = (isADDI|isJALR)?1:0;
+    assign isJUMP= (isJALR)?1:0;
 
-    assign isI=(isADDI)?1:0;
+    assign isI=(isADDI|isJALR)?1:0;
     assign isR=(0)?1:0;
     assign isS=(0)?1:0;
     assign isB=(0)?1:0;
@@ -55,7 +60,7 @@ module IDU(
 
     end
     //9-add sub mul div LL LR AR AND OR XOR-0
-    assign op[9]=(isADDI)?1:0;
+    assign op[9]=(isADDI|isJALR)?1:0;
     assign op[8]=(0)?1:0;
     assign op[7]=(0)?1:0;
     assign op[6]=(0)?1:0;
@@ -65,4 +70,5 @@ module IDU(
     assign op[2]=(0)?1:0;
     assign op[1]=(0)?1:0;
     assign op[0]=(0)?1:0;
+
 endmodule

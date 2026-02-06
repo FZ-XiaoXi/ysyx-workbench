@@ -174,7 +174,7 @@ void Vtop___024root___nba_sequent__TOP__0(Vtop___024root* vlSelf) {
             = (0x0000001fU & (vlSelfRef.PC_command 
                               >> 7U));
         __VdlySet__top__DOT__GPR_0__DOT__GPR__v32 = 1U;
-        vlSelfRef.PC = ((IData)(vlSelfRef.top__DOT__ifJUMP)
+        vlSelfRef.PC = ((IData)(vlSelfRef.top__DOT__isJUMP)
                          ? vlSelfRef.top__DOT__dnpc
                          : vlSelfRef.top__DOT__IFU_0__DOT__snpc);
     }

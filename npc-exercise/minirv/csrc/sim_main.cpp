@@ -22,6 +22,7 @@ void setmem(){
 	MEM[0]=0b00000000001100000000000010010011;//addi
 	MEM[1]=0b00000000001100001000000100010011;//addi
 	MEM[2]=0b00000000001100001000000000010011;//addi
+	MEM[3]=0b00000000000000000000000111100111;//jalr
 }
 int main(int argc, char** argv) {
     VerilatedContext* contextp = new VerilatedContext;
