@@ -12,6 +12,7 @@ module IDU(
     output [31:12]immU,
     output [20: 1]immJ,
     output reg [31: 0]imm,
+    output isEBREAK,
     output isADDI,
     output isJALR,
 
@@ -38,6 +39,7 @@ module IDU(
 
     assign isADDI = (opcode == 7'b0010011 && funct3 == 3'b000) ? 1 : 0;
     assign isJALR = (opcode == 7'b1100111 && funct3 == 3'b000) ? 1 : 0;
+    assign isEBREAK=(command==32'b00000000000100000000000001110011)?1:0;
 
     assign isLOAD = 0;
     assign isWRITE = (isADDI|isJALR)?1:0;

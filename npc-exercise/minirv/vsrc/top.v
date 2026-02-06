@@ -1,4 +1,4 @@
-import "DPI-C" function int add (input int a, input int b);
+import "DPI-C" function void ebreak(void);
 
 
 
@@ -16,9 +16,6 @@ module top(
 
   output [31:0]GPRTEST[31:0]
 );
-  initial begin
-    $display("%x + %x = %x", 1, 2, add(1,2));
-  end
 
   // verilator lint_off PINMISSING
   wire clk0,clk1,clk2;
@@ -32,7 +29,7 @@ module top(
   wire [31:0] rs1_val,rs2_val,gpr_data;
   wire [31:0] EXU_inA,EXU_inB,EXU_data;
   wire gpr_WEN;
-  wire isLOAD,isWRITE,isJUMP;
+  wire isEBREAK,isLOAD,isWRITE,isJUMP;
   wire [9:0]op;
   assign LSU_range=4'b1111;
   assign LSU_writedata=0;
@@ -41,12 +38,15 @@ module top(
   WBU WBU_0(.clk(clk),.rst(rst),.LSU_data(LSU_readdata),.EXU_data(EXU_data),.address(rd_add),.isLOAD(isLOAD),.isWRITE(isWRITE),.isJUMP(isJUMP),.snpc(snpc),.gpr_WEN(gpr_WEN),.gpr_data(gpr_data),.gpr_address(gpr_address));
   IFU IFU_0(.clk(clk),.rst(rst),.PC(PC),.dnpc(dnpc),.snpc(snpc),.isJUMP(isJUMP),.PC_command(PC_command),.command(command));
   //LSU LSU_0(.address({2'b00,value[31:2]}),.data(LSU_readdata),.wdata(LSU_writedata),.range(LSU_range),.clk(clk),.writeEN(LSU_WEN),.PC_address({2'b00,PC[31:2]}),.PC_data(PC_command));
-  IDU IDU_0(.command(PC_command),.opcode(),.imm(imm),.rd(rd_add),.rs1(rs1_add),.rs2(rs2_add),.op(op),.ctype({isR,isI,isS,isB,isU,isJ}),.isLOAD(isLOAD),.isWRITE(isWRITE),.isJUMP(isJUMP));
+  IDU IDU_0(.command(PC_command),.opcode(),.imm(imm),.rd(rd_add),.rs1(rs1_add),.rs2(rs2_add),.op(op),.ctype({isR,isI,isS,isB,isU,isJ}),.isLOAD(isLOAD),.isWRITE(isWRITE),.isJUMP(isJUMP),.isEBREAK(isEBREAK));
   assign EXU_inA=(isI|isU|isB)?imm:rs1_val;
   assign EXU_inB=(isI|isU|isB)?rs1_val:rs2_val;
   EXU EXU_0(.inA(EXU_inA),.inB(EXU_inB),.op(op),.out(EXU_data));
   assign dnpc=EXU_data;
 
+  always @(isEBREAK) begin
+    if(isEBREAK)  ebreak();
+  end
 endmodule
 
 
