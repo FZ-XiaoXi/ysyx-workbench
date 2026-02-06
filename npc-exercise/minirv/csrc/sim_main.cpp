@@ -12,6 +12,7 @@
 uint32_t MEM[MAX_PC];
 int isEBREAK=0;
 int i=0;
+uint32_t sPC=0;
 int pmem_read(int raddr){
 	// 总是读取地址为`raddr & ~0x3u`的4字节返回
 	return MEM[raddr>>2];
@@ -51,6 +52,7 @@ void onecyc(VerilatedContext* contextp,Vtop* top){
 	top->eval();
 	if(i<99999) return;
 	i=0;
+	sPC=top->PC;
 	//top->PC_command=pmem_read(top->PC);
 	//top->LSU_readdata=pmem_read(top->LSU_address);
 	//pmem_write(top->clk,top->LSU_address,top->LSU_writedata,top->LSU_range,top->LSU_WEN);
@@ -58,14 +60,14 @@ void onecyc(VerilatedContext* contextp,Vtop* top){
 	top->clk=1;
 	top->eval();
 	contextp->timeInc(5);
-	
+	printf("PC:%04x ",sPC);
+	printf("CMD:%08x | ",top->PC_command);
 	for(int i=0;i<16;i++) printf("[%2d]:%04x ",i,top->GPRTEST[i]);
 	printf("\n");
 	top->clk=0;
 	top->eval();
 	contextp->timeInc(5);
-	printf("PC:%04x ",top->PC);
-	printf("CMD:%08x | ",top->PC_command);
+	
 }
 
 int main(int argc, char** argv) {
