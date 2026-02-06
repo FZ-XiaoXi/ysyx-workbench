@@ -17,13 +17,16 @@ void mem_write(uint8_t clk,uint32_t add,uint32_t wdata,uint8_t range,uint8_t en)
 	if(!clk) return;
 	if(en) MEM[add>>2]=wdata;
 }
+void setmemm(){
+	memset(MEM,0,MAX_PC*4);
+	MEM[0]=0b00000000001100000000000010010011;//addi
+	MEM[1]=0b00000000001100001000000100010011;//addi
+}
 int main(int argc, char** argv) {
     VerilatedContext* contextp = new VerilatedContext;
     contextp->commandArgs(argc, argv);
     Vtop* top = new Vtop{contextp};
-	memset(MEM,0,MAX_PC*4);
-	MEM[0]=0b00000000001100000000000010010011;
-	MEM[1]=0b00000000001100001000000100010011;
+	setmem();
 	top->clk=0;
 	top->rst=0;
 	top->eval();
