@@ -11,7 +11,7 @@
 
 uint32_t MEM[MAX_PC];
 int isEBREAK=0;
-
+int i=0;
 int pmem_read(int raddr){
 	// 总是读取地址为`raddr & ~0x3u`的4字节返回
 	return MEM[raddr>>2];
@@ -45,6 +45,27 @@ void ebreak(){
 	printf("STOOOOOOOOOOOOOOOOP!");
 	isEBREAK=1;
 }
+
+void onecyc(VerilatedContext* contextp,Vtop* top){
+	i++;
+	top->eval();
+	if(i<99999) continue;
+	i=0;
+	//top->PC_command=pmem_read(top->PC);
+	//top->LSU_readdata=pmem_read(top->LSU_address);
+	//pmem_write(top->clk,top->LSU_address,top->LSU_writedata,top->LSU_range,top->LSU_WEN);
+	printf("PC:%04x ",top->PC);
+	printf("CMD:%08x | ",top->PC_command);
+	top->clk=1;
+	top->eval();
+	contextp->timeInc(5);
+	top->clk=0;
+	top->eval();
+	contextp->timeInc(5);
+	for(int i=0;i<16;i++) printf("[%2d]:%04x ",i,top->GPRTEST[i]);
+	printf("\n");
+}
+
 int main(int argc, char** argv) {
     VerilatedContext* contextp = new VerilatedContext;
     contextp->commandArgs(argc, argv);
@@ -62,24 +83,9 @@ int main(int argc, char** argv) {
 	top->rst=0;
 	top->eval();
 	contextp->timeInc(10);
-	int i=0;
+	
 	while (!contextp->gotFinish()&&isEBREAK==0) {
-		i++;
-		top->eval();
-		if(i<99999) continue;
-		i=0;
-		//top->PC_command=pmem_read(top->PC);
-		//top->LSU_readdata=pmem_read(top->LSU_address);
-		//pmem_write(top->clk,top->LSU_address,top->LSU_writedata,top->LSU_range,top->LSU_WEN);
-		if(!top->clk)	printf("PC:%04x ",top->PC);
-		top->clk=!top->clk;
-		top->eval();
-		if(top->clk){
-			printf("CMD:%08x | ",top->PC_command);
-			for(int i=0;i<16;i++) printf("[%2d]:%04x ",i,top->GPRTEST[i]);
-			printf("\n");
-		}
-		contextp->timeInc(5);
+		onecyc(contextp,top);
 	}
     delete top;
     delete contextp;
