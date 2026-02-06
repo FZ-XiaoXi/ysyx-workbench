@@ -12,7 +12,7 @@ module WBU(
     output [31:0]gpr_data,
     output [4:0]gpr_address
 );  
-    assign gpr_data=isLOAD?LSU_data:(isJUMP?dnpc:(isWRITE?EXU_data:32'hffffffff));
+    assign gpr_data=isLOAD?LSU_data:(isJUMP?snpc:(isWRITE?EXU_data:32'hffffffff));
     assign gpr_address=address;
     assign gpr_WEN=(isLOAD|isWRITE)?1:0;
 endmodule
