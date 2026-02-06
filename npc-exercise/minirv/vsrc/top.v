@@ -17,7 +17,10 @@ module top(
   output [31:0] EXU_inA,EXU_inB,EXU_data,
   output [31:0]GPRTEST[31:0]
 );
-
+  always @(posedge clk) begin
+    if(PC_command)
+      $display("[CPU] Ebreak triggered at PC=%h, exit_code=%d", PC, GPRTEST[10]);
+  end
   // verilator lint_off PINMISSING
   wire clk0,clk1,clk2;
   clkdiv clkdiv_0(clk,rst,clk0,clk1,clk2);

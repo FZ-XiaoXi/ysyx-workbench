@@ -19,6 +19,7 @@ module IFU(
                 PC<=snpc;
             end
         end
+        
     end
     assign snpc=PC+4;
 
