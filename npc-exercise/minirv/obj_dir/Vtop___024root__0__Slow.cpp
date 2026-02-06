@@ -15,22 +15,10 @@ VL_ATTR_COLD void Vtop___024root___eval_static(Vtop___024root* vlSelf) {
     vlSelfRef.__Vtrigprevexpr___TOP__rst__0 = vlSelfRef.rst;
 }
 
-VL_ATTR_COLD void Vtop___024root___eval_initial__TOP(Vtop___024root* vlSelf);
-
 VL_ATTR_COLD void Vtop___024root___eval_initial(Vtop___024root* vlSelf) {
     VL_DEBUG_IF(VL_DBG_MSGF("+    Vtop___024root___eval_initial\n"); );
     Vtop__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
     auto& vlSelfRef = std::ref(*vlSelf).get();
-    // Body
-    Vtop___024root___eval_initial__TOP(vlSelf);
-}
-
-VL_ATTR_COLD void Vtop___024root___eval_initial__TOP(Vtop___024root* vlSelf) {
-    VL_DEBUG_IF(VL_DBG_MSGF("+    Vtop___024root___eval_initial__TOP\n"); );
-    Vtop__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
-    auto& vlSelfRef = std::ref(*vlSelf).get();
-    // Body
-    vlSelfRef.LSU_writedata = 0U;
 }
 
 VL_ATTR_COLD void Vtop___024root___eval_final(Vtop___024root* vlSelf) {
@@ -184,6 +172,12 @@ VL_ATTR_COLD void Vtop___024root___stl_sequent__TOP__0(Vtop___024root* vlSelf) {
         [1U];
     vlSelfRef.GPRTEST[0U] = vlSelfRef.top__DOT__GPR_0__DOT__GPR
         [0U];
+    vlSelfRef.LSU_writedata = ((0U == (0x0000001fU 
+                                       & (vlSelfRef.PC_command 
+                                          >> 0x00000014U)))
+                                ? 0U : vlSelfRef.top__DOT__GPR_0__DOT__GPR
+                               [(0x0000001fU & (vlSelfRef.PC_command 
+                                                >> 0x00000014U))]);
     vlSelfRef.top__DOT__IDU_0__DOT__isADD = (IData)(
                                                     (0x00000033U 
                                                      == 
@@ -416,13 +410,7 @@ VL_ATTR_COLD void Vtop___024root___stl_sequent__TOP__0(Vtop___024root* vlSelf) {
                               ? (vlSelfRef.top__DOT__EXU_0__DOT__inA 
                                  + ((IData)(vlSelfRef.top__DOT____VdfgRegularize_he2b63832_0_0)
                                      ? vlSelfRef.top__DOT__rs1_val
-                                     : ((0U == (0x0000001fU 
-                                                & (vlSelfRef.PC_command 
-                                                   >> 0x00000014U)))
-                                         ? 0U : vlSelfRef.top__DOT__GPR_0__DOT__GPR
-                                        [(0x0000001fU 
-                                          & (vlSelfRef.PC_command 
-                                             >> 0x00000014U))])))
+                                     : vlSelfRef.LSU_writedata))
                               : vlSelfRef.top__DOT__EXU_0__DOT__inA);
     Vtop___024unit____Vdpiimwrap_pmem_read_TOP____024unit(vlSelfRef.LSU_address, vlSelfRef.__Vfunc_pmem_read__2__Vfuncout);
     vlSelfRef.top__DOT__LSU_0__DOT__val0 = vlSelfRef.__Vfunc_pmem_read__2__Vfuncout;

@@ -335,7 +335,22 @@ void Vtop___024root___nba_sequent__TOP__1(Vtop___024root* vlSelf) {
     auto& vlSelfRef = std::ref(*vlSelf).get();
     // Body
     if (vlSelfRef.LSU_WEN) {
-        Vtop___024unit____Vdpiimwrap_pmem_write_TOP____024unit(vlSelfRef.LSU_address, 0U, (IData)(vlSelfRef.LSU_wmask));
+        Vtop___024unit____Vdpiimwrap_pmem_write_TOP____024unit(vlSelfRef.LSU_address, 
+                                                               ((2U 
+                                                                 & vlSelfRef.LSU_address)
+                                                                 ? 
+                                                                ((1U 
+                                                                  & vlSelfRef.LSU_address)
+                                                                  ? 
+                                                                 VL_SHIFTL_III(32,32,32, vlSelfRef.LSU_writedata, 0x00000018U)
+                                                                  : 
+                                                                 VL_SHIFTL_III(32,32,32, vlSelfRef.LSU_writedata, 0x00000010U))
+                                                                 : 
+                                                                ((1U 
+                                                                  & vlSelfRef.LSU_address)
+                                                                  ? 
+                                                                 VL_SHIFTL_III(32,32,32, vlSelfRef.LSU_writedata, 8U)
+                                                                  : vlSelfRef.LSU_writedata)), (IData)(vlSelfRef.LSU_wmask));
     }
 }
 
@@ -371,6 +386,12 @@ void Vtop___024root___nba_sequent__TOP__3(Vtop___024root* vlSelf) {
                                                     ? vlSelfRef.LSU_address
                                                     : vlSelfRef.top__DOT__IFU_0__DOT__snpc));
     vlSelfRef.top__DOT__isEBREAK = (0x00100073U == vlSelfRef.PC_command);
+    vlSelfRef.LSU_writedata = ((0U == (0x0000001fU 
+                                       & (vlSelfRef.PC_command 
+                                          >> 0x00000014U)))
+                                ? 0U : vlSelfRef.top__DOT__GPR_0__DOT__GPR
+                               [(0x0000001fU & (vlSelfRef.PC_command 
+                                                >> 0x00000014U))]);
     vlSelfRef.top__DOT__IDU_0__DOT__isADD = (IData)(
                                                     (0x00000033U 
                                                      == 
@@ -477,13 +498,7 @@ void Vtop___024root___nba_sequent__TOP__3(Vtop___024root* vlSelf) {
                               ? (vlSelfRef.top__DOT__EXU_0__DOT__inA 
                                  + ((IData)(vlSelfRef.top__DOT____VdfgRegularize_he2b63832_0_0)
                                      ? vlSelfRef.top__DOT__rs1_val
-                                     : ((0U == (0x0000001fU 
-                                                & (vlSelfRef.PC_command 
-                                                   >> 0x00000014U)))
-                                         ? 0U : vlSelfRef.top__DOT__GPR_0__DOT__GPR
-                                        [(0x0000001fU 
-                                          & (vlSelfRef.PC_command 
-                                             >> 0x00000014U))])))
+                                     : vlSelfRef.LSU_writedata))
                               : vlSelfRef.top__DOT__EXU_0__DOT__inA);
     Vtop___024unit____Vdpiimwrap_pmem_read_TOP____024unit(vlSelfRef.LSU_address, vlSelfRef.__Vfunc_pmem_read__2__Vfuncout);
     vlSelfRef.top__DOT__LSU_0__DOT__val0 = vlSelfRef.__Vfunc_pmem_read__2__Vfuncout;
