@@ -43,7 +43,7 @@ void setmem(){
 	// MEM[5]=0x00008067;
 }
 void ebreak(){
-	printf("STOOOOOOOOOOOOOOOOP!");
+	//printf("STOOOOOOOOOOOOOOOOP!");
 	isEBREAK=1;
 }
 
