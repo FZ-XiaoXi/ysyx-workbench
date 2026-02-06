@@ -98,7 +98,7 @@ module IDU(
 
     /////////////////////////
     assign LSU_rmask=(isLW)?4'b1111:((isLBU|isLB)?4'b0001:0);
-    assign LSU_wmask=(isSW)?4'b1111:((isSB)?4'b0001:0)
+    assign LSU_wmask=(isSW)?4'b1111:((isSB)?4'b0001:0);
     assign LSU_WEN=(isSW|isSB)?1:0;
     /////////////////////////
     assign isSigned=(isLBU)?0:1;
