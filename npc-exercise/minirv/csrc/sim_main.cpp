@@ -13,6 +13,7 @@
 uint32_t MEM[MAX_MEM];
 int isEBREAK=0;
 int i=0;
+int count=0;
 uint32_t sPC=0;
 int pmem_read(int raddr){
 	raddr=raddr & MAX_MEM;
@@ -97,11 +98,11 @@ void onecyc(VerilatedContext* contextp,Vtop* top){
 	top->eval();
 	contextp->timeInc(5);
 	
-	
+	count++;
 	for(int i=0;i<16;i++) printf("[%2d]:%04x ",i,top->GPRTEST[i]);
 	//printf("0x100: %08x 0x104 %08x ",pmem_read(0x100),pmem_read(0x104));
 	printf("\n");
-	printf("PC:%04x ",sPC);
+	printf("c:%d PC:%04x ",count,sPC);
 	printf("CMD:%08x | ",top->PC_command);
 }
 
