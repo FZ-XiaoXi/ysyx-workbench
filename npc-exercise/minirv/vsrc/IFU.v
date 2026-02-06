@@ -1,3 +1,4 @@
+import "DPI-C" function int pmem_read(input int raddr);
 module IFU(
     input clk,
     input rst,
@@ -5,9 +6,9 @@ module IFU(
     input [31:0] dnpc,
     output [31:0] snpc,
     input isJUMP,
-    input [31:0]PC_command,
-    output reg [31:0]command
+    output reg [31:0]PC_command
 );
+    
     always @(posedge clk,posedge rst) begin
         if (rst) begin
             PC<=0;
@@ -23,9 +24,9 @@ module IFU(
 
     always @(posedge clk,posedge rst) begin
         if (rst) begin
-            command<=0;
+            PC_command<=0;
         end else begin
-            
+            PC_command<=pmem_read(PC);
         end
     end
 endmodule

@@ -8,9 +8,23 @@
 #include "verilated.h"
 
 #define MAX_PC 0xffffff
-#define pmem_read(add) MEM[add>>2]
+
 uint32_t MEM[MAX_PC];
 int isEBREAK=0;
+
+int pmem_read(int raddr){
+	// 总是读取地址为`raddr & ~0x3u`的4字节返回
+	return MEM[raddr>>2];
+}
+void pmem_write(int waddr, int wdata, char wmask) {
+  // 总是往地址为`waddr & ~0x3u`的4字节按写掩码`wmask`写入`wdata`
+  // `wmask`中每比特表示`wdata`中1个字节的掩码,
+  // 如`wmask = 0x3`代表只写入最低2个字节, 内存中的其它字节保持不变
+  MEM[waddr>>2]=(MEM[waddr>>2]&0x00ffffff)|((((wmask>>3)&0x1)?((wdata>>24)&0xff):((MEM[waddr>>2]>>24)&0xff))<<24);
+  MEM[waddr>>2]=(MEM[waddr>>2]&0xff00ffff)|((((wmask>>2)&0x1)?((wdata>>16)&0xff):((MEM[waddr>>2]>>16)&0xff))<<16);
+  MEM[waddr>>2]=(MEM[waddr>>2]&0xffff00ff)|((((wmask>>1)&0x1)?((wdata>> 8)&0xff):((MEM[waddr>>2]>> 8)&0xff))<< 8);
+  MEM[waddr>>2]=(MEM[waddr>>2]&0xffffff00)|((((wmask>>0)&0x1)?((wdata>> 0)&0xff):((MEM[waddr>>2]>> 0)&0xff))<< 0);
+}
 void setmem(){
 	memset(MEM,0,MAX_PC*4);
 	MEM[0]=0b00000000100000000000000010010011;//addi r1,r0,8

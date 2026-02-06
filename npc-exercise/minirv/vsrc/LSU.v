@@ -11,6 +11,7 @@ module LSU(
     input clk,
     input writeEN
 );
+    
     // assign LSU_address=address;
     // assign data=LSU_data;
     // assign LSU_PC_address=PC_address;
