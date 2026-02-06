@@ -16,7 +16,6 @@ int i=0;
 int count=0;
 uint32_t sPC=0;
 VerilatedContext* contextp = new VerilatedContext;
-contextp->commandArgs(argc, argv);
 Vtop* top = new Vtop{contextp};
 int pmem_read(int raddr){
 	raddr=raddr & MAX_MEM;
@@ -120,7 +119,7 @@ void onecyc(VerilatedContext* contextp,Vtop* top){
 }
 
 int main(int argc, char** argv) {
-    
+    contextp->commandArgs(argc, argv);
 	setmem();
 	top->clk=0;
 	top->rst=0;
