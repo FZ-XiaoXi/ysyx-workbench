@@ -8,18 +8,9 @@
 #include "verilated.h"
 
 #define MAX_PC 0xffffff
-
-uint32_t MEM[MAX_PC];
+#define pmem_read(add) PMEM[add>>2]
+uint32_t PMEM[MAX_PC];
 int isEBREAK=0;
-
-uint32_t mem_read(uint32_t add,uint8_t range){
-	return MEM[add>>2];
-	return 0;
-}
-void mem_write(uint8_t clk,uint32_t add,uint32_t wdata,uint8_t range,uint8_t en){
-	if(!clk) return;
-	if(en) MEM[add>>2]=wdata;
-}
 void setmem(){
 	memset(MEM,0,MAX_PC*4);
 	MEM[0]=0b00000000100000000000000010010011;//addi r1,r0,8
@@ -63,9 +54,9 @@ int main(int argc, char** argv) {
 		top->eval();
 		if(i<99999) continue;
 		i=0;
-		top->PC_command=mem_read(top->PC,top->LSU_range);
-		top->LSU_readdata=mem_read(top->LSU_address,top->LSU_range);
-		mem_write(top->clk,top->LSU_address,top->LSU_writedata,top->LSU_range,top->LSU_WEN);
+		top->PC_command=pmem_read(top->PC);
+		//top->LSU_readdata=pmem_read(top->LSU_address);
+		//pmem_write(top->clk,top->LSU_address,top->LSU_writedata,top->LSU_range,top->LSU_WEN);
 		if(top->clk){
 			printf("CMD:%08x | ",top->clk,top->PC,top->PC_command);
 			for(int i=0;i<16;i++) printf("[%2d]:%04x ",i,top->GPRTEST[i]);
