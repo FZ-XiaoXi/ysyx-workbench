@@ -44,6 +44,7 @@ void Vtop___024root___ico_sequent__TOP__0(Vtop___024root* vlSelf) {
     Vtop__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
     auto& vlSelfRef = std::ref(*vlSelf).get();
     // Body
+    vlSelfRef.top__DOT__isEBREAK = (0x00100073U == vlSelfRef.PC_command);
     vlSelfRef.top__DOT__rs1_val = ((0U == (0x0000001fU 
                                            & (vlSelfRef.PC_command 
                                               >> 0x0000000fU)))
@@ -124,11 +125,21 @@ void Vtop___024root___eval_triggers__act(Vtop___024root* vlSelf) {
     vlSelfRef.__VactTriggered[0U] = (QData)((IData)(
                                                     ((((IData)(vlSelfRef.rst) 
                                                        & (~ (IData)(vlSelfRef.__Vtrigprevexpr___TOP__rst__0))) 
-                                                      << 1U) 
-                                                     | ((IData)(vlSelfRef.clk) 
-                                                        & (~ (IData)(vlSelfRef.__Vtrigprevexpr___TOP__clk__0))))));
+                                                      << 2U) 
+                                                     | ((((IData)(vlSelfRef.clk) 
+                                                          & (~ (IData)(vlSelfRef.__Vtrigprevexpr___TOP__clk__0))) 
+                                                         << 1U) 
+                                                        | ((IData)(vlSelfRef.top__DOT__isEBREAK) 
+                                                           != (IData)(vlSelfRef.__Vtrigprevexpr___TOP__top__DOT__isEBREAK__0))))));
+    vlSelfRef.__Vtrigprevexpr___TOP__top__DOT__isEBREAK__0 
+        = vlSelfRef.top__DOT__isEBREAK;
     vlSelfRef.__Vtrigprevexpr___TOP__clk__0 = vlSelfRef.clk;
     vlSelfRef.__Vtrigprevexpr___TOP__rst__0 = vlSelfRef.rst;
+    if (VL_UNLIKELY(((1U & (~ (IData)(vlSelfRef.__VactDidInit)))))) {
+        vlSelfRef.__VactDidInit = 1U;
+        vlSelfRef.__VactTriggered[0U] = (1ULL | vlSelfRef.__VactTriggered
+                                         [0U]);
+    }
 #ifdef VL_DEBUG
     if (VL_UNLIKELY(vlSymsp->_vm_contextp__->debug())) {
         Vtop___024root___dump_triggers__act(vlSelfRef.__VactTriggered, "act"s);
@@ -151,8 +162,20 @@ bool Vtop___024root___trigger_anySet__act(const VlUnpacked<QData/*63:0*/, 1> &in
     return (0U);
 }
 
+void Vtop___024unit____Vdpiimwrap_ebreak_TOP____024unit();
+
 void Vtop___024root___nba_sequent__TOP__0(Vtop___024root* vlSelf) {
     VL_DEBUG_IF(VL_DBG_MSGF("+    Vtop___024root___nba_sequent__TOP__0\n"); );
+    Vtop__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
+    auto& vlSelfRef = std::ref(*vlSelf).get();
+    // Body
+    if ((0x00100073U == vlSelfRef.PC_command)) {
+        Vtop___024unit____Vdpiimwrap_ebreak_TOP____024unit();
+    }
+}
+
+void Vtop___024root___nba_sequent__TOP__1(Vtop___024root* vlSelf) {
+    VL_DEBUG_IF(VL_DBG_MSGF("+    Vtop___024root___nba_sequent__TOP__1\n"); );
     Vtop__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
     auto& vlSelfRef = std::ref(*vlSelf).get();
     // Locals
@@ -463,8 +486,11 @@ void Vtop___024root___eval_nba(Vtop___024root* vlSelf) {
     Vtop__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
     auto& vlSelfRef = std::ref(*vlSelf).get();
     // Body
-    if ((3ULL & vlSelfRef.__VnbaTriggered[0U])) {
+    if ((1ULL & vlSelfRef.__VnbaTriggered[0U])) {
         Vtop___024root___nba_sequent__TOP__0(vlSelf);
+    }
+    if ((6ULL & vlSelfRef.__VnbaTriggered[0U])) {
+        Vtop___024root___nba_sequent__TOP__1(vlSelf);
         vlSelfRef.__Vm_traceActivity[2U] = 1U;
     }
 }

@@ -10,6 +10,7 @@
 #define MAX_PC 0xffffff
 
 uint32_t MEM[MAX_PC];
+int isEBREAK=0;
 
 uint32_t mem_read(uint32_t add,uint8_t range){
 	return MEM[add>>2];
@@ -32,8 +33,9 @@ void setmem(){
 	MEM[4]=0x00a50513;
 	MEM[5]=0x00008067;
 }
-int add(int a, int b){
-	return a+b;
+void ebreak(){
+	printf("STOOOOOOOOOOOOOOOOP!");
+	isEBREAK=1;
 }
 int main(int argc, char** argv) {
     VerilatedContext* contextp = new VerilatedContext;
@@ -53,7 +55,7 @@ int main(int argc, char** argv) {
 	top->eval();
 	contextp->timeInc(10);
 	int i=0;
-	while (!contextp->gotFinish()) {
+	while (!contextp->gotFinish()&&isEBREAK==0) {
 		i++;
 		top->eval();
 		if(i<99999) continue;

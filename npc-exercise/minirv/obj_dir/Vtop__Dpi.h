@@ -16,8 +16,8 @@ extern "C" {
 
 
     // DPI IMPORTS
-    // DPI import at vsrc/top.v:1:29
-    extern int add(int a, int b);
+    // DPI import at vsrc/top.v:1:30
+    extern void ebreak();
 
 #ifdef __cplusplus
 }
