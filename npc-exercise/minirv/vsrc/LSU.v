@@ -56,7 +56,7 @@ module LSU(
     end
     always @(posedge clk) begin
         if(writeEN)begin
-            pmem_write(address,w,wmask);
+            pmem_write(address,w,{4'hf,wmask});
         end
     end
     // assign LSU_address=address;
