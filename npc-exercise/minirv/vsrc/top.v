@@ -37,8 +37,9 @@ module top(
   IFU IFU_0(.clk(clk),.rst(rst),.PC(PC),.dnpc(dnpc),.snpc(snpc),.isJUMP(isJUMP),.PC_command(PC_command));
   //LSU LSU_0(.address({2'b00,value[31:2]}),.data(LSU_readdata),.wdata(LSU_writedata),.range(LSU_rmask),.clk(clk),.writeEN(LSU_WEN),.PC_address({2'b00,PC[31:2]}),.PC_data(PC_command));
   IDU IDU_0(.command(PC_command),.opcode(),.imm(imm),.rd(rd_add),.rs1(rs1_add),.rs2(rs2_add),.op(op),.ctype({isR,isI,isS,isB,isU,isJ}),.LSU_rmask(LSU_rmask),.LSU_wmask(LSU_wmask),.isLOAD(isLOAD),.isWRITE(isWRITE),.isJUMP(isJUMP),.isEBREAK(isEBREAK),.isSigned(isSigned),.LSU_WEN(LSU_WEN));
-  assign EXU_inA=(isI|isU|isB)?imm:rs1_val;
-  assign EXU_inB=(isI|isU|isB)?rs1_val:rs2_val;
+  ////////////////////////////////////////
+  assign EXU_inA=(isI|isU|isB|isR)?imm:rs1_val;
+  assign EXU_inB=(isI|isU|isB|isR)?rs1_val:rs2_val;
   EXU EXU_0(.inA(EXU_inA),.inB(EXU_inB),.op(op),.out(EXU_data));
   assign dnpc=EXU_data;
   assign LSU_address=EXU_data;
