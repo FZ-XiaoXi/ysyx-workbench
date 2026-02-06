@@ -12,7 +12,7 @@ Vtop::Vtop(VerilatedContext* _vcontextp__, const char* _vcname__)
     , vlSymsp{new Vtop__Syms(contextp(), _vcname__, this)}
     , clk{vlSymsp->TOP.clk}
     , rst{vlSymsp->TOP.rst}
-    , LSU_range{vlSymsp->TOP.LSU_range}
+    , LSU_rmask{vlSymsp->TOP.LSU_rmask}
     , LSU_WEN{vlSymsp->TOP.LSU_WEN}
     , LSU_address{vlSymsp->TOP.LSU_address}
     , LSU_writedata{vlSymsp->TOP.LSU_writedata}

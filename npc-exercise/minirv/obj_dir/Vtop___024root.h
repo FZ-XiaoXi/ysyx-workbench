@@ -19,7 +19,7 @@ class alignas(VL_CACHE_LINE_BYTES) Vtop___024root final : public VerilatedModule
     // DESIGN SPECIFIC STATE
     VL_IN8(clk,0,0);
     VL_IN8(rst,0,0);
-    VL_OUT8(LSU_range,3,0);
+    VL_OUT8(LSU_rmask,3,0);
     VL_OUT8(LSU_WEN,0,0);
     CData/*0:0*/ top__DOT__isEBREAK;
     CData/*0:0*/ top__DOT____VdfgRegularize_he2b63832_0_0;

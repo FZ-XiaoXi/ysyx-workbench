@@ -30,7 +30,7 @@ VL_ATTR_COLD void Vtop___024root___eval_initial__TOP(Vtop___024root* vlSelf) {
     Vtop__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
     auto& vlSelfRef = std::ref(*vlSelf).get();
     // Body
-    vlSelfRef.LSU_range = 0x0fU;
+    vlSelfRef.LSU_rmask = 0x0fU;
     vlSelfRef.LSU_writedata = 0U;
     vlSelfRef.LSU_WEN = 0U;
 }
@@ -448,7 +448,7 @@ VL_ATTR_COLD void Vtop___024root___ctor_var_reset(Vtop___024root* vlSelf) {
     vlSelf->clk = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 16707436170211756652ull);
     vlSelf->rst = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 18209466448985614591ull);
     vlSelf->LSU_address = VL_SCOPED_RAND_RESET_I(32, __VscopeHash, 3446524407634464399ull);
-    vlSelf->LSU_range = VL_SCOPED_RAND_RESET_I(4, __VscopeHash, 2467863415439979306ull);
+    vlSelf->LSU_rmask = VL_SCOPED_RAND_RESET_I(4, __VscopeHash, 2467863415439979306ull);
     vlSelf->LSU_writedata = VL_SCOPED_RAND_RESET_I(32, __VscopeHash, 8621591918967330140ull);
     vlSelf->LSU_WEN = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 4139174640315457831ull);
     vlSelf->LSU_readdata = VL_SCOPED_RAND_RESET_I(32, __VscopeHash, 5454595947310901637ull);

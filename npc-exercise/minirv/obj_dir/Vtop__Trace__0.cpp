@@ -139,7 +139,7 @@ void Vtop___024root__trace_chg_0_sub_0(Vtop___024root* vlSelf, VerilatedVcd::Buf
     bufp->chgBit(oldp+108,(vlSelfRef.clk));
     bufp->chgBit(oldp+109,(vlSelfRef.rst));
     bufp->chgIData(oldp+110,(vlSelfRef.LSU_address),32);
-    bufp->chgCData(oldp+111,(vlSelfRef.LSU_range),4);
+    bufp->chgCData(oldp+111,(vlSelfRef.LSU_rmask),4);
     bufp->chgIData(oldp+112,(vlSelfRef.LSU_writedata),32);
     bufp->chgBit(oldp+113,(vlSelfRef.LSU_WEN));
     bufp->chgIData(oldp+114,(vlSelfRef.LSU_readdata),32);

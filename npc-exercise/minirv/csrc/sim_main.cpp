@@ -55,7 +55,7 @@ void onecyc(VerilatedContext* contextp,Vtop* top){
 	sPC=top->PC;
 	//top->PC_command=pmem_read(top->PC);
 	//top->LSU_readdata=pmem_read(top->LSU_address);
-	//pmem_write(top->clk,top->LSU_address,top->LSU_writedata,top->LSU_range,top->LSU_WEN);
+	//pmem_write(top->clk,top->LSU_address,top->LSU_writedata,top->LSU_rmask,top->LSU_WEN);
 	
 	top->clk=1;
 	top->eval();
