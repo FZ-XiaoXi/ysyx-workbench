@@ -32,9 +32,9 @@ module LSU(
         case(rmask)
             4'b0001:rdata=rdata1;
             4'b0011:rdata=rdata2;
-            4'b0111:rdata=0xffffffff;
+            4'b0111:rdata=32'hffffffff;
             4'b1111:rdata=rdata4;
-            default:rdata=0xffffffff;
+            default:rdata=32'hffffffff;
         endcase
     end
 
