@@ -40,7 +40,7 @@ module LSU(
         endcase
     end
 
-    wire [31:0]wdata0,wdata1,wdata2;
+    wire [31:0]wdata0,wdata1,wdata2,wdata3;
     reg [31:0] w;
     assign wdata0=wdata;
     assign wdata1={wdata[23:0],{8{1'b0}}};

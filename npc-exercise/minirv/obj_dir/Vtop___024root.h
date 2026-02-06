@@ -20,6 +20,7 @@ class alignas(VL_CACHE_LINE_BYTES) Vtop___024root final : public VerilatedModule
     VL_IN8(clk,0,0);
     VL_IN8(rst,0,0);
     VL_OUT8(LSU_rmask,3,0);
+    VL_OUT8(LSU_wmask,3,0);
     VL_OUT8(LSU_WEN,0,0);
     CData/*0:0*/ top__DOT__isEBREAK;
     CData/*0:0*/ top__DOT____VdfgRegularize_he2b63832_0_0;
@@ -28,12 +29,14 @@ class alignas(VL_CACHE_LINE_BYTES) Vtop___024root final : public VerilatedModule
     CData/*0:0*/ top__DOT__IDU_0__DOT__isADD;
     CData/*0:0*/ top__DOT__IDU_0__DOT__isLW;
     CData/*0:0*/ top__DOT__IDU_0__DOT__isLBU;
+    CData/*0:0*/ top__DOT__IDU_0__DOT__isSW;
+    CData/*0:0*/ top__DOT__IDU_0__DOT__isSB;
     CData/*0:0*/ top__DOT__IDU_0__DOT__isLOAD;
     CData/*0:0*/ top__DOT__IDU_0__DOT__isWRITE;
     CData/*0:0*/ top__DOT__IDU_0__DOT__isI;
-    CData/*0:0*/ top__DOT__IDU_0__DOT____VdfgRegularize_h52656aab_0_2;
-    CData/*0:0*/ top__DOT__IDU_0__DOT____VdfgRegularize_h52656aab_0_3;
     CData/*0:0*/ top__DOT__IDU_0__DOT____VdfgRegularize_h52656aab_0_4;
+    CData/*0:0*/ top__DOT__IDU_0__DOT____VdfgRegularize_h52656aab_0_5;
+    CData/*0:0*/ top__DOT__IDU_0__DOT____VdfgRegularize_h52656aab_0_6;
     CData/*0:0*/ __VstlFirstIteration;
     CData/*0:0*/ __Vtrigprevexpr___TOP__top__DOT__isEBREAK__0;
     CData/*0:0*/ __Vtrigprevexpr___TOP__clk__0;
