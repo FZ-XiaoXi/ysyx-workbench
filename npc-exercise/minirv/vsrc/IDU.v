@@ -64,7 +64,7 @@ module IDU(
 
     end
     //9-add sub mul div LL LR AR AND OR XOR-0
-    assign op[9]=(isADDI|isJALR,isADD)?1:0;
+    assign op[9]=(isADDI|isJALR|isADD)?1:0;
     assign op[8]=(0)?1:0;
     assign op[7]=(0)?1:0;
     assign op[6]=(0)?1:0;
