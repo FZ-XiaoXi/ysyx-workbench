@@ -43,7 +43,7 @@ module top(
   assign EXU_inB=(isI|isU|isB)?rs1_val:rs2_val;
   EXU EXU_0(.inA(EXU_inA),.inB(EXU_inB),.op(op),.out(EXU_data));
   assign dnpc=EXU_data;
-
+  LSU LSU_0(.clk(clk),.writeEN(LSU_WEN),.address(LSU_address),.rdata(LSU_readdata),.wdata(LSU_writedata),.range(LSU_range));
   always @(isEBREAK) begin
     if(isEBREAK)  ebreak();
   end

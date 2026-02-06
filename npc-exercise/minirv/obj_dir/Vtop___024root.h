@@ -29,7 +29,6 @@ class alignas(VL_CACHE_LINE_BYTES) Vtop___024root final : public VerilatedModule
     CData/*0:0*/ top__DOT__IDU_0__DOT__isI;
     CData/*0:0*/ top__DOT__IDU_0__DOT____VdfgRegularize_h52656aab_0_1;
     CData/*0:0*/ __VstlFirstIteration;
-    CData/*0:0*/ __VicoFirstIteration;
     CData/*0:0*/ __Vtrigprevexpr___TOP__top__DOT__isEBREAK__0;
     CData/*0:0*/ __Vtrigprevexpr___TOP__clk__0;
     CData/*0:0*/ __Vtrigprevexpr___TOP__rst__0;
@@ -38,7 +37,7 @@ class alignas(VL_CACHE_LINE_BYTES) Vtop___024root final : public VerilatedModule
     VL_OUT(LSU_writedata,31,0);
     VL_IN(LSU_readdata,31,0);
     VL_OUT(PC,31,0);
-    VL_IN(PC_command,31,0);
+    VL_OUT(PC_command,31,0);
     IData/*31:0*/ top__DOT__command;
     IData/*31:0*/ top__DOT__rs1_val;
     IData/*31:0*/ top__DOT__GPR_0__DOT__unnamedblk1__DOT__i;
@@ -51,7 +50,6 @@ class alignas(VL_CACHE_LINE_BYTES) Vtop___024root final : public VerilatedModule
     VlUnpacked<IData/*31:0*/, 32> top__DOT__GPR_0__DOT__GPRTEST;
     VlUnpacked<IData/*31:0*/, 32> top__DOT__GPR_0__DOT__GPR;
     VlUnpacked<QData/*63:0*/, 1> __VstlTriggered;
-    VlUnpacked<QData/*63:0*/, 1> __VicoTriggered;
     VlUnpacked<QData/*63:0*/, 1> __VactTriggered;
     VlUnpacked<QData/*63:0*/, 1> __VnbaTriggered;
     VlUnpacked<CData/*0:0*/, 3> __Vm_traceActivity;
