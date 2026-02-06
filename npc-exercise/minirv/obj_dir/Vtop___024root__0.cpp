@@ -423,7 +423,7 @@ void Vtop___024root___nba_sequent__TOP__1(Vtop___024root* vlSelf) {
                                                                  VL_SHIFTL_III(32,32,32, vlSelfRef.LSU_writedata, 8U)
                                                                   : vlSelfRef.LSU_writedata)), (IData)(vlSelfRef.LSU_wmask));
     }
-    if (VL_UNLIKELY(((0U != vlSelfRef.PC_command)))) {
+    if (VL_UNLIKELY(((0x00100073U == vlSelfRef.PC_command)))) {
         VL_WRITEF_NX("[CPU] Ebreak triggered at PC=%x, exit_code=%10#\n",0,
                      32,vlSelfRef.PC,32,vlSelfRef.GPRTEST
                      [0x0aU]);
