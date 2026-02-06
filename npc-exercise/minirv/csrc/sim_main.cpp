@@ -130,8 +130,7 @@ int main(int argc, char** argv) {
 	if(argc>=2){
 		READ=1;
 		IMAGE_NAME=argv[1];
-		printf("USE IMAGE:%s",IMAGE_NAME);
-
+		printf("USE IMAGE:%s\n",IMAGE_NAME);
 	}else{
 		printf("DEFAULT RUN\n");
 	}
