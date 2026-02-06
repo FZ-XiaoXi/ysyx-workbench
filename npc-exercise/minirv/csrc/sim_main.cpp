@@ -25,7 +25,10 @@ void setmem(){
 	MEM[0]=0b00000000100000000000000010010011;//addi r1,r0,8
 	MEM[1]=0b00000000001000001000000100010011;//addi r2,r1,2
 	MEM[2]=0b00000000000100010000000110110011;//add  r3,r1,r2
-	MEM[3]=0b11111111110000001000000011100111;//jalr
+	MEM[3]=0b00000000000000000111000110110111;//lui  r3,0x7000
+	MEM[4]=0b00010001000100011000001000010011;//addi r4,r3,0x111
+	MEM[5]=0b00000000000100000000000001110011;//ebreak
+	//MEM[]=0b11111111110000001000000011100111;//jalr r1,-4(r1)
 	// MEM[0]=0x01400513;
 	// MEM[1]=0x010000e7;
 	// MEM[2]=0x00c000e7;
@@ -64,7 +67,7 @@ int main(int argc, char** argv) {
 		top->LSU_readdata=mem_read(top->LSU_address,top->LSU_range);
 		mem_write(top->clk,top->LSU_address,top->LSU_writedata,top->LSU_range,top->LSU_WEN);
 		printf("%d PC:%04x CMD:%08x | ",top->clk,top->PC,top->PC_command);
-		for(int i=0;i<16;i++) printf("[%2d]:%d ",i,top->GPRTEST[i]);
+		for(int i=0;i<16;i++) printf("[%2d]:%04x ",i,top->GPRTEST[i]);
 		printf("\n");
 		top->clk=!top->clk;
 		top->eval();

@@ -45,6 +45,11 @@ void Vtop___024root___ico_sequent__TOP__0(Vtop___024root* vlSelf) {
     auto& vlSelfRef = std::ref(*vlSelf).get();
     // Body
     vlSelfRef.top__DOT__isEBREAK = (0x00100073U == vlSelfRef.PC_command);
+    vlSelfRef.top__DOT__IDU_0__DOT__isADD = (IData)(
+                                                    (0x00000033U 
+                                                     == 
+                                                     (0xfe00707fU 
+                                                      & vlSelfRef.PC_command)));
     vlSelfRef.top__DOT__rs1_val = ((0U == (0x0000001fU 
                                            & (vlSelfRef.PC_command 
                                               >> 0x0000000fU)))
@@ -57,13 +62,13 @@ void Vtop___024root___ico_sequent__TOP__0(Vtop___024root* vlSelf) {
                                                       == 
                                                       (0x0000707fU 
                                                        & vlSelfRef.PC_command)));
-    vlSelfRef.top__DOT__IDU_0__DOT__isWRITE = ((IData)(
-                                                       (0x00000013U 
-                                                        == 
-                                                        (0x0000707fU 
-                                                         & vlSelfRef.PC_command))) 
-                                               | (IData)(vlSelfRef.top__DOT__IDU_0__DOT__isJALR));
-    vlSelfRef.top__DOT__EXU_0__DOT__out = (((IData)(vlSelfRef.top__DOT__IDU_0__DOT__isWRITE)
+    vlSelfRef.top__DOT__IDU_0__DOT__isI = ((IData)(
+                                                   (0x00000013U 
+                                                    == 
+                                                    (0x0000707fU 
+                                                     & vlSelfRef.PC_command))) 
+                                           | (IData)(vlSelfRef.top__DOT__IDU_0__DOT__isJALR));
+    vlSelfRef.top__DOT__EXU_0__DOT__out = (((IData)(vlSelfRef.top__DOT__IDU_0__DOT__isI)
                                              ? (((- (IData)(
                                                             (vlSelfRef.PC_command 
                                                              >> 0x0000001fU))) 
@@ -71,7 +76,7 @@ void Vtop___024root___ico_sequent__TOP__0(Vtop___024root* vlSelf) {
                                                 | (vlSelfRef.PC_command 
                                                    >> 0x00000014U))
                                              : vlSelfRef.top__DOT__rs1_val) 
-                                           + ((IData)(vlSelfRef.top__DOT__IDU_0__DOT__isWRITE)
+                                           + ((IData)(vlSelfRef.top__DOT__IDU_0__DOT__isI)
                                                ? vlSelfRef.top__DOT__rs1_val
                                                : ((0U 
                                                    == 
@@ -207,7 +212,8 @@ void Vtop___024root___nba_sequent__TOP__1(Vtop___024root* vlSelf) {
             ((0U == (0x0000001fU & (vlSelfRef.PC_command 
                                     >> 7U))) ? 0U : 
              ((IData)(vlSelfRef.top__DOT__IDU_0__DOT__isJALR)
-               ? ((IData)(4U) + vlSelfRef.PC) : ((IData)(vlSelfRef.top__DOT__IDU_0__DOT__isWRITE)
+               ? ((IData)(4U) + vlSelfRef.PC) : (((IData)(vlSelfRef.top__DOT__IDU_0__DOT__isI) 
+                                                  | (IData)(vlSelfRef.top__DOT__IDU_0__DOT__isADD))
                                                   ? vlSelfRef.top__DOT__EXU_0__DOT__out
                                                   : 0xffffffffU)));
         __VdlyDim0__top__DOT__GPR_0__DOT__GPR__v32 
@@ -455,7 +461,7 @@ void Vtop___024root___nba_sequent__TOP__1(Vtop___024root* vlSelf) {
         [1U];
     vlSelfRef.top__DOT__GPR_0__DOT__GPRTEST[0U] = vlSelfRef.GPRTEST
         [0U];
-    vlSelfRef.top__DOT__EXU_0__DOT__out = (((IData)(vlSelfRef.top__DOT__IDU_0__DOT__isWRITE)
+    vlSelfRef.top__DOT__EXU_0__DOT__out = (((IData)(vlSelfRef.top__DOT__IDU_0__DOT__isI)
                                              ? (((- (IData)(
                                                             (vlSelfRef.PC_command 
                                                              >> 0x0000001fU))) 
@@ -463,7 +469,7 @@ void Vtop___024root___nba_sequent__TOP__1(Vtop___024root* vlSelf) {
                                                 | (vlSelfRef.PC_command 
                                                    >> 0x00000014U))
                                              : vlSelfRef.top__DOT__rs1_val) 
-                                           + ((IData)(vlSelfRef.top__DOT__IDU_0__DOT__isWRITE)
+                                           + ((IData)(vlSelfRef.top__DOT__IDU_0__DOT__isI)
                                                ? vlSelfRef.top__DOT__rs1_val
                                                : ((0U 
                                                    == 
