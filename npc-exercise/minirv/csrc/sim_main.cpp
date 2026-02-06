@@ -71,6 +71,9 @@ int main(int argc, char** argv) {
 		//top->PC_command=pmem_read(top->PC);
 		//top->LSU_readdata=pmem_read(top->LSU_address);
 		//pmem_write(top->clk,top->LSU_address,top->LSU_writedata,top->LSU_range,top->LSU_WEN);
+		
+		top->clk=!top->clk;
+		top->eval();
 		if(top->clk){
 			printf("CMD:%08x | ",top->PC_command);
 			for(int i=0;i<16;i++) printf("[%2d]:%04x ",i,top->GPRTEST[i]);
@@ -78,9 +81,6 @@ int main(int argc, char** argv) {
 		}else{
 			printf("PC:%04x ",top->PC);
 		}
-		top->clk=!top->clk;
-		top->eval();
-		
 		contextp->timeInc(5);
 	}
     delete top;
