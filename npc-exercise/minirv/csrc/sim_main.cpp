@@ -30,6 +30,9 @@ void setmem(){
 	MEM[4]=0x00a50513;
 	MEM[5]=0x00008067;
 }
+int add(int a, int b){
+	return a+b;
+}
 int main(int argc, char** argv) {
     VerilatedContext* contextp = new VerilatedContext;
     contextp->commandArgs(argc, argv);

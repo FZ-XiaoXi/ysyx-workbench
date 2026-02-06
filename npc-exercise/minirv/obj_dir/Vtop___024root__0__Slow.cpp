@@ -23,11 +23,20 @@ VL_ATTR_COLD void Vtop___024root___eval_initial(Vtop___024root* vlSelf) {
     Vtop___024root___eval_initial__TOP(vlSelf);
 }
 
+void Vtop___024unit____Vdpiimwrap_add_TOP____024unit(IData/*31:0*/ a, IData/*31:0*/ b, IData/*31:0*/ &add__Vfuncrtn);
+
 VL_ATTR_COLD void Vtop___024root___eval_initial__TOP(Vtop___024root* vlSelf) {
     VL_DEBUG_IF(VL_DBG_MSGF("+    Vtop___024root___eval_initial__TOP\n"); );
     Vtop__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
     auto& vlSelfRef = std::ref(*vlSelf).get();
+    // Locals
+    IData/*31:0*/ __Vfunc_add__0__Vfuncout;
+    __Vfunc_add__0__Vfuncout = 0;
     // Body
+    VL_WRITEF_NX("00000001 + 00000002 = %x\n",0,32,
+                 ([&]() {
+                    Vtop___024unit____Vdpiimwrap_add_TOP____024unit(1U, 2U, __Vfunc_add__0__Vfuncout);
+                }(), __Vfunc_add__0__Vfuncout));
     vlSelfRef.LSU_range = 0x0fU;
     vlSelfRef.LSU_writedata = 0U;
     vlSelfRef.LSU_WEN = 0U;
@@ -58,7 +67,7 @@ VL_ATTR_COLD void Vtop___024root___eval_settle(Vtop___024root* vlSelf) {
 #ifdef VL_DEBUG
             Vtop___024root___dump_triggers__stl(vlSelfRef.__VstlTriggered, "stl"s);
 #endif
-            VL_FATAL_MT("vsrc/top.v", 1, "", "Settle region did not converge after 100 tries");
+            VL_FATAL_MT("vsrc/top.v", 5, "", "Settle region did not converge after 100 tries");
         }
         __VstlIterCount = ((IData)(1U) + __VstlIterCount);
     } while (Vtop___024root___eval_phase__stl(vlSelf));
