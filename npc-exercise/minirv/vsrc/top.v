@@ -10,7 +10,7 @@ module top(
   output [3:0]LSU_range,
   output [31:0]LSU_writedata,
   output LSU_WEN,
-  input [31:0]LSU_readdata,
+  output [31:0]LSU_readdata,
   output [31:0]PC,
   output [31:0]PC_command,
 
