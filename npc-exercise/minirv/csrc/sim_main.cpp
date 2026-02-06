@@ -49,7 +49,7 @@ void ebreak(){
 void onecyc(VerilatedContext* contextp,Vtop* top){
 	i++;
 	top->eval();
-	if(i<99999) continue;
+	if(i<99999) return;
 	i=0;
 	//top->PC_command=pmem_read(top->PC);
 	//top->LSU_readdata=pmem_read(top->LSU_address);
