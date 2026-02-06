@@ -44,6 +44,9 @@ class alignas(VL_CACHE_LINE_BYTES) Vtop VL_NOT_FINAL : public VerilatedModel {
     VL_OUT(&PC_command,31,0);
     VL_OUT(&dnpc,31,0);
     VL_OUT(&snpc,31,0);
+    VL_OUT(&EXU_inA,31,0);
+    VL_OUT(&EXU_inB,31,0);
+    VL_OUT(&EXU_data,31,0);
     VL_OUT((&GPRTEST)[32],31,0);
 
     // CELLS
