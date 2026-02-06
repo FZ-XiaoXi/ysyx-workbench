@@ -153,10 +153,12 @@ int main(int argc, char** argv) {
 		onecyc(contextp,top);
 	}
 	for(int i=0;i<16;i++) printf("[%2d]:%04x ",i,top->GPRTEST[i]);
-	if(top->GPRTEST[10]==0) printf("\n=====HIT GOOD TRAP!=====\n");
-	else printf("\n=====HIT BAD TRAP!=====\n");
+	int flag=top->GPRTEST[10];
+	flag=1;
     delete top;
     delete contextp;
-    return 0;
+	if(flag==0)	printf("\n=====HIT GOOD TRAP!=====\n");
+	else printf("\n=====HIT BAD TRAP!=====\n");
+    return flag;
 }
 
