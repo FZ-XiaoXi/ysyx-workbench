@@ -19,7 +19,7 @@ int pmem_read(int raddr){
 	return MEM[raddr>>2];
 }
 void pmem_write(int waddr, int wdata, char wmask) {
-	//printf("\nW: add:%x data:%x mask:%x\n",waddr,wdata,wmask);
+	printf("\nW: add:%x data:%x mask:%x\n",waddr,wdata,wmask);
 	wmask=wmask<<(waddr&0x03);
   // 总是往地址为`waddr & ~0x3u`的4字节按写掩码`wmask`写入`wdata`
   // `wmask`中每比特表示`wdata`中1个字节的掩码,
