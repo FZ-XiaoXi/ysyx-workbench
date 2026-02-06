@@ -75,11 +75,11 @@ int main(int argc, char** argv) {
 		top->clk=!top->clk;
 		top->eval();
 		if(top->clk){
-			printf("CMD:%08x | ",top->PC_command);
+			printf("PC:%04x CMD:%08x | ",top->PC,top->PC_command);
 			for(int i=0;i<16;i++) printf("[%2d]:%04x ",i,top->GPRTEST[i]);
 			printf("\n");
 		}else{
-			printf("PC:%04x ",top->PC);
+			//printf("PC:%04x ",top->PC);
 		}
 		contextp->timeInc(5);
 	}
