@@ -5,7 +5,7 @@ SIM_C = csrc/*.cpp
 SIM_V=vsrc/*.v
 ARGS ?=
 all:
-	@echo "Write this Makefile by your self."
+	#@echo "Write this Makefile by your self."
 
 INCFLAGS=$(addprefix -I, $(INC_PATH))
 CXXFLAGS += $(INCFLAGS) -DTOP_NAME="\"V$(TOPNAME)\"" -ggdb
