@@ -22,11 +22,11 @@ module IFU(
     end
     assign snpc=PC+4;
 
-    always @(posedge clk,posedge rst) begin
+    always @(*) begin
         if (rst) begin
-            PC_command<=0;
+            PC_command=0;
         end else begin
-            PC_command<=pmem_read(PC);
+            PC_command=pmem_read(PC);
         end
     end
 endmodule
