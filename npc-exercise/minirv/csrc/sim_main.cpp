@@ -95,10 +95,6 @@ void ebreak(){
 }
 
 void onecyc(VerilatedContext* contextp,Vtop* top){
-	i++;
-	top->eval();
-	if(i<0) return;
-	i=0;
 	sPC=top->PC;
 	uint32_t sdPC=top->dnpc;
 	uint32_t ssPC=top->snpc;
