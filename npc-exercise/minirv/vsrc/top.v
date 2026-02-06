@@ -2,7 +2,7 @@ import "DPI-C" function int add (input int a, input int b);
 
 initial begin
   $display("%x + %x = %x", 1, 2, add(1,2));
-endtask
+end
 
 module top(
   input clk,
