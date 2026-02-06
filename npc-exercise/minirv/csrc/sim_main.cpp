@@ -14,7 +14,7 @@ uint32_t MEM[MAX_MEM];
 int isEBREAK=0;
 int i=0;
 uint32_t sPC=0;
-int pmem_read(int raddr){
+int pmem_read(uint32_t raddr){
 	// 总是读取地址为`raddr & ~0x3u`的4字节返回
 	printf("\nR: add:%x ",raddr);
 	uint32_t s=MEM[raddr>>2];
