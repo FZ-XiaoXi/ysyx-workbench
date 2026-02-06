@@ -335,9 +335,7 @@ void Vtop___024root___nba_sequent__TOP__1(Vtop___024root* vlSelf) {
     auto& vlSelfRef = std::ref(*vlSelf).get();
     // Body
     if (vlSelfRef.LSU_WEN) {
-        Vtop___024unit____Vdpiimwrap_pmem_write_TOP____024unit(vlSelfRef.LSU_address, 0U, 
-                                                               (0x000000f0U 
-                                                                | (IData)(vlSelfRef.LSU_wmask)));
+        Vtop___024unit____Vdpiimwrap_pmem_write_TOP____024unit(vlSelfRef.LSU_address, 0U, (IData)(vlSelfRef.LSU_wmask));
     }
 }
 
