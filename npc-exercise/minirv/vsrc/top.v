@@ -84,7 +84,7 @@ module GPR(
         GPR[i]<={32{1'b0}};
       end
     end else begin
-      GPR[addW]<=inData;
+      GPR[addW]<=(addW==5'b00000)?{32{1'b0}}:inData;
     end
   end
 
