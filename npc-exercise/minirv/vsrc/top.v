@@ -13,7 +13,7 @@ module top(
   output [31:0]LSU_readdata,
   output [31:0]PC,
   output [31:0]PC_command,
-
+  output wire [31:0] dnpc,snpc,
   output [31:0]GPRTEST[31:0]
 );
 
@@ -22,7 +22,7 @@ module top(
   clkdiv clkdiv_0(clk,rst,clk0,clk1,clk2);
   wire [31:0] imm;
   wire [31:0] command;
-  wire [31:0] dnpc,snpc;
+  
   wire isR,isI,isS,isB,isU,isJ;
 
   wire [4:0] rd_add,rs1_add,rs2_add,gpr_address;

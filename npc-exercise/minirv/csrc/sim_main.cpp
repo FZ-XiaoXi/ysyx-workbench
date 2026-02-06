@@ -103,7 +103,7 @@ void onecyc(VerilatedContext* contextp,Vtop* top){
 	for(int i=0;i<16;i++) printf("[%2d]:%04x ",i,top->GPRTEST[i]);
 	//printf("0x100: %08x 0x104 %08x ",pmem_read(0x100),pmem_read(0x104));
 	printf("\n");
-	printf("c:%d PC:%04x ",count,sPC);
+	printf("c:%d PC:%04x d:%04x s:%04x",count,sPC,top->dnpc,top->snpc);
 	printf("CMD:%08x | ",top->PC_command);
 }
 
