@@ -18,7 +18,7 @@ int pmem_read(uint32_t raddr){
 	// 总是读取地址为`raddr & ~0x3u`的4字节返回
 	printf("\nR: add:%x ",raddr);
 	uint32_t s=MEM[raddr>>2];
-	printf("val:%x\n",raddr,s);
+	printf("val:%x\n",s);
 	return s;
 }
 void pmem_write(int waddr, int wdata, char wmask) {
