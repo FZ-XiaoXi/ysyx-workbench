@@ -96,11 +96,6 @@ void ebreak(){
 
 void onecyc(VerilatedContext* contextp,Vtop* top){
 	sPC=top->PC;
-	uint32_t sdPC=top->dnpc;
-	uint32_t ssPC=top->snpc;
-	uint32_t A=top->EXU_inA;
-	uint32_t B=top->EXU_inB;
-	uint32_t O=top->EXU_data;
 	for(int i=0;i<16;i++) printf("[%2d]:%04x ",i,top->GPRTEST[i]);
 	//top->PC_command=pmem_read(top->PC);
 	//top->LSU_readdata=pmem_read(top->LSU_address);
