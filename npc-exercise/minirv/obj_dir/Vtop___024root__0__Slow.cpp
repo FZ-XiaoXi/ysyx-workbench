@@ -178,6 +178,11 @@ VL_ATTR_COLD void Vtop___024root___stl_sequent__TOP__0(Vtop___024root* vlSelf) {
                                 ? 0U : vlSelfRef.top__DOT__GPR_0__DOT__GPR
                                [(0x0000001fU & (vlSelfRef.PC_command 
                                                 >> 0x00000014U))]);
+    vlSelfRef.top__DOT__IDU_0__DOT__isADD = (IData)(
+                                                    (0x00000033U 
+                                                     == 
+                                                     (0xfe00707fU 
+                                                      & vlSelfRef.PC_command)));
     vlSelfRef.top__DOT__rs1_val = ((0U == (0x0000001fU 
                                            & (vlSelfRef.PC_command 
                                               >> 0x0000000fU)))
@@ -195,11 +200,6 @@ VL_ATTR_COLD void Vtop___024root___stl_sequent__TOP__0(Vtop___024root* vlSelf) {
                                                     == 
                                                     (0x0000707fU 
                                                      & vlSelfRef.PC_command)));
-    vlSelfRef.top__DOT__IDU_0__DOT__isADD = (IData)(
-                                                    (0x00000033U 
-                                                     == 
-                                                     (0xfe00707fU 
-                                                      & vlSelfRef.PC_command)));
     vlSelfRef.top__DOT__IDU_0__DOT__isJALR = (IData)(
                                                      (0x00000067U 
                                                       == 
@@ -372,7 +372,7 @@ VL_ATTR_COLD void Vtop___024root___stl_sequent__TOP__0(Vtop___024root* vlSelf) {
     vlSelfRef.top__DOT____VdfgRegularize_he2b63832_0_0 
         = ((IData)(vlSelfRef.top__DOT__IDU_0__DOT__isI) 
            | ((0x37U == (0x0000007fU & vlSelfRef.PC_command)) 
-              | (IData)(vlSelfRef.top__DOT__IDU_0__DOT__isADD)));
+              | (IData)(vlSelfRef.LSU_WEN)));
     vlSelfRef.top__DOT__EXU_0__DOT__inA = ((IData)(vlSelfRef.top__DOT____VdfgRegularize_he2b63832_0_0)
                                             ? ((IData)(vlSelfRef.top__DOT__IDU_0__DOT__isI)
                                                 ? (
