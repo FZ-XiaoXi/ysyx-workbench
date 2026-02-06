@@ -65,9 +65,10 @@ void onecyc(VerilatedContext* contextp,Vtop* top){
 	top->eval();
 	contextp->timeInc(5);
 	
-	printf("PC:%04x ",sPC);
-	printf("CMD:%08x ↘️ ",top->PC_command);
+	
 	for(int i=0;i<16;i++) printf("[%2d]:%04x ",i,top->GPRTEST[i]);
+	printf("| PC:%04x ",top->PC);
+	printf("CMD:%08x",top->PC_command);
 	printf("\n");
 }
 
