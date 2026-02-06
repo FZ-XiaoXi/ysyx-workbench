@@ -31,7 +31,7 @@ module top(
   wire gpr_WEN;
   wire isEBREAK,isLOAD,isWRITE,isJUMP,isSigned;
   wire [9:0]op;
-  assign LSU_writedata=0;
+  
   GPR GPR_0(.clk(clk),.rst(rst),.addRA(rs1_add),.addRB(rs2_add),.addW(gpr_address),.outA(rs1_val),.outB(rs2_val),.inData(gpr_data),.WEN(gpr_WEN),.GPRTEST(GPRTEST));
   WBU WBU_0(.clk(clk),.rst(rst),.LSU_data(LSU_readdata),.EXU_data(EXU_data),.address(rd_add),.isLOAD(isLOAD),.isWRITE(isWRITE),.isJUMP(isJUMP),.snpc(snpc),.gpr_WEN(gpr_WEN),.gpr_data(gpr_data),.gpr_address(gpr_address));
   IFU IFU_0(.clk(clk),.rst(rst),.PC(PC),.dnpc(dnpc),.snpc(snpc),.isJUMP(isJUMP),.PC_command(PC_command));
@@ -42,6 +42,7 @@ module top(
   EXU EXU_0(.inA(EXU_inA),.inB(EXU_inB),.op(op),.out(EXU_data));
   assign dnpc=EXU_data;
   assign LSU_address=EXU_data;
+  assign LSU_writedata=rs2_val;
   LSU LSU_0(.clk(clk),.writeEN(LSU_WEN),.address(LSU_address),.rdata(LSU_readdata),.wdata(LSU_writedata),.rmask(LSU_rmask),.wmask(LSU_wmask),.isSigned(isSigned));
   always @(isEBREAK) begin
     if(isEBREAK)  ebreak();
