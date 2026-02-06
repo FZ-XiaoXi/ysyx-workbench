@@ -8,18 +8,19 @@
 #include "verilated.h"
 #define READ 1
 #define FILE_NAME "mem.bin"
-#define MAX_PC 0xfffffff
+#define MAX_MEM 0xfffffff
 #define _EBREAK 0b00000000000100000000000001110011
-uint32_t MEM[MAX_PC];
+uint32_t MEM[MAX_MEM];
 int isEBREAK=0;
 int i=0;
 uint32_t sPC=0;
 int pmem_read(int raddr){
 	// 总是读取地址为`raddr & ~0x3u`的4字节返回
+	printf("\nW: add:%x data:%x\n",raddr,MEM[raddr>>2]);
 	return MEM[raddr>>2];
 }
 void pmem_write(int waddr, int wdata, char wmask) {
-	printf("\nW: add:%x data:%x mask:%x\n",waddr,wdata,wmask);
+	//printf("\nW: add:%x data:%x mask:%x\n",waddr,wdata,wmask);
 	wmask=wmask<<(waddr&0x03);
   // 总是往地址为`waddr & ~0x3u`的4字节按写掩码`wmask`写入`wdata`
   // `wmask`中每比特表示`wdata`中1个字节的掩码,
@@ -30,7 +31,7 @@ void pmem_write(int waddr, int wdata, char wmask) {
 	MEM[waddr>>2]=(MEM[waddr>>2]&0xffffff00)|((((wmask>>0)&0x1)?((wdata>> 0)&0xff):((MEM[waddr>>2]>> 0)&0xff))<< 0);
 }
 void setmem(){
-	memset(MEM,0,MAX_PC*4);
+	memset(MEM,0,MAX_MEM*4);
 	
 	if(READ==0){
 		MEM[ 0]=0b00000000100000000000000010010011;//addi r1,r0,8
