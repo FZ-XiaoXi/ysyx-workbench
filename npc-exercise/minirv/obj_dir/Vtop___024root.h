@@ -38,6 +38,7 @@ class alignas(VL_CACHE_LINE_BYTES) Vtop___024root final : public VerilatedModule
     CData/*0:0*/ top__DOT__IDU_0__DOT____VdfgRegularize_h52656aab_0_5;
     CData/*0:0*/ top__DOT__IDU_0__DOT____VdfgRegularize_h52656aab_0_6;
     CData/*0:0*/ __VstlFirstIteration;
+    CData/*0:0*/ __VicoFirstIteration;
     CData/*0:0*/ __Vtrigprevexpr___TOP__top__DOT__isEBREAK__0;
     CData/*0:0*/ __Vtrigprevexpr___TOP__clk__0;
     CData/*0:0*/ __Vtrigprevexpr___TOP__rst__0;
@@ -59,6 +60,7 @@ class alignas(VL_CACHE_LINE_BYTES) Vtop___024root final : public VerilatedModule
     IData/*31:0*/ top__DOT__LSU_0__DOT__val1;
     IData/*31:0*/ top__DOT__LSU_0__DOT__val2;
     IData/*31:0*/ top__DOT__LSU_0__DOT__rdata4;
+    IData/*31:0*/ __Vfunc_pmem_read__1__Vfuncout;
     IData/*31:0*/ __Vfunc_pmem_read__2__Vfuncout;
     IData/*31:0*/ __VactIterCount;
     VL_OUT(GPRTEST[32],31,0);
@@ -66,9 +68,10 @@ class alignas(VL_CACHE_LINE_BYTES) Vtop___024root final : public VerilatedModule
     VlUnpacked<IData/*31:0*/, 32> top__DOT__GPR_0__DOT__GPRTEST;
     VlUnpacked<IData/*31:0*/, 32> top__DOT__GPR_0__DOT__GPR;
     VlUnpacked<QData/*63:0*/, 1> __VstlTriggered;
+    VlUnpacked<QData/*63:0*/, 1> __VicoTriggered;
     VlUnpacked<QData/*63:0*/, 1> __VactTriggered;
     VlUnpacked<QData/*63:0*/, 1> __VnbaTriggered;
-    VlUnpacked<CData/*0:0*/, 3> __Vm_traceActivity;
+    VlUnpacked<CData/*0:0*/, 4> __Vm_traceActivity;
 
     // INTERNAL VARIABLES
     Vtop__Syms* const vlSymsp;
