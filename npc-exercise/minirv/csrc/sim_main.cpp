@@ -68,7 +68,7 @@ int main(int argc, char** argv) {
 		top->eval();
 		if(i<99999) continue;
 		i=0;
-		top->PC_command=pmem_read(top->PC);
+		//top->PC_command=pmem_read(top->PC);
 		//top->LSU_readdata=pmem_read(top->LSU_address);
 		//pmem_write(top->clk,top->LSU_address,top->LSU_writedata,top->LSU_range,top->LSU_WEN);
 		if(top->clk){
