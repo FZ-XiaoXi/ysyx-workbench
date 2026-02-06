@@ -18,7 +18,7 @@ module top(
   output [31:0]GPRTEST[31:0]
 );
   always @(posedge clk) begin
-    if(PC_command)
+    if(PC_command==32'b00000000000100000000000001110011)
       $display("[CPU] Ebreak triggered at PC=%h, exit_code=%d", PC, GPRTEST[10]);
   end
   // verilator lint_off PINMISSING
