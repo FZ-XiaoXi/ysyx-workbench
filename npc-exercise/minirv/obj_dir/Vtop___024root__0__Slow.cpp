@@ -105,8 +105,7 @@ VL_ATTR_COLD void Vtop___024root___stl_sequent__TOP__0(Vtop___024root* vlSelf) {
     Vtop__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
     auto& vlSelfRef = std::ref(*vlSelf).get();
     // Body
-    vlSelfRef.top__DOT__IFU_0__DOT__snpc = ((IData)(4U) 
-                                            + vlSelfRef.PC);
+    vlSelfRef.snpc = ((IData)(4U) + vlSelfRef.PC);
     vlSelfRef.top__DOT__isEBREAK = (0x00100073U == vlSelfRef.PC_command);
     vlSelfRef.GPRTEST[0x0000001fU] = vlSelfRef.top__DOT__GPR_0__DOT__GPR
         [0x0000001fU];
@@ -413,6 +412,7 @@ VL_ATTR_COLD void Vtop___024root___stl_sequent__TOP__0(Vtop___024root* vlSelf) {
                                      ? vlSelfRef.top__DOT__rs1_val
                                      : vlSelfRef.LSU_writedata))
                               : vlSelfRef.top__DOT__EXU_0__DOT__inA);
+    vlSelfRef.dnpc = vlSelfRef.LSU_address;
     Vtop___024unit____Vdpiimwrap_pmem_read_TOP____024unit(vlSelfRef.LSU_address, vlSelfRef.__Vfunc_pmem_read__2__Vfuncout);
     vlSelfRef.top__DOT__LSU_0__DOT__val0 = vlSelfRef.__Vfunc_pmem_read__2__Vfuncout;
     vlSelfRef.top__DOT__LSU_0__DOT__val1 = (((- (IData)(
@@ -564,6 +564,8 @@ VL_ATTR_COLD void Vtop___024root___ctor_var_reset(Vtop___024root* vlSelf) {
     vlSelf->LSU_readdata = VL_SCOPED_RAND_RESET_I(32, __VscopeHash, 5454595947310901637ull);
     vlSelf->PC = VL_SCOPED_RAND_RESET_I(32, __VscopeHash, 12700755172620096637ull);
     vlSelf->PC_command = VL_SCOPED_RAND_RESET_I(32, __VscopeHash, 1288837359877173570ull);
+    vlSelf->dnpc = VL_SCOPED_RAND_RESET_I(32, __VscopeHash, 9558418065809668140ull);
+    vlSelf->snpc = VL_SCOPED_RAND_RESET_I(32, __VscopeHash, 17955041938888895009ull);
     for (int __Vi0 = 0; __Vi0 < 32; ++__Vi0) {
         vlSelf->GPRTEST[__Vi0] = VL_SCOPED_RAND_RESET_I(32, __VscopeHash, 8972673220147066468ull);
     }
@@ -582,7 +584,6 @@ VL_ATTR_COLD void Vtop___024root___ctor_var_reset(Vtop___024root* vlSelf) {
         vlSelf->top__DOT__GPR_0__DOT__GPR[__Vi0] = VL_SCOPED_RAND_RESET_I(32, __VscopeHash, 18271363982738575805ull);
     }
     vlSelf->top__DOT__GPR_0__DOT__unnamedblk1__DOT__i = 0;
-    vlSelf->top__DOT__IFU_0__DOT__snpc = VL_SCOPED_RAND_RESET_I(32, __VscopeHash, 12889190132087663053ull);
     vlSelf->top__DOT__IDU_0__DOT__isJALR = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 1186707586552049843ull);
     vlSelf->top__DOT__IDU_0__DOT__isADD = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 5961137151053609066ull);
     vlSelf->top__DOT__IDU_0__DOT__isLW = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 6436631688130880582ull);

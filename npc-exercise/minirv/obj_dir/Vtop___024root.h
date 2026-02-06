@@ -47,10 +47,11 @@ class alignas(VL_CACHE_LINE_BYTES) Vtop___024root final : public VerilatedModule
     VL_OUT(LSU_readdata,31,0);
     VL_OUT(PC,31,0);
     VL_OUT(PC_command,31,0);
+    VL_OUT(dnpc,31,0);
+    VL_OUT(snpc,31,0);
     IData/*31:0*/ top__DOT__command;
     IData/*31:0*/ top__DOT__rs1_val;
     IData/*31:0*/ top__DOT__GPR_0__DOT__unnamedblk1__DOT__i;
-    IData/*31:0*/ top__DOT__IFU_0__DOT__snpc;
     IData/*31:0*/ top__DOT__EXU_0__DOT__inA;
     IData/*31:0*/ top__DOT__LSU_0__DOT__val0;
     IData/*31:0*/ top__DOT__LSU_0__DOT__val1;

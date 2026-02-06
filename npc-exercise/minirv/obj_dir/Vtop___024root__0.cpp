@@ -85,8 +85,7 @@ void Vtop___024root___nba_sequent__TOP__0(Vtop___024root* vlSelf) {
                                     >> 7U))) ? 0U : 
              ((IData)(vlSelfRef.top__DOT__IDU_0__DOT__isLOAD)
                ? vlSelfRef.LSU_readdata : ((IData)(vlSelfRef.top__DOT__IDU_0__DOT__isJALR)
-                                            ? ((IData)(4U) 
-                                               + vlSelfRef.PC)
+                                            ? vlSelfRef.snpc
                                             : ((IData)(vlSelfRef.top__DOT__IDU_0__DOT__isWRITE)
                                                 ? vlSelfRef.LSU_address
                                                 : 0xffffffffU))));
@@ -383,8 +382,8 @@ void Vtop___024root___nba_sequent__TOP__3(Vtop___024root* vlSelf) {
         vlSelfRef.PC_command = __Vfunc_pmem_read__1__Vfuncout;
     }
     vlSelfRef.PC = ((IData)(vlSelfRef.rst) ? 0U : ((IData)(vlSelfRef.top__DOT__IDU_0__DOT__isJALR)
-                                                    ? vlSelfRef.LSU_address
-                                                    : vlSelfRef.top__DOT__IFU_0__DOT__snpc));
+                                                    ? vlSelfRef.dnpc
+                                                    : vlSelfRef.snpc));
     vlSelfRef.top__DOT__isEBREAK = (0x00100073U == vlSelfRef.PC_command);
     vlSelfRef.LSU_writedata = ((0U == (0x0000001fU 
                                        & (vlSelfRef.PC_command 
@@ -437,8 +436,7 @@ void Vtop___024root___nba_sequent__TOP__3(Vtop___024root* vlSelf) {
     vlSelfRef.top__DOT__IDU_0__DOT____VdfgRegularize_h52656aab_0_6 
         = ((IData)(vlSelfRef.top__DOT__IDU_0__DOT__isLBU) 
            | (IData)((3U == (0x0000707fU & vlSelfRef.PC_command))));
-    vlSelfRef.top__DOT__IFU_0__DOT__snpc = ((IData)(4U) 
-                                            + vlSelfRef.PC);
+    vlSelfRef.snpc = ((IData)(4U) + vlSelfRef.PC);
     vlSelfRef.top__DOT__IDU_0__DOT____VdfgRegularize_h52656aab_0_4 
         = ((IData)((0x00000013U == (0x0000707fU & vlSelfRef.PC_command))) 
            | (IData)(vlSelfRef.top__DOT__IDU_0__DOT__isJALR));
@@ -501,6 +499,7 @@ void Vtop___024root___nba_sequent__TOP__3(Vtop___024root* vlSelf) {
                                      ? vlSelfRef.top__DOT__rs1_val
                                      : vlSelfRef.LSU_writedata))
                               : vlSelfRef.top__DOT__EXU_0__DOT__inA);
+    vlSelfRef.dnpc = vlSelfRef.LSU_address;
     Vtop___024unit____Vdpiimwrap_pmem_read_TOP____024unit(vlSelfRef.LSU_address, vlSelfRef.__Vfunc_pmem_read__2__Vfuncout);
     vlSelfRef.top__DOT__LSU_0__DOT__val0 = vlSelfRef.__Vfunc_pmem_read__2__Vfuncout;
     vlSelfRef.top__DOT__LSU_0__DOT__val1 = (((- (IData)(

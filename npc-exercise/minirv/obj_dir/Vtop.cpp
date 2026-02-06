@@ -20,6 +20,8 @@ Vtop::Vtop(VerilatedContext* _vcontextp__, const char* _vcname__)
     , LSU_readdata{vlSymsp->TOP.LSU_readdata}
     , PC{vlSymsp->TOP.PC}
     , PC_command{vlSymsp->TOP.PC_command}
+    , dnpc{vlSymsp->TOP.dnpc}
+    , snpc{vlSymsp->TOP.snpc}
     , GPRTEST{vlSymsp->TOP.GPRTEST}
     , __PVT____024unit{vlSymsp->TOP.__PVT____024unit}
     , rootp{&(vlSymsp->TOP)}
