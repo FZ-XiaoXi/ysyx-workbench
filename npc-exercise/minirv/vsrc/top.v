@@ -1,6 +1,8 @@
 import "DPI-C" function int add (input int a, input int b);
 
-
+initial begin
+  $display("%x + %x = %x", 1, 2, add(1,2));
+endtask
 
 module top(
   input clk,
@@ -16,9 +18,7 @@ module top(
 
   output [31:0]GPRTEST[31:0]
 );
-  initial begin
-    $display("%x + %x = %x", 1, 2, add(1,2));
-  endtask
+
   // verilator lint_off PINMISSING
   wire clk0,clk1,clk2;
   clkdiv clkdiv_0(clk,rst,clk0,clk1,clk2);
