@@ -12,9 +12,9 @@ module LSU(
     wire [31:0]val0,val1,val2,val3,rdata1,rdata2,rdata4;
     reg [31:0]val;
     assign val0=pmem_read(address);
-    assign val1={{8{val0[31]}},val0{31:8}};
-    assign val2={{8{val1[31]}},val1{31:8}};
-    assign val3={{8{val2[31]}},val2{31:8}};
+    assign val1={{8{val0[31]}},val0[31:8]};
+    assign val2={{8{val1[31]}},val1[31:8]};
+    assign val3={{8{val2[31]}},val2[31:8]};
     always @(*) begin
         case(address[1:0])
             2'b00:val=val0;
@@ -38,7 +38,7 @@ module LSU(
         endcase
     end
 
-    
+
     // assign LSU_address=address;
     // assign data=LSU_data;
     // assign LSU_PC_address=PC_address;
