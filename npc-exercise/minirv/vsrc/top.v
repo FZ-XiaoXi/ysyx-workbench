@@ -1,4 +1,4 @@
-import "DPI-C" function void ebreak(void);
+import "DPI-C" function void ebreak();
 
 
 
