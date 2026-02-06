@@ -19,10 +19,12 @@ module IDU(
     output isADD,
     output isLUI,
     output isLW,
+    output isLBU,
 
     output isLOAD,
     output isWRITE,
     output isJUMP,
+    output isSigned,
     output [9:0]op,
     output [3:0]LSU_rmask,
     output [5:0]ctype
@@ -48,15 +50,16 @@ module IDU(
     assign isADD    = (opcode == 7'b0110011 && funct3 == 3'b000 && funct7 == 7'b0000000 ) ? 1 : 0;
     assign isLUI    = (opcode == 7'b0110111                                             ) ? 1 : 0;
     assign isLW     = (opcode == 7'b0000011 && funct3 == 3'b010                         ) ? 1 : 0;
+    assign isLBU    = (opcode == 7'b0000011 && funct3 == 3'b100                         ) ? 1 : 0;
     assign isEBREAK = (command==32'b00000000000100000000000001110011                    ) ? 1 : 0;
 /////////////////////////
-    assign isLOAD = (isLW)?1:0;
+    assign isLOAD = (isLW|isLBU)?1:0;
     assign isWRITE = (isADDI|isJALR|isADD|isLUI)?1:0;
     assign isJUMP= (isJALR)?1:0;
 
 
 /////////////////////////
-    assign isI=(isADDI|isJALR|isLW)?1:0;
+    assign isI=(isADDI|isJALR|isLW|isLBU)?1:0;
     assign isR=(isADD)?1:0;
     assign isS=(0)?1:0;
     assign isB=(0)?1:0;
@@ -74,7 +77,7 @@ module IDU(
     end
     //9-add sub mul div LL LR AR AND OR XOR-0
     /////////////////////////
-    assign op[9]=(isADDI|isJALR|isADD|isLW)?1:0;
+    assign op[9]=(isADDI|isJALR|isADD|isLW|isLBU)?1:0;
     assign op[8]=(0)?1:0;
     assign op[7]=(0)?1:0;
     assign op[6]=(0)?1:0;
@@ -86,5 +89,8 @@ module IDU(
     assign op[0]=(0)?1:0;
 
     /////////////////////////
-    assign LSU_rmask=isLW?4'b1111:(0);
+    assign LSU_rmask=isLW?4'b1111:((isLBU)?4'b0001:0);
+
+    /////////////////////////
+    assign isSigned=(isLBU)?0:1;
 endmodule

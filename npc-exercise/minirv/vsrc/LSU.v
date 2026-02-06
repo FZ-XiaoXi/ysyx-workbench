@@ -6,6 +6,7 @@ module LSU(
 
     input [31:0]wdata,
     input [3:0]rmask,
+    input isSigned,
     input clk,
     input writeEN
 );
@@ -24,8 +25,8 @@ module LSU(
         endcase
     end
     
-    assign rdata1={{24{val[7:7]}},val[7:0]};
-    assign rdata2={{16{val[15:15]}},val[15:0]};
+    assign rdata1=(isSigned)?{{24{val[7:7]}},val[7:0]}:{{24{1'b0}},val[7:0]};
+    assign rdata2=(isSigned)?{{16{val[15:15]}},val[15:0]}:{{16{1'b0}},val[15:0]};
     assign rdata4=val[31:0];
     
     always @(*) begin

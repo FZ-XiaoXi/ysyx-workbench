@@ -29,7 +29,7 @@ module top(
   wire [31:0] rs1_val,rs2_val,gpr_data;
   wire [31:0] EXU_inA,EXU_inB,EXU_data;
   wire gpr_WEN;
-  wire isEBREAK,isLOAD,isWRITE,isJUMP;
+  wire isEBREAK,isLOAD,isWRITE,isJUMP,isSigned;
   wire [9:0]op;
   assign LSU_writedata=0;
   assign LSU_WEN=0;
@@ -37,13 +37,13 @@ module top(
   WBU WBU_0(.clk(clk),.rst(rst),.LSU_data(LSU_readdata),.EXU_data(EXU_data),.address(rd_add),.isLOAD(isLOAD),.isWRITE(isWRITE),.isJUMP(isJUMP),.snpc(snpc),.gpr_WEN(gpr_WEN),.gpr_data(gpr_data),.gpr_address(gpr_address));
   IFU IFU_0(.clk(clk),.rst(rst),.PC(PC),.dnpc(dnpc),.snpc(snpc),.isJUMP(isJUMP),.PC_command(PC_command));
   //LSU LSU_0(.address({2'b00,value[31:2]}),.data(LSU_readdata),.wdata(LSU_writedata),.range(LSU_rmask),.clk(clk),.writeEN(LSU_WEN),.PC_address({2'b00,PC[31:2]}),.PC_data(PC_command));
-  IDU IDU_0(.command(PC_command),.opcode(),.imm(imm),.rd(rd_add),.rs1(rs1_add),.rs2(rs2_add),.op(op),.ctype({isR,isI,isS,isB,isU,isJ}),.LSU_rmask(LSU_rmask),.isLOAD(isLOAD),.isWRITE(isWRITE),.isJUMP(isJUMP),.isEBREAK(isEBREAK));
+  IDU IDU_0(.command(PC_command),.opcode(),.imm(imm),.rd(rd_add),.rs1(rs1_add),.rs2(rs2_add),.op(op),.ctype({isR,isI,isS,isB,isU,isJ}),.LSU_rmask(LSU_rmask),.isLOAD(isLOAD),.isWRITE(isWRITE),.isJUMP(isJUMP),.isEBREAK(isEBREAK),.isSigned(isSigned));
   assign EXU_inA=(isI|isU|isB)?imm:rs1_val;
   assign EXU_inB=(isI|isU|isB)?rs1_val:rs2_val;
   EXU EXU_0(.inA(EXU_inA),.inB(EXU_inB),.op(op),.out(EXU_data));
   assign dnpc=EXU_data;
   assign LSU_address=EXU_data;
-  LSU LSU_0(.clk(clk),.writeEN(LSU_WEN),.address(LSU_address),.rdata(LSU_readdata),.wdata(LSU_writedata),.rmask(LSU_rmask));
+  LSU LSU_0(.clk(clk),.writeEN(LSU_WEN),.address(LSU_address),.rdata(LSU_readdata),.wdata(LSU_writedata),.rmask(LSU_rmask),.isSigned(isSigned));
   always @(isEBREAK) begin
     if(isEBREAK)  ebreak();
   end
