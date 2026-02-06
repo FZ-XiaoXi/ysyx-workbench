@@ -69,7 +69,7 @@ void setmem(){
 			i+=1;
 		}
 		fclose(fp);
-		MEM[0x14>>2]=_EBREAK;
+		//MEM[0x14>>2]=_EBREAK;
 		MEM[0x1220>>2]=_EBREAK;
 	}
 	//printf("%x\n%x\n",ROM(0x0),ROM(0x4));
