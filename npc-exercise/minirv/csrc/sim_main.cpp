@@ -97,6 +97,9 @@ void ebreak(){
 void onecyc(VerilatedContext* contextp,Vtop* top){
 	sPC=top->PC;
 	for(int i=0;i<16;i++) printf("[%2d]:%04x ",i,top->GPRTEST[i]);
+	printf("\n");
+	printf("c:%d PC:%04x ",count,sPC);
+	printf("CMD:%08x | ",top->PC_command);
 	//top->PC_command=pmem_read(top->PC);
 	//top->LSU_readdata=pmem_read(top->LSU_address);
 	//pmem_write(top->clk,top->LSU_address,top->LSU_writedata,top->LSU_rmask,top->LSU_WEN);
@@ -112,9 +115,7 @@ void onecyc(VerilatedContext* contextp,Vtop* top){
 	count++;
 	
 	//printf("0x100: %08x 0x104 %08x ",pmem_read(0x100),pmem_read(0x104));
-	printf("\n");
-	printf("c:%d PC:%04x ",count,sPC);
-	printf("CMD:%08x | ",top->PC_command);
+	
 }
 
 int main(int argc, char** argv) {
