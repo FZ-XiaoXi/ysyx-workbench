@@ -7,7 +7,7 @@
 #include "Vtop__Dpi.h"
 #include "verilated.h"
 #define READ 1
-#define FILE_NAME "sum.bin"
+#define FILE_NAME "dummy-minirv-npc.bin"
 #define MAX_MEM 0xaffffff
 #define _EBREAK 0b00000000000100000000000001110011
 uint32_t MEM[MAX_MEM];

@@ -11,7 +11,7 @@ module IFU(
     
     always @(posedge clk,posedge rst) begin
         if (rst) begin
-            PC<=0;
+            PC<=32'h80000000;
         end else begin
             if (isJUMP) begin
                 PC<=dnpc;
