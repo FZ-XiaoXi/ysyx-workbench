@@ -66,9 +66,11 @@ int main(int argc, char** argv) {
 		top->PC_command=mem_read(top->PC,top->LSU_range);
 		top->LSU_readdata=mem_read(top->LSU_address,top->LSU_range);
 		mem_write(top->clk,top->LSU_address,top->LSU_writedata,top->LSU_range,top->LSU_WEN);
-		printf("%d PC:%04x CMD:%08x | ",top->clk,top->PC,top->PC_command);
-		for(int i=0;i<16;i++) printf("[%2d]:%04x ",i,top->GPRTEST[i]);
-		printf("\n");
+		if(top->clk){
+			printf("%d PC:%04x CMD:%08x | ",top->clk,top->PC,top->PC_command);
+			for(int i=0;i<16;i++) printf("[%2d]:%04x ",i,top->GPRTEST[i]);
+			printf("\n");
+		}
 		top->clk=!top->clk;
 		top->eval();
 		

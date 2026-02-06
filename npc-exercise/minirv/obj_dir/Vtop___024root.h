@@ -22,10 +22,12 @@ class alignas(VL_CACHE_LINE_BYTES) Vtop___024root final : public VerilatedModule
     VL_OUT8(LSU_range,3,0);
     VL_OUT8(LSU_WEN,0,0);
     CData/*0:0*/ top__DOT__isEBREAK;
+    CData/*0:0*/ top__DOT____VdfgRegularize_he2b63832_0_0;
     CData/*2:0*/ top__DOT__clkdiv_0__DOT__cnt;
     CData/*0:0*/ top__DOT__IDU_0__DOT__isJALR;
     CData/*0:0*/ top__DOT__IDU_0__DOT__isADD;
     CData/*0:0*/ top__DOT__IDU_0__DOT__isI;
+    CData/*0:0*/ top__DOT__IDU_0__DOT____VdfgRegularize_h52656aab_0_1;
     CData/*0:0*/ __VstlFirstIteration;
     CData/*0:0*/ __VicoFirstIteration;
     CData/*0:0*/ __Vtrigprevexpr___TOP__top__DOT__isEBREAK__0;
@@ -41,6 +43,7 @@ class alignas(VL_CACHE_LINE_BYTES) Vtop___024root final : public VerilatedModule
     IData/*31:0*/ top__DOT__rs1_val;
     IData/*31:0*/ top__DOT__GPR_0__DOT__unnamedblk1__DOT__i;
     IData/*31:0*/ top__DOT__IFU_0__DOT__snpc;
+    IData/*31:0*/ top__DOT__EXU_0__DOT__inA;
     IData/*31:0*/ top__DOT__EXU_0__DOT__out;
     IData/*31:0*/ __VactIterCount;
     VL_OUT(GPRTEST[32],31,0);
