@@ -6,6 +6,7 @@ module LSU(
 
     input [31:0]wdata,
     input [3:0]rmask,
+    input [3:0]wmask,
     input isSigned,
     input clk,
     input writeEN
@@ -39,7 +40,25 @@ module LSU(
         endcase
     end
 
-
+    wire [31:0]wdata0,wdata1,wdata2;
+    reg [31:0] w;
+    assign wdata0=wdata;
+    assign wdata1={wdata[23:0],{8{1'b0}}};
+    assign wdata2={wdata[15:0],{16{1'b0}}};
+    assign wdata3={wdata[ 7:0],{24{1'b0}}};
+    always @(*) begin
+        case(address[1:0])
+            2'b00:w=wdata0;
+            2'b01:w=wdata1;
+            2'b10:w=wdata2;
+            2'b11:w=wdata3;
+        endcase
+    end
+    always @(posedge clk) begin
+        if(writeEN)begin
+            pmem_write(address,w,wmask);
+        end
+    end
     // assign LSU_address=address;
     // assign data=LSU_data;
     // assign LSU_PC_address=PC_address;

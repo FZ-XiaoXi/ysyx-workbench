@@ -21,13 +21,17 @@ module IDU(
     output isLW,
     output isLBU,
     output isLB,
+    output isSW,
+    output isSB,
 
     output isLOAD,
     output isWRITE,
     output isJUMP,
     output isSigned,
+    output LSU_WEN,
     output [9:0]op,
     output [3:0]LSU_rmask,
+    output [3:0]LSU_wmask,
     output [5:0]ctype
 );
     wire isR,isI,isS,isB,isU,isJ;
@@ -53,6 +57,8 @@ module IDU(
     assign isLW     = (opcode == 7'b0000011 && funct3 == 3'b010                         ) ? 1 : 0;
     assign isLBU    = (opcode == 7'b0000011 && funct3 == 3'b100                         ) ? 1 : 0;
     assign isLB     = (opcode == 7'b0000011 && funct3 == 3'b000                         ) ? 1 : 0;
+    assign isSW     = (opcode == 7'b0100011 && funct3 == 3'b010                         ) ? 1 : 0;
+    assign isSB     = (opcode == 7'b0100011 && funct3 == 3'b000                         ) ? 1 : 0;
     assign isEBREAK = (command==32'b00000000000100000000000001110011                    ) ? 1 : 0;
 /////////////////////////
     assign isLOAD = (isLW|isLBU|isLB)?1:0;
@@ -63,7 +69,7 @@ module IDU(
 /////////////////////////
     assign isI=(isADDI|isJALR|isLW|isLBU|isLB)?1:0;
     assign isR=(isADD)?1:0;
-    assign isS=(0)?1:0;
+    assign isS=(isSW|isSB)?1:0;
     assign isB=(0)?1:0;
     assign isU=(isLUI)?1:0;
     assign isJ=(0)?1:0;
@@ -79,7 +85,7 @@ module IDU(
     end
     //9-add sub mul div LL LR AR AND OR XOR-0
     /////////////////////////
-    assign op[9]=(isADDI|isJALR|isADD|isLW|isLBU|isLB)?1:0;
+    assign op[9]=(isADDI|isJALR|isADD|isLW|isLBU|isLB|isSW|isSB)?1:0;
     assign op[8]=(0)?1:0;
     assign op[7]=(0)?1:0;
     assign op[6]=(0)?1:0;
@@ -91,8 +97,9 @@ module IDU(
     assign op[0]=(0)?1:0;
 
     /////////////////////////
-    assign LSU_rmask=isLW?4'b1111:((isLBU|isLB)?4'b0001:0);
-
+    assign LSU_rmask=(isLW)?4'b1111:((isLBU|isLB)?4'b0001:0);
+    assign LSU_wmask=(isSW)?4'b1111:((isSB)?4'b0001:0)
+    assign LSU_WEN=(isSW|isSB)?1:0;
     /////////////////////////
     assign isSigned=(isLBU)?0:1;
 endmodule
