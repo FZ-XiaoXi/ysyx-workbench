@@ -6,11 +6,12 @@
 #include "svdpi.h"
 #include "Vtop__Dpi.h"
 #include "verilated.h"
-#define READ 0
+
 #define FILE_NAME "dummy-minirv-npc.bin"
 #define MAX_MEM 0xaffffff
 #define _EBREAK 0b00000000000100000000000001110011
 uint32_t MEM[MAX_MEM];
+int READ=0;
 int isEBREAK=0;
 int i=0;
 int count=0;
@@ -120,6 +121,7 @@ void onecyc(VerilatedContext* contextp,Vtop* top){
 }
 
 int main(int argc, char** argv) {
+	printf("%d\n",argc);
     contextp->commandArgs(argc, argv);
 	setmem();
 	top->clk=0;
