@@ -347,7 +347,7 @@ void Vtop___024root___nba_sequent__TOP__0(Vtop___024root* vlSelf) {
                                             ? vlSelfRef.snpc
                                             : ((IData)(vlSelfRef.top__DOT__IDU_0__DOT__isWRITE)
                                                 ? vlSelfRef.EXU_data
-                                                : 0xffffffffU))));
+                                                : 0xf0f0f0f0U))));
         __VdlyDim0__top__DOT__GPR_0__DOT__GPR__v32 
             = (0x0000001fU & (vlSelfRef.PC_command 
                               >> 7U));

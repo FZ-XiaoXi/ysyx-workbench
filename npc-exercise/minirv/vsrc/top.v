@@ -93,8 +93,10 @@ module GPR(
       for(int i=0;i<32;i=i+1) begin
         GPR[i]<={32{1'b0}};
       end
-    end else begin
+    end else if(WEN) begin
       GPR[addW]<=(addW==5'b00000)?{32{1'b0}}:inData;
+    end else begin
+      GPR[addW]<=GPR[addW];
     end
   end
 

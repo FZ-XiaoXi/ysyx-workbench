@@ -487,7 +487,7 @@ VL_ATTR_COLD void Vtop___024root__trace_full_0_sub_0(Vtop___024root* vlSelf, Ver
                                     ? vlSelfRef.snpc
                                     : ((IData)(vlSelfRef.top__DOT__IDU_0__DOT__isWRITE)
                                         ? vlSelfRef.EXU_data
-                                        : 0xffffffffU)))),32);
+                                        : 0xf0f0f0f0U)))),32);
     bufp->fullBit(oldp+174,((0x00100073U == vlSelfRef.PC_command)));
     bufp->fullSData(oldp+175,((((IData)(vlSelfRef.top__DOT__IDU_0__DOT____VdfgRegularize_h52656aab_0_5) 
                                 | ((IData)(vlSelfRef.top__DOT__IDU_0__DOT__isLW) 
