@@ -97,7 +97,7 @@ void onecyc(VerilatedContext* contextp,Vtop* top){
 	uint32_t A=top->EXU_inA;
 	uint32_t B=top->EXU_inB;
 	uint32_t O=top->EXU_data;
-	for(int i=0;i<16;i++) printf("[%2d]:%04x ",i,top->GPRTEST[i]);
+	//for(int i=0;i<16;i++) printf("[%2d]:%04x ",i,top->GPRTEST[i]);
 	//top->PC_command=pmem_read(top->PC);
 	//top->LSU_readdata=pmem_read(top->LSU_address);
 	//pmem_write(top->clk,top->LSU_address,top->LSU_writedata,top->LSU_rmask,top->LSU_WEN);
@@ -136,8 +136,9 @@ int main(int argc, char** argv) {
 	
 	while (!contextp->gotFinish()&&isEBREAK==0) {
 		onecyc(contextp,top);
+		for(int i=0;i<16;i++) printf("[%2d]:%04x ",i,top->GPRTEST[i]);
 	}
-	for(int i=0;i<16;i++) printf("[%2d]:%04x ",i,top->GPRTEST[i]);
+	
     delete top;
     delete contextp;
     return 0;
