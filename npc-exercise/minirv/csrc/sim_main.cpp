@@ -4,7 +4,7 @@
 #include <stdint.h>
 #include <assert.h>
 #include "svdpi.h"
-#include "Vour__Dpi.h"
+#include "Vtop__Dpi.h"
 #include "verilated.h"
 
 #define MAX_PC 0xffffff
