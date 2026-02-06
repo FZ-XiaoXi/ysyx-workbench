@@ -14,6 +14,7 @@ module top(
   output [31:0]PC,
   output [31:0]PC_command,
   output wire [31:0] dnpc,snpc,
+  output [31:0] EXU_inA,EXU_inB,EXU_data,
   output [31:0]GPRTEST[31:0]
 );
 
@@ -27,7 +28,7 @@ module top(
 
   wire [4:0] rd_add,rs1_add,rs2_add,gpr_address;
   wire [31:0] rs1_val,rs2_val,gpr_data;
-  wire [31:0] EXU_inA,EXU_inB,EXU_data;
+  
   wire gpr_WEN;
   wire isEBREAK,isLOAD,isWRITE,isJUMP,isSigned;
   wire [9:0]op;

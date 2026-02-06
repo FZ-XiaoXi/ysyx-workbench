@@ -89,6 +89,9 @@ void onecyc(VerilatedContext* contextp,Vtop* top){
 	sPC=top->PC;
 	uint32_t sdPC=top->dnpc;
 	uint32_t ssPC=top->snpc;
+	uint32_t A=top->EXU_inA;
+	uint32_t B=top->EXU_inB;
+	uint32_t O=top->EXU_data;
 	//top->PC_command=pmem_read(top->PC);
 	//top->LSU_readdata=pmem_read(top->LSU_address);
 	//pmem_write(top->clk,top->LSU_address,top->LSU_writedata,top->LSU_rmask,top->LSU_WEN);
@@ -105,7 +108,7 @@ void onecyc(VerilatedContext* contextp,Vtop* top){
 	for(int i=0;i<16;i++) printf("[%2d]:%04x ",i,top->GPRTEST[i]);
 	//printf("0x100: %08x 0x104 %08x ",pmem_read(0x100),pmem_read(0x104));
 	printf("\n");
-	printf("c:%d PC:%04x d:%04x s:%04x ",count,sPC,sdPC,ssPC);
+	printf("c:%d PC:%04x d:%04x s:%04x /%x/%x/%x/ ",count,sPC,sdPC,ssPC,A,B,O);
 	printf("CMD:%08x | ",top->PC_command);
 }
 
