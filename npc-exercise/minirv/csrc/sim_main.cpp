@@ -153,6 +153,7 @@ int main(int argc, char** argv) {
 		onecyc(contextp,top);
 	}
 	for(int i=0;i<16;i++) printf("[%2d]:%04x ",i,top->GPRTEST[i]);
+	if()
     delete top;
     delete contextp;
     return 0;
