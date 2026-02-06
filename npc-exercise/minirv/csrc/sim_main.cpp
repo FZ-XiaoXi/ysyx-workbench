@@ -8,11 +8,11 @@
 #include "verilated.h"
 
 #define MAX_PC 0xffffff
-#define pmem_read(add) PMEM[add>>2]
-uint32_t PMEM[MAX_PC];
+#define pmem_read(add) MEM[add>>2]
+uint32_t MEM[MAX_PC];
 int isEBREAK=0;
 void setmem(){
-	memset(PMEM,0,MAX_PC*4);
+	memset(MEM,0,MAX_PC*4);
 	MEM[0]=0b00000000100000000000000010010011;//addi r1,r0,8
 	MEM[1]=0b00000000001000001000000100010011;//addi r2,r1,2
 	MEM[2]=0b00000000000100010000000110110011;//add  r3,r1,r2
