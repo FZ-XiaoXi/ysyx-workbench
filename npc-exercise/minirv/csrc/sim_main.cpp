@@ -55,16 +55,16 @@ void onecyc(VerilatedContext* contextp,Vtop* top){
 	//top->LSU_readdata=pmem_read(top->LSU_address);
 	//pmem_write(top->clk,top->LSU_address,top->LSU_writedata,top->LSU_range,top->LSU_WEN);
 	printf("PC:%04x ",top->PC);
-	
+	printf("CMD:%08x | ",top->PC_command);
+	for(int i=0;i<16;i++) printf("[%2d]:%04x ",i,top->GPRTEST[i]);
+	printf("\n");
 	top->clk=1;
 	top->eval();
 	contextp->timeInc(5);
 	top->clk=0;
 	top->eval();
 	contextp->timeInc(5);
-	printf("CMD:%08x | ",top->PC_command);
-	for(int i=0;i<16;i++) printf("[%2d]:%04x ",i,top->GPRTEST[i]);
-	printf("\n");
+	
 }
 
 int main(int argc, char** argv) {
