@@ -6,7 +6,7 @@
 #include "svdpi.h"
 #include "Vtop__Dpi.h"
 #include "verilated.h"
-#define READ 1
+#define READ 0
 #define FILE_NAME "mem.bin"
 #define MAX_MEM 0xaffffff
 #define _EBREAK 0b00000000000100000000000001110011
@@ -52,7 +52,7 @@ void setmem(){
 		MEM[10]=0b00010000000000000010001010000011;//lw   r5,0x100(r0)
 		MEM[11]=0b00010000010000000010001100000011;//lw   r6,0x104(r0)
 		MEM[12]=0b00000000000100000000000001110011;//ebreak
-		//MEM[]=0b11111111110000001000000011100111;//jalr r1,-4(r1)
+		//MEM[13]=0b11111111110000001000000011100111;//jalr r1,-4(r1)
 		// MEM[0]=0x01400513;
 		// MEM[1]=0x010000e7;
 		// MEM[2]=0x00c000e7;
