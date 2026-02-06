@@ -115,7 +115,7 @@ void onecyc(VerilatedContext* contextp,Vtop* top){
 	
 	//printf("0x100: %08x 0x104 %08x ",pmem_read(0x100),pmem_read(0x104));
 	printf("\n");
-	printf("c:%d PC:%04x d:%04x s:%04x /%x/%x/%x/ ",count,sPC,sdPC,ssPC,A,B,O);
+	printf("c:%d PC:%04x ",count,sPC);
 	printf("CMD:%08x | ",top->PC_command);
 }
 
