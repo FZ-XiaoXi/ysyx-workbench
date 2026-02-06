@@ -340,14 +340,20 @@ void Vtop___024root___nba_sequent__TOP__0(Vtop___024root* vlSelf) {
                                                      & ((IData)(vlSelfRef.top__DOT__clkdiv_0__DOT__cnt) 
                                                         >> 2U)));
         __VdlyVal__top__DOT__GPR_0__DOT__GPR__v32 = 
-            ((0U == (0x0000001fU & (vlSelfRef.PC_command 
-                                    >> 7U))) ? 0U : 
-             ((IData)(vlSelfRef.top__DOT__IDU_0__DOT__isLOAD)
-               ? vlSelfRef.LSU_readdata : ((IData)(vlSelfRef.top__DOT__IDU_0__DOT__isJALR)
-                                            ? vlSelfRef.snpc
-                                            : ((IData)(vlSelfRef.top__DOT__IDU_0__DOT__isWRITE)
-                                                ? vlSelfRef.EXU_data
-                                                : 0xf0f0f0f0U))));
+            (((IData)(vlSelfRef.top__DOT__IDU_0__DOT__isLOAD) 
+              | (IData)(vlSelfRef.top__DOT__IDU_0__DOT__isWRITE))
+              ? ((0U == (0x0000001fU & (vlSelfRef.PC_command 
+                                        >> 7U))) ? 0U
+                  : ((IData)(vlSelfRef.top__DOT__IDU_0__DOT__isLOAD)
+                      ? vlSelfRef.LSU_readdata : ((IData)(vlSelfRef.top__DOT__IDU_0__DOT__isJALR)
+                                                   ? vlSelfRef.snpc
+                                                   : 
+                                                  ((IData)(vlSelfRef.top__DOT__IDU_0__DOT__isWRITE)
+                                                    ? vlSelfRef.EXU_data
+                                                    : 0xf0f0f0f0U))))
+              : vlSelfRef.top__DOT__GPR_0__DOT__GPR
+             [(0x0000001fU & (vlSelfRef.PC_command 
+                              >> 7U))]);
         __VdlyDim0__top__DOT__GPR_0__DOT__GPR__v32 
             = (0x0000001fU & (vlSelfRef.PC_command 
                               >> 7U));

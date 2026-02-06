@@ -15,6 +15,9 @@ int isEBREAK=0;
 int i=0;
 int count=0;
 uint32_t sPC=0;
+VerilatedContext* contextp = new VerilatedContext;
+contextp->commandArgs(argc, argv);
+Vtop* top = new Vtop{contextp};
 int pmem_read(int raddr){
 	raddr=raddr & MAX_MEM;
 	// 总是读取地址为`raddr & ~0x3u`的4字节返回
@@ -81,6 +84,7 @@ void setmem(){
 void ebreak(){
 	//printf("STOOOOOOOOOOOOOOOOP!");
 	isEBREAK=1;
+	for(int i=0;i<16;i++) printf("[%2d]:%04x ",i,top->GPRTEST[i]);
 }
 
 void onecyc(VerilatedContext* contextp,Vtop* top){
@@ -116,9 +120,7 @@ void onecyc(VerilatedContext* contextp,Vtop* top){
 }
 
 int main(int argc, char** argv) {
-    VerilatedContext* contextp = new VerilatedContext;
-    contextp->commandArgs(argc, argv);
-    Vtop* top = new Vtop{contextp};
+    
 	setmem();
 	top->clk=0;
 	top->rst=0;
