@@ -83,7 +83,7 @@ void setmem(){
 void ebreak(){
 	//printf("STOOOOOOOOOOOOOOOOP!");
 	isEBREAK=1;
-	for(int i=0;i<16;i++) printf("[%2d]:%04x ",i,top->GPRTEST[i]);
+	
 }
 
 void onecyc(VerilatedContext* contextp,Vtop* top){
@@ -137,6 +137,7 @@ int main(int argc, char** argv) {
 	while (!contextp->gotFinish()&&isEBREAK==0) {
 		onecyc(contextp,top);
 	}
+	for(int i=0;i<16;i++) printf("[%2d]:%04x ",i,top->GPRTEST[i]);
     delete top;
     delete contextp;
     return 0;
