@@ -31,7 +31,6 @@ module top(
   wire gpr_WEN;
   wire isEBREAK,isLOAD,isWRITE,isJUMP;
   wire [9:0]op;
-  wire [3:0]LSU_rmask;
   assign LSU_writedata=0;
   assign LSU_WEN=0;
   GPR GPR_0(.clk(clk),.rst(rst),.addRA(rs1_add),.addRB(rs2_add),.addW(gpr_address),.outA(rs1_val),.outB(rs2_val),.inData(gpr_data),.WEN(gpr_WEN),.GPRTEST(GPRTEST));
