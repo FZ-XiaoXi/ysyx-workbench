@@ -27,10 +27,12 @@ class alignas(VL_CACHE_LINE_BYTES) Vtop___024root final : public VerilatedModule
     CData/*0:0*/ top__DOT__IDU_0__DOT__isJALR;
     CData/*0:0*/ top__DOT__IDU_0__DOT__isADD;
     CData/*0:0*/ top__DOT__IDU_0__DOT__isLW;
+    CData/*0:0*/ top__DOT__IDU_0__DOT__isLBU;
+    CData/*0:0*/ top__DOT__IDU_0__DOT__isLOAD;
     CData/*0:0*/ top__DOT__IDU_0__DOT__isWRITE;
     CData/*0:0*/ top__DOT__IDU_0__DOT__isI;
-    CData/*0:0*/ top__DOT__IDU_0__DOT____VdfgRegularize_h52656aab_0_1;
     CData/*0:0*/ top__DOT__IDU_0__DOT____VdfgRegularize_h52656aab_0_2;
+    CData/*0:0*/ top__DOT__IDU_0__DOT____VdfgRegularize_h52656aab_0_3;
     CData/*0:0*/ __VstlFirstIteration;
     CData/*0:0*/ __Vtrigprevexpr___TOP__top__DOT__isEBREAK__0;
     CData/*0:0*/ __Vtrigprevexpr___TOP__clk__0;
