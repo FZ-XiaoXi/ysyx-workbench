@@ -331,7 +331,7 @@ void Vtop___024root___nba_sequent__TOP__0(Vtop___024root* vlSelf) {
         vlSelfRef.top__DOT__GPR_0__DOT__unnamedblk1__DOT__i = 0x00000020U;
         vlSelfRef.top__DOT__clkdiv_0__DOT__cnt = 1U;
         __VdlySet__top__DOT__GPR_0__DOT__GPR__v0 = 1U;
-        vlSelfRef.PC = 0U;
+        vlSelfRef.PC = 0x80000000U;
     } else {
         vlSelfRef.top__DOT__clkdiv_0__DOT__cnt = ((6U 
                                                    & ((IData)(vlSelfRef.top__DOT__clkdiv_0__DOT__cnt) 
