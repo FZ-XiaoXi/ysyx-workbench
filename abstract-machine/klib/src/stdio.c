@@ -36,6 +36,7 @@ int vsprintf(char *out, const char *fmt, va_list ap) {
         fmt+=count;
       }else if(*fmt=='0'){
         width=0;
+				fmt++;
       }
       switch(*fmt){
         case 'd':
