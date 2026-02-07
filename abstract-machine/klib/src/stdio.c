@@ -23,13 +23,34 @@ int vsprintf(char *out, const char *fmt, va_list ap) {
   char c;
   char ds[20]={0};
   while(*fmt){
+    
     if(*fmt=='%'){
+      int width=0,ifZero=0;
       fmt++;
+      if(*fmt=='0'&&*(fmt+1)>='0'&&*(fmt+1)<='9'){
+        ifZero=1;
+        fmt++;
+      	width=atoi(fmt);
+        int count=0;
+        for(int i=width;i>0;i/=10,count++);
+        fmt+=count;
+      }else if(*fmt=='0'){
+        width=0;
+      }
       switch(*fmt){
         case 'd':
           itoa(va_arg(ap, int),ds,10);
-          int i=0;
-          while(ds[i]!='\0') *(out++)=ds[i++];
+					int len=strlen(ds);
+					if(width<=len){
+						int i=0;
+						while(ds[i]!='\0') *(out++)=ds[i++];
+					}else{
+						for(int i=0;i<width-len;i++)
+							if(ifZero) 	*(out++)='0';
+							else 				*(out++)=' ';
+						int i=0;
+						while(ds[i]!='\0') *(out++)=ds[i++];
+					}
           break;
         case 's':
           s=va_arg(ap,char *);
