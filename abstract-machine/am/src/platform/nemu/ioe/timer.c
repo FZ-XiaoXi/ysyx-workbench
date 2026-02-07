@@ -2,11 +2,7 @@
 #include <nemu.h>
 
 void __am_timer_init() {
-  //AM_TIMER_CONFIG_T *cfg;
-  //__am_timer_config(cfg);
-  volatile int t=io_read(AM_TIMER_UPTIME).us;
-  (void)t;
-  io_write(AM_TIMER_CONFIG, .present = false, .has_rtc = true);
+  
 }
 
 void __am_timer_uptime(AM_TIMER_UPTIME_T *uptime) {
