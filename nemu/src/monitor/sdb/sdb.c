@@ -170,7 +170,7 @@ static int cmd_d(char *args) {
       }
     }else printf("Unknown argumenet '%s'\n", args);
   }else{
-    printf("Unknown argumenet '%s'\n", args);
+    printf("NULL argumenet\n");
   }
   return 0;
 }
