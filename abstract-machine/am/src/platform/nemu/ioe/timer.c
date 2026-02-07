@@ -4,7 +4,7 @@
 void __am_timer_init() {
   //AM_TIMER_CONFIG_T *cfg;
   //__am_timer_config(cfg);
-  int t=io_read(AM_TIMER_UPTIME).us;
+  volatile int t=io_read(AM_TIMER_UPTIME).us;
   (void)t;
 }
 
