@@ -35,7 +35,7 @@ int vsprintf(char *out, const char *fmt, va_list ap) {
           while(*s!='\0') *(out++)=*(s++);
           break;
         default:
-          putch(*fmt);putch('/');putch(*fmt);putch('/');putch(*fmt);
+          putch(*((char*)fmt-1));putch('/');putch(*fmt);putch('/');putch(*((char*)fmt+1));
           panic("Error ARGUMENT");
       }
       fmt++;
