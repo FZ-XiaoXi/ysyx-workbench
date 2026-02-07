@@ -23,7 +23,6 @@ int vsprintf(char *out, const char *fmt, va_list ap) {
   char c;
   char ds[20]={0};
   while(*fmt){
-    
     if(*fmt=='%'){
       int width=0,ifZero=0;
       fmt++;
@@ -40,7 +39,8 @@ int vsprintf(char *out, const char *fmt, va_list ap) {
       }
       switch(*fmt){
         case 'd':
-          itoa(va_arg(ap, int),ds,10);
+        case 'x':
+          itoa(va_arg(ap, int),ds,(*fmt=='x')?16:10);
 					int len=strlen(ds);
 					if(width<=len){
 						int i=0;
