@@ -20,6 +20,7 @@ int vsprintf(char *out, const char *fmt, va_list ap) {
   //panic("Not implemented");
   char *nout = out;
   char *s;
+  char c;
   char ds[20]={0};
   while(*fmt){
     if(*fmt=='%'){
@@ -33,6 +34,10 @@ int vsprintf(char *out, const char *fmt, va_list ap) {
         case 's':
           s=va_arg(ap,char *);
           while(*s!='\0') *(out++)=*(s++);
+          break;
+        case 'c':
+          c=va_arg(ap,int);
+          *(out++)=(char)c;
           break;
         default:
           putch(*((char*)fmt-1));putch('/');putch(*fmt);putch('/');putch(*((char*)fmt+1));
