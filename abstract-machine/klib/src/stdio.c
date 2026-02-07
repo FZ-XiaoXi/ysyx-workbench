@@ -42,7 +42,7 @@ int vsprintf(char *out, const char *fmt, va_list ap) {
         case 'd':
           itoa(va_arg(ap, int),ds,10);
 					int len=strlen(ds);
-					printf("===%d===%d===\n",width,len);
+					putch(width+('0'-width));
 					if(width<=len){
 						int i=0;
 						while(ds[i]!='\0') *(out++)=ds[i++];
