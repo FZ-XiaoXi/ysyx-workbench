@@ -45,6 +45,7 @@ int vsprintf(char *out, const char *fmt, va_list ap) {
 					if(width<=len){
 						int i=0;
 						while(ds[i]!='\0') *(out++)=ds[i++];
+            if(len==0) *(out++)='0';
 					}else{
 						for(int i=0;i<width-len;i++)
 							if(ifZero) 	*(out++)='0';
