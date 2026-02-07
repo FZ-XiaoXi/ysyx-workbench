@@ -6,6 +6,7 @@ void __am_timer_init() {
   //__am_timer_config(cfg);
   volatile int t=io_read(AM_TIMER_UPTIME).us;
   (void)t;
+  io_write(AM_TIMER_CONFIG, .present = true, .has_rtc = true);
 }
 
 void __am_timer_uptime(AM_TIMER_UPTIME_T *uptime) {
