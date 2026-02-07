@@ -40,7 +40,9 @@ int vsprintf(char *out, const char *fmt, va_list ap) {
       switch(*fmt){
         case 'd':
         case 'x':
-          itoa(va_arg(ap, int),ds,(*fmt=='x')?16:10);
+        case 'u':
+          if(*fmt=='u') utoa(va_arg(ap, unsigned int),ds,10);
+          else itoa(va_arg(ap, int),ds,(*fmt=='x')?16:10);
 					int len=strlen(ds);
 					if(width<=len){
 						int i=0;
