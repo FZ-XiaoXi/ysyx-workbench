@@ -19,7 +19,7 @@
   ({ reg##_T __io_param; \
     ioe_read(reg, &__io_param); \
     __io_param; })
-
+//({ reg##_T __io_param; ioe_read(reg, &__io_param); __io_param; })
 #define io_write(reg, ...) \
   ({ reg##_T __io_param = (reg##_T) { __VA_ARGS__ }; \
     ioe_write(reg, &__io_param); })
