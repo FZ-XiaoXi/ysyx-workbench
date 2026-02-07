@@ -2,8 +2,10 @@
 #include <nemu.h>
 
 void __am_timer_init() {
-  void *s=NULL;
-  ioe_read(AM_TIMER_UPTIME,s);
+  //AM_TIMER_CONFIG_T *cfg;
+  //__am_timer_config(cfg);
+  int t=io_read(AM_TIMER_UPTIME).us;
+  (void)t;
 }
 
 void __am_timer_uptime(AM_TIMER_UPTIME_T *uptime) {
