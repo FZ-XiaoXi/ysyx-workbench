@@ -26,7 +26,12 @@ int vsprintf(char *out, const char *fmt, va_list ap) {
     if(*fmt=='%'){
       int width=0,ifZero=0;
       fmt++;
-      if(*fmt=='0'&&*(fmt+1)>='0'&&*(fmt+1)<='9'){
+      if(*fmt>'0'&&*fmt<='9'){
+      	width=atoi(fmt);
+        int count=0;
+        for(int i=width;i>0;i/=10,count++);
+        fmt+=count;
+      }else if(*fmt=='0'&&*(fmt+1)>='0'&&*(fmt+1)<='9'){
         ifZero=1;
         fmt++;
       	width=atoi(fmt);
@@ -36,11 +41,6 @@ int vsprintf(char *out, const char *fmt, va_list ap) {
       }else if(*fmt=='0'){
         width=0;
 				fmt++;
-      }else if(*fmt>'0'&&*fmt<='9'){
-      	width=atoi(fmt);
-        int count=0;
-        for(int i=width;i>0;i/=10,count++);
-        fmt+=count;
       }
       switch(*fmt){
         case 'd':
