@@ -16,6 +16,7 @@
 #include <isa.h>
 #include <memory/paddr.h>
 #include <elf.h>
+#include <ftrace.h>
 void init_rand();
 void init_log(const char *log_file);
 void init_mem();
@@ -40,21 +41,16 @@ static void welcome() {
 #ifndef CONFIG_TARGET_AM
 #include <getopt.h>
 
-typedef struct {
-  char name[64];
-  vaddr_t start_add;
-  vaddr_t end_add;
-} symtab_t;
+
 symtab_t *funsymtab=NULL;
-struct {
-  uint32_t deep;
-  
-} fun_tracer_once;
+ftracer_stack_t  ftracer_stack={.depth=0,.is_ftrace=false,.stack=NULL,.symtab_size=0};
+
 static char *log_file = NULL;
 static char *diff_so_file = NULL;
 static char *img_file = NULL;
 static char *elf_file = NULL;
 static int difftest_port = 1234;
+
 
 static void load_elf(){
   if (elf_file == NULL) {Log("Cannot open .elf. Disabled 'ftrace'.");return;}
@@ -106,15 +102,18 @@ static void load_elf(){
     if(ELF32_ST_TYPE(elf_section_symtab[i].st_info)==STT_FUNC){
       strcpy(funsymtab[cnt].name,(char *)(elf_buf + elf_section_header[elf_section_header[elf_section_symtab_index].sh_link].sh_offset + elf_section_symtab[i].st_name));
       funsymtab[cnt].start_add=elf_section_symtab[i].st_value;
-      funsymtab[cnt].end_add=elf_section_symtab[i].st_value + elf_section_symtab[i].st_size;
+      funsymtab[cnt].size=elf_section_symtab[i].st_size;
       cnt++;
     }
   }
   //for(int i=0;i<cnt;i++)  Log("ELF .symtab: 0x%x - 0x%x | %s",funsymtab[i].start_add,funsymtab[i].end_add,funsymtab[i].name);
-
   free(elf_buf);
   
+  //init ftracer stack
+  ftracer_stack.is_ftrace=true;
+  ftracer_stack.symtab_size=elf_section_symtab_num;
 }
+
 static long load_img() {
   if (img_file == NULL) {
     Log("No image is given. Use the default build-in image.");

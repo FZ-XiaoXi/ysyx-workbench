@@ -17,6 +17,7 @@
 #include <cpu/decode.h>
 #include <cpu/difftest.h>
 #include <locale.h>
+#include <ftrace.h>
 #include <../src/monitor/sdb/sdb.h>
 /* The assembly code of instructions executed is only output to the screen
  * when the number of instructions executed is less than this value.
@@ -29,7 +30,7 @@ CPU_state cpu = {};
 uint64_t g_nr_guest_inst = 0;
 static uint64_t g_timer = 0; // unit: us
 static bool g_print_step = false;
-
+void func_trace(Decode *s);
 #ifdef CONFIG_ITRACE_RING
 static char ring_inst_buf[CONFIG_ITRACE_RING_MAX][128]={0};
 void print_ring_inst_buf(){
@@ -44,6 +45,8 @@ void print_ring_inst_buf(){
 #endif
 
 void device_update();
+
+
 
 static void trace_and_difftest(Decode *_this, vaddr_t dnpc) {
 #ifdef CONFIG_ITRACE_COND
@@ -164,3 +167,23 @@ void cpu_exec(uint64_t n) {
     case NEMU_QUIT: statistic();
   }
 }
+
+
+extern symtab_t *funsymtab;
+extern ftracer_stack_t  ftracer_stack;
+void func_trace(Decode *s){
+  if(!funsymtab)  return;
+  for(int i=0;i<ftracer_stack.symtab_size;i++){
+    //if(s->dnpc)
+
+  }
+
+}
+
+// ftracer_t* ftracer_push(ftracer_t* stack){
+  
+// }
+
+// void ftracer_pop(ftracer_t* stack){
+
+// }
