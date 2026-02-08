@@ -89,8 +89,8 @@ static void load_elf(){
   }
   if(elf_section_symtab_off==0){free(elf_buf);free(elf_header);free(elf_section_headers);Log("Cannot init 'ftrace'. (find .symtab ERROR) Disabled 'ftrace'.");return;}
   if(elf_section_strtab_off==0){free(elf_buf);free(elf_header);free(elf_section_headers);Log("Cannot init 'ftrace'. (find .symtab ERROR) Disabled 'ftrace'.");return;}
-  Log("ELF SECTION .strtab OFFSET: %d",elf_section_strtab_off);
-  Log("ELF SECTION .symtab OFFSET: %d",elf_section_symtab_off);
+  Log("ELF SECTION .strtab OFFSET: %x",elf_section_strtab_off);
+  Log("ELF SECTION .symtab OFFSET: %x",elf_section_symtab_off);
 
   free(elf_section_headers);
   free(elf_header);
