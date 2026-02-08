@@ -36,7 +36,7 @@ void print_ring_inst_buf(){
   printf("Instruction ring tracer:\n");
   for(int i=0;i<CONFIG_ITRACE_RING_MAX;i++){
     if(ring_inst_buf[i][0]=='\0') continue;
-    printf("=%s=\n",ring_inst_buf[i]);
+    printf("=%s\t\t\t=\n",ring_inst_buf[i]);
   }
 }
 #endif
