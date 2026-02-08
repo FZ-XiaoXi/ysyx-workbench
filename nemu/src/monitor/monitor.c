@@ -72,24 +72,17 @@ static void load_elf(){
   Elf32_Shdr *elf_section_headers = (Elf32_Shdr *)(elf_buf+(uint32_t)(elf_header->e_shoff));
   Log("ELF SECTION HEADER OFFSET: %d, NUM: %d, SIZE: %d",elf_header->e_shoff,elf_header->e_shnum,elf_header->e_shentsize);
 
-  //Get elf_section_header_strtab
+  //Get elf_section_header_symtab
   Elf32_Off elf_section_header_strtab_off=elf_section_headers[elf_header->e_shstrndx].sh_offset;
   Elf32_Off elf_section_symtab_off=0;
-
-  Elf32_Off elf_section_strtab_off=0;
+  
   for(int i=0;i<elf_header->e_shnum;i++){
-    if(strcmp(elf_buf+elf_section_header_strtab_off+elf_section_headers[i].sh_name,".symtab")==0){
+    if(strcmp(elf_buf+elf_section_header_strtab_off+elf_section_headers[i].sh_name,".symtab")==0)
       elf_section_symtab_off=elf_section_headers[i].sh_offset;
-
-    }else if(strcmp(elf_buf+elf_section_header_strtab_off+elf_section_headers[i].sh_name,".strtab")==0){
-      elf_section_strtab_off=elf_section_headers[i].sh_offset;
-    }
   }
   if(elf_section_symtab_off==0){free(elf_buf);Log("Cannot init 'ftrace'. (find .symtab ERROR) Disabled 'ftrace'.");return;}
-  if(elf_section_strtab_off==0){free(elf_buf);Log("Cannot init 'ftrace'. (find .symtab ERROR) Disabled 'ftrace'.");return;}
-  Log("ELF SECTION .strtab OFFSET: 0x%x",elf_section_strtab_off);
   Log("ELF SECTION .symtab OFFSET: 0x%x",elf_section_symtab_off);
-
+  Log("=========%ld=============",sizeof(Elf32_Sym));
   //Elf32_Sym *elf_section_symtab=(elf_section_symtab_off);
 
 
