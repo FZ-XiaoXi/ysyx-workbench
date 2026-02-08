@@ -48,11 +48,14 @@ static char *elf_file = NULL;
 static int difftest_port = 1234;
 
 static void load_elf(){
-  if (img_file == NULL) {
+  if (elf_file == NULL) {
     Log("No .elf is given. Disabled 'ftrace'.");
     return;
   }
-  Log("23232");
+  FILE *fp = fopen(elf_file,"rb");
+  Assert(fp, "Can not open '%s'", elf_file);
+
+  
 }
 static long load_img() {
   if (img_file == NULL) {
