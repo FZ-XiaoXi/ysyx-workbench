@@ -98,8 +98,12 @@ static void load_elf(){
   
   //Set symtab
   Elf32_Sym *elf_section_symtab=(Elf32_Sym*)(elf_buf+elf_section_symtab_off);
-  for(int i=1;i<elf_section_symtab_num;i++){
-    printf("===%s===\n",(char *)(elf_buf + elf_section_header[elf_section_header[elf_section_symtab_index].sh_link].sh_offset + elf_section_symtab[i].st_name));
+  //int cnt=0;
+  for(int i=0;i<elf_section_symtab_num;i++){
+    if(elf_section_symtab[i].st_info==STT_FUNC){
+      printf("===%s===\n",(char *)(elf_buf + elf_section_header[elf_section_header[elf_section_symtab_index].sh_link].sh_offset + elf_section_symtab[i].st_name));
+    }
+    
     //strcpy(symtab[i].name,(char *)(elf_buf + elf_section_header[elf_section_header[elf_section_symtab_index].sh_link].sh_offset + elf_section_symtab[i].st_name));
     //symtab[i].start_add=elf_section_symtab[i].st_value;
     //symtab[i].end_add=elf_section_symtab[i].st_value + elf_section_symtab[i].st_size;
