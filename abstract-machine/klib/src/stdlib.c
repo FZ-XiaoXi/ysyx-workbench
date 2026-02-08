@@ -4,7 +4,8 @@
 
 #if !defined(__ISA_NATIVE__) || defined(__NATIVE_USE_KLIB__)
 static unsigned long int next = 1;
-
+extern char _heap_start;
+char * addr=(char *)(&_heap_start);
 int rand(void) {
   // RAND_MAX assumed to be 32767
   next = next * 1103515245 + 12345;
@@ -57,7 +58,7 @@ char *itoa(int value, char* str, int base) {
 char *utoa(unsigned int value, char* str, int base) {
   char index[]="0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
   int i=0,j,k;
-  if(base<2 || base >36) panic("ERROR BASE(itoa)");
+  if(base<2 || base >36) panic("ERROR BASE(utoa)");
   while(value>0){
     *(str+i)=index[value%base];
     value/=base;
@@ -78,9 +79,12 @@ void *malloc(size_t size) {
   // Therefore do not call panic() here, else it will yield a dead recursion:
   //   panic() -> putchar() -> (glibc) -> malloc() -> panic()
 #if !(defined(__ISA_NATIVE__) && defined(__NATIVE_USE_KLIB__))
-  panic("Not implemented");
+  //panic("Not implemented");
 #endif
-  return NULL;
+  
+  if(size==0) return (addr++);
+  addr+=size;
+  return addr-size;
 }
 
 void free(void *ptr) {
