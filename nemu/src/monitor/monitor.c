@@ -46,7 +46,10 @@ typedef struct {
   vaddr_t end_add;
 } symtab_t;
 symtab_t *funsymtab=NULL;
-
+struct {
+  uint32_t deep;
+  
+} fun_tracer_once;
 static char *log_file = NULL;
 static char *diff_so_file = NULL;
 static char *img_file = NULL;
@@ -106,12 +109,8 @@ static void load_elf(){
       funsymtab[cnt].end_add=elf_section_symtab[i].st_value + elf_section_symtab[i].st_size;
       cnt++;
     }
-    
-    
   }
-  for(int i=0;i<cnt;i++){
-    Log("ELF .symtab: 0x%x - 0x%x | %s",funsymtab[i].start_add,funsymtab[i].end_add,funsymtab[i].name);
-  }
+  //for(int i=0;i<cnt;i++)  Log("ELF .symtab: 0x%x - 0x%x | %s",funsymtab[i].start_add,funsymtab[i].end_add,funsymtab[i].name);
 
   free(elf_buf);
   
