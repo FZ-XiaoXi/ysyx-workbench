@@ -70,15 +70,22 @@ static void load_elf(){
   memcpy(elf_header,elf_buf,sizeof(Elf32_Ehdr));
   Log("ELF HEADER MAGIC: %02x %02x %02x %02x",elf_header->e_ident[EI_MAG0],elf_header->e_ident[EI_MAG1],elf_header->e_ident[EI_MAG2],elf_header->e_ident[EI_MAG3]);
 
-  //Get 
-  Elf32_Shdr *elf_section_header = malloc(sizeof(Elf32_Shdr));
+  //Get elf_section_header
+  Elf32_Shdr *elf_section_header = malloc(sizeof(Elf32_Shdr)*elf_header->e_shnum);
   if(!elf_section_header){free(elf_buf);free(elf_header);Log("Cannot init 'ftrace'. (malloc() elf_section_header ERROR) Disabled 'ftrace'.");return;}
-  memcpy(elf_section_header,elf_buf+(elf_header->e_shoff),sizeof(Elf32_Shdr));
-  Log("ELF SECTION HEADER OFFSET: %u",(elf_header->e_shoff));
+  memcpy(elf_section_header,elf_buf+(elf_header->e_shoff),sizeof(Elf32_Shdr)*elf_header->e_shnum);
+  Log("ELF SECTION HEADER OFFSET: %d, NUM: %d, SIZE: %d",elf_header->e_shoff,elf_header->e_shnum,elf_header->e_shentsize);
+  Log("SIZE: %ld",sizeof(Elf32_Shdr));
+  // //Get elf_symtab_header
+  // Elf32_Sym *elf_symtab_header = malloc(sizeof(Elf32_Sym)*);
+  // if(!elf_symtab_header){free(elf_buf);free(elf_header);free(elf_section_header);Log("Cannot init 'ftrace'. (malloc() elf_symtab_header ERROR) Disabled 'ftrace'.");return;}
+  // memcpy(elf_symtab_header,elf_buf+(elf_section_header->),sizeof(Elf32_Sym));
+  // Log("ELF SECTION HEADER OFFSET: %u",(elf_header->e_shoff));
 
-
-  free(elf_buf);
+  free(elf_section_header);
   free(elf_header);
+  free(elf_buf);
+  
 }
 static long load_img() {
   if (img_file == NULL) {
