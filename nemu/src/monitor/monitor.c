@@ -74,7 +74,8 @@ static void load_elf(){
   
 
 
-
+  free(elf_buf);
+  free(elf_header);
 }
 static long load_img() {
   if (img_file == NULL) {
