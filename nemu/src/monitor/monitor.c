@@ -101,7 +101,7 @@ static void load_elf(){
   //int cnt=0;
   for(int i=0;i<elf_section_symtab_num;i++){
     //if(elf_section_symtab[i].st_info==STT_FUNC){
-      printf("===%s===\n",(char *)(elf_buf + elf_section_header[elf_section_header[elf_section_symtab_index].sh_link].sh_offset + elf_section_symtab[i].st_name));
+      printf("===%s==%d=\n",(char *)(elf_buf + elf_section_header[elf_section_header[elf_section_symtab_index].sh_link].sh_offset + elf_section_symtab[i].st_name),(int)elf_section_symtab[i].st_info);
     //}
     
     //strcpy(symtab[i].name,(char *)(elf_buf + elf_section_header[elf_section_header[elf_section_symtab_index].sh_link].sh_offset + elf_section_symtab[i].st_name));
