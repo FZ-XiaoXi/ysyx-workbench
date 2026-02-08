@@ -53,32 +53,28 @@ static void load_elf(){
   FILE *fp = fopen(elf_file,"rb");
   if(fp==NULL){Log("Cannot open %s. Disabled 'ftrace'.",elf_file);return;}
   //Get ELF size
-  if(fseek(fp,0,SEEK_END)!=0){
-    fclose(fp);
-    Log("Cannot init 'ftrace'. (fseek() ERROR) Disabled 'ftrace'.");
-    return;
-  }
+  if(fseek(fp,0,SEEK_END)!=0){fclose(fp);Log("Cannot init 'ftrace'. (fseek() ERROR) Disabled 'ftrace'.");return;}
   elf_size=ftell(fp);
-  Log("Load .elf. size: %d bytes",elf_size);
-  Elf32_Ehdr *elf_header = malloc(sizeof(Elf32_Ehdr));
-  if(!elf_header){
-    fclose(fp);
-    Log("Cannot init 'ftrace'. Disabled 'ftrace'.");
-    return;
-  }
+  Log("Load .elf. Size = %d",elf_size);
+
+  //Get ELF data
+  char *elf_buf = malloc(elf_size);
+  if(!elf_buf){fclose(fp);Log("Cannot init 'ftrace'. (malloc() elf_buf ERROR) Disabled 'ftrace'.");return;}
   fseek(fp, 0, SEEK_SET);
-  if(fread(elf_header,1,sizeof(Elf32_Ehdr),fp)!=sizeof(Elf32_Ehdr)){
-    free(elf_header);
-    fclose(fp);
-    Log("Cannot init 'ftrace'. Disabled 'ftrace'.");
-    return;
-  }
-  
-  
-
-
-  free(elf_header);
+  if(fread(elf_buf,1,elf_size,fp)!=elf_size){free(elf_buf);fclose(fp);Log("Cannot init 'ftrace'. (read .elf ERROR) Disabled 'ftrace'.");return;}
   fclose(fp);
+
+  //Get elf_header
+  Elf32_Ehdr *elf_header = malloc(sizeof(Elf32_Ehdr));
+  if(!elf_header){free(elf_buf);Log("Cannot init 'ftrace'. (malloc() elf_header ERROR) Disabled 'ftrace'.");return;}
+  memcpy(elf_header,elf_buf,sizeof(Elf32_Ehdr));
+  Log("ELF HEADER MAGIC: %02x",elf_header->e_ident[EI_MAG0]);
+  
+  
+  
+
+
+
 }
 static long load_img() {
   if (img_file == NULL) {
