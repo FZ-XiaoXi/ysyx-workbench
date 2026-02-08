@@ -45,7 +45,7 @@ typedef struct {
   vaddr_t start_add;
   vaddr_t end_add;
 } symtab_t;
-symtab_t *symtab=NULL;
+symtab_t *funsymtab=NULL;
 
 static char *log_file = NULL;
 static char *diff_so_file = NULL;
@@ -88,8 +88,8 @@ static void load_elf(){
       elf_section_symtab_off=elf_section_header[i].sh_offset;
       elf_section_symtab_num = elf_section_header[i].sh_size / elf_section_header[i].sh_entsize;
       elf_section_symtab_index=i;
-      symtab=malloc(elf_section_header[i].sh_size);
-      if(!symtab){free(elf_buf);Log("Cannot init 'ftrace'. (malloc() symtab ERROR) Disabled 'ftrace'.");return;}
+      funsymtab=malloc(elf_section_header[i].sh_size);
+      if(!funsymtab){free(elf_buf);Log("Cannot init 'ftrace'. (malloc() symtab ERROR) Disabled 'ftrace'.");return;}
       break;
     }
   }
@@ -98,15 +98,16 @@ static void load_elf(){
   
   //Set symtab
   Elf32_Sym *elf_section_symtab=(Elf32_Sym*)(elf_buf+elf_section_symtab_off);
-  //int cnt=0;
+  int cnt=0;
   for(int i=0;i<elf_section_symtab_num;i++){
     if(ELF32_ST_TYPE(elf_section_symtab[i].st_info)==STT_FUNC){
-      printf("===%s==%d=\n",(char *)(elf_buf + elf_section_header[elf_section_header[elf_section_symtab_index].sh_link].sh_offset + elf_section_symtab[i].st_name),(int)ELF32_ST_TYPE(elf_section_symtab[i].st_info));
+      strcpy(funsymtab[cnt].name,(char *)(elf_buf + elf_section_header[elf_section_header[elf_section_symtab_index].sh_link].sh_offset + elf_section_symtab[i].st_name));
+      funsymtab[cnt].start_add=elf_section_symtab[i].st_value;
+      funsymtab[cnt].end_add=elf_section_symtab[i].st_value + elf_section_symtab[i].st_size;
+      cnt++;
     }
     
-    //strcpy(symtab[i].name,(char *)(elf_buf + elf_section_header[elf_section_header[elf_section_symtab_index].sh_link].sh_offset + elf_section_symtab[i].st_name));
-    //symtab[i].start_add=elf_section_symtab[i].st_value;
-    //symtab[i].end_add=elf_section_symtab[i].st_value + elf_section_symtab[i].st_size;
+    
   }
   for(int i=0;i<elf_section_symtab_num;i++){
     //Log("ELF .symtab: 0x%x - 0x%x | %s",symtab[i].start_add,symtab[i].end_add,symtab[i].name);
