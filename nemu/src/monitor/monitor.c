@@ -49,13 +49,30 @@ static int difftest_port = 1234;
 
 static void load_elf(){
   if (elf_file == NULL) {
-    Log("No .elf is given. Disabled 'ftrace'.");
-    return;
+    
   }
   FILE *fp = fopen(elf_file,"rb");
-  Assert(fp, "Can not open '%s'", elf_file);
-  Assert(0, "Can not open '%s'", elf_file);
+  if(fp==NULL){Log("Cannot open %s. Disabled 'ftrace'.",elf_file);return;}
+  Elf32_Ehdr *elf_header = malloc(sizeof(Elf32_Ehdr));
+  if(!elf_header){
+    fclose(fp);
+    Log("Cannot init 'ftrace'. Disabled 'ftrace'.");
+    return;
+  }
+  fseek(fp, 0, SEEK_SET);
+  if(fread(elf_header,1,sizeof(Elf32_Ehdr),fp)!=sizeof(Elf32_Ehdr)){
+    free(elf_file);
+    fclose(fp);
+    Log("Cannot init 'ftrace'. Disabled 'ftrace'.");
+    return;
+  }
+  printf("ELF Header Information:\n");
+  printf("  Magic: %02x %02x %02x %02x\n", elf_header->e_ident[0], elf_header->e_ident[1], elf_header->e_ident[2], elf_header->e_ident[3]);
+  
 
+
+  free(elf_file);
+  fclose(fp);
 }
 static long load_img() {
   if (img_file == NULL) {
