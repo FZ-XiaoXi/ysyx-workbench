@@ -82,12 +82,12 @@ static void load_elf(){
   Elf32_Off elf_section_header_strtab_off=elf_section_header[elf_header->e_shstrndx].sh_offset;
   Elf32_Off elf_section_symtab_off=0;
   uint32_t elf_section_symtab_num;
-  uint32_t elf_section_symtab_index;
+  //uint32_t elf_section_symtab_index;
   for(int i=0;i<elf_header->e_shnum;i++){
     if(strcmp(elf_buf+elf_section_header_strtab_off+elf_section_header[i].sh_name,".symtab")==0){
       elf_section_symtab_off=elf_section_header[i].sh_offset;
       elf_section_symtab_num = elf_section_header[i].sh_size / elf_section_header[i].sh_entsize;
-      elf_section_symtab_index=i;
+      //elf_section_symtab_index=i;
       symtab=malloc(elf_section_header[i].sh_size);
       if(!symtab){free(elf_buf);Log("Cannot init 'ftrace'. (malloc() symtab ERROR) Disabled 'ftrace'.");return;}
       break;
@@ -99,7 +99,7 @@ static void load_elf(){
   //Set symtab
   Elf32_Sym *elf_section_symtab=(Elf32_Sym*)(elf_header+elf_section_symtab_off);
   for(int i=1;i<elf_section_symtab_num;i++){
-    printf("===%d===\n",elf_section_header[elf_section_header[elf_section_symtab_index].sh_link].sh_offset + elf_section_symtab[i].st_name);
+    printf("===%d===\n",elf_section_symtab[i].st_name);
     //strcpy(symtab[i].name,(char *)(elf_buf + elf_section_header[elf_section_header[elf_section_symtab_index].sh_link].sh_offset + elf_section_symtab[i].st_name));
     //symtab[i].start_add=elf_section_symtab[i].st_value;
     //symtab[i].end_add=elf_section_symtab[i].st_value + elf_section_symtab[i].st_size;
