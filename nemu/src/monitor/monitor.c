@@ -23,6 +23,7 @@ void init_difftest(char *ref_so_file, long img_size, int port);
 void init_device();
 void init_sdb();
 void init_disasm();
+void sdb_set_batch_mode();
 
 static void welcome() {
   Log("Trace: %s", MUXDEF(CONFIG_TRACE, ANSI_FMT("ON", ANSI_FG_GREEN), ANSI_FMT("OFF", ANSI_FG_RED)));
@@ -39,7 +40,12 @@ static void welcome() {
 #ifndef CONFIG_TARGET_AM
 #include <getopt.h>
 
-void sdb_set_batch_mode();
+typedef struct {
+  char name[64];
+  vaddr_t start_add;
+  vaddr_t end_add;
+} symtab_t;
+symtab_t *symtab=NULL;
 
 static char *log_file = NULL;
 static char *diff_so_file = NULL;
@@ -76,19 +82,30 @@ static void load_elf(){
   Elf32_Off elf_section_header_strtab_off=elf_section_headers[elf_header->e_shstrndx].sh_offset;
   Elf32_Off elf_section_symtab_off=0;
   uint32_t elf_section_symtab_num;
+  uint32_t elf_section_symtab_index;
   for(int i=0;i<elf_header->e_shnum;i++){
     if(strcmp(elf_buf+elf_section_header_strtab_off+elf_section_headers[i].sh_name,".symtab")==0){
       elf_section_symtab_off=elf_section_headers[i].sh_offset;
       elf_section_symtab_num = elf_section_headers[i].sh_size / elf_section_headers[i].sh_entsize;
+      elf_section_symtab_index=i;
+      symtab=malloc(elf_section_headers[i].sh_size);
+      if(!symtab){free(elf_buf);Log("Cannot init 'ftrace'. (malloc() symtab ERROR) Disabled 'ftrace'.");return;}
       break;
     }
   }
   if(elf_section_symtab_off==0){free(elf_buf);Log("Cannot init 'ftrace'. (find .symtab ERROR) Disabled 'ftrace'.");return;}
   Log("ELF SECTION .symtab OFFSET: 0x%x num:%d",elf_section_symtab_off,elf_section_symtab_num);
   
-  //Elf32_Sym *elf_section_symtab=(Elf32_Sym*)(elf_section_symtab_off);
-  //for(int i=0;i<)
-
+  //Set symtab
+  Elf32_Sym *elf_section_symtab=(Elf32_Sym*)(elf_header+elf_section_symtab_off);
+  for(int i=0;i<elf_section_symtab_num;i++){
+    strcpy(symtab[i].name,(char *)(elf_buf + elf_section_headers[elf_section_headers[elf_section_symtab_index].sh_link].sh_offset + elf_section_symtab[i].st_name));
+    symtab[i].start_add=elf_section_symtab[i].st_value;
+    symtab[i].end_add=elf_section_symtab[i].st_value + elf_section_symtab[i].st_size;
+  }
+  for(int i=0;i<elf_section_symtab_num;i++){
+    Log("ELF .symtab: 0x%x - 0x%x | %s",symtab[i].start_add,symtab[i].end_add,symtab[i].name);
+  }
 
   free(elf_buf);
   
