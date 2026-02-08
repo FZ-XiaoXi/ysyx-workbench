@@ -109,8 +109,8 @@ static void load_elf(){
     
     
   }
-  for(int i=0;i<elf_section_symtab_num;i++){
-    //Log("ELF .symtab: 0x%x - 0x%x | %s",symtab[i].start_add,symtab[i].end_add,symtab[i].name);
+  for(int i=0;i<cnt;i++){
+    Log("ELF .symtab: 0x%x - 0x%x | %s",funsymtab[i].start_add,funsymtab[i].end_add,funsymtab[i].name);
   }
 
   free(elf_buf);
