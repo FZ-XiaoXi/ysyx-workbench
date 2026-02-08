@@ -61,7 +61,7 @@ static void load_elf(){
   }
   fseek(fp, 0, SEEK_SET);
   if(fread(elf_header,1,sizeof(Elf32_Ehdr),fp)!=sizeof(Elf32_Ehdr)){
-    free(elf_file);
+    free(elf_header);
     fclose(fp);
     Log("Cannot init 'ftrace'. Disabled 'ftrace'.");
     return;
@@ -71,7 +71,7 @@ static void load_elf(){
   
 
 
-  free(elf_file);
+  free(elf_header);
   fclose(fp);
 }
 static long load_img() {
