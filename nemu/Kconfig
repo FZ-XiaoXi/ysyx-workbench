@@ -168,6 +168,26 @@ config ITRACE_RING_MAX
   int "Maximum number of instructions in the tracing ring buffer"
   default 20
 
+config MTRACE
+  depends on TRACE && TARGET_NATIVE_ELF && ENGINE_INTERPRETER
+  bool "Enable memory tracing"
+  default y
+
+config MTRACE_RANGE
+  depends on MTRACE
+  bool "Enable address-range filtering for memory tracing"
+  default y
+
+config MTRACE_RANGE_START
+  depends on MTRACE_RANGE
+  hex "Start address of the memory tracing range"
+  default 0x80000000
+
+config MTRACE_RANGE_END
+  depends on MTRACE_RANGE
+  hex "End address of the memory tracing range"
+  default 0x8a000000
+
 config DIFFTEST
   depends on TARGET_NATIVE_ELF
   bool "Enable differential testing"
