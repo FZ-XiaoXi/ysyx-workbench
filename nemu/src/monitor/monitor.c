@@ -75,20 +75,20 @@ static void load_elf(){
   Log("ELF HEADER MAGIC: %02x %02x %02x %02x",elf_header->e_ident[EI_MAG0],elf_header->e_ident[EI_MAG1],elf_header->e_ident[EI_MAG2],elf_header->e_ident[EI_MAG3]);
 
   //Get elf_section_header[]
-  Elf32_Shdr *elf_section_headers = (Elf32_Shdr *)(elf_buf+(uint32_t)(elf_header->e_shoff));
+  Elf32_Shdr *elf_section_header = (Elf32_Shdr *)(elf_buf+(uint32_t)(elf_header->e_shoff));
   Log("ELF SECTION HEADER OFFSET: %d, NUM: %d, SIZE: %d",elf_header->e_shoff,elf_header->e_shnum,elf_header->e_shentsize);
 
   //Get elf_section_header_symtab
-  Elf32_Off elf_section_header_strtab_off=elf_section_headers[elf_header->e_shstrndx].sh_offset;
+  Elf32_Off elf_section_header_strtab_off=elf_section_header[elf_header->e_shstrndx].sh_offset;
   Elf32_Off elf_section_symtab_off=0;
   uint32_t elf_section_symtab_num;
   uint32_t elf_section_symtab_index;
   for(int i=0;i<elf_header->e_shnum;i++){
-    if(strcmp(elf_buf+elf_section_header_strtab_off+elf_section_headers[i].sh_name,".symtab")==0){
-      elf_section_symtab_off=elf_section_headers[i].sh_offset;
-      elf_section_symtab_num = elf_section_headers[i].sh_size / elf_section_headers[i].sh_entsize;
+    if(strcmp(elf_buf+elf_section_header_strtab_off+elf_section_header[i].sh_name,".symtab")==0){
+      elf_section_symtab_off=elf_section_header[i].sh_offset;
+      elf_section_symtab_num = elf_section_header[i].sh_size / elf_section_header[i].sh_entsize;
       elf_section_symtab_index=i;
-      symtab=malloc(elf_section_headers[i].sh_size);
+      symtab=malloc(elf_section_header[i].sh_size);
       if(!symtab){free(elf_buf);Log("Cannot init 'ftrace'. (malloc() symtab ERROR) Disabled 'ftrace'.");return;}
       break;
     }
@@ -99,12 +99,13 @@ static void load_elf(){
   //Set symtab
   Elf32_Sym *elf_section_symtab=(Elf32_Sym*)(elf_header+elf_section_symtab_off);
   for(int i=0;i<elf_section_symtab_num;i++){
-    strcpy(symtab[i].name,(char *)(elf_buf + elf_section_headers[elf_section_headers[elf_section_symtab_index].sh_link].sh_offset + elf_section_symtab[i].st_name));
-    symtab[i].start_add=elf_section_symtab[i].st_value;
-    symtab[i].end_add=elf_section_symtab[i].st_value + elf_section_symtab[i].st_size;
+    printf("===%s===\n",(char *)(elf_buf + elf_section_header[elf_section_header[elf_section_symtab_index].sh_link].sh_offset + elf_section_symtab[i].st_name));
+    //strcpy(symtab[i].name,(char *)(elf_buf + elf_section_header[elf_section_header[elf_section_symtab_index].sh_link].sh_offset + elf_section_symtab[i].st_name));
+    //symtab[i].start_add=elf_section_symtab[i].st_value;
+    //symtab[i].end_add=elf_section_symtab[i].st_value + elf_section_symtab[i].st_size;
   }
   for(int i=0;i<elf_section_symtab_num;i++){
-    Log("ELF .symtab: 0x%x - 0x%x | %s",symtab[i].start_add,symtab[i].end_add,symtab[i].name);
+    //Log("ELF .symtab: 0x%x - 0x%x | %s",symtab[i].start_add,symtab[i].end_add,symtab[i].name);
   }
 
   free(elf_buf);
