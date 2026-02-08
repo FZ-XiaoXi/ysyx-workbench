@@ -48,11 +48,18 @@ static char *elf_file = NULL;
 static int difftest_port = 1234;
 
 static void load_elf(){
-  if (elf_file == NULL) {
-    
-  }
+  if (elf_file == NULL) {Log("Cannot open .elf. Disabled 'ftrace'.");return;}
+  //int elf_size;
   FILE *fp = fopen(elf_file,"rb");
   if(fp==NULL){Log("Cannot open %s. Disabled 'ftrace'.",elf_file);return;}
+  printf("---------------%ld-------------",ftell(fp));
+  //Get ELF size
+  if(fseek(fp,0,SEEK_END)!=0){
+    fclose(fp);
+    Log("Cannot init 'ftrace'. (fseek() ERROR) Disabled 'ftrace'.");
+    return;
+  }
+  //elf_size=ftell(fp);
   Elf32_Ehdr *elf_header = malloc(sizeof(Elf32_Ehdr));
   if(!elf_header){
     fclose(fp);
@@ -66,8 +73,7 @@ static void load_elf(){
     Log("Cannot init 'ftrace'. Disabled 'ftrace'.");
     return;
   }
-  printf("ELF Header Information:\n");
-  printf("  Magic: %02x %02x %02x %02x\n", elf_header->e_ident[0], elf_header->e_ident[1], elf_header->e_ident[2], elf_header->e_ident[3]);
+  
   
 
 
