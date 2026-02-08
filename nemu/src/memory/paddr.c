@@ -33,10 +33,10 @@ static void print_mtrace(op_t op,paddr_t addr,uint32_t val){
 
 #endif
   if(op==MEMREAD){
-    printf("MEMTracer: READ memory [0x%08x] = '0x%08x' at pc = '%08x'\n",addr,val,cpu.pc);
+    printf("MEMTracer: READ  memory [0x%08x] = '0x%08x' at pc = '0x%08x'\n",addr,val,cpu.pc);
   }
   if(op==MEMWRITE){
-    printf("MEMTracer: WRITE memory [0x%08x] = '0x%08x' at pc = '%08x'\n",addr,val,cpu.pc);
+    printf("MEMTracer: WRITE memory [0x%08x] = '0x%08x' at pc = '0x%08x'\n",addr,val,cpu.pc);
   }
 #endif
 }
