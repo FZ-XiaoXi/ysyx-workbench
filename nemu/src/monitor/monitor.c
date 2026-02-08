@@ -54,8 +54,8 @@ static void load_elf(){
   }
   FILE *fp = fopen(elf_file,"rb");
   Assert(fp, "Can not open '%s'", elf_file);
+  Assert(0, "Can not open '%s'", elf_file);
 
-  
 }
 static long load_img() {
   if (img_file == NULL) {
