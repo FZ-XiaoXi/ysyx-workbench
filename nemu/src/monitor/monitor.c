@@ -99,9 +99,10 @@ static void load_elf(){
   //Set symtab
   Elf32_Sym *elf_section_symtab=(Elf32_Sym*)(elf_buf+elf_section_symtab_off);
   for(int i=1;i<elf_section_symtab_num;i++){
-    strcpy(symtab[i].name,(char *)(elf_buf + elf_section_header[elf_section_header[elf_section_symtab_index].sh_link].sh_offset + elf_section_symtab[i].st_name));
-    symtab[i].start_add=elf_section_symtab[i].st_value;
-    symtab[i].end_add=elf_section_symtab[i].st_value + elf_section_symtab[i].st_size;
+    printf("===%s===\n",(char *)(elf_buf + elf_section_header[elf_section_header[elf_section_symtab_index].sh_link].sh_offset + elf_section_symtab[i].st_name));
+    //strcpy(symtab[i].name,(char *)(elf_buf + elf_section_header[elf_section_header[elf_section_symtab_index].sh_link].sh_offset + elf_section_symtab[i].st_name));
+    //symtab[i].start_add=elf_section_symtab[i].st_value;
+    //symtab[i].end_add=elf_section_symtab[i].st_value + elf_section_symtab[i].st_size;
   }
   for(int i=0;i<elf_section_symtab_num;i++){
     //Log("ELF .symtab: 0x%x - 0x%x | %s",symtab[i].start_add,symtab[i].end_add,symtab[i].name);
