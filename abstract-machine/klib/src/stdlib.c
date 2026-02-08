@@ -83,7 +83,7 @@ void *malloc(size_t size) {
 #endif
   
   if(size==0) return (addr++);
-  //addr+=size;
+  addr+=size;
   return addr-size;
 }
 
