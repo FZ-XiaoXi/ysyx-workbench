@@ -84,7 +84,7 @@ void *malloc(size_t size) {
   
   if(size==0) return (addr++);
   addr+=size;
-  return addr-size;
+  return addr;
 }
 
 void free(void *ptr) {
