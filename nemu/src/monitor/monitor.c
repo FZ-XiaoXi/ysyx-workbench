@@ -52,7 +52,7 @@ static void load_elf(){
     Log("No .elf is given. Disabled 'ftrace'.");
     return;
   }
-
+  Log("23232");
 }
 static long load_img() {
   if (img_file == NULL) {
