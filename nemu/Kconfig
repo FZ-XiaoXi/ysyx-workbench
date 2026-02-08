@@ -158,14 +158,14 @@ config ITRACE_COND
   string "Only trace instructions when the condition is true"
   default "true"
 
-config ITRACE_INST_RING
+config ITRACE_RING
   depends on ITRACE
-  bool "Enable error instruction tracing"
+  bool "Enable instruction tracing ring buffer"
   default y
 
-config ITRACE_INST_RING_MAX
-  depends on ITRACE_INST_RING
-  int "Size of the error instruction tracing buffer (unit: number of instructions)"
+config ITRACE_RING_MAX
+  depends on ITRACE_RING
+  int "Maximum number of instructions in the tracing ring buffer"
   default 20
 
 config DIFFTEST

@@ -30,6 +30,16 @@ uint64_t g_nr_guest_inst = 0;
 static uint64_t g_timer = 0; // unit: us
 static bool g_print_step = false;
 
+#ifdef CONFIG_ITRACE_RING
+static char ring_inst_buf[CONFIG_ITRACE_RING_MAX][128]={0};
+void print_ring_inst_buf(){
+  for(int i=0;i<CONFIG_ITRACE_RING_MAX;i++){
+    if(ring_inst_buf[i][0]=='\0') continue;
+    printf("=%s=\n",ring_inst_buf[i]);
+  }
+}
+#endif
+
 void device_update();
 
 static void trace_and_difftest(Decode *_this, vaddr_t dnpc) {
@@ -37,6 +47,16 @@ static void trace_and_difftest(Decode *_this, vaddr_t dnpc) {
   if (ITRACE_COND) { log_write("%s\n", _this->logbuf); }
 #endif
   if (g_print_step) { IFDEF(CONFIG_ITRACE, puts(_this->logbuf)); }
+
+#ifdef CONFIG_ITRACE_RING
+  if(CONFIG_ITRACE_RING_MAX>0){
+    for(int i=0;i<CONFIG_ITRACE_RING_MAX-1;i++){
+      memcpy(ring_inst_buf[i],ring_inst_buf[i+1],128);
+    }
+    sprintf(ring_inst_buf[CONFIG_ITRACE_RING_MAX-1],"%s",_this->logbuf);
+  }
+#endif
+
   IFDEF(CONFIG_DIFFTEST, difftest_step(_this->pc, dnpc));
 #ifdef CONFIG_WATCHPOINT
   for(int i=0;i<32;i++){
@@ -105,6 +125,9 @@ static void statistic() {
 
 void assert_fail_msg() {
   isa_reg_display();
+#ifdef CONFIG_ITRACE_RING
+  print_ring_inst_buf();
+#endif
   statistic();
 }
 
