@@ -74,7 +74,7 @@ static void load_elf(){
   Elf32_Shdr *elf_section_header = malloc(sizeof(Elf32_Shdr));
   if(!elf_section_header){free(elf_buf);free(elf_header);Log("Cannot init 'ftrace'. (malloc() elf_section_header ERROR) Disabled 'ftrace'.");return;}
   memcpy(elf_section_header,elf_buf+(elf_header->e_shoff),sizeof(Elf32_Shdr));
-  Log("ELF SECTION HEADER ADDRESS: 0x%08x",(elf_header->e_shoff));
+  Log("ELF SECTION HEADER OFFSET: %u",(elf_header->e_shoff));
 
 
   free(elf_buf);
