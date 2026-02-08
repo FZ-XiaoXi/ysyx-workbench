@@ -36,6 +36,11 @@ int vsprintf(char *out, const char *fmt, va_list ap) {
       }else if(*fmt=='0'){
         width=0;
 				fmt++;
+      }else if(*fmt>'0'&&*fmt<='9'){
+      	width=atoi(fmt);
+        int count=0;
+        for(int i=width;i>0;i/=10,count++);
+        fmt+=count;
       }
       switch(*fmt){
         case 'd':
