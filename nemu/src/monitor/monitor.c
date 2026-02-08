@@ -65,35 +65,35 @@ static void load_elf(){
   fclose(fp);
 
   //Get elf_header
-  Elf32_Ehdr *elf_header = malloc(sizeof(Elf32_Ehdr));
-  if(!elf_header){free(elf_buf);Log("Cannot init 'ftrace'. (malloc() elf_header ERROR) Disabled 'ftrace'.");return;}
-  memcpy(elf_header,elf_buf,sizeof(Elf32_Ehdr));
+  Elf32_Ehdr *elf_header = (Elf32_Ehdr *)elf_buf;
   Log("ELF HEADER MAGIC: %02x %02x %02x %02x",elf_header->e_ident[EI_MAG0],elf_header->e_ident[EI_MAG1],elf_header->e_ident[EI_MAG2],elf_header->e_ident[EI_MAG3]);
 
   //Get elf_section_header[]
-  Elf32_Shdr *elf_section_headers = malloc(sizeof(Elf32_Shdr)*elf_header->e_shnum);
-  if(!elf_section_headers){free(elf_buf);free(elf_header);Log("Cannot init 'ftrace'. (malloc() elf_section_headers ERROR) Disabled 'ftrace'.");return;}
-  memcpy(elf_section_headers,elf_buf+(elf_header->e_shoff),sizeof(Elf32_Shdr)*elf_header->e_shnum);
+  Elf32_Shdr *elf_section_headers = (Elf32_Shdr *)(elf_buf+(uint32_t)(elf_header->e_shoff));
   Log("ELF SECTION HEADER OFFSET: %d, NUM: %d, SIZE: %d",elf_header->e_shoff,elf_header->e_shnum,elf_header->e_shentsize);
 
   //Get elf_section_header_strtab
   Elf32_Off elf_section_header_strtab_off=elf_section_headers[elf_header->e_shstrndx].sh_offset;
   Elf32_Off elf_section_symtab_off=0;
+
   Elf32_Off elf_section_strtab_off=0;
   for(int i=0;i<elf_header->e_shnum;i++){
     if(strcmp(elf_buf+elf_section_header_strtab_off+elf_section_headers[i].sh_name,".symtab")==0){
       elf_section_symtab_off=elf_section_headers[i].sh_offset;
+
     }else if(strcmp(elf_buf+elf_section_header_strtab_off+elf_section_headers[i].sh_name,".strtab")==0){
       elf_section_strtab_off=elf_section_headers[i].sh_offset;
     }
   }
-  if(elf_section_symtab_off==0){free(elf_buf);free(elf_header);free(elf_section_headers);Log("Cannot init 'ftrace'. (find .symtab ERROR) Disabled 'ftrace'.");return;}
-  if(elf_section_strtab_off==0){free(elf_buf);free(elf_header);free(elf_section_headers);Log("Cannot init 'ftrace'. (find .symtab ERROR) Disabled 'ftrace'.");return;}
-  Log("ELF SECTION .strtab OFFSET: %x",elf_section_strtab_off);
-  Log("ELF SECTION .symtab OFFSET: %x",elf_section_symtab_off);
+  if(elf_section_symtab_off==0){free(elf_buf);Log("Cannot init 'ftrace'. (find .symtab ERROR) Disabled 'ftrace'.");return;}
+  if(elf_section_strtab_off==0){free(elf_buf);Log("Cannot init 'ftrace'. (find .symtab ERROR) Disabled 'ftrace'.");return;}
+  Log("ELF SECTION .strtab OFFSET: 0x%x",elf_section_strtab_off);
+  Log("ELF SECTION .symtab OFFSET: 0x%x",elf_section_symtab_off);
 
-  free(elf_section_headers);
-  free(elf_header);
+  //Elf32_Sym *elf_section_symtab=(elf_section_symtab_off);
+
+
+
   free(elf_buf);
   
 }
