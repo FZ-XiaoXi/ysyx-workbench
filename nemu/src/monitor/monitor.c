@@ -68,10 +68,13 @@ static void load_elf(){
   Elf32_Ehdr *elf_header = malloc(sizeof(Elf32_Ehdr));
   if(!elf_header){free(elf_buf);Log("Cannot init 'ftrace'. (malloc() elf_header ERROR) Disabled 'ftrace'.");return;}
   memcpy(elf_header,elf_buf,sizeof(Elf32_Ehdr));
-  Log("ELF HEADER MAGIC: %02x",elf_header->e_ident[EI_MAG0]);
-  
-  
-  
+  Log("ELF HEADER MAGIC: %02x %02x %02x %02x",elf_header->e_ident[EI_MAG0],elf_header->e_ident[EI_MAG1],elf_header->e_ident[EI_MAG2],elf_header->e_ident[EI_MAG3]);
+
+  //Get 
+  Elf32_Shdr *elf_section_header = malloc(sizeof(Elf32_Shdr));
+  if(!elf_section_header){free(elf_buf);free(elf_header);Log("Cannot init 'ftrace'. (malloc() elf_section_header ERROR) Disabled 'ftrace'.");return;}
+  memcpy(elf_section_header,elf_buf+(elf_header->e_shoff),sizeof(Elf32_Shdr));
+  Log("ELF SECTION HEADER ADDRESS: 0x%08x",(elf_header->e_shoff));
 
 
   free(elf_buf);
