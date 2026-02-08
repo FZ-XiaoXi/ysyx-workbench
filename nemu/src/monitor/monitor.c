@@ -80,7 +80,7 @@ static void load_elf(){
   Elf32_Off elf_section_header_strtab=elf_section_headers[elf_header->e_shstrndx].sh_offset;
   for(int i=0;i<elf_header->e_shnum;i++){
     if(strcmp(elf_buf+elf_section_header_strtab+elf_section_headers[i].sh_name,".symtab")==0){
-      Log("================%d===============",elf_section_headers[i].sh_offset);
+      Log("================%x===============",elf_section_headers[i].sh_offset);
     }
 
   }
