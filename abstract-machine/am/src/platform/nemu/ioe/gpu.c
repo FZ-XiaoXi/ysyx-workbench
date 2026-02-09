@@ -26,7 +26,7 @@ void __am_gpu_fbdraw(AM_GPU_FBDRAW_T *ctl) {
   for(int i=0;i<ctl->h;i++){
     sindex = (ctl->y + i) * gpu_w + ctl->x;
     for(int j=0;j<ctl->w;j++){
-      outl(FB_ADDR + (sindex << 2),*((unsigned int*)ctl->pixels + pindex));
+      outl(FB_ADDR + ((sindex + ctl->w) << 2),*((unsigned int*)ctl->pixels + pindex));
       sindex ++;
       pindex ++;
     }
