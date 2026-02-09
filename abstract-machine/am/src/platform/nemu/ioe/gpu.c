@@ -1,6 +1,6 @@
 #include <am.h>
 #include <nemu.h>
-
+#include <klib.h>
 #define SYNC_ADDR (VGACTL_ADDR + 4)
 
 static int gpu_w,gpu_h;
@@ -36,8 +36,10 @@ void __am_gpu_fbdraw(AM_GPU_FBDRAW_T *ctl) {
         outl(FB_ADDR + (i * 4),*((unsigned int*)ctl->pixels + index));
         index++;
       }
+      printf("LINE!\n");
     }
   }
+  printf("  DISPLAY!\n");
 }
 
 void __am_gpu_status(AM_GPU_STATUS_T *status) {
