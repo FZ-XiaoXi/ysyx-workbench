@@ -29,7 +29,7 @@ void __am_gpu_fbdraw(AM_GPU_FBDRAW_T *ctl) {
       sindex ++;
       pindex ++;
     }
-    sindex += gpu_w;
+    sindex += (gpu_w - ctl->w);
   }
 }
 
