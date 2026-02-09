@@ -20,8 +20,8 @@ typedef struct {
     ftracer_t* stack;
 } ftracer_stack_t;
 
-ftracer_t* ftracer_push(ftracer_t* stack);
-void ftracer_pop(ftracer_t* stack);
+int ftracer_push(ftracer_t stack);
+void ftracer_pop();
 
 #define IN_FUNCRANGE(add,symtab) ((add>=symtab.start_add && add<symtab.start_add+symtab.size)?)
 

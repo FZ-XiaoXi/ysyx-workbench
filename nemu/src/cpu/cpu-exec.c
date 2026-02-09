@@ -19,6 +19,7 @@
 #include <locale.h>
 #include <ftrace.h>
 #include <../src/monitor/sdb/sdb.h>
+#include <memory/paddr.h>
 /* The assembly code of instructions executed is only output to the screen
  * when the number of instructions executed is less than this value.
  * This is useful when you use the `si' command.
@@ -172,18 +173,30 @@ void cpu_exec(uint64_t n) {
 extern symtab_t *funsymtab;
 extern ftracer_stack_t  ftracer_stack;
 void func_trace(Decode *s){
-  if(!funsymtab)  return;
+  if(!funsymtab || !ftracer_stack.is_ftrace)  return;
   for(int i=0;i<ftracer_stack.symtab_size;i++){
-    //if(s->dnpc)
-
+    if(s->pc == RESET_VECTOR && funsymtab[i].start_add == RESET_VECTOR && ftracer_stack.depth==0){
+      ftracer_t stack_frame = {.dst_func = funsymtab + i, .dst_pc = RESET_VECTOR, .src_pc = RESET_VECTOR};
+      ftracer_push(stack_frame);
+    }
+    if(s->dnpc == funsymtab[i].start_add){
+      ftracer_t stack_frame = {.dst_func = funsymtab + i, .dst_pc = s->dnpc, .src_pc = s->pc};
+      ftracer_push(stack_frame);
+    }
   }
 
 }
 
-// ftracer_t* ftracer_push(ftracer_t* stack){
-  
-// }
+int ftracer_push(ftracer_t stack_frame){
+  ftracer_stack.depth++;
+  ftracer_t *tpr = realloc(ftracer_stack.stack, sizeof(ftracer_t)*ftracer_stack.depth);
+  if(!tpr) {Log("Cannot realloc ftracer_stack! Stop ftracing.");ftracer_stack.is_ftrace=0;free(ftracer_stack.stack);return 1;}
+  ftracer_stack.stack = tpr;
+  memcpy(ftracer_stack.stack+ftracer_stack.depth-1, &stack_frame, sizeof(ftracer_t));
+  Log("Push STACK (pc=%d)(func=%s)",stack_frame.dst_pc,stack_frame.dst_func->name);
+  return 0;
+}
 
-// void ftracer_pop(ftracer_t* stack){
-
-// }
+void ftracer_pop(){
+  return;
+}
