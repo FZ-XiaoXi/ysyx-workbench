@@ -193,6 +193,30 @@ config FTRACE
   bool "Enable function tracer"
   default n
 
+config DTRACE
+  depends on TRACE && TARGET_NATIVE_ELF && ENGINE_INTERPRETER
+  bool "Enable device tracing"
+  default y
+
+config DTRACE_COND
+  depends on DTRACE
+  string "Only trace device when the condition is true"
+  default "true"
+# config DTRACE_RANGE
+#   depends on DTRACE
+#   bool "Enable address-range filtering for memory tracing"
+#   default y
+
+# config DTRACE_RANGE_START
+#   depends on MTRACE_RANGE
+#   hex "Start address of the memory tracing range"
+#   default 0x80000000
+
+# config DTRACE_RANGE_END
+#   depends on MTRACE_RANGE
+#   hex "End address of the memory tracing range"
+#   default 0x8a000000
+
 config DIFFTEST
   depends on TARGET_NATIVE_ELF
   bool "Enable differential testing"

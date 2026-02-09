@@ -24,8 +24,8 @@ static uint8_t *pmem = NULL;
 static uint8_t pmem[CONFIG_MSIZE] PG_ALIGN = {};
 #endif
 
-typedef enum{MEMREAD,MEMWRITE,DEVREAD,DEVWRITE} op_t;
-static void print_mtrace(op_t op,paddr_t addr,uint32_t val){
+typedef enum{MEMREAD,MEMWRITE} mtrace_t;
+static void print_mtrace(mtrace_t op,paddr_t addr,uint32_t val){
 #ifdef CONFIG_MTRACE
   if(nemu_state.state != NEMU_RUNNING) return;
 #if   defined(CONFIG_MTRACE_RANGE)
@@ -33,10 +33,10 @@ static void print_mtrace(op_t op,paddr_t addr,uint32_t val){
 #else
 #endif
   if(op==MEMREAD){
-    printf("MEMTracer: READ  memory [0x%08x] = '0x%08x' at pc = '0x%08x'\n",addr,val,cpu.pc);
+    Log("MEMTracer: READ  memory [0x%08x] = '0x%08x' at pc = '0x%08x'\n",addr,val,cpu.pc);
   }
   if(op==MEMWRITE){
-    printf("MEMTracer: WRITE memory [0x%08x] = '0x%08x' at pc = '0x%08x'\n",addr,val,cpu.pc);
+    Log("MEMTracer: WRITE memory [0x%08x] = '0x%08x' at pc = '0x%08x'\n",addr,val,cpu.pc);
   }
 #endif
 }
