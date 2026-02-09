@@ -22,8 +22,20 @@ typedef struct {
 
 int ftracer_push(ftracer_t stack);
 void ftracer_pop();
+void ftracer_write_log(char *s);
 
+typedef struct {
+    int depth;
+    bool isCall;
+    vaddr_t pc;
+    char name[64];
+} ftracer_log_t;
 
+typedef struct {
+    int len;
+    int alloc;
+    char *buf;
+} ftrace_log_t;
 #define IN_FUNCRANGE(add,symtab) ((add>=symtab.start_add && add<symtab.start_add+symtab.size)?1:0)
 
 #endif

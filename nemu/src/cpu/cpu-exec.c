@@ -172,14 +172,22 @@ void cpu_exec(uint64_t n) {
 
 extern symtab_t *funsymtab;
 extern ftracer_stack_t  ftracer_stack;
+ftrace_log_t ftrace_log={0};
+
 void func_trace(Decode *s){
   if(!funsymtab || !ftracer_stack.is_ftrace)  return;
-  
+
   //PUSH
   for(int i=0;i<ftracer_stack.symtab_size;i++){
     if(s->dnpc == funsymtab[i].start_add){
       ftracer_t stack_frame = {.dst_func = funsymtab + i, .dst_pc = s->dnpc, .src_pc = s->pc};
+      Log("Push STACK (pc=%x)(func=%s)",stack_frame.dst_pc,stack_frame.dst_func->name);
       ftracer_push(stack_frame);
+      char S[128]={0};
+      sprintf(S+strlen(S),"0x%08x:", s->pc);
+      for(int i=0;i<ftracer_stack.depth;i++)  sprintf(S+strlen(S),"  ");
+      sprintf(S+strlen(S),"call [%s@0x%08x]\n",stack_frame.dst_func->name,stack_frame.dst_func->start_add);
+      ftracer_write_log(S);
       return;
     }
   }
@@ -191,7 +199,12 @@ void func_trace(Decode *s){
         if(IN_FUNCRANGE(s->pc,funsymtab[i])){
           Log("Pop STACK (pc=%x)(func=%s)",s->pc,funsymtab[i].name);
           ftracer_pop();
-          break;
+          char S[128]={0};
+          sprintf(S+strlen(S),"0x%08x:", s->pc);
+          for(int i=0;i<ftracer_stack.depth+1;i++)  sprintf(S+strlen(S),"  ");
+          sprintf(S+strlen(S),"ret [%s]\n",funsymtab[i].name);
+          ftracer_write_log(S);
+          return;
         }
       }
     }
@@ -204,7 +217,6 @@ int ftracer_push(ftracer_t stack_frame){
   if(!tpr) {Log("Cannot realloc ftracer_stack! Stop ftracing.");ftracer_stack.is_ftrace=0;free(ftracer_stack.stack);return 1;}
   ftracer_stack.stack = tpr;
   memcpy(ftracer_stack.stack+ftracer_stack.depth-1, &stack_frame, sizeof(ftracer_t));
-  Log("Push STACK (pc=%x)(func=%s)",stack_frame.dst_pc,stack_frame.dst_func->name);
   return 0;
 }
 
@@ -218,4 +230,16 @@ void ftracer_pop(){
   // }
   ftracer_stack.depth--;
   return;
+}
+
+void ftracer_write_log(char *s){
+  while(strlen(s)>ftrace_log.alloc-ftrace_log.len-1){
+    char *tpr=realloc(ftrace_log.buf,ftrace_log.alloc+128);
+    if(!tpr){Log("ERROR malloc ftracer_log_buffer!.");return;}
+    ftrace_log.alloc+=128;
+    ftrace_log.buf=tpr;
+  }
+  strcat(ftrace_log.buf,s);
+  ftrace_log.len=strlen(ftrace_log.buf);
+  Log("ADD LOG");
 }
