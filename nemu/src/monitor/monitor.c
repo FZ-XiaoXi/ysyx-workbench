@@ -112,6 +112,13 @@ static void load_elf(){
   //init ftracer stack
   ftracer_stack.is_ftrace=true;
   ftracer_stack.symtab_size=elf_section_symtab_num;
+  for(int i=0;i<ftracer_stack.symtab_size;i++){
+    if(funsymtab[i].start_add == RESET_VECTOR){
+      ftracer_t stack_frame = {.dst_func = funsymtab + i, .dst_pc = RESET_VECTOR, .src_pc = RESET_VECTOR};
+      ftracer_push(stack_frame);
+      break;
+    }
+  }
 }
 
 static long load_img() {
