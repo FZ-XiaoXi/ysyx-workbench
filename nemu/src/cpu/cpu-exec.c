@@ -188,7 +188,7 @@ void func_trace(Decode *s){
       ftracer_push(stack_frame);
       char S[256]={0};
       sprintf(S+strlen(S),"0x%08x:", s->pc);
-      for(int i=0;i<ftracer_stack.depth;i++)  sprintf(S+strlen(S),"  ");
+      for(int i=0;i<ftracer_stack.depth;i++)  sprintf(S+strlen(S)," ");
       sprintf(S+strlen(S),"call [%s@0x%08x]\n",stack_frame.dst_func->name,stack_frame.dst_func->start_add);
       ftracer_write_log(S);
       return;
@@ -204,7 +204,7 @@ void func_trace(Decode *s){
           ftracer_pop();
           char S[256]={0};
           sprintf(S+strlen(S),"0x%08x:", s->pc);
-          for(int i=0;i<ftracer_stack.depth+1;i++)  sprintf(S+strlen(S),"  ");
+          for(int i=0;i<ftracer_stack.depth+1;i++)  sprintf(S+strlen(S)," ");
           sprintf(S+strlen(S),"ret [%s]\n",funsymtab[i].name);
           ftracer_write_log(S);
           return;
