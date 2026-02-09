@@ -193,7 +193,7 @@ int ftracer_push(ftracer_t stack_frame){
   if(!tpr) {Log("Cannot realloc ftracer_stack! Stop ftracing.");ftracer_stack.is_ftrace=0;free(ftracer_stack.stack);return 1;}
   ftracer_stack.stack = tpr;
   memcpy(ftracer_stack.stack+ftracer_stack.depth-1, &stack_frame, sizeof(ftracer_t));
-  Log("Push STACK (pc=%d)(func=%s)",stack_frame.dst_pc,stack_frame.dst_func->name);
+  Log("Push STACK (pc=%x)(func=%s)",stack_frame.dst_pc,stack_frame.dst_func->name);
   return 0;
 }
 
