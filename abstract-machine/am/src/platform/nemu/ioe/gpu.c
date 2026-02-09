@@ -6,14 +6,8 @@
 static int gpu_w,gpu_h;
 
 void __am_gpu_init() {
-  int i;
-  int w = (unsigned int)inl(VGACTL_ADDR)>>16;  // TODO: get the correct width
-  int h = (unsigned int)inl(VGACTL_ADDR)&0xffff;  // TODO: get the correct height
-  gpu_w = w;
-  gpu_h = h;
-  uint32_t *fb = (uint32_t *)(uintptr_t)FB_ADDR;
-  for (i = 0; i < w * h; i ++) fb[i] = i;
-  outl(SYNC_ADDR, 1);
+  gpu_w = (unsigned int)inl(VGACTL_ADDR)>>16;
+  gpu_h = (unsigned int)inl(VGACTL_ADDR)&0xffff;
 }
 
 void __am_gpu_config(AM_GPU_CONFIG_T *cfg) {
