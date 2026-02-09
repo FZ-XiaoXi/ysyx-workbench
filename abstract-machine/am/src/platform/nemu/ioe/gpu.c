@@ -29,7 +29,7 @@ void __am_gpu_fbdraw(AM_GPU_FBDRAW_T *ctl) {
   if(ctl->pixels == NULL) return;
   int index=0;
   for(int i=0;i<gpu_w * gpu_h;i++){
-    int x=i%gpu_w;
+    int x=i%gpu_w;  
     int y=i/gpu_h;
     if(x>=ctl->x && x < ctl->x+ctl->w){
       if(y>=ctl->y && y<ctl->y+ctl->h){
@@ -38,7 +38,7 @@ void __am_gpu_fbdraw(AM_GPU_FBDRAW_T *ctl) {
       }
     }
   }
-  printf("  DISPLAY!\n");
+  printf("  %d DISPLAY!\n",(int)ctl->sync);
 }
 
 void __am_gpu_status(AM_GPU_STATUS_T *status) {
