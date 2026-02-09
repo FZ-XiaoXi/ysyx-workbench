@@ -197,7 +197,7 @@ void func_trace(Decode *s){
 
   //POP
   for(int i=0;i<ftracer_stack.depth;i++){
-    if(s->dnpc == ftracer_stack.stack[i].src_pc + 4){
+    if(s->dnpc == ftracer_stack.stack[i].src_pc + 4 || s->isa.inst==0x00008067){
       for(int i=0;i<ftracer_stack.symtab_size;i++){
         if(IN_FUNCRANGE(s->pc,funsymtab[i])){
           Log("Pop STACK (pc=%x)(func=%s) depth=%d",s->pc,funsymtab[i].name,ftracer_stack.depth-1);
