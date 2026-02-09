@@ -27,6 +27,10 @@
  */
 #define MAX_INST_TO_PRINT 10
 
+extern symtab_t *funsymtab;
+extern ftracer_stack_t  ftracer_stack;
+ftrace_log_t ftrace_log={0};
+
 CPU_state cpu = {};
 uint64_t g_nr_guest_inst = 0;
 static uint64_t g_timer = 0; // unit: us
@@ -163,15 +167,14 @@ void cpu_exec(uint64_t n) {
            (nemu_state.halt_ret == 0 ? ANSI_FMT("HIT GOOD TRAP", ANSI_FG_GREEN) :
             ANSI_FMT("HIT BAD TRAP", ANSI_FG_RED))),
           nemu_state.halt_pc);
+      printf("%s",ftrace_log.buf);
       // fall through
     case NEMU_QUIT: statistic();
   }
 }
 
 
-extern symtab_t *funsymtab;
-extern ftracer_stack_t  ftracer_stack;
-ftrace_log_t ftrace_log={0};
+
 
 void func_trace(Decode *s){
   if(!funsymtab || !ftracer_stack.is_ftrace)  return;
@@ -247,5 +250,4 @@ void ftracer_write_log(char *s){
   }
   strcat(ftrace_log.buf,s);
   ftrace_log.len=strlen(ftrace_log.buf);
-  Log("ADD LOG");
 }
