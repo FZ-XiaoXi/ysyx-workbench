@@ -33,7 +33,7 @@ void __am_gpu_fbdraw(AM_GPU_FBDRAW_T *ctl) {
     int y=i/gpu_h;
     if(x>=ctl->x && x < ctl->x+ctl->w){
       if(y>=ctl->y && y<ctl->y+ctl->h){
-        outl(FB_ADDR,*((unsigned int*)ctl->pixels + index));
+        outl(FB_ADDR + (i * 4),*((unsigned int*)ctl->pixels + index));
         index++;
       }
     }
