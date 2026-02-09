@@ -27,15 +27,14 @@ void __am_gpu_config(AM_GPU_CONFIG_T *cfg) {
 void __am_gpu_fbdraw(AM_GPU_FBDRAW_T *ctl) {
   if (ctl->sync) outl(SYNC_ADDR, 1);
   if(ctl->pixels == NULL) return;
-  int index=0;
-  for(int i=0;i<gpu_w * gpu_h;i++){
-    int x=i%gpu_w;  
-    int y=i/gpu_h;
-    if(x>=ctl->x && x < ctl->x+ctl->w){
-      if(y>=ctl->y && y<ctl->y+ctl->h){
-        outl(FB_ADDR + (i * 4),*((unsigned int*)ctl->pixels + index));
-        index++;
-      }
+  int pindex=0;
+  int sindex = ctl->y * gpu_w + ctl->x;
+  for(int i=0;i<ctl->h;i++){
+    sindex = (ctl->y + i) * gpu_w + ctl->x;
+    for(int j=0;j<ctl->w;j++){
+      outl(FB_ADDR + (sindex << 2),*((unsigned int*)ctl->pixels + pindex));
+      sindex ++;
+      pindex ++;
     }
   }
   printf("  %d DISPLAY!\n",(int)ctl->sync);
