@@ -174,13 +174,28 @@ extern symtab_t *funsymtab;
 extern ftracer_stack_t  ftracer_stack;
 void func_trace(Decode *s){
   if(!funsymtab || !ftracer_stack.is_ftrace)  return;
+  
+  //PUSH
   for(int i=0;i<ftracer_stack.symtab_size;i++){
     if(s->dnpc == funsymtab[i].start_add){
       ftracer_t stack_frame = {.dst_func = funsymtab + i, .dst_pc = s->dnpc, .src_pc = s->pc};
       ftracer_push(stack_frame);
+      return;
     }
   }
 
+  //POP
+  for(int i=0;i<ftracer_stack.depth;i++){
+    if(s->dnpc == ftracer_stack.stack[i].src_pc + 4){
+      for(int i=0;i<ftracer_stack.symtab_size;i++){
+        if(s->pc >= funsymtab[i].start_add && s->pc < funsymtab[i].start_add + funsymtab[i].size){
+          Log("Pop STACK (pc=%x)(func=%s)",s->pc,funsymtab[i].name);
+          ftracer_pop();
+          break;
+        }
+      }
+    }
+  }
 }
 
 int ftracer_push(ftracer_t stack_frame){
@@ -194,5 +209,13 @@ int ftracer_push(ftracer_t stack_frame){
 }
 
 void ftracer_pop(){
+  if(ftracer_stack.depth<=0){
+    Log("ERROR POP STACK. Depth<=0");
+    return;
+  }
+  // for(int i=0;i<ftracer_stack.symtab_size;i++){
+  //   if(ftracer_stack.stack[ftracer_stack.depth-1].)
+  // }
+  ftracer_stack.depth--;
   return;
 }
