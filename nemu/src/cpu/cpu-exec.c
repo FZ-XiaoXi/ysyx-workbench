@@ -27,9 +27,11 @@
  */
 #define MAX_INST_TO_PRINT 10
 
+#ifdef CONFIG_FTRACE
 extern symtab_t *funsymtab;
 extern ftracer_stack_t  ftracer_stack;
 ftrace_log_t ftrace_log={0};
+#endif
 
 CPU_state cpu = {};
 uint64_t g_nr_guest_inst = 0;
@@ -167,7 +169,7 @@ void cpu_exec(uint64_t n) {
            (nemu_state.halt_ret == 0 ? ANSI_FMT("HIT GOOD TRAP", ANSI_FG_GREEN) :
             ANSI_FMT("HIT BAD TRAP", ANSI_FG_RED))),
           nemu_state.halt_pc);
-      printf("%s",ftrace_log.buf);
+      IFDEF(CONFIG_FTRACE,printf("%s",ftrace_log.buf));
       // fall through
     case NEMU_QUIT: statistic();
   }
@@ -177,6 +179,7 @@ void cpu_exec(uint64_t n) {
 
 
 void func_trace(Decode *s){
+#ifdef CONFIG_FTRACE
   if(!funsymtab || !ftracer_stack.is_ftrace)  return;
   Decode start={.pc=RESET_VECTOR,.dnpc=RESET_VECTOR};
   if(s==NULL) s=&start;
@@ -212,8 +215,11 @@ void func_trace(Decode *s){
       }
     }
   }
+#endif
+  return;
 }
 
+#ifdef CONFIG_FTRACE
 int ftracer_push(ftracer_t stack_frame){
   ftracer_stack.depth++;
   ftracer_t *tpr = realloc(ftracer_stack.stack, sizeof(ftracer_t)*ftracer_stack.depth);
@@ -251,3 +257,4 @@ void ftracer_write_log(char *s){
   strcat(ftrace_log.buf,s);
   ftrace_log.len=strlen(ftrace_log.buf);
 }
+#endif

@@ -188,6 +188,11 @@ config MTRACE_RANGE_END
   hex "End address of the memory tracing range"
   default 0x8a000000
 
+config FTRACE
+  depends on TRACE && TARGET_NATIVE_ELF && ENGINE_INTERPRETER
+  bool "Enable function tracer"
+  default n
+
 config DIFFTEST
   depends on TARGET_NATIVE_ELF
   bool "Enable differential testing"
@@ -195,6 +200,8 @@ config DIFFTEST
   help
     Enable differential testing with a reference design.
     Note that this will significantly reduce the performance of NEMU.
+
+
 
 choice
   prompt "Reference design"

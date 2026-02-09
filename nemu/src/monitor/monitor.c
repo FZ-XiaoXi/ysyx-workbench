@@ -42,8 +42,7 @@ static void welcome() {
 #include <getopt.h>
 
 
-symtab_t *funsymtab=NULL;
-ftracer_stack_t  ftracer_stack={.depth=0,.is_ftrace=false,.stack=NULL,.symtab_size=0};
+
 
 static char *log_file = NULL;
 static char *diff_so_file = NULL;
@@ -51,8 +50,12 @@ static char *img_file = NULL;
 static char *elf_file = NULL;
 static int difftest_port = 1234;
 
-
+#ifdef CONFIG_FTRACE
+symtab_t *funsymtab=NULL;
+ftracer_stack_t  ftracer_stack={.depth=0,.is_ftrace=false,.stack=NULL,.symtab_size=0};
+#endif
 static void load_elf(){
+#ifdef CONFIG_FTRACE
   if (elf_file == NULL) {Log("Cannot open .elf. Disabled 'ftrace'.");return;}
   int elf_size;
   FILE *fp = fopen(elf_file,"rb");
@@ -113,6 +116,8 @@ static void load_elf(){
   ftracer_stack.is_ftrace=true;
   ftracer_stack.symtab_size=cnt;
   func_trace(NULL);
+#endif
+  return;
 }
 
 static long load_img() {
