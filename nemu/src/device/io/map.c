@@ -30,8 +30,7 @@ static void print_devtrace(dtrace_t op,paddr_t addr,uint32_t val,IOMap *map){
   if(op==DEVREAD){
     sprintf(buf,"DEVTracer: READ device [%s] [0x%08x] = '0x%08x' at pc = '0x%08x'\n",map->name,addr,val,cpu.pc);
     Log("DEVTracer: READ device [%s] [0x%08x] = '0x%08x' at pc = '0x%08x'\n",map->name,addr,val,cpu.pc);
-  }
-  if(op==DEVWRITE){
+  }else if(op==DEVWRITE){
     sprintf(buf,"DEVTracer: WRITE device [%s] [0x%08x] = '0x%08x' at pc = '0x%08x'\n",map->name,addr,val,cpu.pc);
     Log("DEVTracer: WRITE device [%s] [0x%08x] = '0x%08x' at pc = '0x%08x'\n",map->name,addr,val,cpu.pc);
   }
