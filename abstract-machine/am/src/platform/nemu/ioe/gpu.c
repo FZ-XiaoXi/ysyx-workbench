@@ -24,12 +24,12 @@ void __am_gpu_fbdraw(AM_GPU_FBDRAW_T *ctl) {
   int pindex=0;
   int sindex = ctl->y * gpu_w + ctl->x;
   for(int i=0;i<ctl->h;i++){
-    sindex = (ctl->y + i) * gpu_w + ctl->x;
     for(int j=0;j<ctl->w;j++){
       outl(FB_ADDR + (sindex << 2),*((unsigned int*)ctl->pixels + pindex));
       sindex ++;
       pindex ++;
     }
+    sindex += gpu_w;
   }
 }
 
