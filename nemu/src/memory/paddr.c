@@ -24,6 +24,23 @@ static uint8_t *pmem = NULL;
 static uint8_t pmem[CONFIG_MSIZE] PG_ALIGN = {};
 #endif
 
+typedef enum{MEMREAD,MEMWRITE} mtrace_t;
+static void print_mtrace(mtrace_t op,paddr_t addr,uint32_t val){
+#ifdef CONFIG_MTRACE
+  if(nemu_state.state != NEMU_RUNNING) return;
+#if   defined(CONFIG_MTRACE_RANGE)
+  if(!(addr>=CONFIG_MTRACE_RANGE_START && addr<=CONFIG_MTRACE_RANGE_END)) return;
+#else
+#endif
+  if(op==MEMREAD){
+    Log("MEMTracer: READ  memory [0x%08x] = '0x%08x' at pc = '0x%08x'\n",addr,val,cpu.pc);
+  }
+  if(op==MEMWRITE){
+    Log("MEMTracer: WRITE memory [0x%08x] = '0x%08x' at pc = '0x%08x'\n",addr,val,cpu.pc);
+  }
+#endif
+}
+
 uint8_t* guest_to_host(paddr_t paddr) { return pmem + paddr - CONFIG_MBASE; }
 paddr_t host_to_guest(uint8_t *haddr) { return haddr - pmem + CONFIG_MBASE; }
 
@@ -51,14 +68,22 @@ void init_mem() {
 }
 
 word_t paddr_read(paddr_t addr, int len) {
-  if (likely(in_pmem(addr))) return pmem_read(addr, len);
+  if (likely(in_pmem(addr))){
+    uint32_t val = pmem_read(addr, len);
+    print_mtrace(MEMREAD,addr,val);
+    return val;
+  }
   IFDEF(CONFIG_DEVICE, return mmio_read(addr, len));
   out_of_bound(addr);
   return 0;
 }
 
 void paddr_write(paddr_t addr, int len, word_t data) {
-  if (likely(in_pmem(addr))) { pmem_write(addr, len, data); return; }
+  if (likely(in_pmem(addr))) {
+    print_mtrace(MEMWRITE,addr,data);
+    pmem_write(addr, len, data);
+    return;
+  }
   IFDEF(CONFIG_DEVICE, mmio_write(addr, len, data); return);
   out_of_bound(addr);
 }

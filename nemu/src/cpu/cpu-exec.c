@@ -17,7 +17,9 @@
 #include <cpu/decode.h>
 #include <cpu/difftest.h>
 #include <locale.h>
+#include <ftrace.h>
 #include <../src/monitor/sdb/sdb.h>
+#include <memory/paddr.h>
 /* The assembly code of instructions executed is only output to the screen
  * when the number of instructions executed is less than this value.
  * This is useful when you use the `si' command.
@@ -25,18 +27,48 @@
  */
 #define MAX_INST_TO_PRINT 10
 
+#ifdef CONFIG_FTRACE
+extern symtab_t *funsymtab;
+extern ftracer_stack_t  ftracer_stack;
+ftrace_log_t ftrace_log={0};
+#endif
+
 CPU_state cpu = {};
 uint64_t g_nr_guest_inst = 0;
 static uint64_t g_timer = 0; // unit: us
 static bool g_print_step = false;
+#ifdef CONFIG_ITRACE_RING
+static char ring_inst_buf[CONFIG_ITRACE_RING_MAX][128]={0};
+void print_ring_inst_buf(){
+  printf("=============================================\n");
+  printf("Instruction ring tracer:\n");
+  for(int i=0;i<CONFIG_ITRACE_RING_MAX;i++){
+    if(ring_inst_buf[i][0]=='\0') continue;
+    printf("=%s\n",ring_inst_buf[i]);
+  }
+  printf("=============================================\n");
+}
+#endif
 
 void device_update();
+
+
 
 static void trace_and_difftest(Decode *_this, vaddr_t dnpc) {
 #ifdef CONFIG_ITRACE_COND
   if (ITRACE_COND) { log_write("%s\n", _this->logbuf); }
 #endif
   if (g_print_step) { IFDEF(CONFIG_ITRACE, puts(_this->logbuf)); }
+
+#ifdef CONFIG_ITRACE_RING
+  if(CONFIG_ITRACE_RING_MAX>0){
+    for(int i=0;i<CONFIG_ITRACE_RING_MAX-1;i++){
+      memcpy(ring_inst_buf[i],ring_inst_buf[i+1],128);
+    }
+    sprintf(ring_inst_buf[CONFIG_ITRACE_RING_MAX-1],"%s",_this->logbuf);
+  }
+#endif
+
   IFDEF(CONFIG_DIFFTEST, difftest_step(_this->pc, dnpc));
 #ifdef CONFIG_WATCHPOINT
   for(int i=0;i<32;i++){
@@ -105,6 +137,9 @@ static void statistic() {
 
 void assert_fail_msg() {
   isa_reg_display();
+#ifdef CONFIG_ITRACE_RING
+  print_ring_inst_buf();
+#endif
   statistic();
 }
 
@@ -134,7 +169,92 @@ void cpu_exec(uint64_t n) {
            (nemu_state.halt_ret == 0 ? ANSI_FMT("HIT GOOD TRAP", ANSI_FG_GREEN) :
             ANSI_FMT("HIT BAD TRAP", ANSI_FG_RED))),
           nemu_state.halt_pc);
+      IFDEF(CONFIG_FTRACE,printf("%s",ftrace_log.buf));
       // fall through
     case NEMU_QUIT: statistic();
   }
 }
+
+
+
+
+void func_trace(Decode *s){
+#ifdef CONFIG_FTRACE
+  if(!funsymtab || !ftracer_stack.is_ftrace)  return;
+  Decode start={.pc=RESET_VECTOR,.dnpc=RESET_VECTOR};
+  if(s==NULL) s=&start;
+  //PUSH
+  for(int i=0;i<ftracer_stack.symtab_size;i++){
+    if(s->dnpc == funsymtab[i].start_add){
+      ftracer_t stack_frame = {.dst_func = funsymtab + i, .dst_pc = s->dnpc, .src_pc = s->pc};
+      Log("Push STACK (pc=%x)(func=%s) depth=%d",stack_frame.dst_pc,stack_frame.dst_func->name,ftracer_stack.depth+1);
+      ftracer_push(stack_frame);
+      char S[256]={0};
+      sprintf(S+strlen(S),"0x%08x:", s->pc);
+      for(int i=0;i<ftracer_stack.depth;i++)  sprintf(S+strlen(S)," ");
+      sprintf(S+strlen(S),"call [%s@0x%08x]\n",stack_frame.dst_func->name,stack_frame.dst_func->start_add);
+      ftracer_write_log(S);
+      return;
+    }
+  }
+
+  //POP
+  for(int i=0;i<ftracer_stack.depth;i++){
+    if(s->dnpc == ftracer_stack.stack[i].src_pc + 4 || s->isa.inst==0x00008067){
+      for(int i=0;i<ftracer_stack.symtab_size;i++){
+        if(IN_FUNCRANGE(s->pc,funsymtab[i])){
+          Log("Pop STACK (pc=%x)(func=%s) depth=%d",s->pc,funsymtab[i].name,ftracer_stack.depth-1);
+          ftracer_pop();
+          char S[256]={0};
+          sprintf(S+strlen(S),"0x%08x:", s->pc);
+          for(int i=0;i<ftracer_stack.depth+1;i++)  sprintf(S+strlen(S)," ");
+          sprintf(S+strlen(S),"ret [%s]\n",funsymtab[i].name);
+          ftracer_write_log(S);
+          return;
+        }
+      }
+    }
+  }
+#endif
+  return;
+}
+
+#ifdef CONFIG_FTRACE
+int ftracer_push(ftracer_t stack_frame){
+  ftracer_stack.depth++;
+  ftracer_t *tpr = realloc(ftracer_stack.stack, sizeof(ftracer_t)*ftracer_stack.depth);
+  if(!tpr) {Log("Cannot realloc ftracer_stack! Stop ftracing.");ftracer_stack.is_ftrace=0;free(ftracer_stack.stack);return 1;}
+  ftracer_stack.stack = tpr;
+  memcpy(ftracer_stack.stack+ftracer_stack.depth-1, &stack_frame, sizeof(ftracer_t));
+  return 0;
+}
+
+void ftracer_pop(){
+  if(ftracer_stack.depth<=0){
+    Log("ERROR POP STACK. Depth<=0");
+    return;
+  }
+  // for(int i=0;i<ftracer_stack.symtab_size;i++){
+  //   if(ftracer_stack.stack[ftracer_stack.depth-1].)
+  // }
+  ftracer_stack.depth--;
+  return;
+}
+
+void ftracer_write_log(char *s){
+  if(!ftrace_log.buf){
+    ftrace_log.buf=malloc(128);
+    if(!ftrace_log.buf){Log("ERROR first malloc ftracer_log_buffer!.");return;}
+    memset(ftrace_log.buf,0,128);
+    ftrace_log.alloc=128;
+  }
+  while(strlen(s)>ftrace_log.alloc-ftrace_log.len-1){
+    char *tpr=realloc(ftrace_log.buf,ftrace_log.alloc+128);
+    if(!tpr){Log("ERROR malloc ftracer_log_buffer!.");return;}
+    ftrace_log.alloc+=128;
+    ftrace_log.buf=tpr;
+  }
+  strcat(ftrace_log.buf,s);
+  ftrace_log.len=strlen(ftrace_log.buf);
+}
+#endif
