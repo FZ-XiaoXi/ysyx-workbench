@@ -112,6 +112,7 @@ static void load_elf(){
   //init ftracer stack
   ftracer_stack.is_ftrace=true;
   ftracer_stack.symtab_size=cnt;
+  func_trace(NULL);
 }
 
 static long load_img() {

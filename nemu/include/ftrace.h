@@ -1,6 +1,7 @@
 #ifndef __FTRACE__
 #define __FTRACE__
 #include <common.h>
+#include <cpu/decode.h>
 typedef struct {
   char name[64];
   vaddr_t start_add;
@@ -36,6 +37,9 @@ typedef struct {
     int alloc;
     char *buf;
 } ftrace_log_t;
+
+void func_trace(Decode *s);
+
 #define IN_FUNCRANGE(add,symtab) ((add>=symtab.start_add && add<symtab.start_add+symtab.size)?1:0)
 
 #endif

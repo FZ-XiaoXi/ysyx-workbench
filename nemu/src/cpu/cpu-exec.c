@@ -31,7 +31,6 @@ CPU_state cpu = {};
 uint64_t g_nr_guest_inst = 0;
 static uint64_t g_timer = 0; // unit: us
 static bool g_print_step = false;
-void func_trace(Decode *s);
 #ifdef CONFIG_ITRACE_RING
 static char ring_inst_buf[CONFIG_ITRACE_RING_MAX][128]={0};
 void print_ring_inst_buf(){
@@ -176,13 +175,12 @@ ftrace_log_t ftrace_log={0};
 
 void func_trace(Decode *s){
   if(!funsymtab || !ftracer_stack.is_ftrace)  return;
-
+  Decode start={.pc=RESET_VECTOR,.dnpc=RESET_VECTOR};
+  if(s==NULL) s=&start;
   //PUSH
   for(int i=0;i<ftracer_stack.symtab_size;i++){
     if(s->dnpc == funsymtab[i].start_add || s->pc == RESET_VECTOR){
       ftracer_t stack_frame = {.dst_func = funsymtab + i, .dst_pc = s->dnpc, .src_pc = s->pc};
-      if(s->pc == RESET_VECTOR)
-        stack_frame.dst_pc=s->pc;
       Log("Push STACK (pc=%x)(func=%s)",stack_frame.dst_pc,stack_frame.dst_func->name);
       ftracer_push(stack_frame);
       char S[128]={0};
