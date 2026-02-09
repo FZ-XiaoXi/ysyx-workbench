@@ -106,7 +106,7 @@ static void load_elf(){
       cnt++;
     }
   }
-  //for(int i=0;i<cnt;i++)  Log("ELF .symtab: 0x%x - 0x%x | %s",funsymtab[i].start_add,funsymtab[i].end_add,funsymtab[i].name);
+  for(int i=0;i<cnt;i++)  Log("ELF .symtab: 0x%x + 0x%x | %s",funsymtab[i].start_add,funsymtab[i].size,funsymtab[i].name);
   free(elf_buf);
   
   //init ftracer stack
