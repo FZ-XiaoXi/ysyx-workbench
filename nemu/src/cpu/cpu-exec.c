@@ -175,7 +175,6 @@ extern ftracer_stack_t  ftracer_stack;
 void func_trace(Decode *s){
   if(!funsymtab || !ftracer_stack.is_ftrace)  return;
   for(int i=0;i<ftracer_stack.symtab_size;i++){
-    
     if(s->dnpc == funsymtab[i].start_add){
       ftracer_t stack_frame = {.dst_func = funsymtab + i, .dst_pc = s->dnpc, .src_pc = s->pc};
       ftracer_push(stack_frame);
