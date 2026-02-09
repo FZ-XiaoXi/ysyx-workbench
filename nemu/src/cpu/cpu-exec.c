@@ -188,7 +188,7 @@ void func_trace(Decode *s){
   for(int i=0;i<ftracer_stack.depth;i++){
     if(s->dnpc == ftracer_stack.stack[i].src_pc + 4){
       for(int i=0;i<ftracer_stack.symtab_size;i++){
-        if(s->pc >= funsymtab[i].start_add && s->pc < funsymtab[i].start_add + funsymtab[i].size){
+        if(IN_FUNCRANGE(s->pc,funsymtab[i])){
           Log("Pop STACK (pc=%x)(func=%s)",s->pc,funsymtab[i].name);
           ftracer_pop();
           break;
