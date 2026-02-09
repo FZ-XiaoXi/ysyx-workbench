@@ -36,7 +36,6 @@ void __am_gpu_fbdraw(AM_GPU_FBDRAW_T *ctl) {
         outl(FB_ADDR + (i * 4),*((unsigned int*)ctl->pixels + index));
         index++;
       }
-      printf("LINE!\n");
     }
   }
   printf("  DISPLAY!\n");
