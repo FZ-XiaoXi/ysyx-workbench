@@ -233,6 +233,11 @@ void ftracer_pop(){
 }
 
 void ftracer_write_log(char *s){
+  if(!ftrace_log.buf){
+    ftrace_log.buf=malloc(128);
+    if(!ftrace_log.buf){Log("ERROR first malloc ftracer_log_buffer!.");return;}
+    memset(ftrace_log.buf,0,128);
+  }
   while(strlen(s)>ftrace_log.alloc-ftrace_log.len-1){
     char *tpr=realloc(ftrace_log.buf,ftrace_log.alloc+128);
     if(!tpr){Log("ERROR malloc ftracer_log_buffer!.");return;}
