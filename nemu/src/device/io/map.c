@@ -33,6 +33,7 @@ static void print_devtrace(dtrace_t op,paddr_t addr,uint32_t val,IOMap *map){
     Log("DEVTracer: WRITE device [%s] [0x%08x] = '0x%08x' at pc = '0x%08x'\n",map->name,addr,val,cpu.pc);
   }
 #endif
+  return;
 }
 
 uint8_t* new_space(int size) {
