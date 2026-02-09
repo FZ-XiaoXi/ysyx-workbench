@@ -179,7 +179,7 @@ void func_trace(Decode *s){
   if(s==NULL) s=&start;
   //PUSH
   for(int i=0;i<ftracer_stack.symtab_size;i++){
-    if(s->dnpc == funsymtab[i].start_add || s->pc == RESET_VECTOR){
+    if(s->dnpc == funsymtab[i].start_add){
       ftracer_t stack_frame = {.dst_func = funsymtab + i, .dst_pc = s->dnpc, .src_pc = s->pc};
       Log("Push STACK (pc=%x)(func=%s)",stack_frame.dst_pc,stack_frame.dst_func->name);
       ftracer_push(stack_frame);
