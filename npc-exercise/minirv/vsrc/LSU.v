@@ -9,11 +9,12 @@ module LSU(
     input [3:0]wmask,
     input isSigned,
     input clk,
-    input writeEN
+    input writeEN,
+    input readEN
 );
     wire [31:0]val0,val1,val2,val3,rdata1,rdata2,rdata4;
     reg [31:0]val;
-    assign val0=pmem_read(address);
+    assign val0=(readEN)?pmem_read(address):32'b0;
     assign val1={{8{val0[31]}},val0[31:8]};
     assign val2={{8{val1[31]}},val1[31:8]};
     assign val3={{8{val2[31]}},val2[31:8]};

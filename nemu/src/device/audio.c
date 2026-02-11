@@ -18,8 +18,6 @@
 
 #ifndef CONFIG_TARGET_AM
 #include <SDL2/SDL.h>
-#else
-
 #endif
 
 enum {
@@ -62,25 +60,19 @@ static void init_audio_SDL(){
 }
 
 static void audio_io_handler(uint32_t offset, int len, bool is_write) {
-  //printf("OFFSET:%08x len%d isW%d\n",offset,len,is_write);
-
   if(audio_base[reg_init]==0){
     init_audio_SDL();
-    //Log("INIT AUDIO DEVICE!");
     audio_base[reg_init]=1;
   }
 }
 static void audio_buf_io_handler(uint32_t offset, int len, bool is_write){
-  
 }
 #else
 int flag=0;
 static void audio_io_handler(uint32_t offset, int len, bool is_write) {
   if(offset==0x10 && is_write && audio_base[reg_init]==0){
     if(flag==0){
-      printf("~SET %d %d %d\n",audio_base[reg_freq],audio_base[reg_channels],audio_base[reg_samples]);
       io_write(AM_AUDIO_CTRL,audio_base[reg_freq],audio_base[reg_channels],audio_base[reg_samples]);
-      printf("~REREAD %d %d %d\n",io_read(AM_AUDIO_CTRL).freq,io_read(AM_AUDIO_CTRL).channels,io_read(AM_AUDIO_CTRL).samples);
       flag=1;
     }
   }
