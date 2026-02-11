@@ -343,6 +343,11 @@ VL_ATTR_COLD void Vtop___024root___stl_sequent__TOP__0(Vtop___024root* vlSelf) {
                                                     == 
                                                     (0x0000707fU 
                                                      & vlSelfRef.PC_command)));
+    vlSelfRef.top__DOT__IDU_0__DOT__isLB = (IData)(
+                                                   (3U 
+                                                    == 
+                                                    (0x0000707fU 
+                                                     & vlSelfRef.PC_command)));
     vlSelfRef.top__DOT__IDU_0__DOT__isLBU = (IData)(
                                                     (0x00004003U 
                                                      == 
@@ -356,9 +361,12 @@ VL_ATTR_COLD void Vtop___024root___stl_sequent__TOP__0(Vtop___024root* vlSelf) {
     vlSelfRef.top__DOT__IDU_0__DOT____VdfgRegularize_h52656aab_0_4 
         = ((IData)((0x00000013U == (0x0000707fU & vlSelfRef.PC_command))) 
            | (IData)(vlSelfRef.top__DOT__IDU_0__DOT__isJALR));
+    vlSelfRef.LSU_REN = ((IData)(vlSelfRef.top__DOT__IDU_0__DOT__isLB) 
+                         | ((IData)(vlSelfRef.top__DOT__IDU_0__DOT__isLBU) 
+                            | (IData)(vlSelfRef.top__DOT__IDU_0__DOT__isLW)));
     vlSelfRef.top__DOT__IDU_0__DOT____VdfgRegularize_h52656aab_0_6 
         = ((IData)(vlSelfRef.top__DOT__IDU_0__DOT__isLBU) 
-           | (IData)((3U == (0x0000707fU & vlSelfRef.PC_command))));
+           | (IData)(vlSelfRef.top__DOT__IDU_0__DOT__isLB));
     vlSelfRef.top__DOT__IDU_0__DOT____VdfgRegularize_h52656aab_0_5 
         = ((IData)(vlSelfRef.top__DOT__IDU_0__DOT____VdfgRegularize_h52656aab_0_4) 
            | (IData)(vlSelfRef.top__DOT__IDU_0__DOT__isADD));
@@ -412,8 +420,11 @@ VL_ATTR_COLD void Vtop___024root___stl_sequent__TOP__0(Vtop___024root* vlSelf) {
                            : vlSelfRef.EXU_inA);
     vlSelfRef.dnpc = vlSelfRef.EXU_data;
     vlSelfRef.LSU_address = vlSelfRef.EXU_data;
-    Vtop___024unit____Vdpiimwrap_pmem_read_TOP____024unit(vlSelfRef.LSU_address, vlSelfRef.__Vfunc_pmem_read__2__Vfuncout);
-    vlSelfRef.top__DOT__LSU_0__DOT__val0 = vlSelfRef.__Vfunc_pmem_read__2__Vfuncout;
+    vlSelfRef.top__DOT__LSU_0__DOT__val0 = ((IData)(vlSelfRef.LSU_REN)
+                                             ? ([&]() {
+                Vtop___024unit____Vdpiimwrap_pmem_read_TOP____024unit(vlSelfRef.LSU_address, vlSelfRef.__Vfunc_pmem_read__2__Vfuncout);
+            }(), vlSelfRef.__Vfunc_pmem_read__2__Vfuncout)
+                                             : 0U);
     vlSelfRef.top__DOT__LSU_0__DOT__val1 = (((- (IData)(
                                                         (vlSelfRef.top__DOT__LSU_0__DOT__val0 
                                                          >> 0x0000001fU))) 
@@ -576,6 +587,7 @@ VL_ATTR_COLD void Vtop___024root___ctor_var_reset(Vtop___024root* vlSelf) {
     vlSelf->LSU_wmask = VL_SCOPED_RAND_RESET_I(4, __VscopeHash, 66315869969167284ull);
     vlSelf->LSU_writedata = VL_SCOPED_RAND_RESET_I(32, __VscopeHash, 8621591918967330140ull);
     vlSelf->LSU_WEN = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 4139174640315457831ull);
+    vlSelf->LSU_REN = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 2923086650083657279ull);
     vlSelf->LSU_readdata = VL_SCOPED_RAND_RESET_I(32, __VscopeHash, 5454595947310901637ull);
     vlSelf->PC = VL_SCOPED_RAND_RESET_I(32, __VscopeHash, 12700755172620096637ull);
     vlSelf->PC_command = VL_SCOPED_RAND_RESET_I(32, __VscopeHash, 1288837359877173570ull);
@@ -606,6 +618,7 @@ VL_ATTR_COLD void Vtop___024root___ctor_var_reset(Vtop___024root* vlSelf) {
     vlSelf->top__DOT__IDU_0__DOT__isADD = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 5961137151053609066ull);
     vlSelf->top__DOT__IDU_0__DOT__isLW = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 6436631688130880582ull);
     vlSelf->top__DOT__IDU_0__DOT__isLBU = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 9758633923137858639ull);
+    vlSelf->top__DOT__IDU_0__DOT__isLB = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 7197104786885562832ull);
     vlSelf->top__DOT__IDU_0__DOT__isSW = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 17884975677491578454ull);
     vlSelf->top__DOT__IDU_0__DOT__isSB = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 12562984195008454965ull);
     vlSelf->top__DOT__IDU_0__DOT__isLOAD = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 4693932739305422113ull);

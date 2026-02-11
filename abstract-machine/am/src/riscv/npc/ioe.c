@@ -1,6 +1,6 @@
 #include <am.h>
 #include <klib-macros.h>
-
+#include "npc.h"
 void __am_timer_init();
 
 void __am_timer_rtc(AM_TIMER_RTC_T *);

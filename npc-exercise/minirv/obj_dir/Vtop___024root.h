@@ -22,6 +22,7 @@ class alignas(VL_CACHE_LINE_BYTES) Vtop___024root final : public VerilatedModule
     VL_OUT8(LSU_rmask,3,0);
     VL_OUT8(LSU_wmask,3,0);
     VL_OUT8(LSU_WEN,0,0);
+    VL_OUT8(LSU_REN,0,0);
     CData/*0:0*/ top__DOT__isEBREAK;
     CData/*0:0*/ top__DOT____VdfgRegularize_he2b63832_0_0;
     CData/*2:0*/ top__DOT__clkdiv_0__DOT__cnt;
@@ -29,6 +30,7 @@ class alignas(VL_CACHE_LINE_BYTES) Vtop___024root final : public VerilatedModule
     CData/*0:0*/ top__DOT__IDU_0__DOT__isADD;
     CData/*0:0*/ top__DOT__IDU_0__DOT__isLW;
     CData/*0:0*/ top__DOT__IDU_0__DOT__isLBU;
+    CData/*0:0*/ top__DOT__IDU_0__DOT__isLB;
     CData/*0:0*/ top__DOT__IDU_0__DOT__isSW;
     CData/*0:0*/ top__DOT__IDU_0__DOT__isSB;
     CData/*0:0*/ top__DOT__IDU_0__DOT__isLOAD;
