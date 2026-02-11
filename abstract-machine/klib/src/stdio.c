@@ -24,7 +24,7 @@ int vsprintf(char *out, const char *fmt, va_list ap) {
   char ds[20]={0};
   while(*fmt){
     if(*fmt=='%'){
-      int width=0,ifZero=0;
+      int width=0,ifZero=0,isLong=0;
       fmt++;
       if(*fmt>'0'&&*fmt<='9'){
       	width=atoi(fmt);
@@ -42,12 +42,27 @@ int vsprintf(char *out, const char *fmt, va_list ap) {
         width=0;
 				fmt++;
       }
+      if(*fmt == 'l'){
+        isLong=1;
+        fmt++;
+        if(*fmt == 'l'){
+          isLong=2;
+          fmt++;
+        }
+      }
       switch(*fmt){
         case 'd':
         case 'x':
         case 'u':
-          if(*fmt=='u') utoa(va_arg(ap, unsigned int),ds,10);
-          else itoa(va_arg(ap, int),ds,(*fmt=='x')?16:10);
+          if(*fmt=='u' || *fmt=='x'){
+            if(isLong==0)       utoa(va_arg(ap, unsigned int),ds,(*fmt=='x')?16:10);
+            else if(isLong==1)  ultoa(va_arg(ap, unsigned long int),ds,(*fmt=='x')?16:10);
+            else                ulltoa(va_arg(ap, unsigned long long int),ds,(*fmt=='x')?16:10);
+          }else{
+            if(isLong==0)       itoa(va_arg(ap, int),ds,10);
+            else if(isLong==1)  ltoa(va_arg(ap, long int),ds,10);
+            else                lltoa(va_arg(ap, long long int),ds,10);
+          }
 					int len=strlen(ds);
 					if(width<=len){
 						int i=0;

@@ -53,6 +53,11 @@ ftracer_stack_t  ftracer_stack={.depth=0,.is_ftrace=false,.stack=NULL,.symtab_si
 #endif
 static void load_elf(){
 #ifdef CONFIG_FTRACE
+  //
+  elf_file=malloc(256);
+  strcpy(elf_file,"/home/seaber/ysyx-workbench/nemu/build/riscv32-nemu-interpreter-riscv32-nemu.elf");
+
+  //
   if (elf_file == NULL) {Log("Cannot open .elf. Disabled 'ftrace'.");return;}
   int elf_size;
   FILE *fp = fopen(elf_file,"rb");
@@ -87,7 +92,7 @@ static void load_elf(){
       elf_section_symtab_off=elf_section_header[i].sh_offset;
       elf_section_symtab_num = elf_section_header[i].sh_size / elf_section_header[i].sh_entsize;
       elf_section_symtab_index=i;
-      funsymtab=malloc(elf_section_header[i].sh_size);
+      funsymtab=malloc(sizeof(symtab_t)*elf_section_header[i].sh_size);
       if(!funsymtab){free(elf_buf);Log("Cannot init 'ftrace'. (malloc() symtab ERROR) Disabled 'ftrace'.");return;}
       break;
     }
@@ -106,7 +111,7 @@ static void load_elf(){
       cnt++;
     }
   }
-  for(int i=0;i<cnt;i++)  Log("ELF .symtab: 0x%x + 0x%x | %s",funsymtab[i].start_add,funsymtab[i].size,funsymtab[i].name);
+  //for(int i=0;i<cnt;i++)  Log("ELF .symtab: 0x%x + 0x%x | %s",funsymtab[i].start_add,funsymtab[i].size,funsymtab[i].name);
   free(elf_buf);
   
   //init ftracer stack

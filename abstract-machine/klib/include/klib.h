@@ -31,7 +31,11 @@ void   free      (void *ptr);
 int    abs       (int x);
 int    atoi      (const char *nptr);
 char  *itoa      (int value, char* str, int base);
+char  *ltoa      (long int value, char* str, int base);
+char  *lltoa      (long long int value, char* str, int base);
 char  *utoa      (unsigned int value, char* str, int base);
+char  *ultoa      (unsigned long int value, char* str, int base);
+char  *ulltoa      (unsigned long long int value, char* str, int base);
 
 // stdio.h
 int    printf    (const char *format, ...);

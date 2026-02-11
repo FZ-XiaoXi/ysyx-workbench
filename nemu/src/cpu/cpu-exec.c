@@ -18,7 +18,7 @@
 #include <cpu/difftest.h>
 #include <locale.h>
 #include <ftrace.h>
-#include <../src/monitor/sdb/sdb.h>
+#include "../src/monitor/sdb/sdb.h"
 #include <memory/paddr.h>
 /* The assembly code of instructions executed is only output to the screen
  * when the number of instructions executed is less than this value.
@@ -36,9 +36,11 @@ ftrace_log_t ftrace_log={0};
 CPU_state cpu = {};
 uint64_t g_nr_guest_inst = 0;
 static uint64_t g_timer = 0; // unit: us
-static bool g_print_step = false;
+static bool g_print_step = true;
 #ifdef CONFIG_ITRACE_RING
+void print_ring_inst_buf(void);
 static char ring_inst_buf[CONFIG_ITRACE_RING_MAX][128]={0};
+
 void print_ring_inst_buf(){
   printf("=============================================\n");
   printf("Instruction ring tracer:\n");
@@ -71,6 +73,7 @@ static void trace_and_difftest(Decode *_this, vaddr_t dnpc) {
 
   IFDEF(CONFIG_DIFFTEST, difftest_step(_this->pc, dnpc));
 #ifdef CONFIG_WATCHPOINT
+#ifndef CONFIG_TARGET_AM
   for(int i=0;i<32;i++){
     if(1==diff_wp(i)){
       WP *wp=find_wp(i);
@@ -81,6 +84,7 @@ static void trace_and_difftest(Decode *_this, vaddr_t dnpc) {
       nemu_state.state=NEMU_STOP;
     }
   }
+#endif
 #endif
 }
 
@@ -170,13 +174,13 @@ void cpu_exec(uint64_t n) {
             ANSI_FMT("HIT BAD TRAP", ANSI_FG_RED))),
           nemu_state.halt_pc);
       IFDEF(CONFIG_FTRACE,printf("%s",ftrace_log.buf));
+#ifdef CONFIG_ITRACE_RING
+      print_ring_inst_buf();
+#endif
       // fall through
     case NEMU_QUIT: statistic();
   }
 }
-
-
-
 
 void func_trace(Decode *s){
 #ifdef CONFIG_FTRACE
@@ -187,11 +191,11 @@ void func_trace(Decode *s){
   for(int i=0;i<ftracer_stack.symtab_size;i++){
     if(s->dnpc == funsymtab[i].start_add){
       ftracer_t stack_frame = {.dst_func = funsymtab + i, .dst_pc = s->dnpc, .src_pc = s->pc};
-      Log("Push STACK (pc=%x)(func=%s) depth=%d",stack_frame.dst_pc,stack_frame.dst_func->name,ftracer_stack.depth+1);
+      //Log("Push STACK (pc=%x)(func=%s) depth=%d",stack_frame.dst_pc,stack_frame.dst_func->name,ftracer_stack.depth+1);
       ftracer_push(stack_frame);
       char S[256]={0};
-      sprintf(S+strlen(S),"0x%08x:", s->pc);
-      for(int i=0;i<ftracer_stack.depth;i++)  sprintf(S+strlen(S)," ");
+      sprintf(S+strlen(S),"0x%08x:FUNTRACER: ", s->pc);
+      for(int i=1;i<ftracer_stack.depth;i++)  sprintf(S+strlen(S),"| ");
       sprintf(S+strlen(S),"call [%s@0x%08x]\n",stack_frame.dst_func->name,stack_frame.dst_func->start_add);
       ftracer_write_log(S);
       return;
@@ -199,20 +203,29 @@ void func_trace(Decode *s){
   }
 
   //POP
-  for(int i=0;i<ftracer_stack.depth;i++){
-    if(s->dnpc == ftracer_stack.stack[i].src_pc + 4 || s->isa.inst==0x00008067){
-      for(int i=0;i<ftracer_stack.symtab_size;i++){
-        if(IN_FUNCRANGE(s->pc,funsymtab[i])){
-          Log("Pop STACK (pc=%x)(func=%s) depth=%d",s->pc,funsymtab[i].name,ftracer_stack.depth-1);
-          ftracer_pop();
-          char S[256]={0};
-          sprintf(S+strlen(S),"0x%08x:", s->pc);
-          for(int i=0;i<ftracer_stack.depth+1;i++)  sprintf(S+strlen(S)," ");
-          sprintf(S+strlen(S),"ret [%s]\n",funsymtab[i].name);
-          ftracer_write_log(S);
-          return;
+  for(int i=ftracer_stack.depth-1;i>=0;i--){
+    if(s->dnpc == ftracer_stack.stack[i].src_pc + 4){
+      //is RETURN
+      char this_name[64]={0};
+      for(int j=0;j<ftracer_stack.symtab_size;j++){//FIND NAME
+        if(IN_FUNCRANGE(s->pc,funsymtab[j])){
+          strcpy(this_name,funsymtab[j].name);
+          break;
         }
       }
+      if(this_name[0]=='\0') strcpy(this_name,"[**Cannot find function name**]");
+      int ret_depth = ftracer_stack.depth - i;
+
+      for(int n=0;n<ret_depth;n++){ //POP COUNT
+        char S[256]={0};
+        sprintf(S+strlen(S),"0x%08x:FUNTRACER: ", s->pc);
+        for(int k=1;k<ftracer_stack.depth;k++)  sprintf(S+strlen(S),"| ");
+        sprintf(S+strlen(S),"ret [%s<-%s]\n",ftracer_stack.stack[ftracer_stack.depth-2].dst_func->name,this_name);
+        ftracer_write_log(S);
+        //Log("Pop  STACK (pc=%08x)(func:%s <- %s) depth=%d",s->pc,ftracer_stack.stack[ftracer_stack.depth-2].dst_func->name,this_name,ftracer_stack.depth-1);
+        ftracer_pop();
+      }
+      return;
     }
   }
 #endif
@@ -242,6 +255,7 @@ void ftracer_pop(){
 }
 
 void ftracer_write_log(char *s){
+  log_write("%s", s);
   if(!ftrace_log.buf){
     ftrace_log.buf=malloc(128);
     if(!ftrace_log.buf){Log("ERROR first malloc ftracer_log_buffer!.");return;}

@@ -36,7 +36,57 @@ char *itoa(int value, char* str, int base) {
   int i=0,j,k;
   if(base<2 || base >36) panic("ERROR BASE(itoa)");
   unum=abs(value);
-  if(value<0){
+  if(value<0 && base == 10){
+    *str='-';
+    i++;
+  }
+  while(unum>0){
+    *(str+i)=index[unum%base];
+    unum/=base;
+    i++;
+  }
+  *(str+i)='\0';
+  char temp;
+  for(j=(value>=0)?0:1,k=i-1;j<k;j++,k--){
+    temp=*(str+j);
+    *(str+j)=*(str+k);
+    *(str+k)=temp;
+  }
+  return str;
+}
+
+char *ltoa(long int value, char* str, int base) {
+  char index[]="0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+  unsigned long int unum;
+  int i=0,j,k;
+  if(base<2 || base >36) panic("ERROR BASE(itoa)");
+  unum=(value<0 && base == 10)?-value:value;
+  if(value<0 && base == 10){
+    *str='-';
+    i++;
+  }
+  while(unum>0){
+    *(str+i)=index[unum%base];
+    unum/=base;
+    i++;
+  }
+  *(str+i)='\0';
+  char temp;
+  for(j=(value>=0)?0:1,k=i-1;j<k;j++,k--){
+    temp=*(str+j);
+    *(str+j)=*(str+k);
+    *(str+k)=temp;
+  }
+  return str;
+}
+
+char *lltoa(long long int value, char* str, int base) {
+  char index[]="0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+  unsigned long long int unum;
+  int i=0,j,k;
+  if(base<2 || base >36) panic("ERROR BASE(itoa)");
+  unum=(value<0 && base == 10)?-value:value;
+  if(value<0 && base == 10){
     *str='-';
     i++;
   }
@@ -56,6 +106,44 @@ char *itoa(int value, char* str, int base) {
 }
 
 char *utoa(unsigned int value, char* str, int base) {
+  char index[]="0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+  int i=0,j,k;
+  if(base<2 || base >36) panic("ERROR BASE(utoa)");
+  while(value>0){
+    *(str+i)=index[value%base];
+    value/=base;
+    i++;
+  }
+  *(str+i)='\0';
+  char temp;
+  for(j=(value>=0)?0:1,k=i-1;j<k;j++,k--){
+    temp=*(str+j);
+    *(str+j)=*(str+k);
+    *(str+k)=temp;
+  }
+  return str;
+}
+
+char *ultoa(unsigned long int value, char* str, int base) {
+  char index[]="0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+  int i=0,j,k;
+  if(base<2 || base >36) panic("ERROR BASE(utoa)");
+  while(value>0){
+    *(str+i)=index[value%base];
+    value/=base;
+    i++;
+  }
+  *(str+i)='\0';
+  char temp;
+  for(j=(value>=0)?0:1,k=i-1;j<k;j++,k--){
+    temp=*(str+j);
+    *(str+j)=*(str+k);
+    *(str+k)=temp;
+  }
+  return str;
+}
+
+char *ulltoa(unsigned long long int value, char* str, int base) {
   char index[]="0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
   int i=0,j,k;
   if(base<2 || base >36) panic("ERROR BASE(utoa)");
