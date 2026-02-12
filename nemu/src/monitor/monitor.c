@@ -54,8 +54,8 @@ ftracer_stack_t  ftracer_stack={.depth=0,.is_ftrace=false,.stack=NULL,.symtab_si
 static void load_elf(){
 #ifdef CONFIG_FTRACE
   //
-  elf_file=malloc(256);
-  strcpy(elf_file,"/home/seaber/ysyx-workbench/nemu/build/riscv32-nemu-interpreter-riscv32-nemu.elf");
+  //elf_file=malloc(256);
+  //strcpy(elf_file,"/home/seaber/ysyx-workbench/nemu/build/riscv32-nemu-interpreter-riscv32-nemu.elf");
 
   //
   if (elf_file == NULL) {Log("Cannot open .elf. Disabled 'ftrace'.");return;}

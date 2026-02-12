@@ -30,7 +30,7 @@ void init_isa();
 
 // reg
 extern CPU_state cpu;
-void isa_reg_display();
+void isa_reg_display(CPU_state cpu);
 word_t isa_reg_str2val(const char *name, bool *success);
 
 // exec
@@ -52,7 +52,7 @@ vaddr_t isa_raise_intr(word_t NO, vaddr_t epc);
 word_t isa_query_intr();
 
 // difftest
-bool isa_difftest_checkregs(CPU_state *ref_r, vaddr_t pc);
+bool isa_difftest_checkregs(CPU_state *ref_r, vaddr_t pc, vaddr_t dnpc);
 void isa_difftest_attach();
 
 #endif
