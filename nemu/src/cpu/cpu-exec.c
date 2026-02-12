@@ -140,7 +140,7 @@ static void statistic() {
 }
 
 void assert_fail_msg() {
-  isa_reg_display();
+  isa_reg_display(cpu);
 #ifdef CONFIG_ITRACE_RING
   print_ring_inst_buf();
 #endif

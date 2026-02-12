@@ -23,8 +23,8 @@ const char *regs[] = {
   "s8", "s9", "s10", "s11", "t3", "t4", "t5", "t6"
 };
 
-void isa_reg_display() {
-  for(int i=0;i<32;i++){
+void isa_reg_display(CPU_state cpu) {
+  for(int i=0;i<MUXDEF(CONFIG_RVE, 16, 32);i++){
     printf("$%s\t%x\t\t%d\n",regs[i],cpu.gpr[i],cpu.gpr[i]);
   }
   printf("$pc\t%x\t\t%d\n",cpu.pc,cpu.pc);

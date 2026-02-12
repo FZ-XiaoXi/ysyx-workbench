@@ -73,7 +73,7 @@ static int cmd_info(char *args) {
     switch (argument[0])
     {
     case 'r':
-      isa_reg_display();
+      isa_reg_display(cpu);
       break;
     case 'w':
       print_wp();
