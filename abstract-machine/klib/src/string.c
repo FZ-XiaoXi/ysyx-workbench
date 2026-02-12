@@ -16,7 +16,7 @@ char *strcpy(char *dst, const char *src) {
   //panic("Not implemented");
   char *p;
   size_t l=strlen(src);
-  p=memcpy(dst,src,l);
+  p=memmove(dst,src,l);
   *(p+l)='\0';
   return dst;
 }
@@ -76,10 +76,23 @@ int strncmp(const char *s1, const char *s2, size_t n) {
 
 void *memset(void *s, int c, size_t n) {
   //panic("Not implemented");
-  size_t i=0;
-  while(i<n){
-    *((char *)s+i)=c;
-    i++;
+  uint8_t s8=c&0xff;
+  uint32_t s32=s8|(s8<<8)|(s8<<16)|(s8<<24);
+  uint8_t *sb=(uint8_t*)s;
+  while(n && ((uintptr_t)sb & (sizeof(uint32_t)-1))){
+    *(sb++)=s8;
+    n--;
+  }
+  
+  uint32_t *sl=(uint32_t*)sb;
+  while(n >= sizeof(uint32_t)){
+    *(sl++)=s32;
+    n-=sizeof(uint32_t);
+  }
+
+  sb=(uint8_t*)sl;
+  while(n--){
+    *(sb++)=s8;
   }
   return s;
 }
@@ -104,10 +117,22 @@ void *memmove(void *dst, const void *src, size_t n) {
 
 void *memcpy(void *out, const void *in, size_t n) {
   //panic("Not implemented");
-  size_t i=0;
-  while(i<n){
-    *((char*)out+i) = *((char*)in+i);
-    i++;
+  uint8_t *outb=(uint8_t*)out,*inb=(uint8_t*)in;
+  while(n && !(((uintptr_t)outb & (sizeof(uint32_t)-1)) || ((uintptr_t)inb & (sizeof(uint32_t)-1)))){
+    *(outb++) = *(inb++);
+    n--;
+  }
+
+  uint32_t *outl=(uint32_t*)outb,*inl=(uint32_t*)inb;
+  while(n>=sizeof(uint32_t)){
+    *(outl++) = *(inl++);
+    n-=sizeof(uint32_t);
+  }
+  
+  outb=(uint8_t*)outl;
+  inb=(uint8_t*)inl;
+  while(n--){
+    *(outb++) = *(inb++);
   }
   return out;
 }
