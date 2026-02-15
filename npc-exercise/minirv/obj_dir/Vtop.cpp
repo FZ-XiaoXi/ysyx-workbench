@@ -19,14 +19,11 @@ Vtop::Vtop(VerilatedContext* _vcontextp__, const char* _vcname__)
     , LSU_address{vlSymsp->TOP.LSU_address}
     , LSU_writedata{vlSymsp->TOP.LSU_writedata}
     , LSU_readdata{vlSymsp->TOP.LSU_readdata}
-    , PC{vlSymsp->TOP.PC}
     , PC_command{vlSymsp->TOP.PC_command}
-    , dnpc{vlSymsp->TOP.dnpc}
-    , snpc{vlSymsp->TOP.snpc}
     , EXU_inA{vlSymsp->TOP.EXU_inA}
     , EXU_inB{vlSymsp->TOP.EXU_inB}
     , EXU_data{vlSymsp->TOP.EXU_data}
-    , GPRTEST{vlSymsp->TOP.GPRTEST}
+    , top{vlSymsp->TOP.top}
     , __PVT____024unit{vlSymsp->TOP.__PVT____024unit}
     , rootp{&(vlSymsp->TOP)}
 {

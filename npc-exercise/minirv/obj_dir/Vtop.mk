@@ -37,21 +37,40 @@ VM_PREFIX = Vtop
 VM_MODPREFIX = Vtop
 # User CFLAGS (from -CFLAGS on Verilator command line)
 VM_USER_CFLAGS = \
+  -I/home/seaber/ysyx-workbench/npc-exercise/minirv/csrc \
+  -I/home/seaber/ysyx-workbench/npc-exercise/minirv/csrc/include \
+  -I/home/seaber/ysyx-workbench/npc-exercise/minirv/tools/capstone/repo/include \
   -DTOP_NAME="Vtop" \
-  -ggdb \
+  -g \
 
 # User LDLIBS (from -LDFLAGS on Verilator command line)
 VM_USER_LDLIBS = \
+  -lreadline \
 
 # User .cpp files (from .cpp's on Verilator command line)
 VM_USER_CLASSES = \
-  sim_main \
+  cpu \
+  io \
+  serial \
   timer \
+  init \
+  mem \
+  difftest \
+  expr \
+  log \
+  sdb \
+  trace \
+  watchpoint \
+  sim_main \
+  disasm \
 
 # User .cpp directories (from .cpp's on Verilator command line)
 VM_USER_DIR = \
   .. \
   ../csrc \
+  ../csrc/devices \
+  ../csrc/monitor \
+  ../csrc/utils \
 
 ### Default rules...
 # Include list of all generated classes
@@ -62,9 +81,33 @@ include $(VERILATOR_ROOT)/include/verilated.mk
 ### Executable rules... (from --exe)
 VPATH += $(VM_USER_DIR)
 
+cpu.o: csrc/cpu.c 
+	$(OBJCACHE) $(CXX) $(CXXFLAGS) $(CPPFLAGS) $(OPT_FAST)  -c -o $@ $<
+io.o: csrc/devices/io.c 
+	$(OBJCACHE) $(CXX) $(CXXFLAGS) $(CPPFLAGS) $(OPT_FAST)  -c -o $@ $<
+serial.o: csrc/devices/serial.c 
+	$(OBJCACHE) $(CXX) $(CXXFLAGS) $(CPPFLAGS) $(OPT_FAST)  -c -o $@ $<
+timer.o: csrc/devices/timer.c 
+	$(OBJCACHE) $(CXX) $(CXXFLAGS) $(CPPFLAGS) $(OPT_FAST)  -c -o $@ $<
+init.o: csrc/init.c 
+	$(OBJCACHE) $(CXX) $(CXXFLAGS) $(CPPFLAGS) $(OPT_FAST)  -c -o $@ $<
+mem.o: csrc/mem.c 
+	$(OBJCACHE) $(CXX) $(CXXFLAGS) $(CPPFLAGS) $(OPT_FAST)  -c -o $@ $<
+difftest.o: csrc/monitor/difftest.c 
+	$(OBJCACHE) $(CXX) $(CXXFLAGS) $(CPPFLAGS) $(OPT_FAST)  -c -o $@ $<
+expr.o: csrc/monitor/expr.c 
+	$(OBJCACHE) $(CXX) $(CXXFLAGS) $(CPPFLAGS) $(OPT_FAST)  -c -o $@ $<
+log.o: csrc/monitor/log.c 
+	$(OBJCACHE) $(CXX) $(CXXFLAGS) $(CPPFLAGS) $(OPT_FAST)  -c -o $@ $<
+sdb.o: csrc/monitor/sdb.c 
+	$(OBJCACHE) $(CXX) $(CXXFLAGS) $(CPPFLAGS) $(OPT_FAST)  -c -o $@ $<
+trace.o: csrc/monitor/trace.c 
+	$(OBJCACHE) $(CXX) $(CXXFLAGS) $(CPPFLAGS) $(OPT_FAST)  -c -o $@ $<
+watchpoint.o: csrc/monitor/watchpoint.c 
+	$(OBJCACHE) $(CXX) $(CXXFLAGS) $(CPPFLAGS) $(OPT_FAST)  -c -o $@ $<
 sim_main.o: csrc/sim_main.cpp 
 	$(OBJCACHE) $(CXX) $(CXXFLAGS) $(CPPFLAGS) $(OPT_FAST)  -c -o $@ $<
-timer.o: csrc/timer.cpp 
+disasm.o: csrc/utils/disasm.c 
 	$(OBJCACHE) $(CXX) $(CXXFLAGS) $(CPPFLAGS) $(OPT_FAST)  -c -o $@ $<
 
 ### Link rules... (from --exe)

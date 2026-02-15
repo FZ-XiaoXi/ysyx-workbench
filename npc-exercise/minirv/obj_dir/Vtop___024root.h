@@ -7,6 +7,7 @@
 
 #include "verilated.h"
 class Vtop___024unit;
+class Vtop_top;
 
 
 class Vtop__Syms;
@@ -14,6 +15,7 @@ class Vtop__Syms;
 class alignas(VL_CACHE_LINE_BYTES) Vtop___024root final : public VerilatedModule {
   public:
     // CELLS
+    Vtop_top* top;
     Vtop___024unit* __PVT____024unit;
 
     // DESIGN SPECIFIC STATE
@@ -23,52 +25,18 @@ class alignas(VL_CACHE_LINE_BYTES) Vtop___024root final : public VerilatedModule
     VL_OUT8(LSU_wmask,3,0);
     VL_OUT8(LSU_WEN,0,0);
     VL_OUT8(LSU_REN,0,0);
-    CData/*0:0*/ top__DOT__isEBREAK;
-    CData/*0:0*/ top__DOT____VdfgRegularize_he2b63832_0_0;
-    CData/*2:0*/ top__DOT__clkdiv_0__DOT__cnt;
-    CData/*0:0*/ top__DOT__IDU_0__DOT__isJALR;
-    CData/*0:0*/ top__DOT__IDU_0__DOT__isADD;
-    CData/*0:0*/ top__DOT__IDU_0__DOT__isLW;
-    CData/*0:0*/ top__DOT__IDU_0__DOT__isLBU;
-    CData/*0:0*/ top__DOT__IDU_0__DOT__isLB;
-    CData/*0:0*/ top__DOT__IDU_0__DOT__isSW;
-    CData/*0:0*/ top__DOT__IDU_0__DOT__isSB;
-    CData/*0:0*/ top__DOT__IDU_0__DOT__isLOAD;
-    CData/*0:0*/ top__DOT__IDU_0__DOT__isWRITE;
-    CData/*0:0*/ top__DOT__IDU_0__DOT__isI;
-    CData/*0:0*/ top__DOT__IDU_0__DOT____VdfgRegularize_h52656aab_0_4;
-    CData/*0:0*/ top__DOT__IDU_0__DOT____VdfgRegularize_h52656aab_0_5;
-    CData/*0:0*/ top__DOT__IDU_0__DOT____VdfgRegularize_h52656aab_0_6;
     CData/*0:0*/ __VstlFirstIteration;
     CData/*0:0*/ __VicoFirstIteration;
     CData/*0:0*/ __Vtrigprevexpr___TOP__clk__0;
-    CData/*0:0*/ __Vtrigprevexpr___TOP__top__DOT__isEBREAK__0;
     CData/*0:0*/ __Vtrigprevexpr___TOP__rst__0;
-    CData/*0:0*/ __VactDidInit;
     VL_OUT(LSU_address,31,0);
     VL_OUT(LSU_writedata,31,0);
     VL_OUT(LSU_readdata,31,0);
-    VL_OUT(PC,31,0);
     VL_OUT(PC_command,31,0);
-    VL_OUT(dnpc,31,0);
-    VL_OUT(snpc,31,0);
     VL_OUT(EXU_inA,31,0);
     VL_OUT(EXU_inB,31,0);
     VL_OUT(EXU_data,31,0);
-    IData/*31:0*/ top__DOT__command;
-    IData/*31:0*/ top__DOT__rs1_val;
-    IData/*31:0*/ top__DOT__GPR_0__DOT__unnamedblk1__DOT__i;
-    IData/*31:0*/ top__DOT__LSU_0__DOT__val0;
-    IData/*31:0*/ top__DOT__LSU_0__DOT__val1;
-    IData/*31:0*/ top__DOT__LSU_0__DOT__val2;
-    IData/*31:0*/ top__DOT__LSU_0__DOT__rdata4;
-    IData/*31:0*/ __Vfunc_pmem_read__1__Vfuncout;
-    IData/*31:0*/ __Vfunc_pmem_read__2__Vfuncout;
     IData/*31:0*/ __VactIterCount;
-    VL_OUT(GPRTEST[32],31,0);
-    VlUnpacked<IData/*31:0*/, 32> top__DOT__GPRTEST;
-    VlUnpacked<IData/*31:0*/, 32> top__DOT__GPR_0__DOT__GPRTEST;
-    VlUnpacked<IData/*31:0*/, 32> top__DOT__GPR_0__DOT__GPR;
     VlUnpacked<QData/*63:0*/, 1> __VstlTriggered;
     VlUnpacked<QData/*63:0*/, 1> __VicoTriggered;
     VlUnpacked<QData/*63:0*/, 1> __VactTriggered;
