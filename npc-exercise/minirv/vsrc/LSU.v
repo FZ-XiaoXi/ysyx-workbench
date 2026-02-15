@@ -12,8 +12,14 @@ module LSU(
     input writeEN,
     input readEN
 );
+
     wire [31:0]val0,val1,val2,val3,rdata1,rdata2,rdata4;
     reg [31:0]val;
+    // reg [31:0]pmem;
+    // always @(posedge clk)begin
+    //     pmem <= (readEN)?pmem_read(address):32'b0;
+    // end
+    // assign val0=pmem;
     assign val0=(readEN)?pmem_read(address):32'b0;
     assign val1={{8{val0[31]}},val0[31:8]};
     assign val2={{8{val1[31]}},val1[31:8]};

@@ -13,10 +13,13 @@ LDSCRIPTS += $(AM_HOME)/scripts/linker.ld
 LDFLAGS   += --defsym=_pmem_start=0x80000000 --defsym=_entry_offset=0x0
 LDFLAGS   += --gc-sections -e _start
 
+
 MAINARGS_MAX_LEN = 64
 MAINARGS_PLACEHOLDER = the_insert-arg_rule_in_Makefile_will_insert_mainargs_here
 CFLAGS += -DMAINARGS_MAX_LEN=$(MAINARGS_MAX_LEN) -DMAINARGS_PLACEHOLDER=$(MAINARGS_PLACEHOLDER)
 NPC_HOME = $(AM_HOME)/../npc-exercise/minirv
+NPCFLAGS += -l $(shell dirname $(IMAGE).elf)/npc-log.txt
+NPCFLAGS += -b
 insert-arg: image
 	@python $(AM_HOME)/tools/insert-arg.py $(IMAGE).bin $(MAINARGS_MAX_LEN) $(MAINARGS_PLACEHOLDER) "$(mainargs)"
 
@@ -27,6 +30,6 @@ image: image-dep
 
 run: insert-arg
 #   echo "TODO: add command here to run simulation"
-	$(MAKE) -C $(NPC_HOME) sim ARGS="$(IMAGE).bin"
+	$(MAKE) -C $(NPC_HOME) sim ARGS="$(NPCFLAGS)" IMG=$(IMAGE).bin ELF=$(IMAGE).elf
 
 .PHONY: insert-arg

@@ -27,7 +27,8 @@ bool isa_difftest_checkregs(CPU_state *ref_r, vaddr_t pc, vaddr_t npc) {
   if(ref_r->pc != npc) {
     //printf("===%08x===%08x===\n",ref_r->pc,pc);
     Log("%s DUT:%08x REF:%08x at pc:%08x",ANSI_FMT("Different NEXT PC!", ANSI_FG_RED),npc,ref_r->pc,pc);
-    return false;}
+    return false;
+  }
   return true;
 }
 

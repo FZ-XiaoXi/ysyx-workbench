@@ -27,14 +27,20 @@ VM_TRACE_VCD = 1
 VM_CLASSES_FAST += \
   Vtop \
   Vtop___024root__0 \
+  Vtop_top__0 \
   Vtop___024unit__0 \
+  Vtop_GPR__0 \
 
 # Generated module classes, non-fast-path, compile with low/medium optimization
 VM_CLASSES_SLOW += \
   Vtop___024root__Slow \
   Vtop___024root__0__Slow \
+  Vtop_top__Slow \
+  Vtop_top__0__Slow \
   Vtop___024unit__Slow \
   Vtop___024unit__0__Slow \
+  Vtop_GPR__Slow \
+  Vtop_GPR__0__Slow \
 
 # Generated support classes, fast-path, compile with highest optimization
 VM_SUPPORT_FAST += \

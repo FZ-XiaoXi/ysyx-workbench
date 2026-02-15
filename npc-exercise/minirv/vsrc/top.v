@@ -12,16 +12,10 @@ module top(
   output LSU_WEN,
   output LSU_REN,
   output [31:0]LSU_readdata,
-  output [31:0]PC,
   output [31:0]PC_command,
-  output wire [31:0] dnpc,snpc,
-  output [31:0] EXU_inA,EXU_inB,EXU_data,
-  output [31:0]GPRTEST[31:0]
+  output [31:0] EXU_inA,EXU_inB,EXU_data
 );
-  always @(posedge clk) begin
-    if(PC_command==32'b00000000000100000000000001110011)
-      $display("[CPU] Ebreak triggered at PC=%h, exit_code=%d", PC, GPRTEST[10]);
-  end
+  wire [31:0]PC/* verilator public */,dnpc/* verilator public */,snpc/* verilator public */;
   // verilator lint_off PINMISSING
   wire clk0,clk1,clk2;
   clkdiv clkdiv_0(clk,rst,clk0,clk1,clk2);
@@ -37,7 +31,7 @@ module top(
   wire isEBREAK,isLOAD,isWRITE,isJUMP,isSigned;
   wire [9:0]op;
   
-  GPR GPR_0(.clk(clk),.rst(rst),.addRA(rs1_add),.addRB(rs2_add),.addW(gpr_address),.outA(rs1_val),.outB(rs2_val),.inData(gpr_data),.WEN(gpr_WEN),.GPRTEST(GPRTEST));
+  GPR GPR_0(.clk(clk),.rst(rst),.addRA(rs1_add),.addRB(rs2_add),.addW(gpr_address),.outA(rs1_val),.outB(rs2_val),.inData(gpr_data),.WEN(gpr_WEN));/*verilator public_module*/
   WBU WBU_0(.clk(clk),.rst(rst),.LSU_data(LSU_readdata),.EXU_data(EXU_data),.address(rd_add),.isLOAD(isLOAD),.isWRITE(isWRITE),.isJUMP(isJUMP),.snpc(snpc),.gpr_WEN(gpr_WEN),.gpr_data(gpr_data),.gpr_address(gpr_address));
   IFU IFU_0(.clk(clk),.rst(rst),.PC(PC),.dnpc(dnpc),.snpc(snpc),.isJUMP(isJUMP),.PC_command(PC_command));
   //LSU LSU_0(.address({2'b00,value[31:2]}),.data(LSU_readdata),.wdata(LSU_writedata),.range(LSU_rmask),.clk(clk),.writeEN(LSU_WEN),.PC_address({2'b00,PC[31:2]}),.PC_data(PC_command));
@@ -50,7 +44,7 @@ module top(
   assign LSU_address=EXU_data;
   assign LSU_writedata=rs2_val;
   LSU LSU_0(.clk(clk),.writeEN(LSU_WEN),.address(LSU_address),.rdata(LSU_readdata),.wdata(LSU_writedata),.rmask(LSU_rmask),.wmask(LSU_wmask),.isSigned(isSigned),.readEN(LSU_REN));
-  always @(isEBREAK) begin
+  always @(posedge clk) begin
     if(isEBREAK)  ebreak();
   end
 endmodule
@@ -84,10 +78,9 @@ module GPR(
   output [31:0]outA,
   output [31:0]outB,
   input [31:0]inData,
-  output [31:0]GPRTEST[31:0],
   input WEN
 );
-  reg [31:0]GPR[31:0];
+  reg [31:0]GPR[31:0]/* verilator public */;
 
   assign outA=(addRA==0)?{32{1'b0}}:GPR[addRA];
   assign outB=(addRB==0)?{32{1'b0}}:GPR[addRB];
@@ -103,6 +96,4 @@ module GPR(
       GPR[addW]<=GPR[addW];
     end
   end
-
-  assign GPRTEST=GPR;
 endmodule
