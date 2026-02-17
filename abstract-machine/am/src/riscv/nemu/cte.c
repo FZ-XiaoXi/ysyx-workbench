@@ -5,9 +5,21 @@
 static Context* (*user_handler)(Event, Context*) = NULL;
 
 Context* __am_irq_handle(Context *c) {
+  // for(int i=0;i<32;i++)
+  //   printf("%d %08x\n",i,c->gpr[i]);
+  // printf("ca %08x\n",c->mcause);
+  // printf("st %08x\n",c->mstatus);
+  // printf("pc %08x\n",c->mepc);
   if (user_handler) {
     Event ev = {0};
+    uintptr_t syscall_num = c->GPR1;
     switch (c->mcause) {
+      case 11:
+        if(syscall_num == (uintptr_t)-1){
+          ev.event = EVENT_YIELD;
+          c->mepc += 4;
+        }
+        break;
       default: ev.event = EVENT_ERROR; break;
     }
 
