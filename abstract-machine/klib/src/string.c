@@ -118,22 +118,27 @@ void *memmove(void *dst, const void *src, size_t n) {
 void *memcpy(void *out, const void *in, size_t n) {
   //panic("Not implemented");
   uint8_t *outb=(uint8_t*)out,*inb=(uint8_t*)in;
-  while(n && !(((uintptr_t)outb & (sizeof(uint32_t)-1)) || ((uintptr_t)inb & (sizeof(uint32_t)-1)))){
-    *(outb++) = *(inb++);
-    n--;
-  }
-
-  uint32_t *outl=(uint32_t*)outb,*inl=(uint32_t*)inb;
-  while(n>=sizeof(uint32_t)){
-    *(outl++) = *(inl++);
-    n-=sizeof(uint32_t);
-  }
   
-  outb=(uint8_t*)outl;
-  inb=(uint8_t*)inl;
   while(n--){
     *(outb++) = *(inb++);
   }
+
+  // while(n && !(((uintptr_t)outb & (sizeof(uint32_t)-1)) || ((uintptr_t)inb & (sizeof(uint32_t)-1)))){
+  //   *(outb++) = *(inb++);
+  //   n--;
+  // }
+
+  // uint32_t *outl=(uint32_t*)outb,*inl=(uint32_t*)inb;
+  // while(n>=sizeof(uint32_t)){
+  //   *(outl++) = *(inl++);
+  //   n-=sizeof(uint32_t);
+  // }
+  
+  // outb=(uint8_t*)outl;
+  // inb=(uint8_t*)inl;
+  // while(n--){
+  //   *(outb++) = *(inb++);
+  // }
   return out;
 }
 

@@ -9,7 +9,7 @@
 #include "Vtop.h"
 #include "Vtop___024root.h"
 #include "Vtop_top.h"
-#include "Vtop_GPR.h"
+#include "Vtop_REG.h"
 
 extern VerilatedContext* contextp;
 extern Vtop* top;

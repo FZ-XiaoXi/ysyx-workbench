@@ -15,8 +15,8 @@ int main(int argc, char** argv) {
 	// while (!contextp->gotFinish()&&cpu.state==NPC_RUNNING) {
 	// 	onecyc(contextp,top);
 	// }
-	//for(int i=0;i<16;i++) printf("[%2d]:%04x ",i,(uint32_t)top->rootp->top->GPR_0->GPR[i]);
-	//int flag=top->rootp->top->GPR_0->GPR[10];
+	//for(int i=0;i<16;i++) printf("[%2d]:%04x ",i,(uint32_t)top->rootp->top->REG_0->GPR[i]);
+	//int flag=top->rootp->top->REG_0->GPR[10];
     delete top;
     delete contextp;
 

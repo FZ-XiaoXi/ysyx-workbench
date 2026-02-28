@@ -7,6 +7,8 @@ module IFU(
     output [31:0] snpc,
     input isJUMP,
     input isBRANCH,
+    input isECALL,
+    input isMRET,
     output reg [31:0]PC_command
 );
     
@@ -14,7 +16,7 @@ module IFU(
         if (rst) begin
             PC<=32'h80000000;
         end else begin
-            if (isJUMP | isBRANCH) begin
+            if (isJUMP | isBRANCH | isECALL | isMRET) begin
                 PC<=dnpc;
             end else begin
                 PC<=snpc;

@@ -16,7 +16,7 @@ static void cpu_get_reg(){
 	cpu.pc = cpu.dnpc;
 	cpu.dnpc = top->top->PC;
 	for(int i=0;i<CONFIG_GPR_NUM;i++){
-		cpu.gpr[i] = top->top->GPR_0->GPR[i];
+		cpu.gpr[i] = top->top->REG_0->GPR[i];
 	}
 }
 
@@ -45,8 +45,9 @@ void cpu_exec(uint64_t n){
 		cpu_exec_once();
 		cpu.count++;
 		cpu_get_reg();
-		//printf("%08x %08x %08x %08x imm%08x rs1%08x rs2%08x %08x\n",top->EXU_inA,top->EXU_inB,top->EXU_data,top->top->PC,top->imm,top->rs1_val,top->rs2_val,top->top->GPR_0->GPR[14]);
-		//printf("%08x\n",cpu.pc);
+		//printf("%08x %08x \n", top->top->REG_0->CSR_MCYCLEH, top->top->REG_0->CSR_MCYCLE);
+		//printf("%08x %08x %08x %08x imm%08x rs1%08x rs2%08x %08x\n",top->EXU_inA,top->EXU_inB,top->EXU_data,top->top->PC,top->imm,top->rs1_val,top->rs2_val,top->top->REG_0->GPR[14]);
+		//printf("%08x %08x\n",top->top->REG_0->CSR_MTVEC,cpu.pc);
 		cpu.inst = MEM(cpu.pc);
 
 		trace_and_difftest();

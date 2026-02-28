@@ -35,4 +35,8 @@ static inline const char* reg_name(int idx) {
 #define CSR_MEPC   0x341
 #define CSR_MCAUSE 0x342
 #define CSR_MSTATUS 0x300
+#define CSR_MCYCLE 0xb00
+#define CSR_MCYCLEH 0xb80
+#define CSR_MVENDORID 0xf11
+#define CSR_MARCHID 0xf12
 #endif
