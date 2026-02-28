@@ -1,3 +1,4 @@
+
 module IDU(
     input [31:0]command,
     input isGREATER,
@@ -7,6 +8,7 @@ module IDU(
     output [ 4: 0]rd,
     output [ 4: 0]rs1,
     output [ 4: 0]rs2,
+    output [ 11: 0]rcsr,
     output [ 2: 0]funct3,
     output [ 6: 0]funct7,
     output [11: 0]immI,
@@ -17,11 +19,14 @@ module IDU(
     output reg [31: 0]imm,
 
     output isEBREAK,
+    output isECALL,
+    output isMRET,
     output isLOAD,
     output isWRITE,
     output isJUMP,
     output isCOMPARE,
     output reg isBRANCH,
+    output [1:0]isCSR,
     output COMP_data,
     output isSigned,
     output isPC,
@@ -30,7 +35,7 @@ module IDU(
     output [9:0]op,
     output [3:0]LSU_rmask,
     output [3:0]LSU_wmask,
-    output [5:0]ctype
+    output [6:0]ctype
 );
     wire isLUI, isAUIPC, isJAL, isJALR, isBEQ, isBNE, isBLT, isBGE, isBLTU, isBGEU;
     wire isLB, isLH, isLW, isLBU, isLHU, isSB, isSH, isSW, isADDI, isSLTI, isSLTIU;
@@ -38,12 +43,15 @@ module IDU(
     wire isSLTU, isXOR, isSRL, isSRA, isOR, isAND, isMUL, isMULH, isMULHSU;
     wire isMULHU, isDIV, isDIVU, isREM, isREMU;
 
-    wire isR,isI,isS,isB,isU,isJ;
-    assign ctype={isR,isI,isS,isB,isU,isJ};
+    wire isCSRRW,isCSRRS,isCSRRC,isCSRRWI,isCSRRSI,isCSRRCI;
+
+    wire isR,isI,isS,isB,isU,isJ,isCR;
+    assign ctype={isR,isI,isS,isB,isU,isJ,isCR};
     assign opcode=  command[ 6: 0];
     assign rd=      command[11: 7];
     assign rs1=     command[19:15];
     assign rs2=     command[24:20];
+    assign rcsr=    command[31:20];
     assign funct3=  command[14:12];
     assign funct7=  command[31:25];
     
@@ -52,6 +60,7 @@ module IDU(
     assign immB = {command[31:31],command[ 7: 7],command[30:25],command[11: 8]};
     assign immU = {command[31:12]                                             };
     assign immJ = {command[31:31],command[19:12],command[20:20],command[30:21]};
+    //assign immCR= {command[31:20]}
 
 /////////////////////////
     assign isLUI    = (opcode == 7'b0110111                                             ) ? 1 : 0;
@@ -92,8 +101,13 @@ module IDU(
     assign isOR     = (opcode == 7'b0110011 && funct3 == 3'b110 && funct7 == 7'b0000000 ) ? 1 : 0;
     assign isAND    = (opcode == 7'b0110011 && funct3 == 3'b111 && funct7 == 7'b0000000 ) ? 1 : 0;
 
+    assign isECALL  = (command==32'b00000000000000000000000001110011                    ) ? 1 : 0;
     assign isEBREAK = (command==32'b00000000000100000000000001110011                    ) ? 1 : 0;
+    assign isMRET   = (command==32'b00110000001000000000000001110011                    ) ? 1 : 0;
 
+    assign isCSRRW  = (opcode == 7'b1110011 && funct3 == 3'b001                         ) ? 1 : 0;
+    assign isCSRRS  = (opcode == 7'b1110011 && funct3 == 3'b010                         ) ? 1 : 0;
+    assign isCSRRC  = (opcode == 7'b1110011 && funct3 == 3'b011                         ) ? 1 : 0;
 
 /////////////////////////
     assign isLOAD = (isLW|isLBU|isLB|isLH|isLHU)?1:0;
@@ -101,6 +115,7 @@ module IDU(
     assign isJUMP= (isJAL|isJALR)?1:0;
     assign isPC = (isAUIPC|isJAL|isBEQ|isBNE|isBLT|isBGE|isBLTU|isBGEU)?1:0;
     assign isCOMPARE=(isSLTI|isSLTIU|isSLT|isSLTU)?1:0;
+    assign isCSR = (isCSRRS?2'b01:(isCSRRW?(2'b11):(isCSRRC?2'b10:2'b00)));
 /////////////////////////
     assign isI=(isADDI|isSLTI|isSLTIU|isXORI|isORI|isANDI|isSLLI|isSRLI|isSRAI|isJALR|isLW|isLBU|isLB|isLH|isLHU)?1:0;
     assign isR=(isADD|isSUB|isSLL|isSLT|isSLTU|isXOR|isSRL|isSRA|isOR|isAND)?1:0;
@@ -108,6 +123,7 @@ module IDU(
     assign isB=(isBEQ|isBNE|isBLT|isBGE|isBLTU|isBGEU)?1:0;
     assign isU=(isLUI|isAUIPC)?1:0;
     assign isJ=(isJAL)?1:0;
+    assign isCR=(isCSRRW|isCSRRS|isCSRRC)?1:0;
 
     always @(*) begin
         if     (isI)    imm={{20{immI[11:11]}},immI[11:0]};

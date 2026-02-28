@@ -17,6 +17,7 @@
 #include <cpu/cpu.h>
 #include <cpu/ifetch.h>
 #include <cpu/decode.h>
+#include <cpu/difftest.h>
 
 #define R(i) gpr(i)
 #define Mr vaddr_read
@@ -55,7 +56,8 @@ static void decode_operand(Decode *s, int *rd, int *rcsr, word_t *src1, word_t *
 
 static int decode_exec(Decode *s) {
   s->dnpc = s->snpc;
-
+  extern void func_trace(Decode *s);
+  extern void difftest_skip_ref();
 #define INSTPAT_INST(s) ((s)->isa.inst)
 #define INSTPAT_MATCH(s, name, type, ... /* execute body */ ) { \
   int rd = 0, rcsr = 0; \
@@ -63,7 +65,7 @@ static int decode_exec(Decode *s) {
   decode_operand(s, &rd, &rcsr, &src1, &src2, &imm, concat(TYPE_, type)); \
   __VA_ARGS__ ; \
 }
-  extern void func_trace(Decode *s);
+  
   INSTPAT_START();
   INSTPAT("??????? ????? ????? ??? ????? 01101 11", lui    , U, R(rd) = imm);
   INSTPAT("??????? ????? ????? ??? ????? 00101 11", auipc  , U, R(rd) = s->pc + imm);
@@ -117,16 +119,18 @@ static int decode_exec(Decode *s) {
   INSTPAT("0000000 00001 00000 000 00000 11100 11", ebreak , N, NEMUTRAP(s->pc, R(10))); // R(10) is $a0
   INSTPAT("0011000 00010 00000 000 00000 11100 11", mret   , N, s->dnpc = csr(CSR_MEPC));
   
-  INSTPAT("??????? ????? ????? 001 ????? 11100 11", csrrw  , CR, R(rd) = csr(rcsr); csr(rcsr) = src1;);
-  INSTPAT("??????? ????? ????? 010 ????? 11100 11", csrrs  , CR, R(rd) = csr(rcsr); csr(rcsr) = csr(rcsr) | src1;);
-  INSTPAT("??????? ????? ????? 011 ????? 11100 11", csrrc  , CR, R(rd) = csr(rcsr); csr(rcsr) = csr(rcsr) & ~src1;);
+  INSTPAT("??????? ????? ????? 001 ????? 11100 11", csrrw  , CR, R(rd) = csr(rcsr); csr(rcsr) = src1; if(rcsr==0xb00||rcsr==0xb80){difftest_skip_ref();};);
+  INSTPAT("??????? ????? ????? 010 ????? 11100 11", csrrs  , CR, R(rd) = csr(rcsr); csr(rcsr) = csr(rcsr) | src1; if(rcsr==0xb00||rcsr==0xb80){difftest_skip_ref();};);
+  INSTPAT("??????? ????? ????? 011 ????? 11100 11", csrrc  , CR, R(rd) = csr(rcsr); csr(rcsr) = csr(rcsr) & ~src1; if(rcsr==0xb00||rcsr==0xb80){difftest_skip_ref();};);
 
 
   
   INSTPAT("??????? ????? ????? ??? ????? ????? ??", inv    , N, INV(s->pc));
   INSTPAT_END();
-
+  //printf("NEMU=%08x\n",csr(CSR_MCYCLE));
+  csr(CSR_MCYCLE) ++;
   R(0) = 0; // reset $zero to 0
+  
 
   return 0;
 }

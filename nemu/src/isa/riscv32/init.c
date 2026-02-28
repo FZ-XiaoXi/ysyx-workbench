@@ -25,11 +25,23 @@ static const uint32_t img [] = {
   0x00100073,  // ebreak (used as nemu_trap)
   0xdeadbeef,  // some data
 };
+// static const uint32_t img [] = {
+//   0xb00025f3,  // auipc t0,0
+//   0xb00025f3,  // sb  zero,16(t0)
+//   0xb00025f3,  // lbu a0,16(t0)
+//   0xb00025f3,  // ebreak (used as nemu_trap)
+//   0x00100073,  // some data
+// };
 
 static void restart() {
   /* Set the initial program counter. */
   cpu.pc = RESET_VECTOR;
   cpu.csr[CSR_MSTATUS] = 0x1800;
+  cpu.csr[CSR_MCYCLE] = 0x0000;
+  cpu.csr[CSR_MCYCLEH] = 0x0000;
+  cpu.csr[CSR_MVENDORID] = 0x79737978;
+  cpu.csr[CSR_MARCHID] = 0x018ce19b;
+  
   /* The zero register is always 0. */
   cpu.gpr[0] = 0;
 }

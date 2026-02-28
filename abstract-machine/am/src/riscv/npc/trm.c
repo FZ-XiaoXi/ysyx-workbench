@@ -1,5 +1,6 @@
 #include <am.h>
 #include <klib-macros.h>
+#include <klib.h>
 #include "npc.h"
 extern char _heap_start;
 int main(const char *args);
@@ -23,6 +24,11 @@ void halt(int code) {
 }
 
 void _trm_init() {
+  uint32_t ysyx_name,ysyx_id;
+  asm volatile("csrr %0,mvendorid" : "=r"(ysyx_name));
+  asm volatile("csrr %0,marchid" : "=r"(ysyx_id));
+  printf("===YSYX:%c%c%c%c\n",(ysyx_name>>24)&0xff,(ysyx_name>>16)&0xff,(ysyx_name>>8)&0xff,ysyx_name&0xff);
+  printf("===ID:%d\n",ysyx_id);
   int ret = main(mainargs);
   halt(ret);
 }

@@ -3,7 +3,7 @@
 #include <common.h>
 #include <cpu/decode.h>
 typedef struct {
-  char name[64];
+  char name[128];
   vaddr_t start_add;
   vaddr_t size;
 } symtab_t;
@@ -29,7 +29,7 @@ typedef struct {
     int depth;
     bool isCall;
     vaddr_t pc;
-    char name[64];
+    char name[128];
 } ftracer_log_t;
 
 typedef struct {
