@@ -119,7 +119,7 @@ ifeq ($(MAKECMDGOALS),archive)
 ### Rule (archive): objects (`*.o`) -> `ARCHIVE.a` (ar)
 $(ARCHIVE): $(OBJS)
 	@echo + AR "->" $(shell realpath $@ --relative-to .)
-	@$(AaeR) rcs $@ $^
+	@$(AR) rcs $@ $^
 else
 # $(1): library name
 define LIB_TEMPLATE =
