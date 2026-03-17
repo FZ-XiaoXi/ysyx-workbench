@@ -640,13 +640,13 @@ VL_ATTR_COLD void Vtop___024root__trace_full_0_sub_0(Vtop___024root* vlSelf, Ver
     bufp->fullIData(oldp+119,((vlSelfRef.EXU_inA | vlSelfRef.EXU_inB)),32);
     bufp->fullIData(oldp+120,((vlSelfRef.EXU_inA & vlSelfRef.EXU_inB)),32);
     bufp->fullIData(oldp+121,(VL_SHIFTRS_III(32,32,32, vlSelfRef.EXU_inA, 
-                                             (0x0000003fU 
+                                             (0x0000001fU 
                                               & vlSelfRef.EXU_inB))),32);
     bufp->fullIData(oldp+122,(VL_SHIFTR_III(32,32,32, vlSelfRef.EXU_inA, 
-                                            (0x0000003fU 
+                                            (0x0000001fU 
                                              & vlSelfRef.EXU_inB))),32);
     bufp->fullIData(oldp+123,(VL_SHIFTL_III(32,32,32, vlSelfRef.EXU_inA, 
-                                            (0x0000003fU 
+                                            (0x0000001fU 
                                              & vlSelfRef.EXU_inB))),32);
     bufp->fullIData(oldp+124,((vlSelfRef.EXU_inA + 
                                ((IData)(vlSymsp->TOP__top.__PVT__EXU_0__DOT__ADDER_0__DOT__inB) 

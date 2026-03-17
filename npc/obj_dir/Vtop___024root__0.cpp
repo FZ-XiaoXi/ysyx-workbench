@@ -209,15 +209,15 @@ void Vtop___024root___ico_sequent__TOP__2(Vtop___024root* vlSelf) {
                                     + (IData)((QData)((IData)(vlSymsp->TOP__top.__PVT__EXU_0__DOT__ADDER_0__DOT__cin)))))
                               : ((IData)(vlSymsp->TOP__top.__VdfgRegularize_he2b63832_1_0)
                                   ? VL_SHIFTL_III(32,32,32, vlSelfRef.EXU_inA, 
-                                                  (0x0000003fU 
+                                                  (0x0000001fU 
                                                    & vlSelfRef.EXU_inB))
                                   : ((IData)(vlSymsp->TOP__top.__VdfgRegularize_he2b63832_1_1)
                                       ? VL_SHIFTR_III(32,32,32, vlSelfRef.EXU_inA, 
-                                                      (0x0000003fU 
+                                                      (0x0000001fU 
                                                        & vlSelfRef.EXU_inB))
                                       : ((IData)(vlSymsp->TOP__top.__VdfgRegularize_he2b63832_1_2)
                                           ? VL_SHIFTRS_III(32,32,32, vlSelfRef.EXU_inA, 
-                                                           (0x0000003fU 
+                                                           (0x0000001fU 
                                                             & vlSelfRef.EXU_inB))
                                           : ((IData)(vlSymsp->TOP__top.__VdfgRegularize_he2b63832_1_3)
                                               ? (vlSelfRef.EXU_inA 
