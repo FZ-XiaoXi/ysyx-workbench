@@ -252,13 +252,13 @@ void Vtop___024root__trace_chg_0_sub_0(Vtop___024root* vlSelf, VerilatedVcd::Buf
     bufp->chgIData(oldp+118,((vlSelfRef.EXU_inA | vlSelfRef.EXU_inB)),32);
     bufp->chgIData(oldp+119,((vlSelfRef.EXU_inA & vlSelfRef.EXU_inB)),32);
     bufp->chgIData(oldp+120,(VL_SHIFTRS_III(32,32,32, vlSelfRef.EXU_inA, 
-                                            (0x0000003fU 
+                                            (0x0000001fU 
                                              & vlSelfRef.EXU_inB))),32);
     bufp->chgIData(oldp+121,(VL_SHIFTR_III(32,32,32, vlSelfRef.EXU_inA, 
-                                           (0x0000003fU 
+                                           (0x0000001fU 
                                             & vlSelfRef.EXU_inB))),32);
     bufp->chgIData(oldp+122,(VL_SHIFTL_III(32,32,32, vlSelfRef.EXU_inA, 
-                                           (0x0000003fU 
+                                           (0x0000001fU 
                                             & vlSelfRef.EXU_inB))),32);
     bufp->chgIData(oldp+123,((vlSelfRef.EXU_inA + ((IData)(vlSymsp->TOP__top.__PVT__EXU_0__DOT__ADDER_0__DOT__inB) 
                                                    + (IData)((QData)((IData)(vlSymsp->TOP__top.__PVT__EXU_0__DOT__ADDER_0__DOT__cin)))))),32);
