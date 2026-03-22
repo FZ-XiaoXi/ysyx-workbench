@@ -56,7 +56,7 @@ module REG(
     endcase
   end
 
-  always @(posedge clk,posedge rst) begin
+  always @(posedge clk) begin
     if(rst) begin
       CSR_MCYCLE <= 0;
       CSR_MCYCLEH <= 0;
@@ -85,7 +85,7 @@ module REG(
     end
   end
 
-  always @(posedge clk,posedge rst) begin
+  always @(posedge clk) begin
     if(rst) begin
       for(int i=0;i<32;i=i+1) begin
         GPR[i]<={32{1'b0}};

@@ -34,6 +34,8 @@ void init(int argc, char** argv){
 	contextp->commandArgs(argc, argv);
 	top->clk=0;top->rst=0;top->eval();contextp->timeInc(10);
 	top->clk=0;top->rst=1;top->eval();contextp->timeInc(10);
+	top->clk=1;top->rst=1;top->eval();contextp->timeInc(10);
+	top->clk=0;top->rst=1;top->eval();contextp->timeInc(10);
 	top->clk=0;top->rst=0;top->eval();contextp->timeInc(10);
 	// top->clk=1;top->rst=0;top->eval();contextp->timeInc(10);
 	// top->clk=0;top->rst=0;top->eval();contextp->timeInc(10);

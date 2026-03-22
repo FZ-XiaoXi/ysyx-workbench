@@ -71,7 +71,7 @@ void cpu_exec(uint64_t n){
 				ANSI_FMT("HIT BAD TRAP", ANSI_FG_RED))), \
 				cpu.pc);
 			Log("Halt code = " FMT_WORD, cpu.halt_ret);
-			Log("Total instruction = %llu", cpu.count);
+			Log("Total instruction = %lu", cpu.count);
 			break;
 		}
 		case NPC_RUNNING:
