@@ -18,9 +18,9 @@ module EXU(
     assign op_or=inA|inB;
     assign op_and=inA&inB;
     
-    assign op_ar=$signed(inA) >>> (inB & 32'h3f);
-    assign op_lr=inA >> (inB & 32'h3f);
-    assign op_ll=inA << (inB & 32'h3f);
+    assign op_ar=$signed(inA) >>> (inB & 32'h1f);
+    assign op_lr=inA >> (inB & 32'h1f);
+    assign op_ll=inA << (inB & 32'h1f);
 
     M_ADDER ADDER_0 (.inA({1'b0,inA}),.inB((op[8])?~{1'b0,inB}:{1'b0,inB}),.cin((op[8])?1:0),.out(op_adder),.carry());
     always @(*) begin
