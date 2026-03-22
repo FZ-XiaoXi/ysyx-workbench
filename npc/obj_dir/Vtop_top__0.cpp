@@ -388,34 +388,11 @@ void Vtop_top___ico_sequent__TOP__top__3(Vtop_top* vlSelf) {
                                                 : vlSelfRef.__PVT__LSU_0__DOT__val0));
 }
 
-void Vtop_top___nba_sequent__TOP__top__0(Vtop_top* vlSelf) {
-    VL_DEBUG_IF(VL_DBG_MSGF("+      Vtop_top___nba_sequent__TOP__top__0\n"); );
-    Vtop__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
-    auto& vlSelfRef = std::ref(*vlSelf).get();
-    // Body
-    vlSelfRef.PC = ((IData)(vlSymsp->TOP.rst) ? 0x80000000U
-                     : ((1U & ((((IData)(vlSelfRef.__PVT__IDU_0__DOT__isJUMP) 
-                                 | ((IData)(vlSelfRef.__PVT__IDU_0__DOT__isBEQ)
-                                     ? (IData)(vlSelfRef.__PVT__COMP_0__DOT__isEQUAL)
-                                     : ((IData)(vlSelfRef.__PVT__IDU_0__DOT__isBNE)
-                                         ? (~ (IData)(vlSelfRef.__PVT__COMP_0__DOT__isEQUAL))
-                                         : (((IData)(vlSelfRef.__PVT__IDU_0__DOT__isBLT) 
-                                             | (IData)(vlSelfRef.__PVT__IDU_0__DOT__isBLTU))
-                                             ? (~ (IData)(vlSelfRef.__VdfgRegularize_h6e95ff9d_0_0))
-                                             : (((IData)(vlSelfRef.__PVT__IDU_0__DOT__isBGE) 
-                                                 | (IData)(vlSelfRef.__PVT__IDU_0__DOT__isBGEU)) 
-                                                & (IData)(vlSelfRef.__VdfgRegularize_h6e95ff9d_0_0)))))) 
-                                | (0x00000073U == vlSelfRef.PC_command)) 
-                               | (0x30200073U == vlSelfRef.PC_command)))
-                         ? vlSelfRef.dnpc : vlSelfRef.snpc));
-    vlSelfRef.snpc = ((IData)(4U) + vlSelfRef.PC);
-}
-
 void Vtop___024unit____Vdpiimwrap_pmem_write_TOP____024unit(IData/*31:0*/ waddr, IData/*31:0*/ wdata, CData/*7:0*/ wmask);
 void Vtop___024unit____Vdpiimwrap_ebreak_TOP____024unit();
 
-void Vtop_top___nba_sequent__TOP__top__1(Vtop_top* vlSelf) {
-    VL_DEBUG_IF(VL_DBG_MSGF("+      Vtop_top___nba_sequent__TOP__top__1\n"); );
+void Vtop_top___nba_sequent__TOP__top__0(Vtop_top* vlSelf) {
+    VL_DEBUG_IF(VL_DBG_MSGF("+      Vtop_top___nba_sequent__TOP__top__0\n"); );
     Vtop__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
     auto& vlSelfRef = std::ref(*vlSelf).get();
     // Body
@@ -440,13 +417,22 @@ void Vtop_top___nba_sequent__TOP__top__1(Vtop_top* vlSelf) {
     if ((0x00100073U == vlSelfRef.PC_command)) {
         Vtop___024unit____Vdpiimwrap_ebreak_TOP____024unit();
     }
-}
-
-void Vtop_top___nba_sequent__TOP__top__2(Vtop_top* vlSelf) {
-    VL_DEBUG_IF(VL_DBG_MSGF("+      Vtop_top___nba_sequent__TOP__top__2\n"); );
-    Vtop__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
-    auto& vlSelfRef = std::ref(*vlSelf).get();
-    // Body
+    vlSelfRef.PC = ((IData)(vlSymsp->TOP.rst) ? 0x80000000U
+                     : ((1U & ((((IData)(vlSelfRef.__PVT__IDU_0__DOT__isJUMP) 
+                                 | ((IData)(vlSelfRef.__PVT__IDU_0__DOT__isBEQ)
+                                     ? (IData)(vlSelfRef.__PVT__COMP_0__DOT__isEQUAL)
+                                     : ((IData)(vlSelfRef.__PVT__IDU_0__DOT__isBNE)
+                                         ? (~ (IData)(vlSelfRef.__PVT__COMP_0__DOT__isEQUAL))
+                                         : (((IData)(vlSelfRef.__PVT__IDU_0__DOT__isBLT) 
+                                             | (IData)(vlSelfRef.__PVT__IDU_0__DOT__isBLTU))
+                                             ? (~ (IData)(vlSelfRef.__VdfgRegularize_h6e95ff9d_0_0))
+                                             : (((IData)(vlSelfRef.__PVT__IDU_0__DOT__isBGE) 
+                                                 | (IData)(vlSelfRef.__PVT__IDU_0__DOT__isBGEU)) 
+                                                & (IData)(vlSelfRef.__VdfgRegularize_h6e95ff9d_0_0)))))) 
+                                | (0x00000073U == vlSelfRef.PC_command)) 
+                               | (0x30200073U == vlSelfRef.PC_command)))
+                         ? vlSelfRef.dnpc : vlSelfRef.snpc));
+    vlSelfRef.snpc = ((IData)(4U) + vlSelfRef.PC);
     if (vlSymsp->TOP.rst) {
         vlSelfRef.PC_command = 0U;
     } else {

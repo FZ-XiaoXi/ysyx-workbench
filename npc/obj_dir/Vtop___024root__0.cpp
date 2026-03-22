@@ -356,13 +356,9 @@ void Vtop___024root___eval_triggers__act(Vtop___024root* vlSelf) {
     auto& vlSelfRef = std::ref(*vlSelf).get();
     // Body
     vlSelfRef.__VactTriggered[0U] = (QData)((IData)(
-                                                    ((((IData)(vlSelfRef.rst) 
-                                                       & (~ (IData)(vlSelfRef.__Vtrigprevexpr___TOP__rst__0))) 
-                                                      << 1U) 
-                                                     | ((IData)(vlSelfRef.clk) 
-                                                        & (~ (IData)(vlSelfRef.__Vtrigprevexpr___TOP__clk__0))))));
+                                                    ((IData)(vlSelfRef.clk) 
+                                                     & (~ (IData)(vlSelfRef.__Vtrigprevexpr___TOP__clk__0)))));
     vlSelfRef.__Vtrigprevexpr___TOP__clk__0 = vlSelfRef.clk;
-    vlSelfRef.__Vtrigprevexpr___TOP__rst__0 = vlSelfRef.rst;
 #ifdef VL_DEBUG
     if (VL_UNLIKELY(vlSymsp->_vm_contextp__->debug())) {
         Vtop___024root___dump_triggers__act(vlSelfRef.__VactTriggered, "act"s);
@@ -387,24 +383,16 @@ bool Vtop___024root___trigger_anySet__act(const VlUnpacked<QData/*63:0*/, 1> &in
 
 void Vtop_REG___nba_sequent__TOP__top__REG_0__0(Vtop_REG* vlSelf);
 void Vtop_top___nba_sequent__TOP__top__0(Vtop_top* vlSelf);
-void Vtop_top___nba_sequent__TOP__top__1(Vtop_top* vlSelf);
-void Vtop_top___nba_sequent__TOP__top__2(Vtop_top* vlSelf);
 
 void Vtop___024root___eval_nba(Vtop___024root* vlSelf) {
     VL_DEBUG_IF(VL_DBG_MSGF("+    Vtop___024root___eval_nba\n"); );
     Vtop__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
     auto& vlSelfRef = std::ref(*vlSelf).get();
     // Body
-    if ((3ULL & vlSelfRef.__VnbaTriggered[0U])) {
-        Vtop_REG___nba_sequent__TOP__top__REG_0__0((&vlSymsp->TOP__top__REG_0));
-        Vtop_top___nba_sequent__TOP__top__0((&vlSymsp->TOP__top));
-    }
     if ((1ULL & vlSelfRef.__VnbaTriggered[0U])) {
-        Vtop_top___nba_sequent__TOP__top__1((&vlSymsp->TOP__top));
-    }
-    if ((3ULL & vlSelfRef.__VnbaTriggered[0U])) {
-        Vtop_top___nba_sequent__TOP__top__2((&vlSymsp->TOP__top));
+        Vtop_REG___nba_sequent__TOP__top__REG_0__0((&vlSymsp->TOP__top__REG_0));
         vlSelfRef.__Vm_traceActivity[2U] = 1U;
+        Vtop_top___nba_sequent__TOP__top__0((&vlSymsp->TOP__top));
         Vtop___024root___ico_sequent__TOP__0(vlSelf);
         Vtop_REG___ico_sequent__TOP__top__REG_0__0((&vlSymsp->TOP__top__REG_0));
         Vtop_top___ico_sequent__TOP__top__1((&vlSymsp->TOP__top));

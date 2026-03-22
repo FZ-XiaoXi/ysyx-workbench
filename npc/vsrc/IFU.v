@@ -12,7 +12,7 @@ module IFU(
     output reg [31:0]PC_command
 );
     
-    always @(posedge clk,posedge rst) begin
+    always @(posedge clk) begin
         if (rst) begin
             PC<=32'h80000000;
         end else begin
