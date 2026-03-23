@@ -100,9 +100,13 @@ module REG(
     end
   end
 
-    always @(*) begin
-        if(WCSREN & ((addCSR==ADD_MCYCLE) | (addCSR==ADD_MCYCLEH)))  difftest_skip_ref();
-    end
+  always @(posedge clk) begin
+      if (~rst & bus_valid) begin
+          if (WCSREN & ((addCSR==ADD_MCYCLE) | (addCSR==ADD_MCYCLEH))) begin
+              difftest_skip_ref();
+          end
+      end
+  end
     assign csr_mepc  = CSR_MEPC;
     assign csr_mtvec = CSR_MTVEC;
 endmodule

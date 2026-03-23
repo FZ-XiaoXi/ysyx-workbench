@@ -21,7 +21,7 @@ module LSU(
     //     pmem <= (readEN)?pmem_read(address):32'b0;
     // end
     // assign val0=pmem;
-    assign val0=pmem_read(address);
+    assign val0=(readEN)?pmem_read(address):32'b0;
     assign val1={{8{val0[31]}},val0[31:8]};
     assign val2={{8{val1[31]}},val1[31:8]};
     assign val3={{8{val2[31]}},val2[31:8]};
