@@ -4,6 +4,8 @@
 
 #include "Vtop__pch.h"
 
+void Vtop___024unit____Vdpiimwrap_difftest_skip_ref_TOP____024unit();
+
 void Vtop_REG___nba_sequent__TOP__top__REG_0__0(Vtop_REG* vlSelf) {
     VL_DEBUG_IF(VL_DBG_MSGF("+        Vtop_REG___nba_sequent__TOP__top__REG_0__0\n"); );
     Vtop__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
@@ -24,6 +26,18 @@ void Vtop_REG___nba_sequent__TOP__top__REG_0__0(Vtop_REG* vlSelf) {
     // Body
     __Vdly__CSR_MCYCLE = vlSelfRef.CSR_MCYCLE;
     __Vdly__CSR_MCYCLEH = vlSelfRef.CSR_MCYCLEH;
+    if (((~ (IData)(vlSymsp->TOP.rst)) & (IData)(vlSymsp->TOP__top__IFU_0.state))) {
+        if (((IData)(vlSelfRef.__PVT__WCSREN) & ((0x0b00U 
+                                                  == 
+                                                  (vlSymsp->TOP__top__IFU_0.__PVT__PC_command 
+                                                   >> 0x00000014U)) 
+                                                 | (0x0b80U 
+                                                    == 
+                                                    (vlSymsp->TOP__top__IFU_0.__PVT__PC_command 
+                                                     >> 0x00000014U))))) {
+            Vtop___024unit____Vdpiimwrap_difftest_skip_ref_TOP____024unit();
+        }
+    }
     __VdlySet__GPR__v0 = 0U;
     __VdlySet__GPR__v32 = 0U;
     if (vlSymsp->TOP.rst) {
@@ -129,8 +143,6 @@ void Vtop_REG___nba_sequent__TOP__top__REG_0__0(Vtop_REG* vlSelf) {
     }
 }
 
-void Vtop___024unit____Vdpiimwrap_difftest_skip_ref_TOP____024unit();
-
 void Vtop_REG___nba_sequent__TOP__top__REG_0__1(Vtop_REG* vlSelf) {
     VL_DEBUG_IF(VL_DBG_MSGF("+        Vtop_REG___nba_sequent__TOP__top__REG_0__1\n"); );
     Vtop__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
@@ -139,13 +151,4 @@ void Vtop_REG___nba_sequent__TOP__top__REG_0__1(Vtop_REG* vlSelf) {
     vlSelfRef.__PVT__WCSREN = ((IData)(vlSymsp->TOP__top.__PVT__IDU_0__DOT__isCSRRS) 
                                | ((IData)(vlSymsp->TOP__top.__PVT__IDU_0__DOT__isCSRRW) 
                                   | (IData)(vlSymsp->TOP__top.__PVT__IDU_0__DOT__isCSRRC)));
-    if (((IData)(vlSelfRef.__PVT__WCSREN) & ((0x0b00U 
-                                              == (vlSymsp->TOP__top__IFU_0.__PVT__PC_command 
-                                                  >> 0x00000014U)) 
-                                             | (0x0b80U 
-                                                == 
-                                                (vlSymsp->TOP__top__IFU_0.__PVT__PC_command 
-                                                 >> 0x00000014U))))) {
-        Vtop___024unit____Vdpiimwrap_difftest_skip_ref_TOP____024unit();
-    }
 }

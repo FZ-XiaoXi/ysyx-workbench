@@ -18,20 +18,20 @@ static uint32_t check_devices(uint32_t addr, io_callback_t *io_callback, int *id
 
 extern void difftest_skip_ref();
 bool read_devices(uint32_t addr, uint32_t*data){
-    difftest_skip_ref();
     io_callback_t io_callback=NULL;
     uint32_t offset = check_devices(addr, &io_callback, NULL);
     if(io_callback == NULL) return false;
+    difftest_skip_ref();
     *data = io_callback(offset, 0, 4, false);
     dtrace(addr, false, *data);
     return true;
 }
 
 bool write_devices(uint32_t addr, uint32_t data){
-    difftest_skip_ref();
     io_callback_t io_callback=NULL;
     uint32_t offset = check_devices(addr, &io_callback, NULL);
     if(io_callback == NULL) return false;
+    difftest_skip_ref();
     io_callback(offset, data, 4, true);
     dtrace(addr, true, data);
     return true;

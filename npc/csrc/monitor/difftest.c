@@ -68,7 +68,8 @@ static void checkregs(CPUState *ref, uint32_t pc, uint32_t npc) {
 void difftest_step(uint32_t pc, uint32_t npc){
 	CPUState ref;
 	if(is_skip_ref){
-		
+		extern long img_size;
+		ref_difftest_memcpy(RESET_VECTOR, &MEM(RESET_VECTOR), img_size, DIFFTEST_TO_REF);
 		ref_difftest_regcpy(cpu.gpr, &npc, DIFFTEST_TO_REF);
 		is_skip_ref = false;
 		return;
@@ -78,7 +79,6 @@ void difftest_step(uint32_t pc, uint32_t npc){
 	checkregs(&ref, pc, npc);
 }
 void difftest_skip_ref() {
-  printf("XXXX\n");
   is_skip_ref = true;
 }
 #else

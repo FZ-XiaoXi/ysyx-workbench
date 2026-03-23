@@ -12,9 +12,9 @@ static char *diff_so_file = NULL;
 static char *img_file = NULL;
 static char *elf_file = NULL;
 static int difftest_port = 1234;
-
-char *IMAGE_NAME;
-char *ELF_NAME;
+long img_size = 0;
+char *IMAGE_NAME = NULL;
+char *ELF_NAME = NULL;
 VerilatedContext* contextp = NULL;
 Vtop* top = NULL;
 
@@ -26,7 +26,7 @@ void init(int argc, char** argv){
 	init_log(log_file);
 
     //init MEMORY & elf
-	long img_size = load_img();
+	img_size = load_img();
 
 	//init verilator
 	contextp = new VerilatedContext;

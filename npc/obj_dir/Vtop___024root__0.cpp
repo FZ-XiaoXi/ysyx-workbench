@@ -370,15 +370,15 @@ void Vtop___024root___nba_sequent__TOP__0(Vtop___024root* vlSelf) {
                                                  : 0U)));
     vlSelfRef.LSU_WEN = ((IData)(vlSymsp->TOP__top.__PVT__IDU_0__DOT__isSW) 
                          | (IData)(vlSymsp->TOP__top.IDU_0__DOT____VdfgRegularize_h52656aab_0_25));
-    vlSelfRef.LSU_REN = ((IData)(vlSymsp->TOP__top.__PVT__IDU_0__DOT__isLB) 
-                         | ((IData)(vlSymsp->TOP__top.__PVT__IDU_0__DOT__isLBU) 
-                            | ((IData)(vlSymsp->TOP__top.__PVT__IDU_0__DOT__isLW) 
-                               | (IData)(vlSymsp->TOP__top.IDU_0__DOT____VdfgRegularize_h52656aab_0_22))));
     vlSelfRef.LSU_rmask = ((IData)(vlSymsp->TOP__top.__PVT__IDU_0__DOT__isLW)
                             ? 0x0fU : ((IData)(vlSymsp->TOP__top.IDU_0__DOT____VdfgRegularize_h52656aab_0_21)
                                         ? 1U : ((IData)(vlSymsp->TOP__top.IDU_0__DOT____VdfgRegularize_h52656aab_0_22)
                                                  ? 3U
                                                  : 0U)));
+    vlSelfRef.LSU_REN = ((IData)(vlSymsp->TOP__top.__PVT__IDU_0__DOT__isLB) 
+                         | ((IData)(vlSymsp->TOP__top.__PVT__IDU_0__DOT__isLBU) 
+                            | ((IData)(vlSymsp->TOP__top.__PVT__IDU_0__DOT__isLW) 
+                               | (IData)(vlSymsp->TOP__top.IDU_0__DOT____VdfgRegularize_h52656aab_0_22))));
     vlSelfRef.imm = ((IData)(vlSymsp->TOP__top.__PVT__IDU_0__DOT__isI)
                       ? (((- (IData)((vlSymsp->TOP__top__IFU_0.__PVT__PC_command 
                                       >> 0x0000001fU))) 
