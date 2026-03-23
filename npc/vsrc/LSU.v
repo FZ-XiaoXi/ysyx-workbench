@@ -10,7 +10,8 @@ module LSU(
     input isSigned,
     input clk,
     input writeEN,
-    input readEN
+    input readEN,
+    input bus_valid
 );
 
     wire [31:0]val0,val1,val2,val3,rdata1,rdata2,rdata4;
@@ -20,7 +21,7 @@ module LSU(
     //     pmem <= (readEN)?pmem_read(address):32'b0;
     // end
     // assign val0=pmem;
-    assign val0=(readEN)?pmem_read(address):32'b0;
+    assign val0=pmem_read(address);
     assign val1={{8{val0[31]}},val0[31:8]};
     assign val2={{8{val1[31]}},val1[31:8]};
     assign val3={{8{val2[31]}},val2[31:8]};
@@ -62,7 +63,7 @@ module LSU(
         endcase
     end
     always @(posedge clk) begin
-        if(writeEN)begin
+        if(writeEN && bus_valid)begin
             pmem_write(address,w,{4'h0,wmask});
         end
     end

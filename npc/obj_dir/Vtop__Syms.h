@@ -16,6 +16,7 @@
 // INCLUDE MODULE CLASSES
 #include "Vtop___024root.h"
 #include "Vtop_top.h"
+#include "Vtop_IFU.h"
 #include "Vtop___024unit.h"
 #include "Vtop_REG.h"
 
@@ -35,10 +36,12 @@ class alignas(VL_CACHE_LINE_BYTES) Vtop__Syms final : public VerilatedSyms {
     Vtop___024root                 TOP;
     Vtop___024unit                 TOP____024unit;
     Vtop_top                       TOP__top;
+    Vtop_IFU                       TOP__top__IFU_0;
     Vtop_REG                       TOP__top__REG_0;
 
     // SCOPE NAMES
     VerilatedScope __Vscope_top;
+    VerilatedScope __Vscope_top__IFU_0;
     VerilatedScope __Vscope_top__REG_0;
 
     // CONSTRUCTORS

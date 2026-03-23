@@ -17,7 +17,8 @@ module REG(
   input WCSREN,
   input WEN,
   input isECALL,
-  input isMRET
+  input isMRET,
+  input bus_valid
 ); 
   parameter [11:0]ADD_MCYCLE = 12'hb00;
   parameter [11:0]ADD_MCYCLEH = 12'hb80;
@@ -66,7 +67,7 @@ module REG(
       CSR_MSTATUS <= 32'h1800;
       CSR_MVENDORID <= 32'h79737978;
       CSR_MARCHID <= 32'h018ce19b;
-    end else begin
+    end else if(bus_valid) begin
       if(WCSREN) begin
         case (addCSR)
             ADD_MTVEC:      CSR_MTVEC   <= inData;
@@ -90,10 +91,12 @@ module REG(
       for(int i=0;i<32;i=i+1) begin
         GPR[i]<={32{1'b0}};
       end
-    end else if(WEN | WCSREN) begin
-      GPR[addW]<=(addW==5'b00000)?{32{1'b0}}:(WCSREN?CSR_BUS:inData);
-    end else begin
-      GPR[addW]<=GPR[addW];
+    end else if(bus_valid) begin
+      if(WEN | WCSREN) begin
+        GPR[addW]<=(addW==5'b00000)?{32{1'b0}}:(WCSREN?CSR_BUS:inData);
+      end else begin
+        GPR[addW]<=GPR[addW];
+      end
     end
   end
 

@@ -58,7 +58,9 @@ static void checkregs(CPUState *ref, uint32_t pc, uint32_t npc) {
   	if (!success) {
     	cpu.state = NPC_ABORT;
     	//cpu.halt_pc = pc;
+		printf("===REF CPU State===\n");
 		reg_display(*ref);
+		printf("===DUT CPU State===\n");
 		reg_display(cpu);
   	}
 }
@@ -66,6 +68,7 @@ static void checkregs(CPUState *ref, uint32_t pc, uint32_t npc) {
 void difftest_step(uint32_t pc, uint32_t npc){
 	CPUState ref;
 	if(is_skip_ref){
+		
 		ref_difftest_regcpy(cpu.gpr, &npc, DIFFTEST_TO_REF);
 		is_skip_ref = false;
 		return;
@@ -75,7 +78,7 @@ void difftest_step(uint32_t pc, uint32_t npc){
 	checkregs(&ref, pc, npc);
 }
 void difftest_skip_ref() {
-	
+  printf("XXXX\n");
   is_skip_ref = true;
 }
 #else
