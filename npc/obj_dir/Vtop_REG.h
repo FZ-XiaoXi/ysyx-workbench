@@ -23,6 +23,7 @@ class alignas(VL_CACHE_LINE_BYTES) Vtop_REG final : public VerilatedModule {
     VL_IN8(__PVT__WEN,0,0);
     VL_IN8(__PVT__isECALL,0,0);
     VL_IN8(__PVT__isMRET,0,0);
+    VL_IN8(__PVT__bus_valid,0,0);
     VL_IN16(__PVT__addCSR,11,0);
     VL_IN(__PVT__inData,31,0);
     VL_IN(__PVT__inCSRData,31,0);

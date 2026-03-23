@@ -10,6 +10,7 @@
 #include "Vtop___024root.h"
 #include "Vtop_top.h"
 #include "Vtop_REG.h"
+#include "Vtop_IFU.h"
 
 extern VerilatedContext* contextp;
 extern Vtop* top;
@@ -25,8 +26,8 @@ extern FILE* log_fp;
 #define CONFIG_MSIZE 0x8000000
 
 //#define CONFIG_DIFFTEST_ENABLE
-//#define CONFIG_WATCHPOINT_ENABLE
-//#define CONFIG_TRACE_ENABLE
+#define CONFIG_WATCHPOINT_ENABLE
+#define CONFIG_TRACE_ENABLE
 #ifdef CONFIG_TRACE_ENABLE
 
     #define CONFIG_ITRACE_ENABLE
@@ -34,15 +35,15 @@ extern FILE* log_fp;
         //#define CONFIG_ITRACE_PRINT
     #endif
     
-    //#define CONFIG_MTRACE_ENABLE
+    #define CONFIG_MTRACE_ENABLE
     #ifdef CONFIG_MTRACE_ENABLE
-        #define CONFIG_MTRACE_RANGE_LEFT 0x800a0000
-        #define CONFIG_MTRACE_RANGE_RIGHT 0x800f0000
+        #define CONFIG_MTRACE_RANGE_LEFT 0x80009fd8
+        #define CONFIG_MTRACE_RANGE_RIGHT 0x80009fd8
     #endif
 
-    //#define CONFIG_FTRACE_ENABLE
+    #define CONFIG_FTRACE_ENABLE
 
-    //#define CONFIG_DTRACE_ENABLE
+    #define CONFIG_DTRACE_ENABLE
 
 #endif
 

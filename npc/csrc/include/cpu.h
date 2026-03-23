@@ -9,6 +9,7 @@ typedef struct{
     uint32_t halt_ret;
     uint64_t count;
     uint32_t inst;
+    uint8_t rtl_state;
     int state;
     uint32_t gpr[CONFIG_GPR_NUM];
     char logbuf[128];

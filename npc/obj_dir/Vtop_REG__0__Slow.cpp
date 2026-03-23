@@ -28,6 +28,7 @@ VL_ATTR_COLD void Vtop_REG___ctor_var_reset(Vtop_REG* vlSelf) {
     vlSelf->__PVT__WEN = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 16162439619744449072ull);
     vlSelf->__PVT__isECALL = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 1184926532974597313ull);
     vlSelf->__PVT__isMRET = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 4828884427583364781ull);
+    vlSelf->__PVT__bus_valid = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 9373776200932413134ull);
     for (int __Vi0 = 0; __Vi0 < 32; ++__Vi0) {
         vlSelf->GPR[__Vi0] = VL_SCOPED_RAND_RESET_I(32, __VscopeHash, 3611090588693839745ull);
     }
