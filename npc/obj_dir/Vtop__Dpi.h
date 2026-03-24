@@ -16,8 +16,10 @@ extern "C" {
 
 
     // DPI IMPORTS
+    // DPI import at vsrc/LSU.v:1:30
+    extern void difftest_mem_set(int addr);
     // DPI import at vsrc/REG.v:1:30
-    extern void difftest_skip_ref();
+    extern void difftest_skip_ref(int reason);
     // DPI import at vsrc/top.v:1:30
     extern void ebreak();
     // DPI import at vsrc/top.v:2:29

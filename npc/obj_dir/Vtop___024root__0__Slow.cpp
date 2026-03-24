@@ -43,7 +43,7 @@ VL_ATTR_COLD void Vtop___024root___eval_settle(Vtop___024root* vlSelf) {
 #ifdef VL_DEBUG
             Vtop___024root___dump_triggers__stl(vlSelfRef.__VstlTriggered, "stl"s);
 #endif
-            VL_FATAL_MT("vsrc/top.v", 6, "", "Settle region did not converge after 100 tries");
+            VL_FATAL_MT("vsrc/top.v", 5, "", "Settle region did not converge after 100 tries");
         }
         __VstlIterCount = ((IData)(1U) + __VstlIterCount);
     } while (Vtop___024root___eval_phase__stl(vlSelf));
@@ -175,15 +175,15 @@ VL_ATTR_COLD void Vtop___024root___stl_sequent__TOP__1(Vtop___024root* vlSelf) {
                                                  : 0U)));
     vlSelfRef.LSU_WEN = ((IData)(vlSymsp->TOP__top.__PVT__IDU_0__DOT__isSW) 
                          | (IData)(vlSymsp->TOP__top.IDU_0__DOT____VdfgRegularize_h52656aab_0_25));
+    vlSelfRef.LSU_REN = ((IData)(vlSymsp->TOP__top.__PVT__IDU_0__DOT__isLB) 
+                         | ((IData)(vlSymsp->TOP__top.__PVT__IDU_0__DOT__isLBU) 
+                            | ((IData)(vlSymsp->TOP__top.__PVT__IDU_0__DOT__isLW) 
+                               | (IData)(vlSymsp->TOP__top.IDU_0__DOT____VdfgRegularize_h52656aab_0_22))));
     vlSelfRef.LSU_rmask = ((IData)(vlSymsp->TOP__top.__PVT__IDU_0__DOT__isLW)
                             ? 0x0fU : ((IData)(vlSymsp->TOP__top.IDU_0__DOT____VdfgRegularize_h52656aab_0_21)
                                         ? 1U : ((IData)(vlSymsp->TOP__top.IDU_0__DOT____VdfgRegularize_h52656aab_0_22)
                                                  ? 3U
                                                  : 0U)));
-    vlSelfRef.LSU_REN = ((IData)(vlSymsp->TOP__top.__PVT__IDU_0__DOT__isLB) 
-                         | ((IData)(vlSymsp->TOP__top.__PVT__IDU_0__DOT__isLBU) 
-                            | ((IData)(vlSymsp->TOP__top.__PVT__IDU_0__DOT__isLW) 
-                               | (IData)(vlSymsp->TOP__top.IDU_0__DOT____VdfgRegularize_h52656aab_0_22))));
     vlSelfRef.imm = ((IData)(vlSymsp->TOP__top.__PVT__IDU_0__DOT__isI)
                       ? (((- (IData)((vlSymsp->TOP__top__IFU_0.__PVT__PC_command 
                                       >> 0x0000001fU))) 
@@ -256,10 +256,14 @@ VL_ATTR_COLD void Vtop___024root___stl_sequent__TOP__1(Vtop___024root* vlSelf) {
 VL_ATTR_COLD void Vtop___024root____Vm_traceActivitySetAll(Vtop___024root* vlSelf);
 void Vtop_IFU___ico_sequent__TOP__top__IFU_0__0(Vtop_IFU* vlSelf);
 VL_ATTR_COLD void Vtop_top___stl_sequent__TOP__top__0(Vtop_top* vlSelf);
+VL_ATTR_COLD void Vtop_LSU___stl_sequent__TOP__top__LSU_0__0(Vtop_LSU* vlSelf);
 void Vtop_REG___nba_sequent__TOP__top__REG_0__1(Vtop_REG* vlSelf);
+void Vtop_LSU___ico_sequent__TOP__top__LSU_0__0(Vtop_LSU* vlSelf);
 void Vtop_top___ico_sequent__TOP__top__0(Vtop_top* vlSelf);
+void Vtop_IFU___ico_sequent__TOP__top__IFU_0__1(Vtop_IFU* vlSelf);
 void Vtop___024root___ico_sequent__TOP__1(Vtop___024root* vlSelf);
 void Vtop_top___ico_sequent__TOP__top__1(Vtop_top* vlSelf);
+void Vtop_LSU___ico_sequent__TOP__top__LSU_0__1(Vtop_LSU* vlSelf);
 void Vtop___024root___ico_sequent__TOP__2(Vtop___024root* vlSelf);
 
 VL_ATTR_COLD void Vtop___024root___eval_stl(Vtop___024root* vlSelf) {
@@ -272,11 +276,15 @@ VL_ATTR_COLD void Vtop___024root___eval_stl(Vtop___024root* vlSelf) {
         Vtop___024root____Vm_traceActivitySetAll(vlSelf);
         Vtop_IFU___ico_sequent__TOP__top__IFU_0__0((&vlSymsp->TOP__top__IFU_0));
         Vtop_top___stl_sequent__TOP__top__0((&vlSymsp->TOP__top));
+        Vtop_LSU___stl_sequent__TOP__top__LSU_0__0((&vlSymsp->TOP__top__LSU_0));
         Vtop_REG___nba_sequent__TOP__top__REG_0__1((&vlSymsp->TOP__top__REG_0));
         Vtop___024root___stl_sequent__TOP__1(vlSelf);
+        Vtop_LSU___ico_sequent__TOP__top__LSU_0__0((&vlSymsp->TOP__top__LSU_0));
         Vtop_top___ico_sequent__TOP__top__0((&vlSymsp->TOP__top));
+        Vtop_IFU___ico_sequent__TOP__top__IFU_0__1((&vlSymsp->TOP__top__IFU_0));
         Vtop___024root___ico_sequent__TOP__1(vlSelf);
         Vtop_top___ico_sequent__TOP__top__1((&vlSymsp->TOP__top));
+        Vtop_LSU___ico_sequent__TOP__top__LSU_0__1((&vlSymsp->TOP__top__LSU_0));
         Vtop___024root___ico_sequent__TOP__2(vlSelf);
     }
 }

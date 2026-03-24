@@ -23,11 +23,13 @@ static void cpu_get_reg(){
 static void cpu_exec_once(){
 	top->clk=1;
 	top->eval();
-	contextp->timeInc(5);
+	tfp->dump(contextp->time());
+	contextp->timeInc(2);
 	
 	top->clk=0;
 	top->eval();
-	contextp->timeInc(5);
+	tfp->dump(contextp->time());
+	contextp->timeInc(2);
 }
 void cpu_exec(uint64_t n){
 	switch (cpu.state)
@@ -43,27 +45,23 @@ void cpu_exec(uint64_t n){
 
 	while(n > 0){
 		cpu_exec_once();
-		cpu.rtl_state = top->top->IFU_0->state;
-		if(cpu.rtl_state == 1) continue;
+		cpu.lsu_state = top->top->LSU_0->state;
+		cpu.ifu_state = top->top->IFU_0->state;
+		//Log("LSU state = %d, IFU state = %d", cpu.lsu_state, cpu.ifu_state);
+		if(cpu.ifu_state == 1) continue;
 		else{
 			n--;
 			cpu.count++;
 			cpu_get_reg();
-			//printf("%08x %08x \n", top->top->REG_0->CSR_MCYCLEH, top->top->REG_0->CSR_MCYCLE);
-			//printf("%08x %08x %08x %08x imm%08x rs1%08x rs2%08x %08x\n",top->EXU_inA,top->EXU_inB,top->EXU_data,top->top->PC,top->imm,top->rs1_val,top->rs2_val,top->top->REG_0->GPR[14]);
-			//printf("%08x %08x\n",top->top->REG_0->CSR_MTVEC,cpu.pc);
 			if(check_pmem_bound(cpu.pc)){
 				cpu.inst = pmem_read(cpu.pc);
-				//Log("%05lu [" FMT_WORD "]:" FMT_WORD , cpu.count, cpu.pc, cpu.inst);
 			}else{
 				Log("pc = " FMT_WORD " is out of bound", cpu.pc);
-				cpu.state = NPC_ABORT;
-				break;
 			}
 			
 
 			trace_and_difftest();
-			//Log("%05d [" FMT_WORD "]:" FMT_WORD , cpu.count, cpu.pc, pmem_read(cpu.pc));
+			cpu.mem_access_addr = 0;
 			if(cpu.state != NPC_RUNNING) break;
 			
 		}

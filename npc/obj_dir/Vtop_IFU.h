@@ -20,6 +20,7 @@ class alignas(VL_CACHE_LINE_BYTES) Vtop_IFU final : public VerilatedModule {
     VL_IN8(__PVT__isBRANCH,0,0);
     VL_IN8(__PVT__isECALL,0,0);
     VL_IN8(__PVT__isMRET,0,0);
+    VL_IN8(__PVT__WBU_final,0,0);
     VL_OUT8(__PVT__bus_valid,0,0);
     CData/*0:0*/ state;
     CData/*0:0*/ __PVT__next_state;

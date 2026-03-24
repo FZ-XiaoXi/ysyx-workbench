@@ -4,12 +4,24 @@
 
 #include "Vtop__pch.h"
 
-extern "C" void difftest_skip_ref();
+extern "C" void difftest_mem_set(int addr);
 
-void Vtop___024unit____Vdpiimwrap_difftest_skip_ref_TOP____024unit() {
+void Vtop___024unit____Vdpiimwrap_difftest_mem_set_TOP____024unit(IData/*31:0*/ addr) {
+    VL_DEBUG_IF(VL_DBG_MSGF("+        Vtop___024unit____Vdpiimwrap_difftest_mem_set_TOP____024unit\n"); );
+    // Body
+    int addr__Vcvt;
+    addr__Vcvt = addr;
+    difftest_mem_set(addr__Vcvt);
+}
+
+extern "C" void difftest_skip_ref(int reason);
+
+void Vtop___024unit____Vdpiimwrap_difftest_skip_ref_TOP____024unit(IData/*31:0*/ reason) {
     VL_DEBUG_IF(VL_DBG_MSGF("+        Vtop___024unit____Vdpiimwrap_difftest_skip_ref_TOP____024unit\n"); );
     // Body
-    difftest_skip_ref();
+    int reason__Vcvt;
+    reason__Vcvt = reason;
+    difftest_skip_ref(reason__Vcvt);
 }
 
 extern "C" void ebreak();

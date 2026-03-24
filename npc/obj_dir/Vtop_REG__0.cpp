@@ -4,7 +4,7 @@
 
 #include "Vtop__pch.h"
 
-void Vtop___024unit____Vdpiimwrap_difftest_skip_ref_TOP____024unit();
+void Vtop___024unit____Vdpiimwrap_difftest_skip_ref_TOP____024unit(IData/*31:0*/ reason);
 
 void Vtop_REG___nba_sequent__TOP__top__REG_0__0(Vtop_REG* vlSelf) {
     VL_DEBUG_IF(VL_DBG_MSGF("+        Vtop_REG___nba_sequent__TOP__top__REG_0__0\n"); );
@@ -35,7 +35,7 @@ void Vtop_REG___nba_sequent__TOP__top__REG_0__0(Vtop_REG* vlSelf) {
                                                     == 
                                                     (vlSymsp->TOP__top__IFU_0.__PVT__PC_command 
                                                      >> 0x00000014U))))) {
-            Vtop___024unit____Vdpiimwrap_difftest_skip_ref_TOP____024unit();
+            Vtop___024unit____Vdpiimwrap_difftest_skip_ref_TOP____024unit(3U);
         }
     }
     __VdlySet__GPR__v0 = 0U;
@@ -56,21 +56,20 @@ void Vtop_REG___nba_sequent__TOP__top__REG_0__0(Vtop_REG* vlSelf) {
         __Vdly__CSR_MCYCLEH = ((0xffffffffU == vlSelfRef.CSR_MCYCLE)
                                 ? ((IData)(1U) + vlSelfRef.CSR_MCYCLEH)
                                 : vlSelfRef.CSR_MCYCLEH);
-        __VdlyVal__GPR__v32 = ((((IData)(vlSymsp->TOP__top.__PVT__IDU_0__DOT__isLOAD) 
-                                 | (IData)(vlSymsp->TOP__top.__PVT__IDU_0__DOT__isWRITE)) 
-                                | (IData)(vlSelfRef.__PVT__WCSREN))
-                                ? ((0U == (0x0000001fU 
+        if ((((IData)(vlSymsp->TOP__top__LSU_0.__PVT__LSU_final) 
+              & ((IData)(vlSymsp->TOP__top.__PVT__IDU_0__DOT__isLOAD) 
+                 | (IData)(vlSymsp->TOP__top.__PVT__IDU_0__DOT__isWRITE))) 
+             | (IData)(vlSelfRef.__PVT__WCSREN))) {
+            __VdlyVal__GPR__v32 = ((0U == (0x0000001fU 
                                            & (vlSymsp->TOP__top__IFU_0.__PVT__PC_command 
                                               >> 7U)))
                                     ? 0U : ((IData)(vlSelfRef.__PVT__WCSREN)
                                              ? vlSymsp->TOP.CSR_data
-                                             : vlSymsp->TOP.reg_data))
-                                : vlSelfRef.GPR[(0x0000001fU 
-                                                 & (vlSymsp->TOP__top__IFU_0.__PVT__PC_command 
-                                                    >> 7U))]);
-        __VdlyDim0__GPR__v32 = (0x0000001fU & (vlSymsp->TOP__top__IFU_0.__PVT__PC_command 
-                                               >> 7U));
-        __VdlySet__GPR__v32 = 1U;
+                                             : vlSymsp->TOP.reg_data));
+            __VdlyDim0__GPR__v32 = (0x0000001fU & (vlSymsp->TOP__top__IFU_0.__PVT__PC_command 
+                                                   >> 7U));
+            __VdlySet__GPR__v32 = 1U;
+        }
         if (vlSelfRef.__PVT__WCSREN) {
             if ((0x0305U != (vlSymsp->TOP__top__IFU_0.__PVT__PC_command 
                              >> 0x00000014U))) {
