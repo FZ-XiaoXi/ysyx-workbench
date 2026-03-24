@@ -16,7 +16,9 @@ long img_size = 0;
 char *IMAGE_NAME = NULL;
 char *ELF_NAME = NULL;
 VerilatedContext* contextp = NULL;
+VerilatedVcdC* tfp = NULL;
 Vtop* top = NULL;
+
 
 void init(int argc, char** argv){
 	//init PRAISE
@@ -32,6 +34,16 @@ void init(int argc, char** argv){
 	contextp = new VerilatedContext;
 	top = new Vtop{contextp};
 	contextp->commandArgs(argc, argv);
+
+#ifdef CONFIG_WAVE_ENABLE
+	tfp = new VerilatedVcdC;
+	contextp->traceEverOn(true);
+	top->trace(tfp, 0);
+	tfp->open("npc-waveform.vcd");
+#endif
+
+	//init reset
+
 	top->clk=0;top->rst=0;top->eval();contextp->timeInc(10);
 	top->clk=0;top->rst=1;top->eval();contextp->timeInc(10);
 	top->clk=1;top->rst=1;top->eval();contextp->timeInc(10);
@@ -47,6 +59,7 @@ void init(int argc, char** argv){
 	cpu.halt_ret = 0;
 	cpu.count = 0;
 	cpu.inst = MEM(cpu.pc);
+	cpu.mem_access_addr = 0;
 	//cpu.pc=
 	
 	//init regex
@@ -180,21 +193,24 @@ static long load_img() {
     Log("No image is given. Use the default build-in image.");
 		//MEM[0]=0b00000000100000000000000010010011;//addi r1,r0,8
 		//MEM[1]=0b00000000010000001000010001100111;//jalr r8,4(r1)
+		// MEM[ 0]=0b00000000100000000000000010010011;//addi r1,r0,8
+		// MEM[ 1]=0b00000000001000001000000100010011;//addi r2,r1,2
+		// MEM[ 2]=0b00000000000100010000000110110011;//add  r3,r1,r2
+		// MEM[ 3]=0b00000000000000000111000110110111;//lui  r3,0x7000
+		// MEM[ 4]=0b00010001000100011000001000010011;//addi r4,r3,0x111
+		// MEM[ 5]=0b00000000010000000010000010000011;//lw   r1,4(r0)
+		// MEM[ 6]=0b00000000001000000100000100000011;//lbu  r2,+2(r0)
+		// MEM[ 7]=0b00000000001000000000000110000011;//lb   r3,+2(r0)
+		// MEM[ 8]=0b00010000001100000010000000100011;//sw   r3,0x100(r0)
+		// MEM[ 9]=0b00010000001100000000001100100011;//sb   r3,0x106(r0)
+		// MEM[10]=0b00010000000000000010001010000011;//lw   r5,0x100(r0)
+		// MEM[11]=0b00010000010000000010001100000011;//lw   r6,0x104(r0)
+		// MEM[12]=0b00000000000100000000010100010011;//addi r10,r0,1
+		// MEM[13]=0b00000000000100000000000001110011;//ebreak
+		// MEM[14]=0b00000000010000000000010001100111;//jalr r8,4(r0)
 		MEM[ 0]=0b00000000100000000000000010010011;//addi r1,r0,8
-		MEM[ 1]=0b00000000001000001000000100010011;//addi r2,r1,2
-		MEM[ 2]=0b00000000000100010000000110110011;//add  r3,r1,r2
-		MEM[ 3]=0b00000000000000000111000110110111;//lui  r3,0x7000
-		MEM[ 4]=0b00010001000100011000001000010011;//addi r4,r3,0x111
-		MEM[ 5]=0b00000000010000000010000010000011;//lw   r1,4(r0)
-		MEM[ 6]=0b00000000001000000100000100000011;//lbu  r2,+2(r0)
-		MEM[ 7]=0b00000000001000000000000110000011;//lb   r3,+2(r0)
-		MEM[ 8]=0b00010000001100000010000000100011;//sw   r3,0x100(r0)
-		MEM[ 9]=0b00010000001100000000001100100011;//sb   r3,0x106(r0)
-		MEM[10]=0b00010000000000000010001010000011;//lw   r5,0x100(r0)
-		MEM[11]=0b00010000010000000010001100000011;//lw   r6,0x104(r0)
-		MEM[12]=0b00000000000100000000010100010011;//addi r10,r0,1
-		MEM[13]=0b00000000000100000000000001110011;//ebreak
-		MEM[14]=0b00000000010000000000010001100111;//jalr r8,4(r0)
+		MEM[ 1]=0b00010000001100000010000000100011;//sw   r1,0x100(r0)
+
     return 4096; // built-in image size
   }
 

@@ -19,7 +19,8 @@ int main(int argc, char** argv) {
 	//int flag=top->rootp->top->REG_0->GPR[10];
     delete top;
     delete contextp;
-
+	tfp->close();
+	delete tfp;
 	int status = !(cpu.state==NPC_QUIT || (cpu.state==NPC_END && cpu.halt_ret==0));
     return status;
 }

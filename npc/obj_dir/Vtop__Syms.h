@@ -18,6 +18,7 @@
 #include "Vtop_top.h"
 #include "Vtop_IFU.h"
 #include "Vtop___024unit.h"
+#include "Vtop_LSU.h"
 #include "Vtop_REG.h"
 
 // DPI TYPES for DPI Export callbacks (Internal use)
@@ -37,11 +38,13 @@ class alignas(VL_CACHE_LINE_BYTES) Vtop__Syms final : public VerilatedSyms {
     Vtop___024unit                 TOP____024unit;
     Vtop_top                       TOP__top;
     Vtop_IFU                       TOP__top__IFU_0;
+    Vtop_LSU                       TOP__top__LSU_0;
     Vtop_REG                       TOP__top__REG_0;
 
     // SCOPE NAMES
     VerilatedScope __Vscope_top;
     VerilatedScope __Vscope_top__IFU_0;
+    VerilatedScope __Vscope_top__LSU_0;
     VerilatedScope __Vscope_top__REG_0;
 
     // CONSTRUCTORS

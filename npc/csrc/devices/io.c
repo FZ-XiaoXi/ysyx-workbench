@@ -16,12 +16,12 @@ static uint32_t check_devices(uint32_t addr, io_callback_t *io_callback, int *id
     return 0;
 }
 
-extern void difftest_skip_ref();
+extern void difftest_skip_ref(int reason);
 bool read_devices(uint32_t addr, uint32_t*data){
     io_callback_t io_callback=NULL;
     uint32_t offset = check_devices(addr, &io_callback, NULL);
     if(io_callback == NULL) return false;
-    difftest_skip_ref();
+    difftest_skip_ref(1);
     *data = io_callback(offset, 0, 4, false);
     dtrace(addr, false, *data);
     return true;
@@ -31,7 +31,7 @@ bool write_devices(uint32_t addr, uint32_t data){
     io_callback_t io_callback=NULL;
     uint32_t offset = check_devices(addr, &io_callback, NULL);
     if(io_callback == NULL) return false;
-    difftest_skip_ref();
+    difftest_skip_ref(2);
     io_callback(offset, data, 4, true);
     dtrace(addr, true, data);
     return true;

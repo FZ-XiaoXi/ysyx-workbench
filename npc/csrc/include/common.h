@@ -11,8 +11,12 @@
 #include "Vtop_top.h"
 #include "Vtop_REG.h"
 #include "Vtop_IFU.h"
+#include "Vtop_LSU.h"
+#include "verilated_vcd_c.h"
 
 extern VerilatedContext* contextp;
+extern VerilatedVcdC* tfp;
+
 extern Vtop* top;
 extern FILE* log_fp;
 
@@ -27,6 +31,7 @@ extern FILE* log_fp;
 
 #define CONFIG_DIFFTEST_ENABLE
 #define CONFIG_WATCHPOINT_ENABLE
+#define CONFIG_WAVE_ENABLE
 #define CONFIG_TRACE_ENABLE
 #ifdef CONFIG_TRACE_ENABLE
 
@@ -37,8 +42,8 @@ extern FILE* log_fp;
     
     #define CONFIG_MTRACE_ENABLE
     #ifdef CONFIG_MTRACE_ENABLE
-        #define CONFIG_MTRACE_RANGE_LEFT 0x80009fd8
-        #define CONFIG_MTRACE_RANGE_RIGHT 0x80009fd8
+        #define CONFIG_MTRACE_RANGE_LEFT 0x80008fd0
+        #define CONFIG_MTRACE_RANGE_RIGHT 0x80008fdf
     #endif
 
     #define CONFIG_FTRACE_ENABLE

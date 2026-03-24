@@ -9,6 +9,7 @@ module IFU(
     input isBRANCH,
     input isECALL,
     input isMRET,
+    input WBU_final,
     output reg [31:0]PC_command,
     output reg bus_valid
 );
@@ -28,7 +29,11 @@ module IFU(
             end
             state_wait:begin
                 bus_valid=1;
-                next_state=state_idle;
+                if(WBU_final) begin
+                    next_state=state_idle;
+                end else begin
+                    next_state=state_wait;
+                end
             end
             default:
                 next_state=state_idle;
@@ -50,23 +55,10 @@ module IFU(
         end
     end
 
-
     always @(posedge clk) begin
         if (rst) begin
             PC<=32'h80000000;
-        end else if (bus_valid) begin
-            if (isJUMP | isBRANCH | isECALL | isMRET) begin
-                PC<=dnpc;
-            end else begin
-                PC<=snpc;
-            end
-        end
-    end
-
-    always @(posedge clk) begin
-        if (rst) begin
-            PC<=32'h80000000;
-        end else if (bus_valid) begin
+        end else if (bus_valid && WBU_final) begin
             if (isJUMP | isBRANCH | isECALL | isMRET) begin
                 PC<=dnpc;
             end else begin

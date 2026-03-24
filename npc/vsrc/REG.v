@@ -1,4 +1,4 @@
-import "DPI-C" function void difftest_skip_ref();
+import "DPI-C" function void difftest_skip_ref(int reason);
 module REG(
   input clk,
   input rst,
@@ -94,8 +94,6 @@ module REG(
     end else if(bus_valid) begin
       if(WEN | WCSREN) begin
         GPR[addW]<=(addW==5'b00000)?{32{1'b0}}:(WCSREN?CSR_BUS:inData);
-      end else begin
-        GPR[addW]<=GPR[addW];
       end
     end
   end
@@ -103,7 +101,7 @@ module REG(
   always @(posedge clk) begin
       if (~rst & bus_valid) begin
           if (WCSREN & ((addCSR==ADD_MCYCLE) | (addCSR==ADD_MCYCLEH))) begin
-              difftest_skip_ref();
+              difftest_skip_ref(3);
           end
       end
   end

@@ -7,6 +7,7 @@
 
 #include "verilated.h"
 class Vtop_IFU;
+class Vtop_LSU;
 class Vtop_REG;
 
 
@@ -17,6 +18,7 @@ class alignas(VL_CACHE_LINE_BYTES) Vtop_top final : public VerilatedModule {
     // CELLS
     Vtop_REG* REG_0;
     Vtop_IFU* IFU_0;
+    Vtop_LSU* LSU_0;
 
     // DESIGN SPECIFIC STATE
     // Anonymous structures to workaround compiler member-count bugs
@@ -32,7 +34,6 @@ class alignas(VL_CACHE_LINE_BYTES) Vtop_top final : public VerilatedModule {
         CData/*0:0*/ __PVT__IDU_0__DOT__isLOAD;
         CData/*0:0*/ __PVT__IDU_0__DOT__isWRITE;
         CData/*0:0*/ __PVT__IDU_0__DOT__isJUMP;
-        CData/*0:0*/ __PVT__IDU_0__DOT__isBRANCH;
         CData/*1:0*/ __PVT__IDU_0__DOT__isCSR;
         CData/*0:0*/ __PVT__IDU_0__DOT__isJALR;
         CData/*0:0*/ __PVT__IDU_0__DOT__isBEQ;
@@ -85,9 +86,9 @@ class alignas(VL_CACHE_LINE_BYTES) Vtop_top final : public VerilatedModule {
         CData/*0:0*/ __PVT__IDU_0__DOT__isS;
         CData/*0:0*/ __PVT__IDU_0__DOT__isB;
         CData/*0:0*/ __PVT__IDU_0__DOT__isU;
+        CData/*0:0*/ IDU_0__DOT____VdfgRegularize_h52656aab_0_19;
     };
     struct {
-        CData/*0:0*/ IDU_0__DOT____VdfgRegularize_h52656aab_0_19;
         CData/*0:0*/ IDU_0__DOT____VdfgRegularize_h52656aab_0_20;
         CData/*0:0*/ IDU_0__DOT____VdfgRegularize_h52656aab_0_21;
         CData/*0:0*/ IDU_0__DOT____VdfgRegularize_h52656aab_0_22;
@@ -103,6 +104,7 @@ class alignas(VL_CACHE_LINE_BYTES) Vtop_top final : public VerilatedModule {
         CData/*0:0*/ __VdfgRegularize_he2b63832_1_5;
         CData/*0:0*/ __VdfgRegularize_he2b63832_1_6;
         CData/*0:0*/ __VdfgRegularize_he2b63832_1_7;
+        CData/*0:0*/ __VdfgRegularize_h6e95ff9d_0_0;
         VL_OUT(LSU_address,31,0);
         VL_OUT(LSU_writedata,31,0);
         VL_OUT(LSU_readdata,31,0);
@@ -121,11 +123,6 @@ class alignas(VL_CACHE_LINE_BYTES) Vtop_top final : public VerilatedModule {
         IData/*31:0*/ __PVT__command;
         IData/*31:0*/ __PVT__COMP_0__DOT__inB;
         IData/*31:0*/ __PVT__COMP_0__DOT__out;
-        IData/*31:0*/ __PVT__LSU_0__DOT__val0;
-        IData/*31:0*/ __PVT__LSU_0__DOT__val1;
-        IData/*31:0*/ __PVT__LSU_0__DOT__val2;
-        IData/*31:0*/ __PVT__LSU_0__DOT__rdata4;
-        IData/*31:0*/ __Vfunc_pmem_read__1__Vfuncout;
         QData/*32:0*/ __PVT__EXU_0__DOT__ADDER_0__DOT__inB;
     };
 

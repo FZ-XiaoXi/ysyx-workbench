@@ -30,10 +30,12 @@ VM_CLASSES_FAST += \
   Vtop_top__0 \
   Vtop_IFU__0 \
   Vtop___024unit__0 \
+  Vtop_LSU__0 \
   Vtop_REG__0 \
 
 # Generated module classes, non-fast-path, compile with low/medium optimization
 VM_CLASSES_SLOW += \
+  Vtop__ConstPool_0 \
   Vtop___024root__Slow \
   Vtop___024root__0__Slow \
   Vtop_top__Slow \
@@ -42,6 +44,8 @@ VM_CLASSES_SLOW += \
   Vtop_IFU__0__Slow \
   Vtop___024unit__Slow \
   Vtop___024unit__0__Slow \
+  Vtop_LSU__Slow \
+  Vtop_LSU__0__Slow \
   Vtop_REG__Slow \
   Vtop_REG__0__Slow \
 

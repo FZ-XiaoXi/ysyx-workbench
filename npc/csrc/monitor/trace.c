@@ -76,8 +76,8 @@ void trace_and_difftest(){
     }
 #endif
 #ifdef CONFIG_DIFFTEST_ENABLE
-    extern void difftest_step(uint32_t pc, uint32_t npc);
-    difftest_step(cpu.pc, cpu.dnpc);
+    extern void difftest_step(uint32_t pc, uint32_t npc,uint32_t mem_addr);
+    difftest_step(cpu.pc, cpu.dnpc, cpu.mem_access_addr);
 #endif
 }
 
