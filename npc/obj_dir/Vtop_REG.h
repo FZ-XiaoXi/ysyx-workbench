@@ -20,7 +20,7 @@ class alignas(VL_CACHE_LINE_BYTES) Vtop_REG final : public VerilatedModule {
     VL_IN8(__PVT__addRB,4,0);
     VL_IN8(__PVT__addW,4,0);
     VL_IN8(__PVT__WCSREN,0,0);
-    VL_IN8(__PVT__WEN,0,0);
+    VL_IN8(__PVT__gpr_WEN,0,0);
     VL_IN8(__PVT__isECALL,0,0);
     VL_IN8(__PVT__isMRET,0,0);
     VL_IN8(__PVT__bus_valid,0,0);

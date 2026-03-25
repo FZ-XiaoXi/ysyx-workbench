@@ -13,13 +13,13 @@ Vtop::Vtop(VerilatedContext* _vcontextp__, const char* _vcname__)
     , clk{vlSymsp->TOP.clk}
     , rst{vlSymsp->TOP.rst}
     , LSU_rmask{vlSymsp->TOP.LSU_rmask}
-    , LSU_wmask{vlSymsp->TOP.LSU_wmask}
+    , lsu_wmask{vlSymsp->TOP.lsu_wmask}
     , LSU_WEN{vlSymsp->TOP.LSU_WEN}
-    , LSU_REN{vlSymsp->TOP.LSU_REN}
+    , lsu_reqValid{vlSymsp->TOP.lsu_reqValid}
     , COMP_data{vlSymsp->TOP.COMP_data}
-    , LSU_address{vlSymsp->TOP.LSU_address}
-    , LSU_writedata{vlSymsp->TOP.LSU_writedata}
-    , LSU_readdata{vlSymsp->TOP.LSU_readdata}
+    , lsu_addr{vlSymsp->TOP.lsu_addr}
+    , lsu_wdata{vlSymsp->TOP.lsu_wdata}
+    , lsu_rdata{vlSymsp->TOP.lsu_rdata}
     , PC_command{vlSymsp->TOP.PC_command}
     , EXU_inA{vlSymsp->TOP.EXU_inA}
     , EXU_inB{vlSymsp->TOP.EXU_inB}

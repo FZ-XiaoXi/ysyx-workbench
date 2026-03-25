@@ -43,5 +43,5 @@ $(LIBCAPSTONE):
 	$(MAKE) -C tools/capstone
 
 clean:
-	rm -rf obj_dir wave.vcd wave.fst
+	rm -rf obj_dir npc-waveform.vcd wave.fst
 include ~/ysyx-workbench/Makefile

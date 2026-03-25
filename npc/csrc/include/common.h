@@ -12,6 +12,7 @@
 #include "Vtop_REG.h"
 #include "Vtop_IFU.h"
 #include "Vtop_LSU.h"
+#include "Vtop_IDU.h"
 #include "verilated_vcd_c.h"
 
 extern VerilatedContext* contextp;
@@ -42,8 +43,8 @@ extern FILE* log_fp;
     
     #define CONFIG_MTRACE_ENABLE
     #ifdef CONFIG_MTRACE_ENABLE
-        #define CONFIG_MTRACE_RANGE_LEFT 0x80008fd0
-        #define CONFIG_MTRACE_RANGE_RIGHT 0x80008fdf
+        #define CONFIG_MTRACE_RANGE_LEFT 0x80008fc0
+        #define CONFIG_MTRACE_RANGE_RIGHT 0x80008fcf
     #endif
 
     #define CONFIG_FTRACE_ENABLE

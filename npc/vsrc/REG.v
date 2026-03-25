@@ -15,7 +15,7 @@ module REG(
   output [31:0]csr_mtvec,
   output [31:0]csr_mepc,
   input WCSREN,
-  input WEN,
+  input gpr_WEN,
   input isECALL,
   input isMRET,
   input bus_valid
@@ -92,7 +92,7 @@ module REG(
         GPR[i]<={32{1'b0}};
       end
     end else if(bus_valid) begin
-      if(WEN | WCSREN) begin
+      if(gpr_WEN | WCSREN) begin
         GPR[addW]<=(addW==5'b00000)?{32{1'b0}}:(WCSREN?CSR_BUS:inData);
       end
     end
