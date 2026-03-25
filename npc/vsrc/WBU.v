@@ -8,15 +8,16 @@ module WBU(
     input [31:0]snpc,
     input [4:0]address,
     input isLOAD,
+    input isSTORE,
     input [1:0]isCSR,
     input isWRITE,
     input isJUMP,
     input isCOMPARE,
-    input LSU_final,
+    input lsu_respValid,
     output gpr_WEN,
     output reg [31:0]reg_data,
     output [4:0]gpr_address,
-    output WBU_final
+    output reg wbu_final
 );  
     always @(*) begin
         if(isLOAD) begin
@@ -35,8 +36,20 @@ module WBU(
         end
 
     end
-    //assign reg_data=isLOAD?LSU_data:(isJUMP?snpc:(isWRITE?(isCOMPARE?{31'b0,COMP_data}:EXU_data):(32'hf0f0f0f0)));
+
     assign gpr_address=address;
-    assign gpr_WEN=(LSU_final)?((isLOAD|isWRITE)?1:0):0;
-    assign WBU_final=LSU_final;
+    assign gpr_WEN=(isLOAD)?(lsu_respValid?1:0):(isWRITE| |isCSR?1:0);
+    always @(*) begin
+        if(gpr_WEN)begin
+            wbu_final = 1;
+        end else if(isLOAD | isSTORE)begin
+            if(lsu_respValid) begin
+                wbu_final = 1;
+            end else begin
+                wbu_final = 0;
+            end
+        end else begin
+            wbu_final = 1;
+        end
+    end
 endmodule

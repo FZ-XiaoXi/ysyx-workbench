@@ -25,7 +25,7 @@ VL_ATTR_COLD void Vtop_REG___ctor_var_reset(Vtop_REG* vlSelf) {
     vlSelf->__PVT__csr_mtvec = VL_SCOPED_RAND_RESET_I(32, __VscopeHash, 16711562886451133210ull);
     vlSelf->__PVT__csr_mepc = VL_SCOPED_RAND_RESET_I(32, __VscopeHash, 14107046366709206832ull);
     vlSelf->__PVT__WCSREN = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 1439781833436128944ull);
-    vlSelf->__PVT__WEN = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 16162439619744449072ull);
+    vlSelf->__PVT__gpr_WEN = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 422963226620874047ull);
     vlSelf->__PVT__isECALL = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 1184926532974597313ull);
     vlSelf->__PVT__isMRET = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 4828884427583364781ull);
     vlSelf->__PVT__bus_valid = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 9373776200932413134ull);

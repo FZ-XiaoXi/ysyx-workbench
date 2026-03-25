@@ -15,23 +15,30 @@ class alignas(VL_CACHE_LINE_BYTES) Vtop_LSU final : public VerilatedModule {
 
     // DESIGN SPECIFIC STATE
     VL_IN8(__PVT__rmask,3,0);
-    VL_IN8(__PVT__wmask,3,0);
+    VL_IN8(__PVT__lsu_wmask,3,0);
     VL_IN8(__PVT__isSigned,0,0);
     VL_IN8(__PVT__clk,0,0);
-    VL_IN8(__PVT__writeEN,0,0);
+    VL_IN8(__PVT__lsu_wen,0,0);
     VL_IN8(__PVT__bus_valid,0,0);
-    VL_IN8(__PVT__LSU_REN,0,0);
+    VL_IN8(__PVT__lsu_reqValid,0,0);
     VL_IN8(__PVT__rst,0,0);
-    VL_OUT8(__PVT__LSU_final,0,0);
+    VL_OUT8(__PVT__lsu_respValid,0,0);
     CData/*0:0*/ state;
     CData/*0:0*/ __PVT__next_state;
-    VL_IN(__PVT__address,31,0);
-    VL_OUT(__PVT__rdata,31,0);
-    VL_IN(__PVT__wdata,31,0);
-    IData/*31:0*/ __PVT__LSU_rdata;
+    CData/*0:0*/ __PVT__lsu_respValid_t;
+    CData/*0:0*/ __PVT__random_delay_pulse_0__DOT__lfsr_en;
+    CData/*2:0*/ __PVT__random_delay_pulse_0__DOT__delay_cnt;
+    CData/*0:0*/ __PVT__random_delay_pulse_0__DOT__busy;
+    CData/*0:0*/ __PVT__random_delay_pulse_0__DOT__start_d;
+    CData/*2:0*/ __PVT__random_delay_pulse_0__DOT__u_lfsr__DOT__state;
+    CData/*0:0*/ __PVT__random_delay_pulse_0__DOT__u_lfsr__DOT__feedback;
+    VL_IN(__PVT__lsu_addr,31,0);
+    VL_OUT(__PVT__lsu_rdata,31,0);
+    VL_IN(__PVT__lsu_wdata,31,0);
+    IData/*31:0*/ __PVT__rdata;
     IData/*31:0*/ __PVT__val1;
     IData/*31:0*/ __PVT__val2;
-    IData/*31:0*/ __PVT__rdata4;
+    IData/*31:0*/ __PVT__lsu_rdata4;
 
     // INTERNAL VARIABLES
     Vtop__Syms* const vlSymsp;

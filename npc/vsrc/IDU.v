@@ -3,6 +3,10 @@ module IDU(
     input [31:0]command,
     input isGREATER,
     input isEQUAL,
+    input clk,
+    input rst,
+    input bus_valid,
+    input wbu_final,
 
     output [ 6: 0]opcode,
     output [ 4: 0]rd,
@@ -22,6 +26,7 @@ module IDU(
     output isECALL,
     output isMRET,
     output isLOAD,
+    output isSTORE,
     output isWRITE,
     output isJUMP,
     output isCOMPARE,
@@ -31,12 +36,48 @@ module IDU(
     output isSigned,
     output isPC,
     output LSU_WEN,
-    output LSU_REN,
+    output reg lsu_reqValid,
     output [9:0]op,
     output [3:0]LSU_rmask,
-    output [3:0]LSU_wmask,
+    output [3:0]lsu_wmask,
     output [6:0]ctype
 );
+    reg state/*verilator public*/,next_state;
+    parameter state_idle=0,state_wait=1;
+    always @(*)begin
+        case(state)
+            state_idle: begin
+                if(bus_valid) begin
+                    if(isLOAD | isSTORE) begin
+                        next_state=state_wait;
+                        lsu_reqValid=1;
+                    end else begin
+                        next_state=state_idle;
+                        lsu_reqValid=0;
+                    end
+                end else begin
+                    next_state=state_idle;
+                    lsu_reqValid=0;
+                end
+            end
+            state_wait: begin
+                lsu_reqValid=0;
+                if(wbu_final) begin
+                    next_state=state_idle;
+                end else begin
+                    next_state=state_wait;
+                end
+            end
+        endcase
+    end
+    always @(posedge clk) begin
+        if(rst) begin
+            state<=state_idle;
+        end else begin
+            state<=next_state;
+        end
+    end
+
     wire isLUI, isAUIPC, isJAL, isJALR, isBEQ, isBNE, isBLT, isBGE, isBLTU, isBGEU;
     wire isLB, isLH, isLW, isLBU, isLHU, isSB, isSH, isSW, isADDI, isSLTI, isSLTIU;
     wire isXORI, isORI, isANDI, isSLLI, isSRLI, isSRAI, isADD, isSUB, isSLL, isSLT;
@@ -111,6 +152,7 @@ module IDU(
 
 /////////////////////////
     assign isLOAD = (isLW|isLBU|isLB|isLH|isLHU)?1:0;
+    assign isSTORE= (isSW|isSB|isSH)?1:0;
     assign isWRITE = (isLUI|isAUIPC|isJAL|isJALR|isADDI|isSLTI|isSLTIU|isXORI|isORI|isANDI|isSLLI|isSRLI|isSRAI|isADD|isSUB|isSLL|isSLT|isSLTU|isXOR|isSRL|isSRA|isOR|isAND)?1:0;
     assign isJUMP= (isJAL|isJALR)?1:0;
     assign isPC = (isAUIPC|isJAL|isBEQ|isBNE|isBLT|isBGE|isBLTU|isBGEU)?1:0;
@@ -149,9 +191,8 @@ module IDU(
 
     /////////////////////////
     assign LSU_rmask=(isLW)?4'b1111:((isLBU|isLB)?4'b0001:((isLH|isLHU)?4'b0011:0));
-    assign LSU_wmask=(isSW)?4'b1111:((isSB)?4'b0001:((isSH)?4'b0011:0));
+    assign lsu_wmask=(isSW)?4'b1111:((isSB)?4'b0001:((isSH)?4'b0011:0));
     assign LSU_WEN=(isSW|isSH|isSB)?1:0;
-    assign LSU_REN=(isLB|isLBU|isLW|isLH|isLHU)?1:0;
     /////////////////////////
     assign isSigned=(isLBU|isLHU|isBLTU|isBGEU|isSLTIU|isSLTU)?0:1;
 

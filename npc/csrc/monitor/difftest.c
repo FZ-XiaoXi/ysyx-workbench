@@ -57,7 +57,7 @@ static bool checkregs(CPUState *ref, uint32_t pc, uint32_t npc) {
 	return success;
 }
 
-void difftest_step(uint32_t pc, uint32_t npc, uint32_t mem_addr) {
+void difftest_step(uint32_t pc, uint32_t npc, uint32_t mem_addr) {;
 	CPUState ref;
 	if(is_skip_ref){
 		ref_difftest_regcpy(cpu.gpr, &npc, DIFFTEST_TO_REF);
@@ -76,6 +76,9 @@ void difftest_step(uint32_t pc, uint32_t npc, uint32_t mem_addr) {
 			if(ref_mem != dut_mem) {
 				Log("%s DUT MEM[" FMT_WORD "] = %08x REF MEM[" FMT_WORD "] = %08x at pc:%08x",ANSI_FMT("Different Memory!", ANSI_FG_RED),mem_addr, dut_mem, mem_addr, ref_mem, pc);
 				success = false;
+			}else{
+				Log("Memory at address " FMT_WORD " is the same: %08x", mem_addr, dut_mem);
+
 			}
 		}
 	}
@@ -93,7 +96,7 @@ void difftest_skip_ref(int reason) {
   is_skip_ref = true;
 }
 void difftest_mem_set(int addr){
-	Log("Differential testing: Set memory address " FMT_WORD, addr);
+	//Log("Differential testing: Set memory address " FMT_WORD, addr);
 	cpu.mem_access_addr = (uint32_t)addr;
 }
 #else

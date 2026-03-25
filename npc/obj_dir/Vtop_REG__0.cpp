@@ -26,7 +26,7 @@ void Vtop_REG___nba_sequent__TOP__top__REG_0__0(Vtop_REG* vlSelf) {
     // Body
     __Vdly__CSR_MCYCLE = vlSelfRef.CSR_MCYCLE;
     __Vdly__CSR_MCYCLEH = vlSelfRef.CSR_MCYCLEH;
-    if (((~ (IData)(vlSymsp->TOP.rst)) & (IData)(vlSymsp->TOP__top__IFU_0.state))) {
+    if (((~ (IData)(vlSymsp->TOP.rst)) & (IData)(vlSymsp->TOP__top__IFU_0.__PVT__bus_valid))) {
         if (((IData)(vlSelfRef.__PVT__WCSREN) & ((0x0b00U 
                                                   == 
                                                   (vlSymsp->TOP__top__IFU_0.__PVT__PC_command 
@@ -51,15 +51,12 @@ void Vtop_REG___nba_sequent__TOP__top__REG_0__0(Vtop_REG* vlSelf) {
         vlSelfRef.CSR_MCAUSE = 0U;
         vlSelfRef.CSR_MTVEC = 0U;
         vlSelfRef.CSR_MEPC = 0U;
-    } else if (vlSymsp->TOP__top__IFU_0.state) {
+    } else if (vlSymsp->TOP__top__IFU_0.__PVT__bus_valid) {
         __Vdly__CSR_MCYCLE = ((IData)(1U) + vlSelfRef.CSR_MCYCLE);
         __Vdly__CSR_MCYCLEH = ((0xffffffffU == vlSelfRef.CSR_MCYCLE)
                                 ? ((IData)(1U) + vlSelfRef.CSR_MCYCLEH)
                                 : vlSelfRef.CSR_MCYCLEH);
-        if ((((IData)(vlSymsp->TOP__top__LSU_0.__PVT__LSU_final) 
-              & ((IData)(vlSymsp->TOP__top.__PVT__IDU_0__DOT__isLOAD) 
-                 | (IData)(vlSymsp->TOP__top.__PVT__IDU_0__DOT__isWRITE))) 
-             | (IData)(vlSelfRef.__PVT__WCSREN))) {
+        if (((IData)(vlSelfRef.__PVT__gpr_WEN) | (IData)(vlSelfRef.__PVT__WCSREN))) {
             __VdlyVal__GPR__v32 = ((0U == (0x0000001fU 
                                            & (vlSymsp->TOP__top__IFU_0.__PVT__PC_command 
                                               >> 7U)))
@@ -147,7 +144,20 @@ void Vtop_REG___nba_sequent__TOP__top__REG_0__1(Vtop_REG* vlSelf) {
     Vtop__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
     auto& vlSelfRef = std::ref(*vlSelf).get();
     // Body
-    vlSelfRef.__PVT__WCSREN = ((IData)(vlSymsp->TOP__top.__PVT__IDU_0__DOT__isCSRRS) 
-                               | ((IData)(vlSymsp->TOP__top.__PVT__IDU_0__DOT__isCSRRW) 
-                                  | (IData)(vlSymsp->TOP__top.__PVT__IDU_0__DOT__isCSRRC)));
+    vlSelfRef.__PVT__WCSREN = ((IData)(vlSymsp->TOP__top__IDU_0.__PVT__isCSRRS) 
+                               | ((IData)(vlSymsp->TOP__top__IDU_0.__PVT__isCSRRW) 
+                                  | (IData)(vlSymsp->TOP__top__IDU_0.__PVT__isCSRRC)));
+}
+
+void Vtop_REG___nba_comb__TOP__top__REG_0__0(Vtop_REG* vlSelf) {
+    VL_DEBUG_IF(VL_DBG_MSGF("+        Vtop_REG___nba_comb__TOP__top__REG_0__0\n"); );
+    Vtop__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
+    auto& vlSelfRef = std::ref(*vlSelf).get();
+    // Body
+    vlSelfRef.__PVT__gpr_WEN = (1U & ((IData)(vlSymsp->TOP__top__IDU_0.__PVT__isLOAD)
+                                       ? ((IData)(vlSymsp->TOP__top__LSU_0.__PVT__lsu_respValid)
+                                           ? 1U : 0U)
+                                       : (((IData)(vlSymsp->TOP__top__IDU_0.__PVT__isWRITE) 
+                                           | (IData)(vlSelfRef.__PVT__WCSREN))
+                                           ? 1U : 0U)));
 }

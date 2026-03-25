@@ -47,8 +47,9 @@ void cpu_exec(uint64_t n){
 		cpu_exec_once();
 		cpu.lsu_state = top->top->LSU_0->state;
 		cpu.ifu_state = top->top->IFU_0->state;
-		//Log("LSU state = %d, IFU state = %d", cpu.lsu_state, cpu.ifu_state);
-		if(cpu.ifu_state == 1) continue;
+		cpu.idu_state = top->top->IDU_0->state;
+		Log("LSU state = %d, IFU state = %d, IDU state = %d at pc = " FMT_WORD, cpu.lsu_state, cpu.ifu_state, cpu.idu_state, cpu.pc);
+		if(cpu.ifu_state != 0) continue;
 		else{
 			n--;
 			cpu.count++;

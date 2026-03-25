@@ -28,6 +28,7 @@ VM_CLASSES_FAST += \
   Vtop \
   Vtop___024root__0 \
   Vtop_top__0 \
+  Vtop_IDU__0 \
   Vtop_IFU__0 \
   Vtop___024unit__0 \
   Vtop_LSU__0 \
@@ -40,6 +41,8 @@ VM_CLASSES_SLOW += \
   Vtop___024root__0__Slow \
   Vtop_top__Slow \
   Vtop_top__0__Slow \
+  Vtop_IDU__Slow \
+  Vtop_IDU__0__Slow \
   Vtop_IFU__Slow \
   Vtop_IFU__0__Slow \
   Vtop___024unit__Slow \

@@ -22,16 +22,17 @@ class alignas(VL_CACHE_LINE_BYTES) Vtop___024root final : public VerilatedModule
     VL_IN8(clk,0,0);
     VL_IN8(rst,0,0);
     VL_OUT8(LSU_rmask,3,0);
-    VL_OUT8(LSU_wmask,3,0);
+    VL_OUT8(lsu_wmask,3,0);
     VL_OUT8(LSU_WEN,0,0);
-    VL_OUT8(LSU_REN,0,0);
+    VL_OUT8(lsu_reqValid,0,0);
     VL_OUT8(COMP_data,0,0);
     CData/*0:0*/ __VstlFirstIteration;
     CData/*0:0*/ __VicoFirstIteration;
     CData/*0:0*/ __Vtrigprevexpr___TOP__clk__0;
-    VL_OUT(LSU_address,31,0);
-    VL_OUT(LSU_writedata,31,0);
-    VL_OUT(LSU_readdata,31,0);
+    CData/*0:0*/ __Vtrigprevexpr___TOP__rst__0;
+    VL_OUT(lsu_addr,31,0);
+    VL_OUT(lsu_wdata,31,0);
+    VL_OUT(lsu_rdata,31,0);
     VL_OUT(PC_command,31,0);
     VL_OUT(EXU_inA,31,0);
     VL_OUT(EXU_inB,31,0);
@@ -46,7 +47,7 @@ class alignas(VL_CACHE_LINE_BYTES) Vtop___024root final : public VerilatedModule
     VlUnpacked<QData/*63:0*/, 1> __VicoTriggered;
     VlUnpacked<QData/*63:0*/, 1> __VactTriggered;
     VlUnpacked<QData/*63:0*/, 1> __VnbaTriggered;
-    VlUnpacked<CData/*0:0*/, 3> __Vm_traceActivity;
+    VlUnpacked<CData/*0:0*/, 5> __Vm_traceActivity;
 
     // INTERNAL VARIABLES
     Vtop__Syms* const vlSymsp;
