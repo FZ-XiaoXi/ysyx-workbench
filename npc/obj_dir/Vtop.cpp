@@ -15,7 +15,6 @@ Vtop::Vtop(VerilatedContext* _vcontextp__, const char* _vcname__)
     , LSU_rmask{vlSymsp->TOP.LSU_rmask}
     , lsu_wmask{vlSymsp->TOP.lsu_wmask}
     , LSU_WEN{vlSymsp->TOP.LSU_WEN}
-    , lsu_reqValid{vlSymsp->TOP.lsu_reqValid}
     , COMP_data{vlSymsp->TOP.COMP_data}
     , lsu_addr{vlSymsp->TOP.lsu_addr}
     , lsu_wdata{vlSymsp->TOP.lsu_wdata}

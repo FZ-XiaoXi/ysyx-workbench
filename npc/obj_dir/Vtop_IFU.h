@@ -26,17 +26,29 @@ class alignas(VL_CACHE_LINE_BYTES) Vtop_IFU final : public VerilatedModule {
     CData/*1:0*/ __PVT__next_state;
     CData/*0:0*/ __PVT__pmem_reqValid;
     CData/*0:0*/ __PVT__pmem_respValid;
-    CData/*0:0*/ __PVT__random_delay_pulse_0__DOT__lfsr_en;
-    CData/*2:0*/ __PVT__random_delay_pulse_0__DOT__delay_cnt;
-    CData/*0:0*/ __PVT__random_delay_pulse_0__DOT__busy;
-    CData/*0:0*/ __PVT__random_delay_pulse_0__DOT__start_d;
-    CData/*2:0*/ __PVT__random_delay_pulse_0__DOT__u_lfsr__DOT__state;
-    CData/*0:0*/ __PVT__random_delay_pulse_0__DOT__u_lfsr__DOT__feedback;
+    CData/*0:0*/ __PVT__pmem_reqReady;
+    CData/*0:0*/ __PVT__pmem_respReady;
+    CData/*3:0*/ __PVT__ROM_0__DOT__wmask;
+    CData/*0:0*/ ROM_0__DOT____Vcellinp__random_delay_pulse_0__start;
+    CData/*0:0*/ __PVT__ROM_0__DOT__random_delay_pulse_0__DOT__lfsr_en;
+    CData/*1:0*/ __PVT__ROM_0__DOT__random_delay_pulse_0__DOT__delay_cnt;
+    CData/*0:0*/ __PVT__ROM_0__DOT__random_delay_pulse_0__DOT__busy;
+    CData/*0:0*/ __PVT__ROM_0__DOT__random_delay_pulse_0__DOT__start_d;
+    CData/*1:0*/ __PVT__ROM_0__DOT__random_delay_pulse_0__DOT__u_lfsr__DOT__state;
+    CData/*0:0*/ __PVT__ROM_0__DOT__random_delay_pulse_0__DOT__u_lfsr__DOT__feedback;
+    CData/*0:0*/ __PVT__ROM_0__DOT__random_delay_pulse_1__DOT__lfsr_en;
+    CData/*1:0*/ __PVT__ROM_0__DOT__random_delay_pulse_1__DOT__delay_cnt;
+    CData/*0:0*/ __PVT__ROM_0__DOT__random_delay_pulse_1__DOT__busy;
+    CData/*0:0*/ __PVT__ROM_0__DOT__random_delay_pulse_1__DOT__start_d;
+    CData/*1:0*/ __PVT__ROM_0__DOT__random_delay_pulse_1__DOT__u_lfsr__DOT__state;
+    CData/*0:0*/ __PVT__ROM_0__DOT__random_delay_pulse_1__DOT__u_lfsr__DOT__feedback;
     VL_OUT(__PVT__PC,31,0);
     VL_IN(__PVT__dnpc,31,0);
     VL_OUT(__PVT__snpc,31,0);
     VL_OUT(__PVT__PC_command,31,0);
     IData/*31:0*/ __PVT__ifu_raddr;
+    IData/*31:0*/ __PVT__PC_command_t;
+    IData/*31:0*/ __PVT__ROM_0__DOT__wdata;
 
     // INTERNAL VARIABLES
     Vtop__Syms* const vlSymsp;

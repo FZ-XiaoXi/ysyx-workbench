@@ -11,26 +11,43 @@ module LSU(
     input clk,
     input lsu_wen,
     input bus_valid,
-    input lsu_reqValid,
+    input lsu_reqEN,
     input rst,
-    output reg lsu_respValid
+    output lsu_respValid
 );
-    parameter state_idle=0,state_wait=1;
-    reg state/*verilator public*/,next_state;
+    reg lsu_reqValid;
+    wire lsu_reqReady,lsu_respReady;
+    parameter state_idle=0,state_wait_ready=1,state_wait_data=2;
+    reg [1:0]state/*verilator public*/,next_state;
     always @(*) begin
         case(state)
             state_idle:begin
-                if(lsu_reqValid) begin
-                    next_state=state_wait;
+                if(lsu_reqEN) begin
+                    lsu_reqValid=1;
+                    if(lsu_reqReady) begin
+                        next_state=state_wait_data;
+                    end else begin
+                        next_state=state_wait_ready;
+                    end
                 end else begin
+                    lsu_reqValid=0;
                     next_state=state_idle;
                 end
             end
-            state_wait:begin
+            state_wait_ready:begin
+                lsu_reqValid=1;
+                if(lsu_reqReady) begin
+                    next_state=state_wait_data;
+                end else begin
+                    next_state=state_wait_ready;
+                end
+            end 
+            state_wait_data:begin
+                lsu_reqValid=0;
                 if(lsu_respValid) begin
                     next_state=state_idle;
                 end else begin
-                    next_state=state_wait;
+                    next_state=state_wait_data;
                 end
             end 
         endcase
@@ -45,26 +62,7 @@ module LSU(
     reg [31:0] rdata;
     wire [31:0]val0,val1,val2,val3,lsu_rdata1,lsu_rdata2,lsu_rdata4;
     reg [31:0]val;
-    reg lsu_respValid_t;
-    always @(posedge clk) begin
-        // case (state)
-        //     state_idle:begin
-        //         if(lsu_reqValid) begin
 
-        //         end
-        //     end
-        //     state_wait:begin
-        //         //lsu_respValid<=lsu_reqValid & bus_valid;
-        //     end
-        // endcase
-        //lsu_respValid_t <= state==state_wait;
-        //lsu_respValid <= lsu_respValid?0:lsu_respValid_t;
-        rdata <= (!lsu_wen)?pmem_read(lsu_addr):32'h4f4f4f4f;
-        if(lsu_wen) begin
-            difftest_mem_set(lsu_addr);
-            pmem_write(lsu_addr,lsu_wdata,{4'h0,lsu_wmask});
-        end
-    end
     
     assign val0=rdata;
     assign val1={{8{val0[31]}},val0[31:8]};
@@ -94,13 +92,6 @@ module LSU(
         endcase
     end
 
-    random_delay_pulse #(
-        .LFSR_WIDTH (3)                     // LFSR 位宽，决定随机延迟的范围（1 ~ 2^LFSR_WIDTH-1）
-    ) random_delay_pulse_0(
-        .clk(clk),                             // 时钟
-        .rst_n(~rst),                           // 异步复位，低有效
-        .start(lsu_reqValid),                           // 启动脉冲（上升沿有效）
-        .out(lsu_respValid)                              // 输出脉冲，高有效，宽度一个时钟周期
-    );
+    MEM RAM_0(.clk(clk),.rst(rst),.wen(lsu_wen),.addr(lsu_addr),.wdata(lsu_wdata),.rdata(rdata),.wmask(lsu_wmask),.reqValid(lsu_reqValid),.respValid(lsu_respValid),.respReady(lsu_respReady),.reqReady(lsu_reqReady));
 
 endmodule

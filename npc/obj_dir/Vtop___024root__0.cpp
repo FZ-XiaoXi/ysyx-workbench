@@ -150,7 +150,6 @@ void Vtop___024root___ico_sequent__TOP__1(Vtop___024root* vlSelf) {
                                                    : vlSelfRef.EXU_inB)))))));
     vlSelfRef.COMP_data = (1U & (~ ((IData)(vlSymsp->TOP__top.__PVT__COMP_0__DOT__isEQUAL) 
                                     | (IData)(vlSymsp->TOP__top.__PVT__COMP_0__DOT__isGREATER))));
-    vlSelfRef.lsu_reqValid = vlSymsp->TOP__top__IDU_0.__PVT__lsu_reqValid;
     vlSelfRef.EXU_data = vlSelfRef.lsu_addr;
 }
 
@@ -490,26 +489,18 @@ void Vtop___024root___nba_sequent__TOP__2(Vtop___024root* vlSelf) {
     vlSelfRef.EXU_data = vlSelfRef.lsu_addr;
 }
 
-void Vtop___024root___nba_comb__TOP__0(Vtop___024root* vlSelf) {
-    VL_DEBUG_IF(VL_DBG_MSGF("+    Vtop___024root___nba_comb__TOP__0\n"); );
-    Vtop__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
-    auto& vlSelfRef = std::ref(*vlSelf).get();
-    // Body
-    vlSelfRef.lsu_reqValid = vlSymsp->TOP__top__IDU_0.__PVT__lsu_reqValid;
-}
-
+void Vtop_LSU___nba_sequent__TOP__top__LSU_0__0(Vtop_LSU* vlSelf);
+void Vtop_IFU___nba_sequent__TOP__top__IFU_0__0(Vtop_IFU* vlSelf);
 void Vtop_REG___nba_sequent__TOP__top__REG_0__0(Vtop_REG* vlSelf);
 void Vtop_top___nba_sequent__TOP__top__0(Vtop_top* vlSelf);
-void Vtop_IFU___nba_sequent__TOP__top__IFU_0__0(Vtop_IFU* vlSelf);
-void Vtop_LSU___nba_sequent__TOP__top__LSU_0__0(Vtop_LSU* vlSelf);
+void Vtop_IFU___nba_sequent__TOP__top__IFU_0__1(Vtop_IFU* vlSelf);
+void Vtop_LSU___nba_sequent__TOP__top__LSU_0__1(Vtop_LSU* vlSelf);
 void Vtop_IDU___nba_sequent__TOP__top__IDU_0__0(Vtop_IDU* vlSelf);
 void Vtop_top___nba_sequent__TOP__top__1(Vtop_top* vlSelf);
 void Vtop_REG___nba_sequent__TOP__top__REG_0__1(Vtop_REG* vlSelf);
 void Vtop_IDU___nba_sequent__TOP__top__IDU_0__1(Vtop_IDU* vlSelf);
 void Vtop_top___nba_sequent__TOP__top__2(Vtop_top* vlSelf);
 void Vtop_top___nba_sequent__TOP__top__3(Vtop_top* vlSelf);
-void Vtop_LSU___nba_sequent__TOP__top__LSU_0__1(Vtop_LSU* vlSelf);
-void Vtop_IFU___nba_sequent__TOP__top__IFU_0__1(Vtop_IFU* vlSelf);
 void Vtop_LSU___nba_sequent__TOP__top__LSU_0__2(Vtop_LSU* vlSelf);
 void Vtop_REG___nba_comb__TOP__top__REG_0__0(Vtop_REG* vlSelf);
 void Vtop_IDU___nba_comb__TOP__top__IDU_0__0(Vtop_IDU* vlSelf);
@@ -520,12 +511,17 @@ void Vtop___024root___eval_nba(Vtop___024root* vlSelf) {
     Vtop__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
     auto& vlSelfRef = std::ref(*vlSelf).get();
     // Body
+    if ((3ULL & vlSelfRef.__VnbaTriggered[0U])) {
+        Vtop_LSU___nba_sequent__TOP__top__LSU_0__0((&vlSymsp->TOP__top__LSU_0));
+        vlSelfRef.__Vm_traceActivity[2U] = 1U;
+        Vtop_IFU___nba_sequent__TOP__top__IFU_0__0((&vlSymsp->TOP__top__IFU_0));
+    }
     if ((1ULL & vlSelfRef.__VnbaTriggered[0U])) {
         Vtop_REG___nba_sequent__TOP__top__REG_0__0((&vlSymsp->TOP__top__REG_0));
-        vlSelfRef.__Vm_traceActivity[2U] = 1U;
+        vlSelfRef.__Vm_traceActivity[3U] = 1U;
         Vtop_top___nba_sequent__TOP__top__0((&vlSymsp->TOP__top));
-        Vtop_IFU___nba_sequent__TOP__top__IFU_0__0((&vlSymsp->TOP__top__IFU_0));
-        Vtop_LSU___nba_sequent__TOP__top__LSU_0__0((&vlSymsp->TOP__top__LSU_0));
+        Vtop_IFU___nba_sequent__TOP__top__IFU_0__1((&vlSymsp->TOP__top__IFU_0));
+        Vtop_LSU___nba_sequent__TOP__top__LSU_0__1((&vlSymsp->TOP__top__LSU_0));
         Vtop_IDU___nba_sequent__TOP__top__IDU_0__0((&vlSymsp->TOP__top__IDU_0));
         Vtop_top___nba_sequent__TOP__top__1((&vlSymsp->TOP__top));
         Vtop___024root___nba_sequent__TOP__0(vlSelf);
@@ -536,13 +532,8 @@ void Vtop___024root___eval_nba(Vtop___024root* vlSelf) {
         Vtop_top___nba_sequent__TOP__top__3((&vlSymsp->TOP__top));
         Vtop___024root___nba_sequent__TOP__2(vlSelf);
         Vtop_top___ico_sequent__TOP__top__1((&vlSymsp->TOP__top));
-        Vtop_LSU___nba_sequent__TOP__top__LSU_0__1((&vlSymsp->TOP__top__LSU_0));
-        Vtop___024root___ico_sequent__TOP__2(vlSelf);
-    }
-    if ((3ULL & vlSelfRef.__VnbaTriggered[0U])) {
-        Vtop_IFU___nba_sequent__TOP__top__IFU_0__1((&vlSymsp->TOP__top__IFU_0));
-        vlSelfRef.__Vm_traceActivity[3U] = 1U;
         Vtop_LSU___nba_sequent__TOP__top__LSU_0__2((&vlSymsp->TOP__top__LSU_0));
+        Vtop___024root___ico_sequent__TOP__2(vlSelf);
     }
     if ((3ULL & vlSelfRef.__VnbaTriggered[0U])) {
         Vtop_REG___nba_comb__TOP__top__REG_0__0((&vlSymsp->TOP__top__REG_0));
@@ -550,7 +541,6 @@ void Vtop___024root___eval_nba(Vtop___024root* vlSelf) {
         Vtop_IDU___nba_comb__TOP__top__IDU_0__0((&vlSymsp->TOP__top__IDU_0));
         Vtop_IFU___ico_sequent__TOP__top__IFU_0__0((&vlSymsp->TOP__top__IFU_0));
         Vtop_IDU___ico_sequent__TOP__top__IDU_0__0((&vlSymsp->TOP__top__IDU_0));
-        Vtop___024root___nba_comb__TOP__0(vlSelf);
         Vtop_LSU___nba_comb__TOP__top__LSU_0__0((&vlSymsp->TOP__top__LSU_0));
     }
 }

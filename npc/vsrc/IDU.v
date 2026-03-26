@@ -36,7 +36,7 @@ module IDU(
     output isSigned,
     output isPC,
     output LSU_WEN,
-    output reg lsu_reqValid,
+    output reg lsu_reqEN,
     output [9:0]op,
     output [3:0]LSU_rmask,
     output [3:0]lsu_wmask,
@@ -50,18 +50,18 @@ module IDU(
                 if(bus_valid) begin
                     if(isLOAD | isSTORE) begin
                         next_state=state_wait;
-                        lsu_reqValid=1;
+                        lsu_reqEN=1;
                     end else begin
                         next_state=state_idle;
-                        lsu_reqValid=0;
+                        lsu_reqEN=0;
                     end
                 end else begin
                     next_state=state_idle;
-                    lsu_reqValid=0;
+                    lsu_reqEN=0;
                 end
             end
             state_wait: begin
-                lsu_reqValid=0;
+                lsu_reqEN=0;
                 if(wbu_final) begin
                     next_state=state_idle;
                 end else begin

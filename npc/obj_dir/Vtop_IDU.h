@@ -42,7 +42,7 @@ class alignas(VL_CACHE_LINE_BYTES) Vtop_IDU final : public VerilatedModule {
         VL_OUT8(__PVT__isSigned,0,0);
         VL_OUT8(__PVT__isPC,0,0);
         VL_OUT8(__PVT__LSU_WEN,0,0);
-        VL_OUT8(__PVT__lsu_reqValid,0,0);
+        VL_OUT8(__PVT__lsu_reqEN,0,0);
         VL_OUT8(__PVT__LSU_rmask,3,0);
         VL_OUT8(__PVT__lsu_wmask,3,0);
         VL_OUT8(__PVT__ctype,6,0);

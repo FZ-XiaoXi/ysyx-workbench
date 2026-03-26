@@ -259,7 +259,7 @@ VL_ATTR_COLD void Vtop_IDU___ctor_var_reset(Vtop_IDU* vlSelf) {
     vlSelf->__PVT__isSigned = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 12721690139541285193ull);
     vlSelf->__PVT__isPC = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 15220313626966664195ull);
     vlSelf->__PVT__LSU_WEN = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 4139174640315457831ull);
-    vlSelf->__PVT__lsu_reqValid = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 11881322873208076425ull);
+    vlSelf->__PVT__lsu_reqEN = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 15873875435752093388ull);
     vlSelf->__PVT__op = VL_SCOPED_RAND_RESET_I(10, __VscopeHash, 3630531923276091163ull);
     vlSelf->__PVT__LSU_rmask = VL_SCOPED_RAND_RESET_I(4, __VscopeHash, 15114391294081831391ull);
     vlSelf->__PVT__lsu_wmask = VL_SCOPED_RAND_RESET_I(4, __VscopeHash, 13598643557825439274ull);
