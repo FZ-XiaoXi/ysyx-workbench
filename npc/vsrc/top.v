@@ -10,7 +10,6 @@ module top(
   output [3:0]LSU_rmask,lsu_wmask,
   output [31:0]lsu_wdata,
   output LSU_WEN,
-  output lsu_reqValid,
   output [31:0]lsu_rdata,
   output [31:0]PC_command,
   output [31:0] EXU_inA,EXU_inB,EXU_data,CSR_data,
@@ -20,7 +19,7 @@ module top(
 );
   wire [31:0]PC/* verilator public */,dnpc/* verilator public */,snpc/* verilator public */;
   // verilator lint_off PINMISSING
-  wire lsu_respValid,wbu_final;
+  wire lsu_respValid,lsu_reqEN,wbu_final;
   wire [31:0] command;
   
   wire isR,isI,isS,isB,isU,isJ,isCR;
@@ -67,7 +66,7 @@ module top(
     .isSigned(isSigned),
     .isCSR(isCSR),
     .LSU_WEN(LSU_WEN),
-    .lsu_reqValid(lsu_reqValid),
+    .lsu_reqEN(lsu_reqEN),
     .isPC(isPC),
     .isGREATER(isGREATER),
     .isEQUAL(isEQUAL),
@@ -88,7 +87,7 @@ module top(
   assign dnpc=isECALL?csr_mtvec:(isMRET?csr_mepc:EXU_data);
   assign lsu_addr=EXU_data;
   assign lsu_wdata=rs2_val;
-  LSU LSU_0(.clk(clk),.lsu_wen(LSU_WEN),.lsu_addr(lsu_addr),.lsu_rdata(lsu_rdata),.lsu_wdata(lsu_wdata),.rmask(LSU_rmask),.lsu_wmask(lsu_wmask),.isSigned(isSigned),.lsu_reqValid(lsu_reqValid),.bus_valid(bus_valid),.lsu_respValid(lsu_respValid),.rst(rst));/*verilator public_module*/
+  LSU LSU_0(.clk(clk),.lsu_wen(LSU_WEN),.lsu_addr(lsu_addr),.lsu_rdata(lsu_rdata),.lsu_wdata(lsu_wdata),.rmask(LSU_rmask),.lsu_wmask(lsu_wmask),.isSigned(isSigned),.lsu_reqEN(lsu_reqEN),.bus_valid(bus_valid),.lsu_respValid(lsu_respValid),.rst(rst));/*verilator public_module*/
   always @(posedge clk) begin
     if(isEBREAK)  ebreak();
   end

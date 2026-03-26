@@ -20,7 +20,7 @@ void Vtop_IDU___ico_sequent__TOP__top__IDU_0__0(Vtop_IDU* vlSelf) {
                                 << 2U)) | (((IData)(vlSelfRef.__PVT__wbu_final) 
                                             << 1U) 
                                            | (IData)(vlSelfRef.state)));
-    vlSelfRef.__PVT__lsu_reqValid = Vtop__ConstPool__TABLE_h5244400f_0
+    vlSelfRef.__PVT__lsu_reqEN = Vtop__ConstPool__TABLE_h5244400f_0
         [__Vtableidx1];
     vlSelfRef.__PVT__next_state = Vtop__ConstPool__TABLE_h0c6117bb_0
         [__Vtableidx1];

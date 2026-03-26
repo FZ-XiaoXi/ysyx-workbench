@@ -9,8 +9,10 @@ VL_ATTR_COLD void Vtop_IFU___stl_sequent__TOP__top__IFU_0__0(Vtop_IFU* vlSelf) {
     Vtop__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
     auto& vlSelfRef = std::ref(*vlSelf).get();
     // Body
-    vlSelfRef.__PVT__random_delay_pulse_0__DOT__u_lfsr__DOT__feedback 
-        = (1U & VL_REDXOR_32((3U & (IData)(vlSelfRef.__PVT__random_delay_pulse_0__DOT__u_lfsr__DOT__state))));
+    vlSelfRef.__PVT__ROM_0__DOT__random_delay_pulse_0__DOT__u_lfsr__DOT__feedback 
+        = (1U & VL_REDXOR_2(vlSelfRef.__PVT__ROM_0__DOT__random_delay_pulse_0__DOT__u_lfsr__DOT__state));
+    vlSelfRef.__PVT__ROM_0__DOT__random_delay_pulse_1__DOT__u_lfsr__DOT__feedback 
+        = (1U & VL_REDXOR_2(vlSelfRef.__PVT__ROM_0__DOT__random_delay_pulse_1__DOT__u_lfsr__DOT__state));
 }
 
 VL_ATTR_COLD void Vtop_IFU___ctor_var_reset(Vtop_IFU* vlSelf) {
@@ -36,10 +38,22 @@ VL_ATTR_COLD void Vtop_IFU___ctor_var_reset(Vtop_IFU* vlSelf) {
     vlSelf->__PVT__next_state = VL_SCOPED_RAND_RESET_I(2, __VscopeHash, 10383377256973303270ull);
     vlSelf->__PVT__pmem_reqValid = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 12250641669446868879ull);
     vlSelf->__PVT__pmem_respValid = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 7392642148508904925ull);
-    vlSelf->__PVT__random_delay_pulse_0__DOT__lfsr_en = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 10563439750320617219ull);
-    vlSelf->__PVT__random_delay_pulse_0__DOT__delay_cnt = VL_SCOPED_RAND_RESET_I(3, __VscopeHash, 1258137465832815374ull);
-    vlSelf->__PVT__random_delay_pulse_0__DOT__busy = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 8568700393153990559ull);
-    vlSelf->__PVT__random_delay_pulse_0__DOT__start_d = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 3205558585022889190ull);
-    vlSelf->__PVT__random_delay_pulse_0__DOT__u_lfsr__DOT__state = VL_SCOPED_RAND_RESET_I(3, __VscopeHash, 14945001024778963298ull);
-    vlSelf->__PVT__random_delay_pulse_0__DOT__u_lfsr__DOT__feedback = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 17357906364188215045ull);
+    vlSelf->__PVT__pmem_reqReady = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 3900379259909198561ull);
+    vlSelf->__PVT__pmem_respReady = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 11501185454192359743ull);
+    vlSelf->__PVT__PC_command_t = VL_SCOPED_RAND_RESET_I(32, __VscopeHash, 14968570010561450919ull);
+    vlSelf->__PVT__ROM_0__DOT__wdata = VL_SCOPED_RAND_RESET_I(32, __VscopeHash, 17883001906690339352ull);
+    vlSelf->__PVT__ROM_0__DOT__wmask = VL_SCOPED_RAND_RESET_I(4, __VscopeHash, 9368959083515258247ull);
+    vlSelf->ROM_0__DOT____Vcellinp__random_delay_pulse_0__start = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 16870249618349248593ull);
+    vlSelf->__PVT__ROM_0__DOT__random_delay_pulse_0__DOT__lfsr_en = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 14099580009402690679ull);
+    vlSelf->__PVT__ROM_0__DOT__random_delay_pulse_0__DOT__delay_cnt = VL_SCOPED_RAND_RESET_I(2, __VscopeHash, 13027716380060397255ull);
+    vlSelf->__PVT__ROM_0__DOT__random_delay_pulse_0__DOT__busy = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 17147668631297370950ull);
+    vlSelf->__PVT__ROM_0__DOT__random_delay_pulse_0__DOT__start_d = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 16624109593192412510ull);
+    vlSelf->__PVT__ROM_0__DOT__random_delay_pulse_0__DOT__u_lfsr__DOT__state = VL_SCOPED_RAND_RESET_I(2, __VscopeHash, 17927956074791777646ull);
+    vlSelf->__PVT__ROM_0__DOT__random_delay_pulse_0__DOT__u_lfsr__DOT__feedback = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 5886624344541497811ull);
+    vlSelf->__PVT__ROM_0__DOT__random_delay_pulse_1__DOT__lfsr_en = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 10179756618413556043ull);
+    vlSelf->__PVT__ROM_0__DOT__random_delay_pulse_1__DOT__delay_cnt = VL_SCOPED_RAND_RESET_I(2, __VscopeHash, 18433478926909942198ull);
+    vlSelf->__PVT__ROM_0__DOT__random_delay_pulse_1__DOT__busy = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 16233551538323186048ull);
+    vlSelf->__PVT__ROM_0__DOT__random_delay_pulse_1__DOT__start_d = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 12209540720168473743ull);
+    vlSelf->__PVT__ROM_0__DOT__random_delay_pulse_1__DOT__u_lfsr__DOT__state = VL_SCOPED_RAND_RESET_I(2, __VscopeHash, 1555195145722388190ull);
+    vlSelf->__PVT__ROM_0__DOT__random_delay_pulse_1__DOT__u_lfsr__DOT__feedback = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 9625856101440407638ull);
 }
