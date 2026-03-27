@@ -36,9 +36,11 @@ module random_delay_pulse #(
 ) (
     input  wire clk,
     input  wire rst_n,
+    input wire out_lock,
     input  wire start,
     output reg  out
 );
+    reg out_unlock;
     wire [LFSR_WIDTH-1:0] lfsr_state;
     wire                  lfsr_data;
     reg                   lfsr_en;
@@ -55,10 +57,10 @@ module random_delay_pulse #(
             busy      <= 1'b0;
             lfsr_en   <= 1'b1;
             delay_cnt <= {LFSR_WIDTH{1'b0}};
-            out       <= 1'b0;
+            out_unlock       <= 1'b0;
         end else begin
             // 默认输出清零
-            out <= 1'b0;
+            out_unlock <= 1'b0;
             
             // 边沿检测（先更新 start_d）
             start_d <= start;
@@ -68,7 +70,7 @@ module random_delay_pulse #(
                 if (start && !start_d) begin
                     if (lfsr_state == 1) begin
                         // 延迟为 1 个周期，直接输出
-                        out <= 1'b1;
+                        out_unlock <= 1'b1;
                         // 不进入 busy 状态，LFSR 保持运行
                         busy <= 1'b0;
                         lfsr_en <= 1'b1;
@@ -83,7 +85,7 @@ module random_delay_pulse #(
             end else begin
                 // 计数阶段
                 if (delay_cnt == 1) begin
-                    out <= 1'b1;
+                    out_unlock <= 1'b1;
                     busy <= 1'b0;
                     lfsr_en <= 1'b1;       // 恢复 LFSR
                     delay_cnt <= {LFSR_WIDTH{1'b0}};
@@ -105,4 +107,34 @@ module random_delay_pulse #(
         .data_out  (lfsr_data)
     );
 
+
+    parameter lock_state_normal = 0,
+              lock_state_lock = 1;
+    reg lock_state, lock_state_next;
+    always @(posedge clk or negedge rst_n) begin
+        if (!rst_n) begin
+            lock_state <= lock_state_normal;
+        end else begin
+            lock_state <= lock_state_next;
+        end
+    end
+    always @(*) begin
+        case (lock_state)
+            lock_state_normal: begin
+                if(out_unlock && out_lock) begin
+                    lock_state_next = lock_state_lock;
+                end else begin
+                    lock_state_next = lock_state_normal;
+                end
+            end
+            lock_state_lock: begin
+                if(out_lock) begin
+                    lock_state_next = lock_state_lock;
+                end else begin
+                    lock_state_next = lock_state_normal;
+                end
+            end
+        endcase
+    end
+    assign out = (lock_state == lock_state_lock && out_lock) ? 1'b1 : out_unlock;
 endmodule
