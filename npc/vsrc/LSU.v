@@ -13,8 +13,10 @@ module LSU(
     input bus_valid,
     input lsu_reqEN,
     input rst,
-    output lsu_respValid
+    output lsu_final
 );
+    wire lsu_respValid;
+    assign lsu_final=(state==state_wait_data)?lsu_respValid & lsu_respReady:0;
     reg lsu_reqValid;
     wire lsu_reqReady,lsu_respReady;
     parameter state_idle=0,state_wait_ready=1,state_wait_data=2;
@@ -44,7 +46,7 @@ module LSU(
             end 
             state_wait_data:begin
                 lsu_reqValid=0;
-                if(lsu_respValid) begin
+                if(lsu_respValid & lsu_respReady) begin
                     next_state=state_idle;
                 end else begin
                     next_state=state_wait_data;
@@ -93,5 +95,14 @@ module LSU(
     end
 
     MEM RAM_0(.clk(clk),.rst(rst),.wen(lsu_wen),.addr(lsu_addr),.wdata(lsu_wdata),.rdata(rdata),.wmask(lsu_wmask),.reqValid(lsu_reqValid),.respValid(lsu_respValid),.respReady(lsu_respReady),.reqReady(lsu_reqReady));
-
+    
+    random_delay_pulse #(
+        .LFSR_WIDTH (3)                     // LFSR 位宽，决定随机延迟的范围（1 ~ 2^LFSR_WIDTH-1）
+    ) random_delay_pulse_1(
+        .clk(clk),                             // 时钟
+        .rst_n(~rst),                           // 异步复位，低有效
+        .out_lock(state==state_wait_data),                      // 复位锁存，保持输出直到状态机进入等待数据状态
+        .start(lsu_reqValid & lsu_reqReady),                           // 启动脉冲（上升沿有效）
+        .out(lsu_respReady)                              // 输出脉冲，高有效，宽度一个时钟周期
+    );
 endmodule

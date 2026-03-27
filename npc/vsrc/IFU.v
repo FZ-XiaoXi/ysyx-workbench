@@ -47,7 +47,7 @@ module IFU(
             state_wait_command:begin
                 bus_valid=0;
                 pmem_reqValid=0;
-                if(pmem_respValid) begin
+                if(pmem_respValid & pmem_respReady) begin
                     next_state=state_wait_exec;
                 end else begin
                     next_state=state_wait_command;
@@ -96,4 +96,14 @@ module IFU(
     assign snpc=PC+4;
 
     MEM ROM_0(.clk(clk),.rst(rst),.wen(0),.addr(PC),.wdata(),.rdata(PC_command_t),.wmask(),.reqValid(pmem_reqValid),.respValid(pmem_respValid),.respReady(pmem_respReady),.reqReady(pmem_reqReady));
+
+    random_delay_pulse #(
+        .LFSR_WIDTH (3)                     // LFSR 位宽，决定随机延迟的范围（1 ~ 2^LFSR_WIDTH-1）
+    ) random_delay_pulse_1(
+        .clk(clk),                             // 时钟
+        .rst_n(~rst),                           // 异步复位，低有效
+        .start(pmem_reqValid & pmem_reqReady),                           // 启动脉冲（上升沿有效）
+        .out_lock(state==state_wait_command),                      // 复位锁存，保持输出直到状态机进入等待命令状态
+        .out(pmem_respReady)                              // 输出脉冲，高有效，宽度一个时钟周期
+    );
 endmodule

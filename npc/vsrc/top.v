@@ -19,7 +19,7 @@ module top(
 );
   wire [31:0]PC/* verilator public */,dnpc/* verilator public */,snpc/* verilator public */;
   // verilator lint_off PINMISSING
-  wire lsu_respValid,lsu_reqEN,wbu_final;
+  wire lsu_final,lsu_reqEN,wbu_final;
   wire [31:0] command;
   
   wire isR,isI,isS,isB,isU,isJ,isCR;
@@ -36,7 +36,7 @@ module top(
   wire [31:0]csr_mepc,csr_mtvec;
   wire bus_valid;
   REG REG_0(.clk(clk),.rst(rst),.addRA(rs1_add),.addRB(rs2_add),.addW(gpr_address),.addCSR(rcsr_add),.outA(rs1_val),.outB(rs2_val),.inData(reg_data),.gpr_WEN(gpr_WEN),.CSR_BUS(CSR_data),.WCSREN(|isCSR),.isECALL(isECALL),.isMRET(isMRET),.csr_mepc(csr_mepc),.csr_mtvec(csr_mtvec),.pc(PC),.bus_valid(bus_valid));/*verilator public_module*/
-  WBU WBU_0(.clk(clk),.rst(rst),.LSU_data(lsu_rdata),.EXU_data(EXU_data),.COMP_data(COMP_data),.address(rd_add),.isLOAD(isLOAD),.isWRITE(isWRITE),.isJUMP(isJUMP),.snpc(snpc),.gpr_WEN(gpr_WEN),.reg_data(reg_data),.gpr_address(gpr_address),.isCOMPARE(isCOMPARE),.CSR_data(CSR_data),.isCSR(isCSR),.lsu_respValid(lsu_respValid),.wbu_final(wbu_final),.isSTORE(isSTORE));
+  WBU WBU_0(.clk(clk),.rst(rst),.LSU_data(lsu_rdata),.EXU_data(EXU_data),.COMP_data(COMP_data),.address(rd_add),.isLOAD(isLOAD),.isWRITE(isWRITE),.isJUMP(isJUMP),.snpc(snpc),.gpr_WEN(gpr_WEN),.reg_data(reg_data),.gpr_address(gpr_address),.isCOMPARE(isCOMPARE),.CSR_data(CSR_data),.isCSR(isCSR),.lsu_final(lsu_final),.wbu_final(wbu_final),.isSTORE(isSTORE));
   IFU IFU_0(.clk(clk),.rst(rst),.PC(PC),.dnpc(dnpc),.snpc(snpc),.isJUMP(isJUMP),.PC_command(PC_command),.isBRANCH(isBRANCH),.isECALL(isECALL),.isMRET(isMRET),.bus_valid(bus_valid),.wbu_final(wbu_final));/*verilator public_module*/
   //LSU LSU_0(.address({2'b00,value[31:2]}),.data(lsu_rdata),.wdata(lsu_wdata),.range(LSU_rmask),.clk(clk),.lsu_wen(LSU_WEN),.PC_address({2'b00,PC[31:2]}),.PC_data(PC_command));
   IDU IDU_0(
@@ -87,7 +87,7 @@ module top(
   assign dnpc=isECALL?csr_mtvec:(isMRET?csr_mepc:EXU_data);
   assign lsu_addr=EXU_data;
   assign lsu_wdata=rs2_val;
-  LSU LSU_0(.clk(clk),.lsu_wen(LSU_WEN),.lsu_addr(lsu_addr),.lsu_rdata(lsu_rdata),.lsu_wdata(lsu_wdata),.rmask(LSU_rmask),.lsu_wmask(lsu_wmask),.isSigned(isSigned),.lsu_reqEN(lsu_reqEN),.bus_valid(bus_valid),.lsu_respValid(lsu_respValid),.rst(rst));/*verilator public_module*/
+  LSU LSU_0(.clk(clk),.lsu_wen(LSU_WEN),.lsu_addr(lsu_addr),.lsu_rdata(lsu_rdata),.lsu_wdata(lsu_wdata),.rmask(LSU_rmask),.lsu_wmask(lsu_wmask),.isSigned(isSigned),.lsu_reqEN(lsu_reqEN),.bus_valid(bus_valid),.lsu_final(lsu_final),.rst(rst));/*verilator public_module*/
   always @(posedge clk) begin
     if(isEBREAK)  ebreak();
   end
