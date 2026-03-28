@@ -13,7 +13,7 @@ void disassemble(char *str, int size, uint64_t pc, uint8_t *code, int nbyte);
 
 #ifdef CONFIG_FTRACE_ENABLE
 typedef struct {
-  char name[64];
+  char name[128];
   uint32_t start_add;
   uint32_t size;
 } symtab_t;

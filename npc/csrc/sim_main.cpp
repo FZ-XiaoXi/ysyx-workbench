@@ -19,8 +19,10 @@ int main(int argc, char** argv) {
 	//int flag=top->rootp->top->REG_0->GPR[10];
     delete top;
     delete contextp;
+	#ifdef CONFIG_WAVE_ENABLE
 	tfp->close();
 	delete tfp;
+	#endif
 	int status = !(cpu.state==NPC_QUIT || (cpu.state==NPC_END && cpu.halt_ret==0));
     return status;
 }
