@@ -63,13 +63,12 @@ module MEM(
     end
 
     always @(posedge clk) begin
-        if(state==state_working) begin
-
-        end
-        rdata <= (!wen)?pmem_read(addr):32'h4f4f4f4f;
-        if(wen) begin
-            difftest_mem_set(addr);
-            pmem_write(addr,wdata,{4'h0,wmask});
+        if(reqValid & reqReady) begin
+            rdata <= (!wen)?pmem_read(addr):32'h4f4f4f4f;
+            if(wen) begin
+                difftest_mem_set(addr);
+                pmem_write(addr,wdata,{4'h0,wmask});
+            end
         end
     end
 

@@ -92,12 +92,14 @@ void difftest_step(uint32_t pc, uint32_t npc, uint32_t mem_addr) {;
   	}
 }
 void difftest_skip_ref(int reason) {
-	Log("Differential testing: %s because of %d", ANSI_FMT("REF is skipped", ANSI_FG_YELLOW), reason);
+	//Log("Differential testing: %s because of %d", ANSI_FMT("REF is skipped", ANSI_FG_YELLOW), reason);
   is_skip_ref = true;
 }
 void difftest_mem_set(int addr){
+	#ifdef CONFIG_DIFFTEST_MEM_ENABLE
 	//Log("Differential testing: Set memory address " FMT_WORD, addr);
 	cpu.mem_access_addr = (uint32_t)addr;
+	#endif
 }
 #else
 void init_difftest(char *diff_so_file, long img_size) { }

@@ -23,12 +23,16 @@ static void cpu_get_reg(){
 static void cpu_exec_once(){
 	top->clk=1;
 	top->eval();
+	#ifdef CONFIG_WAVE_ENABLE
 	tfp->dump(contextp->time());
+	#endif
 	contextp->timeInc(2);
 	
 	top->clk=0;
 	top->eval();
+	#ifdef CONFIG_WAVE_ENABLE
 	tfp->dump(contextp->time());
+	#endif
 	contextp->timeInc(2);
 }
 void cpu_exec(uint64_t n){
@@ -48,7 +52,7 @@ void cpu_exec(uint64_t n){
 		cpu.lsu_state = top->top->LSU_0->state;
 		cpu.ifu_state = top->top->IFU_0->state;
 		cpu.idu_state = top->top->IDU_0->state;
-		Log("LSU state = %d, IFU state = %d, IDU state = %d at pc = " FMT_WORD, cpu.lsu_state, cpu.ifu_state, cpu.idu_state, cpu.pc);
+		//Log("LSU state = %d, IFU state = %d, IDU state = %d at pc = " FMT_WORD, cpu.lsu_state, cpu.ifu_state, cpu.idu_state, cpu.pc);
 		if(cpu.ifu_state != 0) continue;
 		else{
 			n--;
