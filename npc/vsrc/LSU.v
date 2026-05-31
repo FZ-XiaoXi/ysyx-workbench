@@ -94,7 +94,19 @@ module LSU(
         endcase
     end
 
-    MEM RAM_0(.clk(clk),.rst(rst),.wen(lsu_wen),.addr(lsu_addr),.wdata(lsu_wdata),.rdata(rdata),.wmask(lsu_wmask),.reqValid(lsu_reqValid),.respValid(lsu_respValid),.respReady(lsu_respReady),.reqReady(lsu_reqReady));
+    MEM RAM_0(
+        .clk(clk),
+        .rst(rst),
+        .wen(lsu_wen),
+        .addr(lsu_addr),
+        .wdata(lsu_wdata),
+        .rdata(rdata),
+        .wmask(lsu_wmask),
+        .reqValid(lsu_reqValid),
+        .respValid(lsu_respValid),
+        .respReady(lsu_respReady),
+        .reqReady(lsu_reqReady)
+    );
     
     random_delay_pulse #(
         .LFSR_WIDTH (3)                     // LFSR 位宽，决定随机延迟的范围（1 ~ 2^LFSR_WIDTH-1）
