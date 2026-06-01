@@ -11,60 +11,97 @@ VL_ATTR_COLD void Vtop_top___stl_sequent__TOP__top__0(Vtop_top* vlSelf) {
     Vtop__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
     auto& vlSelfRef = std::ref(*vlSelf).get();
     // Body
-    vlSelfRef.__PVT__IROM__DOT__read_delay_inst__DOT__u_lfsr__DOT__feedback 
-        = (1U & VL_REDXOR_32((3U & (IData)(vlSelfRef.__PVT__IROM__DOT__read_delay_inst__DOT__u_lfsr__DOT__state))));
-    vlSelfRef.__PVT__IROM__DOT__write_delay_inst__DOT__u_lfsr__DOT__feedback 
-        = (1U & VL_REDXOR_2(vlSelfRef.__PVT__IROM__DOT__write_delay_inst__DOT__u_lfsr__DOT__state));
-    vlSelfRef.__PVT__DRAM__DOT__read_delay_inst__DOT__u_lfsr__DOT__feedback 
-        = (1U & VL_REDXOR_32((3U & (IData)(vlSelfRef.__PVT__DRAM__DOT__read_delay_inst__DOT__u_lfsr__DOT__state))));
-    vlSelfRef.__PVT__DRAM__DOT__write_delay_inst__DOT__u_lfsr__DOT__feedback 
-        = (1U & VL_REDXOR_2(vlSelfRef.__PVT__DRAM__DOT__write_delay_inst__DOT__u_lfsr__DOT__state));
-    vlSelfRef.__PVT__IROM__DOT__w_next = vlSelfRef.__PVT__IROM__DOT__w_state;
-    if ((0U != (IData)(vlSelfRef.__PVT__IROM__DOT__w_state))) {
-        if ((1U == (IData)(vlSelfRef.__PVT__IROM__DOT__w_state))) {
-            if (vlSelfRef.__PVT__IROM__DOT__write_delay_inst__DOT__out_unlock) {
-                vlSelfRef.__PVT__IROM__DOT__w_next = 2U;
-            }
-        } else if ((2U != (IData)(vlSelfRef.__PVT__IROM__DOT__w_state))) {
-            vlSelfRef.__PVT__IROM__DOT__w_next = 0U;
-        }
-    }
-    Vtop___024unit____Vdpiimwrap_pmem_read_TOP____024unit(vlSelfRef.__PVT__IROM__DOT__raddr_reg, vlSelfRef.__Vfunc_pmem_read__1__Vfuncout);
-    vlSelfRef.__PVT__IROM__DOT__current_mem_rdata = vlSelfRef.__Vfunc_pmem_read__1__Vfuncout;
+    vlSelfRef.__PVT__RAM__DOT__read_delay_inst__DOT__u_lfsr__DOT__feedback 
+        = (1U & VL_REDXOR_32((3U & (IData)(vlSelfRef.__PVT__RAM__DOT__read_delay_inst__DOT__u_lfsr__DOT__state))));
+    vlSelfRef.__PVT__RAM__DOT__write_delay_inst__DOT__u_lfsr__DOT__feedback 
+        = (1U & VL_REDXOR_2(vlSelfRef.__PVT__RAM__DOT__write_delay_inst__DOT__u_lfsr__DOT__state));
+    vlSelfRef.__PVT__IROM_rresp = 0U;
+    vlSelfRef.__PVT__DRAM_rresp = 0U;
+    vlSelfRef.__PVT__RAM_AXI4LiteArbiter__DOT__M1_bresp = 0U;
+    vlSelfRef.__PVT__DRAM_bresp = 0U;
+    vlSelfRef.__PVT__RAM_AXI4LiteArbiter__DOT__M1_awready = 0U;
+    vlSelfRef.__PVT__RAM_AXI4LiteArbiter__DOT__M1_wready = 0U;
     vlSelfRef.snpc = ((IData)(4U) + vlSymsp->TOP__top__IFU_0.__PVT__PC);
     vlSelfRef.PC = vlSymsp->TOP__top__IFU_0.__PVT__PC;
-    Vtop___024unit____Vdpiimwrap_pmem_read_TOP____024unit(vlSelfRef.__PVT__DRAM__DOT__raddr_reg, vlSelfRef.__Vfunc_pmem_read__2__Vfuncout);
-    vlSelfRef.__PVT__DRAM__DOT__current_mem_rdata = vlSelfRef.__Vfunc_pmem_read__2__Vfuncout;
-}
-
-extern const VlUnpacked<CData/*1:0*/, 32> Vtop__ConstPool__TABLE_h61f39d43_0;
-
-VL_ATTR_COLD void Vtop_top___stl_sequent__TOP__top__1(Vtop_top* vlSelf) {
-    VL_DEBUG_IF(VL_DBG_MSGF("+      Vtop_top___stl_sequent__TOP__top__1\n"); );
-    Vtop__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
-    auto& vlSelfRef = std::ref(*vlSelf).get();
-    // Locals
-    CData/*4:0*/ __Vtableidx1;
-    __Vtableidx1 = 0;
-    // Body
-    __Vtableidx1 = (((3U != (IData)(vlSymsp->TOP__top__IFU_0.state)) 
-                     << 4U) | (((IData)(vlSelfRef.__PVT__IROM__DOT__read_delay_inst__DOT__out_unlock) 
-                                << 3U) | (((IData)(vlSymsp->TOP__top__IFU_0.__PVT__arvalid) 
-                                           << 2U) | (IData)(vlSelfRef.__PVT__IROM__DOT__r_state))));
-    vlSelfRef.__PVT__IROM__DOT__r_next = Vtop__ConstPool__TABLE_h61f39d43_0
-        [__Vtableidx1];
-    vlSelfRef.__PVT__EXU_0__DOT__ADDER_0__DOT__cin 
-        = ((IData)(vlSymsp->TOP__top__IDU_0.__VdfgRegularize_h52656aab_0_16) 
-           & (0x20U == (vlSymsp->TOP__top__IFU_0.__PVT__PC_command 
-                        >> 0x00000019U)));
-    vlSelfRef.__VdfgRegularize_he2b63832_0_0 = ((IData)(vlSymsp->TOP__top__IDU_0.__PVT__isI) 
-                                                | ((IData)(vlSymsp->TOP__top__IDU_0.__PVT__isU) 
-                                                   | ((IData)(vlSymsp->TOP__top__IDU_0.__PVT__isB) 
-                                                      | ((IData)(vlSymsp->TOP__top__IDU_0.__PVT__isSTORE) 
-                                                         | (0x6fU 
-                                                            == 
-                                                            (0x0000007fU 
-                                                             & vlSymsp->TOP__top__IFU_0.__PVT__PC_command))))));
+    vlSelfRef.__PVT__RAM_AXI4LiteArbiter__DOT__M1_arvalid 
+        = ((0U == (IData)(vlSymsp->TOP__top__IFU_0.state)) 
+           | (1U == (IData)(vlSymsp->TOP__top__IFU_0.state)));
+    if (vlSelfRef.__PVT__RAM_AXI4LiteArbiter__DOT__W_state) {
+        if ((1U & (~ (IData)(vlSelfRef.__PVT__RAM_AXI4LiteArbiter__DOT__w_pass)))) {
+            vlSelfRef.__PVT__RAM_AXI4LiteArbiter__DOT__M1_bresp = 0U;
+            vlSelfRef.__PVT__RAM_AXI4LiteArbiter__DOT__M1_awready 
+                = (0U == (IData)(vlSelfRef.__PVT__RAM__DOT__w_state));
+            vlSelfRef.__PVT__RAM_AXI4LiteArbiter__DOT__M1_wready 
+                = (0U == (IData)(vlSelfRef.__PVT__RAM__DOT__w_state));
+        }
+        if (vlSelfRef.__PVT__RAM_AXI4LiteArbiter__DOT__w_pass) {
+            vlSelfRef.__PVT__DRAM_bresp = 0U;
+        }
+    }
+    if (vlSelfRef.__PVT__RAM_AXI4LiteArbiter__DOT__R_state) {
+        if ((1U & (~ (IData)(vlSelfRef.__PVT__RAM_AXI4LiteArbiter__DOT__r_pass)))) {
+            vlSelfRef.__PVT__IROM_rresp = 0U;
+        }
+        if (vlSelfRef.__PVT__RAM_AXI4LiteArbiter__DOT__r_pass) {
+            vlSelfRef.__PVT__DRAM_rresp = 0U;
+        }
+    }
+    Vtop___024unit____Vdpiimwrap_pmem_read_TOP____024unit(vlSelfRef.__PVT__RAM__DOT__raddr_reg, vlSelfRef.__Vfunc_pmem_read__1__Vfuncout);
+    vlSelfRef.__PVT__RAM__DOT__current_mem_rdata = vlSelfRef.__Vfunc_pmem_read__1__Vfuncout;
+    vlSelfRef.__PVT__RAM_AXI4LiteArbiter__DOT__S_bvalid 
+        = ((2U == (IData)(vlSelfRef.__PVT__RAM__DOT__w_state)) 
+           | ((1U == (IData)(vlSelfRef.__PVT__RAM__DOT__w_state)) 
+              & (IData)(vlSelfRef.__PVT__RAM__DOT__write_delay_inst__DOT__out_unlock)));
+    vlSelfRef.__PVT__RAM_AXI4LiteArbiter__DOT__M2_bready 
+        = ((2U == (IData)(vlSymsp->TOP__top__LSU_0.state)) 
+           | (0U == (IData)(vlSymsp->TOP__top__LSU_0.state)));
+    vlSelfRef.__PVT__RAM_AXI4LiteArbiter__DOT__M2_rready 
+        = ((4U == (IData)(vlSymsp->TOP__top__LSU_0.state)) 
+           | (0U == (IData)(vlSymsp->TOP__top__LSU_0.state)));
+    vlSelfRef.__PVT__RAM_AXI4LiteArbiter__DOT__S_rvalid 
+        = ((2U == (IData)(vlSelfRef.__PVT__RAM__DOT__r_state)) 
+           | ((1U == (IData)(vlSelfRef.__PVT__RAM__DOT__r_state)) 
+              & (IData)(vlSelfRef.__PVT__RAM__DOT__read_delay_inst__DOT__out_unlock)));
+    vlSelfRef.__PVT__RAM_AXI4LiteArbiter__DOT__S_rdata 
+        = ((2U == (IData)(vlSelfRef.__PVT__RAM__DOT__r_state))
+            ? vlSelfRef.__PVT__RAM__DOT__rdata_hold
+            : vlSelfRef.__PVT__RAM__DOT__current_mem_rdata);
+    vlSelfRef.__PVT__RAM_AXI4LiteArbiter__DOT__M1_bvalid = 0U;
+    vlSelfRef.__PVT__DRAM_bvalid = 0U;
+    vlSelfRef.__PVT__RAM_bready = 0U;
+    if (vlSelfRef.__PVT__RAM_AXI4LiteArbiter__DOT__W_state) {
+        if ((1U & (~ (IData)(vlSelfRef.__PVT__RAM_AXI4LiteArbiter__DOT__w_pass)))) {
+            vlSelfRef.__PVT__RAM_AXI4LiteArbiter__DOT__M1_bvalid 
+                = vlSelfRef.__PVT__RAM_AXI4LiteArbiter__DOT__S_bvalid;
+        }
+        if (vlSelfRef.__PVT__RAM_AXI4LiteArbiter__DOT__w_pass) {
+            vlSelfRef.__PVT__DRAM_bvalid = vlSelfRef.__PVT__RAM_AXI4LiteArbiter__DOT__S_bvalid;
+        }
+        vlSelfRef.__PVT__RAM_bready = ((IData)(vlSelfRef.__PVT__RAM_AXI4LiteArbiter__DOT__w_pass) 
+                                       && (IData)(vlSelfRef.__PVT__RAM_AXI4LiteArbiter__DOT__M2_bready));
+    }
+    vlSelfRef.__PVT__RAM_rready = 0U;
+    vlSelfRef.__PVT__IROM_rvalid = 0U;
+    vlSelfRef.__PVT__DRAM_rvalid = 0U;
+    vlSelfRef.__PVT__IROM_rdata = 0U;
+    vlSelfRef.__PVT__DRAM_rdata = 0U;
+    if (vlSelfRef.__PVT__RAM_AXI4LiteArbiter__DOT__R_state) {
+        if (vlSelfRef.__PVT__RAM_AXI4LiteArbiter__DOT__r_pass) {
+            vlSelfRef.__PVT__RAM_rready = vlSelfRef.__PVT__RAM_AXI4LiteArbiter__DOT__M2_rready;
+            vlSelfRef.__PVT__DRAM_rvalid = vlSelfRef.__PVT__RAM_AXI4LiteArbiter__DOT__S_rvalid;
+            vlSelfRef.__PVT__DRAM_rdata = vlSelfRef.__PVT__RAM_AXI4LiteArbiter__DOT__S_rdata;
+        } else {
+            vlSelfRef.__PVT__RAM_rready = (3U != (IData)(vlSymsp->TOP__top__IFU_0.state));
+        }
+        if ((1U & (~ (IData)(vlSelfRef.__PVT__RAM_AXI4LiteArbiter__DOT__r_pass)))) {
+            vlSelfRef.__PVT__IROM_rvalid = vlSelfRef.__PVT__RAM_AXI4LiteArbiter__DOT__S_rvalid;
+            vlSelfRef.__PVT__IROM_rdata = vlSelfRef.__PVT__RAM_AXI4LiteArbiter__DOT__S_rdata;
+        }
+    }
+    vlSelfRef.__PVT__RAM_AXI4LiteArbiter__DOT__S_arready 
+        = ((0U == (IData)(vlSelfRef.__PVT__RAM__DOT__r_state)) 
+           | ((IData)(vlSelfRef.__PVT__RAM_rready) 
+              & (IData)(vlSelfRef.__PVT__RAM_AXI4LiteArbiter__DOT__S_rvalid)));
 }
 
 VL_ATTR_COLD void Vtop_top___ctor_var_reset(Vtop_top* vlSelf) {
@@ -95,68 +132,82 @@ VL_ATTR_COLD void Vtop_top___ctor_var_reset(Vtop_top* vlSelf) {
     vlSelf->dnpc = VL_SCOPED_RAND_RESET_I(32, __VscopeHash, 9558418065809668140ull);
     vlSelf->snpc = VL_SCOPED_RAND_RESET_I(32, __VscopeHash, 17955041938888895009ull);
     vlSelf->__PVT__command = VL_SCOPED_RAND_RESET_I(32, __VscopeHash, 13453452394900071627ull);
+    vlSelf->__PVT__IROM_rdata = VL_SCOPED_RAND_RESET_I(32, __VscopeHash, 13557263189155302816ull);
+    vlSelf->__PVT__IROM_arready = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 2564055601578176104ull);
+    vlSelf->__PVT__IROM_rvalid = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 9475527605847262747ull);
+    vlSelf->__PVT__IROM_rresp = VL_SCOPED_RAND_RESET_I(2, __VscopeHash, 10266562458926410597ull);
+    vlSelf->__PVT__DRAM_rdata = VL_SCOPED_RAND_RESET_I(32, __VscopeHash, 12232755174251697194ull);
+    vlSelf->__PVT__DRAM_rvalid = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 13919585347633116539ull);
+    vlSelf->__PVT__DRAM_bvalid = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 13644965262641193639ull);
+    vlSelf->__PVT__DRAM_awready = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 18335034915749954829ull);
+    vlSelf->__PVT__DRAM_wready = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 10847697789670926749ull);
+    vlSelf->__PVT__DRAM_arready = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 5977303994642059722ull);
+    vlSelf->__PVT__DRAM_bresp = VL_SCOPED_RAND_RESET_I(2, __VscopeHash, 16878665226666086136ull);
+    vlSelf->__PVT__DRAM_rresp = VL_SCOPED_RAND_RESET_I(2, __VscopeHash, 3176023903348792426ull);
+    vlSelf->__PVT__RAM_awaddr = VL_SCOPED_RAND_RESET_I(32, __VscopeHash, 686701304205528786ull);
+    vlSelf->__PVT__RAM_wdata = VL_SCOPED_RAND_RESET_I(32, __VscopeHash, 9150059842804049460ull);
+    vlSelf->__PVT__RAM_araddr = VL_SCOPED_RAND_RESET_I(32, __VscopeHash, 15475681766001047310ull);
+    vlSelf->__PVT__RAM_wstrb = VL_SCOPED_RAND_RESET_I(4, __VscopeHash, 15494620483806822064ull);
+    vlSelf->__PVT__RAM_awvalid = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 10565181593093597127ull);
+    vlSelf->__PVT__RAM_wvalid = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 278212340690924942ull);
+    vlSelf->__PVT__RAM_arvalid = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 10736681486522132936ull);
+    vlSelf->__PVT__RAM_rready = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 6841237691953972828ull);
+    vlSelf->__PVT__RAM_bready = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 12521873630498331255ull);
     vlSelf->__VdfgRegularize_he2b63832_0_0 = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 15367874221688210060ull);
-    vlSelf->__PVT__IROM__DOT__r_state = VL_SCOPED_RAND_RESET_I(2, __VscopeHash, 17558585777867108814ull);
-    vlSelf->__PVT__IROM__DOT__r_next = VL_SCOPED_RAND_RESET_I(2, __VscopeHash, 11814468452844844338ull);
-    vlSelf->__PVT__IROM__DOT__raddr_reg = VL_SCOPED_RAND_RESET_I(32, __VscopeHash, 48376850669963992ull);
-    vlSelf->__PVT__IROM__DOT__rdata_hold = VL_SCOPED_RAND_RESET_I(32, __VscopeHash, 9746812172044480737ull);
-    vlSelf->__PVT__IROM__DOT__current_mem_rdata = VL_SCOPED_RAND_RESET_I(32, __VscopeHash, 16201870360525373634ull);
-    vlSelf->__PVT__IROM__DOT__w_state = VL_SCOPED_RAND_RESET_I(2, __VscopeHash, 1605955768143120009ull);
-    vlSelf->__PVT__IROM__DOT__w_next = VL_SCOPED_RAND_RESET_I(2, __VscopeHash, 16592605608476900658ull);
-    vlSelf->__PVT__IROM__DOT__read_delay_inst__DOT__out_unlock = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 11204095162137588257ull);
-    vlSelf->__PVT__IROM__DOT__read_delay_inst__DOT__lfsr_en = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 12966431463436037012ull);
-    vlSelf->__PVT__IROM__DOT__read_delay_inst__DOT__delay_cnt = VL_SCOPED_RAND_RESET_I(4, __VscopeHash, 7819492007107844118ull);
-    vlSelf->__PVT__IROM__DOT__read_delay_inst__DOT__busy = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 3948641039529019824ull);
-    vlSelf->__PVT__IROM__DOT__read_delay_inst__DOT__start_d = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 8823609228357623672ull);
-    vlSelf->__PVT__IROM__DOT__read_delay_inst__DOT__lock_state = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 15787650337151826099ull);
-    vlSelf->__PVT__IROM__DOT__read_delay_inst__DOT__u_lfsr__DOT__state = VL_SCOPED_RAND_RESET_I(4, __VscopeHash, 8185418422739608503ull);
-    vlSelf->__PVT__IROM__DOT__read_delay_inst__DOT__u_lfsr__DOT__feedback = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 8785903628287345785ull);
-    vlSelf->__PVT__IROM__DOT__write_delay_inst__DOT__out_unlock = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 18297336972029086048ull);
-    vlSelf->__PVT__IROM__DOT__write_delay_inst__DOT__lfsr_en = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 17270771723148385774ull);
-    vlSelf->__PVT__IROM__DOT__write_delay_inst__DOT__delay_cnt = VL_SCOPED_RAND_RESET_I(2, __VscopeHash, 5664992244243985888ull);
-    vlSelf->__PVT__IROM__DOT__write_delay_inst__DOT__busy = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 4473483072187132475ull);
-    vlSelf->__PVT__IROM__DOT__write_delay_inst__DOT__start_d = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 6513823213990616406ull);
-    vlSelf->__PVT__IROM__DOT__write_delay_inst__DOT__lock_state = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 3595730571718060734ull);
-    vlSelf->__PVT__IROM__DOT__write_delay_inst__DOT__u_lfsr__DOT__state = VL_SCOPED_RAND_RESET_I(2, __VscopeHash, 13957303206480623363ull);
-    vlSelf->__PVT__IROM__DOT__write_delay_inst__DOT__u_lfsr__DOT__feedback = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 13681696803079870324ull);
     vlSelf->__PVT__EXU_0__DOT__ADDER_0__DOT__inB = VL_SCOPED_RAND_RESET_Q(33, __VscopeHash, 394028622014140529ull);
     vlSelf->__PVT__EXU_0__DOT__ADDER_0__DOT__cin = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 1352641279154428879ull);
     vlSelf->__PVT__COMP_0__DOT__inB = VL_SCOPED_RAND_RESET_I(32, __VscopeHash, 10216836910058307467ull);
     vlSelf->__PVT__COMP_0__DOT__isEQUAL = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 18285799449688399837ull);
     vlSelf->__PVT__COMP_0__DOT__isGREATER = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 17655933437007907191ull);
     vlSelf->__PVT__COMP_0__DOT__out = VL_SCOPED_RAND_RESET_I(32, __VscopeHash, 5917469842835743340ull);
-    vlSelf->__PVT__DRAM__DOT__r_state = VL_SCOPED_RAND_RESET_I(2, __VscopeHash, 2492845829368784429ull);
-    vlSelf->__PVT__DRAM__DOT__r_next = VL_SCOPED_RAND_RESET_I(2, __VscopeHash, 5853894911693158317ull);
-    vlSelf->__PVT__DRAM__DOT__raddr_reg = VL_SCOPED_RAND_RESET_I(32, __VscopeHash, 16137266371806577404ull);
-    vlSelf->__PVT__DRAM__DOT__rdata_hold = VL_SCOPED_RAND_RESET_I(32, __VscopeHash, 4000256781348153806ull);
-    vlSelf->__PVT__DRAM__DOT__current_mem_rdata = VL_SCOPED_RAND_RESET_I(32, __VscopeHash, 5134714257740330163ull);
-    vlSelf->__PVT__DRAM__DOT__w_state = VL_SCOPED_RAND_RESET_I(2, __VscopeHash, 12925823976671961880ull);
-    vlSelf->__PVT__DRAM__DOT__w_next = VL_SCOPED_RAND_RESET_I(2, __VscopeHash, 11599678007053330725ull);
-    vlSelf->__PVT__DRAM__DOT__read_delay_inst__DOT__start = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 10808484198798226225ull);
-    vlSelf->__PVT__DRAM__DOT__read_delay_inst__DOT__out_unlock = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 6878918776835537312ull);
-    vlSelf->__PVT__DRAM__DOT__read_delay_inst__DOT__lfsr_en = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 2422663938639947447ull);
-    vlSelf->__PVT__DRAM__DOT__read_delay_inst__DOT__delay_cnt = VL_SCOPED_RAND_RESET_I(4, __VscopeHash, 102573638572563737ull);
-    vlSelf->__PVT__DRAM__DOT__read_delay_inst__DOT__busy = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 10459915810209972221ull);
-    vlSelf->__PVT__DRAM__DOT__read_delay_inst__DOT__start_d = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 5709094084450608016ull);
-    vlSelf->__PVT__DRAM__DOT__read_delay_inst__DOT__lock_state = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 7232133194369642248ull);
-    vlSelf->__PVT__DRAM__DOT__read_delay_inst__DOT__u_lfsr__DOT__state = VL_SCOPED_RAND_RESET_I(4, __VscopeHash, 10277611093210377996ull);
-    vlSelf->__PVT__DRAM__DOT__read_delay_inst__DOT__u_lfsr__DOT__feedback = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 6482351922666936788ull);
-    vlSelf->__PVT__DRAM__DOT__write_delay_inst__DOT__start = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 8096490549830613691ull);
-    vlSelf->__PVT__DRAM__DOT__write_delay_inst__DOT__out_unlock = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 17996789360370741254ull);
-    vlSelf->__PVT__DRAM__DOT__write_delay_inst__DOT__lfsr_en = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 9621716809160977364ull);
-    vlSelf->__PVT__DRAM__DOT__write_delay_inst__DOT__delay_cnt = VL_SCOPED_RAND_RESET_I(2, __VscopeHash, 10288593339066448052ull);
-    vlSelf->__PVT__DRAM__DOT__write_delay_inst__DOT__busy = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 4542236754721052089ull);
-    vlSelf->__PVT__DRAM__DOT__write_delay_inst__DOT__start_d = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 17164451002016293276ull);
-    vlSelf->__PVT__DRAM__DOT__write_delay_inst__DOT__lock_state = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 15215063776713356240ull);
-    vlSelf->__PVT__DRAM__DOT__write_delay_inst__DOT__u_lfsr__DOT__state = VL_SCOPED_RAND_RESET_I(2, __VscopeHash, 16287294339830711236ull);
-    vlSelf->__PVT__DRAM__DOT__write_delay_inst__DOT__u_lfsr__DOT__feedback = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 2291659415518459104ull);
+    vlSelf->__PVT__RAM_AXI4LiteArbiter__DOT__M1_arvalid = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 14356449785092601124ull);
+    vlSelf->__PVT__RAM_AXI4LiteArbiter__DOT__M1_awready = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 14773051348550187421ull);
+    vlSelf->__PVT__RAM_AXI4LiteArbiter__DOT__M1_wready = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 17382313962911481618ull);
+    vlSelf->__PVT__RAM_AXI4LiteArbiter__DOT__M1_bresp = VL_SCOPED_RAND_RESET_I(2, __VscopeHash, 9488035963589973303ull);
+    vlSelf->__PVT__RAM_AXI4LiteArbiter__DOT__M1_bvalid = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 16158711966075244824ull);
+    vlSelf->__PVT__RAM_AXI4LiteArbiter__DOT__M2_arvalid = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 2042498477824767762ull);
+    vlSelf->__PVT__RAM_AXI4LiteArbiter__DOT__M2_rready = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 6252876650602622408ull);
+    vlSelf->__PVT__RAM_AXI4LiteArbiter__DOT__M2_awvalid = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 12375025885305802629ull);
+    vlSelf->__PVT__RAM_AXI4LiteArbiter__DOT__M2_bready = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 8274023529088780226ull);
+    vlSelf->__PVT__RAM_AXI4LiteArbiter__DOT__S_arready = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 17810295575027080342ull);
+    vlSelf->__PVT__RAM_AXI4LiteArbiter__DOT__S_rdata = VL_SCOPED_RAND_RESET_I(32, __VscopeHash, 18119107141920553825ull);
+    vlSelf->__PVT__RAM_AXI4LiteArbiter__DOT__S_rvalid = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 7341170536629540755ull);
+    vlSelf->__PVT__RAM_AXI4LiteArbiter__DOT__S_bvalid = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 13008089194761548441ull);
+    vlSelf->__PVT__RAM_AXI4LiteArbiter__DOT__R_state = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 4823501578651874595ull);
+    vlSelf->__PVT__RAM_AXI4LiteArbiter__DOT__R_state_next = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 1837037405076427872ull);
+    vlSelf->__PVT__RAM_AXI4LiteArbiter__DOT__r_priority = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 2951964795728321035ull);
+    vlSelf->__PVT__RAM_AXI4LiteArbiter__DOT__r_pass = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 1346968999279420740ull);
+    vlSelf->__PVT__RAM_AXI4LiteArbiter__DOT__r_pass_next = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 8493337708806758808ull);
+    vlSelf->__PVT__RAM_AXI4LiteArbiter__DOT__W_state = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 7369852676473428527ull);
+    vlSelf->__PVT__RAM_AXI4LiteArbiter__DOT__W_state_next = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 11151231722009253200ull);
+    vlSelf->__PVT__RAM_AXI4LiteArbiter__DOT__w_priority = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 17469664743412755466ull);
+    vlSelf->__PVT__RAM_AXI4LiteArbiter__DOT__w_pass = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 13826073504181371997ull);
+    vlSelf->__PVT__RAM_AXI4LiteArbiter__DOT__w_pass_next = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 1031217269604282145ull);
+    vlSelf->__PVT__RAM__DOT__r_state = VL_SCOPED_RAND_RESET_I(2, __VscopeHash, 5895322731500914881ull);
+    vlSelf->__PVT__RAM__DOT__r_next = VL_SCOPED_RAND_RESET_I(2, __VscopeHash, 11345834108962901552ull);
+    vlSelf->__PVT__RAM__DOT__raddr_reg = VL_SCOPED_RAND_RESET_I(32, __VscopeHash, 12490774110110814760ull);
+    vlSelf->__PVT__RAM__DOT__rdata_hold = VL_SCOPED_RAND_RESET_I(32, __VscopeHash, 1863639929101832015ull);
+    vlSelf->__PVT__RAM__DOT__current_mem_rdata = VL_SCOPED_RAND_RESET_I(32, __VscopeHash, 12807319279230274983ull);
+    vlSelf->__PVT__RAM__DOT__w_state = VL_SCOPED_RAND_RESET_I(2, __VscopeHash, 17719082420725444522ull);
+    vlSelf->__PVT__RAM__DOT__w_next = VL_SCOPED_RAND_RESET_I(2, __VscopeHash, 2438546371427750677ull);
+    vlSelf->__PVT__RAM__DOT__read_delay_inst__DOT__start = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 8602196500886247303ull);
+    vlSelf->__PVT__RAM__DOT__read_delay_inst__DOT__out_unlock = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 7302626734060265340ull);
+    vlSelf->__PVT__RAM__DOT__read_delay_inst__DOT__lfsr_en = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 9028097263970014452ull);
+    vlSelf->__PVT__RAM__DOT__read_delay_inst__DOT__delay_cnt = VL_SCOPED_RAND_RESET_I(4, __VscopeHash, 10679249740693928254ull);
+    vlSelf->__PVT__RAM__DOT__read_delay_inst__DOT__busy = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 12262564538801768656ull);
+    vlSelf->__PVT__RAM__DOT__read_delay_inst__DOT__start_d = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 16179775370138714637ull);
+    vlSelf->__PVT__RAM__DOT__read_delay_inst__DOT__lock_state = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 18291395219225528441ull);
+    vlSelf->__PVT__RAM__DOT__read_delay_inst__DOT__u_lfsr__DOT__state = VL_SCOPED_RAND_RESET_I(4, __VscopeHash, 18025240425002587375ull);
+    vlSelf->__PVT__RAM__DOT__read_delay_inst__DOT__u_lfsr__DOT__feedback = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 11186310810720704562ull);
+    vlSelf->__PVT__RAM__DOT__write_delay_inst__DOT__start = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 6136436521483847611ull);
+    vlSelf->__PVT__RAM__DOT__write_delay_inst__DOT__out_unlock = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 17746922452320766863ull);
+    vlSelf->__PVT__RAM__DOT__write_delay_inst__DOT__lfsr_en = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 906267286100031928ull);
+    vlSelf->__PVT__RAM__DOT__write_delay_inst__DOT__delay_cnt = VL_SCOPED_RAND_RESET_I(2, __VscopeHash, 7661164404842783544ull);
+    vlSelf->__PVT__RAM__DOT__write_delay_inst__DOT__busy = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 5435872617704704241ull);
+    vlSelf->__PVT__RAM__DOT__write_delay_inst__DOT__start_d = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 9729211534646998239ull);
+    vlSelf->__PVT__RAM__DOT__write_delay_inst__DOT__lock_state = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 6693949153386011104ull);
+    vlSelf->__PVT__RAM__DOT__write_delay_inst__DOT__u_lfsr__DOT__state = VL_SCOPED_RAND_RESET_I(2, __VscopeHash, 3719478394371622732ull);
+    vlSelf->__PVT__RAM__DOT__write_delay_inst__DOT__u_lfsr__DOT__feedback = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 9344018477985577196ull);
     vlSelf->__Vfunc_pmem_read__1__Vfuncout = 0;
-    vlSelf->__Vfunc_pmem_read__2__Vfuncout = 0;
     vlSelf->__VdfgRegularize_h6e95ff9d_0_0 = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 5614032309088458142ull);
-    vlSelf->__Vdly__IROM__DOT__read_delay_inst__DOT__busy = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 13492630532375726847ull);
-    vlSelf->__Vdly__IROM__DOT__read_delay_inst__DOT__delay_cnt = VL_SCOPED_RAND_RESET_I(4, __VscopeHash, 12765734909401463866ull);
-    vlSelf->__Vdly__IROM__DOT__read_delay_inst__DOT__u_lfsr__DOT__state = VL_SCOPED_RAND_RESET_I(4, __VscopeHash, 10757891800577758355ull);
-    vlSelf->__Vdly__DRAM__DOT__read_delay_inst__DOT__busy = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 16323494727403613867ull);
-    vlSelf->__Vdly__DRAM__DOT__read_delay_inst__DOT__delay_cnt = VL_SCOPED_RAND_RESET_I(4, __VscopeHash, 10533655812809494827ull);
-    vlSelf->__Vdly__DRAM__DOT__read_delay_inst__DOT__u_lfsr__DOT__state = VL_SCOPED_RAND_RESET_I(4, __VscopeHash, 6678331247425154985ull);
 }

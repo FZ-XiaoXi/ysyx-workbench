@@ -9,34 +9,42 @@ VL_ATTR_COLD void Vtop_LSU___stl_sequent__TOP__top__LSU_0__0(Vtop_LSU* vlSelf) {
     Vtop__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
     auto& vlSelfRef = std::ref(*vlSelf).get();
     // Body
-    vlSelfRef.__PVT__bready = ((2U == (IData)(vlSelfRef.state)) 
-                               | (0U == (IData)(vlSelfRef.state)));
-    vlSelfRef.__PVT__rvalid = ((2U == (IData)(vlSymsp->TOP__top.__PVT__DRAM__DOT__r_state)) 
-                               | ((1U == (IData)(vlSymsp->TOP__top.__PVT__DRAM__DOT__r_state)) 
-                                  & (IData)(vlSymsp->TOP__top.__PVT__DRAM__DOT__read_delay_inst__DOT__out_unlock)));
-    vlSelfRef.__PVT__rready = ((4U == (IData)(vlSelfRef.state)) 
-                               | (0U == (IData)(vlSelfRef.state)));
-    vlSelfRef.__PVT__rdata = ((2U == (IData)(vlSymsp->TOP__top.__PVT__DRAM__DOT__r_state))
-                               ? vlSymsp->TOP__top.__PVT__DRAM__DOT__rdata_hold
-                               : vlSymsp->TOP__top.__PVT__DRAM__DOT__current_mem_rdata);
-    vlSelfRef.__PVT__b_fire = (((2U == (IData)(vlSymsp->TOP__top.__PVT__DRAM__DOT__w_state)) 
-                                | ((1U == (IData)(vlSymsp->TOP__top.__PVT__DRAM__DOT__w_state)) 
-                                   & (IData)(vlSymsp->TOP__top.__PVT__DRAM__DOT__write_delay_inst__DOT__out_unlock))) 
-                               & (IData)(vlSelfRef.__PVT__bready));
-    vlSelfRef.__PVT__r_fire = ((IData)(vlSelfRef.__PVT__rvalid) 
-                               & (IData)(vlSelfRef.__PVT__rready));
-    vlSelfRef.__PVT__val1 = (((- (IData)((vlSelfRef.__PVT__rdata 
+    vlSelfRef.__PVT__b_fire = ((IData)(vlSymsp->TOP__top.__PVT__DRAM_bvalid) 
+                               & (IData)(vlSymsp->TOP__top.__PVT__RAM_AXI4LiteArbiter__DOT__M2_bready));
+    vlSelfRef.__PVT__r_fire = ((IData)(vlSymsp->TOP__top.__PVT__DRAM_rvalid) 
+                               & (IData)(vlSymsp->TOP__top.__PVT__RAM_AXI4LiteArbiter__DOT__M2_rready));
+    vlSelfRef.__PVT__val1 = (((- (IData)((vlSymsp->TOP__top.__PVT__DRAM_rdata 
                                           >> 0x0000001fU))) 
-                              << 0x00000018U) | (vlSelfRef.__PVT__rdata 
+                              << 0x00000018U) | (vlSymsp->TOP__top.__PVT__DRAM_rdata 
                                                  >> 8U));
     vlSelfRef.__PVT__lsu_final = (((4U == (IData)(vlSelfRef.state)) 
                                    & (IData)(vlSelfRef.__PVT__r_fire)) 
                                   | ((2U == (IData)(vlSelfRef.state)) 
                                      & (IData)(vlSelfRef.__PVT__b_fire)));
-    vlSelfRef.__PVT__val2 = (((- (IData)((vlSelfRef.__PVT__rdata 
+    vlSelfRef.__PVT__val2 = (((- (IData)((vlSymsp->TOP__top.__PVT__DRAM_rdata 
                                           >> 0x0000001fU))) 
                               << 0x00000018U) | (vlSelfRef.__PVT__val1 
                                                  >> 8U));
+}
+
+VL_ATTR_COLD void Vtop_LSU___stl_sequent__TOP__top__LSU_0__1(Vtop_LSU* vlSelf) {
+    VL_DEBUG_IF(VL_DBG_MSGF("+        Vtop_LSU___stl_sequent__TOP__top__LSU_0__1\n"); );
+    Vtop__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
+    auto& vlSelfRef = std::ref(*vlSelf).get();
+    // Body
+    vlSelfRef.__PVT__val = ((2U & vlSymsp->TOP.lsu_addr)
+                             ? ((1U & vlSymsp->TOP.lsu_addr)
+                                 ? (((- (IData)((vlSymsp->TOP__top.__PVT__DRAM_rdata 
+                                                 >> 0x0000001fU))) 
+                                     << 0x00000018U) 
+                                    | (vlSelfRef.__PVT__val2 
+                                       >> 8U)) : vlSelfRef.__PVT__val2)
+                             : ((1U & vlSymsp->TOP.lsu_addr)
+                                 ? vlSelfRef.__PVT__val1
+                                 : vlSymsp->TOP__top.__PVT__DRAM_rdata));
+    vlSelfRef.__VdfgRegularize_hac146698_0_1 = ((0U 
+                                                 == (IData)(vlSelfRef.state)) 
+                                                & (IData)(vlSymsp->TOP__top__IDU_0.__PVT__lsu_reqEN));
 }
 
 VL_ATTR_COLD void Vtop_LSU___ctor_var_reset(Vtop_LSU* vlSelf) {
@@ -76,10 +84,11 @@ VL_ATTR_COLD void Vtop_LSU___ctor_var_reset(Vtop_LSU* vlSelf) {
     vlSelf->__PVT__rready = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 8930348232195030647ull);
     vlSelf->state = VL_SCOPED_RAND_RESET_I(3, __VscopeHash, 9404372463396948974ull);
     vlSelf->__PVT__next_state = VL_SCOPED_RAND_RESET_I(3, __VscopeHash, 10383377256973303270ull);
-    vlSelf->__PVT__aw_fire = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 6797594169646705420ull);
     vlSelf->__PVT__b_fire = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 5582104448376273005ull);
+    vlSelf->__PVT__ar_fire = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 17531198051612780992ull);
     vlSelf->__PVT__r_fire = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 9673292808138091229ull);
     vlSelf->__PVT__val1 = VL_SCOPED_RAND_RESET_I(32, __VscopeHash, 5324393166403162543ull);
     vlSelf->__PVT__val2 = VL_SCOPED_RAND_RESET_I(32, __VscopeHash, 10955695006771734379ull);
     vlSelf->__PVT__val = VL_SCOPED_RAND_RESET_I(32, __VscopeHash, 14157650751545541461ull);
+    vlSelf->__VdfgRegularize_hac146698_0_1 = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 7377928744105918783ull);
 }

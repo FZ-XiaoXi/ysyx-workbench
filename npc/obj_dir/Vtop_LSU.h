@@ -38,9 +38,10 @@ class alignas(VL_CACHE_LINE_BYTES) Vtop_LSU final : public VerilatedModule {
     VL_OUT8(__PVT__rready,0,0);
     CData/*2:0*/ state;
     CData/*2:0*/ __PVT__next_state;
-    CData/*0:0*/ __PVT__aw_fire;
     CData/*0:0*/ __PVT__b_fire;
+    CData/*0:0*/ __PVT__ar_fire;
     CData/*0:0*/ __PVT__r_fire;
+    CData/*0:0*/ __VdfgRegularize_hac146698_0_1;
     VL_IN(__PVT__lsu_addr,31,0);
     VL_OUT(__PVT__lsu_rdata,31,0);
     VL_IN(__PVT__lsu_wdata,31,0);

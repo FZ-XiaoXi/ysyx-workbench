@@ -99,23 +99,23 @@ VL_ATTR_COLD bool Vtop___024root___trigger_anySet__stl(const VlUnpacked<QData/*6
 void Vtop___024root___nba_sequent__TOP__0(Vtop___024root* vlSelf);
 VL_ATTR_COLD void Vtop___024root____Vm_traceActivitySetAll(Vtop___024root* vlSelf);
 VL_ATTR_COLD void Vtop_top___stl_sequent__TOP__top__0(Vtop_top* vlSelf);
-VL_ATTR_COLD void Vtop_IFU___stl_sequent__TOP__top__IFU_0__0(Vtop_IFU* vlSelf);
 void Vtop_IDU___nba_sequent__TOP__top__IDU_0__1(Vtop_IDU* vlSelf);
 VL_ATTR_COLD void Vtop_LSU___stl_sequent__TOP__top__LSU_0__0(Vtop_LSU* vlSelf);
-VL_ATTR_COLD void Vtop_top___stl_sequent__TOP__top__1(Vtop_top* vlSelf);
+void Vtop_IFU___ico_sequent__TOP__top__IFU_0__0(Vtop_IFU* vlSelf);
 void Vtop_REG___nba_sequent__TOP__top__REG_0__1(Vtop_REG* vlSelf);
+void Vtop_top___nba_sequent__TOP__top__2(Vtop_top* vlSelf);
 void Vtop___024root___nba_sequent__TOP__1(Vtop___024root* vlSelf);
 void Vtop_IDU___nba_sequent__TOP__top__IDU_0__2(Vtop_IDU* vlSelf);
-void Vtop_top___nba_sequent__TOP__top__4(Vtop_top* vlSelf);
+void Vtop_top___nba_sequent__TOP__top__3(Vtop_top* vlSelf);
 void Vtop_REG___ico_sequent__TOP__top__REG_0__0(Vtop_REG* vlSelf);
 void Vtop___024root___ico_sequent__TOP__1(Vtop___024root* vlSelf);
 void Vtop_IDU___ico_sequent__TOP__top__IDU_0__0(Vtop_IDU* vlSelf);
 void Vtop_top___ico_sequent__TOP__top__1(Vtop_top* vlSelf);
-void Vtop_LSU___ico_sequent__TOP__top__LSU_0__1(Vtop_LSU* vlSelf);
-void Vtop_IFU___ico_sequent__TOP__top__IFU_0__1(Vtop_IFU* vlSelf);
+VL_ATTR_COLD void Vtop_LSU___stl_sequent__TOP__top__LSU_0__1(Vtop_LSU* vlSelf);
 void Vtop___024root___ico_sequent__TOP__2(Vtop___024root* vlSelf);
 void Vtop_top___ico_sequent__TOP__top__2(Vtop_top* vlSelf);
-void Vtop_LSU___ico_sequent__TOP__top__LSU_0__2(Vtop_LSU* vlSelf);
+void Vtop_IFU___ico_sequent__TOP__top__IFU_0__1(Vtop_IFU* vlSelf);
+void Vtop_LSU___ico_sequent__TOP__top__LSU_0__3(Vtop_LSU* vlSelf);
 
 VL_ATTR_COLD void Vtop___024root___eval_stl(Vtop___024root* vlSelf) {
     VL_DEBUG_IF(VL_DBG_MSGF("+    Vtop___024root___eval_stl\n"); );
@@ -126,23 +126,23 @@ VL_ATTR_COLD void Vtop___024root___eval_stl(Vtop___024root* vlSelf) {
         Vtop___024root___nba_sequent__TOP__0(vlSelf);
         Vtop___024root____Vm_traceActivitySetAll(vlSelf);
         Vtop_top___stl_sequent__TOP__top__0((&vlSymsp->TOP__top));
-        Vtop_IFU___stl_sequent__TOP__top__IFU_0__0((&vlSymsp->TOP__top__IFU_0));
         Vtop_IDU___nba_sequent__TOP__top__IDU_0__1((&vlSymsp->TOP__top__IDU_0));
         Vtop_LSU___stl_sequent__TOP__top__LSU_0__0((&vlSymsp->TOP__top__LSU_0));
-        Vtop_top___stl_sequent__TOP__top__1((&vlSymsp->TOP__top));
+        Vtop_IFU___ico_sequent__TOP__top__IFU_0__0((&vlSymsp->TOP__top__IFU_0));
         Vtop_REG___nba_sequent__TOP__top__REG_0__1((&vlSymsp->TOP__top__REG_0));
+        Vtop_top___nba_sequent__TOP__top__2((&vlSymsp->TOP__top));
         Vtop___024root___nba_sequent__TOP__1(vlSelf);
         Vtop_IDU___nba_sequent__TOP__top__IDU_0__2((&vlSymsp->TOP__top__IDU_0));
-        Vtop_top___nba_sequent__TOP__top__4((&vlSymsp->TOP__top));
+        Vtop_top___nba_sequent__TOP__top__3((&vlSymsp->TOP__top));
         Vtop_REG___ico_sequent__TOP__top__REG_0__0((&vlSymsp->TOP__top__REG_0));
         Vtop___024root___ico_sequent__TOP__1(vlSelf);
         Vtop_IDU___ico_sequent__TOP__top__IDU_0__0((&vlSymsp->TOP__top__IDU_0));
         Vtop_top___ico_sequent__TOP__top__1((&vlSymsp->TOP__top));
-        Vtop_LSU___ico_sequent__TOP__top__LSU_0__1((&vlSymsp->TOP__top__LSU_0));
-        Vtop_IFU___ico_sequent__TOP__top__IFU_0__1((&vlSymsp->TOP__top__IFU_0));
+        Vtop_LSU___stl_sequent__TOP__top__LSU_0__1((&vlSymsp->TOP__top__LSU_0));
         Vtop___024root___ico_sequent__TOP__2(vlSelf);
         Vtop_top___ico_sequent__TOP__top__2((&vlSymsp->TOP__top));
-        Vtop_LSU___ico_sequent__TOP__top__LSU_0__2((&vlSymsp->TOP__top__LSU_0));
+        Vtop_IFU___ico_sequent__TOP__top__IFU_0__1((&vlSymsp->TOP__top__IFU_0));
+        Vtop_LSU___ico_sequent__TOP__top__LSU_0__3((&vlSymsp->TOP__top__LSU_0));
     }
 }
 
@@ -204,7 +204,6 @@ VL_ATTR_COLD void Vtop___024root____Vm_traceActivitySetAll(Vtop___024root* vlSel
     vlSelfRef.__Vm_traceActivity[2U] = 1U;
     vlSelfRef.__Vm_traceActivity[3U] = 1U;
     vlSelfRef.__Vm_traceActivity[4U] = 1U;
-    vlSelfRef.__Vm_traceActivity[5U] = 1U;
 }
 
 VL_ATTR_COLD void Vtop___024root___ctor_var_reset(Vtop___024root* vlSelf) {
@@ -245,7 +244,7 @@ VL_ATTR_COLD void Vtop___024root___ctor_var_reset(Vtop___024root* vlSelf) {
     for (int __Vi0 = 0; __Vi0 < 1; ++__Vi0) {
         vlSelf->__VnbaTriggered[__Vi0] = 0;
     }
-    for (int __Vi0 = 0; __Vi0 < 6; ++__Vi0) {
+    for (int __Vi0 = 0; __Vi0 < 5; ++__Vi0) {
         vlSelf->__Vm_traceActivity[__Vi0] = 0;
     }
 }
