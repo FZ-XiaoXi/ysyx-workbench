@@ -4,24 +4,6 @@
 
 #include "Vtop__pch.h"
 
-VL_ATTR_COLD void Vtop_IFU___stl_sequent__TOP__top__IFU_0__0(Vtop_IFU* vlSelf) {
-    VL_DEBUG_IF(VL_DBG_MSGF("+        Vtop_IFU___stl_sequent__TOP__top__IFU_0__0\n"); );
-    Vtop__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
-    auto& vlSelfRef = std::ref(*vlSelf).get();
-    // Body
-    vlSelfRef.__PVT__arvalid = ((0U == (IData)(vlSelfRef.state)) 
-                                | (1U == (IData)(vlSelfRef.state)));
-    vlSelfRef.__PVT__rvalid = ((2U == (IData)(vlSymsp->TOP__top.__PVT__IROM__DOT__r_state)) 
-                               | ((1U == (IData)(vlSymsp->TOP__top.__PVT__IROM__DOT__r_state)) 
-                                  & (IData)(vlSymsp->TOP__top.__PVT__IROM__DOT__read_delay_inst__DOT__out_unlock)));
-    vlSelfRef.__PVT__r_fire = ((IData)(vlSelfRef.__PVT__rvalid) 
-                               & (3U != (IData)(vlSelfRef.state)));
-    vlSelfRef.__PVT__ar_fire = ((IData)(vlSelfRef.__PVT__arvalid) 
-                                & ((0U == (IData)(vlSymsp->TOP__top.__PVT__IROM__DOT__r_state)) 
-                                   | ((3U != (IData)(vlSelfRef.state)) 
-                                      & (IData)(vlSelfRef.__PVT__rvalid))));
-}
-
 VL_ATTR_COLD void Vtop_IFU___ctor_var_reset(Vtop_IFU* vlSelf) {
     VL_DEBUG_IF(VL_DBG_MSGF("+        Vtop_IFU___ctor_var_reset\n"); );
     Vtop__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
@@ -49,6 +31,5 @@ VL_ATTR_COLD void Vtop_IFU___ctor_var_reset(Vtop_IFU* vlSelf) {
     vlSelf->__PVT__rready = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 8930348232195030647ull);
     vlSelf->state = VL_SCOPED_RAND_RESET_I(2, __VscopeHash, 9404372463396948974ull);
     vlSelf->__PVT__next_state = VL_SCOPED_RAND_RESET_I(2, __VscopeHash, 10383377256973303270ull);
-    vlSelf->__PVT__ar_fire = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 17531198051612780992ull);
     vlSelf->__PVT__r_fire = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 9673292808138091229ull);
 }

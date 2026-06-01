@@ -63,6 +63,9 @@ void Vtop_IDU___nba_sequent__TOP__top__IDU_0__1(Vtop_IDU* vlSelf) {
     vlSelfRef.__PVT__isSLT = (IData)((0x00002033U == 
                                       (0xfe00707fU 
                                        & vlSymsp->TOP__top__IFU_0.__PVT__PC_command)));
+    vlSelfRef.__PVT__isSLTU = (IData)((0x00003033U 
+                                       == (0xfe00707fU 
+                                           & vlSymsp->TOP__top__IFU_0.__PVT__PC_command)));
     vlSelfRef.__PVT__isXOR = (IData)((0x00004033U == 
                                       (0xfe00707fU 
                                        & vlSymsp->TOP__top__IFU_0.__PVT__PC_command)));
@@ -71,9 +74,6 @@ void Vtop_IDU___nba_sequent__TOP__top__IDU_0__1(Vtop_IDU* vlSelf) {
     vlSelfRef.__PVT__isAND = (IData)((0x00007033U == 
                                       (0xfe00707fU 
                                        & vlSymsp->TOP__top__IFU_0.__PVT__PC_command)));
-    vlSelfRef.__PVT__isSLTU = (IData)((0x00003033U 
-                                       == (0xfe00707fU 
-                                           & vlSymsp->TOP__top__IFU_0.__PVT__PC_command)));
     vlSelfRef.__PVT__isCSRRW = (IData)((0x00001073U 
                                         == (0x0000707fU 
                                             & vlSymsp->TOP__top__IFU_0.__PVT__PC_command)));
@@ -83,18 +83,6 @@ void Vtop_IDU___nba_sequent__TOP__top__IDU_0__1(Vtop_IDU* vlSelf) {
     vlSelfRef.__PVT__isCSRRC = (IData)((0x00003073U 
                                         == (0x0000707fU 
                                             & vlSymsp->TOP__top__IFU_0.__PVT__PC_command)));
-    __VdfgRegularize_h52656aab_0_17 = (IData)((0x00005033U 
-                                               == (0x0000707fU 
-                                                   & vlSymsp->TOP__top__IFU_0.__PVT__PC_command)));
-    vlSelfRef.__VdfgRegularize_h52656aab_0_16 = (IData)(
-                                                        (0x00000033U 
-                                                         == 
-                                                         (0x0000707fU 
-                                                          & vlSymsp->TOP__top__IFU_0.__PVT__PC_command)));
-    vlSelfRef.__PVT__isU = ((0x37U == (0x0000007fU 
-                                       & vlSymsp->TOP__top__IFU_0.__PVT__PC_command)) 
-                            | (0x17U == (0x0000007fU 
-                                         & vlSymsp->TOP__top__IFU_0.__PVT__PC_command)));
     vlSelfRef.__PVT__isBEQ = (IData)((0x00000063U == 
                                       (0x0000707fU 
                                        & vlSymsp->TOP__top__IFU_0.__PVT__PC_command)));
@@ -113,6 +101,21 @@ void Vtop_IDU___nba_sequent__TOP__top__IDU_0__1(Vtop_IDU* vlSelf) {
     vlSelfRef.__PVT__isBLTU = (IData)((0x00006063U 
                                        == (0x0000707fU 
                                            & vlSymsp->TOP__top__IFU_0.__PVT__PC_command)));
+    __VdfgRegularize_h52656aab_0_17 = (IData)((0x00005033U 
+                                               == (0x0000707fU 
+                                                   & vlSymsp->TOP__top__IFU_0.__PVT__PC_command)));
+    vlSelfRef.__PVT__isU = ((0x37U == (0x0000007fU 
+                                       & vlSymsp->TOP__top__IFU_0.__PVT__PC_command)) 
+                            | (0x17U == (0x0000007fU 
+                                         & vlSymsp->TOP__top__IFU_0.__PVT__PC_command)));
+    vlSelfRef.__VdfgRegularize_h52656aab_0_16 = (IData)(
+                                                        (0x00000033U 
+                                                         == 
+                                                         (0x0000707fU 
+                                                          & vlSymsp->TOP__top__IFU_0.__PVT__PC_command)));
+    vlSelfRef.__PVT__isSLTIU = (IData)((0x00003013U 
+                                        == (0x0000707fU 
+                                            & vlSymsp->TOP__top__IFU_0.__PVT__PC_command)));
     vlSelfRef.__PVT__isXORI = (IData)((0x00004013U 
                                        == (0x0000707fU 
                                            & vlSymsp->TOP__top__IFU_0.__PVT__PC_command)));
@@ -122,9 +125,6 @@ void Vtop_IDU___nba_sequent__TOP__top__IDU_0__1(Vtop_IDU* vlSelf) {
     vlSelfRef.__PVT__isANDI = (IData)((0x00007013U 
                                        == (0x0000707fU 
                                            & vlSymsp->TOP__top__IFU_0.__PVT__PC_command)));
-    vlSelfRef.__PVT__isSLTIU = (IData)((0x00003013U 
-                                        == (0x0000707fU 
-                                            & vlSymsp->TOP__top__IFU_0.__PVT__PC_command)));
     vlSelfRef.__PVT__isADDI = (IData)((0x00000013U 
                                        == (0x0000707fU 
                                            & vlSymsp->TOP__top__IFU_0.__PVT__PC_command)));
@@ -137,13 +137,13 @@ void Vtop_IDU___nba_sequent__TOP__top__IDU_0__1(Vtop_IDU* vlSelf) {
                                      (0x0000707fU & vlSymsp->TOP__top__IFU_0.__PVT__PC_command)));
     vlSelfRef.__PVT__isSH = (IData)((0x00001023U == 
                                      (0x0000707fU & vlSymsp->TOP__top__IFU_0.__PVT__PC_command)));
+    __VdfgRegularize_h52656aab_0_26 = (IData)((0x00001000U 
+                                               == (0xfe007000U 
+                                                   & vlSymsp->TOP__top__IFU_0.__PVT__PC_command)));
     vlSelfRef.__PVT__isLW = (IData)((0x00002003U == 
                                      (0x0000707fU & vlSymsp->TOP__top__IFU_0.__PVT__PC_command)));
     vlSelfRef.__PVT__isLH = (IData)((0x00001003U == 
                                      (0x0000707fU & vlSymsp->TOP__top__IFU_0.__PVT__PC_command)));
-    __VdfgRegularize_h52656aab_0_26 = (IData)((0x00001000U 
-                                               == (0xfe007000U 
-                                                   & vlSymsp->TOP__top__IFU_0.__PVT__PC_command)));
     vlSelfRef.__PVT__isLBU = (IData)((0x00004003U == 
                                       (0x0000707fU 
                                        & vlSymsp->TOP__top__IFU_0.__PVT__PC_command)));
@@ -158,6 +158,8 @@ void Vtop_IDU___nba_sequent__TOP__top__IDU_0__1(Vtop_IDU* vlSelf) {
                                         ? 3U : ((IData)(vlSelfRef.__PVT__isCSRRC)
                                                  ? 2U
                                                  : 0U)));
+    __VdfgRegularize_h52656aab_0_24 = ((IData)(vlSelfRef.__PVT__isBLTU) 
+                                       | (IData)(vlSelfRef.__PVT__isBGEU));
     vlSelfRef.__PVT__isSRL = ((IData)(__VdfgRegularize_h52656aab_0_17) 
                               & (0U == (vlSymsp->TOP__top__IFU_0.__PVT__PC_command 
                                         >> 0x00000019U)));
@@ -167,20 +169,18 @@ void Vtop_IDU___nba_sequent__TOP__top__IDU_0__1(Vtop_IDU* vlSelf) {
     vlSelfRef.__PVT__isADD = ((IData)(vlSelfRef.__VdfgRegularize_h52656aab_0_16) 
                               & (0U == (vlSymsp->TOP__top__IFU_0.__PVT__PC_command 
                                         >> 0x00000019U)));
-    __VdfgRegularize_h52656aab_0_24 = ((IData)(vlSelfRef.__PVT__isBLTU) 
-                                       | (IData)(vlSelfRef.__PVT__isBGEU));
-    vlSelfRef.__VdfgRegularize_h6e95ff9d_0_7 = ((IData)(vlSelfRef.__PVT__isXORI) 
-                                                | (IData)(vlSelfRef.__PVT__isXOR));
-    vlSelfRef.__VdfgRegularize_h6e95ff9d_0_6 = ((IData)(vlSelfRef.__PVT__isORI) 
-                                                | (IData)(vlSelfRef.__PVT__isOR));
-    vlSelfRef.__VdfgRegularize_h6e95ff9d_0_5 = ((IData)(vlSelfRef.__PVT__isANDI) 
-                                                | (IData)(vlSelfRef.__PVT__isAND));
     vlSelfRef.__VdfgRegularize_h52656aab_0_20 = ((IData)(
                                                          (0x00002013U 
                                                           == 
                                                           (0x0000707fU 
                                                            & vlSymsp->TOP__top__IFU_0.__PVT__PC_command))) 
                                                  | (IData)(vlSelfRef.__PVT__isSLTIU));
+    vlSelfRef.__VdfgRegularize_h6e95ff9d_0_7 = ((IData)(vlSelfRef.__PVT__isXORI) 
+                                                | (IData)(vlSelfRef.__PVT__isXOR));
+    vlSelfRef.__VdfgRegularize_h6e95ff9d_0_6 = ((IData)(vlSelfRef.__PVT__isORI) 
+                                                | (IData)(vlSelfRef.__PVT__isOR));
+    vlSelfRef.__VdfgRegularize_h6e95ff9d_0_5 = ((IData)(vlSelfRef.__PVT__isANDI) 
+                                                | (IData)(vlSelfRef.__PVT__isAND));
     vlSelfRef.__PVT__isJUMP = ((0x6fU == (0x0000007fU 
                                           & vlSymsp->TOP__top__IFU_0.__PVT__PC_command)) 
                                | (IData)(vlSelfRef.__PVT__isJALR));

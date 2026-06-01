@@ -64,32 +64,7 @@ module top(
   wire [31:0] IROM_araddr,IROM_rdata;
   wire IROM_arvalid,IROM_arready,IROM_rvalid,IROM_rready;
   wire [1:0] IROM_rresp;
-  MEM IROM(
-    .clk(clk),
-    .rst(rst),
 
-    .araddr(IROM_araddr),
-    .arvalid(IROM_arvalid),
-    .arready(IROM_arready),
-
-    .rdata(IROM_rdata),
-    .rresp(IROM_rresp),
-    .rvalid(IROM_rvalid),
-    .rready(IROM_rready),
-
-    .awaddr(0),
-    .awvalid(0),
-    .awready(),
-
-    .wdata(0),
-    .wstrb(0),
-    .wvalid(0),
-    .wready(),
-    
-    .bresp(),
-    .bvalid(),
-    .bready(0)
-);
 
   IDU IDU_0(
     .clk(clk),
@@ -177,31 +152,114 @@ module top(
   wire DRAM_awvalid,DRAM_wvalid,DRAM_arvalid,DRAM_rvalid,DRAM_bvalid;
   wire DRAM_awready,DRAM_wready,DRAM_arready,DRAM_rready,DRAM_bready;
   wire [1:0] DRAM_bresp,DRAM_rresp;
-  MEM DRAM(
+
+
+    AXI4LiteArbiter RAM_AXI4LiteArbiter(
     .clk(clk),
     .rst(rst),
 
-    .araddr(DRAM_araddr),
-    .arvalid(DRAM_arvalid),
-    .arready(DRAM_arready),
+    //MASTER1
+    //AR
+    .M1_araddr(IROM_araddr),
+    .M1_arvalid(IROM_arvalid),
+    .M1_arready(IROM_arready),
+    //R
+    .M1_rdata(IROM_rdata),
+    .M1_rresp(IROM_rresp),
+    .M1_rvalid(IROM_rvalid),
+    .M1_rready(IROM_rready),
+    //AW
+    .M1_awaddr(0),
+    .M1_awvalid(0),
+    .M1_awready(),
+    //W
+    .M1_wdata(0),
+    .M1_wstrb(0),
+    .M1_wvalid(0),
+    .M1_wready(),
+    //B
+    .M1_bresp(),
+    .M1_bvalid(),
+    .M1_bready(0),
 
-    .rdata(DRAM_rdata),
-    .rresp(DRAM_rresp),
-    .rvalid(DRAM_rvalid),
-    .rready(DRAM_rready),
+    //MASTER2
+    //AR
+    .M2_araddr(DRAM_araddr),
+    .M2_arvalid(DRAM_arvalid),
+    .M2_arready(DRAM_arready),
+    //R
+    .M2_rdata(DRAM_rdata),
+    .M2_rresp(DRAM_rresp),
+    .M2_rvalid(DRAM_rvalid),
+    .M2_rready(DRAM_rready),
+    //AW
+    .M2_awaddr(DRAM_awaddr),
+    .M2_awvalid(DRAM_awvalid),
+    .M2_awready(DRAM_awready),
+    //W
+    .M2_wdata(DRAM_wdata),
+    .M2_wstrb(DRAM_wstrb),
+    .M2_wvalid(DRAM_wvalid),
+    .M2_wready(DRAM_wready),
+    //B
+    .M2_bresp(DRAM_bresp),
+    .M2_bvalid(DRAM_bvalid),
+    .M2_bready(DRAM_bready),
 
-    .awaddr(DRAM_awaddr),
-    .awvalid(DRAM_awvalid),
-    .awready(DRAM_awready),
+    //SLAVE
+    //AR
+    .S_araddr(RAM_araddr),
+    .S_arvalid(RAM_arvalid),
+    .S_arready(RAM_arready),
+    //R
+    .S_rdata(RAM_rdata),
+    .S_rresp(RAM_rresp),
+    .S_rvalid(RAM_rvalid),
+    .S_rready(RAM_rready),
+    //AW
+    .S_awaddr(RAM_awaddr),
+    .S_awvalid(RAM_awvalid),
+    .S_awready(RAM_awready),
+    //W
+    .S_wdata(RAM_wdata),
+    .S_wstrb(RAM_wstrb),
+    .S_wvalid(RAM_wvalid),
+    .S_wready(RAM_wready),
+    //B
+    .S_bresp(RAM_bresp),
+    .S_bvalid(RAM_bvalid),
+    .S_bready(RAM_bready)
+  );
+  wire [31:0] RAM_awaddr,RAM_wdata,RAM_araddr,RAM_rdata;
+  wire [3:0] RAM_wstrb;
+  wire RAM_awvalid,RAM_wvalid,RAM_arvalid,RAM_rvalid,RAM_bvalid;
+  wire RAM_awready,RAM_wready,RAM_arready,RAM_rready,RAM_bready;
+  wire [1:0] RAM_bresp,RAM_rresp;
+  MEM RAM(
+    .clk(clk),
+    .rst(rst),
 
-    .wdata(DRAM_wdata),
-    .wstrb(DRAM_wstrb),
-    .wvalid(DRAM_wvalid),
-    .wready(DRAM_wready),
+    .araddr(RAM_araddr),
+    .arvalid(RAM_arvalid),
+    .arready(RAM_arready),
+
+    .rdata(RAM_rdata),
+    .rresp(RAM_rresp),
+    .rvalid(RAM_rvalid),
+    .rready(RAM_rready),
+
+    .awaddr(RAM_awaddr),
+    .awvalid(RAM_awvalid),
+    .awready(RAM_awready),
+
+    .wdata(RAM_wdata),
+    .wstrb(RAM_wstrb),
+    .wvalid(RAM_wvalid),
+    .wready(RAM_wready),
     
-    .bresp(DRAM_bresp),
-    .bvalid(DRAM_bvalid),
-    .bready(DRAM_bready)
+    .bresp(RAM_bresp),
+    .bvalid(RAM_bvalid),
+    .bready(RAM_bready)
   );
 
   always @(posedge clk) begin
