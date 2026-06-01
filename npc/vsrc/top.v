@@ -37,8 +37,60 @@ module top(
   wire bus_valid;
   REG REG_0(.clk(clk),.rst(rst),.addRA(rs1_add),.addRB(rs2_add),.addW(gpr_address),.addCSR(rcsr_add),.outA(rs1_val),.outB(rs2_val),.inData(reg_data),.gpr_WEN(gpr_WEN),.CSR_BUS(CSR_data),.WCSREN(|isCSR),.isECALL(isECALL),.isMRET(isMRET),.csr_mepc(csr_mepc),.csr_mtvec(csr_mtvec),.pc(PC),.bus_valid(bus_valid));/*verilator public_module*/
   WBU WBU_0(.clk(clk),.rst(rst),.LSU_data(lsu_rdata),.EXU_data(EXU_data),.COMP_data(COMP_data),.address(rd_add),.isLOAD(isLOAD),.isWRITE(isWRITE),.isJUMP(isJUMP),.snpc(snpc),.gpr_WEN(gpr_WEN),.reg_data(reg_data),.gpr_address(gpr_address),.isCOMPARE(isCOMPARE),.CSR_data(CSR_data),.isCSR(isCSR),.lsu_final(lsu_final),.wbu_final(wbu_final),.isSTORE(isSTORE));
-  IFU IFU_0(.clk(clk),.rst(rst),.PC(PC),.dnpc(dnpc),.snpc(snpc),.isJUMP(isJUMP),.PC_command(PC_command),.isBRANCH(isBRANCH),.isECALL(isECALL),.isMRET(isMRET),.bus_valid(bus_valid),.wbu_final(wbu_final));/*verilator public_module*/
-  //LSU LSU_0(.address({2'b00,value[31:2]}),.data(lsu_rdata),.wdata(lsu_wdata),.range(LSU_rmask),.clk(clk),.lsu_wen(LSU_WEN),.PC_address({2'b00,PC[31:2]}),.PC_data(PC_command));
+  
+  IFU IFU_0(
+    .clk(clk),
+    .rst(rst),
+    .PC(PC),
+    .dnpc(dnpc),
+    .snpc(snpc),
+    .isJUMP(isJUMP),
+    .isBRANCH(isBRANCH),
+    .isECALL(isECALL),
+    .isMRET(isMRET),
+    .wbu_final(wbu_final),
+    .PC_command(PC_command),
+    .bus_valid(bus_valid),
+
+    .araddr(IROM_araddr),
+    .arvalid(IROM_arvalid),
+    .arready(IROM_arready),
+    .rdata(IROM_rdata),
+    .rresp(IROM_rresp),
+    .rvalid(IROM_rvalid),
+    .rready(IROM_rready)
+    
+  );/*verilator public_module*/
+  wire [31:0] IROM_araddr,IROM_rdata;
+  wire IROM_arvalid,IROM_arready,IROM_rvalid,IROM_rready;
+  wire [1:0] IROM_rresp;
+  MEM IROM(
+    .clk(clk),
+    .rst(rst),
+
+    .araddr(IROM_araddr),
+    .arvalid(IROM_arvalid),
+    .arready(IROM_arready),
+
+    .rdata(IROM_rdata),
+    .rresp(IROM_rresp),
+    .rvalid(IROM_rvalid),
+    .rready(IROM_rready),
+
+    .awaddr(0),
+    .awvalid(0),
+    .awready(),
+
+    .wdata(0),
+    .wstrb(0),
+    .wvalid(0),
+    .wready(),
+    
+    .bresp(),
+    .bvalid(),
+    .bready(0)
+);
+
   IDU IDU_0(
     .clk(clk),
     .rst(rst),
@@ -87,7 +139,71 @@ module top(
   assign dnpc=isECALL?csr_mtvec:(isMRET?csr_mepc:EXU_data);
   assign lsu_addr=EXU_data;
   assign lsu_wdata=rs2_val;
-  LSU LSU_0(.clk(clk),.lsu_wen(LSU_WEN),.lsu_addr(lsu_addr),.lsu_rdata(lsu_rdata),.lsu_wdata(lsu_wdata),.rmask(LSU_rmask),.lsu_wmask(lsu_wmask),.isSigned(isSigned),.lsu_reqEN(lsu_reqEN),.bus_valid(bus_valid),.lsu_final(lsu_final),.rst(rst));/*verilator public_module*/
+  LSU LSU_0(
+    .clk(clk),
+    .rst(rst),
+    .lsu_addr(lsu_addr),
+    .lsu_rdata(lsu_rdata),
+    .lsu_wdata(lsu_wdata),
+    .lsu_wen(LSU_WEN),
+    .lsu_reqEN(lsu_reqEN),
+    .lsu_final(lsu_final),
+    .rmask(LSU_rmask),
+    .lsu_wmask(lsu_wmask),
+    .isSigned(isSigned),
+    .bus_valid(bus_valid),
+
+    .awaddr(DRAM_awaddr),
+    .awvalid(DRAM_awvalid),
+    .awready(DRAM_awready),
+    .wdata(DRAM_wdata),
+    .wstrb(DRAM_wstrb),
+    .wvalid(DRAM_wvalid),
+    .wready(DRAM_wready),
+    .bresp(DRAM_bresp),
+    .bvalid(DRAM_bvalid),
+    .bready(DRAM_bready),
+
+    .araddr(DRAM_araddr),
+    .arvalid(DRAM_arvalid),
+    .arready(DRAM_arready),
+    .rdata(DRAM_rdata),
+    .rresp(DRAM_rresp),
+    .rvalid(DRAM_rvalid),
+    .rready(DRAM_rready)
+  );/*verilator public_module*/
+  wire [31:0] DRAM_awaddr,DRAM_wdata,DRAM_araddr,DRAM_rdata;
+  wire [3:0] DRAM_wstrb;
+  wire DRAM_awvalid,DRAM_wvalid,DRAM_arvalid,DRAM_rvalid,DRAM_bvalid;
+  wire DRAM_awready,DRAM_wready,DRAM_arready,DRAM_rready,DRAM_bready;
+  wire [1:0] DRAM_bresp,DRAM_rresp;
+  MEM DRAM(
+    .clk(clk),
+    .rst(rst),
+
+    .araddr(DRAM_araddr),
+    .arvalid(DRAM_arvalid),
+    .arready(DRAM_arready),
+
+    .rdata(DRAM_rdata),
+    .rresp(DRAM_rresp),
+    .rvalid(DRAM_rvalid),
+    .rready(DRAM_rready),
+
+    .awaddr(DRAM_awaddr),
+    .awvalid(DRAM_awvalid),
+    .awready(DRAM_awready),
+
+    .wdata(DRAM_wdata),
+    .wstrb(DRAM_wstrb),
+    .wvalid(DRAM_wvalid),
+    .wready(DRAM_wready),
+    
+    .bresp(DRAM_bresp),
+    .bvalid(DRAM_bvalid),
+    .bready(DRAM_bready)
+  );
+
   always @(posedge clk) begin
     if(isEBREAK)  ebreak();
   end

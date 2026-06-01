@@ -39,7 +39,7 @@ void Vtop_REG___nba_sequent__TOP__top__REG_0__0(Vtop_REG* vlSelf) {
     // Body
     __Vdly__CSR_MCYCLE = vlSelfRef.CSR_MCYCLE;
     __Vdly__CSR_MCYCLEH = vlSelfRef.CSR_MCYCLEH;
-    if (((~ (IData)(vlSymsp->TOP.rst)) & (IData)(vlSymsp->TOP__top__IFU_0.__PVT__bus_valid))) {
+    if (((~ (IData)(vlSymsp->TOP.rst)) & (3U == (IData)(vlSymsp->TOP__top__IFU_0.state)))) {
         if (((IData)(vlSelfRef.__PVT__WCSREN) & ((0x0b00U 
                                                   == 
                                                   (vlSymsp->TOP__top__IFU_0.__PVT__PC_command 
@@ -64,7 +64,7 @@ void Vtop_REG___nba_sequent__TOP__top__REG_0__0(Vtop_REG* vlSelf) {
         vlSelfRef.CSR_MCAUSE = 0U;
         vlSelfRef.CSR_MTVEC = 0U;
         vlSelfRef.CSR_MEPC = 0U;
-    } else if (vlSymsp->TOP__top__IFU_0.__PVT__bus_valid) {
+    } else if ((3U == (IData)(vlSymsp->TOP__top__IFU_0.state))) {
         __Vdly__CSR_MCYCLE = ((IData)(1U) + vlSelfRef.CSR_MCYCLE);
         __Vdly__CSR_MCYCLEH = ((0xffffffffU == vlSelfRef.CSR_MCYCLE)
                                 ? ((IData)(1U) + vlSelfRef.CSR_MCYCLEH)

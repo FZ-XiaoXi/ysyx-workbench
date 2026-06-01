@@ -1,94 +1,154 @@
 module MEM(
     input clk,
     input rst,
-    input wen,
-    input [31:0]addr,
-    input [31:0]wdata,
-    output reg [31:0]rdata,
-    input [3:0]wmask,
-    input reqValid,
-    output reqReady,
-    output respValid,
-    input respReady
 
+    //AR
+    input  [31:0] araddr,
+    input         arvalid,
+    output        arready,
+
+    //R
+    output [31:0] rdata,
+    output [1:0]  rresp,
+    output        rvalid,
+    input         rready,
+
+    //AW
+    input  [31:0] awaddr,
+    input         awvalid,
+    output        awready,
+
+    //W
+    input  [31:0] wdata,
+    input  [3:0]  wstrb,
+    input         wvalid,
+    output        wready,
+    
+    //B
+    output [1:0]  bresp,
+    output        bvalid,
+    input         bready
 );
-    wire respFinal;
-    parameter state_idle=0,state_wait_slave_ready=1,state_working=2,state_wait_master_ready=3;
-    reg [1:0]state,next_state;
 
-    assign respValid = (state == state_working && respFinal) || (state == state_wait_master_ready);
+    // AR / R
+    localparam R_IDLE = 2'd0, R_WAIT_MEM = 2'd1, R_HOLD_DATA = 2'd2;
+    reg [1:0] r_state, r_next;
+    
+    reg [31:0] raddr_reg;
+    reg [31:0] rdata_hold;
+    wire       r_mem_ready;
+
+    always @(posedge clk) begin
+        if(rst) r_state <= R_IDLE;
+        else    r_state <= r_next;
+    end
+
     always @(*) begin
-        case(state)
-            state_idle:begin
-                if(reqValid & reqReady) begin
-                    next_state=state_working;
-                end else if(reqValid) begin
-                    next_state=state_wait_slave_ready;
-                end else begin
-                    next_state=state_idle;
+        r_next = r_state;
+        case(r_state)
+            R_IDLE: begin
+                if(arvalid) r_next = R_WAIT_MEM;
+            end
+            R_WAIT_MEM: begin
+                if(r_mem_ready) begin
+                    if(rready) begin
+                        if(arvalid) r_next = R_WAIT_MEM;
+                        else        r_next = R_IDLE;
+                    end else begin
+                        r_next = R_HOLD_DATA;
+                    end
                 end
             end
-            state_wait_slave_ready:begin
-                if(reqValid & reqReady) begin
-                    next_state=state_working;
-                end else begin
-                    next_state=state_wait_slave_ready;
+            R_HOLD_DATA: begin
+                if(rready) begin
+                    if(arvalid) r_next = R_WAIT_MEM;
+                    else        r_next = R_IDLE;
                 end
             end
-            state_working:begin
-                if(respFinal & respReady) begin
-                    next_state=state_idle;
-                end else if(respFinal) begin
-                    next_state=state_wait_master_ready;
-                end else begin
-                    next_state=state_working;
-                end
-            end 
-            state_wait_master_ready:begin
-                if(respValid & respReady) begin
-                    next_state=state_idle;
-                end else begin
-                    next_state=state_wait_master_ready;
-                end
-            end
+            default: r_next = R_IDLE;
         endcase
     end
 
+    wire r_req_fire = (arvalid && arready);
     always @(posedge clk) begin
-        if(rst) begin
-            state<=state_idle;
-        end else begin
-            state<=next_state;
+        if(r_req_fire) raddr_reg <= araddr;
+    end
+
+    random_delay_pulse #(.LFSR_WIDTH(4)) read_delay_inst (
+        .clk(clk),
+        .rst_n(~rst),
+        .out_lock(0),
+        .start(r_req_fire),
+        .out(r_mem_ready)
+    );
+
+    wire [31:0] current_mem_rdata = pmem_read(raddr_reg);
+
+    always @(posedge clk) begin
+        if (r_state == R_WAIT_MEM && r_mem_ready && !rready) begin
+            rdata_hold <= current_mem_rdata; 
         end
     end
 
+    assign rvalid  = (r_state == R_HOLD_DATA) || (r_state == R_WAIT_MEM && r_mem_ready);
+    assign rdata   = (r_state == R_HOLD_DATA) ? rdata_hold : current_mem_rdata;
+    assign rresp   = 2'b00;
+    assign arready = (r_state == R_IDLE) || 
+                     (r_state == R_HOLD_DATA && rready) || 
+                     (r_state == R_WAIT_MEM && r_mem_ready && rready);
+
+
+    // AW / W / B
+    localparam W_IDLE = 2'd0, W_WAIT_MEM = 2'd1, W_HOLD_RESP = 2'd2;
+    reg [1:0] w_state, w_next;
+    wire      w_mem_ready;
+
     always @(posedge clk) begin
-        if(reqValid & reqReady) begin
-            rdata <= (!wen)?pmem_read(addr):32'h4f4f4f4f;
-            if(wen) begin
-                difftest_mem_set(addr);
-                pmem_write(addr,wdata,{4'h0,wmask});
+        if(rst) w_state <= W_IDLE;
+        else    w_state <= w_next;
+    end
+
+    wire w_req_fire = (w_state == W_IDLE) && awvalid && wvalid;
+
+    always @(*) begin
+        w_next = w_state;
+        case(w_state)
+            W_IDLE: begin
+                if(awvalid && wvalid) w_next = W_WAIT_MEM;
             end
+            W_WAIT_MEM: begin
+                if(w_mem_ready) begin
+                    if(bready) w_next = W_IDLE;
+                    else       w_next = W_HOLD_RESP;
+                end
+            end
+            W_HOLD_RESP: begin
+                if(bready) w_next = W_IDLE;
+            end
+            default: w_next = W_IDLE;
+        endcase
+        
+    end
+
+    always @(posedge clk) begin
+        if(w_req_fire) begin
+            difftest_mem_set(awaddr);
+            pmem_write(awaddr, wdata, {4'h0, wstrb});
         end
     end
 
-    random_delay_pulse #(
-        .LFSR_WIDTH (2)                     // LFSR 位宽，决定随机延迟的范围（1 ~ 2^LFSR_WIDTH-1）
-    ) random_delay_pulse_0(
-        .clk(clk),                             // 时钟
-        .rst_n(~rst),                           // 异步复位，低有效
+    random_delay_pulse #(.LFSR_WIDTH(2)) write_delay_inst (
+        .clk(clk),
+        .rst_n(~rst),
         .out_lock(0),
-        .start(reqValid & reqReady),                           // 启动脉冲（上升沿有效）
-        .out(respFinal)                              // 输出脉冲，高有效，宽度一个时钟周期
+        .start(w_req_fire),
+        .out(w_mem_ready)
     );
 
-    random_delay_pulse #(
-        .LFSR_WIDTH (2)                     // LFSR 位宽，决定随机延迟的范围（1 ~ 2^LFSR_WIDTH-1）
-    ) random_delay_pulse_1(
-        .clk(clk),                             // 时钟
-        .rst_n(~rst),                           // 异步复位，低有效
-        .out_lock(0),
-        .start(reqValid),                           // 启动脉冲（上升沿有效）
-        .out(reqReady)                              // 输出脉冲，高有效，宽度一个时钟周期
-    );
+    assign awready = (w_state == W_IDLE);
+    assign wready  = (w_state == W_IDLE);
+    
+    assign bvalid  = (w_state == W_HOLD_RESP) || (w_state == W_WAIT_MEM && w_mem_ready);
+    assign bresp   = 2'b00;
+
 endmodule
