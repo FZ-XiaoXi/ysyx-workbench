@@ -30,7 +30,7 @@ Vtop__Syms::Vtop__Syms(VerilatedContext* contextp, const char* namep, Vtop* mode
     , TOP__top__REG_0{this, Verilated::catName(namep, "top.REG_0")}
 {
     // Check resources
-    Verilated::stackCheck(478);
+    Verilated::stackCheck(506);
     // Configure time unit / time precision
     _vm_contextp__->timeunit(-12);
     _vm_contextp__->timeprecision(-12);
@@ -62,7 +62,7 @@ Vtop__Syms::Vtop__Syms(VerilatedContext* contextp, const char* namep, Vtop* mode
         __Vscope_top.varInsert(__Vfinal,"snpc", &(TOP__top.snpc), false, VLVT_UINT32,VLVD_NODIR|VLVF_PUB_RW,0,1 ,31,0);
         __Vscope_top__IDU_0.varInsert(__Vfinal,"state", &(TOP__top__IDU_0.state), false, VLVT_UINT8,VLVD_NODIR|VLVF_PUB_RW,0,0);
         __Vscope_top__IFU_0.varInsert(__Vfinal,"state", &(TOP__top__IFU_0.state), false, VLVT_UINT8,VLVD_NODIR|VLVF_PUB_RW,0,1 ,1,0);
-        __Vscope_top__LSU_0.varInsert(__Vfinal,"state", &(TOP__top__LSU_0.state), false, VLVT_UINT8,VLVD_NODIR|VLVF_PUB_RW,0,1 ,1,0);
+        __Vscope_top__LSU_0.varInsert(__Vfinal,"state", &(TOP__top__LSU_0.state), false, VLVT_UINT8,VLVD_NODIR|VLVF_PUB_RW,0,1 ,2,0);
         __Vscope_top__REG_0.varInsert(__Vfinal,"CSR_MARCHID", &(TOP__top__REG_0.CSR_MARCHID), false, VLVT_UINT32,VLVD_NODIR|VLVF_PUB_RW,0,1 ,31,0);
         __Vscope_top__REG_0.varInsert(__Vfinal,"CSR_MCAUSE", &(TOP__top__REG_0.CSR_MCAUSE), false, VLVT_UINT32,VLVD_NODIR|VLVF_PUB_RW,0,1 ,31,0);
         __Vscope_top__REG_0.varInsert(__Vfinal,"CSR_MCYCLE", &(TOP__top__REG_0.CSR_MCYCLE), false, VLVT_UINT32,VLVD_NODIR|VLVF_PUB_RW,0,1 ,31,0);

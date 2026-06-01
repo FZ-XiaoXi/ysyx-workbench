@@ -68,7 +68,7 @@ void difftest_step(uint32_t pc, uint32_t npc, uint32_t mem_addr) {;
 	ref_difftest_regcpy(ref.gpr, &ref.pc, DIFFTEST_TO_DUT);
 	bool success = checkregs(&ref, pc, npc);
 	if(mem_addr != 0 && success) {
-		Log("Check memory at address " FMT_WORD, mem_addr);
+		// Log("Check memory at address " FMT_WORD, mem_addr);
 		if(check_pmem_bound(mem_addr)){
 			uint32_t ref_mem,dut_mem;
 			ref_difftest_memcpy((mem_addr&~0x03), (void *)&ref_mem, 4, DIFFTEST_TO_DUT);
@@ -77,7 +77,7 @@ void difftest_step(uint32_t pc, uint32_t npc, uint32_t mem_addr) {;
 				Log("%s DUT MEM[" FMT_WORD "] = %08x REF MEM[" FMT_WORD "] = %08x at pc:%08x",ANSI_FMT("Different Memory!", ANSI_FG_RED),mem_addr, dut_mem, mem_addr, ref_mem, pc);
 				success = false;
 			}else{
-				Log("Memory at address " FMT_WORD " is the same: %08x", mem_addr, dut_mem);
+				// Log("Memory at address " FMT_WORD " is the same: %08x", mem_addr, dut_mem);
 
 			}
 		}

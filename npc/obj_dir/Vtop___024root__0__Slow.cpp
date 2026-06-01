@@ -96,168 +96,17 @@ VL_ATTR_COLD bool Vtop___024root___trigger_anySet__stl(const VlUnpacked<QData/*6
     return (0U);
 }
 
-VL_ATTR_COLD void Vtop___024root___stl_sequent__TOP__0(Vtop___024root* vlSelf) {
-    VL_DEBUG_IF(VL_DBG_MSGF("+    Vtop___024root___stl_sequent__TOP__0\n"); );
-    Vtop__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
-    auto& vlSelfRef = std::ref(*vlSelf).get();
-    // Body
-    vlSelfRef.PC_command = vlSymsp->TOP__top__IFU_0.__PVT__PC_command;
-    vlSelfRef.CSR_data = ((((0x0b00U == (vlSymsp->TOP__top__IFU_0.__PVT__PC_command 
-                                         >> 0x00000014U)) 
-                            | (0x0b80U == (vlSymsp->TOP__top__IFU_0.__PVT__PC_command 
-                                           >> 0x00000014U))) 
-                           | (((0x0305U == (vlSymsp->TOP__top__IFU_0.__PVT__PC_command 
-                                            >> 0x00000014U)) 
-                               | (0x0341U == (vlSymsp->TOP__top__IFU_0.__PVT__PC_command 
-                                              >> 0x00000014U))) 
-                              | ((0x0342U == (vlSymsp->TOP__top__IFU_0.__PVT__PC_command 
-                                              >> 0x00000014U)) 
-                                 | ((0x0300U == (vlSymsp->TOP__top__IFU_0.__PVT__PC_command 
-                                                 >> 0x00000014U)) 
-                                    | ((0x0f11U == 
-                                        (vlSymsp->TOP__top__IFU_0.__PVT__PC_command 
-                                         >> 0x00000014U)) 
-                                       | (0x0f12U == 
-                                          (vlSymsp->TOP__top__IFU_0.__PVT__PC_command 
-                                           >> 0x00000014U)))))))
-                           ? ((0x0b00U == (vlSymsp->TOP__top__IFU_0.__PVT__PC_command 
-                                           >> 0x00000014U))
-                               ? vlSymsp->TOP__top__REG_0.CSR_MCYCLE
-                               : ((0x0b80U == (vlSymsp->TOP__top__IFU_0.__PVT__PC_command 
-                                               >> 0x00000014U))
-                                   ? vlSymsp->TOP__top__REG_0.CSR_MCYCLEH
-                                   : ((0x0305U == (vlSymsp->TOP__top__IFU_0.__PVT__PC_command 
-                                                   >> 0x00000014U))
-                                       ? vlSymsp->TOP__top__REG_0.CSR_MTVEC
-                                       : ((0x0341U 
-                                           == (vlSymsp->TOP__top__IFU_0.__PVT__PC_command 
-                                               >> 0x00000014U))
-                                           ? vlSymsp->TOP__top__REG_0.CSR_MEPC
-                                           : ((0x0342U 
-                                               == (vlSymsp->TOP__top__IFU_0.__PVT__PC_command 
-                                                   >> 0x00000014U))
-                                               ? vlSymsp->TOP__top__REG_0.CSR_MCAUSE
-                                               : ((0x0300U 
-                                                   == 
-                                                   (vlSymsp->TOP__top__IFU_0.__PVT__PC_command 
-                                                    >> 0x00000014U))
-                                                   ? vlSymsp->TOP__top__REG_0.CSR_MSTATUS
-                                                   : 
-                                                  ((0x0f11U 
-                                                    == 
-                                                    (vlSymsp->TOP__top__IFU_0.__PVT__PC_command 
-                                                     >> 0x00000014U))
-                                                    ? vlSymsp->TOP__top__REG_0.CSR_MVENDORID
-                                                    : vlSymsp->TOP__top__REG_0.CSR_MARCHID)))))))
-                           : 0x2b2b2b2bU);
-    vlSelfRef.lsu_wdata = ((0U == (0x0000001fU & (vlSymsp->TOP__top__IFU_0.__PVT__PC_command 
-                                                  >> 0x00000014U)))
-                            ? 0U : vlSymsp->TOP__top__REG_0.GPR
-                           [(0x0000001fU & (vlSymsp->TOP__top__IFU_0.__PVT__PC_command 
-                                            >> 0x00000014U))]);
-    vlSelfRef.rs1_val = ((0U == (0x0000001fU & (vlSymsp->TOP__top__IFU_0.__PVT__PC_command 
-                                                >> 0x0000000fU)))
-                          ? 0U : vlSymsp->TOP__top__REG_0.GPR
-                         [(0x0000001fU & (vlSymsp->TOP__top__IFU_0.__PVT__PC_command 
-                                          >> 0x0000000fU))]);
-    vlSelfRef.rs2_val = vlSelfRef.lsu_wdata;
-}
-
-VL_ATTR_COLD void Vtop___024root___stl_sequent__TOP__1(Vtop___024root* vlSelf) {
-    VL_DEBUG_IF(VL_DBG_MSGF("+    Vtop___024root___stl_sequent__TOP__1\n"); );
-    Vtop__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
-    auto& vlSelfRef = std::ref(*vlSelf).get();
-    // Body
-    vlSelfRef.lsu_wmask = ((IData)(vlSymsp->TOP__top__IDU_0.__PVT__isSW)
-                            ? 0x0fU : ((IData)(vlSymsp->TOP__top__IDU_0.__PVT__isSB)
-                                        ? 1U : ((IData)(vlSymsp->TOP__top__IDU_0.__PVT__isSH)
-                                                 ? 3U
-                                                 : 0U)));
-    vlSelfRef.LSU_WEN = ((IData)(vlSymsp->TOP__top__IDU_0.__PVT__isSW) 
-                         | (IData)(vlSymsp->TOP__top__IDU_0.__VdfgRegularize_h52656aab_0_25));
-    vlSelfRef.LSU_rmask = ((IData)(vlSymsp->TOP__top__IDU_0.__PVT__isLW)
-                            ? 0x0fU : ((IData)(vlSymsp->TOP__top__IDU_0.__VdfgRegularize_h52656aab_0_21)
-                                        ? 1U : ((IData)(vlSymsp->TOP__top__IDU_0.__VdfgRegularize_h52656aab_0_22)
-                                                 ? 3U
-                                                 : 0U)));
-    vlSelfRef.imm = ((IData)(vlSymsp->TOP__top__IDU_0.__PVT__isI)
-                      ? (((- (IData)((vlSymsp->TOP__top__IFU_0.__PVT__PC_command 
-                                      >> 0x0000001fU))) 
-                          << 0x0000000cU) | (vlSymsp->TOP__top__IFU_0.__PVT__PC_command 
-                                             >> 0x00000014U))
-                      : ((0x6fU == (0x0000007fU & vlSymsp->TOP__top__IFU_0.__PVT__PC_command))
-                          ? ((((0x00000ffeU & ((- (IData)(
-                                                          (vlSymsp->TOP__top__IFU_0.__PVT__PC_command 
-                                                           >> 0x0000001fU))) 
-                                               << 1U)) 
-                               | (vlSymsp->TOP__top__IFU_0.__PVT__PC_command 
-                                  >> 0x0000001fU)) 
-                              << 0x00000014U) | (((
-                                                   (0x000001feU 
-                                                    & (vlSymsp->TOP__top__IFU_0.__PVT__PC_command 
-                                                       >> 0x0000000bU)) 
-                                                   | (1U 
-                                                      & (vlSymsp->TOP__top__IFU_0.__PVT__PC_command 
-                                                         >> 0x00000014U))) 
-                                                  << 0x0000000bU) 
-                                                 | (0x000007feU 
-                                                    & (vlSymsp->TOP__top__IFU_0.__PVT__PC_command 
-                                                       >> 0x00000014U))))
-                          : ((IData)(vlSymsp->TOP__top__IDU_0.__PVT__isSTORE)
-                              ? (((- (IData)((vlSymsp->TOP__top__IFU_0.__PVT__PC_command 
-                                              >> 0x0000001fU))) 
-                                  << 0x0000000cU) | 
-                                 ((0x00000fe0U & (vlSymsp->TOP__top__IFU_0.__PVT__PC_command 
-                                                  >> 0x00000014U)) 
-                                  | (0x0000001fU & 
-                                     (vlSymsp->TOP__top__IFU_0.__PVT__PC_command 
-                                      >> 7U)))) : ((IData)(vlSymsp->TOP__top__IDU_0.__PVT__isU)
-                                                    ? 
-                                                   (0xfffff000U 
-                                                    & vlSymsp->TOP__top__IFU_0.__PVT__PC_command)
-                                                    : 
-                                                   ((IData)(vlSymsp->TOP__top__IDU_0.__PVT__isB)
-                                                     ? 
-                                                    (((- (IData)(
-                                                                 (vlSymsp->TOP__top__IFU_0.__PVT__PC_command 
-                                                                  >> 0x0000001fU))) 
-                                                      << 0x0000000dU) 
-                                                     | ((((2U 
-                                                           & (vlSymsp->TOP__top__IFU_0.__PVT__PC_command 
-                                                              >> 0x0000001eU)) 
-                                                          | (1U 
-                                                             & (vlSymsp->TOP__top__IFU_0.__PVT__PC_command 
-                                                                >> 7U))) 
-                                                         << 0x0000000bU) 
-                                                        | ((0x000007e0U 
-                                                            & (vlSymsp->TOP__top__IFU_0.__PVT__PC_command 
-                                                               >> 0x00000014U)) 
-                                                           | (0x0000001eU 
-                                                              & (vlSymsp->TOP__top__IFU_0.__PVT__PC_command 
-                                                                 >> 7U)))))
-                                                     : 0U)))));
-    if (vlSymsp->TOP__top.__VdfgRegularize_he2b63832_0_0) {
-        vlSelfRef.EXU_inA = (((IData)(vlSymsp->TOP__top__IDU_0.__VdfgRegularize_h52656aab_0_19) 
-                              | (IData)(vlSymsp->TOP__top__IDU_0.__PVT__isB))
-                              ? vlSymsp->TOP__top.PC
-                              : vlSelfRef.rs1_val);
-        vlSelfRef.EXU_inB = vlSelfRef.imm;
-    } else {
-        vlSelfRef.EXU_inA = vlSelfRef.rs1_val;
-        vlSelfRef.EXU_inB = ((IData)(vlSymsp->TOP__top__REG_0.__PVT__WCSREN)
-                              ? vlSelfRef.rs1_val : vlSelfRef.lsu_wdata);
-    }
-}
-
+void Vtop___024root___nba_sequent__TOP__0(Vtop___024root* vlSelf);
 VL_ATTR_COLD void Vtop___024root____Vm_traceActivitySetAll(Vtop___024root* vlSelf);
-VL_ATTR_COLD void Vtop_IFU___stl_sequent__TOP__top__IFU_0__0(Vtop_IFU* vlSelf);
-VL_ATTR_COLD void Vtop_LSU___stl_sequent__TOP__top__LSU_0__0(Vtop_LSU* vlSelf);
 VL_ATTR_COLD void Vtop_top___stl_sequent__TOP__top__0(Vtop_top* vlSelf);
-VL_ATTR_COLD void Vtop_IDU___stl_sequent__TOP__top__IDU_0__0(Vtop_IDU* vlSelf);
-void Vtop_REG___nba_sequent__TOP__top__REG_0__1(Vtop_REG* vlSelf);
-VL_ATTR_COLD void Vtop_top___stl_sequent__TOP__top__1(Vtop_top* vlSelf);
+VL_ATTR_COLD void Vtop_IFU___stl_sequent__TOP__top__IFU_0__0(Vtop_IFU* vlSelf);
 void Vtop_IDU___nba_sequent__TOP__top__IDU_0__1(Vtop_IDU* vlSelf);
-void Vtop_top___ico_sequent__TOP__top__0(Vtop_top* vlSelf);
+VL_ATTR_COLD void Vtop_LSU___stl_sequent__TOP__top__LSU_0__0(Vtop_LSU* vlSelf);
+VL_ATTR_COLD void Vtop_top___stl_sequent__TOP__top__1(Vtop_top* vlSelf);
+void Vtop_REG___nba_sequent__TOP__top__REG_0__1(Vtop_REG* vlSelf);
+void Vtop___024root___nba_sequent__TOP__1(Vtop___024root* vlSelf);
+void Vtop_IDU___nba_sequent__TOP__top__IDU_0__2(Vtop_IDU* vlSelf);
+void Vtop_top___nba_sequent__TOP__top__4(Vtop_top* vlSelf);
 void Vtop_REG___ico_sequent__TOP__top__REG_0__0(Vtop_REG* vlSelf);
 void Vtop___024root___ico_sequent__TOP__1(Vtop___024root* vlSelf);
 void Vtop_IDU___ico_sequent__TOP__top__IDU_0__0(Vtop_IDU* vlSelf);
@@ -265,7 +114,7 @@ void Vtop_top___ico_sequent__TOP__top__1(Vtop_top* vlSelf);
 void Vtop_LSU___ico_sequent__TOP__top__LSU_0__1(Vtop_LSU* vlSelf);
 void Vtop_IFU___ico_sequent__TOP__top__IFU_0__1(Vtop_IFU* vlSelf);
 void Vtop___024root___ico_sequent__TOP__2(Vtop___024root* vlSelf);
-void Vtop_IDU___ico_sequent__TOP__top__IDU_0__1(Vtop_IDU* vlSelf);
+void Vtop_top___ico_sequent__TOP__top__2(Vtop_top* vlSelf);
 void Vtop_LSU___ico_sequent__TOP__top__LSU_0__2(Vtop_LSU* vlSelf);
 
 VL_ATTR_COLD void Vtop___024root___eval_stl(Vtop___024root* vlSelf) {
@@ -274,17 +123,17 @@ VL_ATTR_COLD void Vtop___024root___eval_stl(Vtop___024root* vlSelf) {
     auto& vlSelfRef = std::ref(*vlSelf).get();
     // Body
     if ((1ULL & vlSelfRef.__VstlTriggered[0U])) {
-        Vtop___024root___stl_sequent__TOP__0(vlSelf);
+        Vtop___024root___nba_sequent__TOP__0(vlSelf);
         Vtop___024root____Vm_traceActivitySetAll(vlSelf);
-        Vtop_IFU___stl_sequent__TOP__top__IFU_0__0((&vlSymsp->TOP__top__IFU_0));
-        Vtop_LSU___stl_sequent__TOP__top__LSU_0__0((&vlSymsp->TOP__top__LSU_0));
         Vtop_top___stl_sequent__TOP__top__0((&vlSymsp->TOP__top));
-        Vtop_IDU___stl_sequent__TOP__top__IDU_0__0((&vlSymsp->TOP__top__IDU_0));
-        Vtop_REG___nba_sequent__TOP__top__REG_0__1((&vlSymsp->TOP__top__REG_0));
-        Vtop_top___stl_sequent__TOP__top__1((&vlSymsp->TOP__top));
-        Vtop___024root___stl_sequent__TOP__1(vlSelf);
+        Vtop_IFU___stl_sequent__TOP__top__IFU_0__0((&vlSymsp->TOP__top__IFU_0));
         Vtop_IDU___nba_sequent__TOP__top__IDU_0__1((&vlSymsp->TOP__top__IDU_0));
-        Vtop_top___ico_sequent__TOP__top__0((&vlSymsp->TOP__top));
+        Vtop_LSU___stl_sequent__TOP__top__LSU_0__0((&vlSymsp->TOP__top__LSU_0));
+        Vtop_top___stl_sequent__TOP__top__1((&vlSymsp->TOP__top));
+        Vtop_REG___nba_sequent__TOP__top__REG_0__1((&vlSymsp->TOP__top__REG_0));
+        Vtop___024root___nba_sequent__TOP__1(vlSelf);
+        Vtop_IDU___nba_sequent__TOP__top__IDU_0__2((&vlSymsp->TOP__top__IDU_0));
+        Vtop_top___nba_sequent__TOP__top__4((&vlSymsp->TOP__top));
         Vtop_REG___ico_sequent__TOP__top__REG_0__0((&vlSymsp->TOP__top__REG_0));
         Vtop___024root___ico_sequent__TOP__1(vlSelf);
         Vtop_IDU___ico_sequent__TOP__top__IDU_0__0((&vlSymsp->TOP__top__IDU_0));
@@ -292,7 +141,7 @@ VL_ATTR_COLD void Vtop___024root___eval_stl(Vtop___024root* vlSelf) {
         Vtop_LSU___ico_sequent__TOP__top__LSU_0__1((&vlSymsp->TOP__top__LSU_0));
         Vtop_IFU___ico_sequent__TOP__top__IFU_0__1((&vlSymsp->TOP__top__IFU_0));
         Vtop___024root___ico_sequent__TOP__2(vlSelf);
-        Vtop_IDU___ico_sequent__TOP__top__IDU_0__1((&vlSymsp->TOP__top__IDU_0));
+        Vtop_top___ico_sequent__TOP__top__2((&vlSymsp->TOP__top));
         Vtop_LSU___ico_sequent__TOP__top__LSU_0__2((&vlSymsp->TOP__top__LSU_0));
     }
 }
@@ -355,6 +204,7 @@ VL_ATTR_COLD void Vtop___024root____Vm_traceActivitySetAll(Vtop___024root* vlSel
     vlSelfRef.__Vm_traceActivity[2U] = 1U;
     vlSelfRef.__Vm_traceActivity[3U] = 1U;
     vlSelfRef.__Vm_traceActivity[4U] = 1U;
+    vlSelfRef.__Vm_traceActivity[5U] = 1U;
 }
 
 VL_ATTR_COLD void Vtop___024root___ctor_var_reset(Vtop___024root* vlSelf) {
@@ -395,7 +245,7 @@ VL_ATTR_COLD void Vtop___024root___ctor_var_reset(Vtop___024root* vlSelf) {
     for (int __Vi0 = 0; __Vi0 < 1; ++__Vi0) {
         vlSelf->__VnbaTriggered[__Vi0] = 0;
     }
-    for (int __Vi0 = 0; __Vi0 < 5; ++__Vi0) {
+    for (int __Vi0 = 0; __Vi0 < 6; ++__Vi0) {
         vlSelf->__Vm_traceActivity[__Vi0] = 0;
     }
 }
