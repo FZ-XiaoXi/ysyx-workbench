@@ -119,9 +119,9 @@ static int decode_exec(Decode *s) {
   INSTPAT("0000000 00001 00000 000 00000 11100 11", ebreak , N, NEMUTRAP(s->pc, R(10))); // R(10) is $a0
   INSTPAT("0011000 00010 00000 000 00000 11100 11", mret   , N, s->dnpc = csr(CSR_MEPC));
   
-  INSTPAT("??????? ????? ????? 001 ????? 11100 11", csrrw  , CR, R(rd) = csr(rcsr); csr(rcsr) = src1; if(rcsr==0xb00||rcsr==0xb80){difftest_skip_ref();};);
-  INSTPAT("??????? ????? ????? 010 ????? 11100 11", csrrs  , CR, R(rd) = csr(rcsr); csr(rcsr) = csr(rcsr) | src1; if(rcsr==0xb00||rcsr==0xb80){difftest_skip_ref();};);
-  INSTPAT("??????? ????? ????? 011 ????? 11100 11", csrrc  , CR, R(rd) = csr(rcsr); csr(rcsr) = csr(rcsr) & ~src1; if(rcsr==0xb00||rcsr==0xb80){difftest_skip_ref();};);
+  INSTPAT("??????? ????? ????? 001 ????? 11100 11", csrrw  , CR, R(rd) = csr(rcsr); if(rcsr==0xb00||rcsr==0xb80){difftest_skip_ref();}; if(rcsr!=0xb00&&rcsr!=0xb80&&rcsr!=0xf11&&rcsr!=0xf12){csr(rcsr) = src1;};);
+  INSTPAT("??????? ????? ????? 010 ????? 11100 11", csrrs  , CR, R(rd) = csr(rcsr); if(rcsr==0xb00||rcsr==0xb80){difftest_skip_ref();}; if(rcsr!=0xb00&&rcsr!=0xb80&&rcsr!=0xf11&&rcsr!=0xf12){csr(rcsr) = csr(rcsr) | src1;};);
+  INSTPAT("??????? ????? ????? 011 ????? 11100 11", csrrc  , CR, R(rd) = csr(rcsr); if(rcsr==0xb00||rcsr==0xb80){difftest_skip_ref();}; if(rcsr!=0xb00&&rcsr!=0xb80&&rcsr!=0xf11&&rcsr!=0xf12){csr(rcsr) = csr(rcsr) & ~src1;};);
 
 
   
