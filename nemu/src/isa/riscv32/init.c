@@ -19,7 +19,7 @@
 // this is not consistent with uint8_t
 // but it is ok since we do not access the array directly
 static const uint32_t img [] = {
-  0x00000297,  // auipc t0,0
+  0x3402D7F3,  // auipc t0,0
   0x00028823,  // sb  zero,16(t0)
   0x0102c503,  // lbu a0,16(t0)
   0x00100073,  // ebreak (used as nemu_trap)
@@ -39,6 +39,7 @@ static void restart() {
   cpu.csr[CSR_MSTATUS] = 0x1800;
   cpu.csr[CSR_MCYCLE] = 0x0000;
   cpu.csr[CSR_MCYCLEH] = 0x0000;
+  cpu.csr[CSR_MISA] = 0x40000100;
   cpu.csr[CSR_MVENDORID] = 0x79737978;
   cpu.csr[CSR_MARCHID] = 0x018ce19b;
   
