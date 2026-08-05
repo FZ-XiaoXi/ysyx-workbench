@@ -52,10 +52,10 @@ module MEM(
             R_WAIT_MEM: begin
                 if(r_mem_ready) begin
                     if(rready) begin
-                        if(arvalid) r_next = R_WAIT_MEM;
+                        if(arvalid) r_next = R_WAIT_MEM;//////马上进入下一周期事务，后面写事务还没有，待优化
                         else        r_next = R_IDLE;
                     end else begin
-                        r_next = R_HOLD_DATA;
+                        r_next = R_HOLD_DATA;   ///////没准备好就保持数据
                     end
                 end
             end

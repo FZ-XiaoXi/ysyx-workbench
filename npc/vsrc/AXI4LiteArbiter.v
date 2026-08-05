@@ -23,176 +23,236 @@ module AXI4LiteArbiter(///////这里使用ai进行代码格式美化
     output reg [31:0] S_wdata,    output reg [3:0]  S_wstrb,    output reg        S_wvalid,   input             S_wready,
     input      [1:0]  S_bresp,    input             S_bvalid,   output reg        S_bready
 );
-
-    // =======================================================================
-    // R Channel Arbiter (Read)
-    // =======================================================================
-    localparam R_IDLE = 1'b0, R_BUSY = 1'b1;
-    reg R_state, R_state_next;
-    reg r_priority, r_pass, r_pass_next;
-
+    /////////////////////////////////////////////////////////////////////R - Arbiter
+    parameter R_IDLE = 1'b0, R_BUSY = 1'b1;
+    reg R_state, R_next_state;
+    reg R_master_sel, R_master_sel_next; // 0: M1, 1: M2
     always @(posedge clk) begin
         if(rst) begin
-             R_state <= R_IDLE; r_priority <= 0; r_pass <= 0;
-        end else begin
-            R_state <= R_state_next; r_priority <= ~r_priority; r_pass <= r_pass_next;
+            R_state<=R_IDLE;
+            R_master_sel<=0;
+        end else    begin
+            R_state<=R_next_state;
+            R_master_sel<=R_master_sel_next;
         end
     end
 
-    // 1. R Channel: 状态转移逻辑 (隔离)
-    always @(*) begin
-        R_state_next = R_state;
-        r_pass_next  = r_pass;
+    always @(*)begin
+        R_next_state=R_state;
+        R_master_sel_next=R_master_sel;
         case(R_state)
-            R_IDLE: begin
-                if(M1_arvalid & M2_arvalid) begin
-                    R_state_next = R_BUSY; r_pass_next = r_priority;
+            R_IDLE:begin
+                if(M1_arvalid) begin
+                    R_next_state = R_BUSY;
+                    R_master_sel_next = 0;
                 end else if(M2_arvalid) begin
-                    R_state_next = R_BUSY; r_pass_next = 1;
-                end else if(M1_arvalid) begin
-                    R_state_next = R_BUSY; r_pass_next = 0;
+                    R_next_state = R_BUSY;
+                    R_master_sel_next = 1;
+                end else begin
+                    R_next_state = R_IDLE;
+                    R_master_sel_next = R_master_sel;
                 end
             end
-            R_BUSY: begin
-                if ( (r_pass == 1 && M2_rready && S_rvalid) || 
-                     (r_pass == 0 && M1_rready && S_rvalid) ) begin
-                    if (M1_arvalid) begin
-                        R_state_next = R_BUSY; r_pass_next = 0;
-                    end else if (M2_arvalid) begin
-                        R_state_next = R_BUSY; r_pass_next = 1;
-                    end else begin
-                        R_state_next = R_IDLE;
+            R_BUSY:begin
+                case(R_master_sel)
+                    1'b0:begin
+                        if(S_rvalid & M1_rready) R_next_state=R_IDLE;
                     end
-                end
+                    1'b1:begin
+                        if(S_rvalid & M2_rready) R_next_state=R_IDLE;
+                    end
+                endcase
             end
+            default:
+                R_next_state=R_IDLE;
         endcase
     end
 
-    // 2. AR Channel (地址通道): 严格组合逻辑
-    always @(*) begin
-        S_araddr = 0; S_arvalid = 0; M1_arready = 0; M2_arready = 0;
-        if (R_state == R_IDLE) begin
-            if (M1_arvalid & M2_arvalid) begin
-                S_arvalid = 1; S_araddr = r_priority ? M2_araddr : M1_araddr;
-                M1_arready = ~r_priority & S_arready; M2_arready = r_priority & S_arready;
-            end else if (M2_arvalid) begin
-                S_arvalid = 1; S_araddr = M2_araddr; M2_arready = S_arready;
-            end else if (M1_arvalid) begin
-                S_arvalid = 1; S_araddr = M1_araddr; M1_arready = S_arready;
+    //AR
+    always @(*)begin
+        case(R_state)
+            R_IDLE:begin
+                if(M1_arvalid) begin
+                    M1_arready = S_arready;
+                    M2_arready = 0;
+                    S_arvalid = 1;
+                    S_araddr = M1_araddr;
+                end else if(M2_arvalid) begin
+                    M1_arready = 0;
+                    M2_arready = S_arready;
+                    S_arvalid = 1;
+                    S_araddr = M2_araddr;
+                end else begin
+                    M1_arready = 0;
+                    M2_arready = 0;
+                    S_arvalid = 0;
+                    S_araddr = 0;
+                end
             end
-        end else begin // R_BUSY
-            if (r_pass == 0) begin
-                S_arvalid = M1_arvalid; S_araddr = M1_araddr; M1_arready = S_arready;
-            end else begin
-                S_arvalid = M2_arvalid; S_araddr = M2_araddr; M2_arready = S_arready;
+            R_BUSY:begin
+                M1_arready = R_master_sel?0:S_arready;
+                M2_arready = R_master_sel?S_arready:0;
+                S_arvalid = R_master_sel?M2_arvalid:M1_arvalid;
+                S_araddr = R_master_sel?M2_araddr:M1_araddr;
             end
-        end
+        endcase
     end
-
-    // 3. R Channel (数据响应通道): 严格组合逻辑
-    always @(*) begin
-        S_rready = 0;
-        M1_rvalid = 0; M1_rdata = 0; M1_rresp = 0;
-        M2_rvalid = 0; M2_rdata = 0; M2_rresp = 0;
-        if (R_state == R_BUSY) begin
-            if (r_pass == 0) begin // M1
-                M1_rvalid = S_rvalid; M1_rdata = S_rdata; M1_rresp = S_rresp; S_rready = M1_rready;
-            end else begin         // M2
-                M2_rvalid = S_rvalid; M2_rdata = S_rdata; M2_rresp = S_rresp; S_rready = M2_rready;
+    //R
+    always @(*)begin
+        case(R_state)
+            R_IDLE:begin
+                M1_rvalid = 0;
+                M1_rdata = 0;
+                M1_rresp = 0;
+                M2_rvalid = 0;
+                M2_rdata = 0;
+                M2_rresp = 0;
+                S_rready = 0;
             end
-        end
+            R_BUSY:begin
+                M1_rdata = R_master_sel?0:S_rdata;
+                M1_rresp = R_master_sel?0:S_rresp;
+                M1_rvalid = R_master_sel?0:S_rvalid;
+                M2_rdata = R_master_sel?S_rdata:0;
+                M2_rresp = R_master_sel?S_rresp:0;
+                M2_rvalid = R_master_sel?S_rvalid:0;
+                S_rready = R_master_sel?M2_rready:M1_rready;
+            end
+        endcase
     end
+    
 
 
-    // =======================================================================
-    // W Channel Arbiter (Write)
-    // =======================================================================
-    localparam W_IDLE = 1'b0, W_BUSY = 1'b1;
-    reg W_state, W_state_next;
-    reg w_priority, w_pass, w_pass_next;
 
+    /////////////////////////////////////////////////////////////////////W - Arbiter
+    parameter W_IDLE = 1'b0, W_BUSY = 1'b1;
+    reg W_state, W_next_state;
+    reg W_master_sel, W_master_sel_next; // 0: M1, 1: M2
     always @(posedge clk) begin
         if(rst) begin
-             W_state <= W_IDLE; w_priority <= 0; w_pass <= 0;
-        end else begin
-            W_state <= W_state_next; w_priority <= ~w_priority; w_pass <= w_pass_next;
+            W_state<=W_IDLE;
+            W_master_sel<=0;
+        end else    begin
+            W_state<=W_next_state;
+            W_master_sel<=W_master_sel_next;
         end
     end
 
-    // 1. W Channel: 状态转移逻辑
-    always @(*) begin
-        W_state_next = W_state;
-        w_pass_next  = w_pass;
+    always @(*)begin
+        W_next_state=W_state;
+        W_master_sel_next=W_master_sel;
         case(W_state)
-            W_IDLE: begin
-                if ((M1_awvalid | M1_wvalid) & (M2_awvalid | M2_wvalid)) begin
-                    W_state_next = W_BUSY; w_pass_next = w_priority;
-                end else if (M2_awvalid | M2_wvalid) begin
-                    W_state_next = W_BUSY; w_pass_next = 1;
-                end else if (M1_awvalid | M1_wvalid) begin
-                    W_state_next = W_BUSY; w_pass_next = 0;
+            W_IDLE:begin
+                if(M1_awvalid) begin
+                    W_next_state = W_BUSY;
+                    W_master_sel_next = 0;
+                end else if(M2_awvalid) begin
+                    W_next_state = W_BUSY;
+                    W_master_sel_next = 1;
+                end else begin
+                    W_next_state = W_IDLE;
+                    W_master_sel_next = W_master_sel;
                 end
             end
-            W_BUSY: begin
-                if ( (w_pass == 1 && M2_bready && S_bvalid) || 
-                     (w_pass == 0 && M1_bready && S_bvalid) ) begin
-                    if (M1_awvalid | M1_wvalid) begin
-                        W_state_next = W_BUSY; w_pass_next = 0;
-                    end else if (M2_awvalid | M2_wvalid) begin
-                        W_state_next = W_BUSY; w_pass_next = 1;
-                    end else begin
-                        W_state_next = W_IDLE;
+            W_BUSY:begin
+                case(W_master_sel)
+                    1'b0:begin
+                        if(S_bvalid & M1_bready) W_next_state=W_IDLE;
                     end
+                    1'b1:begin
+                        if(S_bvalid & M2_bready) W_next_state=W_IDLE;
+                    end
+                endcase
+            end
+            default:
+                W_next_state=W_IDLE;
+        endcase
+    end
+
+    //AW
+    always @(*)begin
+        case(W_state)
+            W_IDLE:begin
+                if(M1_awvalid) begin
+                    M1_awready = S_awready;
+                    M2_awready = 0;
+                    S_awvalid = 1;
+                    S_awaddr = M1_awaddr;
+                end else if(M2_awvalid) begin
+                    M1_awready = 0;
+                    M2_awready = S_awready;
+                    S_awvalid = 1;
+                    S_awaddr = M2_awaddr;
+                end else begin
+                    M1_awready = 0;
+                    M2_awready = 0;
+                    S_awvalid = 0;
+                    S_awaddr = 0;
                 end
+            end
+            W_BUSY:begin
+                M1_awready = W_master_sel?0:S_awready;
+                M2_awready = W_master_sel?S_awready:0;
+                S_awvalid = W_master_sel?M2_awvalid:M1_awvalid;
+                S_awaddr = W_master_sel?M2_awaddr:M1_awaddr;
             end
         endcase
     end
 
-    // 2. AW / W Channel (写地址与写数据): 严格组合逻辑
-    always @(*) begin
-        S_awaddr = 0; S_awvalid = 0; M1_awready = 0; M2_awready = 0;
-        S_wdata  = 0; S_wstrb   = 0; S_wvalid   = 0; M1_wready  = 0; M2_wready  = 0;
-        if (W_state == W_IDLE) begin
-            if ((M1_awvalid | M1_wvalid) & (M2_awvalid | M2_wvalid)) begin
-                S_awaddr   = w_priority ? M2_awaddr : M1_awaddr;
-                S_awvalid  = w_priority ? M2_awvalid : M1_awvalid;
-                M1_awready = ~w_priority & S_awready;
-                M2_awready = w_priority & S_awready;
-                S_wdata    = w_priority ? M2_wdata : M1_wdata;
-                S_wstrb    = w_priority ? M2_wstrb : M1_wstrb;
-                S_wvalid   = w_priority ? M2_wvalid : M1_wvalid;
-                M1_wready  = ~w_priority & S_wready;
-                M2_wready  = w_priority & S_wready;
-            end else if (M2_awvalid | M2_wvalid) begin
-                S_awaddr = M2_awaddr; S_awvalid = M2_awvalid; M2_awready = S_awready;
-                S_wdata  = M2_wdata;  S_wstrb   = M2_wstrb;   S_wvalid   = M2_wvalid; M2_wready = S_wready;
-            end else if (M1_awvalid | M1_wvalid) begin
-                S_awaddr = M1_awaddr; S_awvalid = M1_awvalid; M1_awready = S_awready;
-                S_wdata  = M1_wdata;  S_wstrb   = M1_wstrb;   S_wvalid   = M1_wvalid; M1_wready = S_wready;
+    //W
+    always @(*)begin
+        case(W_state)
+            W_IDLE:begin
+                
+                
+                if(M1_wvalid) begin
+                    S_wvalid = 1;
+                    S_wdata = M1_wdata;
+                    S_wstrb = M1_wstrb;
+                    M1_wready = S_wready;
+                    M2_wready = 0;
+                end else if(M2_wvalid) begin
+                    S_wvalid = 1;
+                    S_wdata = M2_wdata;
+                    S_wstrb = M2_wstrb;
+                    M1_wready = 0;
+                    M2_wready = S_wready;
+                end else begin
+                    S_wvalid = 0;
+                    S_wdata = 0;
+                    S_wstrb = 0;
+                end
             end
-        end else begin // W_BUSY
-            if (w_pass == 0) begin
-                S_awaddr = M1_awaddr; S_awvalid = M1_awvalid; M1_awready = S_awready;
-                S_wdata  = M1_wdata;  S_wstrb   = M1_wstrb;   S_wvalid   = M1_wvalid; M1_wready = S_wready;
-            end else begin
-                S_awaddr = M2_awaddr; S_awvalid = M2_awvalid; M2_awready = S_awready;
-                S_wdata  = M2_wdata;  S_wstrb   = M2_wstrb;   S_wvalid   = M2_wvalid; M2_wready = S_wready;
+            W_BUSY:begin
+                M1_wready = W_master_sel?0:S_wready;
+                M2_wready = W_master_sel?S_wready:0;
+                S_wvalid = W_master_sel?M2_wvalid:M1_wvalid;
+                S_wdata = W_master_sel?M2_wdata:M1_wdata;
+                S_wstrb = W_master_sel?M2_wstrb:M1_wstrb;
+                
             end
-        end
+        endcase
     end
 
-    // 3. B Channel (写响应): 严格组合逻辑
-    always @(*) begin
-        S_bready  = 0;
-        M1_bvalid = 0; M1_bresp = 0;
-        M2_bvalid = 0; M2_bresp = 0;
-        if (W_state == W_BUSY) begin
-            if (w_pass == 0) begin // M1
-                M1_bvalid = S_bvalid; M1_bresp = S_bresp; S_bready = M1_bready;
-            end else begin         // M2
-                M2_bvalid = S_bvalid; M2_bresp = S_bresp; S_bready = M2_bready;
+
+    //B
+    always @(*)begin
+        case(W_state)
+            W_IDLE:begin
+                M1_bresp = 0;
+                M1_bvalid = 0;
+                M2_bresp = 0;
+                M2_bvalid = 0;
+                S_bready = 0;
             end
-        end
+            W_BUSY:begin
+                M1_bresp = W_master_sel?0:S_bresp;
+                M1_bvalid = W_master_sel?0:S_bvalid;
+                M2_bresp = W_master_sel?S_bresp:0;
+                M2_bvalid = W_master_sel?S_bvalid:0;
+                S_bready = W_master_sel?M2_bready:M1_bready;
+            end
+        endcase
     end
 
 endmodule

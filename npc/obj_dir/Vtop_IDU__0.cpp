@@ -95,15 +95,15 @@ void Vtop_IDU___nba_sequent__TOP__top__IDU_0__1(Vtop_IDU* vlSelf) {
     vlSelfRef.__PVT__isBLT = (IData)((0x00004063U == 
                                       (0x0000707fU 
                                        & vlSymsp->TOP__top__IFU_0.__PVT__PC_command)));
+    __VdfgRegularize_h52656aab_0_17 = (IData)((0x00005033U 
+                                               == (0x0000707fU 
+                                                   & vlSymsp->TOP__top__IFU_0.__PVT__PC_command)));
     vlSelfRef.__PVT__isBGEU = (IData)((0x00007063U 
                                        == (0x0000707fU 
                                            & vlSymsp->TOP__top__IFU_0.__PVT__PC_command)));
     vlSelfRef.__PVT__isBLTU = (IData)((0x00006063U 
                                        == (0x0000707fU 
                                            & vlSymsp->TOP__top__IFU_0.__PVT__PC_command)));
-    __VdfgRegularize_h52656aab_0_17 = (IData)((0x00005033U 
-                                               == (0x0000707fU 
-                                                   & vlSymsp->TOP__top__IFU_0.__PVT__PC_command)));
     vlSelfRef.__PVT__isU = ((0x37U == (0x0000007fU 
                                        & vlSymsp->TOP__top__IFU_0.__PVT__PC_command)) 
                             | (0x17U == (0x0000007fU 
@@ -158,14 +158,14 @@ void Vtop_IDU___nba_sequent__TOP__top__IDU_0__1(Vtop_IDU* vlSelf) {
                                         ? 3U : ((IData)(vlSelfRef.__PVT__isCSRRC)
                                                  ? 2U
                                                  : 0U)));
-    __VdfgRegularize_h52656aab_0_24 = ((IData)(vlSelfRef.__PVT__isBLTU) 
-                                       | (IData)(vlSelfRef.__PVT__isBGEU));
     vlSelfRef.__PVT__isSRL = ((IData)(__VdfgRegularize_h52656aab_0_17) 
                               & (0U == (vlSymsp->TOP__top__IFU_0.__PVT__PC_command 
                                         >> 0x00000019U)));
     vlSelfRef.__PVT__isSRA = ((IData)(__VdfgRegularize_h52656aab_0_17) 
                               & (0x20U == (vlSymsp->TOP__top__IFU_0.__PVT__PC_command 
                                            >> 0x00000019U)));
+    __VdfgRegularize_h52656aab_0_24 = ((IData)(vlSelfRef.__PVT__isBLTU) 
+                                       | (IData)(vlSelfRef.__PVT__isBGEU));
     vlSelfRef.__PVT__isADD = ((IData)(vlSelfRef.__VdfgRegularize_h52656aab_0_16) 
                               & (0U == (vlSymsp->TOP__top__IFU_0.__PVT__PC_command 
                                         >> 0x00000019U)));

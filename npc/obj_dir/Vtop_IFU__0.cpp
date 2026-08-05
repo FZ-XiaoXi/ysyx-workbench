@@ -9,7 +9,9 @@ void Vtop_IFU___ico_sequent__TOP__top__IFU_0__0(Vtop_IFU* vlSelf) {
     Vtop__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
     auto& vlSelfRef = std::ref(*vlSelf).get();
     // Body
-    vlSelfRef.__PVT__r_fire = ((IData)(vlSymsp->TOP__top.__PVT__IROM_rvalid) 
+    vlSelfRef.__PVT__r_fire = (((IData)(vlSymsp->TOP__top.__PVT__RAM_AXI4LiteArbiter__DOT__R_state) 
+                                & ((~ (IData)(vlSymsp->TOP__top.__PVT__RAM_AXI4LiteArbiter__DOT__R_master_sel)) 
+                                   & (IData)(vlSymsp->TOP__top.__PVT__RAM_AXI4LiteArbiter__DOT__S_rvalid))) 
                                & (3U != (IData)(vlSelfRef.state)));
 }
 
@@ -70,7 +72,11 @@ void Vtop_IFU___nba_sequent__TOP__top__IFU_0__0(Vtop_IFU* vlSelf) {
         }
         vlSelfRef.state = vlSelfRef.__PVT__next_state;
         if (vlSelfRef.__PVT__r_fire) {
-            vlSelfRef.__PVT__PC_command = vlSymsp->TOP__top.__PVT__IROM_rdata;
+            vlSelfRef.__PVT__PC_command = ((IData)(vlSymsp->TOP__top.__PVT__RAM_AXI4LiteArbiter__DOT__R_state)
+                                            ? ((IData)(vlSymsp->TOP__top.__PVT__RAM_AXI4LiteArbiter__DOT__R_master_sel)
+                                                ? 0U
+                                                : vlSymsp->TOP__top.__PVT__RAM_AXI4LiteArbiter__DOT__S_rdata)
+                                            : 0U);
         }
     }
 }
