@@ -230,9 +230,9 @@ void Vtop_REG___ico_sequent__TOP__top__REG_0__0(Vtop_REG* vlSelf);
 void Vtop_top___ico_sequent__TOP__top__1(Vtop_top* vlSelf);
 void Vtop_LSU___ico_sequent__TOP__top__LSU_0__1(Vtop_LSU* vlSelf);
 void Vtop_IDU___ico_sequent__TOP__top__IDU_0__0(Vtop_IDU* vlSelf);
+void Vtop_IFU___ico_sequent__TOP__top__IFU_0__1(Vtop_IFU* vlSelf);
 void Vtop_LSU___ico_sequent__TOP__top__LSU_0__2(Vtop_LSU* vlSelf);
 void Vtop_top___ico_sequent__TOP__top__2(Vtop_top* vlSelf);
-void Vtop_IFU___ico_sequent__TOP__top__IFU_0__1(Vtop_IFU* vlSelf);
 void Vtop_LSU___ico_sequent__TOP__top__LSU_0__3(Vtop_LSU* vlSelf);
 
 void Vtop___024root___eval_ico(Vtop___024root* vlSelf) {
@@ -252,9 +252,9 @@ void Vtop___024root___eval_ico(Vtop___024root* vlSelf) {
         Vtop_LSU___ico_sequent__TOP__top__LSU_0__1((&vlSymsp->TOP__top__LSU_0));
         Vtop_IDU___ico_sequent__TOP__top__IDU_0__0((&vlSymsp->TOP__top__IDU_0));
         Vtop___024root___ico_sequent__TOP__2(vlSelf);
+        Vtop_IFU___ico_sequent__TOP__top__IFU_0__1((&vlSymsp->TOP__top__IFU_0));
         Vtop_LSU___ico_sequent__TOP__top__LSU_0__2((&vlSymsp->TOP__top__LSU_0));
         Vtop_top___ico_sequent__TOP__top__2((&vlSymsp->TOP__top));
-        Vtop_IFU___ico_sequent__TOP__top__IFU_0__1((&vlSymsp->TOP__top__IFU_0));
         Vtop_LSU___ico_sequent__TOP__top__LSU_0__3((&vlSymsp->TOP__top__LSU_0));
     }
 }
@@ -473,6 +473,7 @@ void Vtop_LSU___nba_sequent__TOP__top__LSU_0__0(Vtop_LSU* vlSelf);
 void Vtop_IFU___nba_sequent__TOP__top__IFU_0__0(Vtop_IFU* vlSelf);
 void Vtop_top___nba_sequent__TOP__top__1(Vtop_top* vlSelf);
 void Vtop_IDU___nba_sequent__TOP__top__IDU_0__1(Vtop_IDU* vlSelf);
+void Vtop_LSU___nba_sequent__TOP__top__LSU_0__1(Vtop_LSU* vlSelf);
 void Vtop_REG___nba_sequent__TOP__top__REG_0__1(Vtop_REG* vlSelf);
 void Vtop_top___nba_sequent__TOP__top__2(Vtop_top* vlSelf);
 void Vtop_IDU___nba_sequent__TOP__top__IDU_0__2(Vtop_IDU* vlSelf);
@@ -495,6 +496,7 @@ void Vtop___024root___eval_nba(Vtop___024root* vlSelf) {
         Vtop_top___nba_sequent__TOP__top__1((&vlSymsp->TOP__top));
         Vtop___024root___nba_sequent__TOP__0(vlSelf);
         Vtop_IDU___nba_sequent__TOP__top__IDU_0__1((&vlSymsp->TOP__top__IDU_0));
+        Vtop_LSU___nba_sequent__TOP__top__LSU_0__1((&vlSymsp->TOP__top__LSU_0));
         Vtop_REG___nba_sequent__TOP__top__REG_0__1((&vlSymsp->TOP__top__REG_0));
         Vtop_top___nba_sequent__TOP__top__2((&vlSymsp->TOP__top));
         Vtop___024root___nba_sequent__TOP__1(vlSelf);
@@ -512,13 +514,13 @@ void Vtop___024root___eval_nba(Vtop___024root* vlSelf) {
     if ((3ULL & vlSelfRef.__VnbaTriggered[0U])) {
         Vtop_top___nba_comb__TOP__top__0((&vlSymsp->TOP__top));
         vlSelfRef.__Vm_traceActivity[4U] = 1U;
-        Vtop_LSU___ico_sequent__TOP__top__LSU_0__0((&vlSymsp->TOP__top__LSU_0));
         Vtop_IFU___ico_sequent__TOP__top__IFU_0__0((&vlSymsp->TOP__top__IFU_0));
+        Vtop_LSU___ico_sequent__TOP__top__LSU_0__0((&vlSymsp->TOP__top__LSU_0));
         Vtop_REG___ico_sequent__TOP__top__REG_0__0((&vlSymsp->TOP__top__REG_0));
         Vtop_IDU___ico_sequent__TOP__top__IDU_0__0((&vlSymsp->TOP__top__IDU_0));
+        Vtop_IFU___ico_sequent__TOP__top__IFU_0__1((&vlSymsp->TOP__top__IFU_0));
         Vtop_LSU___ico_sequent__TOP__top__LSU_0__2((&vlSymsp->TOP__top__LSU_0));
         Vtop_top___ico_sequent__TOP__top__2((&vlSymsp->TOP__top));
-        Vtop_IFU___ico_sequent__TOP__top__IFU_0__1((&vlSymsp->TOP__top__IFU_0));
         Vtop_LSU___ico_sequent__TOP__top__LSU_0__3((&vlSymsp->TOP__top__LSU_0));
     }
 }
