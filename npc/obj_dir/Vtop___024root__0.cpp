@@ -514,8 +514,8 @@ void Vtop___024root___eval_nba(Vtop___024root* vlSelf) {
     if ((3ULL & vlSelfRef.__VnbaTriggered[0U])) {
         Vtop_top___nba_comb__TOP__top__0((&vlSymsp->TOP__top));
         vlSelfRef.__Vm_traceActivity[4U] = 1U;
-        Vtop_IFU___ico_sequent__TOP__top__IFU_0__0((&vlSymsp->TOP__top__IFU_0));
         Vtop_LSU___ico_sequent__TOP__top__LSU_0__0((&vlSymsp->TOP__top__LSU_0));
+        Vtop_IFU___ico_sequent__TOP__top__IFU_0__0((&vlSymsp->TOP__top__IFU_0));
         Vtop_REG___ico_sequent__TOP__top__REG_0__0((&vlSymsp->TOP__top__REG_0));
         Vtop_IDU___ico_sequent__TOP__top__IDU_0__0((&vlSymsp->TOP__top__IDU_0));
         Vtop_LSU___ico_sequent__TOP__top__LSU_0__2((&vlSymsp->TOP__top__LSU_0));

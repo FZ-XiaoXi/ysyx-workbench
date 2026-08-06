@@ -16,10 +16,16 @@ module IFU(
     output [31:0]     araddr,
     output            arvalid,
     input             arready,
+    output [3:0]      arid,
+    output [7:0]      arlen,
+    output [2:0]      arsize,
+    output [1:0]      arburst,
     input  [31:0]     rdata,
     input  [1:0]      rresp,
     input             rvalid,
-    output            rready
+    output            rready,
+    input             rlast,
+    input  [3:0]      rid
 );
     localparam S_IDLE       = 2'b00;
     localparam S_WAIT_READY = 2'b01; // 等待地址通道接受地址
@@ -33,6 +39,10 @@ module IFU(
     wire r_fire  = rvalid && rready;
 
     assign araddr  = PC;
+    assign arid    = 4'b0;
+    assign arlen   = 8'b0;
+    assign arsize  = 3'b010;
+    assign arburst = 2'b01;
     assign arvalid = (state == S_IDLE) || (state == S_WAIT_READY);
     assign rready  = (state != S_WAIT_EXEC);
 

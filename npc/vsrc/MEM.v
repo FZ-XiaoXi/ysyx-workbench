@@ -6,28 +6,40 @@ module MEM(
     input  [31:0] araddr,
     input         arvalid,
     output        arready,
+    input  [3:0]  arid,
+    input  [7:0]  arlen,
+    input  [2:0]  arsize,
+    input  [1:0]  arburst,
 
     //R
     output [31:0] rdata,
     output [1:0]  rresp,
     output        rvalid,
     input         rready,
+    output        rlast,
+    output [3:0]  rid,
 
     //AW
     input  [31:0] awaddr,
     input         awvalid,
     output        awready,
+    input  [3:0]  awid,
+    input  [7:0]  awlen,
+    input  [2:0]  awsize,
+    input  [1:0]  awburst,
 
     //W
     input  [31:0] wdata,
     input  [3:0]  wstrb,
     input         wvalid,
     output        wready,
-    
+    input         wlast,
+
     //B
     output [1:0]  bresp,
     output        bvalid,
-    input         bready
+    input         bready,
+    output [3:0]  bid
 );
 
     // AR / R
@@ -93,6 +105,8 @@ module MEM(
     assign rvalid  = (r_state == R_HOLD_DATA) || (r_state == R_WAIT_MEM && r_mem_ready);
     assign rdata   = (r_state == R_HOLD_DATA) ? rdata_hold : current_mem_rdata;
     assign rresp   = 2'b00;
+    assign rlast   = 1'b1;  // single beat
+    assign rid     = 4'b0;
     assign arready = (r_state == R_IDLE) || 
                      (r_state == R_HOLD_DATA && rready) || 
                      (r_state == R_WAIT_MEM && r_mem_ready && rready);
@@ -150,5 +164,6 @@ module MEM(
     
     assign bvalid  = (w_state == W_HOLD_RESP) || (w_state == W_WAIT_MEM && w_mem_ready);
     assign bresp   = 2'b00;
+    assign bid     = 4'b0;
 
 endmodule
