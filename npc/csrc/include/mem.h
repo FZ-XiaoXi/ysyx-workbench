@@ -1,7 +1,7 @@
 #ifndef __MEM_H__
 #define __MEM_H__
 #include "common.h"
-#include "Vtop__Dpi.h"
+#include "VysyxSoCFull__Dpi.h"
 #include "svdpi.h"
 #define MEM(addr) (MEM[(addr - PMEM_LEFT)>>2])
 

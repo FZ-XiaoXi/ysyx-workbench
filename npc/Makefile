@@ -1,24 +1,36 @@
-TOPNAME=top
-VERILATOR_FLAGS=--cc --exe --build --trace --top-module $(TOPNAME) 
+TOPNAME=ysyxSoCFull
+
 LD_PRELOAD ?=
 LD_PRELOAD += $(gcc -print-file-name=libasan.so)
-INC_PATH ?=
-INC_PATH += csrc/
-INC_PATH += csrc/include
-INC_PATH += tools/capstone/repo/include
-INC_PATH := $(abspath $(INC_PATH))
+C_INC_PATH ?=
+C_INC_PATH += csrc/
+C_INC_PATH += csrc/include
+C_INC_PATH += tools/capstone/repo/include
+C_INC_PATH := $(abspath $(C_INC_PATH))
+
+V_INC_PATH ?=
+V_INC_PATH += $(NPC_HOME)/../ysyxSoC/perip/uart16550/rtl/
+V_INC_PATH += $(NPC_HOME)/../ysyxSoC/perip/spi/rtl/
+V_INC_PATH := $(abspath $(V_INC_PATH))
+
+
 
 SIM_C := $(wildcard csrc/*.c* csrc/monitor/*.c* csrc/devices/*.c* csrc/utils/*.c*)
-SIM_V := $(wildcard vsrc/*.v)
+SIM_V := $(shell find vsrc/ -type f \( -name "*.v" -o -name "*.sv" \))
+SIM_V += $(shell find $(NPC_HOME)/../ysyxSoC/perip/ -type f  -name "*.v" )
+SIM_V += $(NPC_HOME)/../ysyxSoC/build/ysyxSoCFull.v
 
 LIBCAPSTONE = tools/capstone/repo/libcapstone.so.5
 DIFF_REF_PATH = $(NEMU_HOME)
 DIFF_REF_SO = $(DIFF_REF_PATH)/riscv32-nemu-interpreter-so
 ARGS_DIFF = --diff=$(DIFF_REF_SO)
 
-INCFLAGS=$(addprefix -I, $(INC_PATH))
-CXXFLAGS += $(INCFLAGS) -DTOP_NAME="\"V$(TOPNAME)\"" -g
+C_INCFLAGS=$(addprefix -I, $(C_INC_PATH))
+CXXFLAGS += $(C_INCFLAGS) -DTOP_NAME="\"V$(TOPNAME)\"" -g
 LDFLAGS += -lreadline
+
+V_INCFLAGS=$(addprefix -I, $(V_INC_PATH))
+VERILATOR_FLAGS=--cc --exe --build --trace --timescale "1ns/1ns" --no-timing $(V_INCFLAGS) --top-module $(TOPNAME) 
 
 override ARGS ?=
 override ARGS += $(ARGS_DIFF)

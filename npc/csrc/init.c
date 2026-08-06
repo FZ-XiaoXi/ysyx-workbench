@@ -17,7 +17,7 @@ char *IMAGE_NAME = NULL;
 char *ELF_NAME = NULL;
 VerilatedContext* contextp = NULL;
 VerilatedVcdC* tfp = NULL;
-Vtop* top = NULL;
+VysyxSoCFull* top = NULL;
 
 
 void init(int argc, char** argv){
@@ -32,7 +32,7 @@ void init(int argc, char** argv){
 
 	//init verilator
 	contextp = new VerilatedContext;
-	top = new Vtop{contextp};
+	top = new VysyxSoCFull{contextp};
 	contextp->commandArgs(argc, argv);
 
 #ifdef CONFIG_WAVE_ENABLE
@@ -44,13 +44,13 @@ void init(int argc, char** argv){
 
 	//init reset
 
-	top->clk=0;top->rst=0;top->eval();contextp->timeInc(10);
-	top->clk=0;top->rst=1;top->eval();contextp->timeInc(10);
-	top->clk=1;top->rst=1;top->eval();contextp->timeInc(10);
-	top->clk=0;top->rst=1;top->eval();contextp->timeInc(10);
-	top->clk=0;top->rst=0;top->eval();contextp->timeInc(10);
-	// top->clk=1;top->rst=0;top->eval();contextp->timeInc(10);
-	// top->clk=0;top->rst=0;top->eval();contextp->timeInc(10);
+	top->clock=0;top->reset=0;top->eval();contextp->timeInc(10);
+	top->clock=0;top->reset=1;top->eval();contextp->timeInc(10);
+	top->clock=1;top->reset=1;top->eval();contextp->timeInc(10);
+	top->clock=0;top->reset=1;top->eval();contextp->timeInc(10);
+	top->clock=0;top->reset=0;top->eval();contextp->timeInc(10);
+	// top->clock=1;top->reset=0;top->eval();contextp->timeInc(10);
+	// top->clock=0;top->reset=0;top->eval();contextp->timeInc(10);
 
     //init CPU
 	cpu.pc = RESET_VECTOR;

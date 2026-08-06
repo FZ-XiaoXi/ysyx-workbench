@@ -10,6 +10,7 @@ extern void sdb_mainloop();
 
 int main(int argc, char** argv) {
 	init(argc, argv);
+	// Verilated::commandArgs(argc, argv);
 	sdb_mainloop();
 
 	// while (!contextp->gotFinish()&&cpu.state==NPC_RUNNING) {

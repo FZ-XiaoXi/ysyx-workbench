@@ -1,10 +1,10 @@
 
-module IDU(
+module ysyx_26010011_IDU(
     input [31:0]command,
     input isGREATER,
     input isEQUAL,
-    input clk,
-    input rst,
+    input clock,
+    input reset,
     input bus_valid,
     input wbu_final,
 
@@ -70,8 +70,8 @@ module IDU(
             end
         endcase
     end
-    always @(posedge clk) begin
-        if(rst) begin
+    always @(posedge clock) begin
+        if(reset) begin
             state<=state_idle;
         end else begin
             state<=next_state;
@@ -196,7 +196,7 @@ module IDU(
     /////////////////////////
     assign isSigned=(isLBU|isLHU|isBLTU|isBGEU|isSLTIU|isSLTU)?0:1;
 
-    //COMP
+    //ysyx_26010011_COMP
     assign COMP_data = (isEQUAL|isGREATER)?0:1;
 
     //BRANCH

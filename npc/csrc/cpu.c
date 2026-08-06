@@ -1,5 +1,5 @@
 #include "common.h"
-#include "Vtop__Dpi.h"
+#include "VysyxSoCFull__Dpi.h"
 #include "svdpi.h"
 #include "cpu.h"
 #include "mem.h"
@@ -14,21 +14,21 @@ const char *regs[] = {
 
 static void cpu_get_reg(){
 	cpu.pc = cpu.dnpc;
-	cpu.dnpc = top->top->PC;
+	cpu.dnpc = top->ysyxSoCFull->asic->cpu->cpu->PC;
 	for(int i=0;i<CONFIG_GPR_NUM;i++){
-		cpu.gpr[i] = top->top->REG_0->GPR[i];
+		cpu.gpr[i] = top->ysyxSoCFull->asic->cpu->cpu->REG_0->GPR[i];
 	}
 }
 
 static void cpu_exec_once(){
-	top->clk=1;
+	top->clock=1;
 	top->eval();
 	#ifdef CONFIG_WAVE_ENABLE
 	tfp->dump(contextp->time());
 	#endif
 	contextp->timeInc(2);
 	
-	top->clk=0;
+	top->clock=0;
 	top->eval();
 	#ifdef CONFIG_WAVE_ENABLE
 	tfp->dump(contextp->time());
@@ -49,9 +49,9 @@ void cpu_exec(uint64_t n){
 
 	while(n > 0){
 		cpu_exec_once();
-		cpu.lsu_state = top->top->LSU_0->state;
-		cpu.ifu_state = top->top->IFU_0->state;
-		cpu.idu_state = top->top->IDU_0->state;
+		cpu.lsu_state = top->ysyxSoCFull->asic->cpu->cpu->LSU_0->state;
+		cpu.ifu_state = top->ysyxSoCFull->asic->cpu->cpu->IFU_0->state;
+		cpu.idu_state = top->ysyxSoCFull->asic->cpu->cpu->IDU_0->state;
 		// Log("LSU state = %d, IFU state = %d, IDU state = %d at pc = " FMT_WORD, cpu.lsu_state, cpu.ifu_state, cpu.idu_state, cpu.pc);
 		if(cpu.ifu_state != 0) continue;
 		else{

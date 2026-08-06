@@ -1,4 +1,4 @@
-module EXU(
+module ysyx_26010011_EXU(
     input [31:0]inA,
     input [31:0]inB,
     input [9:0]op,
@@ -22,7 +22,7 @@ module EXU(
     assign op_lr=inA >> (inB & 32'h1f);
     assign op_ll=inA << (inB & 32'h1f);
 
-    M_ADDER ADDER_0 (.inA({1'b0,inA}),.inB((op[8])?~{1'b0,inB}:{1'b0,inB}),.cin((op[8])?1:0),.out(op_adder),.carry());
+    ysyx_26010011_M_ADDER ADDER_0 (.inA({1'b0,inA}),.inB((op[8])?~{1'b0,inB}:{1'b0,inB}),.cin((op[8])?1:0),.out(op_adder),.carry());
     always @(*) begin
         if(op[9] | op[8]) out=op_adder;
 
@@ -42,7 +42,7 @@ module EXU(
     
 endmodule
 
-module COMP(
+module ysyx_26010011_COMP(
     input [31:0]inA,
     input [31:0]inB,
     input isCompSigned,
@@ -51,7 +51,7 @@ module COMP(
 );
     wire [31:0] out;
     wire carry;
-    M_ADDER COMP_SUBER_0 (.inA({1'b0,inA}),.inB(~{1'b0,inB}),.cin(1),.out(out),.carry(carry));
+    ysyx_26010011_M_ADDER COMP_SUBER_0 (.inA({1'b0,inA}),.inB(~{1'b0,inB}),.cin(1),.out(out),.carry(carry));
     
     assign isEQUAL = &(inA ~^ inB);
     wire isSGREATER,isUGREATER;
@@ -60,7 +60,7 @@ module COMP(
     assign isGREATER = (isCompSigned)?isSGREATER:isUGREATER;
 endmodule
 
-module M_ADDER(
+module ysyx_26010011_M_ADDER(
     input [32:0] inA,
     input [32:0] inB,
     input cin,

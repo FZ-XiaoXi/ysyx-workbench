@@ -1,6 +1,6 @@
-module bridge(
-    input clk,
-    input rst,
+module ysyx_26010011_bridge(
+    input clock,
+    input reset,
     //////////////////////////////////////////////////////////
     
     // S 侧 AW
@@ -14,57 +14,57 @@ module bridge(
     output reg [3:0]  S_bid,
     // S 侧 AR
     input      [31:0] S_araddr,  input             S_arvalid, output reg        S_arready,
-    input      [3:0]  S_arid,    input      [7:0]  S_arlen,   input      [2:0]  S_arsize,  input      [1:0]  S_arburst,
+    input      [3:0]  S_arid,    input      [7:0]  S_arlen,   input      [2:0]  S_arsize,  input      [1:0]  S_arbureset,
     // S 侧 R
     output reg [31:0] S_rdata,   output reg [1:0]  S_rresp,   output reg        S_rvalid,  input             S_rready,
     output reg        S_rlast,   output reg [3:0]  S_rid,
 
     ///////////////////////////////////////////////////////
-    //MEM AW
+    //ysyx_26010011_MEM AW
     output reg [31:0] MEM_awaddr,  output reg        MEM_awvalid, input             MEM_awready,
     output reg [3:0]  MEM_awid,    output reg [7:0]  MEM_awlen,   output reg [2:0]  MEM_awsize, output reg [1:0]  MEM_awburst,
-    //MEM W
+    //ysyx_26010011_MEM W
     output reg [31:0] MEM_wdata,   output reg [3:0]  MEM_wstrb,   output reg        MEM_wvalid, input             MEM_wready,
     output reg        MEM_wlast,
-    //MEM B
+    //ysyx_26010011_MEM B
     input      [1:0]  MEM_bresp,   input             MEM_bvalid,  output reg        MEM_bready,
     input      [3:0]  MEM_bid,
-    //MEM AR
+    //ysyx_26010011_MEM AR
     output reg [31:0] MEM_araddr,  output reg        MEM_arvalid, input             MEM_arready,
-    output reg [3:0]  MEM_arid,    output reg [7:0]  MEM_arlen,   output reg [2:0]  MEM_arsize, output reg [1:0]  MEM_arburst,
-    //MEM R
+    output reg [3:0]  MEM_arid,    output reg [7:0]  MEM_arlen,   output reg [2:0]  MEM_arsize, output reg [1:0]  MEM_arbureset,
+    //ysyx_26010011_MEM R
     input      [31:0] MEM_rdata,   input      [1:0]  MEM_rresp,   input             MEM_rvalid,  output reg        MEM_rready,
     input             MEM_rlast,   input      [3:0]  MEM_rid,
 
-    //UART AW
+    //ysyx_26010011_UART AW
     output reg [31:0] UART_awaddr,  output reg        UART_awvalid, input             UART_awready,
     output reg [3:0]  UART_awid,    output reg [7:0]  UART_awlen,   output reg [2:0]  UART_awsize, output reg [1:0]  UART_awburst,
-    //UART W
+    //ysyx_26010011_UART W
     output reg [31:0] UART_wdata,   output reg [3:0]  UART_wstrb,   output reg        UART_wvalid, input             UART_wready,
     output reg        UART_wlast,
-    //UART B
+    //ysyx_26010011_UART B
     input      [1:0]  UART_bresp,   input             UART_bvalid,  output reg        UART_bready,
     input      [3:0]  UART_bid,
-    //UART AR
+    //ysyx_26010011_UART AR
     output reg [31:0] UART_araddr,  output reg        UART_arvalid, input             UART_arready,
-    output reg [3:0]  UART_arid,    output reg [7:0]  UART_arlen,   output reg [2:0]  UART_arsize, output reg [1:0]  UART_arburst,
-    //UART R
+    output reg [3:0]  UART_arid,    output reg [7:0]  UART_arlen,   output reg [2:0]  UART_arsize, output reg [1:0]  UART_arbureset,
+    //ysyx_26010011_UART R
     input      [31:0] UART_rdata,   input      [1:0]  UART_rresp,   input             UART_rvalid,  output reg        UART_rready,
     input             UART_rlast,   input      [3:0]  UART_rid,
 
-    //CLINT AW
+    //ysyx_26010011_CLINT AW
     output reg [31:0] CLINT_awaddr,  output reg        CLINT_awvalid, input             CLINT_awready,
     output reg [3:0]  CLINT_awid,    output reg [7:0]  CLINT_awlen,   output reg [2:0]  CLINT_awsize, output reg [1:0]  CLINT_awburst,
-    //CLINT W
+    //ysyx_26010011_CLINT W
     output reg [31:0] CLINT_wdata,   output reg [3:0]  CLINT_wstrb,   output reg        CLINT_wvalid, input             CLINT_wready,
     output reg        CLINT_wlast,
-    //CLINT B
+    //ysyx_26010011_CLINT B
     input      [1:0]  CLINT_bresp,   input             CLINT_bvalid,  output reg        CLINT_bready,
     input      [3:0]  CLINT_bid,
-    //CLINT AR
+    //ysyx_26010011_CLINT AR
     output reg [31:0] CLINT_araddr,  output reg        CLINT_arvalid, input             CLINT_arready,
-    output reg [3:0]  CLINT_arid,    output reg [7:0]  CLINT_arlen,   output reg [2:0]  CLINT_arsize, output reg [1:0]  CLINT_arburst,
-    //CLINT R
+    output reg [3:0]  CLINT_arid,    output reg [7:0]  CLINT_arlen,   output reg [2:0]  CLINT_arsize, output reg [1:0]  CLINT_arbureset,
+    //ysyx_26010011_CLINT R
     input      [31:0] CLINT_rdata,   input      [1:0]  CLINT_rresp,   input             CLINT_rvalid,  output reg        CLINT_rready,
     input             CLINT_rlast,   input      [3:0]  CLINT_rid
 
@@ -89,8 +89,8 @@ module bridge(
         aw_fire = S_awvalid && S_awready;
     end
 
-    always @(posedge clk) begin
-        if(rst) begin
+    always @(posedge clock) begin
+        if(reset) begin
             R_state <= STATE_IDLE;
             W_state <= STATE_IDLE;
         end else begin
@@ -120,8 +120,8 @@ module bridge(
         endcase
     end
 
-    always @(posedge clk) begin
-        if(rst) begin
+    always @(posedge clock) begin
+        if(reset) begin
             aw_sel_reg <= 4'b0;
             ar_sel_reg <= 4'b0;
         end else begin
@@ -148,22 +148,22 @@ module bridge(
     always @(*) begin
         //READ
         MEM_araddr = 32'b0;  MEM_arvalid = 1'b0;  MEM_rready = 1'b0;
-        MEM_arid = 0; MEM_arlen = 0; MEM_arsize = 0; MEM_arburst = 0;
+        MEM_arid = 0; MEM_arlen = 0; MEM_arsize = 0; MEM_arbureset = 0;
         UART_araddr = 32'b0; UART_arvalid = 1'b0; UART_rready = 1'b0;
-        UART_arid = 0; UART_arlen = 0; UART_arsize = 0; UART_arburst = 0;
+        UART_arid = 0; UART_arlen = 0; UART_arsize = 0; UART_arbureset = 0;
         CLINT_araddr = 32'b0; CLINT_arvalid = 1'b0; CLINT_rready = 1'b0;
-        CLINT_arid = 0; CLINT_arlen = 0; CLINT_arsize = 0; CLINT_arburst = 0;
+        CLINT_arid = 0; CLINT_arlen = 0; CLINT_arsize = 0; CLINT_arbureset = 0;
         S_arready = 1'b0;
         S_rdata = 32'b0; S_rresp = 2'b0; S_rvalid = 1'b0;
         S_rlast = 0; S_rid = 0;
 
         if(ar_sel_reg == 4'b0001) begin
             MEM_araddr = S_araddr; MEM_arvalid = S_arvalid; MEM_rready = S_rready;
-            MEM_arid = S_arid; MEM_arlen = S_arlen; MEM_arsize = S_arsize; MEM_arburst = S_arburst;
+            MEM_arid = S_arid; MEM_arlen = S_arlen; MEM_arsize = S_arsize; MEM_arbureset = S_arbureset;
             UART_araddr = 32'hdeadbeef; UART_arvalid = 0; UART_rready = 0;
-            UART_arid = 0; UART_arlen = 0; UART_arsize = 0; UART_arburst = 0;
+            UART_arid = 0; UART_arlen = 0; UART_arsize = 0; UART_arbureset = 0;
             CLINT_araddr = 32'hdeadbeef; CLINT_arvalid = 0; CLINT_rready = 0;
-            CLINT_arid = 0; CLINT_arlen = 0; CLINT_arsize = 0; CLINT_arburst = 0;
+            CLINT_arid = 0; CLINT_arlen = 0; CLINT_arsize = 0; CLINT_arbureset = 0;
 
             S_arready = MEM_arready;
             S_rdata = MEM_rdata; S_rresp = MEM_rresp; S_rvalid = MEM_rvalid;
@@ -171,11 +171,11 @@ module bridge(
         end
         else if(ar_sel_reg == 4'b0010) begin
             UART_araddr = (S_araddr - ADDR_UART_BASE); UART_arvalid = S_arvalid; UART_rready = S_rready;
-            UART_arid = S_arid; UART_arlen = S_arlen; UART_arsize = S_arsize; UART_arburst = S_arburst;
+            UART_arid = S_arid; UART_arlen = S_arlen; UART_arsize = S_arsize; UART_arbureset = S_arbureset;
             MEM_araddr = 32'hdeadbeef; MEM_arvalid = 0; MEM_rready = 0;
-            MEM_arid = 0; MEM_arlen = 0; MEM_arsize = 0; MEM_arburst = 0;
+            MEM_arid = 0; MEM_arlen = 0; MEM_arsize = 0; MEM_arbureset = 0;
             CLINT_araddr = 32'hdeadbeef; CLINT_arvalid = 0; CLINT_rready = 0;
-            CLINT_arid = 0; CLINT_arlen = 0; CLINT_arsize = 0; CLINT_arburst = 0;
+            CLINT_arid = 0; CLINT_arlen = 0; CLINT_arsize = 0; CLINT_arbureset = 0;
 
             S_arready = UART_arready;
             S_rdata = UART_rdata; S_rresp = UART_rresp; S_rvalid = UART_rvalid;
@@ -183,11 +183,11 @@ module bridge(
         end
         else if(ar_sel_reg == 4'b0100) begin
             CLINT_araddr = (S_araddr - ADDR_CLINT_BASE); CLINT_arvalid = S_arvalid; CLINT_rready = S_rready;
-            CLINT_arid = S_arid; CLINT_arlen = S_arlen; CLINT_arsize = S_arsize; CLINT_arburst = S_arburst;
+            CLINT_arid = S_arid; CLINT_arlen = S_arlen; CLINT_arsize = S_arsize; CLINT_arbureset = S_arbureset;
             MEM_araddr = 32'hdeadbeef; MEM_arvalid = 0; MEM_rready = 0;
-            MEM_arid = 0; MEM_arlen = 0; MEM_arsize = 0; MEM_arburst = 0;
+            MEM_arid = 0; MEM_arlen = 0; MEM_arsize = 0; MEM_arbureset = 0;
             UART_araddr = 32'hdeadbeef; UART_arvalid = 0; UART_rready = 0;
-            UART_arid = 0; UART_arlen = 0; UART_arsize = 0; UART_arburst = 0;
+            UART_arid = 0; UART_arlen = 0; UART_arsize = 0; UART_arbureset = 0;
 
             S_arready = CLINT_arready;
             S_rdata = CLINT_rdata; S_rresp = CLINT_rresp; S_rvalid = CLINT_rvalid;
@@ -195,29 +195,29 @@ module bridge(
         end
         else if (S_araddr >= ADDR_UART_BASE && S_araddr < ADDR_UART_BASE + ADDR_UART_SIZE) begin
             UART_araddr = (S_araddr - ADDR_UART_BASE); UART_arvalid = S_arvalid; UART_rready = S_rready;
-            UART_arid = S_arid; UART_arlen = S_arlen; UART_arsize = S_arsize; UART_arburst = S_arburst;
+            UART_arid = S_arid; UART_arlen = S_arlen; UART_arsize = S_arsize; UART_arbureset = S_arbureset;
             MEM_araddr = 32'hdeadbeef; MEM_arvalid = 0; MEM_rready = 0;
-            MEM_arid = 0; MEM_arlen = 0; MEM_arsize = 0; MEM_arburst = 0;
+            MEM_arid = 0; MEM_arlen = 0; MEM_arsize = 0; MEM_arbureset = 0;
             S_arready = UART_arready;
             S_rdata = MEM_rdata; S_rresp = MEM_rresp; S_rvalid = MEM_rvalid;
         end
         else if (S_araddr >= ADDR_CLINT_BASE && S_araddr < ADDR_CLINT_BASE + ADDR_CLINT_SIZE) begin
             CLINT_araddr = (S_araddr - ADDR_CLINT_BASE); CLINT_arvalid = S_arvalid; CLINT_rready = S_rready;
-            CLINT_arid = S_arid; CLINT_arlen = S_arlen; CLINT_arsize = S_arsize; CLINT_arburst = S_arburst;
+            CLINT_arid = S_arid; CLINT_arlen = S_arlen; CLINT_arsize = S_arsize; CLINT_arbureset = S_arbureset;
             MEM_araddr = 32'hdeadbeef; MEM_arvalid = 0; MEM_rready = 0;
-            MEM_arid = 0; MEM_arlen = 0; MEM_arsize = 0; MEM_arburst = 0;
+            MEM_arid = 0; MEM_arlen = 0; MEM_arsize = 0; MEM_arbureset = 0;
             UART_araddr = 32'hdeadbeef; UART_arvalid = 0; UART_rready = 0;
-            UART_arid = 0; UART_arlen = 0; UART_arsize = 0; UART_arburst = 0;
+            UART_arid = 0; UART_arlen = 0; UART_arsize = 0; UART_arbureset = 0;
             S_arready = CLINT_arready;
             S_rdata = MEM_rdata; S_rresp = MEM_rresp; S_rvalid = MEM_rvalid;
         end
         else begin
             MEM_araddr = S_araddr; MEM_arvalid = S_arvalid; MEM_rready = S_rready;
-            MEM_arid = S_arid; MEM_arlen = S_arlen; MEM_arsize = S_arsize; MEM_arburst = S_arburst;
+            MEM_arid = S_arid; MEM_arlen = S_arlen; MEM_arsize = S_arsize; MEM_arbureset = S_arbureset;
             UART_araddr = 32'hdeadbeef; UART_arvalid = 0; UART_rready = 0;
-            UART_arid = 0; UART_arlen = 0; UART_arsize = 0; UART_arburst = 0;
+            UART_arid = 0; UART_arlen = 0; UART_arsize = 0; UART_arbureset = 0;
             CLINT_araddr = 32'hdeadbeef; CLINT_arvalid = 0; CLINT_rready = 0;
-            CLINT_arid = 0; CLINT_arlen = 0; CLINT_arsize = 0; CLINT_arburst = 0;
+            CLINT_arid = 0; CLINT_arlen = 0; CLINT_arsize = 0; CLINT_arbureset = 0;
 
             S_arready = MEM_arready;
             S_rdata = MEM_rdata; S_rresp = MEM_rresp; S_rvalid = MEM_rvalid;

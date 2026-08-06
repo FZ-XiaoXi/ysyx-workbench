@@ -1,8 +1,8 @@
 import "DPI-C" function void difftest_mem_set(int addr);
 
-module LSU(
-    input             clk,
-    input             rst,
+module ysyx_26010011_LSU(
+    input             clock,
+    input             reset,
     // CPU 流水线接口
     input [31:0]      lsu_addr,
     output reg [31:0] lsu_rdata,
@@ -42,7 +42,7 @@ module LSU(
     output [3:0]      arid,
     output [7:0]      arlen,
     output [2:0]      arsize,
-    output [1:0]      arburst,
+    output [1:0]      arbureset,
     // AXI4 读数据通道
     input  [31:0]     rdata,
     input  [1:0]      rresp,
@@ -79,7 +79,7 @@ module LSU(
     assign arid    = 4'b0;
     assign arlen   = 8'b0;
     assign arsize  = 3'b010;  // 32-bit
-    assign arburst = 2'b01;   // INCR
+    assign arbureset = 2'b01;   // INCR
 
     assign awvalid = (state == S_IDLE && lsu_reqEN && lsu_wen) || (state == S_WAIT_AW_W);
     assign wvalid  = (state == S_IDLE && lsu_reqEN && lsu_wen) || (state == S_WAIT_AW_W);
@@ -127,8 +127,8 @@ module LSU(
         endcase
     end
 
-    always @(posedge clk) begin
-        if (rst) state <= S_IDLE;
+    always @(posedge clock) begin
+        if (reset) state <= S_IDLE;
         else     state <= next_state;
     end
 

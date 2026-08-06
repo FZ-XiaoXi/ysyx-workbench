@@ -1,6 +1,6 @@
-module WBU(
-    input clk,
-    input rst,
+module ysyx_26010011_WBU(
+    input clock,
+    input reset,
     input [31:0]LSU_data,
     input [31:0]EXU_data,
     input [31:0]CSR_data,
