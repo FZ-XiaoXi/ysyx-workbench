@@ -1,6 +1,6 @@
-module IFU(
-    input clk,
-    input rst,
+module ysyx_26010011_IFU(
+    input clock,
+    input reset,
     
     output reg [31:0] PC,
     input [31:0]      dnpc,
@@ -19,7 +19,7 @@ module IFU(
     output [3:0]      arid,
     output [7:0]      arlen,
     output [2:0]      arsize,
-    output [1:0]      arburst,
+    output [1:0]      arbureset,
     input  [31:0]     rdata,
     input  [1:0]      rresp,
     input             rvalid,
@@ -42,7 +42,7 @@ module IFU(
     assign arid    = 4'b0;
     assign arlen   = 8'b0;
     assign arsize  = 3'b010;
-    assign arburst = 2'b01;
+    assign arbureset = 2'b01;
     assign arvalid = (state == S_IDLE) || (state == S_WAIT_READY);
     assign rready  = (state != S_WAIT_EXEC);
 
@@ -71,8 +71,8 @@ module IFU(
         endcase
     end
 
-    always @(posedge clk) begin
-        if (rst) state <= S_IDLE;
+    always @(posedge clock) begin
+        if (reset) state <= S_IDLE;
         else     state <= next_state;
     end
 
@@ -80,16 +80,16 @@ module IFU(
         bus_valid = (state == S_WAIT_EXEC);
     end
 
-    always @(posedge clk) begin
-        if (rst) begin
+    always @(posedge clock) begin
+        if (reset) begin
             PC_command <= 32'h0;
         end else if (r_fire) begin
             PC_command <= rdata;
         end
     end
 
-    always @(posedge clk) begin
-        if (rst) begin
+    always @(posedge clock) begin
+        if (reset) begin
             PC <= 32'h80000000;
         end else if (bus_valid && wbu_final) begin
             if (isJUMP | isBRANCH | isECALL | isMRET) begin

@@ -1,6 +1,6 @@
-module UART(
-    input clk,
-    input rst,
+module ysyx_26010011_UART(
+    input clock,
+    input reset,
 
     //AR
     input  [31:0] araddr,
@@ -9,7 +9,7 @@ module UART(
     input  [3:0]  arid,
     input  [7:0]  arlen,
     input  [2:0]  arsize,
-    input  [1:0]  arburst,
+    input  [1:0]  arbureset,
 
     //R
     output [31:0] rdata,
@@ -50,8 +50,8 @@ module UART(
     reg [31:0] rdata_hold;
     wire       r_mem_ready;
 
-    always @(posedge clk) begin
-        if(rst) r_state <= R_IDLE;
+    always @(posedge clock) begin
+        if(reset) r_state <= R_IDLE;
         else    r_state <= r_next;
     end
 
@@ -82,13 +82,13 @@ module UART(
     end
 
     wire r_req_fire = (arvalid && arready);
-    always @(posedge clk) begin
+    always @(posedge clock) begin
         if(r_req_fire) raddr_reg <= araddr;
     end
 
-    random_delay_pulse #(.LFSR_WIDTH(4)) read_delay_inst (
-        .clk(clk),
-        .rst_n(~rst),
+    ysyx_26010011_random_delay_pulse #(.LFSR_WIDTH(4)) read_delay_inst (
+        .clock(clock),
+        .reset_n(~reset),
         .out_lock(0),
         .start(r_req_fire),
         .out(r_mem_ready)
@@ -96,7 +96,7 @@ module UART(
 
     wire [31:0] current_mem_rdata = 32'hDEADBEEF;
 
-    always @(posedge clk) begin
+    always @(posedge clock) begin
         if (r_state == R_WAIT_MEM && r_mem_ready && !rready) begin
             rdata_hold <= current_mem_rdata; 
         end
@@ -115,8 +115,8 @@ module UART(
     reg [1:0] w_state, w_next;
     wire      w_mem_ready;
 
-    always @(posedge clk) begin
-        if(rst) w_state <= W_IDLE;
+    always @(posedge clock) begin
+        if(reset) w_state <= W_IDLE;
         else    w_state <= w_next;
     end
 
@@ -142,7 +142,7 @@ module UART(
         
     end
 
-    always @(posedge clk) begin
+    always @(posedge clock) begin
         if(w_req_fire) begin
             $write("%c", wdata[7:0]);
             difftest_skip_ref(2);
@@ -150,9 +150,9 @@ module UART(
         end
     end
 
-    random_delay_pulse #(.LFSR_WIDTH(2)) write_delay_inst (
-        .clk(clk),
-        .rst_n(~rst),
+    ysyx_26010011_random_delay_pulse #(.LFSR_WIDTH(2)) write_delay_inst (
+        .clock(clock),
+        .reset_n(~reset),
         .out_lock(0),
         .start(w_req_fire),
         .out(w_mem_ready)

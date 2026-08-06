@@ -1,12 +1,12 @@
 // ============================================================
 // 参数化 LFSR 模块（Fibonacci 型，右移结构）
 // ============================================================
-module lfsr #(
+module ysyx_26010011_lfsr #(
     parameter WIDTH = 8,                         // 寄存器位宽
     parameter [WIDTH-1:0] TAP_MASK = {{WIDTH-2{1'b0}}, 2'b11}  // 默认：最高两位反馈
 ) (
-    input  wire             clk,
-    input  wire             rst_n,
+    input  wire             clock,
+    input  wire             reset_n,
     input  wire             en,
     output wire [WIDTH-1:0] state_out,
     output wire             data_out
@@ -16,8 +16,8 @@ module lfsr #(
 
     assign feedback = ^(state & TAP_MASK);       // 抽头异或
 
-    always @(posedge clk or negedge rst_n) begin
-        if (!rst_n)
+    always @(posedge clock or negedge reset_n) begin
+        if (!reset_n)
             state <= {{WIDTH-1{1'b0}}, 1'b1};    // 种子：最低位为1，其余为0
         else if (en)
             state <= {feedback, state[WIDTH-1:1]}; // 右移，反馈值移入最高位
@@ -31,11 +31,11 @@ endmodule
 // ============================================================
 // 随机延迟脉冲发生器
 // ============================================================
-module random_delay_pulse #(
+module ysyx_26010011_random_delay_pulse #(
     parameter LFSR_WIDTH = 8
 ) (
-    input  wire clk,
-    input  wire rst_n,
+    input  wire clock,
+    input  wire reset_n,
     input wire out_lock,
     input  wire start,
     output reg  out
@@ -51,8 +51,8 @@ module random_delay_pulse #(
     // LFSR 实例化（同前，略）
 
     // 合并边沿检测与状态机，避免多拍延迟
-    always @(posedge clk or negedge rst_n) begin
-        if (!rst_n) begin
+    always @(posedge clock or negedge reset_n) begin
+        if (!reset_n) begin
             start_d   <= 1'b0;
             busy      <= 1'b0;
             lfsr_en   <= 1'b1;
@@ -96,12 +96,12 @@ module random_delay_pulse #(
         end
     end
     // 实例化 LFSR（同级）
-    lfsr #(
+    ysyx_26010011_lfsr #(
         .WIDTH (LFSR_WIDTH)
         // TAP_MASK 使用默认值，若需自定义可在顶层传递参数
     ) u_lfsr (
-        .clk       (clk),
-        .rst_n     (rst_n),
+        .clock       (clock),
+        .reset_n     (reset_n),
         .en        (lfsr_en),
         .state_out (lfsr_state),
         .data_out  (lfsr_data)
@@ -111,8 +111,8 @@ module random_delay_pulse #(
     parameter lock_state_normal = 0,
               lock_state_lock = 1;
     reg lock_state, lock_state_next;
-    always @(posedge clk or negedge rst_n) begin
-        if (!rst_n) begin
+    always @(posedge clock or negedge reset_n) begin
+        if (!reset_n) begin
             lock_state <= lock_state_normal;
         end else begin
             lock_state <= lock_state_next;

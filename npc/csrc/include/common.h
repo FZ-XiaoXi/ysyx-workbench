@@ -1,24 +1,33 @@
 #ifndef __COMMON_H__
 #define __COMMON_H__
+#include <cstdint>
+
+
 
 #include <stdlib.h>
 #include <stdio.h>
 #include <stdint.h>
 #include <assert.h>
 #include "debug.h"
-#include "Vtop.h"
-#include "Vtop___024root.h"
-#include "Vtop_top.h"
-#include "Vtop_REG.h"
-#include "Vtop_IFU.h"
-#include "Vtop_LSU.h"
-#include "Vtop_IDU.h"
+
+#include "VysyxSoCFull.h"
+#include "VysyxSoCFull_ysyxSoCFull.h"
+#include "VysyxSoCFull_ysyxSoCASIC.h"
+#include "VysyxSoCFull_CPU.h"
+#include "VysyxSoCFull_ysyx_26010011.h"
+#include "VysyxSoCFull_ysyx_26010011_REG.h"
+#include "VysyxSoCFull_ysyx_26010011_IFU.h"
+#include "VysyxSoCFull_ysyx_26010011_LSU.h"
+#include "VysyxSoCFull_ysyx_26010011_IDU.h"
 #include "verilated_vcd_c.h"
+
+extern "C" void flash_read(int32_t addr, int32_t *data) { assert(0); }
+extern "C" void mrom_read(int32_t addr, int32_t *data) { assert(0); }
 
 extern VerilatedContext* contextp;
 extern VerilatedVcdC* tfp;
 
-extern Vtop* top;
+extern VysyxSoCFull* top;
 extern FILE* log_fp;
 
 #define CONFIG_INST_LEN 4

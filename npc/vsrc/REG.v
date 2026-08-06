@@ -1,7 +1,7 @@
 import "DPI-C" function void difftest_skip_ref(int reason);
-module REG(
-  input clk,
-  input rst,
+module ysyx_26010011_REG(
+  input clock,
+  input reset,
   input [4:0]addRA,
   input [4:0]addRB,
   input [11:0]addCSR,
@@ -57,8 +57,8 @@ module REG(
     endcase
   end
 
-  always @(posedge clk) begin
-    if(rst) begin
+  always @(posedge clock) begin
+    if(reset) begin
       CSR_MCYCLE <= 0;
       CSR_MCYCLEH <= 0;
       CSR_MTVEC <= 0;
@@ -86,8 +86,8 @@ module REG(
     end
   end
 
-  always @(posedge clk) begin
-    if(rst) begin
+  always @(posedge clock) begin
+    if(reset) begin
       for(int i=0;i<32;i=i+1) begin
         GPR[i]<={32{1'b0}};
       end
@@ -98,8 +98,8 @@ module REG(
     end
   end
 
-  always @(posedge clk) begin
-      if (~rst & bus_valid) begin
+  always @(posedge clock) begin
+      if (~reset & bus_valid) begin
           if (WCSREN & ((addCSR==ADD_MCYCLE) | (addCSR==ADD_MCYCLEH))) begin
               difftest_skip_ref(3);
           end

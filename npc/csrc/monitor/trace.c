@@ -156,7 +156,7 @@ void ftracer_write_log(char *s){
   log_write("%s", s);
   if(!ftrace_log.buf){
     ftrace_log.buf=(char*)malloc(128);
-    if(!ftrace_log.buf){Log("ERROR first malloc ftracer_log_buffer!.");return;}
+    if(!ftrace_log.buf){Log("ERROR fireset malloc ftracer_log_buffer!.");return;}
     memset(ftrace_log.buf,0,128);
     ftrace_log.alloc=128;
   }
