@@ -9,12 +9,14 @@ void Vtop_LSU___ico_sequent__TOP__top__LSU_0__0(Vtop_LSU* vlSelf) {
     Vtop__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
     auto& vlSelfRef = std::ref(*vlSelf).get();
     // Body
+    vlSelfRef.__PVT__b_fire = (((IData)(vlSymsp->TOP__top.__PVT__RAM_AXI4LiteArbiter__DOT__W_state) 
+                                & ((IData)(vlSymsp->TOP__top.__PVT__RAM_AXI4LiteArbiter__DOT__W_master_sel) 
+                                   & (IData)(vlSymsp->TOP__top.__PVT__S_bvalid))) 
+                               & (IData)(vlSymsp->TOP__top.__PVT__RAM_AXI4LiteArbiter__DOT__M2_bready));
     vlSelfRef.__PVT__r_fire = (((IData)(vlSymsp->TOP__top.__PVT__RAM_AXI4LiteArbiter__DOT__R_state) 
                                 & ((IData)(vlSymsp->TOP__top.__PVT__RAM_AXI4LiteArbiter__DOT__R_master_sel) 
                                    & (IData)(vlSymsp->TOP__top.__PVT__RAM_AXI4LiteArbiter__DOT__S_rvalid))) 
                                & (IData)(vlSymsp->TOP__top.__PVT__RAM_AXI4LiteArbiter__DOT__M2_rready));
-    vlSelfRef.__PVT__b_fire = ((IData)(vlSymsp->TOP__top.__PVT__DRAM_bvalid) 
-                               & (IData)(vlSymsp->TOP__top.__PVT__RAM_AXI4LiteArbiter__DOT__M2_bready));
     vlSelfRef.__PVT__lsu_final = (((4U == (IData)(vlSelfRef.state)) 
                                    & (IData)(vlSelfRef.__PVT__r_fire)) 
                                   | ((2U == (IData)(vlSelfRef.state)) 

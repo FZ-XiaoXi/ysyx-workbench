@@ -6,28 +6,40 @@ module CLINT(
     input  [31:0] araddr,
     input         arvalid,
     output        arready,
+    input  [3:0]  arid,
+    input  [7:0]  arlen,
+    input  [2:0]  arsize,
+    input  [1:0]  arburst,
 
     //R
     output [31:0] rdata,
     output [1:0]  rresp,
     output        rvalid,
     input         rready,
+    output        rlast,
+    output [3:0]  rid,
 
     //AW
     input  [31:0] awaddr,
     input         awvalid,
     output        awready,
+    input  [3:0]  awid,
+    input  [7:0]  awlen,
+    input  [2:0]  awsize,
+    input  [1:0]  awburst,
 
     //W
     input  [31:0] wdata,
     input  [3:0]  wstrb,
     input         wvalid,
     output        wready,
-    
+    input         wlast,
+
     //B
     output [1:0]  bresp,
     output        bvalid,
-    input         bready
+    input         bready,
+    output [3:0]  bid
 );
 
     // AR / R

@@ -15,26 +15,41 @@ module LSU(
     input             isSigned,
     input             bus_valid,
     
-    // AXI4-Lite 写通道
+    // AXI4 写地址通道
     output [31:0]     awaddr,
     output            awvalid,
     input             awready,
+    output [3:0]      awid,
+    output [7:0]      awlen,
+    output [2:0]      awsize,
+    output [1:0]      awburst,
+    // AXI4 写数据通道
     output [31:0]     wdata,
     output [3:0]      wstrb,
     output            wvalid,
     input             wready,
+    output            wlast,
+    // AXI4 写响应通道
     input  [1:0]      bresp,
     input             bvalid,
     output            bready,
+    input  [3:0]      bid,
 
-    // AXI4-Lite 读通道
+    // AXI4 读地址通道
     output [31:0]     araddr,
     output            arvalid,
     input             arready,
+    output [3:0]      arid,
+    output [7:0]      arlen,
+    output [2:0]      arsize,
+    output [1:0]      arburst,
+    // AXI4 读数据通道
     input  [31:0]     rdata,
     input  [1:0]      rresp,
     input             rvalid,
-    output            rready
+    output            rready,
+    input             rlast,
+    input  [3:0]      rid
 );
 
     localparam S_IDLE        = 3'd0;
@@ -53,9 +68,18 @@ module LSU(
     wire r_fire  = rvalid && rready;
 
     assign awaddr  = lsu_addr;
+    assign awid    = 4'b0;
+    assign awlen   = 8'b0;
+    assign awsize  = 3'b010;  // 32-bit
+    assign awburst = 2'b01;   // INCR
     assign wdata   = lsu_wdata;
     assign wstrb   = lsu_wmask;
+    assign wlast   = 1'b1;    // single beat
     assign araddr  = lsu_addr;
+    assign arid    = 4'b0;
+    assign arlen   = 8'b0;
+    assign arsize  = 3'b010;  // 32-bit
+    assign arburst = 2'b01;   // INCR
 
     assign awvalid = (state == S_IDLE && lsu_reqEN && lsu_wen) || (state == S_WAIT_AW_W);
     assign wvalid  = (state == S_IDLE && lsu_reqEN && lsu_wen) || (state == S_WAIT_AW_W);
