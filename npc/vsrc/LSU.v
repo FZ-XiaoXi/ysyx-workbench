@@ -39,9 +39,9 @@ module LSU(
 
     localparam S_IDLE        = 3'd0;
     localparam S_WAIT_AW_W   = 3'd1; // 等待写地址与写数据握手
-    localparam S_WAIT_BRESP  = 3'd2; // 等待写响应 (B 通道)
+    localparam S_WAIT_BRESP  = 3'd2; // 等待写响应(B通道)
     localparam S_WAIT_AR     = 3'd3; // 等待读地址握手
-    localparam S_WAIT_RDATA  = 3'd4; // 等待读数据返回 (R 通道)
+    localparam S_WAIT_RDATA  = 3'd4; // 等待读数据返回(R通道)
 
     reg [2:0] state/*verilator public*/, next_state;
 

@@ -30,7 +30,7 @@ Vtop__Syms::Vtop__Syms(VerilatedContext* contextp, const char* namep, Vtop* mode
     , TOP__top__REG_0{this, Verilated::catName(namep, "top.REG_0")}
 {
     // Check resources
-    Verilated::stackCheck(466);
+    Verilated::stackCheck(562);
     // Configure time unit / time precision
     _vm_contextp__->timeunit(-12);
     _vm_contextp__->timeprecision(-12);

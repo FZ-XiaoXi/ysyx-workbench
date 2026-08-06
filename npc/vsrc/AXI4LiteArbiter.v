@@ -1,4 +1,4 @@
-module AXI4LiteArbiter(///////这里使用ai进行代码格式美化
+module AXI4LiteArbiter(
     input     clk,
     input     rst,
 

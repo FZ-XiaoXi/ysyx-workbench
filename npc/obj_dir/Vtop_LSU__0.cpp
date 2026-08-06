@@ -56,16 +56,11 @@ void Vtop_LSU___ico_sequent__TOP__top__LSU_0__3(Vtop_LSU* vlSelf) {
     CData/*0:0*/ __VdfgExtracted_hd51ce84d__0;
     __VdfgExtracted_hd51ce84d__0 = 0;
     // Body
+    __VdfgExtracted_hd51ce84d__0 = (((IData)(vlSymsp->TOP__top.__PVT__RAM_AXI4LiteArbiter__DOT__M2_awvalid) 
+                                     & (IData)(vlSymsp->TOP__top.__PVT__DRAM_awready)) 
+                                    & (IData)(vlSymsp->TOP__top.__PVT__DRAM_wready));
     vlSelfRef.__PVT__ar_fire = ((IData)(vlSymsp->TOP__top.__PVT__RAM_AXI4LiteArbiter__DOT__M2_arvalid) 
                                 & (IData)(vlSymsp->TOP__top.__PVT__DRAM_arready));
-    __VdfgExtracted_hd51ce84d__0 = (((IData)(vlSymsp->TOP__top.__PVT__RAM_AXI4LiteArbiter__DOT__M2_awvalid) 
-                                     & (IData)(vlSymsp->TOP__top.__PVT__DRAM_wready)) 
-                                    & ((IData)(vlSymsp->TOP__top.__PVT__RAM_AXI4LiteArbiter__DOT__W_state)
-                                        ? ((IData)(vlSymsp->TOP__top.__PVT__RAM_AXI4LiteArbiter__DOT__W_master_sel)
-                                            ? (0U == (IData)(vlSymsp->TOP__top.__PVT__RAM__DOT__w_state))
-                                            : 0U) : 
-                                       ((IData)(vlSymsp->TOP__top.__PVT__RAM_AXI4LiteArbiter__DOT__M2_awvalid) 
-                                        && (0U == (IData)(vlSymsp->TOP__top.__PVT__RAM__DOT__w_state)))));
     vlSelfRef.__PVT__next_state = vlSelfRef.state;
     if ((4U & (IData)(vlSelfRef.state))) {
         if ((2U & (IData)(vlSelfRef.state))) {

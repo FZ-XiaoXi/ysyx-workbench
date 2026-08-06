@@ -154,81 +154,63 @@ module top(
   wire [1:0] DRAM_bresp,DRAM_rresp;
 
 
-    AXI4LiteArbiter RAM_AXI4LiteArbiter(
+  AXI4LiteArbiter RAM_AXI4LiteArbiter(
     .clk(clk),
     .rst(rst),
 
     //MASTER1
-    //AR
-    .M1_araddr(IROM_araddr),
-    .M1_arvalid(IROM_arvalid),
-    .M1_arready(IROM_arready),
-    //R
-    .M1_rdata(IROM_rdata),
-    .M1_rresp(IROM_rresp),
-    .M1_rvalid(IROM_rvalid),
-    .M1_rready(IROM_rready),
-    //AW
-    .M1_awaddr(0),
-    .M1_awvalid(0),
-    .M1_awready(),
-    //W
-    .M1_wdata(0),
-    .M1_wstrb(0),
-    .M1_wvalid(0),
-    .M1_wready(),
-    //B
-    .M1_bresp(),
-    .M1_bvalid(),
-    .M1_bready(0),
+    .M1_araddr(IROM_araddr),  .M1_arvalid(IROM_arvalid),  .M1_arready(IROM_arready),
+    .M1_rdata(IROM_rdata),    .M1_rresp(IROM_rresp),      .M1_rvalid(IROM_rvalid),    .M1_rready(IROM_rready),
+    .M1_awaddr(0),            .M1_awvalid(0),             .M1_awready(),
+    .M1_wdata(0),             .M1_wstrb(0),               .M1_wvalid(0),              .M1_wready(),
+    .M1_bresp(),              .M1_bvalid(),               .M1_bready(0),
 
     //MASTER2
-    //AR
-    .M2_araddr(DRAM_araddr),
-    .M2_arvalid(DRAM_arvalid),
-    .M2_arready(DRAM_arready),
-    //R
-    .M2_rdata(DRAM_rdata),
-    .M2_rresp(DRAM_rresp),
-    .M2_rvalid(DRAM_rvalid),
-    .M2_rready(DRAM_rready),
-    //AW
-    .M2_awaddr(DRAM_awaddr),
-    .M2_awvalid(DRAM_awvalid),
-    .M2_awready(DRAM_awready),
-    //W
-    .M2_wdata(DRAM_wdata),
-    .M2_wstrb(DRAM_wstrb),
-    .M2_wvalid(DRAM_wvalid),
-    .M2_wready(DRAM_wready),
-    //B
-    .M2_bresp(DRAM_bresp),
-    .M2_bvalid(DRAM_bvalid),
-    .M2_bready(DRAM_bready),
+    .M2_araddr(DRAM_araddr),  .M2_arvalid(DRAM_arvalid),  .M2_arready(DRAM_arready),
+    .M2_rdata(DRAM_rdata),    .M2_rresp(DRAM_rresp),      .M2_rvalid(DRAM_rvalid),    .M2_rready(DRAM_rready),
+    .M2_awaddr(DRAM_awaddr),  .M2_awvalid(DRAM_awvalid),  .M2_awready(DRAM_awready),
+    .M2_wdata(DRAM_wdata),    .M2_wstrb(DRAM_wstrb),      .M2_wvalid(DRAM_wvalid),    .M2_wready(DRAM_wready),
+    .M2_bresp(DRAM_bresp),    .M2_bvalid(DRAM_bvalid),    .M2_bready(DRAM_bready),
 
     //SLAVE
-    //AR
-    .S_araddr(RAM_araddr),
-    .S_arvalid(RAM_arvalid),
-    .S_arready(RAM_arready),
-    //R
-    .S_rdata(RAM_rdata),
-    .S_rresp(RAM_rresp),
-    .S_rvalid(RAM_rvalid),
-    .S_rready(RAM_rready),
-    //AW
-    .S_awaddr(RAM_awaddr),
-    .S_awvalid(RAM_awvalid),
-    .S_awready(RAM_awready),
-    //W
-    .S_wdata(RAM_wdata),
-    .S_wstrb(RAM_wstrb),
-    .S_wvalid(RAM_wvalid),
-    .S_wready(RAM_wready),
-    //B
-    .S_bresp(RAM_bresp),
-    .S_bvalid(RAM_bvalid),
-    .S_bready(RAM_bready)
+    .S_araddr(S_araddr),  .S_arvalid(S_arvalid),  .S_arready(S_arready),
+    .S_rdata(S_rdata),    .S_rresp(S_rresp),      .S_rvalid(S_rvalid),    .S_rready(S_rready),
+    .S_awaddr(S_awaddr),  .S_awvalid(S_awvalid),  .S_awready(S_awready),
+    .S_wdata(S_wdata),    .S_wstrb(S_wstrb),      .S_wvalid(S_wvalid),    .S_wready(S_wready),
+    .S_bresp(S_bresp),    .S_bvalid(S_bvalid),    .S_bready(S_bready)
+  );
+
+  wire [31:0]S_araddr,S_rdata,S_awaddr,S_wdata;
+  wire S_arvalid,S_arready,S_rvalid,S_rready,S_awvalid,S_awready,S_wvalid,S_wready,S_bvalid,S_bready;
+  wire [1:0]S_rresp,S_bresp;
+  wire [3:0]S_wstrb;
+  bridge XBAR_Bridge_inst(
+    .clk(clk),
+    .rst(rst),
+
+    .S_araddr(S_araddr),  .S_arvalid(S_arvalid),  .S_arready(S_arready),
+    .S_rdata(S_rdata),    .S_rresp(S_rresp),      .S_rvalid(S_rvalid),    .S_rready(S_rready),
+    .S_awaddr(S_awaddr),  .S_awvalid(S_awvalid),  .S_awready(S_awready),
+    .S_wdata(S_wdata),    .S_wstrb(S_wstrb),      .S_wvalid(S_wvalid),    .S_wready(S_wready),
+    .S_bresp(S_bresp),    .S_bvalid(S_bvalid),    .S_bready(S_bready),
+
+    .MEM_araddr(RAM_araddr),  .MEM_arvalid(RAM_arvalid),  .MEM_arready(RAM_arready),
+    .MEM_rdata(RAM_rdata),    .MEM_rresp(RAM_rresp),      .MEM_rvalid(RAM_rvalid),    .MEM_rready(RAM_rready),
+    .MEM_awaddr(RAM_awaddr),  .MEM_awvalid(RAM_awvalid),  .MEM_awready(RAM_awready),
+    .MEM_wdata(RAM_wdata),    .MEM_wstrb(RAM_wstrb),      .MEM_wvalid(RAM_wvalid),    .MEM_wready(RAM_wready),
+    .MEM_bresp(RAM_bresp),    .MEM_bvalid(RAM_bvalid),    .MEM_bready(RAM_bready),
+
+    .UART_araddr(UART_araddr),  .UART_arvalid(UART_arvalid),  .UART_arready(UART_arready),
+    .UART_rdata(UART_rdata),    .UART_rresp(UART_rresp),      .UART_rvalid(UART_rvalid),    .UART_rready(UART_rready),
+    .UART_awaddr(UART_awaddr),  .UART_awvalid(UART_awvalid),  .UART_awready(UART_awready),
+    .UART_wdata(UART_wdata),    .UART_wstrb(UART_wstrb),      .UART_wvalid(UART_wvalid),    .UART_wready(UART_wready),
+    .UART_bresp(UART_bresp),    .UART_bvalid(UART_bvalid),    .UART_bready(UART_bready),
+
+    .CLINT_araddr(CLINT_araddr),  .CLINT_arvalid(CLINT_arvalid),  .CLINT_arready(CLINT_arready),
+    .CLINT_rdata(CLINT_rdata),    .CLINT_rresp(CLINT_rresp),      .CLINT_rvalid(CLINT_rvalid),    .CLINT_rready(CLINT_rready),
+    .CLINT_awaddr(CLINT_awaddr),  .CLINT_awvalid(CLINT_awvalid),  .CLINT_awready(CLINT_awready),
+    .CLINT_wdata(CLINT_wdata),    .CLINT_wstrb(CLINT_wstrb),      .CLINT_wvalid(CLINT_wvalid),    .CLINT_wready(CLINT_wready),
+    .CLINT_bresp(CLINT_bresp),    .CLINT_bvalid(CLINT_bvalid),    .CLINT_bready(CLINT_bready)
   );
   wire [31:0] RAM_awaddr,RAM_wdata,RAM_araddr,RAM_rdata;
   wire [3:0] RAM_wstrb;
@@ -260,6 +242,70 @@ module top(
     .bresp(RAM_bresp),
     .bvalid(RAM_bvalid),
     .bready(RAM_bready)
+  );
+
+  wire [31:0] UART_awaddr,UART_wdata,UART_araddr,UART_rdata;
+  wire [3:0] UART_wstrb;
+  wire UART_awvalid,UART_wvalid,UART_arvalid,UART_rvalid,UART_bvalid;
+  wire UART_awready,UART_wready,UART_arready,UART_rready,UART_bready;
+  wire [1:0] UART_bresp,UART_rresp;
+  UART UART_inst(
+    .clk(clk),
+    .rst(rst),
+
+    .araddr(UART_araddr),
+    .arvalid(UART_arvalid),
+    .arready(UART_arready),
+
+    .rdata(UART_rdata),
+    .rresp(UART_rresp),
+    .rvalid(UART_rvalid),
+    .rready(UART_rready),
+
+    .awaddr(UART_awaddr),
+    .awvalid(UART_awvalid),
+    .awready(UART_awready),
+
+    .wdata(UART_wdata),
+    .wstrb(UART_wstrb),
+    .wvalid(UART_wvalid),
+    .wready(UART_wready),
+    
+    .bresp(UART_bresp),
+    .bvalid(UART_bvalid),
+    .bready(UART_bready)
+  );
+
+  wire [31:0] CLINT_awaddr,CLINT_wdata,CLINT_araddr,CLINT_rdata;
+  wire [3:0] CLINT_wstrb;
+  wire CLINT_awvalid,CLINT_wvalid,CLINT_arvalid,CLINT_rvalid,CLINT_bvalid;
+  wire CLINT_awready,CLINT_wready,CLINT_arready,CLINT_rready,CLINT_bready;
+  wire [1:0] CLINT_bresp,CLINT_rresp;
+  CLINT CLINT_inst(
+    .clk(clk),
+    .rst(rst),
+
+    .araddr(CLINT_araddr),
+    .arvalid(CLINT_arvalid),
+    .arready(CLINT_arready),
+
+    .rdata(CLINT_rdata),
+    .rresp(CLINT_rresp),
+    .rvalid(CLINT_rvalid),
+    .rready(CLINT_rready),
+
+    .awaddr(CLINT_awaddr),
+    .awvalid(CLINT_awvalid),
+    .awready(CLINT_awready),
+
+    .wdata(CLINT_wdata),
+    .wstrb(CLINT_wstrb),
+    .wvalid(CLINT_wvalid),
+    .wready(CLINT_wready),
+    
+    .bresp(CLINT_bresp),
+    .bvalid(CLINT_bvalid),
+    .bready(CLINT_bready)
   );
 
   always @(posedge clk) begin
