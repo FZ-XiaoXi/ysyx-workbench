@@ -65,10 +65,12 @@ void VysyxSoCFull_ysyxSoCFull___nba_sequent__TOP__ysyxSoCFull__0(VysyxSoCFull_ys
     } else {
         VL_FWRITEF_NX(0x80000002U,"Assertion failed: Unsupported command `%xh`, only support `03h` read command\n",0,
                       8,vlSelfRef.__PVT__flash__DOT__cmd);
+        VL_FFLUSH_I(0x80000002U);
         vlSelfRef.__Vdly__flash__DOT__state = vlSelfRef.__PVT__flash__DOT__state;
         VL_WRITEF_NX("[%0t] %%Fatal: flash.v:44: Assertion failed in %NysyxSoCFull.flash\n",0,
                      64,VL_TIME_UNITED_Q(1000),-9,vlSymsp->name());
-        VL_STOP_MT("/home/seaber/ysyx-workbench/npc/../ysyxSoC/perip/flash/flash.v", 44, "", false);
+        Verilated::runFlushCallbacks();
+        VL_STOP_MT("/home/seaber/ysyx-workbench/abstract-machine/../npc/../ysyxSoC/perip/flash/flash.v", 44, "", false);
     }
     if ((1U & (IData)(vlSymsp->TOP__ysyxSoCFull__asic.__PVT__lspi__DOT__mspi__DOT__spi_ss))) {
         vlSelfRef.__Vdly__flash__DOT__data = 0U;
@@ -122,10 +124,12 @@ void VysyxSoCFull_ysyxSoCFull___nba_sequent__TOP__ysyxSoCFull__2(VysyxSoCFull_ys
         } else {
             VL_FWRITEF_NX(0x80000002U,"Assertion failed: Unsupport command `%xh`, only support `03h` read command\n",0,
                           8,vlSelfRef.__PVT__flash__DOT__cmd);
+            VL_FFLUSH_I(0x80000002U);
             VL_WRITEF_NX("[%0t] %%Fatal: flash.v:98: Assertion failed in %NysyxSoCFull.flash.flash_cmd_i\n",0,
                          64,VL_TIME_UNITED_Q(1000),
                          -9,vlSymsp->name());
-            VL_STOP_MT("/home/seaber/ysyx-workbench/npc/../ysyxSoC/perip/flash/flash.v", 98, "", false);
+            Verilated::runFlushCallbacks();
+            VL_STOP_MT("/home/seaber/ysyx-workbench/abstract-machine/../npc/../ysyxSoC/perip/flash/flash.v", 98, "", false);
         }
     }
     vlSelfRef.__PVT__flash__DOT__data_bswap = ((((0x0000ff00U 

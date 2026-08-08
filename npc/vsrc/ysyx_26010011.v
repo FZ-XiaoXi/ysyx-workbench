@@ -4,7 +4,7 @@ import "DPI-C" function void pmem_write(input int waddr, input int wdata, input 
 
 module ysyx_26010011(
   input clock,
-  input reset,
+  input reset/*verilator public*/,
   input io_interrupt,
 
   input		io_master_awready,
@@ -310,16 +310,16 @@ module ysyx_26010011(
     .S_rlast(io_master_rlast),    .S_rid(io_master_rid)
   );
 
-  wire [31:0]S_araddr,S_rdata,S_awaddr,S_wdata;
-  wire S_arvalid,S_arready,S_rvalid,S_rready,S_awvalid,S_awready,S_wvalid,S_wready,S_bvalid,S_bready;
-  wire [1:0]S_rresp,S_bresp;
-  wire [3:0]S_wstrb;
-  wire [3:0] S_awid;  wire [7:0] S_awlen;  wire [2:0] S_awsize;  wire [1:0] S_awburst;
-  wire S_wlast;
-  wire [3:0] S_bid;
-  wire [3:0] S_arid;  wire [7:0] S_arlen;  wire [2:0] S_arsize;  wire [1:0] S_arbureset;
-  wire S_rlast;
-  wire [3:0] S_rid;
+  // wire [31:0]S_araddr,S_rdata,S_awaddr,S_wdata;
+  // wire S_arvalid,S_arready,S_rvalid,S_rready,S_awvalid,S_awready,S_wvalid,S_wready,S_bvalid,S_bready;
+  // wire [1:0]S_rresp,S_bresp;
+  // wire [3:0]S_wstrb;
+  // wire [3:0] S_awid;  wire [7:0] S_awlen;  wire [2:0] S_awsize;  wire [1:0] S_awburst;
+  // wire S_wlast;
+  // wire [3:0] S_bid;
+  // wire [3:0] S_arid;  wire [7:0] S_arlen;  wire [2:0] S_arsize;  wire [1:0] S_arbureset;
+  // wire S_rlast;
+  // wire [3:0] S_rid;
   // ysyx_26010011_bridge XBAR_Bridge_inst(
   //   .clock(clock),
   //   .reset(reset),

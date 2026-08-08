@@ -8,10 +8,12 @@
 #include "VysyxSoCFull___024unit.h"
 #include "VysyxSoCFull_ysyxSoCASIC.h"
 #include "VysyxSoCFull_CPU.h"
+#include "VysyxSoCFull_AXI4RAM.h"
 #include "VysyxSoCFull_ysyx_26010011.h"
-#include "VysyxSoCFull_ysyx_26010011_LSU.h"
+#include "VysyxSoCFull_mem_2048x32.h"
 #include "VysyxSoCFull_ysyx_26010011_IFU.h"
 #include "VysyxSoCFull_ysyx_26010011_IDU.h"
+#include "VysyxSoCFull_ysyx_26010011_LSU.h"
 #include "VysyxSoCFull_ysyx_26010011_REG.h"
 
 // FUNCTIONS
@@ -28,6 +30,8 @@ VysyxSoCFull__Syms::VysyxSoCFull__Syms(VerilatedContext* contextp, const char* n
     , TOP____024unit{this, Verilated::catName(namep, "$unit")}
     , TOP__ysyxSoCFull{this, Verilated::catName(namep, "ysyxSoCFull")}
     , TOP__ysyxSoCFull__asic{this, Verilated::catName(namep, "ysyxSoCFull.asic")}
+    , TOP__ysyxSoCFull__asic__axi4ram{this, Verilated::catName(namep, "ysyxSoCFull.asic.axi4ram")}
+    , TOP__ysyxSoCFull__asic__axi4ram__mem_ext{this, Verilated::catName(namep, "ysyxSoCFull.asic.axi4ram.mem_ext")}
     , TOP__ysyxSoCFull__asic__cpu{this, Verilated::catName(namep, "ysyxSoCFull.asic.cpu")}
     , TOP__ysyxSoCFull__asic__cpu__cpu{this, Verilated::catName(namep, "ysyxSoCFull.asic.cpu.cpu")}
     , TOP__ysyxSoCFull__asic__cpu__cpu__IDU_0{this, Verilated::catName(namep, "ysyxSoCFull.asic.cpu.cpu.IDU_0")}
@@ -36,7 +40,7 @@ VysyxSoCFull__Syms::VysyxSoCFull__Syms(VerilatedContext* contextp, const char* n
     , TOP__ysyxSoCFull__asic__cpu__cpu__REG_0{this, Verilated::catName(namep, "ysyxSoCFull.asic.cpu.cpu.REG_0")}
 {
     // Check resources
-    Verilated::stackCheck(1008);
+    Verilated::stackCheck(1100);
     // Configure time unit / time precision
     _vm_contextp__->timeunit(-9);
     _vm_contextp__->timeprecision(-12);
@@ -44,6 +48,8 @@ VysyxSoCFull__Syms::VysyxSoCFull__Syms(VerilatedContext* contextp, const char* n
     TOP.__PVT____024unit = &TOP____024unit;
     TOP.ysyxSoCFull = &TOP__ysyxSoCFull;
     TOP__ysyxSoCFull.asic = &TOP__ysyxSoCFull__asic;
+    TOP__ysyxSoCFull__asic.axi4ram = &TOP__ysyxSoCFull__asic__axi4ram;
+    TOP__ysyxSoCFull__asic__axi4ram.mem_ext = &TOP__ysyxSoCFull__asic__axi4ram__mem_ext;
     TOP__ysyxSoCFull__asic.cpu = &TOP__ysyxSoCFull__asic__cpu;
     TOP__ysyxSoCFull__asic__cpu.cpu = &TOP__ysyxSoCFull__asic__cpu__cpu;
     TOP__ysyxSoCFull__asic__cpu__cpu.IDU_0 = &TOP__ysyxSoCFull__asic__cpu__cpu__IDU_0;
@@ -55,6 +61,8 @@ VysyxSoCFull__Syms::VysyxSoCFull__Syms(VerilatedContext* contextp, const char* n
     TOP____024unit.__Vconfigure(true);
     TOP__ysyxSoCFull.__Vconfigure(true);
     TOP__ysyxSoCFull__asic.__Vconfigure(true);
+    TOP__ysyxSoCFull__asic__axi4ram.__Vconfigure(true);
+    TOP__ysyxSoCFull__asic__axi4ram__mem_ext.__Vconfigure(true);
     TOP__ysyxSoCFull__asic__cpu.__Vconfigure(true);
     TOP__ysyxSoCFull__asic__cpu__cpu.__Vconfigure(true);
     TOP__ysyxSoCFull__asic__cpu__cpu__IDU_0.__Vconfigure(true);
@@ -64,6 +72,7 @@ VysyxSoCFull__Syms::VysyxSoCFull__Syms(VerilatedContext* contextp, const char* n
     // Setup scopes
     __Vscope_ysyxSoCFull__asic__axi42apb.configure(this, name(), "ysyxSoCFull.asic.axi42apb", "axi42apb", "<null>", -9, VerilatedScope::SCOPE_OTHER);
     __Vscope_ysyxSoCFull__asic__axi4frag.configure(this, name(), "ysyxSoCFull.asic.axi4frag", "axi4frag", "<null>", -9, VerilatedScope::SCOPE_OTHER);
+    __Vscope_ysyxSoCFull__asic__axi4ram__mem_ext.configure(this, name(), "ysyxSoCFull.asic.axi4ram.mem_ext", "mem_ext", "<null>", 0, VerilatedScope::SCOPE_OTHER);
     __Vscope_ysyxSoCFull__asic__axi4xbar_1.configure(this, name(), "ysyxSoCFull.asic.axi4xbar_1", "axi4xbar_1", "<null>", -9, VerilatedScope::SCOPE_OTHER);
     __Vscope_ysyxSoCFull__asic__axi4yank.configure(this, name(), "ysyxSoCFull.asic.axi4yank", "axi4yank", "<null>", -9, VerilatedScope::SCOPE_OTHER);
     __Vscope_ysyxSoCFull__asic__axi4yank__unnamedblk1.configure(this, name(), "ysyxSoCFull.asic.axi4yank.unnamedblk1", "unnamedblk1", "<null>", -9, VerilatedScope::SCOPE_OTHER);
@@ -77,11 +86,19 @@ VysyxSoCFull__Syms::VysyxSoCFull__Syms(VerilatedContext* contextp, const char* n
     __Vscope_ysyxSoCFull__flash__flash_cmd_i.configure(this, name(), "ysyxSoCFull.flash.flash_cmd_i", "flash_cmd_i", "<null>", -9, VerilatedScope::SCOPE_OTHER);
     // Setup export functions
     for (int __Vfinal = 0; __Vfinal < 2; ++__Vfinal) {
+        __Vscope_ysyxSoCFull__asic__axi4ram__mem_ext.varInsert(__Vfinal,"Memory", &(TOP__ysyxSoCFull__asic__axi4ram__mem_ext.Memory), false, VLVT_UINT32,VLVD_NODIR|VLVF_PUB_RW,1,1 ,0,2047 ,31,0);
         __Vscope_ysyxSoCFull__asic__cpu__cpu.varInsert(__Vfinal,"PC", &(TOP__ysyxSoCFull__asic__cpu__cpu.PC), false, VLVT_UINT32,VLVD_NODIR|VLVF_PUB_RW,0,1 ,31,0);
         __Vscope_ysyxSoCFull__asic__cpu__cpu.varInsert(__Vfinal,"dnpc", &(TOP__ysyxSoCFull__asic__cpu__cpu.dnpc), false, VLVT_UINT32,VLVD_NODIR|VLVF_PUB_RW,0,1 ,31,0);
+        __Vscope_ysyxSoCFull__asic__cpu__cpu.varInsert(__Vfinal,"reset", &(TOP__ysyxSoCFull__asic__cpu__cpu.reset), false, VLVT_UINT8,VLVD_IN|VLVF_PUB_RW,0,0);
         __Vscope_ysyxSoCFull__asic__cpu__cpu.varInsert(__Vfinal,"snpc", &(TOP__ysyxSoCFull__asic__cpu__cpu.snpc), false, VLVT_UINT32,VLVD_NODIR|VLVF_PUB_RW,0,1 ,31,0);
         __Vscope_ysyxSoCFull__asic__cpu__cpu__IDU_0.varInsert(__Vfinal,"state", &(TOP__ysyxSoCFull__asic__cpu__cpu__IDU_0.state), false, VLVT_UINT8,VLVD_NODIR|VLVF_PUB_RW,0,0);
+        __Vscope_ysyxSoCFull__asic__cpu__cpu__IFU_0.varInsert(__Vfinal,"PC", &(TOP__ysyxSoCFull__asic__cpu__cpu__IFU_0.PC), false, VLVT_UINT32,VLVD_OUT|VLVF_PUB_RW,0,1 ,31,0);
         __Vscope_ysyxSoCFull__asic__cpu__cpu__IFU_0.varInsert(__Vfinal,"state", &(TOP__ysyxSoCFull__asic__cpu__cpu__IFU_0.state), false, VLVT_UINT8,VLVD_NODIR|VLVF_PUB_RW,0,1 ,1,0);
+        __Vscope_ysyxSoCFull__asic__cpu__cpu__LSU_0.varInsert(__Vfinal,"lsu_addr", &(TOP__ysyxSoCFull__asic__cpu__cpu__LSU_0.lsu_addr), false, VLVT_UINT32,VLVD_IN|VLVF_PUB_RW,0,1 ,31,0);
+        __Vscope_ysyxSoCFull__asic__cpu__cpu__LSU_0.varInsert(__Vfinal,"lsu_reqEN", &(TOP__ysyxSoCFull__asic__cpu__cpu__LSU_0.lsu_reqEN), false, VLVT_UINT8,VLVD_IN|VLVF_PUB_RW,0,0);
+        __Vscope_ysyxSoCFull__asic__cpu__cpu__LSU_0.varInsert(__Vfinal,"lsu_wdata", &(TOP__ysyxSoCFull__asic__cpu__cpu__LSU_0.lsu_wdata), false, VLVT_UINT32,VLVD_IN|VLVF_PUB_RW,0,1 ,31,0);
+        __Vscope_ysyxSoCFull__asic__cpu__cpu__LSU_0.varInsert(__Vfinal,"lsu_wen", &(TOP__ysyxSoCFull__asic__cpu__cpu__LSU_0.lsu_wen), false, VLVT_UINT8,VLVD_IN|VLVF_PUB_RW,0,0);
+        __Vscope_ysyxSoCFull__asic__cpu__cpu__LSU_0.varInsert(__Vfinal,"lsu_wmask", &(TOP__ysyxSoCFull__asic__cpu__cpu__LSU_0.lsu_wmask), false, VLVT_UINT8,VLVD_IN|VLVF_PUB_RW,0,1 ,3,0);
         __Vscope_ysyxSoCFull__asic__cpu__cpu__LSU_0.varInsert(__Vfinal,"state", &(TOP__ysyxSoCFull__asic__cpu__cpu__LSU_0.state), false, VLVT_UINT8,VLVD_NODIR|VLVF_PUB_RW,0,1 ,2,0);
         __Vscope_ysyxSoCFull__asic__cpu__cpu__REG_0.varInsert(__Vfinal,"CSR_MARCHID", &(TOP__ysyxSoCFull__asic__cpu__cpu__REG_0.CSR_MARCHID), false, VLVT_UINT32,VLVD_NODIR|VLVF_PUB_RW,0,1 ,31,0);
         __Vscope_ysyxSoCFull__asic__cpu__cpu__REG_0.varInsert(__Vfinal,"CSR_MCAUSE", &(TOP__ysyxSoCFull__asic__cpu__cpu__REG_0.CSR_MCAUSE), false, VLVT_UINT32,VLVD_NODIR|VLVF_PUB_RW,0,1 ,31,0);

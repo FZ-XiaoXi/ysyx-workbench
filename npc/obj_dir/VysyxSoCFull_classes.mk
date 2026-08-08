@@ -30,10 +30,12 @@ VM_CLASSES_FAST += \
   VysyxSoCFull_ysyxSoCFull__0 \
   VysyxSoCFull___024unit__0 \
   VysyxSoCFull_ysyxSoCASIC__0 \
+  VysyxSoCFull_AXI4RAM__0 \
   VysyxSoCFull_ysyx_26010011__0 \
-  VysyxSoCFull_ysyx_26010011_LSU__0 \
+  VysyxSoCFull_mem_2048x32__0 \
   VysyxSoCFull_ysyx_26010011_IFU__0 \
   VysyxSoCFull_ysyx_26010011_IDU__0 \
+  VysyxSoCFull_ysyx_26010011_LSU__0 \
   VysyxSoCFull_ysyx_26010011_REG__0 \
 
 # Generated module classes, non-fast-path, compile with low/medium optimization
@@ -49,14 +51,18 @@ VM_CLASSES_SLOW += \
   VysyxSoCFull_ysyxSoCASIC__0__Slow \
   VysyxSoCFull_CPU__Slow \
   VysyxSoCFull_CPU__0__Slow \
+  VysyxSoCFull_AXI4RAM__Slow \
+  VysyxSoCFull_AXI4RAM__0__Slow \
   VysyxSoCFull_ysyx_26010011__Slow \
   VysyxSoCFull_ysyx_26010011__0__Slow \
-  VysyxSoCFull_ysyx_26010011_LSU__Slow \
-  VysyxSoCFull_ysyx_26010011_LSU__0__Slow \
+  VysyxSoCFull_mem_2048x32__Slow \
+  VysyxSoCFull_mem_2048x32__0__Slow \
   VysyxSoCFull_ysyx_26010011_IFU__Slow \
   VysyxSoCFull_ysyx_26010011_IFU__0__Slow \
   VysyxSoCFull_ysyx_26010011_IDU__Slow \
   VysyxSoCFull_ysyx_26010011_IDU__0__Slow \
+  VysyxSoCFull_ysyx_26010011_LSU__Slow \
+  VysyxSoCFull_ysyx_26010011_LSU__0__Slow \
   VysyxSoCFull_ysyx_26010011_REG__Slow \
   VysyxSoCFull_ysyx_26010011_REG__0__Slow \
 

@@ -13,6 +13,8 @@
 #include "VysyxSoCFull.h"
 #include "VysyxSoCFull_ysyxSoCFull.h"
 #include "VysyxSoCFull_ysyxSoCASIC.h"
+#include "VysyxSoCFull_AXI4RAM.h"
+#include "VysyxSoCFull_mem_2048x32.h"
 #include "VysyxSoCFull_CPU.h"
 #include "VysyxSoCFull_ysyx_26010011.h"
 #include "VysyxSoCFull_ysyx_26010011_REG.h"
@@ -21,8 +23,7 @@
 #include "VysyxSoCFull_ysyx_26010011_IDU.h"
 #include "verilated_vcd_c.h"
 
-extern "C" void flash_read(int32_t addr, int32_t *data) { assert(0); }
-extern "C" void mrom_read(int32_t addr, int32_t *data) { assert(0); }
+
 
 extern VerilatedContext* contextp;
 extern VerilatedVcdC* tfp;
@@ -33,19 +34,24 @@ extern FILE* log_fp;
 #define CONFIG_INST_LEN 4
 #define CONFIG_LOG_PATH "./npc-log.txt"
 #define CONFIG_GPR_NUM 16
-#define CONFIG_MBASE 0x80000000
+#define CONFIG_SRAMBASE 0x0f000000
+#define CONFIG_SRAMSIZE 0x00002000
+#define SRAM_LEFT CONFIG_SRAMBASE
+
+
+#define CONFIG_MROMBASE 0x20000000
+#define CONFIG_MROMSIZE 0x00001000
 #define CONFIG_PC_RESET_OFFSET 0x0
-#define PMEM_LEFT CONFIG_MBASE
-#define RESET_VECTOR (PMEM_LEFT + CONFIG_PC_RESET_OFFSET)
-#define CONFIG_MSIZE 0x8000000
+#define RESET_VECTOR (CONFIG_MROMBASE + CONFIG_PC_RESET_OFFSET)
+
 
 #define CONFIG_DIFFTEST_ENABLE
 #ifdef CONFIG_DIFFTEST_ENABLE
-    #define CONFIG_DIFFTEST_MEM_ENABLE
+    // #define CONFIG_DIFFTEST_MEM_ENABLE
 #endif
 
 #define CONFIG_WATCHPOINT_ENABLE
-// #define CONFIG_WAVE_ENABLE
+#define CONFIG_WAVE_ENABLE
 
 
 //#define CONFIG_TRACE_ENABLE

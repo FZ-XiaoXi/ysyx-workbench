@@ -36,7 +36,7 @@ class alignas(VL_CACHE_LINE_BYTES) VysyxSoCFull_ysyx_26010011_IFU final : public
     CData/*1:0*/ state;
     CData/*1:0*/ __PVT__next_state;
     CData/*0:0*/ __PVT__r_fire;
-    VL_OUT(__PVT__PC,31,0);
+    VL_OUT(PC,31,0);
     VL_IN(__PVT__dnpc,31,0);
     VL_OUT(__PVT__snpc,31,0);
     VL_OUT(__PVT__PC_command,31,0);

@@ -26,7 +26,7 @@ class alignas(VL_CACHE_LINE_BYTES) VysyxSoCFull_ysyx_26010011 final : public Ver
     // Anonymous structures to workaround compiler member-count bugs
     struct {
         VL_IN8(__PVT__clock,0,0);
-        VL_IN8(__PVT__reset,0,0);
+        VL_IN8(reset,0,0);
         VL_IN8(__PVT__io_interrupt,0,0);
         VL_IN8(__PVT__io_master_awready,0,0);
         VL_OUT8(__PVT__io_master_awvalid,0,0);
@@ -79,39 +79,18 @@ class alignas(VL_CACHE_LINE_BYTES) VysyxSoCFull_ysyx_26010011 final : public Ver
         VL_OUT8(__PVT__io_slave_rlast,0,0);
         VL_OUT8(__PVT__io_slave_rid,3,0);
         CData/*0:0*/ __PVT__DRAM_wready;
-        CData/*0:0*/ __PVT__S_arvalid;
-        CData/*0:0*/ __PVT__S_arready;
-        CData/*0:0*/ __PVT__S_rvalid;
-        CData/*0:0*/ __PVT__S_rready;
-        CData/*0:0*/ __PVT__S_awvalid;
-        CData/*0:0*/ __PVT__S_awready;
-        CData/*0:0*/ __PVT__S_wvalid;
-        CData/*0:0*/ __PVT__S_wready;
-        CData/*0:0*/ __PVT__S_bvalid;
-        CData/*0:0*/ __PVT__S_bready;
-    };
-    struct {
-        CData/*1:0*/ __PVT__S_rresp;
-        CData/*1:0*/ __PVT__S_bresp;
-        CData/*3:0*/ __PVT__S_wstrb;
-        CData/*3:0*/ __PVT__S_awid;
-        CData/*7:0*/ __PVT__S_awlen;
-        CData/*2:0*/ __PVT__S_awsize;
-        CData/*1:0*/ __PVT__S_awburst;
-        CData/*0:0*/ __PVT__S_wlast;
-        CData/*3:0*/ __PVT__S_bid;
-        CData/*3:0*/ __PVT__S_arid;
-        CData/*7:0*/ __PVT__S_arlen;
-        CData/*2:0*/ __PVT__S_arsize;
-        CData/*1:0*/ __PVT__S_arbureset;
-        CData/*0:0*/ __PVT__S_rlast;
-        CData/*3:0*/ __PVT__S_rid;
         CData/*0:0*/ __VdfgRegularize_he0d61652_0_0;
-        CData/*0:0*/ __PVT__WBU_0__DOT__gpr_WEN;
         CData/*0:0*/ __PVT__RAM_AXI4LiteArbiter__DOT__M1_wready;
+        CData/*0:0*/ __PVT__RAM_AXI4LiteArbiter__DOT__M2_awvalid;
+        CData/*3:0*/ __PVT__RAM_AXI4LiteArbiter__DOT__M2_wstrb;
+        CData/*0:0*/ __PVT__RAM_AXI4LiteArbiter__DOT__M2_bready;
+        CData/*0:0*/ __PVT__RAM_AXI4LiteArbiter__DOT__M2_arvalid;
+        CData/*0:0*/ __PVT__RAM_AXI4LiteArbiter__DOT__M2_rready;
         CData/*1:0*/ __PVT__RAM_AXI4LiteArbiter__DOT__S_bresp;
         CData/*0:0*/ __PVT__RAM_AXI4LiteArbiter__DOT__S_bvalid;
         CData/*3:0*/ __PVT__RAM_AXI4LiteArbiter__DOT__S_bid;
+    };
+    struct {
         CData/*1:0*/ __PVT__RAM_AXI4LiteArbiter__DOT__S_rresp;
         CData/*0:0*/ __PVT__RAM_AXI4LiteArbiter__DOT__S_rvalid;
         CData/*0:0*/ __PVT__RAM_AXI4LiteArbiter__DOT__S_rready;
@@ -137,16 +116,13 @@ class alignas(VL_CACHE_LINE_BYTES) VysyxSoCFull_ysyx_26010011 final : public Ver
         IData/*31:0*/ dnpc;
         IData/*31:0*/ snpc;
         IData/*31:0*/ __PVT__command;
-        IData/*31:0*/ __PVT__S_araddr;
-        IData/*31:0*/ __PVT__S_rdata;
-        IData/*31:0*/ __PVT__S_awaddr;
-        IData/*31:0*/ __PVT__S_wdata;
-        IData/*31:0*/ __PVT__WBU_0__DOT__CSR_data;
-        IData/*31:0*/ __PVT__WBU_0__DOT__reg_data;
         IData/*31:0*/ __PVT__EXU_0__DOT__inA;
         IData/*31:0*/ __PVT__EXU_0__DOT__inB;
+        IData/*31:0*/ __PVT__COMP_0__DOT__inA;
         IData/*31:0*/ __PVT__COMP_0__DOT__inB;
         IData/*31:0*/ __PVT__COMP_0__DOT__out;
+        IData/*31:0*/ __PVT__RAM_AXI4LiteArbiter__DOT__M2_wdata;
+        IData/*31:0*/ __PVT__RAM_AXI4LiteArbiter__DOT__M2_rdata;
         IData/*31:0*/ __PVT__RAM_AXI4LiteArbiter__DOT__S_rdata;
         QData/*32:0*/ __PVT__EXU_0__DOT__ADDER_0__DOT__inB;
     };

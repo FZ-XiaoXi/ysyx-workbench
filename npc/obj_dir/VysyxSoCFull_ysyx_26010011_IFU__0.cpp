@@ -9,12 +9,15 @@ void VysyxSoCFull_ysyx_26010011_IFU___ico_sequent__TOP__ysyxSoCFull__asic__cpu__
     VysyxSoCFull__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
     auto& vlSelfRef = std::ref(*vlSelf).get();
     // Body
+    vlSelfRef.__PVT__rready = ((~ (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu.reset)) 
+                               & (3U != (IData)(vlSelfRef.state)));
+    vlSelfRef.__PVT__arvalid = ((~ (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu.reset)) 
+                                & ((0U == (IData)(vlSelfRef.state)) 
+                                   | (1U == (IData)(vlSelfRef.state))));
     vlSelfRef.__PVT__r_fire = (((IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu.__PVT__RAM_AXI4LiteArbiter__DOT__R_state) 
                                 & ((~ (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu.__PVT__RAM_AXI4LiteArbiter__DOT__R_master_sel)) 
                                    & (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu.__PVT__RAM_AXI4LiteArbiter__DOT__S_rvalid))) 
-                               & (3U != (IData)(vlSelfRef.state)));
-    vlSelfRef.__PVT__arvalid = ((0U == (IData)(vlSelfRef.state)) 
-                                | (1U == (IData)(vlSelfRef.state)));
+                               & (IData)(vlSelfRef.__PVT__rready));
 }
 
 extern const VlUnpacked<CData/*1:0*/, 128> VysyxSoCFull__ConstPool__TABLE_h56e6de32_0;
@@ -27,7 +30,7 @@ void VysyxSoCFull_ysyx_26010011_IFU___ico_sequent__TOP__ysyxSoCFull__asic__cpu__
     CData/*6:0*/ __Vtableidx1;
     __Vtableidx1 = 0;
     // Body
-    vlSelfRef.__PVT__wbu_final = (1U & ((IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu.__PVT__WBU_0__DOT__gpr_WEN) 
+    vlSelfRef.__PVT__wbu_final = (1U & ((IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__REG_0.__PVT__gpr_WEN) 
                                         | ((~ (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__IDU_0.__VdfgExtracted_h790550e9__0)) 
                                            | (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__LSU_0.__PVT__lsu_final))));
     __Vtableidx1 = (((((IData)(vlSelfRef.__PVT__r_fire)
@@ -57,33 +60,30 @@ void VysyxSoCFull_ysyx_26010011_IFU___nba_sequent__TOP__ysyxSoCFull__asic__cpu__
     VysyxSoCFull__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
     auto& vlSelfRef = std::ref(*vlSelf).get();
     // Body
-    if (vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__LSU_0.__PVT__reset) {
-        vlSelfRef.__PVT__PC = 0x80000000U;
+    if (vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu.reset) {
+        vlSelfRef.PC = 0x20000000U;
         vlSelfRef.state = 0U;
         vlSelfRef.__PVT__PC_command = 0U;
     } else {
         if (((3U == (IData)(vlSelfRef.state)) & (IData)(vlSelfRef.__PVT__wbu_final))) {
-            vlSelfRef.__PVT__PC = ((1U & ((((IData)(vlSelfRef.__PVT__isJUMP) 
-                                            | ((IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__IDU_0.__PVT__isBEQ)
-                                                ? (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__IDU_0.__PVT__isEQUAL)
-                                                : ((IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__IDU_0.__PVT__isBNE)
-                                                    ? 
-                                                   (~ (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__IDU_0.__PVT__isEQUAL))
-                                                    : 
-                                                   (((IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__IDU_0.__PVT__isBLT) 
-                                                     | (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__IDU_0.__PVT__isBLTU))
-                                                     ? 
-                                                    (~ (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__IDU_0.__VdfgRegularize_h6e95ff9d_0_8))
-                                                     : 
-                                                    (((IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__IDU_0.__PVT__isBGE) 
-                                                      | (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__IDU_0.__PVT__isBGEU)) 
-                                                     & (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__IDU_0.__VdfgRegularize_h6e95ff9d_0_8)))))) 
-                                           | (0x00000073U 
-                                              == vlSelfRef.__PVT__PC_command)) 
-                                          | (0x30200073U 
-                                             == vlSelfRef.__PVT__PC_command)))
-                                    ? vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu.dnpc
-                                    : vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu.snpc);
+            vlSelfRef.PC = ((1U & ((((IData)(vlSelfRef.__PVT__isJUMP) 
+                                     | ((IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__IDU_0.__PVT__isBEQ)
+                                         ? (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__IDU_0.__PVT__isEQUAL)
+                                         : ((IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__IDU_0.__PVT__isBNE)
+                                             ? (~ (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__IDU_0.__PVT__isEQUAL))
+                                             : (((IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__IDU_0.__PVT__isBLT) 
+                                                 | (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__IDU_0.__PVT__isBLTU))
+                                                 ? 
+                                                (~ (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__IDU_0.__VdfgRegularize_h6e95ff9d_0_8))
+                                                 : 
+                                                (((IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__IDU_0.__PVT__isBGE) 
+                                                  | (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__IDU_0.__PVT__isBGEU)) 
+                                                 & (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__IDU_0.__VdfgRegularize_h6e95ff9d_0_8)))))) 
+                                    | (0x00000073U 
+                                       == vlSelfRef.__PVT__PC_command)) 
+                                   | (0x30200073U == vlSelfRef.__PVT__PC_command)))
+                             ? vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu.dnpc
+                             : vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu.snpc);
         }
         vlSelfRef.state = vlSelfRef.__PVT__next_state;
         if (vlSelfRef.__PVT__r_fire) {
@@ -94,8 +94,6 @@ void VysyxSoCFull_ysyx_26010011_IFU___nba_sequent__TOP__ysyxSoCFull__asic__cpu__
                                             : 0U);
         }
     }
-    vlSelfRef.__PVT__arvalid = ((0U == (IData)(vlSelfRef.state)) 
-                                | (1U == (IData)(vlSelfRef.state)));
 }
 
 void VysyxSoCFull_ysyx_26010011_IFU___nba_sequent__TOP__ysyxSoCFull__asic__cpu__cpu__IFU_0__1(VysyxSoCFull_ysyx_26010011_IFU* vlSelf) {
@@ -103,11 +101,16 @@ void VysyxSoCFull_ysyx_26010011_IFU___nba_sequent__TOP__ysyxSoCFull__asic__cpu__
     VysyxSoCFull__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
     auto& vlSelfRef = std::ref(*vlSelf).get();
     // Body
-    vlSelfRef.__PVT__r_fire = (((IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu.__PVT__RAM_AXI4LiteArbiter__DOT__R_state) 
-                                & ((~ (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu.__PVT__RAM_AXI4LiteArbiter__DOT__R_master_sel)) 
-                                   & (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu.__PVT__RAM_AXI4LiteArbiter__DOT__S_rvalid))) 
+    vlSelfRef.__PVT__rready = ((~ (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu.reset)) 
                                & (3U != (IData)(vlSelfRef.state)));
+    vlSelfRef.__PVT__arvalid = ((~ (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu.reset)) 
+                                & ((0U == (IData)(vlSelfRef.state)) 
+                                   | (1U == (IData)(vlSelfRef.state))));
     vlSelfRef.__PVT__isJUMP = ((0x6fU == (0x0000007fU 
                                           & vlSelfRef.__PVT__PC_command)) 
                                | (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__IDU_0.__PVT__isJALR));
+    vlSelfRef.__PVT__r_fire = (((IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu.__PVT__RAM_AXI4LiteArbiter__DOT__R_state) 
+                                & ((~ (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu.__PVT__RAM_AXI4LiteArbiter__DOT__R_master_sel)) 
+                                   & (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu.__PVT__RAM_AXI4LiteArbiter__DOT__S_rvalid))) 
+                               & (IData)(vlSelfRef.__PVT__rready));
 }

@@ -20,16 +20,38 @@
 
 #define PMEM_LEFT  ((paddr_t)CONFIG_MBASE)
 #define PMEM_RIGHT ((paddr_t)CONFIG_MBASE + CONFIG_MSIZE - 1)
+
+#define YSYXSOC_MROM_SIZE  ((paddr_t)0x00001000)
+#define YSYXSOC_MROM_LEFT  ((paddr_t)0x20000000)
+#define YSYXSOC_MROM_RIGHT ((paddr_t)YSYXSOC_MROM_LEFT + YSYXSOC_MROM_SIZE - 1)
+
+#define YSYXSOC_SRAM_SIZE  ((paddr_t)0x00002000)
+#define YSYXSOC_SRAM_LEFT  ((paddr_t)0x0F000000)
+#define YSYXSOC_SRAM_RIGHT ((paddr_t)YSYXSOC_SRAM_LEFT + YSYXSOC_SRAM_SIZE - 1)
+
+#if !defined(CONFIG_TARGET_SHARE_YSYXSOC)
 #define RESET_VECTOR (PMEM_LEFT + CONFIG_PC_RESET_OFFSET)
+#else
+#define RESET_VECTOR (YSYXSOC_MROM_LEFT)
+#endif
+
 
 /* convert the guest physical address in the guest program to host virtual address in NEMU */
 uint8_t* guest_to_host(paddr_t paddr);
 /* convert the host virtual address in NEMU to guest physical address in the guest program */
 paddr_t host_to_guest(uint8_t *haddr);
 
+
 static inline bool in_pmem(paddr_t addr) {
-  return addr - CONFIG_MBASE < CONFIG_MSIZE;
+  #if !defined(CONFIG_TARGET_SHARE_YSYXSOC)
+    return addr - CONFIG_MBASE < CONFIG_MSIZE;
+  #else
+    return (addr >= YSYXSOC_MROM_LEFT && addr <= YSYXSOC_MROM_RIGHT) || (addr >= YSYXSOC_SRAM_LEFT && addr <= YSYXSOC_SRAM_RIGHT);
+  #endif
 }
+
+
+
 
 word_t paddr_read(paddr_t addr, int len);
 void paddr_write(paddr_t addr, int len, word_t data);

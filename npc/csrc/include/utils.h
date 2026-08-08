@@ -40,10 +40,17 @@
 
 #define ANSI_FMT(str, fmt) fmt str ANSI_NONE
 
+extern FILE* log_fp;
+#ifdef __cplusplus
+extern "C" {
+#endif
+bool log_enable(void);
+#ifdef __cplusplus
+}
+#endif
+
 #define log_write(...) \
   do { \
-    extern FILE* log_fp; \
-    extern bool log_enable(); \
     if (log_enable() && log_fp != NULL) { \
       fprintf(log_fp, __VA_ARGS__); \
       fflush(log_fp); \

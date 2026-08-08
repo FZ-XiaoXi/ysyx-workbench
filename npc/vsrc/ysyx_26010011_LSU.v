@@ -4,14 +4,14 @@ module ysyx_26010011_LSU(
     input             clock,
     input             reset,
     // CPU 流水线接口
-    input [31:0]      lsu_addr,
+    input [31:0]      lsu_addr/*verilator public*/,
     output reg [31:0] lsu_rdata,
-    input [31:0]      lsu_wdata,
-    input             lsu_wen,
-    input             lsu_reqEN,
+    input [31:0]      lsu_wdata/*verilator public*/,
+    input             lsu_wen/*verilator public*/,
+    input             lsu_reqEN/*verilator public*/,
     output            lsu_final,
     input [3:0]       rmask,
-    input [3:0]       lsu_wmask,
+    input [3:0]       lsu_wmask/*verilator public*/,
     input             isSigned,
     input             bus_valid,
     
@@ -67,13 +67,13 @@ module ysyx_26010011_LSU(
     wire ar_fire = arvalid && arready;
     wire r_fire  = rvalid && rready;
 
-    assign awaddr  = lsu_addr;
+    assign awaddr  = {lsu_addr};
     assign awid    = 4'b0;
     assign awlen   = 8'b0;
     assign awsize  = 3'b010;  // 32-bit
     assign awburst = 2'b01;   // INCR
-    assign wdata   = lsu_wdata;
-    assign wstrb   = lsu_wmask;
+    assign wdata   = lsu_wdata << (awaddr[1:0] * 8);
+    assign wstrb   = lsu_wmask << awaddr[1:0];
     assign wlast   = 1'b1;    // single beat
     assign araddr  = lsu_addr;
     assign arid    = 4'b0;
@@ -81,12 +81,21 @@ module ysyx_26010011_LSU(
     assign arsize  = 3'b010;  // 32-bit
     assign arbureset = 2'b01;   // INCR
 
-    assign awvalid = (state == S_IDLE && lsu_reqEN && lsu_wen) || (state == S_WAIT_AW_W);
-    assign wvalid  = (state == S_IDLE && lsu_reqEN && lsu_wen) || (state == S_WAIT_AW_W);
-    assign arvalid = (state == S_IDLE && lsu_reqEN && !lsu_wen) || (state == S_WAIT_AR);
+    assign awvalid = ((state == S_IDLE && lsu_reqEN && lsu_wen) || (state == S_WAIT_AW_W)) & !reset;
+    assign wvalid  = ((state == S_IDLE && lsu_reqEN && lsu_wen) || (state == S_WAIT_AW_W)) & !reset;
+    assign arvalid = ((state == S_IDLE && lsu_reqEN && !lsu_wen) || (state == S_WAIT_AR)) & !reset;
 
-    assign bready  = (state == S_WAIT_BRESP) || (state == S_IDLE);
-    assign rready  = (state == S_WAIT_RDATA) || (state == S_IDLE);
+    assign bready  = ((state == S_WAIT_BRESP) || (state == S_IDLE)) & !reset;
+    assign rready  = ((state == S_WAIT_RDATA) || (state == S_IDLE)) & !reset;
+
+    always @(*) begin
+        if(lsu_wen && lsu_reqEN) begin
+            difftest_mem_set(lsu_addr);
+        end
+        if(lsu_wen && lsu_reqEN && !(awaddr >= 32'h0f000000 && awaddr < 32'h0f002000)) begin
+            difftest_skip_ref(lsu_addr);
+        end
+    end
 
     always @(*) begin
         next_state = state;
@@ -141,7 +150,8 @@ module ysyx_26010011_LSU(
     wire [31:0] val2 = {{8{val1[31]}}, val1[31:8]};
     wire [31:0] val3 = {{8{val2[31]}}, val2[31:8]};
     
-    reg [31:0] val;
+    reg[31:0]val;
+    // assign val = val0;
     always @(*) begin
         case(lsu_addr[1:0])
             2'b00: val = val0;

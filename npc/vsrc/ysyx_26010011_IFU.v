@@ -2,7 +2,7 @@ module ysyx_26010011_IFU(
     input clock,
     input reset,
     
-    output reg [31:0] PC,
+    output reg [31:0] PC/*verilator public*/,
     input [31:0]      dnpc,
     output [31:0]     snpc,
     input             isJUMP,
@@ -43,8 +43,8 @@ module ysyx_26010011_IFU(
     assign arlen   = 8'b0;
     assign arsize  = 3'b010;
     assign arbureset = 2'b01;
-    assign arvalid = (state == S_IDLE) || (state == S_WAIT_READY);
-    assign rready  = (state != S_WAIT_EXEC);
+    assign arvalid = ((state == S_IDLE) || (state == S_WAIT_READY))&!reset;
+    assign rready  = (state != S_WAIT_EXEC)&!reset;
 
     always @(*) begin
         next_state = state;
@@ -90,7 +90,7 @@ module ysyx_26010011_IFU(
 
     always @(posedge clock) begin
         if (reset) begin
-            PC <= 32'h80000000;
+            PC <= 32'h20000000;
         end else if (bus_valid && wbu_final) begin
             if (isJUMP | isBRANCH | isECALL | isMRET) begin
                 PC <= dnpc;
