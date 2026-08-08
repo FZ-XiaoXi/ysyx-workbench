@@ -15,6 +15,10 @@
 #include "VysyxSoCFull_ysyxSoCASIC.h"
 #include "VysyxSoCFull_AXI4RAM.h"
 #include "VysyxSoCFull_mem_2048x32.h"
+#include "VysyxSoCFull_APBUart16550.h"
+#include "VysyxSoCFull_uart_top_apb.h"
+#include "VysyxSoCFull_uart_regs.h"
+
 #include "VysyxSoCFull_CPU.h"
 #include "VysyxSoCFull_ysyx_26010011.h"
 #include "VysyxSoCFull_ysyx_26010011_REG.h"
@@ -22,6 +26,7 @@
 #include "VysyxSoCFull_ysyx_26010011_LSU.h"
 #include "VysyxSoCFull_ysyx_26010011_IDU.h"
 #include "verilated_vcd_c.h"
+
 
 
 
@@ -77,4 +82,12 @@ extern FILE* log_fp;
 #define _EBREAK 0b00000000000100000000000001110011
 #define FMT_WORD "0x%08x"
 #define ARRLEN(arr) (int)(sizeof(arr) / sizeof(arr[0]))
+
+#ifdef CONFIG_WAVE_ENABLE
+    #define DUMP() do{tfp->dump(contextp->time());}while(0)
+#else
+    #define DUMP() do{}while(0)
+#endif
+
+
 #endif

@@ -80,7 +80,7 @@ module ysyx_26010011(
   assign io_slave_rlast=0;
   assign io_slave_rid=0;
   
-
+  wire lsu_access_fault;
   wire [31:0]PC/* verilator public */,dnpc/* verilator public */,snpc/* verilator public */;
   // verilator lint_off PINMISSING
   wire lsu_final,lsu_reqEN,wbu_final;
@@ -90,6 +90,7 @@ module ysyx_26010011(
 
   wire [4:0] rd_add,rs1_add,rs2_add,gpr_address;
   wire [11:0] rcsr_add;
+
 
   wire COMP_data;
   wire [31:0] EXU_inA,EXU_inB,EXU_data,CSR_data;
@@ -124,6 +125,7 @@ module ysyx_26010011(
     .wbu_final(wbu_final),
     .PC_command(PC_command),
     .bus_valid(bus_valid),
+    .lsu_access_fault(lsu_access_fault),
 
     .araddr(IROM_araddr),
     .arvalid(IROM_arvalid),
@@ -196,7 +198,7 @@ module ysyx_26010011(
   assign COMP_inA=rs1_val;
   ysyx_26010011_COMP COMP_0(.inA(COMP_inA),.inB(COMP_inB),.isCompSigned(isSigned),.isGREATER(isGREATER),.isEQUAL(isEQUAL));
   
-  assign dnpc=isECALL?csr_mtvec:(isMRET?csr_mepc:EXU_data);
+  assign dnpc=(isECALL || lsu_access_fault)?csr_mtvec:(isMRET?csr_mepc:EXU_data);
   assign lsu_addr=EXU_data;
   assign lsu_wdata=rs2_val;
   ysyx_26010011_LSU LSU_0(
@@ -212,6 +214,7 @@ module ysyx_26010011(
     .lsu_wmask(lsu_wmask),
     .isSigned(isSigned),
     .bus_valid(bus_valid),
+    .lsu_access_fault(lsu_access_fault),
 
     .awaddr(DRAM_awaddr),
     .awvalid(DRAM_awvalid),
@@ -309,219 +312,6 @@ module ysyx_26010011(
     .S_rdata(io_master_rdata),    .S_rresp(io_master_rresp),      .S_rvalid(io_master_rvalid),    .S_rready(io_master_rready),
     .S_rlast(io_master_rlast),    .S_rid(io_master_rid)
   );
-
-  // wire [31:0]S_araddr,S_rdata,S_awaddr,S_wdata;
-  // wire S_arvalid,S_arready,S_rvalid,S_rready,S_awvalid,S_awready,S_wvalid,S_wready,S_bvalid,S_bready;
-  // wire [1:0]S_rresp,S_bresp;
-  // wire [3:0]S_wstrb;
-  // wire [3:0] S_awid;  wire [7:0] S_awlen;  wire [2:0] S_awsize;  wire [1:0] S_awburst;
-  // wire S_wlast;
-  // wire [3:0] S_bid;
-  // wire [3:0] S_arid;  wire [7:0] S_arlen;  wire [2:0] S_arsize;  wire [1:0] S_arbureset;
-  // wire S_rlast;
-  // wire [3:0] S_rid;
-  // ysyx_26010011_bridge XBAR_Bridge_inst(
-  //   .clock(clock),
-  //   .reset(reset),
-
-  //   // S side
-  //   .S_awaddr(S_awaddr),  .S_awvalid(S_awvalid),  .S_awready(S_awready),
-  //   .S_awid(S_awid),      .S_awlen(S_awlen),      .S_awsize(S_awsize),    .S_awburst(S_awburst),
-  //   .S_wdata(S_wdata),    .S_wstrb(S_wstrb),      .S_wvalid(S_wvalid),    .S_wready(S_wready),
-  //   .S_wlast(S_wlast),
-  //   .S_bresp(S_bresp),    .S_bvalid(S_bvalid),    .S_bready(S_bready),
-  //   .S_bid(S_bid),
-  //   .S_araddr(S_araddr),  .S_arvalid(S_arvalid),  .S_arready(S_arready),
-  //   .S_arid(S_arid),      .S_arlen(S_arlen),      .S_arsize(S_arsize),    .S_arbureset(S_arbureset),
-  //   .S_rdata(S_rdata),    .S_rresp(S_rresp),      .S_rvalid(S_rvalid),    .S_rready(S_rready),
-  //   .S_rlast(S_rlast),    .S_rid(S_rid),
-
-  //   // ysyx_26010011_MEM
-  //   .MEM_awaddr(RAM_awaddr),  .MEM_awvalid(RAM_awvalid),  .MEM_awready(RAM_awready),
-  //   .MEM_awid(RAM_awid),      .MEM_awlen(RAM_awlen),      .MEM_awsize(RAM_awsize),    .MEM_awburst(RAM_awburst),
-  //   .MEM_wdata(RAM_wdata),    .MEM_wstrb(RAM_wstrb),      .MEM_wvalid(RAM_wvalid),    .MEM_wready(RAM_wready),
-  //   .MEM_wlast(RAM_wlast),
-  //   .MEM_bresp(RAM_bresp),    .MEM_bvalid(RAM_bvalid),    .MEM_bready(RAM_bready),
-  //   .MEM_bid(RAM_bid),
-  //   .MEM_araddr(RAM_araddr),  .MEM_arvalid(RAM_arvalid),  .MEM_arready(RAM_arready),
-  //   .MEM_arid(RAM_arid),      .MEM_arlen(RAM_arlen),      .MEM_arsize(RAM_arsize),    .MEM_arbureset(RAM_arbureset),
-  //   .MEM_rdata(RAM_rdata),    .MEM_rresp(RAM_rresp),      .MEM_rvalid(RAM_rvalid),    .MEM_rready(RAM_rready),
-  //   .MEM_rlast(RAM_rlast),    .MEM_rid(RAM_rid),
-
-  //   // ysyx_26010011_UART
-  //   .UART_awaddr(UART_awaddr),  .UART_awvalid(UART_awvalid),  .UART_awready(UART_awready),
-  //   .UART_awid(UART_awid),      .UART_awlen(UART_awlen),      .UART_awsize(UART_awsize),    .UART_awburst(UART_awburst),
-  //   .UART_wdata(UART_wdata),    .UART_wstrb(UART_wstrb),      .UART_wvalid(UART_wvalid),    .UART_wready(UART_wready),
-  //   .UART_wlast(UART_wlast),
-  //   .UART_bresp(UART_bresp),    .UART_bvalid(UART_bvalid),    .UART_bready(UART_bready),
-  //   .UART_bid(UART_bid),
-  //   .UART_araddr(UART_araddr),  .UART_arvalid(UART_arvalid),  .UART_arready(UART_arready),
-  //   .UART_arid(UART_arid),      .UART_arlen(UART_arlen),      .UART_arsize(UART_arsize),    .UART_arbureset(UART_arbureset),
-  //   .UART_rdata(UART_rdata),    .UART_rresp(UART_rresp),      .UART_rvalid(UART_rvalid),    .UART_rready(UART_rready),
-  //   .UART_rlast(UART_rlast),    .UART_rid(UART_rid),
-
-  //   // ysyx_26010011_CLINT
-  //   .CLINT_awaddr(CLINT_awaddr),  .CLINT_awvalid(CLINT_awvalid),  .CLINT_awready(CLINT_awready),
-  //   .CLINT_awid(CLINT_awid),      .CLINT_awlen(CLINT_awlen),      .CLINT_awsize(CLINT_awsize),    .CLINT_awburst(CLINT_awburst),
-  //   .CLINT_wdata(CLINT_wdata),    .CLINT_wstrb(CLINT_wstrb),      .CLINT_wvalid(CLINT_wvalid),    .CLINT_wready(CLINT_wready),
-  //   .CLINT_wlast(CLINT_wlast),
-  //   .CLINT_bresp(CLINT_bresp),    .CLINT_bvalid(CLINT_bvalid),    .CLINT_bready(CLINT_bready),
-  //   .CLINT_bid(CLINT_bid),
-  //   .CLINT_araddr(CLINT_araddr),  .CLINT_arvalid(CLINT_arvalid),  .CLINT_arready(CLINT_arready),
-  //   .CLINT_arid(CLINT_arid),      .CLINT_arlen(CLINT_arlen),      .CLINT_arsize(CLINT_arsize),    .CLINT_arbureset(CLINT_arbureset),
-  //   .CLINT_rdata(CLINT_rdata),    .CLINT_rresp(CLINT_rresp),      .CLINT_rvalid(CLINT_rvalid),    .CLINT_rready(CLINT_rready),
-  //   .CLINT_rlast(CLINT_rlast),    .CLINT_rid(CLINT_rid)
-  // );
-  // wire [31:0] RAM_awaddr,RAM_wdata,RAM_araddr,RAM_rdata;
-  // wire [3:0] RAM_wstrb;
-  // wire RAM_awvalid,RAM_wvalid,RAM_arvalid,RAM_rvalid,RAM_bvalid;
-  // wire RAM_awready,RAM_wready,RAM_arready,RAM_rready,RAM_bready;
-  // wire [1:0] RAM_bresp,RAM_rresp;
-  // wire [3:0] RAM_awid;  wire [7:0] RAM_awlen;  wire [2:0] RAM_awsize;  wire [1:0] RAM_awburst;
-  // wire RAM_wlast;
-  // wire [3:0] RAM_bid;
-  // wire [3:0] RAM_arid;  wire [7:0] RAM_arlen;  wire [2:0] RAM_arsize;  wire [1:0] RAM_arbureset;
-  // wire RAM_rlast;
-  // wire [3:0] RAM_rid;
-  // ysyx_26010011_MEM RAM(
-  //   .clock(clock),
-  //   .reset(reset),
-
-  //   .araddr(RAM_araddr),
-  //   .arvalid(RAM_arvalid),
-  //   .arready(RAM_arready),
-  //   .arid(RAM_arid),
-  //   .arlen(RAM_arlen),
-  //   .arsize(RAM_arsize),
-  //   .arbureset(RAM_arbureset),
-
-  //   .rdata(RAM_rdata),
-  //   .rresp(RAM_rresp),
-  //   .rvalid(RAM_rvalid),
-  //   .rready(RAM_rready),
-  //   .rlast(RAM_rlast),
-  //   .rid(RAM_rid),
-
-  //   .awaddr(RAM_awaddr),
-  //   .awvalid(RAM_awvalid),
-  //   .awready(RAM_awready),
-  //   .awid(RAM_awid),
-  //   .awlen(RAM_awlen),
-  //   .awsize(RAM_awsize),
-  //   .awburst(RAM_awburst),
-
-  //   .wdata(RAM_wdata),
-  //   .wstrb(RAM_wstrb),
-  //   .wvalid(RAM_wvalid),
-  //   .wready(RAM_wready),
-  //   .wlast(RAM_wlast),
-
-  //   .bresp(RAM_bresp),
-  //   .bvalid(RAM_bvalid),
-  //   .bready(RAM_bready),
-  //   .bid(RAM_bid)
-  // );
-
-  // wire [31:0] UART_awaddr,UART_wdata,UART_araddr,UART_rdata;
-  // wire [3:0] UART_wstrb;
-  // wire UART_awvalid,UART_wvalid,UART_arvalid,UART_rvalid,UART_bvalid;
-  // wire UART_awready,UART_wready,UART_arready,UART_rready,UART_bready;
-  // wire [1:0] UART_bresp,UART_rresp;
-  // wire [3:0] UART_awid;  wire [7:0] UART_awlen;  wire [2:0] UART_awsize;  wire [1:0] UART_awburst;
-  // wire UART_wlast;
-  // wire [3:0] UART_bid;
-  // wire [3:0] UART_arid;  wire [7:0] UART_arlen;  wire [2:0] UART_arsize;  wire [1:0] UART_arbureset;
-  // wire UART_rlast;
-  // wire [3:0] UART_rid;
-  // ysyx_26010011_UART UART_inst(
-  //   .clock(clock),
-  //   .reset(reset),
-
-  //   .araddr(UART_araddr),
-  //   .arvalid(UART_arvalid),
-  //   .arready(UART_arready),
-  //   .arid(UART_arid),
-  //   .arlen(UART_arlen),
-  //   .arsize(UART_arsize),
-  //   .arbureset(UART_arbureset),
-
-  //   .rdata(UART_rdata),
-  //   .rresp(UART_rresp),
-  //   .rvalid(UART_rvalid),
-  //   .rready(UART_rready),
-  //   .rlast(UART_rlast),
-  //   .rid(UART_rid),
-
-  //   .awaddr(UART_awaddr),
-  //   .awvalid(UART_awvalid),
-  //   .awready(UART_awready),
-  //   .awid(UART_awid),
-  //   .awlen(UART_awlen),
-  //   .awsize(UART_awsize),
-  //   .awburst(UART_awburst),
-
-  //   .wdata(UART_wdata),
-  //   .wstrb(UART_wstrb),
-  //   .wvalid(UART_wvalid),
-  //   .wready(UART_wready),
-  //   .wlast(UART_wlast),
-
-  //   .bresp(UART_bresp),
-  //   .bvalid(UART_bvalid),
-  //   .bready(UART_bready),
-  //   .bid(UART_bid)
-  // );
-
-  // wire [31:0] CLINT_awaddr,CLINT_wdata,CLINT_araddr,CLINT_rdata;
-  // wire [3:0] CLINT_wstrb;
-  // wire CLINT_awvalid,CLINT_wvalid,CLINT_arvalid,CLINT_rvalid,CLINT_bvalid;
-  // wire CLINT_awready,CLINT_wready,CLINT_arready,CLINT_rready,CLINT_bready;
-  // wire [1:0] CLINT_bresp,CLINT_rresp;
-  // wire [3:0] CLINT_awid;  wire [7:0] CLINT_awlen;  wire [2:0] CLINT_awsize;  wire [1:0] CLINT_awburst;
-  // wire CLINT_wlast;
-  // wire [3:0] CLINT_bid;
-  // wire [3:0] CLINT_arid;  wire [7:0] CLINT_arlen;  wire [2:0] CLINT_arsize;  wire [1:0] CLINT_arbureset;
-  // wire CLINT_rlast;
-  // wire [3:0] CLINT_rid;
-  // ysyx_26010011_CLINT CLINT_inst(
-  //   .clock(clock),
-  //   .reset(reset),
-
-  //   .araddr(CLINT_araddr),
-  //   .arvalid(CLINT_arvalid),
-  //   .arready(CLINT_arready),
-  //   .arid(CLINT_arid),
-  //   .arlen(CLINT_arlen),
-  //   .arsize(CLINT_arsize),
-  //   .arbureset(CLINT_arbureset),
-
-  //   .rdata(CLINT_rdata),
-  //   .rresp(CLINT_rresp),
-  //   .rvalid(CLINT_rvalid),
-  //   .rready(CLINT_rready),
-  //   .rlast(CLINT_rlast),
-  //   .rid(CLINT_rid),
-
-  //   .awaddr(CLINT_awaddr),
-  //   .awvalid(CLINT_awvalid),
-  //   .awready(CLINT_awready),
-  //   .awid(CLINT_awid),
-  //   .awlen(CLINT_awlen),
-  //   .awsize(CLINT_awsize),
-  //   .awburst(CLINT_awburst),
-
-  //   .wdata(CLINT_wdata),
-  //   .wstrb(CLINT_wstrb),
-  //   .wvalid(CLINT_wvalid),
-  //   .wready(CLINT_wready),
-  //   .wlast(CLINT_wlast),
-
-  //   .bresp(CLINT_bresp),
-  //   .bvalid(CLINT_bvalid),
-  //   .bready(CLINT_bready),
-  //   .bid(CLINT_bid)
-  // );
-
   always @(posedge clock) begin
     if(isEBREAK)  ebreak();
   end

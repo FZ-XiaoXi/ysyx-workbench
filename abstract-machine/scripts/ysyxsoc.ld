@@ -3,36 +3,57 @@ ENTRY(_start)
 MEMORY
 {
   /* 指令空间：0x20000000 ~ 0x20000FFF (4KB) */
-  mrom (rx)  : ORIGIN = 0x20000000, LENGTH = 4K
+  mrom : ORIGIN = 0x20000000, LENGTH = 4K
   /* 数据空间：0x0f000000 ~ 0x0f001FFF (8KB) */
-  sram (rw)  : ORIGIN = 0x0f000000, LENGTH = 8K
+  sram : ORIGIN = 0x0f000000, LENGTH = 8K
 }
+
 
 SECTIONS
 {
+  . = ORIGIN(mrom);
   .text : {
     *(entry)
     *(.text*)
-  } > mrom
+  } > mrom AT> mrom
+
 
   .rodata : {
+    _rodata_vma_start = .;
     *(.rodata*)
     *(.srodata*)
-  } > mrom
+    . = ALIGN(4);
+    _rodata_vma_end = .;
+  } > mrom AT> mrom
+  _rodata_lma_start = LOADADDR(.rodata);
+  _rodata_lma_end = _rodata_lma_start + SIZEOF(.rodata);
+
+
 
   .data : {
+    _data_vma_start = .;
     *(.data*)
     *(.sdata*)
-  } > mrom
+    . = ALIGN(4);
+    _data_vma_end = .;
+  } > sram AT> mrom
+  _data_lma_start = LOADADDR(.data);
+  _data_lma_end = _data_lma_start + SIZEOF(.data);
 
   .bss : {
-    _bss_start = .;
+    _bss_vma_start = .;
     *(.bss*)
     *(.sbss*)
     *(.scommon)
-  } > mrom
+    . = ALIGN(4);
+    _bss_vma_end = .;
+  } > sram AT>mrom
+  _bss_lma_start = LOADADDR(.bss);
+  _bss_lma_end = _bss_lma_start + SIZEOF(.bss);
 
   . = ORIGIN(sram);
+  . = ALIGN(0x0100);
+
   _heap_start = .;
   . = _heap_start + 0x1000;
   _heap_end = .;

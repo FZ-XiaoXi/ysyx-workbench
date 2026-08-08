@@ -12,6 +12,7 @@ module ysyx_26010011_IFU(
     input             wbu_final,
     output reg [31:0] PC_command,
     output reg        bus_valid,
+    input             lsu_access_fault,
 
     output [31:0]     araddr,
     output            arvalid,
@@ -92,7 +93,7 @@ module ysyx_26010011_IFU(
         if (reset) begin
             PC <= 32'h20000000;
         end else if (bus_valid && wbu_final) begin
-            if (isJUMP | isBRANCH | isECALL | isMRET) begin
+            if (isJUMP | isBRANCH | isECALL | isMRET | lsu_access_fault) begin
                 PC <= dnpc;
             end else begin
                 PC <= snpc;
