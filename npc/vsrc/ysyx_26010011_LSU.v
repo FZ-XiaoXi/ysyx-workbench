@@ -14,6 +14,7 @@ module ysyx_26010011_LSU(
     input [3:0]       lsu_wmask/*verilator public*/,
     input             isSigned,
     input             bus_valid,
+    output            lsu_access_fault,
     
     // AXI4 写地址通道
     output [31:0]     awaddr,
@@ -52,6 +53,8 @@ module ysyx_26010011_LSU(
     input  [3:0]      rid
 );
 
+    assign lsu_access_fault = (rvalid && (rresp==2'b10 || rresp==2'b11)) || (bvalid && (bresp==2'b10 || bresp==2'b11));
+
     localparam S_IDLE        = 3'd0;
     localparam S_WAIT_AW_W   = 3'd1; // 等待写地址与写数据握手
     localparam S_WAIT_BRESP  = 3'd2; // 等待写响应(B通道)
@@ -70,15 +73,23 @@ module ysyx_26010011_LSU(
     assign awaddr  = {lsu_addr};
     assign awid    = 4'b0;
     assign awlen   = 8'b0;
-    assign awsize  = 3'b010;  // 32-bit
+    
+    assign awsize  = (lsu_wmask == 4'b0001) ? 3'b000 :
+                     (lsu_wmask == 4'b0011) ? 3'b001 : 3'b010;
     assign awburst = 2'b01;   // INCR
+
+    // 对于 awsize=0(byte), wdata 只取 [7:0]，靠 wstrb 选 lane
+    // 对于 awsize=1(half), wdata 只取 [15:0]
+    // Fragmenter 对齐地址后 UART APB 用 paddr[1:0] 选字节，故数据必须放在对应 lane
     assign wdata   = lsu_wdata << (awaddr[1:0] * 8);
     assign wstrb   = lsu_wmask << awaddr[1:0];
     assign wlast   = 1'b1;    // single beat
+
     assign araddr  = lsu_addr;
     assign arid    = 4'b0;
     assign arlen   = 8'b0;
-    assign arsize  = 3'b010;  // 32-bit
+    assign arsize  = (rmask == 4'b0001) ? 3'b000 :
+                     (rmask == 4'b0011) ? 3'b001 : 3'b010;
     assign arbureset = 2'b01;   // INCR
 
     assign awvalid = ((state == S_IDLE && lsu_reqEN && lsu_wen) || (state == S_WAIT_AW_W)) & !reset;
@@ -93,6 +104,9 @@ module ysyx_26010011_LSU(
             difftest_mem_set(lsu_addr);
         end
         if(lsu_wen && lsu_reqEN && !(awaddr >= 32'h0f000000 && awaddr < 32'h0f002000)) begin
+            difftest_skip_ref(lsu_addr);
+        end
+        if(arvalid && lsu_reqEN && !(araddr >= 32'h0f000000 && araddr < 32'h0f002000)) begin
             difftest_skip_ref(lsu_addr);
         end
     end
