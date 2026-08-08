@@ -101,6 +101,16 @@ void init(int argc, char** argv){
 	cpu.inst = MROM(cpu.pc);
 	cpu.mem_access_addr = 0;
 	//cpu.pc=
+
+	unsigned char * ptr = (unsigned char *)(&FLASH[0]);
+	unsigned int j=0;
+	while(j < CONFIG_FLASHSIZE){
+		*ptr = j & 0xff;
+		Log("FLASH[%08x] = %02x", j, *ptr);
+		ptr++;
+		j++;
+	}
+	
 	
 	//init regex
 	extern void init_regex();

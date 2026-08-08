@@ -6,6 +6,7 @@
 
 uint32_t MEM[CONFIG_SRAMSIZE>>2];
 uint32_t MROM[CONFIG_MROMSIZE>>2];
+uint32_t FLASH[CONFIG_FLASHSIZE>>2];
 int pmem_read(int raddr){
 	if(check_sram_bound(raddr)){
 		// 总是读取地址为`raddr & ~0x3u`的4字节返回
@@ -53,9 +54,17 @@ bool check_mrom_bound(uint32_t addr){
 		return false;
 	}
 }
+// bool check_flash_bound(uint32_t addr){
+// 	if(addr >= CONFIG_FLASHBASE && addr < CONFIG_FLASHBASE + CONFIG_FLASHSIZE){
+// 		return true;
+// 	}else{
+// 		return false;
+// 	}
+// }
 
 extern "C" void flash_read(int32_t addr, int32_t *data) {
-	assert(0);
+	Log("READ FLASH: addr = " FMT_WORD, addr);
+	*data = FLASH(addr);
 }
 extern "C" void mrom_read(int32_t addr, int32_t *data) {
 	*data = MROM(addr);
