@@ -36,7 +36,7 @@ void init_difftest(char *diff_so_file, long img_size){
   	Log("The result of every instruction will be compared with [%s]. ", diff_so_file);
 
 	ref_difftest_init(0);
-	ref_difftest_memcpy(RESET_VECTOR, &MEM(RESET_VECTOR), CONFIG_MSIZE, DIFFTEST_TO_REF);
+	ref_difftest_memcpy(RESET_VECTOR, &MROM(RESET_VECTOR), CONFIG_MROMSIZE, DIFFTEST_TO_REF);
   	ref_difftest_regcpy(cpu.gpr, &cpu.pc, DIFFTEST_TO_REF);
 }
 
@@ -67,11 +67,15 @@ void difftest_step(uint32_t pc, uint32_t npc, uint32_t mem_addr) {;
 	ref_difftest_exec(1);
 	ref_difftest_regcpy(ref.gpr, &ref.pc, DIFFTEST_TO_DUT);
 	bool success = checkregs(&ref, pc, npc);
+	uint32_t ref_mem_s;
+	ref_difftest_memcpy((0x20000048&~0x03), (void *)&ref_mem_s, 4, DIFFTEST_TO_DUT);
+	// Log("DUT MEM[0x20000048] = %08x REF MEM[0x20000048] = %08x at pc:%08x", 0, ref_mem_s, pc);
 	if(mem_addr != 0 && success) {
 		// Log("Check memory at address " FMT_WORD, mem_addr);
-		if(check_pmem_bound(mem_addr)){
+		if(check_sram_bound(mem_addr)){
 			uint32_t ref_mem,dut_mem;
 			ref_difftest_memcpy((mem_addr&~0x03), (void *)&ref_mem, 4, DIFFTEST_TO_DUT);
+			
 			dut_mem = MEM(mem_addr);
 			if(ref_mem != dut_mem) {
 				Log("%s DUT MEM[" FMT_WORD "] = %08x REF MEM[" FMT_WORD "] = %08x at pc:%08x",ANSI_FMT("Different Memory!", ANSI_FG_RED),mem_addr, dut_mem, mem_addr, ref_mem, pc);
@@ -98,7 +102,9 @@ void difftest_skip_ref(int reason) {
 void difftest_mem_set(int addr){
 	#ifdef CONFIG_DIFFTEST_MEM_ENABLE
 	//Log("Differential testing: Set memory address " FMT_WORD, addr);
-	cpu.mem_access_addr = (uint32_t)addr;
+	if(check_sram_bound(addr)){
+		cpu.mem_access_addr = (uint32_t)addr;
+	}
 	#endif
 }
 #else

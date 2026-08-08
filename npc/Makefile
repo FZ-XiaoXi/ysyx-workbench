@@ -22,7 +22,7 @@ SIM_V += $(NPC_HOME)/../ysyxSoC/build/ysyxSoCFull.v
 
 LIBCAPSTONE = tools/capstone/repo/libcapstone.so.5
 DIFF_REF_PATH = $(NEMU_HOME)
-DIFF_REF_SO = $(DIFF_REF_PATH)/riscv32-nemu-interpreter-so
+DIFF_REF_SO = $(DIFF_REF_PATH)/riscv32-nemu-interpreter-so-ysyxsoc
 ARGS_DIFF = --diff=$(DIFF_REF_SO)
 
 C_INCFLAGS=$(addprefix -I, $(C_INC_PATH))
@@ -30,7 +30,7 @@ CXXFLAGS += $(C_INCFLAGS) -DTOP_NAME="\"V$(TOPNAME)\"" -g
 LDFLAGS += -lreadline
 
 V_INCFLAGS=$(addprefix -I, $(V_INC_PATH))
-VERILATOR_FLAGS=--cc --exe --build --trace --timescale "1ns/1ns" --no-timing $(V_INCFLAGS) --top-module $(TOPNAME) 
+VERILATOR_FLAGS=--cc --autoflush --exe --build --trace --timescale "1ns/1ns" --no-timing $(V_INCFLAGS) --top-module $(TOPNAME) 
 
 override ARGS ?=
 override ARGS += $(ARGS_DIFF)

@@ -104,7 +104,6 @@ class alignas(VL_CACHE_LINE_BYTES) VysyxSoCFull_ysyx_26010011_IDU final : public
         CData/*0:0*/ __VdfgRegularize_hd1728725_0_19;
         CData/*0:0*/ __VdfgRegularize_hd1728725_0_20;
         CData/*0:0*/ __VdfgRegularize_hd1728725_0_21;
-        CData/*0:0*/ __VdfgRegularize_hd1728725_0_22;
         CData/*0:0*/ __VdfgRegularize_hd1728725_0_25;
         CData/*0:0*/ __VdfgRegularize_h6e95ff9d_0_8;
         CData/*0:0*/ __VdfgRegularize_h6e95ff9d_0_16;

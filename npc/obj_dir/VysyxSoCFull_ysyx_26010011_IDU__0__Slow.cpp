@@ -105,7 +105,6 @@ VL_ATTR_COLD void VysyxSoCFull_ysyx_26010011_IDU___ctor_var_reset(VysyxSoCFull_y
     vlSelf->__VdfgRegularize_hd1728725_0_19 = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 10914409760702877942ull);
     vlSelf->__VdfgRegularize_hd1728725_0_20 = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 804754383437851585ull);
     vlSelf->__VdfgRegularize_hd1728725_0_21 = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 1399399610820123890ull);
-    vlSelf->__VdfgRegularize_hd1728725_0_22 = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 16997498474549684765ull);
     vlSelf->__VdfgRegularize_hd1728725_0_25 = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 5392466791965037126ull);
     vlSelf->__VdfgRegularize_h6e95ff9d_0_8 = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 14010890682781396190ull);
     vlSelf->__VdfgRegularize_h6e95ff9d_0_16 = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 1742307454951500614ull);

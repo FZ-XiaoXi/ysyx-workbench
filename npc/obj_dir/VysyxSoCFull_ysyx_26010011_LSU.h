@@ -16,11 +16,11 @@ class alignas(VL_CACHE_LINE_BYTES) VysyxSoCFull_ysyx_26010011_LSU final : public
     // DESIGN SPECIFIC STATE
     VL_IN8(__PVT__clock,0,0);
     VL_IN8(__PVT__reset,0,0);
-    VL_IN8(__PVT__lsu_wen,0,0);
-    VL_IN8(__PVT__lsu_reqEN,0,0);
+    VL_IN8(lsu_wen,0,0);
+    VL_IN8(lsu_reqEN,0,0);
     VL_OUT8(__PVT__lsu_final,0,0);
     VL_IN8(__PVT__rmask,3,0);
-    VL_IN8(__PVT__lsu_wmask,3,0);
+    VL_IN8(lsu_wmask,3,0);
     VL_IN8(__PVT__isSigned,0,0);
     VL_IN8(__PVT__bus_valid,0,0);
     VL_OUT8(__PVT__awvalid,0,0);
@@ -53,9 +53,10 @@ class alignas(VL_CACHE_LINE_BYTES) VysyxSoCFull_ysyx_26010011_LSU final : public
     CData/*0:0*/ __PVT__b_fire;
     CData/*0:0*/ __PVT__ar_fire;
     CData/*0:0*/ __PVT__r_fire;
-    VL_IN(__PVT__lsu_addr,31,0);
+    CData/*0:0*/ __VdfgRegularize_hc456a51f_0_1;
+    VL_IN(lsu_addr,31,0);
     VL_OUT(__PVT__lsu_rdata,31,0);
-    VL_IN(__PVT__lsu_wdata,31,0);
+    VL_IN(lsu_wdata,31,0);
     VL_OUT(__PVT__awaddr,31,0);
     VL_OUT(__PVT__wdata,31,0);
     VL_OUT(__PVT__araddr,31,0);

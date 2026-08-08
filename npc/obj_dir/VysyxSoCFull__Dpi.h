@@ -16,15 +16,15 @@ extern "C" {
 
 
     // DPI IMPORTS
-    // DPI import at vsrc/LSU.v:1:30
+    // DPI import at vsrc/ysyx_26010011_LSU.v:1:30
     extern void difftest_mem_set(int addr);
-    // DPI import at vsrc/REG.v:1:30
+    // DPI import at vsrc/ysyx_26010011_REG.v:1:30
     extern void difftest_skip_ref(int reason);
     // DPI import at vsrc/ysyx_26010011.v:1:30
     extern void ebreak();
-    // DPI import at /home/seaber/ysyx-workbench/npc/../ysyxSoC/perip/flash/flash.v:84:30
+    // DPI import at /home/seaber/ysyx-workbench/abstract-machine/../npc/../ysyxSoC/perip/flash/flash.v:84:30
     extern void flash_read(int addr, int* data);
-    // DPI import at /home/seaber/ysyx-workbench/npc/../ysyxSoC/build/ysyxSoCFull.v:5402:30
+    // DPI import at /home/seaber/ysyx-workbench/abstract-machine/../npc/../ysyxSoC/build/ysyxSoCFull.v:5402:30
     extern void mrom_read(int raddr, int* rdata);
     // DPI import at vsrc/ysyx_26010011.v:2:29
     extern int pmem_read(int raddr);

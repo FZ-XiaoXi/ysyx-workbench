@@ -19,10 +19,12 @@
 #include "VysyxSoCFull___024unit.h"
 #include "VysyxSoCFull_ysyxSoCASIC.h"
 #include "VysyxSoCFull_CPU.h"
+#include "VysyxSoCFull_AXI4RAM.h"
 #include "VysyxSoCFull_ysyx_26010011.h"
-#include "VysyxSoCFull_ysyx_26010011_LSU.h"
+#include "VysyxSoCFull_mem_2048x32.h"
 #include "VysyxSoCFull_ysyx_26010011_IFU.h"
 #include "VysyxSoCFull_ysyx_26010011_IDU.h"
+#include "VysyxSoCFull_ysyx_26010011_LSU.h"
 #include "VysyxSoCFull_ysyx_26010011_REG.h"
 
 // DPI TYPES for DPI Export callbacks (Internal use)
@@ -42,6 +44,8 @@ class alignas(VL_CACHE_LINE_BYTES) VysyxSoCFull__Syms final : public VerilatedSy
     VysyxSoCFull___024unit         TOP____024unit;
     VysyxSoCFull_ysyxSoCFull       TOP__ysyxSoCFull;
     VysyxSoCFull_ysyxSoCASIC       TOP__ysyxSoCFull__asic;
+    VysyxSoCFull_AXI4RAM           TOP__ysyxSoCFull__asic__axi4ram;
+    VysyxSoCFull_mem_2048x32       TOP__ysyxSoCFull__asic__axi4ram__mem_ext;
     VysyxSoCFull_CPU               TOP__ysyxSoCFull__asic__cpu;
     VysyxSoCFull_ysyx_26010011     TOP__ysyxSoCFull__asic__cpu__cpu;
     VysyxSoCFull_ysyx_26010011_IDU TOP__ysyxSoCFull__asic__cpu__cpu__IDU_0;
@@ -52,6 +56,7 @@ class alignas(VL_CACHE_LINE_BYTES) VysyxSoCFull__Syms final : public VerilatedSy
     // SCOPE NAMES
     VerilatedScope __Vscope_ysyxSoCFull__asic__axi42apb;
     VerilatedScope __Vscope_ysyxSoCFull__asic__axi4frag;
+    VerilatedScope __Vscope_ysyxSoCFull__asic__axi4ram__mem_ext;
     VerilatedScope __Vscope_ysyxSoCFull__asic__axi4xbar_1;
     VerilatedScope __Vscope_ysyxSoCFull__asic__axi4yank;
     VerilatedScope __Vscope_ysyxSoCFull__asic__axi4yank__unnamedblk1;
