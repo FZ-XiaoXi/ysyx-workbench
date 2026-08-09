@@ -54,8 +54,7 @@ void uart_init() {
 
 void putch(char ch) {
   // while(1);
-    while(((inb(SERIAL_PORT + 5)>>5) & 0x01)!=1){
-  }
+  while(((inb(SERIAL_PORT + 5)>>5) & 0x01)!=1);
   outb(SERIAL_PORT, ch);
 }
 

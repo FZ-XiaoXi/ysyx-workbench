@@ -63,7 +63,7 @@ bool check_mrom_bound(uint32_t addr){
 // }
 
 extern "C" void flash_read(int32_t addr, int32_t *data) {
-	Log("READ FLASH: addr = " FMT_WORD, addr);
+	Log("READ FLASH: addr = " FMT_WORD " val = " FMT_WORD, addr, FLASH(addr));
 	*data = FLASH(addr);
 }
 extern "C" void mrom_read(int32_t addr, int32_t *data) {
