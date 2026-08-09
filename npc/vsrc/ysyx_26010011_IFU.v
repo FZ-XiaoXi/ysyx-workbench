@@ -91,7 +91,7 @@ module ysyx_26010011_IFU(
 
     always @(posedge clock) begin
         if (reset) begin
-            PC <= 32'h20000000;
+            PC <= 32'h30000000;
         end else if (bus_valid && wbu_final) begin
             if (isJUMP | isBRANCH | isECALL | isMRET | lsu_access_fault) begin
                 PC <= dnpc;

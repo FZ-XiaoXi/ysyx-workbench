@@ -2,8 +2,8 @@ ENTRY(_start)
 
 MEMORY
 {
-  /* 指令空间：0x20000000 ~ 0x20000FFF (4KB) */
-  mrom : ORIGIN = 0x20000000, LENGTH = 4K
+  /* 指令空间：0x30000000 ~ 0x30100000 (1MB) */
+  flash : ORIGIN = 0x30000000, LENGTH = 1M
   /* 数据空间：0x0f000000 ~ 0x0f001FFF (8KB) */
   sram : ORIGIN = 0x0f000000, LENGTH = 8K
 }
@@ -11,11 +11,11 @@ MEMORY
 
 SECTIONS
 {
-  . = ORIGIN(mrom);
+  . = ORIGIN(flash);
   .text : {
     *(entry)
     *(.text*)
-  } > mrom AT> mrom
+  } > flash AT> flash
 
 
   .rodata : {
@@ -24,7 +24,7 @@ SECTIONS
     *(.srodata*)
     . = ALIGN(4);
     _rodata_vma_end = .;
-  } > mrom AT> mrom
+  } > flash AT> flash
   _rodata_lma_start = LOADADDR(.rodata);
   _rodata_lma_end = _rodata_lma_start + SIZEOF(.rodata);
 
@@ -36,7 +36,7 @@ SECTIONS
     *(.sdata*)
     . = ALIGN(4);
     _data_vma_end = .;
-  } > sram AT> mrom
+  } > sram AT> flash
   _data_lma_start = LOADADDR(.data);
   _data_lma_end = _data_lma_start + SIZEOF(.data);
 
@@ -47,7 +47,7 @@ SECTIONS
     *(.scommon)
     . = ALIGN(4);
     _bss_vma_end = .;
-  } > sram AT>mrom
+  } > sram AT>flash
   _bss_lma_start = LOADADDR(.bss);
   _bss_lma_end = _bss_lma_start + SIZEOF(.bss);
 
