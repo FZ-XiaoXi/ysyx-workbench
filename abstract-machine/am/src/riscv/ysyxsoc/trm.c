@@ -81,10 +81,13 @@ void _trm_init() {
   // start_buf_[19] = (char)((ysyx_id / 10000000) + '0');
   // putstr(start_buf_);
   
-  // printf("===YSYX:%c%c%c%c\n",(ysyx_name>>24)&0xff,(ysyx_name>>16)&0xff,(ysyx_name>>8)&0xff,ysyx_name&0xff);
-  // printf("===ID:%d\n",ysyx_id);
-
   uart_init();
+
+  
+  printf("===YSYX:%c%c%c%c\n",(ysyx_name>>24)&0xff,(ysyx_name>>16)&0xff,(ysyx_name>>8)&0xff,ysyx_name&0xff);
+  printf("===ID:%d\n",ysyx_id);
+
+  
 
   int ret = main(mainargs);
   halt(ret);

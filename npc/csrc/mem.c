@@ -7,6 +7,7 @@
 uint32_t MEM[CONFIG_SRAMSIZE>>2];
 uint32_t MROM[CONFIG_MROMSIZE>>2];
 uint32_t FLASH[CONFIG_FLASHSIZE>>2];
+uint8_t PSRAM[CONFIG_PSRAMSIZE];
 int pmem_read(int raddr){
 	if(check_sram_bound(raddr)){
 		// 总是读取地址为`raddr & ~0x3u`的4字节返回
@@ -69,4 +70,14 @@ extern "C" void flash_read(int32_t addr, int32_t *data) {
 extern "C" void mrom_read(int32_t addr, int32_t *data) {
 	*data = MROM(addr);
 }
-
+extern void psram_read(int raddr, int count, int* rdata) {
+	// Log("READ FLASH: addr = " FMT_WORD " val = " FMT_WORD, addr, FLASH(addr + CONFIG_FLASHBASE));
+	// *data = FLASH(addr + CONFIG_FLASHBASE);
+	*rdata = (int32_t)PSRAM((((uint32_t)raddr + (uint32_t)count)%1024)+((CONFIG_PSRAMBASE + raddr)& ~0x3ff));
+}
+extern void psram_write(int waddr, int count, int wdata){
+	// Log("WRITE PSRAM: addr = " FMT_WORD " val = " FMT_WORD " count = " FMT_WORD, waddr, wdata, count);
+	PSRAM((((uint32_t)waddr + (uint32_t)count)%1024)+((CONFIG_PSRAMBASE + waddr)& ~0x3ff)) = wdata & 0xff;
+	// Log("WRITE FLASH: addr = " FMT_WORD " val = " FMT_WORD, addr, data);
+	// FLASH(addr + CONFIG_FLASHBASE) = data;
+}
