@@ -98,18 +98,18 @@ void init(int argc, char** argv){
     cpu.state = NPC_STOP;
 	cpu.halt_ret = 0;
 	cpu.count = 0;
-	cpu.inst = MROM(cpu.pc);
+	cpu.inst = FLASH(cpu.pc);
 	cpu.mem_access_addr = 0;
 	//cpu.pc=
 
-	unsigned char * ptr = (unsigned char *)(&FLASH[0]);
-	unsigned int j=0;
-	while(j < 0x1000){
-		*ptr = j & 0xff;
-		Log("FLASH[%08x] = %02x", j, *ptr);
-		ptr++;
-		j++;
-	}
+	// unsigned char * ptr = (unsigned char *)(&FLASH[0]);
+	// unsigned int j=0;
+	// while(j < 0x1000){
+	// 	*ptr = j & 0xff;
+	// 	Log("FLASH[%08x] = %02x", j, *ptr);
+	// 	ptr++;
+	// 	j++;
+	// }
 
 	
 	
@@ -277,24 +277,11 @@ static long load_img() {
   Log("The image is %s, size = %ld", img_file, size);
 
   fseek(fp, 0, SEEK_SET);
-  int ret = fread((uint8_t*)MROM + RESET_VECTOR - CONFIG_MROMBASE, size, 1, fp);
+  int ret = fread((uint8_t*)FLASH + RESET_VECTOR - CONFIG_FLASHBASE, size, 1, fp);
   Log("Final image size = %ld", size);
   assert(ret == 1);
   fclose(fp);
   
-  FILE *sfp = fopen("/home/seaber/ysyx-workbench/ysyxSoC/test/char-test.bin", "rb");
-  Assert(sfp, "Can not open '%s'", "/home/seaber/ysyx-workbench/ysyxSoC/test/char-test.bin");
-
-  fseek(sfp, 0, SEEK_END);
-  long ssize = ftell(sfp);
-
-  Log("The image is %s, size = %ld", "/home/seaber/ysyx-workbench/ysyxSoC/test/char-test.bin", ssize);
-
-  fseek(sfp, 0, SEEK_SET);
-  int sret = fread((uint8_t*)FLASH + (0xf0000), ssize, 1, sfp);
-  Log("Final image size = %ld", ssize);
-  assert(sret == 1);
-  fclose(sfp);
 
 /////////////////////
   {

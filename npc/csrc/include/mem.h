@@ -5,7 +5,7 @@
 #include "svdpi.h"
 #define MEM(addr) (MEM[(addr - SRAM_LEFT)>>2])
 #define MROM(addr) (MROM[(addr - CONFIG_MROMBASE)>>2])
-#define FLASH(addr) (FLASH[(addr)>>2])
+#define FLASH(addr) (FLASH[(addr - CONFIG_FLASHBASE)>>2])
 
         
 extern uint32_t MEM[CONFIG_SRAMSIZE>>2];
