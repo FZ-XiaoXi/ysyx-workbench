@@ -60,7 +60,7 @@ extern FILE* log_fp;
 #endif
 
 #define CONFIG_WATCHPOINT_ENABLE
-// #define CONFIG_WAVE_ENABLE
+#define CONFIG_WAVE_ENABLE
 
 
 //#define CONFIG_TRACE_ENABLE
