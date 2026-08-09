@@ -66,12 +66,12 @@ void cpu_exec(uint64_t n){
 			n--;
 			cpu.count++;
 			cpu_get_reg();
-			// Log("%02x %02x %02x %02x at pc = " FMT_WORD ,top->ysyxSoCFull->asic->axi4ram->mem_ext->Memory[0],top->ysyxSoCFull->asic->axi4ram->mem_ext->Memory[1],top->ysyxSoCFull->asic->axi4ram->mem_ext->Memory[2],top->ysyxSoCFull->asic->axi4ram->mem_ext->Memory[3],cpu.pc);
+			// Log("%02x %02x %02x %02x at pc = " FMT_WORD ,top->ysyxSoCFull->asic->axi4ram->mem_ext->Memory[1984],top->ysyxSoCFull->asic->axi4ram->mem_ext->Memory[1985],top->ysyxSoCFull->asic->axi4ram->mem_ext->Memory[1986],top->ysyxSoCFull->asic->axi4ram->mem_ext->Memory[1987],cpu.pc);
 			// Log("LSR state = %02x LCR state = %02x at pc = " FMT_WORD ,top->ysyxSoCFull->asic->luart->muart->Uregs->lsr,top->ysyxSoCFull->asic->luart->muart->Uregs->lcr,cpu.pc);
 			if(check_mrom_bound(cpu.pc)){
 				cpu.inst = MROM(cpu.pc);
 			}else{
-				Log("pc = " FMT_WORD " is out of bound", cpu.pc);
+				// Log("pc = " FMT_WORD " is out of bound", cpu.pc);
 			}
 			
 			trace_and_difftest();
