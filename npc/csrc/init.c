@@ -102,14 +102,15 @@ void init(int argc, char** argv){
 	cpu.mem_access_addr = 0;
 	//cpu.pc=
 
-	unsigned char * ptr = (unsigned char *)(&FLASH[0]);
-	unsigned int j=0;
-	while(j < CONFIG_FLASHSIZE){
-		*ptr = j & 0xff;
-		Log("FLASH[%08x] = %02x", j, *ptr);
-		ptr++;
-		j++;
-	}
+	// unsigned char * ptr = (unsigned char *)(&FLASH[0]);
+	// unsigned int j=0;
+	// while(j < CONFIG_FLASHSIZE){
+	// 	*ptr = j & 0xff;
+	// 	Log("FLASH[%08x] = %02x", j, *ptr);
+	// 	ptr++;
+	// 	j++;
+	// }
+
 	
 	
 	//init regex
@@ -281,6 +282,20 @@ static long load_img() {
   assert(ret == 1);
   fclose(fp);
   
+  FILE *sfp = fopen("/home/seaber/ysyx-workbench/ysyxSoC/test/char-test.bin", "rb");
+  Assert(sfp, "Can not open '%s'", "/home/seaber/ysyx-workbench/ysyxSoC/test/char-test.bin");
+
+  fseek(sfp, 0, SEEK_END);
+  long ssize = ftell(sfp);
+
+  Log("The image is %s, size = %ld", "/home/seaber/ysyx-workbench/ysyxSoC/test/char-test.bin", ssize);
+
+  fseek(sfp, 0, SEEK_SET);
+  int sret = fread((uint8_t*)FLASH + (0xf0000), ssize, 1, sfp);
+  Log("Final image size = %ld", ssize);
+  assert(sret == 1);
+  fclose(sfp);
+
 /////////////////////
   {
 //   FILE *fpd = fopen(img_data_file, "rb");
