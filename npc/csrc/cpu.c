@@ -68,8 +68,8 @@ void cpu_exec(uint64_t n){
 			cpu_get_reg();
 			// Log("%02x %02x %02x %02x at pc = " FMT_WORD ,top->ysyxSoCFull->asic->axi4ram->mem_ext->Memory[1984],top->ysyxSoCFull->asic->axi4ram->mem_ext->Memory[1985],top->ysyxSoCFull->asic->axi4ram->mem_ext->Memory[1986],top->ysyxSoCFull->asic->axi4ram->mem_ext->Memory[1987],cpu.pc);
 			// Log("LSR state = %02x LCR state = %02x at pc = " FMT_WORD ,top->ysyxSoCFull->asic->luart->muart->Uregs->lsr,top->ysyxSoCFull->asic->luart->muart->Uregs->lcr,cpu.pc);
-			// Log("PSRAM[0x%08x] = 0x%02x at pc = " FMT_WORD ,(uint32_t)(0x80001234),PSRAM((uint32_t)(0x80001234)),cpu.pc);
-			// Log("PSRAM[0x%08x] = 0x%02x at pc = " FMT_WORD ,(uint32_t)(0x80001235),PSRAM((uint32_t)(0x80001235)),cpu.pc);
+			// Log("PSRAM[0x%08x] = 0x%02x at pc = " FMT_WORD ,(uint32_t)(0x80000000),PSRAM((uint32_t)(0x80000000)),cpu.pc);
+			// Log("PSRAM[0x%08x] = 0x%02x at pc = " FMT_WORD ,(uint32_t)(0x80000004),PSRAM((uint32_t)(0x80000004)),cpu.pc);
 			// Log("PSRAM[0x%08x] = 0x%02x at pc = " FMT_WORD ,(uint32_t)(0x80001236),PSRAM((uint32_t)(0x80001236)),cpu.pc);
 			// Log("PSRAM[0x%08x] = 0x%02x at pc = " FMT_WORD ,(uint32_t)(0x80001237),PSRAM((uint32_t)(0x80001237)),cpu.pc);
 			if(check_mrom_bound(cpu.pc)){
