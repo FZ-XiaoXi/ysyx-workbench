@@ -3,9 +3,13 @@
 #include <klib.h>
 #include "npc.h"
 extern char _heap_start;
+extern char _heap_end;
+extern char _stack_top;
+extern char _stack_pointer;
 int main(const char *args);
 
 extern char _sram_start;
+extern char _psram_start;
 extern char _rodata_vma_start;
 extern char _rodata_vma_end;
 extern char _rodata_lma_start;
@@ -21,8 +25,10 @@ extern char _bss_lma_end;
 
 #define SRAM_SIZE (8 * 1024 * 1024)
 #define SRAM_END  ((uintptr_t)&_sram_start + SRAM_SIZE)
+#define PSRAM_SIZE (4 * 1024 * 1024 * 1024)
+#define PSRAM_END  ((uintptr_t)&_psram_start + PSRAM_SIZE)
 
-Area heap = RANGE(&_heap_start, SRAM_END);
+Area heap = RANGE(&_heap_start, &_heap_end);
 static const char mainargs[MAINARGS_MAX_LEN] __attribute__((section(".text.mainargs"))) = TOSTRING(MAINARGS_PLACEHOLDER); // defined in CFLAGS
 
 void uart_init() {
@@ -66,8 +72,9 @@ void halt(int code) {
 
 void _trm_init() {
   // memcpy((void*)&_rodata_vma_start, (void*)&_rodata_lma_start, (uintptr_t)&_rodata_vma_end - (uintptr_t)&_rodata_vma_start);
-  memcpy((void*)&_data_vma_start, (void*)&_data_lma_start, (uintptr_t)&_data_vma_end - (uintptr_t)&_data_vma_start);
-  memcpy((void*)&_bss_vma_start, (void*)&_bss_lma_start, (uintptr_t)&_bss_vma_end - (uintptr_t)&_bss_vma_start);
+  
+  // memcpy((void*)&_data_vma_start, (void*)&_data_lma_start, (uintptr_t)&_data_vma_end - (uintptr_t)&_data_vma_start);
+  // memcpy((void*)&_bss_vma_start, (void*)&_bss_lma_start, (uintptr_t)&_bss_vma_end - (uintptr_t)&_bss_vma_start);
 
   uint32_t ysyx_name,ysyx_id;
   asm volatile("csrr %0,mvendorid" : "=r"(ysyx_name));
@@ -83,9 +90,13 @@ void _trm_init() {
   
   uart_init();
 
+  // printf("data:[0x%08x-0x%08x) -> [0x%08x-0x%08x)\n",(uint32_t)(void*)(&_data_lma_start),(uint32_t)(void*)(&_data_lma_end),(uint32_t)(void*)(&_data_vma_start),(uint32_t)(void*)(&_data_vma_end));
+  // printf("bss:[0x%08x-0x%08x) -> [0x%08x-0x%08x)\n",(uint32_t)(void*)(&_bss_lma_start),(uint32_t)(void*)(&_bss_lma_end),(uint32_t)(void*)(&_bss_vma_start),(uint32_t)(void*)(&_bss_vma_end));
+  // printf("heap:[0x%08x-0x%08x)\n",(uint32_t)(void*)(&_heap_start),(uint32_t)(void*)(&_heap_end));
+  // printf("stack:[0x%08x-0x%08x)\n",(uint32_t)(void*)(&_stack_top),(uint32_t)(void*)(&_stack_pointer));
   
-  printf("===YSYX:%c%c%c%c\n",(ysyx_name>>24)&0xff,(ysyx_name>>16)&0xff,(ysyx_name>>8)&0xff,ysyx_name&0xff);
-  printf("===ID:%d\n",ysyx_id);
+  // printf("===YSYX:%c%c%c%c\n",(ysyx_name>>24)&0xff,(ysyx_name>>16)&0xff,(ysyx_name>>8)&0xff,ysyx_name&0xff);
+  // printf("===ID:%d\n",ysyx_id);
 
   
 

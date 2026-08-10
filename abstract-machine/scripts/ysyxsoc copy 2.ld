@@ -14,21 +14,11 @@ MEMORY
 SECTIONS
 {
   . = ORIGIN(flash);
-  .flash : {
+  .text : {
     *(entry)
-    . = ALIGN(4);
+    *(.text*)
   } > flash AT> flash
 
-  . = ORIGIN(sram);
-  _text_vma_start = .;
-  .text : {
-    *(.text*)
-    . = ALIGN(4);
-    _text_vma_end = .;
-  } > sram AT> flash
-  _text_lma_start = LOADADDR(.text);
-  _text_lma_size = SIZEOF(.text);
-  _text_lma_end = _text_lma_start + _text_lma_size;
 
   .rodata : {
     _rodata_vma_start = .;
@@ -36,10 +26,9 @@ SECTIONS
     *(.srodata*)
     . = ALIGN(4);
     _rodata_vma_end = .;
-  } > sram AT> flash
+  } > flash AT> flash
   _rodata_lma_start = LOADADDR(.rodata);
-  _rodata_lma_size = SIZEOF(.rodata);
-  _rodata_lma_end = _rodata_lma_start + _rodata_lma_size;
+  _rodata_lma_end = _rodata_lma_start + SIZEOF(.rodata);
 
 
 
@@ -49,10 +38,9 @@ SECTIONS
     *(.sdata*)
     . = ALIGN(4);
     _data_vma_end = .;
-  } > sram AT> flash
+  } > psram AT> flash
   _data_lma_start = LOADADDR(.data);
-  _data_lma_size = SIZEOF(.data);
-  _data_lma_end = _data_lma_start + _data_lma_size;
+  _data_lma_end = _data_lma_start + SIZEOF(.data);
 
   .bss : {
     _bss_vma_start = .;
@@ -61,23 +49,23 @@ SECTIONS
     *(.scommon)
     . = ALIGN(4);
     _bss_vma_end = .;
-  } > sram AT>flash
+  } > psram AT>flash
   _bss_lma_start = LOADADDR(.bss);
-  _bss_lma_size = SIZEOF(.bss);
-  _bss_lma_end = _bss_lma_start + _bss_lma_size;
+  _bss_lma_end = _bss_lma_start + SIZEOF(.bss);
 
-  . = ALIGN(0x0100);
+  . = _bss_vma_end;
+  . = ALIGN(0x010000);
 
   _heap_start = .;
-  . = _heap_start + 0x0200;
+  . = _heap_start + 0x200000;
   _heap_end = .;
   _stack_top = .;
-  _stack_pointer = . + 0x0400;
+  _stack_pointer = . + 0x100000;
   . = _stack_pointer;
   end = .;
   _end = .;
   
-  ASSERT(. <= ORIGIN(sram) + LENGTH(sram), "Error: sram overflow!")
-  _sram_start = ORIGIN(sram);
+  ASSERT(. <= ORIGIN(psram) + LENGTH(psram), "Error: psram overflow!")
+  _sram_start = ORIGIN(psram);
   /DISCARD/ : { *(.comment) *(.note*) *(.eh_frame) }
 }
