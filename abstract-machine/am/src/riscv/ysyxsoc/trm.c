@@ -90,13 +90,13 @@ void _trm_init() {
   
   uart_init();
 
-  // printf("data:[0x%08x-0x%08x) -> [0x%08x-0x%08x)\n",(uint32_t)(void*)(&_data_lma_start),(uint32_t)(void*)(&_data_lma_end),(uint32_t)(void*)(&_data_vma_start),(uint32_t)(void*)(&_data_vma_end));
-  // printf("bss:[0x%08x-0x%08x) -> [0x%08x-0x%08x)\n",(uint32_t)(void*)(&_bss_lma_start),(uint32_t)(void*)(&_bss_lma_end),(uint32_t)(void*)(&_bss_vma_start),(uint32_t)(void*)(&_bss_vma_end));
-  // printf("heap:[0x%08x-0x%08x)\n",(uint32_t)(void*)(&_heap_start),(uint32_t)(void*)(&_heap_end));
-  // printf("stack:[0x%08x-0x%08x)\n",(uint32_t)(void*)(&_stack_top),(uint32_t)(void*)(&_stack_pointer));
+  printf("data:[0x%08x-0x%08x) -> [0x%08x-0x%08x)\n",(uint32_t)(void*)(&_data_lma_start),(uint32_t)(void*)(&_data_lma_end),(uint32_t)(void*)(&_data_vma_start),(uint32_t)(void*)(&_data_vma_end));
+  printf("bss:[0x%08x-0x%08x) -> [0x%08x-0x%08x)\n",(uint32_t)(void*)(&_bss_lma_start),(uint32_t)(void*)(&_bss_lma_end),(uint32_t)(void*)(&_bss_vma_start),(uint32_t)(void*)(&_bss_vma_end));
+  printf("heap:[0x%08x-0x%08x)\n",(uint32_t)(void*)(&_heap_start),(uint32_t)(void*)(&_heap_end));
+  printf("stack:[0x%08x-0x%08x)\n",(uint32_t)(void*)(&_stack_top),(uint32_t)(void*)(&_stack_pointer));
   
-  // printf("===YSYX:%c%c%c%c\n",(ysyx_name>>24)&0xff,(ysyx_name>>16)&0xff,(ysyx_name>>8)&0xff,ysyx_name&0xff);
-  // printf("===ID:%d\n",ysyx_id);
+  printf("===YSYX:%c%c%c%c\n",(ysyx_name>>24)&0xff,(ysyx_name>>16)&0xff,(ysyx_name>>8)&0xff,ysyx_name&0xff);
+  printf("===ID:%d\n",ysyx_id);
 
   
 

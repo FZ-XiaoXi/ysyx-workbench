@@ -1,4 +1,5 @@
 AM_SRCS := riscv/ysyxsoc/start.S \
+           riscv/ysyxsoc/ssbl.S \
            riscv/ysyxsoc/trm.c \
            riscv/ysyxsoc/ioe.c \
            riscv/ysyxsoc/timer.c \
@@ -28,7 +29,7 @@ insert-arg: image
 image: image-dep
 	@$(OBJDUMP) -d -s -h $(IMAGE).elf > $(IMAGE).txt
 	@echo + OBJCOPY "->" $(IMAGE_REL).bin
-	@$(OBJCOPY) -S -j .flash -j .text -j .rodata -j .data -j .bss -O binary $(IMAGE).elf $(IMAGE).bin
+	@$(OBJCOPY) -S -j .flash -j .ssbl -j .text -j .rodata -j .data -j .bss -O binary $(IMAGE).elf $(IMAGE).bin
 	@echo + OBJCOPY "->" $(IMAGE)-data.bin
 	@$(OBJCOPY) -S -j .data -O binary $(IMAGE).elf $(IMAGE)-data.bin
 
