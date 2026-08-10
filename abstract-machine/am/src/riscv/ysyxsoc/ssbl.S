@@ -20,14 +20,12 @@ _bootloader_data_loop:
   j _bootloader_data_loop
 
 _bootloader_data_loop_end:
-  la a0, _bss_lma_start
   la a1, _bss_vma_start
   la a2, _bss_lma_size
 
 _bootloader_bss_loop:
   beqz a2, _bootloader_bss_loop_end
-  sb t0, 0(x0)
-  addi a0, a0, 1
+  sb x0, 0(a1)
   addi a1, a1, 1
   addi a2, a2, -1
   j _bootloader_bss_loop
