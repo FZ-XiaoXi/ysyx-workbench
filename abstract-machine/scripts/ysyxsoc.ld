@@ -2,8 +2,8 @@ ENTRY(_start)
 
 MEMORY
 {
-  /* 指令空间：0x30000000 ~ 0x30100000 (1MB) */
-  flash : ORIGIN = 0x30000000, LENGTH = 1M
+  /* 指令空间：0x30000000 ~ 0x31000000 (16MB) */
+  flash : ORIGIN = 0x30000000, LENGTH = 16M
   /* 数据空间：0x0f000000 ~ 0x0f001FFF (8KB) */
   sram : ORIGIN = 0x0f000000, LENGTH = 8K
   /* 数据空间：0x80000000 ~ 0x80400000 (4MB) */
@@ -20,12 +20,23 @@ SECTIONS
   } > flash AT> flash
 
   . = ORIGIN(sram);
+  _ssbl_vma_start = .;
+  .ssbl : {
+    *(ssbl)
+    . = ALIGN(4);
+    _ssbl_vma_end = .;
+  } > sram AT> flash
+  _ssbl_lma_start = LOADADDR(.ssbl);
+  _ssbl_lma_size = SIZEOF(.ssbl);
+  _ssbl_lma_end = _ssbl_lma_start + _ssbl_lma_size;
+
+  . = ORIGIN(psram);
   _text_vma_start = .;
   .text : {
     *(.text*)
     . = ALIGN(4);
     _text_vma_end = .;
-  } > sram AT> flash
+  } > psram AT> flash
   _text_lma_start = LOADADDR(.text);
   _text_lma_size = SIZEOF(.text);
   _text_lma_end = _text_lma_start + _text_lma_size;
@@ -36,7 +47,7 @@ SECTIONS
     *(.srodata*)
     . = ALIGN(4);
     _rodata_vma_end = .;
-  } > sram AT> flash
+  } > psram AT> flash
   _rodata_lma_start = LOADADDR(.rodata);
   _rodata_lma_size = SIZEOF(.rodata);
   _rodata_lma_end = _rodata_lma_start + _rodata_lma_size;
@@ -49,7 +60,7 @@ SECTIONS
     *(.sdata*)
     . = ALIGN(4);
     _data_vma_end = .;
-  } > sram AT> flash
+  } > psram AT> flash
   _data_lma_start = LOADADDR(.data);
   _data_lma_size = SIZEOF(.data);
   _data_lma_end = _data_lma_start + _data_lma_size;
@@ -61,23 +72,27 @@ SECTIONS
     *(.scommon)
     . = ALIGN(4);
     _bss_vma_end = .;
-  } > sram AT>flash
+  } > psram AT>flash
   _bss_lma_start = LOADADDR(.bss);
   _bss_lma_size = SIZEOF(.bss);
   _bss_lma_end = _bss_lma_start + _bss_lma_size;
 
-  . = ALIGN(0x0100);
+  . = ALIGN(0x10000);
 
   _heap_start = .;
-  . = _heap_start + 0x0200;
+  . = _heap_start + 0xf0000;
   _heap_end = .;
+
+  . = _ssbl_vma_end;
+  . = ALIGN(0x0010);
+  _sram_start = .;
   _stack_top = .;
-  _stack_pointer = . + 0x0400;
+  _stack_pointer = . + 0x1f00;
   . = _stack_pointer;
   end = .;
   _end = .;
   
   ASSERT(. <= ORIGIN(sram) + LENGTH(sram), "Error: sram overflow!")
-  _sram_start = ORIGIN(sram);
+  
   /DISCARD/ : { *(.comment) *(.note*) *(.eh_frame) }
 }
