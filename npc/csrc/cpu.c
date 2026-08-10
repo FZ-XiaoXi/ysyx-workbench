@@ -63,6 +63,7 @@ void cpu_exec(uint64_t n){
 		
 		
 		if(cpu.ifu_state == 0 && !reset_state){
+			// Log("PC=" FMT_WORD , cpu.pc);
 			n--;
 			cpu.count++;
 			cpu_get_reg();
