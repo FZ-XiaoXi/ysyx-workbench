@@ -71,7 +71,8 @@ class alignas(VL_CACHE_LINE_BYTES) VysyxSoCFull__Syms final : public VerilatedSy
     VerilatedScope __Vscope_ysyxSoCFull__flash;
     VerilatedScope __Vscope_ysyxSoCFull__flash__flash_cmd_i;
     VerilatedScope __Vscope_ysyxSoCFull__psram;
-    VerilatedScope __Vscope_ysyxSoCFull__sdram;
+    VerilatedScope __Vscope_ysyxSoCFull__sdram__u_sdram_16_H;
+    VerilatedScope __Vscope_ysyxSoCFull__sdram__u_sdram_16_L;
 
     // CONSTRUCTORS
     VysyxSoCFull__Syms(VerilatedContext* contextp, const char* namep, VysyxSoCFull* modelp);

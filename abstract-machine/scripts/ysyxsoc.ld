@@ -9,8 +9,8 @@ MEMORY
   sram : ORIGIN = 0x0f000000, LENGTH = 8K
   /* 数据空间：0x80000000 ~ 0x80400000 (4MB) */
   psram : ORIGIN = 0x80000000, LENGTH = 4M
-  /* 数据空间：0xa0000000 ~ 0xa2000000 (32MB)*/
-  sdram : ORIGIN = 0xa0000000, LENGTH = 32M
+  /* 数据空间：0xa0000000 ~ 0xa4000000 (64MB)*/
+  sdram : ORIGIN = 0xa0000000, LENGTH = 64M
 }
 
 

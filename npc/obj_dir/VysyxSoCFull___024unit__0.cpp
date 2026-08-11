@@ -58,9 +58,9 @@ void VysyxSoCFull___024unit____Vdpiimwrap_pmem_write_TOP____024unit(IData/*31:0*
     pmem_write(waddr__Vcvt, wdata__Vcvt, wmask__Vcvt);
 }
 
-extern "C" void sdram_write(int waddr, int count, int wdata);
+extern "C" void sdram_write(int waddr, int count, int wdata, svLogic sel);
 
-void VysyxSoCFull___024unit____Vdpiimwrap_sdram_write_TOP____024unit(IData/*31:0*/ waddr, IData/*31:0*/ count, IData/*31:0*/ wdata) {
+void VysyxSoCFull___024unit____Vdpiimwrap_sdram_write_TOP____024unit(IData/*31:0*/ waddr, IData/*31:0*/ count, IData/*31:0*/ wdata, CData/*0:0*/ sel) {
     VL_DEBUG_IF(VL_DBG_MSGF("+        VysyxSoCFull___024unit____Vdpiimwrap_sdram_write_TOP____024unit\n"); );
     // Body
     int waddr__Vcvt;
@@ -69,12 +69,14 @@ void VysyxSoCFull___024unit____Vdpiimwrap_sdram_write_TOP____024unit(IData/*31:0
     count__Vcvt = count;
     int wdata__Vcvt;
     wdata__Vcvt = wdata;
-    sdram_write(waddr__Vcvt, count__Vcvt, wdata__Vcvt);
+    svLogic sel__Vcvt;
+    sel__Vcvt = sel;
+    sdram_write(waddr__Vcvt, count__Vcvt, wdata__Vcvt, sel__Vcvt);
 }
 
-extern "C" void sdram_read(int raddr, int count, int* rdata);
+extern "C" void sdram_read(int raddr, int count, int* rdata, svLogic sel);
 
-void VysyxSoCFull___024unit____Vdpiimwrap_sdram_read_TOP____024unit(IData/*31:0*/ raddr, IData/*31:0*/ count, IData/*31:0*/ &rdata) {
+void VysyxSoCFull___024unit____Vdpiimwrap_sdram_read_TOP____024unit(IData/*31:0*/ raddr, IData/*31:0*/ count, IData/*31:0*/ &rdata, CData/*0:0*/ sel) {
     VL_DEBUG_IF(VL_DBG_MSGF("+        VysyxSoCFull___024unit____Vdpiimwrap_sdram_read_TOP____024unit\n"); );
     // Body
     int raddr__Vcvt;
@@ -82,7 +84,9 @@ void VysyxSoCFull___024unit____Vdpiimwrap_sdram_read_TOP____024unit(IData/*31:0*
     int count__Vcvt;
     count__Vcvt = count;
     int rdata__Vcvt;
-    sdram_read(raddr__Vcvt, count__Vcvt, &rdata__Vcvt);
+    svLogic sel__Vcvt;
+    sel__Vcvt = sel;
+    sdram_read(raddr__Vcvt, count__Vcvt, &rdata__Vcvt, sel__Vcvt);
     rdata = (rdata__Vcvt);
 }
 
