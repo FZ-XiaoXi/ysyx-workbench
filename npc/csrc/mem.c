@@ -8,7 +8,8 @@ uint32_t MEM[CONFIG_SRAMSIZE>>2];
 uint32_t MROM[CONFIG_MROMSIZE>>2];
 uint32_t FLASH[CONFIG_FLASHSIZE>>2];
 uint8_t PSRAM[CONFIG_PSRAMSIZE];
-uint16_t SDRAM[CONFIG_SDRAMSIZE>>1];
+uint16_t SDRAML[CONFIG_SDRAMSIZE>>2];
+uint16_t SDRAMH[CONFIG_SDRAMSIZE>>2];
 int pmem_read(int raddr){
 	if(check_sram_bound(raddr)){
 		// 总是读取地址为`raddr & ~0x3u`的4字节返回
@@ -82,18 +83,30 @@ extern void psram_write(int waddr, int count, int wdata){
 	// Log("WRITE FLASH: addr = " FMT_WORD " val = " FMT_WORD, addr, data);
 	// FLASH(addr + CONFIG_FLASHBASE) = data;
 }
-extern void sdram_read(int raddr, int count, int* rdata) {
+extern void sdram_read(int raddr, int count, int* rdata, svLogic sel) {
 	// Log("READ FLASH: addr = " FMT_WORD " val = " FMT_WORD, addr, FLASH(addr + CONFIG_FLASHBASE));
 	// *data = FLASH(addr + CONFIG_FLASHBASE);
-	*rdata = (int32_t)SDRAM((uint32_t)raddr + CONFIG_SDRAMBASE + count*2);
+	if(sel){
+		*rdata = ((int32_t)SDRAMH((uint32_t)raddr + CONFIG_SDRAMBASE + count*4));	//H
+	}else{
+		*rdata = ((int32_t)SDRAML((uint32_t)raddr + CONFIG_SDRAMBASE + count*4));	//L
+	}
 }
-extern void sdram_write(int waddr, int count, int wdata){
+extern void sdram_write(int waddr, int count, int wdata, svLogic sel){
 	uint8_t wenH = (wdata >> 31)&0x1;
 	uint8_t wenL = (wdata >> 30)&0x1;
 	uint16_t wda = wdata & 0xffff;
-	uint16_t source = SDRAM((uint32_t)(waddr + CONFIG_SDRAMBASE + count*2));
-	// Log("WRITE SDRAM: addr = " FMT_WORD " val = " FMT_WORD " count = " FMT_WORD " WH=%d WL=%d at pc = " FMT_WORD, waddr, wdata, count, wenH,wenL, cpu.pc);
-	SDRAM((uint32_t)waddr + CONFIG_SDRAMBASE + count*2) = (0xff00 & (wenH?(wda):(source))) | (0x00ff & (wenL?(wda):(source))) ;
+	if(sel){
+		uint16_t source = SDRAMH((uint32_t)(waddr + CONFIG_SDRAMBASE + count*4));
+		// Log("WRITE SDRAMH: addr = " FMT_WORD " val = " FMT_WORD " count = " FMT_WORD " WH=%d WL=%d at pc = " FMT_WORD, waddr, wdata, count, wenH,wenL, cpu.pc);
+		SDRAMH((uint32_t)waddr + CONFIG_SDRAMBASE + count*4) = (0xff00 & ((wenH)?(wda):(source))) | (0x00ff & ((wenL)?(wda):(source))) ;
+	}else{
+		uint16_t source = SDRAML((uint32_t)(waddr + CONFIG_SDRAMBASE + count*4));
+		// Log("WRITE SDRAML: addr = " FMT_WORD " val = " FMT_WORD " count = " FMT_WORD " WH=%d WL=%d at pc = " FMT_WORD, waddr, wdata, count, wenH,wenL, cpu.pc);
+		SDRAML((uint32_t)waddr + CONFIG_SDRAMBASE + count*4) = (0xff00 & ((wenH)?(wda):(source))) | (0x00ff & ((wenL)?(wda):(source))) ;
+
+	}
+	
 	// Log("WRITE PSRAM: addr = " FMT_WORD " val = " FMT_WORD " count = " FMT_WORD, waddr, wdata, count);
 	// PSRAM((((uint32_t)waddr + (uint32_t)count)%1024)+((CONFIG_PSRAMBASE + waddr)& ~0x3ff)) = wdata & 0xff;
 	// Log("WRITE FLASH: addr = " FMT_WORD " val = " FMT_WORD, addr, data);
