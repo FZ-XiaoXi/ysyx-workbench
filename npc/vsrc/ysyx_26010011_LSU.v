@@ -100,13 +100,16 @@ module ysyx_26010011_LSU(
     assign rready  = ((state == S_WAIT_RDATA) || (state == S_IDLE)) & !reset;
 
     always @(*) begin
-        if(lsu_wen && lsu_reqEN) begin
-            difftest_mem_set(lsu_addr);
-        end
-        if(lsu_wen && lsu_reqEN && !(awaddr >= 32'h0f000000 && awaddr < 32'h0f002000)) begin
-            difftest_skip_ref(lsu_addr);
-        end
-        if(arvalid && lsu_reqEN && !(araddr >= 32'h0f000000 && araddr < 32'h0f002000)) begin
+        // if(lsu_wen && lsu_reqEN) begin
+        //     difftest_mem_set(lsu_addr);
+        // end
+        if(((lsu_wen && lsu_reqEN)||(arvalid && lsu_reqEN)) && !(
+                (awaddr >= 32'h30000000 && awaddr < 32'h31000000)
+              ||(awaddr >= 32'h0f000000 && awaddr < 32'h0f002000)
+              ||(awaddr >= 32'h80000000 && awaddr < 32'h80400000)
+              ||(awaddr >= 32'ha0000000 && awaddr < 32'ha2000000)
+              ||(awaddr >= 32'h20000000 && awaddr < 32'h20001000)
+              )) begin
             difftest_skip_ref(lsu_addr);
         end
     end

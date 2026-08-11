@@ -23,10 +23,10 @@ extern char _bss_vma_end;
 extern char _bss_lma_start;
 extern char _bss_lma_end;
 
-#define SRAM_SIZE (8 * 1024 * 1024)
-#define SRAM_END  ((uintptr_t)&_sram_start + SRAM_SIZE)
-#define PSRAM_SIZE (4 * 1024 * 1024 * 1024)
-#define PSRAM_END  ((uintptr_t)&_psram_start + PSRAM_SIZE)
+// #define SRAM_SIZE (8 * 1024 * 1024)
+// #define SRAM_END  ((uintptr_t)&_sram_start + SRAM_SIZE)
+// #define PSRAM_SIZE (4 * 1024 * 1024 * 1024)
+// #define PSRAM_END  ((uintptr_t)&_psram_start + PSRAM_SIZE)
 
 Area heap = RANGE(&_heap_start, &_heap_end);
 static const char mainargs[MAINARGS_MAX_LEN] __attribute__((section(".text.mainargs"))) = TOSTRING(MAINARGS_PLACEHOLDER); // defined in CFLAGS

@@ -45,6 +45,7 @@ class alignas(VL_CACHE_LINE_BYTES) VysyxSoCFull___024root final : public Verilat
     CData/*0:0*/ __Vtrigprevexpr___TOP__ysyxSoCFull__asic____PVT__spi_sck__0;
     CData/*0:0*/ __Vtrigprevexpr___TOP__ysyxSoCFull____PVT___asic_psram_ce_n__0;
     CData/*0:0*/ __Vtrigprevexpr___TOP__ysyxSoCFull____PVT___asic_psram_sck__0;
+    CData/*0:0*/ __Vtrigprevexpr___TOP__ysyxSoCFull____PVT__sdram__DOT__clock__0;
     CData/*0:0*/ __Vtrigprevexpr___TOP__clock__0;
     CData/*0:0*/ __Vtrigprevexpr___TOP__reset__0;
     VL_OUT16(externalPins_gpio_out,15,0);
@@ -54,7 +55,7 @@ class alignas(VL_CACHE_LINE_BYTES) VysyxSoCFull___024root final : public Verilat
     VlUnpacked<QData/*63:0*/, 1> __VicoTriggered;
     VlUnpacked<QData/*63:0*/, 1> __VactTriggered;
     VlUnpacked<QData/*63:0*/, 1> __VnbaTriggered;
-    VlUnpacked<CData/*0:0*/, 10> __Vm_traceActivity;
+    VlUnpacked<CData/*0:0*/, 13> __Vm_traceActivity;
 
     // INTERNAL VARIABLES
     VysyxSoCFull__Syms* const vlSymsp;

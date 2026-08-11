@@ -119,7 +119,7 @@ void cpu_exec(uint64_t n){
 
 void reg_display(CPUState cpu) {
   for(int i=0;i<CONFIG_GPR_NUM;i++){
-    printf("$%s\t" FMT_WORD "\t%d\n",regs[i],cpu.gpr[i],cpu.gpr[i]);
+    printf("%02d $%s\t" FMT_WORD "\t%d\n",i,regs[i],cpu.gpr[i],cpu.gpr[i]);
   }
   printf("$pc\t" FMT_WORD "\t%d\n",cpu.pc,cpu.pc);
 }

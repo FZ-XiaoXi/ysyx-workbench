@@ -532,6 +532,7 @@ class alignas(VL_CACHE_LINE_BYTES) VysyxSoCFull_ysyxSoCASIC final : public Veril
         SData/*15:0*/ __PVT__lspi__DOT__mspi__DOT__u0_spi_top__DOT__divider;
         SData/*13:0*/ __PVT__lspi__DOT__mspi__DOT__u0_spi_top__DOT__ctrl;
         SData/*15:0*/ __PVT__lspi__DOT__mspi__DOT__u0_spi_top__DOT__clgen__DOT__cnt;
+        SData/*15:0*/ __PVT__lsdram_apb__DOT__msdram__DOT__u_sdram_ctrl__DOT__sdram_data_input_i;
         SData/*12:0*/ __PVT__lsdram_apb__DOT__msdram__DOT__u_sdram_ctrl__DOT__addr_q;
         SData/*15:0*/ __PVT__lsdram_apb__DOT__msdram__DOT__u_sdram_ctrl__DOT__data_q;
         SData/*15:0*/ __PVT__lsdram_apb__DOT__msdram__DOT__u_sdram_ctrl__DOT__data_buffer_q;
@@ -548,9 +549,9 @@ class alignas(VL_CACHE_LINE_BYTES) VysyxSoCFull_ysyxSoCASIC final : public Veril
         IData/*31:0*/ __PVT__axi4xbar_1__DOT__auto_anon_in_wdata;
         IData/*31:0*/ __PVT__axi4xbar_1__DOT__auto_anon_in_araddr;
         IData/*31:0*/ __PVT__lspi__DOT__mspi__DOT__xipmaster_prdata;
-        IData/*31:0*/ __PVT__lspi__DOT__mspi__DOT__xipslv_pwdata;
     };
     struct {
+        IData/*31:0*/ __PVT__lspi__DOT__mspi__DOT__xipslv_pwdata;
         IData/*31:0*/ __PVT__lspi__DOT__mspi__DOT__xipslv_prdata;
         IData/*31:0*/ __PVT__lspi__DOT__mspi__DOT__spictrl_pwdata;
         IData/*31:0*/ __PVT__lspi__DOT__mspi__DOT__spictrl_prdata;
@@ -585,6 +586,7 @@ class alignas(VL_CACHE_LINE_BYTES) VysyxSoCFull_ysyxSoCASIC final : public Veril
         IData/*31:0*/ __PVT__axi4frag__DOT__deq_q__DOT__io_deq_bits_addr;
         IData/*31:0*/ __PVT__axi4frag__DOT__deq_q_1__DOT__io_deq_bits_addr;
         IData/*31:0*/ __Vtask_lmrom__DOT__mrom__DOT__mrom_read__0__rdata;
+        IData/*16:0*/ __Vdly__lsdram_apb__DOT__msdram__DOT__u_sdram_ctrl__DOT__refresh_timer_q;
         QData/*46:0*/ __PVT__axi4buf__DOT__nodeOut_awdeq_q__DOT__ram_ext__DOT__R0_data;
         QData/*35:0*/ __PVT__axi4buf__DOT__nodeOut_wdeq_q__DOT__ram_ext__DOT__R0_data;
         QData/*46:0*/ __PVT__axi4buf__DOT__nodeOut_ardeq_q__DOT__ram_ext__DOT__R0_data;
