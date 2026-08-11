@@ -60,13 +60,19 @@ class alignas(VL_CACHE_LINE_BYTES) VysyxSoCFull_ysyxSoCFull final : public Veril
         CData/*7:0*/ __PVT__psram__DOT__buf_wdata;
         CData/*0:0*/ __PVT__psram__DOT__is_QPI;
         CData/*0:0*/ psram__DOT____VdfgRegularize_h886b63e5_0_0;
-        CData/*0:0*/ __PVT__sdram__DOT__wire_dq_out_en;
-        CData/*3:0*/ __PVT__sdram__DOT__state;
-        CData/*3:0*/ __PVT__sdram__DOT__next_state;
-        CData/*3:0*/ __PVT__sdram__DOT__count;
-        CData/*3:0*/ __PVT__sdram__DOT__next_count;
-        CData/*0:0*/ __PVT__sdram__DOT__clock;
-        CData/*0:0*/ __VdfgRegularize_h6e95ff9d_0_25;
+        CData/*0:0*/ __PVT__sdram__DOT__u_sdram_16_L__DOT__wire_dq_out_en;
+        CData/*3:0*/ __PVT__sdram__DOT__u_sdram_16_L__DOT__state;
+        CData/*3:0*/ __PVT__sdram__DOT__u_sdram_16_L__DOT__next_state;
+        CData/*3:0*/ __PVT__sdram__DOT__u_sdram_16_L__DOT__count;
+        CData/*3:0*/ __PVT__sdram__DOT__u_sdram_16_L__DOT__next_count;
+        CData/*0:0*/ __PVT__sdram__DOT__u_sdram_16_H__DOT__wire_dq_out_en;
+        CData/*3:0*/ __PVT__sdram__DOT__u_sdram_16_H__DOT__state;
+        CData/*3:0*/ __PVT__sdram__DOT__u_sdram_16_H__DOT__next_state;
+        CData/*3:0*/ __PVT__sdram__DOT__u_sdram_16_H__DOT__count;
+        CData/*3:0*/ __PVT__sdram__DOT__u_sdram_16_H__DOT__next_count;
+        CData/*0:0*/ __PVT__sdram__DOT__u_sdram_16_H__DOT__clock;
+        CData/*3:0*/ __VdfgRegularize_h6e95ff9d_0_26;
+        CData/*3:0*/ __VdfgRegularize_h6e95ff9d_0_30;
         CData/*2:0*/ __Vdly__flash__DOT__state;
         CData/*7:0*/ __Vdly__flash__DOT__counter;
         CData/*7:0*/ __Vdly__flash__DOT__cmd;
@@ -74,7 +80,11 @@ class alignas(VL_CACHE_LINE_BYTES) VysyxSoCFull_ysyxSoCFull final : public Veril
         VL_IN16(externalPins_gpio_in,15,0);
         SData/*15:0*/ __PVT__bitrev__DOT__rev;
         SData/*9:0*/ __PVT__psram__DOT__counter;
-        SData/*12:0*/ __PVT__sdram__DOT__reg_mode;
+        SData/*12:0*/ __PVT__sdram__DOT__u_sdram_16_L__DOT__reg_mode;
+        SData/*12:0*/ __PVT__sdram__DOT__u_sdram_16_H__DOT__reg_mode;
+        SData/*12:0*/ __VdfgRegularize_hbc52461a_1_0;
+    };
+    struct {
         SData/*15:0*/ __Vdly__bitrev__DOT__rev;
         IData/*23:0*/ __PVT__flash__DOT__addr;
         IData/*31:0*/ __PVT__flash__DOT__data;
@@ -82,16 +92,21 @@ class alignas(VL_CACHE_LINE_BYTES) VysyxSoCFull_ysyxSoCFull final : public Veril
         IData/*31:0*/ __PVT__flash__DOT__data_bswap;
         IData/*23:0*/ __PVT__psram__DOT__buf_addr;
         IData/*31:0*/ __PVT__psram__DOT__psram_rdata;
-        IData/*31:0*/ __PVT__sdram__DOT__reg_active_addr;
-    };
-    struct {
-        IData/*31:0*/ __PVT__sdram__DOT__wire_addr;
-        IData/*31:0*/ __PVT__sdram__DOT__sdram_rdata;
+        IData/*31:0*/ sdram__DOT__dq__out__strong__out2;
+        IData/*31:0*/ sdram__DOT__dq__out__strong__out3;
+        IData/*31:0*/ __PVT__sdram__DOT__u_sdram_16_L__DOT__reg_active_addr;
+        IData/*31:0*/ __PVT__sdram__DOT__u_sdram_16_L__DOT__wire_addr;
+        IData/*31:0*/ __PVT__sdram__DOT__u_sdram_16_L__DOT__sdram_rdata;
+        IData/*31:0*/ __PVT__sdram__DOT__u_sdram_16_H__DOT__reg_active_addr;
+        IData/*31:0*/ __PVT__sdram__DOT__u_sdram_16_H__DOT__wire_addr;
+        IData/*31:0*/ __PVT__sdram__DOT__u_sdram_16_H__DOT__sdram_rdata;
         IData/*31:0*/ __Vtask_psram__DOT__psram_read__2__rdata;
         IData/*31:0*/ __Vtask_sdram_read__5__rdata;
+        IData/*31:0*/ __Vtask_sdram_read__8__rdata;
         IData/*23:0*/ __Vdly__flash__DOT__addr;
         IData/*31:0*/ __Vdly__flash__DOT__data;
-        VlUnpacked<SData/*12:0*/, 4> __PVT__sdram__DOT__reg_active_row;
+        VlUnpacked<SData/*12:0*/, 4> __PVT__sdram__DOT__u_sdram_16_L__DOT__reg_active_row;
+        VlUnpacked<SData/*12:0*/, 4> __PVT__sdram__DOT__u_sdram_16_H__DOT__reg_active_row;
     };
 
     // INTERNAL VARIABLES
