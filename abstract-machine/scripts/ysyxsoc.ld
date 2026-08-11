@@ -36,6 +36,7 @@ SECTIONS
   . = ORIGIN(sdram);
   _text_vma_start = .;
   .text : {
+    . = ALIGN(4);
     *(.text*)
     . = ALIGN(4);
     _text_vma_end = .;
@@ -45,6 +46,7 @@ SECTIONS
   _text_lma_end = _text_lma_start + _text_lma_size;
 
   .rodata : {
+    . = ALIGN(4);
     _rodata_vma_start = .;
     *(.rodata*)
     *(.srodata*)
@@ -58,6 +60,7 @@ SECTIONS
 
 
   .data : {
+    . = ALIGN(4);
     _data_vma_start = .;
     *(.data*)
     *(.sdata*)
@@ -69,6 +72,7 @@ SECTIONS
   _data_lma_end = _data_lma_start + _data_lma_size;
 
   .bss : {
+    . = ALIGN(4);
     _bss_vma_start = .;
     *(.bss*)
     *(.sbss*)
@@ -86,11 +90,11 @@ SECTIONS
   . = _heap_start + 0xf0000;
   _heap_end = .;
 
-  . = _ssbl_vma_end;
-  . = ALIGN(0x0010);
+  . = ORIGIN(sram);
+  . = ALIGN(0x0004);
   _sram_start = .;
   _stack_top = .;
-  _stack_pointer = . + 0x1f00;
+  _stack_pointer = . + 0x1ffc;
   . = _stack_pointer;
   end = .;
   _end = .;
