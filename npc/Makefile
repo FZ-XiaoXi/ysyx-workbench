@@ -30,7 +30,7 @@ CXXFLAGS += $(C_INCFLAGS) -DTOP_NAME="\"V$(TOPNAME)\"" -g
 LDFLAGS += -lreadline
 
 V_INCFLAGS=$(addprefix -I, $(V_INC_PATH))
-VERILATOR_FLAGS=--cc --autoflush --exe --build --trace --timescale "1ns/1ns" --no-timing $(V_INCFLAGS) --top-module $(TOPNAME) 
+VERILATOR_FLAGS=--cc --autoflush --exe --build -O3 --trace --timescale "1ns/1ns" --no-timing $(V_INCFLAGS) --top-module $(TOPNAME) 
 
 override ARGS ?=
 override ARGS += $(ARGS_DIFF)
