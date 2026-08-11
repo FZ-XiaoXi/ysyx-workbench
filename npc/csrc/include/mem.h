@@ -7,14 +7,16 @@
 #define MROM(addr) (MROM[(addr - CONFIG_MROMBASE)>>2])
 #define FLASH(addr) (FLASH[(addr - CONFIG_FLASHBASE)>>2])
 #define PSRAM(addr) (PSRAM[(addr - CONFIG_PSRAMBASE)])
-#define SDRAM(addr) (SDRAM[(addr - CONFIG_SDRAMBASE)>>1])
+#define SDRAML(addr) (SDRAML[(addr - CONFIG_SDRAMBASE)>>2])
+#define SDRAMH(addr) (SDRAMH[(addr - CONFIG_SDRAMBASE)>>2])
 
         
 extern uint32_t MEM[CONFIG_SRAMSIZE>>2];
 extern uint32_t MROM[CONFIG_MROMSIZE>>2];
 extern uint32_t FLASH[CONFIG_FLASHSIZE>>2];
 extern uint8_t  PSRAM[CONFIG_PSRAMSIZE];
-extern uint16_t SDRAM[CONFIG_SDRAMSIZE>>1];
+extern uint16_t SDRAML[CONFIG_SDRAMSIZE>>2];
+extern uint16_t SDRAMH[CONFIG_SDRAMSIZE>>2];
 void pmem_write(int waddr, int wdata, char wmask);
 int pmem_read(int raddr);
 bool check_sram_bound(uint32_t addr);

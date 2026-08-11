@@ -10,6 +10,7 @@ void (*ref_difftest_exec)(uint64_t n) = NULL;
 void (*ref_difftest_raise_intr)(uint64_t NO) = NULL;
 static bool is_skip_ref = false;
 #ifdef CONFIG_DIFFTEST_ENABLE
+uint32_t SDRAM[CONFIG_SDRAMSIZE>>2];
 void init_difftest(char *diff_so_file, long img_size){
 	assert(diff_so_file != NULL);
 
@@ -41,7 +42,11 @@ void init_difftest(char *diff_so_file, long img_size){
 	ref_difftest_memcpy(CONFIG_FLASHBASE, &FLASH(CONFIG_FLASHBASE), CONFIG_FLASHSIZE, DIFFTEST_TO_REF);
 	ref_difftest_memcpy(CONFIG_SRAMBASE, &MEM(CONFIG_SRAMBASE), CONFIG_SRAMSIZE, DIFFTEST_TO_REF);
 	ref_difftest_memcpy(CONFIG_PSRAMBASE, &PSRAM(CONFIG_PSRAMBASE), CONFIG_PSRAMSIZE, DIFFTEST_TO_REF);
-	ref_difftest_memcpy(CONFIG_SDRAMBASE, &SDRAM(CONFIG_SDRAMBASE), CONFIG_SDRAMSIZE, DIFFTEST_TO_REF);
+	
+	for(int i=0;i<CONFIG_SDRAMSIZE>>2;i++){
+		SDRAM[i] = (uint32_t)SDRAML((uint32_t)(i*4 + CONFIG_SDRAMBASE)) | ((uint32_t)SDRAMH((uint32_t)(i*4 + CONFIG_SDRAMBASE)) << 16);
+	}
+	ref_difftest_memcpy(CONFIG_SDRAMBASE, SDRAM, CONFIG_SDRAMSIZE, DIFFTEST_TO_REF);
 	
   	ref_difftest_regcpy(cpu.gpr, &cpu.pc, DIFFTEST_TO_REF);
 	Log("Finished initializing differential testing.");
