@@ -104,7 +104,6 @@ void VysyxSoCFull_ysyx_26010011_LSU___ico_sequent__TOP__ysyxSoCFull__asic__cpu__
                                                 & (IData)(vlSelfRef.lsu_reqEN));
 }
 
-void VysyxSoCFull___024unit____Vdpiimwrap_difftest_mem_set_TOP____024unit(IData/*31:0*/ addr);
 void VysyxSoCFull___024unit____Vdpiimwrap_difftest_skip_ref_TOP____024unit(IData/*31:0*/ reason);
 
 void VysyxSoCFull_ysyx_26010011_LSU___ico_sequent__TOP__ysyxSoCFull__asic__cpu__cpu__LSU_0__3(VysyxSoCFull_ysyx_26010011_LSU* vlSelf) {
@@ -112,19 +111,28 @@ void VysyxSoCFull_ysyx_26010011_LSU___ico_sequent__TOP__ysyxSoCFull__asic__cpu__
     VysyxSoCFull__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
     auto& vlSelfRef = std::ref(*vlSelf).get();
     // Body
-    if (((IData)(vlSelfRef.lsu_wen) & (IData)(vlSelfRef.lsu_reqEN))) {
-        VysyxSoCFull___024unit____Vdpiimwrap_difftest_mem_set_TOP____024unit(vlSelfRef.lsu_addr);
-    }
-    if ((((IData)(vlSelfRef.lsu_wen) & (IData)(vlSelfRef.lsu_reqEN)) 
-         & (~ ((0x0f000000U <= vlSelfRef.lsu_addr) 
-               & (0x0f002000U > vlSelfRef.lsu_addr))))) {
-        VysyxSoCFull___024unit____Vdpiimwrap_difftest_skip_ref_TOP____024unit(vlSelfRef.lsu_addr);
-    }
-    if ((((IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu.__PVT__RAM_AXI4LiteArbiter__DOT__M2_arvalid) 
-          & (IData)(vlSelfRef.lsu_reqEN)) & (~ ((0x0f000000U 
-                                                 <= vlSelfRef.lsu_addr) 
-                                                & (0x0f002000U 
-                                                   > vlSelfRef.lsu_addr))))) {
+    if (((((IData)(vlSelfRef.lsu_wen) | (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu.__PVT__RAM_AXI4LiteArbiter__DOT__M2_arvalid)) 
+          & (IData)(vlSelfRef.lsu_reqEN)) & (~ ((((
+                                                   ((0x30000000U 
+                                                     <= vlSelfRef.lsu_addr) 
+                                                    & (0x31000000U 
+                                                       > vlSelfRef.lsu_addr)) 
+                                                   | ((0x0f000000U 
+                                                       <= vlSelfRef.lsu_addr) 
+                                                      & (0x0f002000U 
+                                                         > vlSelfRef.lsu_addr))) 
+                                                  | ((0x80000000U 
+                                                      <= vlSelfRef.lsu_addr) 
+                                                     & (0x80400000U 
+                                                        > vlSelfRef.lsu_addr))) 
+                                                 | ((0xa0000000U 
+                                                     <= vlSelfRef.lsu_addr) 
+                                                    & (0xa2000000U 
+                                                       > vlSelfRef.lsu_addr))) 
+                                                | ((0x20000000U 
+                                                    <= vlSelfRef.lsu_addr) 
+                                                   & (0x20001000U 
+                                                      > vlSelfRef.lsu_addr)))))) {
         VysyxSoCFull___024unit____Vdpiimwrap_difftest_skip_ref_TOP____024unit(vlSelfRef.lsu_addr);
     }
     vlSelfRef.__PVT__ar_fire = ((IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu.__PVT__RAM_AXI4LiteArbiter__DOT__M2_arvalid) 

@@ -28,9 +28,15 @@
   #if   defined(CONFIG_PMEM_MALLOC)
   static uint8_t *mrom = NULL;
   static uint8_t *sram = NULL;
+  static uint8_t *flash = NULL;
+  static uint8_t *psram = NULL;
+  static uint8_t *sdram = NULL;
   #else
   static uint8_t mrom[YSYXSOC_MROM_SIZE] PG_ALIGN = {}; //4KB
   static uint8_t sram[YSYXSOC_SRAM_SIZE] PG_ALIGN = {}; //8KB
+  static uint8_t flash[YSYXSOC_FLASH_SIZE] PG_ALIGN = {}; //16MB
+  static uint8_t psram[YSYXSOC_PSRAM_SIZE] PG_ALIGN = {}; //4MB
+  static uint8_t sdram[YSYXSOC_SDRAM_SIZE] PG_ALIGN = {}; //32MB
   #endif
 #endif
 
@@ -104,8 +110,8 @@ void paddr_write(paddr_t addr, int len, word_t data) {
 
 #else//////////////////////////////////////////////////////////////////////////////////
 static void out_of_bound(paddr_t addr) {
-  panic("address = " FMT_PADDR " is out of bound of sram[" FMT_PADDR ", " FMT_PADDR "] or mrom[" FMT_PADDR ", " FMT_PADDR "] at pc = " FMT_WORD,
-      addr, YSYXSOC_SRAM_LEFT, YSYXSOC_SRAM_RIGHT, YSYXSOC_MROM_LEFT, YSYXSOC_MROM_RIGHT, cpu.pc);
+  panic("address = " FMT_PADDR " is out of bound at pc = " FMT_WORD,
+      addr, cpu.pc);
 }
 
 typedef enum{MEMREAD,MEMWRITE} mtrace_t;
@@ -118,6 +124,12 @@ uint8_t* guest_to_host(paddr_t paddr) {
     return mrom + paddr - YSYXSOC_MROM_LEFT;
   }else if(paddr >= YSYXSOC_SRAM_LEFT && paddr <= YSYXSOC_SRAM_RIGHT){
     return sram + paddr - YSYXSOC_SRAM_LEFT;
+  }else if(paddr >= YSYXSOC_PSRAM_LEFT && paddr <= YSYXSOC_PSRAM_RIGHT){
+    return psram + paddr - YSYXSOC_PSRAM_LEFT;
+  }else if(paddr >= YSYXSOC_SDRAM_LEFT && paddr <= YSYXSOC_SDRAM_RIGHT){
+    return sdram + paddr - YSYXSOC_SDRAM_LEFT;
+  }else if(paddr >= YSYXSOC_FLASH_LEFT && paddr <= YSYXSOC_FLASH_RIGHT){
+    return flash + paddr - YSYXSOC_FLASH_LEFT;
   }else{
     out_of_bound(paddr);
   }
@@ -128,6 +140,12 @@ paddr_t host_to_guest(uint8_t *haddr) {
     return haddr - mrom + YSYXSOC_MROM_LEFT;
   }else if(haddr >= sram && haddr < sram + YSYXSOC_SRAM_SIZE){
     return haddr - sram + YSYXSOC_SRAM_LEFT;
+  }else if(haddr >= psram && haddr < psram + YSYXSOC_PSRAM_SIZE){
+    return haddr - psram + YSYXSOC_PSRAM_LEFT;
+  }else if(haddr >= sdram && haddr < sdram + YSYXSOC_SDRAM_SIZE){
+    return haddr - sdram + YSYXSOC_SDRAM_LEFT;
+  }else if(haddr >= flash && haddr < flash + YSYXSOC_FLASH_SIZE){
+    return haddr - flash + YSYXSOC_FLASH_LEFT;
   }else{
     out_of_bound(host_to_guest(haddr));
   }
@@ -151,11 +169,24 @@ void init_mem() {
     assert(mrom);
     sram = malloc(YSYXSOC_SRAM_SIZE);
     assert(sram);
+    flash = malloc(YSYXSOC_FLASH_SIZE);
+    assert(flash);
+    psram = malloc(YSYXSOC_PSRAM_SIZE);
+    assert(psram);
+    sdram = malloc(YSYXSOC_SDRAM_SIZE);
+    assert(sdram);
   #endif
     IFDEF(CONFIG_MEM_RANDOM, memset(sram, rand(), YSYXSOC_SRAM_SIZE));
     IFDEF(CONFIG_MEM_RANDOM, memset(mrom, rand(), YSYXSOC_MROM_SIZE));
+    IFDEF(CONFIG_MEM_RANDOM, memset(flash, rand(), YSYXSOC_FLASH_SIZE));
+    IFDEF(CONFIG_MEM_RANDOM, memset(psram, rand(), YSYXSOC_PSRAM_SIZE));
+    IFDEF(CONFIG_MEM_RANDOM, memset(sdram, rand(), YSYXSOC_SDRAM_SIZE));
     Log("mrom memory area [" FMT_PADDR ", " FMT_PADDR "]", YSYXSOC_MROM_LEFT, YSYXSOC_MROM_RIGHT);
     Log("sram memory area [" FMT_PADDR ", " FMT_PADDR "]", YSYXSOC_SRAM_LEFT, YSYXSOC_SRAM_RIGHT);
+    Log("flash memory area [" FMT_PADDR ", " FMT_PADDR "]", YSYXSOC_FLASH_LEFT, YSYXSOC_FLASH_RIGHT);
+    Log("psram memory area [" FMT_PADDR ", " FMT_PADDR "]", YSYXSOC_PSRAM_LEFT, YSYXSOC_PSRAM_RIGHT);
+    Log("sdram memory area [" FMT_PADDR ", " FMT_PADDR "]", YSYXSOC_SDRAM_LEFT, YSYXSOC_SDRAM_RIGHT);
+    
 }
 
 word_t paddr_read(paddr_t addr, int len) {

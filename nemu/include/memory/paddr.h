@@ -29,10 +29,22 @@
 #define YSYXSOC_SRAM_LEFT  ((paddr_t)0x0F000000)
 #define YSYXSOC_SRAM_RIGHT ((paddr_t)YSYXSOC_SRAM_LEFT + YSYXSOC_SRAM_SIZE - 1)
 
+#define YSYXSOC_FLASH_SIZE  ((paddr_t)0x01000000)
+#define YSYXSOC_FLASH_LEFT  ((paddr_t)0x30000000)
+#define YSYXSOC_FLASH_RIGHT ((paddr_t)YSYXSOC_FLASH_LEFT + YSYXSOC_FLASH_SIZE - 1)
+
+#define YSYXSOC_PSRAM_SIZE  ((paddr_t)0x00400000)
+#define YSYXSOC_PSRAM_LEFT  ((paddr_t)0x80000000)
+#define YSYXSOC_PSRAM_RIGHT ((paddr_t)YSYXSOC_PSRAM_LEFT + YSYXSOC_PSRAM_SIZE - 1)
+
+#define YSYXSOC_SDRAM_SIZE  ((paddr_t)0x02000000)
+#define YSYXSOC_SDRAM_LEFT  ((paddr_t)0xA0000000)
+#define YSYXSOC_SDRAM_RIGHT ((paddr_t)YSYXSOC_SDRAM_LEFT + YSYXSOC_SDRAM_SIZE - 1)
+
 #if !defined(CONFIG_TARGET_SHARE_YSYXSOC)
 #define RESET_VECTOR (PMEM_LEFT + CONFIG_PC_RESET_OFFSET)
 #else
-#define RESET_VECTOR (YSYXSOC_MROM_LEFT)
+#define RESET_VECTOR (YSYXSOC_FLASH_LEFT)
 #endif
 
 
@@ -46,12 +58,13 @@ static inline bool in_pmem(paddr_t addr) {
   #if !defined(CONFIG_TARGET_SHARE_YSYXSOC)
     return addr - CONFIG_MBASE < CONFIG_MSIZE;
   #else
-    return (addr >= YSYXSOC_MROM_LEFT && addr <= YSYXSOC_MROM_RIGHT) || (addr >= YSYXSOC_SRAM_LEFT && addr <= YSYXSOC_SRAM_RIGHT);
+    return (   (addr >= YSYXSOC_MROM_LEFT && addr <= YSYXSOC_MROM_RIGHT) \
+           || (addr >= YSYXSOC_SRAM_LEFT && addr <= YSYXSOC_SRAM_RIGHT) \
+           || (addr >= YSYXSOC_PSRAM_LEFT && addr <= YSYXSOC_PSRAM_RIGHT) \
+           || (addr >= YSYXSOC_SDRAM_LEFT && addr <= YSYXSOC_SDRAM_RIGHT) \
+           || (addr >= YSYXSOC_FLASH_LEFT && addr <= YSYXSOC_FLASH_RIGHT));
   #endif
 }
-
-
-
 
 word_t paddr_read(paddr_t addr, int len);
 void paddr_write(paddr_t addr, int len, word_t data);

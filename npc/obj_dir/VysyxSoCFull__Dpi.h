@@ -34,6 +34,10 @@ extern "C" {
     extern void psram_read(int raddr, int count, int* rdata);
     // DPI import at /home/seaber/ysyx-workbench/abstract-machine/../npc/../ysyxSoC/perip/psram/psram.v:219:30
     extern void psram_write(int waddr, int count, int wdata);
+    // DPI import at /home/seaber/ysyx-workbench/abstract-machine/../npc/../ysyxSoC/perip/sdram/sdram.v:2:30
+    extern void sdram_read(int raddr, int count, int* rdata);
+    // DPI import at /home/seaber/ysyx-workbench/abstract-machine/../npc/../ysyxSoC/perip/sdram/sdram.v:1:30
+    extern void sdram_write(int waddr, int count, int wdata);
 
 #ifdef __cplusplus
 }
