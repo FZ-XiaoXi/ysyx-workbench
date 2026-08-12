@@ -1,5 +1,7 @@
 TOPNAME=ysyxSoCFull
 
+include $(NVBOARD_HOME)/scripts/nvboard.mk
+
 LD_PRELOAD ?=
 LD_PRELOAD += $(gcc -print-file-name=libasan.so)
 C_INC_PATH ?=
@@ -7,6 +9,7 @@ C_INC_PATH += csrc/
 C_INC_PATH += csrc/include
 C_INC_PATH += tools/capstone/repo/include
 C_INC_PATH := $(abspath $(C_INC_PATH))
+C_INC_PATH += $(NVBOARD_USR_INC)
 
 V_INC_PATH ?=
 V_INC_PATH += $(NPC_HOME)/../ysyxSoC/perip/uart16550/rtl/
@@ -37,10 +40,12 @@ override ARGS += $(ARGS_DIFF)
 IMG ?=
 ELF ?=
 
+
+
 all:
 #	@echo "Write this Makefile by your self."
 
-sim: $(SIM_C) $(SIM_V) 
+sim: $(SIM_C) $(SIM_V) $(NVBOARD_ARCHIVE)
 	$(call git_commit, "sim RTL") # DO NOT REMOVE THIS LINE!!!
 	verilator $(VERILATOR_FLAGS) --top-module $(TOPNAME) $^ $(addprefix -CFLAGS , $(CXXFLAGS)) $(addprefix -LDFLAGS , $(LDFLAGS))
 	@echo "ARGS = $(ARGS)"

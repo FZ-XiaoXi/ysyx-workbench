@@ -37,18 +37,28 @@ VM_PREFIX = VysyxSoCFull
 VM_MODPREFIX = VysyxSoCFull
 # User CFLAGS (from -CFLAGS on Verilator command line)
 VM_USER_CFLAGS = \
+  -MMD \
+  -O3 \
+  -I/usr/include/SDL2 \
+  -D_REENTRANT \
   -I/home/seaber/ysyx-workbench/npc/csrc \
   -I/home/seaber/ysyx-workbench/npc/csrc/include \
   -I/home/seaber/ysyx-workbench/npc/tools/capstone/repo/include \
+  -I/home/seaber/ysyx-workbench/nvboard/usr/include \
   -DTOP_NAME="VysyxSoCFull" \
   -g \
 
 # User LDLIBS (from -LDFLAGS on Verilator command line)
 VM_USER_LDLIBS = \
+  /home/seaber/ysyx-workbench/nvboard/build/nvboard.a \
+  -lSDL2 \
+  -lSDL2_image \
+  -lSDL2_ttf \
   -lreadline \
 
 # User .cpp files (from .cpp's on Verilator command line)
 VM_USER_CLASSES = \
+  auto_bind \
   cpu \
   io \
   serial \
@@ -81,6 +91,8 @@ include $(VERILATOR_ROOT)/include/verilated.mk
 ### Executable rules... (from --exe)
 VPATH += $(VM_USER_DIR)
 
+auto_bind.o: csrc/auto_bind.cpp 
+	$(OBJCACHE) $(CXX) $(CXXFLAGS) $(CPPFLAGS) $(OPT_FAST)  -c -o $@ $<
 cpu.o: csrc/cpu.c 
 	$(OBJCACHE) $(CXX) $(CXXFLAGS) $(CPPFLAGS) $(OPT_FAST)  -c -o $@ $<
 io.o: csrc/devices/io.c 

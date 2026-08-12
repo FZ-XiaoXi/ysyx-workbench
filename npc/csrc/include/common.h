@@ -10,6 +10,7 @@
 #include <assert.h>
 #include "debug.h"
 
+
 #include "VysyxSoCFull.h"
 #include "VysyxSoCFull_ysyxSoCFull.h"
 #include "VysyxSoCFull_ysyxSoCASIC.h"
@@ -63,6 +64,10 @@ extern FILE* log_fp;
 #define CONFIG_PC_RESET_OFFSET 0x0
 #define RESET_VECTOR (FLASH_LEFT + CONFIG_PC_RESET_OFFSET)
 
+#define CONFIG_NVBOARD_ENABLE
+#ifdef CONFIG_NVBOARD_ENABLE
+    #include "nvboard.h"
+#endif
 
 // #define CONFIG_DIFFTEST_ENABLE
 #ifdef CONFIG_DIFFTEST_ENABLE

@@ -13,7 +13,7 @@ int main(int argc, char** argv) {
 	Log("Init FINISH");
 	// Verilated::commandArgs(argc, argv);
 	sdb_mainloop();
-
+	
 	// while (!contextp->gotFinish()&&cpu.state==NPC_RUNNING) {
 	// 	onecyc(contextp,top);
 	// }
@@ -22,8 +22,11 @@ int main(int argc, char** argv) {
     delete top;
     delete contextp;
 	#ifdef CONFIG_WAVE_ENABLE
-	tfp->close();
-	delete tfp;
+		tfp->close();
+		delete tfp;
+	#endif
+	#ifdef CONFIG_NVBOARD_ENABLE
+		nvboard_quit();
 	#endif
 	int status = !(cpu.state==NPC_QUIT || (cpu.state==NPC_END && cpu.halt_ret==0));
     return status;
