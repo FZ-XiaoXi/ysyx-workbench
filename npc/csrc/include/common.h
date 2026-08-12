@@ -13,8 +13,8 @@
 #include "VysyxSoCFull.h"
 #include "VysyxSoCFull_ysyxSoCFull.h"
 #include "VysyxSoCFull_ysyxSoCASIC.h"
-#include "VysyxSoCFull_AXI4RAM.h"
-#include "VysyxSoCFull_mem_2048x32.h"
+// #include "VysyxSoCFull_AXI4RAM.h"
+// #include "VysyxSoCFull_mem_2048x32.h"
 #include "VysyxSoCFull_APBUart16550.h"
 #include "VysyxSoCFull_uart_top_apb.h"
 #include "VysyxSoCFull_uart_regs.h"
@@ -53,7 +53,7 @@ extern FILE* log_fp;
 #define PSRAM_LEFT CONFIG_PSRAMBASE
 
 #define CONFIG_SDRAMBASE 0xA0000000
-#define CONFIG_SDRAMSIZE 0x04000000
+#define CONFIG_SDRAMSIZE 0x08000000
 #define SDRAM_LEFT CONFIG_SDRAMBASE
 
 #define CONFIG_MROMBASE 0x20000000
@@ -70,7 +70,7 @@ extern FILE* log_fp;
 #endif
 
 // #define CONFIG_WATCHPOINT_ENABLE
-#define CONFIG_WAVE_ENABLE
+// #define CONFIG_WAVE_ENABLE
 
 
 // #define CONFIG_TRACE_ENABLE

@@ -43,12 +43,12 @@ void init_difftest(char *diff_so_file, long img_size){
 	ref_difftest_memcpy(CONFIG_SRAMBASE, &MEM(CONFIG_SRAMBASE), CONFIG_SRAMSIZE, DIFFTEST_TO_REF);
 	ref_difftest_memcpy(CONFIG_PSRAMBASE, &PSRAM(CONFIG_PSRAMBASE), CONFIG_PSRAMSIZE, DIFFTEST_TO_REF);
 	
-	for(int i=0;i<CONFIG_SDRAMSIZE>>2;i++){
-		SDRAM[i] = (uint32_t)SDRAML((uint32_t)(i*4 + CONFIG_SDRAMBASE)) | ((uint32_t)SDRAMH((uint32_t)(i*4 + CONFIG_SDRAMBASE)) << 16);
-	}
-	ref_difftest_memcpy(CONFIG_SDRAMBASE, SDRAM, CONFIG_SDRAMSIZE, DIFFTEST_TO_REF);
+	// for(int i=0;i<CONFIG_SDRAMSIZE>>2;i++){
+	// 	SDRAM[i] = (uint32_t)SDRAML((uint32_t)(i*4 + CONFIG_SDRAMBASE)) | ((uint32_t)SDRAMH((uint32_t)(i*4 + CONFIG_SDRAMBASE)) << 16);
+	// }
+	// ref_difftest_memcpy(CONFIG_SDRAMBASE, SDRAM, CONFIG_SDRAMSIZE, DIFFTEST_TO_REF);
 	
-  	ref_difftest_regcpy(cpu.gpr, &cpu.pc, DIFFTEST_TO_REF);
+  	// ref_difftest_regcpy(cpu.gpr, &cpu.pc, DIFFTEST_TO_REF);
 	Log("Finished initializing differential testing.");
 }
 

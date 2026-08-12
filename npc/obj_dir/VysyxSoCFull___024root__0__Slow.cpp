@@ -24,8 +24,12 @@ VL_ATTR_COLD void VysyxSoCFull___024root___eval_static(VysyxSoCFull___024root* v
         = vlSymsp->TOP__ysyxSoCFull.__PVT___asic_psram_ce_n;
     vlSelfRef.__Vtrigprevexpr___TOP__ysyxSoCFull____PVT___asic_psram_sck__0 
         = vlSymsp->TOP__ysyxSoCFull.__PVT___asic_psram_sck;
-    vlSelfRef.__Vtrigprevexpr___TOP__ysyxSoCFull____PVT__sdram__DOT__u_sdram_16_H__DOT__clock__0 
-        = vlSymsp->TOP__ysyxSoCFull.__PVT__sdram__DOT__u_sdram_16_H__DOT__clock;
+    vlSelfRef.__Vtrigprevexpr___TOP__ysyxSoCFull____PVT__sdram__DOT__clock__0 
+        = vlSymsp->TOP__ysyxSoCFull.__PVT__sdram__DOT__clock;
+    vlSelfRef.__Vtrigprevexpr___TOP__ysyxSoCFull____PVT__sdram__DOT__sdram_32_0__DOT__u_sdram_16_H__DOT__clock__0 
+        = vlSymsp->TOP__ysyxSoCFull.__PVT__sdram__DOT__sdram_32_0__DOT__u_sdram_16_H__DOT__clock;
+    vlSelfRef.__Vtrigprevexpr___TOP__ysyxSoCFull____PVT__sdram__DOT__sdram_32_1__DOT__u_sdram_16_H__DOT__clock__0 
+        = vlSymsp->TOP__ysyxSoCFull.__PVT__sdram__DOT__sdram_32_1__DOT__u_sdram_16_H__DOT__clock;
     vlSelfRef.__Vtrigprevexpr___TOP__clock__0 = vlSelfRef.clock;
     vlSelfRef.__Vtrigprevexpr___TOP__reset__0 = vlSelfRef.reset;
 }
@@ -258,13 +262,19 @@ VL_ATTR_COLD void VysyxSoCFull___024root___dump_triggers__act(const VlUnpacked<Q
         VL_DBG_MSGS("         '" + tag + "' region trigger index 3 is active: @(posedge ysyxSoCFull._asic_psram_sck)\n");
     }
     if ((1U & (IData)((triggers[0U] >> 4U)))) {
-        VL_DBG_MSGS("         '" + tag + "' region trigger index 4 is active: @(posedge ysyxSoCFull.sdram.u_sdram_16_H.clock)\n");
+        VL_DBG_MSGS("         '" + tag + "' region trigger index 4 is active: @(posedge ysyxSoCFull.sdram.clock)\n");
     }
     if ((1U & (IData)((triggers[0U] >> 5U)))) {
-        VL_DBG_MSGS("         '" + tag + "' region trigger index 5 is active: @(posedge clock)\n");
+        VL_DBG_MSGS("         '" + tag + "' region trigger index 5 is active: @(posedge ysyxSoCFull.sdram.sdram_32_0.u_sdram_16_H.clock)\n");
     }
     if ((1U & (IData)((triggers[0U] >> 6U)))) {
-        VL_DBG_MSGS("         '" + tag + "' region trigger index 6 is active: @(posedge reset)\n");
+        VL_DBG_MSGS("         '" + tag + "' region trigger index 6 is active: @(posedge ysyxSoCFull.sdram.sdram_32_1.u_sdram_16_H.clock)\n");
+    }
+    if ((1U & (IData)((triggers[0U] >> 7U)))) {
+        VL_DBG_MSGS("         '" + tag + "' region trigger index 7 is active: @(posedge clock)\n");
+    }
+    if ((1U & (IData)((triggers[0U] >> 8U)))) {
+        VL_DBG_MSGS("         '" + tag + "' region trigger index 8 is active: @(posedge reset)\n");
     }
 }
 #endif  // VL_DEBUG
@@ -288,6 +298,10 @@ VL_ATTR_COLD void VysyxSoCFull___024root____Vm_traceActivitySetAll(VysyxSoCFull_
     vlSelfRef.__Vm_traceActivity[0x0000000bU] = 1U;
     vlSelfRef.__Vm_traceActivity[0x0000000cU] = 1U;
     vlSelfRef.__Vm_traceActivity[0x0000000dU] = 1U;
+    vlSelfRef.__Vm_traceActivity[0x0000000eU] = 1U;
+    vlSelfRef.__Vm_traceActivity[0x0000000fU] = 1U;
+    vlSelfRef.__Vm_traceActivity[0x00000010U] = 1U;
+    vlSelfRef.__Vm_traceActivity[0x00000011U] = 1U;
 }
 
 VL_ATTR_COLD void VysyxSoCFull___024root___ctor_var_reset(VysyxSoCFull___024root* vlSelf) {
@@ -331,13 +345,15 @@ VL_ATTR_COLD void VysyxSoCFull___024root___ctor_var_reset(VysyxSoCFull___024root
     vlSelf->__Vtrigprevexpr___TOP__ysyxSoCFull__asic____PVT__spi_sck__0 = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 16922055095286911739ull);
     vlSelf->__Vtrigprevexpr___TOP__ysyxSoCFull____PVT___asic_psram_ce_n__0 = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 2376599365100612846ull);
     vlSelf->__Vtrigprevexpr___TOP__ysyxSoCFull____PVT___asic_psram_sck__0 = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 12750872355276837962ull);
-    vlSelf->__Vtrigprevexpr___TOP__ysyxSoCFull____PVT__sdram__DOT__u_sdram_16_H__DOT__clock__0 = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 4777903109582377305ull);
+    vlSelf->__Vtrigprevexpr___TOP__ysyxSoCFull____PVT__sdram__DOT__clock__0 = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 3633494671647802397ull);
+    vlSelf->__Vtrigprevexpr___TOP__ysyxSoCFull____PVT__sdram__DOT__sdram_32_0__DOT__u_sdram_16_H__DOT__clock__0 = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 4518844674926396265ull);
+    vlSelf->__Vtrigprevexpr___TOP__ysyxSoCFull____PVT__sdram__DOT__sdram_32_1__DOT__u_sdram_16_H__DOT__clock__0 = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 15887004186800973584ull);
     vlSelf->__Vtrigprevexpr___TOP__clock__0 = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 13272892335938733197ull);
     vlSelf->__Vtrigprevexpr___TOP__reset__0 = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 1487628987237401141ull);
     for (int __Vi0 = 0; __Vi0 < 1; ++__Vi0) {
         vlSelf->__VnbaTriggered[__Vi0] = 0;
     }
-    for (int __Vi0 = 0; __Vi0 < 14; ++__Vi0) {
+    for (int __Vi0 = 0; __Vi0 < 18; ++__Vi0) {
         vlSelf->__Vm_traceActivity[__Vi0] = 0;
     }
 }
