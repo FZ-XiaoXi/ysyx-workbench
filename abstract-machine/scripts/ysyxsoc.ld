@@ -33,14 +33,14 @@ SECTIONS
   _ssbl_lma_size = SIZEOF(.ssbl);
   _ssbl_lma_end = _ssbl_lma_start + _ssbl_lma_size;
 
-  . = ORIGIN(psram);
+  . = ORIGIN(sdram);
   _text_vma_start = .;
   .text : {
     . = ALIGN(4);
     *(.text*)
     . = ALIGN(4);
     _text_vma_end = .;
-  } > psram AT> flash
+  } > sdram AT> flash
   _text_lma_start = LOADADDR(.text);
   _text_lma_size = SIZEOF(.text);
   _text_lma_end = _text_lma_start + _text_lma_size;
@@ -52,7 +52,7 @@ SECTIONS
     *(.srodata*)
     . = ALIGN(4);
     _rodata_vma_end = .;
-  } > psram AT> flash
+  } > sdram AT> flash
   _rodata_lma_start = LOADADDR(.rodata);
   _rodata_lma_size = SIZEOF(.rodata);
   _rodata_lma_end = _rodata_lma_start + _rodata_lma_size;
@@ -66,7 +66,7 @@ SECTIONS
     *(.sdata*)
     . = ALIGN(4);
     _data_vma_end = .;
-  } > psram AT> flash
+  } > sdram AT> flash
   _data_lma_start = LOADADDR(.data);
   _data_lma_size = SIZEOF(.data);
   _data_lma_end = _data_lma_start + _data_lma_size;
@@ -79,7 +79,7 @@ SECTIONS
     *(.scommon)
     . = ALIGN(4);
     _bss_vma_end = .;
-  } > psram AT>flash
+  } > sdram AT>flash
   _bss_lma_start = LOADADDR(.bss);
   _bss_lma_size = SIZEOF(.bss);
   _bss_lma_end = _bss_lma_start + _bss_lma_size;
