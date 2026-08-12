@@ -55,6 +55,9 @@ void cpu_exec(uint64_t n){
 	int this_cnt = 0;
 	while(n > 0){
 		cpu_exec_once();
+		#ifdef CONFIG_NVBOARD_ENABLE
+			nvboard_update();
+		#endif
 		this_cnt++;
 		// if(this_cnt > 2000){
 		// 	cpu_get_reg();

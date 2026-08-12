@@ -31,32 +31,6 @@ extern char _bss_lma_end;
 Area heap = RANGE(&_heap_start, &_heap_end);
 static const char mainargs[MAINARGS_MAX_LEN] __attribute__((section(".text.mainargs"))) = TOSTRING(MAINARGS_PLACEHOLDER); // defined in CFLAGS
 
-void uart_init() {
-  // LCR Configuration Register (Offset +3, DLAB=0)
-  typedef union {
-    uint8_t val;
-    struct {
-      uint8_t wls    : 2;  // [1:0] Word Length Select: 00=5, 01=6, 10=7, 11=8 bits
-      uint8_t stb    : 1;  // [2]   Stop Bits: 0=1 stop, 1=1.5/2 stop bits
-      uint8_t pen    : 1;  // [3]   Parity Enable
-      uint8_t eps    : 1;  // [4]   Even Parity Select: 0=odd, 1=even
-      uint8_t stkpar : 1;  // [5]   Stick Parity: 1=force fixed parity
-      uint8_t brk    : 1;  // [6]   Break Control: 1=force TX low (break condition)
-      uint8_t dlab   : 1;  // [7]   Divisor Latch Access Bit: 1=access baud divisor
-    } bits;
-  } LCR_CONFIG_T;
-  LCR_CONFIG_T lcr_config;
-  lcr_config.val = inb(SERIAL_PORT + 3);
-  // lcr_config.bits.wls=0x3;
-  // lcr_config.bits.stb=0;
-  // lcr_config.bits.pen=0;
-  lcr_config.bits.dlab=1;
-  outb(SERIAL_PORT + 3, lcr_config.val);
-  outb(SERIAL_PORT + 1, 0x00);
-  outb(SERIAL_PORT + 0, 0x01);
-  lcr_config.bits.dlab=0;
-  outb(SERIAL_PORT + 3, lcr_config.val);
-}
 
 void putch(char ch) {
   // while(1);
@@ -87,9 +61,8 @@ void _trm_init() {
   // start_buf_[11] = (char)((ysyx_name)&0xff);
   // start_buf_[19] = (char)((ysyx_id / 10000000) + '0');
   // putstr(start_buf_);
+  ioe_init();
   
-  uart_init();
-
   printf("data:[0x%08x-0x%08x) -> [0x%08x-0x%08x)\n",(uint32_t)(void*)(&_data_lma_start),(uint32_t)(void*)(&_data_lma_end),(uint32_t)(void*)(&_data_vma_start),(uint32_t)(void*)(&_data_vma_end));
   printf("bss:[0x%08x-0x%08x) -> [0x%08x-0x%08x)\n",(uint32_t)(void*)(&_bss_lma_start),(uint32_t)(void*)(&_bss_lma_end),(uint32_t)(void*)(&_bss_vma_start),(uint32_t)(void*)(&_bss_vma_end));
   printf("heap:[0x%08x-0x%08x)\n",(uint32_t)(void*)(&_heap_start),(uint32_t)(void*)(&_heap_end));

@@ -24,9 +24,14 @@ VysyxSoCFull* top = NULL;
 void init(int argc, char** argv){
 	//init PRAISE
 	parse_args(argc, argv);
+
+	
     //init log
 	extern void init_log(const char *log_file);
 	init_log(log_file);
+
+
+
 
     //init MEMORY & elf
 	img_size = load_img();
@@ -35,6 +40,16 @@ void init(int argc, char** argv){
 	contextp = new VerilatedContext;
 	top = new VysyxSoCFull{contextp};
 	contextp->commandArgs(argc, argv);
+
+
+#ifdef CONFIG_NVBOARD_ENABLE
+	void nvboard_bind_all_pins(VysyxSoCFull* top);
+	nvboard_bind_all_pins(top);
+	nvboard_init();
+	nvboard_update();
+	nvboard_update();
+	nvboard_update();
+#endif
 
 #ifdef CONFIG_WAVE_ENABLE
 	tfp = new VerilatedVcdC;
