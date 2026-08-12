@@ -88,7 +88,7 @@ void cpu_exec(uint64_t n){
 			// Log("PSRAM[0x%08x] = 0x%02x at pc = " FMT_WORD ,(uint32_t)(0x80000004),PSRAM((uint32_t)(0x80000004)),cpu.pc);
 			// Log("PSRAM[0x%08x] = 0x%02x at pc = " FMT_WORD ,(uint32_t)(0x80001236),PSRAM((uint32_t)(0x80001236)),cpu.pc);
 			// Log("PSRAM[0x%08x] = 0x%02x at pc = " FMT_WORD ,(uint32_t)(0x80001237),PSRAM((uint32_t)(0x80001237)),cpu.pc);
-			// Log("PSRAM[0x%08x] = 0x%04x%04x at pc = " FMT_WORD ,(uint32_t)(0xa1fffff0),SDRAMH((uint32_t)(0xa1fffff0)),SDRAML((uint32_t)(0xa1fffff0)),cpu.pc);
+			// Log("PSRAM[0x%08x] = 0x%04x%04x at pc = " FMT_WORD ,(uint32_t)(0xa0000000),SDRAM01((uint32_t)(0xa0000000)),SDRAM00((uint32_t)(0xa0000000)),cpu.pc);
 			
 			if(check_mrom_bound(cpu.pc)){
 				cpu.inst = FLASH(cpu.pc);

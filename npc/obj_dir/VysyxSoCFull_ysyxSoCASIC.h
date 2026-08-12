@@ -38,7 +38,7 @@ class alignas(VL_CACHE_LINE_BYTES) VysyxSoCFull_ysyxSoCASIC final : public Veril
         VL_OUT8(__PVT__sdram_ras,0,0);
         VL_OUT8(__PVT__sdram_cas,0,0);
         VL_OUT8(__PVT__sdram_we,0,0);
-        VL_OUT8(__PVT__sdram_ba,1,0);
+        VL_OUT8(__PVT__sdram_ba,2,0);
         VL_OUT8(__PVT__sdram_dqm,3,0);
         VL_OUT8(__PVT__gpio_seg_0,7,0);
         VL_OUT8(__PVT__gpio_seg_1,7,0);
@@ -306,10 +306,10 @@ class alignas(VL_CACHE_LINE_BYTES) VysyxSoCFull_ysyxSoCASIC final : public Veril
         CData/*0:0*/ __PVT__lsdram_apb__DOT__msdram__DOT__u_sdram_ctrl__DOT__data_rd_en_q;
         CData/*3:0*/ __PVT__lsdram_apb__DOT__msdram__DOT__u_sdram_ctrl__DOT__dqm_q;
         CData/*0:0*/ __PVT__lsdram_apb__DOT__msdram__DOT__u_sdram_ctrl__DOT__cke_q;
-        CData/*1:0*/ __PVT__lsdram_apb__DOT__msdram__DOT__u_sdram_ctrl__DOT__bank_q;
+        CData/*2:0*/ __PVT__lsdram_apb__DOT__msdram__DOT__u_sdram_ctrl__DOT__bank_q;
         CData/*3:0*/ __PVT__lsdram_apb__DOT__msdram__DOT__u_sdram_ctrl__DOT__dqm_buffer_q;
         CData/*0:0*/ __PVT__lsdram_apb__DOT__msdram__DOT__u_sdram_ctrl__DOT__refresh_q;
-        CData/*3:0*/ __PVT__lsdram_apb__DOT__msdram__DOT__u_sdram_ctrl__DOT__row_open_q;
+        CData/*7:0*/ __PVT__lsdram_apb__DOT__msdram__DOT__u_sdram_ctrl__DOT__row_open_q;
         CData/*3:0*/ __PVT__lsdram_apb__DOT__msdram__DOT__u_sdram_ctrl__DOT__state_q;
         CData/*3:0*/ __PVT__lsdram_apb__DOT__msdram__DOT__u_sdram_ctrl__DOT__next_state_r;
         CData/*3:0*/ __PVT__lsdram_apb__DOT__msdram__DOT__u_sdram_ctrl__DOT__target_state_r;
@@ -615,7 +615,7 @@ class alignas(VL_CACHE_LINE_BYTES) VysyxSoCFull_ysyxSoCASIC final : public Veril
         VlUnpacked<IData/*31:0*/, 2048> __PVT__axi4ram__DOT__mem_ext__DOT__Memory;
     };
     struct {
-        VlUnpacked<SData/*12:0*/, 4> __PVT__lsdram_apb__DOT__msdram__DOT__u_sdram_ctrl__DOT__active_row_q;
+        VlUnpacked<SData/*12:0*/, 8> __PVT__lsdram_apb__DOT__msdram__DOT__u_sdram_ctrl__DOT__active_row_q;
         VlUnpacked<QData/*46:0*/, 2> __PVT__axi4buf__DOT__nodeOut_awdeq_q__DOT__ram_ext__DOT__Memory;
         VlUnpacked<QData/*35:0*/, 2> __PVT__axi4buf__DOT__nodeOut_wdeq_q__DOT__ram_ext__DOT__Memory;
         VlUnpacked<CData/*5:0*/, 2> __PVT__axi4buf__DOT__nodeIn_bdeq_q__DOT__ram_ext__DOT__Memory;
