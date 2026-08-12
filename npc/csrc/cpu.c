@@ -53,8 +53,10 @@ void cpu_exec(uint64_t n){
 		cpu_exec_once();
 	}
 	int this_cnt = 0;
+	static uint64_t cyc_cnt = 0;
 	while(n > 0){
 		cpu_exec_once();
+		cyc_cnt++;
 		#ifdef CONFIG_NVBOARD_ENABLE
 			nvboard_update();
 		#endif
@@ -82,7 +84,7 @@ void cpu_exec(uint64_t n){
 			cpu_get_reg();
 			static int cnt = 0;
 			if(cnt++==10000){
-				Log("[sp=0x%08x]Executed %lu instructions, current pc = " FMT_WORD,cpu.gpr[2], cpu.count, cpu.pc);
+				Log("[sp=0x%08x][cycle=%ld]Executed %lu instructions, current pc = " FMT_WORD,cpu.gpr[2],  cyc_cnt,cpu.count, cpu.pc);
 				cnt=0;
 			}
 			// Log("%02x %02x %02x %02x at pc = " FMT_WORD ,top->ysyxSoCFull->asic->axi4ram->mem_ext->Memory[1984],top->ysyxSoCFull->asic->axi4ram->mem_ext->Memory[1985],top->ysyxSoCFull->asic->axi4ram->mem_ext->Memory[1986],top->ysyxSoCFull->asic->axi4ram->mem_ext->Memory[1987],cpu.pc);

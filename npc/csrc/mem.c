@@ -12,6 +12,8 @@ uint16_t SDRAM00[CONFIG_SDRAMSIZE>>3];
 uint16_t SDRAM01[CONFIG_SDRAMSIZE>>3];
 uint16_t SDRAM10[CONFIG_SDRAMSIZE>>3];
 uint16_t SDRAM11[CONFIG_SDRAMSIZE>>3];
+
+
 int pmem_read(int raddr){
 	if(check_sram_bound(raddr)){
 		// 总是读取地址为`raddr & ~0x3u`的4字节返回
