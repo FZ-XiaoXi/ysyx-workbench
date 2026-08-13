@@ -144,7 +144,7 @@ void cpu_exec(uint64_t n){
 			n--;
 			cpu.counter_inst++;
 			static int cnt = 0;
-			if((cnt++==10000) || (cpu.state != NPC_RUNNING)){
+			if((cnt++==100000) || (cpu.state != NPC_RUNNING)){
 				Log("[sp=0x%08x][cyc=%ld][inst=%lu][AvgIPC=%.2f] pc = " FMT_WORD,cpu.gpr[2],  cpu.counter_cycle,cpu.counter_inst, (float)cpu.counter_inst/(float)cpu.counter_cycle, cpu.pc);
 				Log("[IFUGetInst=%lu cyc%.2f][LSUGetData=%lu cyc%.2f][LSUPutData=%lu cyc%.2f][IDUMem=%lu cyc%.2f][IDUCSR=%lu cyc%.2f][IDUCalc=%lu cyc%.2f] pc = " FMT_WORD,
 					cpu.counter_IFU_get_inst, (float)((float)cpu.counter_IFU_get_inst_cyc / (cpu.counter_IFU_get_inst==0?1:(float)cpu.counter_IFU_get_inst)),
@@ -164,14 +164,14 @@ void cpu_exec(uint64_t n){
 			// Log("PSRAM[0x%08x] = 0x%02x at pc = " FMT_WORD ,(uint32_t)(0x80001237),PSRAM((uint32_t)(0x80001237)),cpu.pc);
 			// Log("PSRAM[0x%08x] = 0x%04x%04x at pc = " FMT_WORD ,(uint32_t)(0xa0000000),SDRAM01((uint32_t)(0xa0000000)),SDRAM00((uint32_t)(0xa0000000)),cpu.pc);
 			
-			if(check_mrom_bound(cpu.pc)){
-				cpu.inst = FLASH(cpu.pc);
-			}else{
-				// Log("pc = " FMT_WORD " is out of bound", cpu.pc);
-			}
+			// if(check_mrom_bound(cpu.pc)){
+			// 	cpu.inst = FLASH(cpu.pc);
+			// }else{
+			// 	// Log("pc = " FMT_WORD " is out of bound", cpu.pc);
+			// }
 			
 			trace_and_difftest();
-			cpu.mem_access_addr = 0;
+			// cpu.mem_access_addr = 0;
 			if(cpu.state != NPC_RUNNING) break;
 		}
 		else{

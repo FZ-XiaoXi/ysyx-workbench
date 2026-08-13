@@ -44,20 +44,70 @@
 
 #if !defined(CONFIG_TARGET_SHARE_YSYXSOC)
 
+
+#ifdef CONFIG_MTRACE
+#include <SDL2/SDL.h>
+#define SCREEN_W 1920
+#define SCREEN_H 1080
+static SDL_Renderer *renderer = NULL;
+static uint8_t is_init_mem_screen = 0;
+static SDL_Texture *texture = NULL;
+static void *mtrace_mem = NULL;
+static void init_mem_screen() {
+  mtrace_mem = malloc(SCREEN_W * SCREEN_H * sizeof(uint32_t));
+  assert(mtrace_mem);
+  memset(mtrace_mem, 0x004b, SCREEN_W * SCREEN_H * sizeof(uint32_t));
+  SDL_Window *window = NULL;
+  char title[128];
+  sprintf(title, "%s-MTrace", str(__GUEST_ISA__));
+  SDL_Init(SDL_INIT_VIDEO);
+  SDL_CreateWindowAndRenderer(
+      SCREEN_W,
+      SCREEN_H,
+      0, &window, &renderer);
+  SDL_SetWindowTitle(window, title);
+  texture = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_ARGB8888,
+      SDL_TEXTUREACCESS_STATIC, SCREEN_W, SCREEN_H);
+  SDL_RenderPresent(renderer);
+}
+
+static inline void update_mem_screen() {
+  SDL_UpdateTexture(texture, NULL, mtrace_mem, SCREEN_W * sizeof(uint32_t));
+  SDL_RenderClear(renderer);
+  SDL_RenderCopy(renderer, texture, NULL, NULL);
+  SDL_RenderPresent(renderer);
+}
+#endif
+
+
 typedef enum{MEMREAD,MEMWRITE} mtrace_t;
 static void print_mtrace(mtrace_t op,paddr_t addr,uint32_t val){
 #ifdef CONFIG_MTRACE
+  if(!is_init_mem_screen){
+    init_mem_screen();
+    is_init_mem_screen = 1;
+  }
+
   if(nemu_state.state != NEMU_RUNNING) return;
-#if   defined(CONFIG_MTRACE_RANGE)
-  if(!(addr>=CONFIG_MTRACE_RANGE_START && addr<=CONFIG_MTRACE_RANGE_END)) return;
-#else
-#endif
+  #if   defined(CONFIG_MTRACE_RANGE)
+    if(!(addr>=CONFIG_MTRACE_RANGE_START && addr<=CONFIG_MTRACE_RANGE_END)) return;
+  #endif
+  static uint32_t mtrace_skip_cnt = 0;
+  
+  if(mtrace_skip_cnt ++ > 5000){
+    mtrace_skip_cnt = 0;
+    update_mem_screen();
+  }
+  uint32_t pix_index = (((addr - PMEM_LEFT)) % (SCREEN_W * SCREEN_H));
+  ((uint32_t*)mtrace_mem)[pix_index] = val;
+  
   if(op==MEMREAD){
-    Log("MEMTracer: READ  memory [0x%08x] = '0x%08x' at pc = '0x%08x'\n",addr,val,cpu.pc);
+    // Log("MEMTracer: READ  memory [0x%08x] = '0x%08x' at pc = '0x%08x'",addr,val,cpu.pc);
   }
   if(op==MEMWRITE){
-    Log("MEMTracer: WRITE memory [0x%08x] = '0x%08x' at pc = '0x%08x'\n",addr,val,cpu.pc);
+    // Log("MEMTracer: WRITE memory [0x%08x] = '0x%08x' at pc = '0x%08x'",addr,val,cpu.pc);
   }
+
 #endif
 }
 
