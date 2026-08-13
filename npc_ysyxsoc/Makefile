@@ -59,6 +59,10 @@ csrc/utils/disasm.c: $(LIBCAPSTONE)
 $(LIBCAPSTONE):
 	$(MAKE) -C tools/capstone
 
+perf:
+	@echo "git commit: $(shell git log -1 --format="%H")"
+	$(MAKE) -C $(NPC_SOC_HOME)/../am-kernels/benchmarks/microbench/ run ARCH=riscv32e-ysyxsoc mainargs=test
+
 clean:
 	rm -rf obj_dir npc-waveform.vcd wave.fst
 include ~/ysyx-workbench/Makefile
