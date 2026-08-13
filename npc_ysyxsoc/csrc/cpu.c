@@ -143,9 +143,8 @@ void cpu_exec(uint64_t n){
 			// Log("PC=" FMT_WORD , cpu.pc);
 			n--;
 			cpu.counter_inst++;
-			cpu_get_reg();
 			static int cnt = 0;
-			if(cnt++==10000){
+			if((cnt++==10000) || (cpu.state != NPC_RUNNING)){
 				Log("[sp=0x%08x][cyc=%ld][inst=%lu][AvgIPC=%.2f] pc = " FMT_WORD,cpu.gpr[2],  cpu.counter_cycle,cpu.counter_inst, (float)cpu.counter_inst/(float)cpu.counter_cycle, cpu.pc);
 				Log("[IFUGetInst=%lu cyc%.2f][LSUGetData=%lu cyc%.2f][LSUPutData=%lu cyc%.2f][IDUMem=%lu cyc%.2f][IDUCSR=%lu cyc%.2f][IDUCalc=%lu cyc%.2f] pc = " FMT_WORD,
 					cpu.counter_IFU_get_inst, (float)((float)cpu.counter_IFU_get_inst_cyc / (cpu.counter_IFU_get_inst==0?1:(float)cpu.counter_IFU_get_inst)),
