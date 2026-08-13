@@ -1,5 +1,5 @@
 #include "common.h"
-#include "VysyxSoCFull__Dpi.h"
+#include "Vtop__Dpi.h"
 #include "svdpi.h"
 #include "cpu.h"
 #include "mem.h"
@@ -14,28 +14,26 @@ const char *regs[] = {
 
 static void cpu_get_reg(){
 	cpu.pc = cpu.dnpc;
-	cpu.dnpc = top->ysyxSoCFull->asic->cpu->cpu->PC;
+	cpu.dnpc = top->top->PC;
 	for(int i=0;i<CONFIG_GPR_NUM;i++){
-		cpu.gpr[i] = top->ysyxSoCFull->asic->cpu->cpu->REG_0->GPR[i];
+		cpu.gpr[i] = top->top->REG_0->GPR[i];
 	}
 }
 
 static void cpu_exec_once(){
-	top->clock=1;
+	top->clk=1;
 	top->eval();
 	#ifdef CONFIG_WAVE_ENABLE
-	// if(cpu.count > 4450000) DUMP();
-	DUMP();
+	tfp->dump(contextp->time());
 	#endif
-	contextp->timeInc(2);
+	contextp->timeInc(1);
 	
-	top->clock=0;
+	top->clk=0;
 	top->eval();
 	#ifdef CONFIG_WAVE_ENABLE
-	// if(cpu.count > 4450000) DUMP();
-	DUMP();
+	tfp->dump(contextp->time());
 	#endif
-	contextp->timeInc(2);
+	contextp->timeInc(1);
 }
 void cpu_exec(uint64_t n){
 	switch (cpu.state)
@@ -48,69 +46,30 @@ void cpu_exec(uint64_t n){
 		default:
 			cpu.state = NPC_RUNNING;
 	}
-	
-	while(cpu.ifu_state != 0 || top->ysyxSoCFull->asic->cpu->cpu->reset){
-		cpu_exec_once();
-	}
-	int this_cnt = 0;
-	static uint64_t cyc_cnt = 0;
+
 	while(n > 0){
 		cpu_exec_once();
-		cyc_cnt++;
-		#ifdef CONFIG_NVBOARD_ENABLE
-			nvboard_update();
-		#endif
-		this_cnt++;
-		// if(this_cnt > 2000){
-		// 	cpu_get_reg();
-		// 	Log("cpu.count = %lu, this_cnt = %d, current pc = " FMT_WORD, cpu.count, this_cnt, cpu.pc);
-		// 	while(1);
-		// 	// if(cpu.pc == 0x00000044) while(1);
-		// }
-		cpu.lsu_state = top->ysyxSoCFull->asic->cpu->cpu->LSU_0->state;
-		cpu.ifu_state = top->ysyxSoCFull->asic->cpu->cpu->IFU_0->state;
-		cpu.idu_state = top->ysyxSoCFull->asic->cpu->cpu->IDU_0->state;
-		uint8_t reset_state = top->ysyxSoCFull->asic->cpu->cpu->reset;
+		cpu.lsu_state = top->top->LSU_0->state;
+		cpu.ifu_state = top->top->IFU_0->state;
+		cpu.idu_state = top->top->IDU_0->state;
 		// Log("LSU state = %d, IFU state = %d, IDU state = %d at pc = " FMT_WORD, cpu.lsu_state, cpu.ifu_state, cpu.idu_state, cpu.pc);
-		// Log("LPC = " FMT_WORD,cpu.pc);
-		// Log("PC=" FMT_WORD " INST=" FMT_WORD , cpu.pc, cpu.inst);
-		
-		
-		if(cpu.ifu_state == 0 && !reset_state){
-			this_cnt = 0;
-			// Log("PC=" FMT_WORD , cpu.pc);
+		if(cpu.ifu_state != 0) continue;
+		else{
 			n--;
 			cpu.count++;
 			cpu_get_reg();
-			static int cnt = 0;
-			if(cnt++==10000){
-				Log("[sp=0x%08x][cycle=%ld]Executed %lu instructions, current pc = " FMT_WORD,cpu.gpr[2],  cyc_cnt,cpu.count, cpu.pc);
-				cnt=0;
-			}
-			// Log("%02x %02x %02x %02x at pc = " FMT_WORD ,top->ysyxSoCFull->asic->axi4ram->mem_ext->Memory[1984],top->ysyxSoCFull->asic->axi4ram->mem_ext->Memory[1985],top->ysyxSoCFull->asic->axi4ram->mem_ext->Memory[1986],top->ysyxSoCFull->asic->axi4ram->mem_ext->Memory[1987],cpu.pc);
-			// Log("LSR state = %02x LCR state = %02x at pc = " FMT_WORD ,top->ysyxSoCFull->asic->luart->muart->Uregs->lsr,top->ysyxSoCFull->asic->luart->muart->Uregs->lcr,cpu.pc);
-			// Log("PSRAM[0x%08x] = 0x%02x at pc = " FMT_WORD ,(uint32_t)(0x80000000),PSRAM((uint32_t)(0x80000000)),cpu.pc);
-			// Log("PSRAM[0x%08x] = 0x%02x at pc = " FMT_WORD ,(uint32_t)(0x80000004),PSRAM((uint32_t)(0x80000004)),cpu.pc);
-			// Log("PSRAM[0x%08x] = 0x%02x at pc = " FMT_WORD ,(uint32_t)(0x80001236),PSRAM((uint32_t)(0x80001236)),cpu.pc);
-			// Log("PSRAM[0x%08x] = 0x%02x at pc = " FMT_WORD ,(uint32_t)(0x80001237),PSRAM((uint32_t)(0x80001237)),cpu.pc);
-			// Log("PSRAM[0x%08x] = 0x%04x%04x at pc = " FMT_WORD ,(uint32_t)(0xa0000000),SDRAM01((uint32_t)(0xa0000000)),SDRAM00((uint32_t)(0xa0000000)),cpu.pc);
-			
-			if(check_mrom_bound(cpu.pc)){
-				cpu.inst = FLASH(cpu.pc);
+			if(check_pmem_bound(cpu.pc)){
+				cpu.inst = pmem_read(cpu.pc);
 			}else{
-				// Log("pc = " FMT_WORD " is out of bound", cpu.pc);
+				Log("pc = " FMT_WORD " is out of bound", cpu.pc);
 			}
 			
+
 			trace_and_difftest();
 			cpu.mem_access_addr = 0;
 			if(cpu.state != NPC_RUNNING) break;
+			
 		}
-		else{
-			continue;
-		}
-		// Log("MROM[0]=" FMT_WORD ,MROM[0]);
-		// Log("RPC = " FMT_WORD,cpu.pc);
-
 	}
 	
 	switch (cpu.state)
@@ -141,9 +100,9 @@ void cpu_exec(uint64_t n){
 
 void reg_display(CPUState cpu) {
   for(int i=0;i<CONFIG_GPR_NUM;i++){
-    printf("%02d $%s\t" FMT_WORD "\t%d\n",i,regs[i],cpu.gpr[i],cpu.gpr[i]);
+    printf("$%s\t%x\t\t%d\n",regs[i],cpu.gpr[i],cpu.gpr[i]);
   }
-  printf("$pc\t" FMT_WORD "\t%d\n",cpu.pc,cpu.pc);
+  printf("$pc\t%x\t\t%d\n",cpu.pc,cpu.pc);
 }
 
 uint32_t reg_str2val(const char *s, bool *success) {
@@ -162,7 +121,6 @@ uint32_t reg_str2val(const char *s, bool *success) {
 }
 
 void ebreak(){
-	Log("ebreak at pc = " FMT_WORD, cpu.pc);
 	cpu.state=NPC_END;
 }
 
