@@ -87,7 +87,7 @@ SECTIONS
   . = ALIGN(0x10000);
 
   _heap_start = .;
-  . = _heap_start + 0xf0000;
+  . = _heap_start + 0x2000000;
   _heap_end = .;
 
   . = ORIGIN(sram);
