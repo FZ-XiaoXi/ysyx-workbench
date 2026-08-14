@@ -18,7 +18,7 @@
 #include <device/mmio.h>
 #include <isa.h>
 
-#if !defined(CONFIG_TARGET_SHARE_YSYXSOC)
+#if !defined(CONFIG_TARGET_YSYXSOC)
   #if   defined(CONFIG_PMEM_MALLOC)
   static uint8_t *pmem = NULL;
   #else // CONFIG_PMEM_GARRAY
@@ -42,7 +42,7 @@
 
 
 
-#if !defined(CONFIG_TARGET_SHARE_YSYXSOC)
+#if !defined(CONFIG_TARGET_YSYXSOC)
 
 
 #ifdef CONFIG_MTRACE
@@ -63,7 +63,7 @@ static void init_mem_screen() {
   SDL_Init(SDL_INIT_VIDEO);
   SDL_CreateWindowAndRenderer(
       SCREEN_W,
-      SCREEN_H,
+      SCREEN_H,paddr_write
       0, &window, &renderer);
   SDL_SetWindowTitle(window, title);
   texture = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_ARGB8888,
@@ -181,6 +181,7 @@ uint8_t* guest_to_host(paddr_t paddr) {
   }else if(paddr >= YSYXSOC_FLASH_LEFT && paddr <= YSYXSOC_FLASH_RIGHT){
     return flash + paddr - YSYXSOC_FLASH_LEFT;
   }else{
+    
     out_of_bound(paddr);
   }
   return NULL;
@@ -244,7 +245,7 @@ word_t paddr_read(paddr_t addr, int len) {
     uint32_t val = pmem_read(addr, len);
     return val;
   }
-  // IFDEF(CONFIG_DEVICE, return mmio_read(addr, len));
+  IFDEF(CONFIG_DEVICE, return mmio_read(addr, len));
   out_of_bound(addr);
   return 0;
 }
@@ -254,7 +255,7 @@ void paddr_write(paddr_t addr, int len, word_t data) {
     pmem_write(addr, len, data);
     return;
   }
-  // IFDEF(CONFIG_DEVICE, mmio_write(addr, len, data); return);
+  IFDEF(CONFIG_DEVICE, mmio_write(addr, len, data); return);
   out_of_bound(addr);
 }
 #endif

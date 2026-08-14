@@ -60,12 +60,13 @@ $(LIBCAPSTONE):
 	$(MAKE) -C tools/capstone
 
 perf:
-	@echo "git commit: $(shell git log -1 --format="%H")"
 	@echo "[perf] start: $$(date '+%F %T')"; \
 	start=$$(date +%s); \
 	$(MAKE) -C $(NPC_SOC_HOME)/../am-kernels/benchmarks/microbench/ run ARCH=riscv32e-ysyxsoc mainargs=train; \
 	end=$$(date +%s); \
 	echo "[perf] 用时: $$((end - start)) 秒"
+	@echo "ysyx git commit: $(shell git log -1 --format="%H")"
+	@echo "soc git commit: $(shell cd $(NPC_SOC_HOME)/../ysyxSoC && git log -1 --format="%H")"
 
 perf-test:
 	@echo "[perf] start: $$(date '+%F %T')"; \

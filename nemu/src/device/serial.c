@@ -20,6 +20,7 @@
 // NOTE: this is compatible to 16550
 
 #define CH_OFFSET 0
+#define ST_OFFSET 5
 
 static uint8_t *serial_base = NULL;
 
@@ -36,7 +37,13 @@ static void serial_io_handler(uint32_t offset, int len, bool is_write) {
       if (is_write) serial_putc(serial_base[0]);
       else panic("do not support read");
       break;
+#ifdef CONFIG_TARGET_YSYXSOC
+    case ST_OFFSET:
+      serial_base[5] = 0xff;
+      break;
+#else
     default: panic("do not support offset = %d", offset);
+#endif
   }
 }
 
