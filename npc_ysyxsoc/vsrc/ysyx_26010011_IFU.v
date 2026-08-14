@@ -28,7 +28,7 @@ module ysyx_26010011_IFU(
     input             rlast,
     input  [3:0]      rid
 );
-    ysyx_26010011_IFU_icache #(.CACHE_BLOCK_SIZE(4), .CACHE_SIZE(16)) icache_u0(
+    ysyx_26010011_IFU_icache #(.CACHE_BLOCK_SIZE(8), .CACHE_SIZE(16)) icache_u0(
         .clock(clock),
         .reset(reset),
         .in_addr(in_addr),
@@ -42,7 +42,7 @@ module ysyx_26010011_IFU(
         .out_arid(arid),
         .out_arlen(arlen),
         .out_arsize(arsize),
-        .out_arbureset(arbureset),
+        .out_arburst(arbureset),
         .out_rdata(rdata),
         .out_rresp(rresp),
         .out_rvalid(rvalid),
@@ -134,7 +134,7 @@ module ysyx_26010011_IFU_icache #(
 
 
     output [31:0]     out_araddr, output            out_arvalid,input             out_arready,output [3:0]      out_arid,
-    output [7:0]      out_arlen,  output [2:0]      out_arsize, output [1:0]      out_arbureset,
+    output [7:0]      out_arlen,  output [2:0]      out_arsize, output [1:0]      out_arburst,
 
     input  [31:0]     out_rdata,  input  [1:0]      out_rresp,  input             out_rvalid, output            out_rready,
     input             out_rlast,  input  [3:0]      out_rid,
@@ -153,13 +153,16 @@ module ysyx_26010011_IFU_icache #(
     parameter INDEX_W = $clog2(CACHE_SIZE);
     parameter OFFSET_W = $clog2(CACHE_BLOCK_SIZE);
     parameter TAG_W   = 32 - OFFSET_W - INDEX_W;
-
+    parameter BURST_LEN = CACHE_BLOCK_SIZE>>2;
+    parameter BURST_W = (|($clog2(BURST_LEN)))?($clog2(BURST_LEN)):1;
+    localparam [BURST_W-1:0] BURST_LAST = BURST_W'(BURST_LEN - 1);
 
 
 
     wire [INDEX_W-1:0] now_index = {in_addr[31:OFFSET_W][INDEX_W-1:0]} ;
     wire [TAG_W-1:0]   now_tag   = {in_addr[31:OFFSET_W][INDEX_W + TAG_W - 1: INDEX_W]};
-    wire is_hit = cache_valid[now_index] && (cache_tag[now_index] == now_tag);
+    wire [OFFSET_W:0]now_offset = {1'b0, in_addr[OFFSET_W-1:0]};
+    wire is_hit = in_reqValid & cache_valid[now_index] && (cache_tag[now_index] == now_tag);
     assign debug_is_hit = is_hit;
     reg [BLOCK_W-1:0] cache_mem   [0:CACHE_SIZE-1];
     reg               cache_valid [0:CACHE_SIZE-1];
@@ -176,10 +179,10 @@ module ysyx_26010011_IFU_icache #(
                 cache_mem[i]   <= {BLOCK_W{1'b0}};
             end
         end else begin
-            if(((state != S_IDLE) | in_reqValid) & r_fire & !is_hit) begin
-                cache_valid[now_index] <= 1'b1;
+            if((r_fire & (state == S_WAIT_DATA))) begin
+                cache_valid[now_index] <= r_fire & out_rlast;
                 cache_tag[now_index]   <= now_tag;
-                cache_mem[now_index]   <= out_rdata;
+                cache_mem[now_index][burst_cnt*32 +: 32]   <= out_rdata;
             end
         end
     end
@@ -195,25 +198,49 @@ module ysyx_26010011_IFU_icache #(
     wire ar_fire = out_arvalid && out_arready;
     wire r_fire  = out_rvalid && out_rready;
 
-    assign out_araddr  = in_addr;
+    assign out_araddr  = in_addr & {{(32-OFFSET_W){1'b1}}, {OFFSET_W{1'b0}}};
     assign out_arid    = 4'b0;
-    assign out_arlen   = 8'b0;
+    assign out_arlen   = BURST_LEN - 1;
     assign out_arsize  = 3'b010;
-    assign out_arbureset = 2'b01;
+    assign out_arburst = 2'b01;
     assign out_arvalid = (!is_hit & (((state == S_IDLE) && in_reqValid) || (state == S_WAIT_READY)))&!reset;
     assign out_rready  = !reset;
 
+
+
+
+    reg [BURST_W-1:0] burst_cnt=0;
+    always @(posedge clock) begin
+        if (reset) begin
+            burst_cnt <= 0;
+        end else if (r_fire) begin
+            if (burst_cnt == BURST_LAST && out_rlast && r_fire) begin
+                burst_cnt <= 0;
+            end else begin
+                burst_cnt <= burst_cnt + {{(BURST_W-1){1'b0}}, 1'b1};
+            end
+        end else begin
+            burst_cnt <= burst_cnt;
+        end
+    end
+
     always @(*) begin
-        in_rdata = (is_hit) ? cache_mem[now_index] : out_rdata;
+        if(is_hit) begin
+            in_rdata = cache_mem[now_index][now_offset*8 +: 32];
+        end else if(now_offset[2+BURST_W-1:2] == BURST_LAST)begin
+            in_rdata = out_rdata;
+        end else begin
+            in_rdata = cache_mem[now_index][now_offset*8 +: 32];
+        end
+    end
+    always @(*) begin
         if(state == S_IDLE) begin
             if(in_reqValid && is_hit) begin
-                in_respValid = 1'b1;
-            end else if(in_reqValid && r_fire) begin
                 in_respValid = 1'b1;
             end else begin
                 in_respValid = 1'b0;
             end
-        end else if(next_state == S_IDLE) begin
+        end else if(r_fire & (next_state == S_IDLE)) begin
             in_respValid = 1'b1;
         end else begin
             in_respValid = 1'b0;
@@ -228,8 +255,7 @@ module ysyx_26010011_IFU_icache #(
                     next_state = S_IDLE;
                 end else if(in_reqValid) begin
                     if (ar_fire) begin
-                        if (r_fire)  next_state = S_IDLE;
-                        else         next_state = S_WAIT_DATA;
+                        next_state = S_WAIT_DATA;
                     end else begin
                         next_state = S_WAIT_READY;
                     end
@@ -239,15 +265,18 @@ module ysyx_26010011_IFU_icache #(
             end
             S_WAIT_READY: begin
                 if (ar_fire) begin
-                    if (r_fire)  next_state = S_IDLE;
-                    else         next_state = S_WAIT_DATA;
+                    next_state = S_WAIT_DATA;
                 end else begin
                     next_state = S_WAIT_READY;
                 end
             end
             S_WAIT_DATA: begin
                 if (r_fire) begin
-                    next_state = S_IDLE;
+                    if (out_rlast) begin
+                        next_state = S_IDLE;
+                    end else begin
+                        next_state = S_WAIT_DATA;
+                    end
                 end
             end
             default: next_state = S_IDLE;

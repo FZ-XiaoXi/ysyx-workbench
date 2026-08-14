@@ -159,6 +159,12 @@ void VysyxSoCFull_ysyx_26010011_IDU___nba_sequent__TOP__ysyxSoCFull__asic__cpu__
     CData/*0:0*/ __VdfgRegularize_hd1728725_0_26;
     __VdfgRegularize_hd1728725_0_26 = 0;
     // Body
+    vlSelfRef.__PVT__isSLT = (IData)((0x00002033U == 
+                                      (0xfe00707fU 
+                                       & vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__IFU_0.__PVT__PC_command)));
+    vlSelfRef.__PVT__isSLTU = (IData)((0x00003033U 
+                                       == (0xfe00707fU 
+                                           & vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__IFU_0.__PVT__PC_command)));
     vlSelfRef.__VdfgRegularize_hd1728725_0_19 = ((0x17U 
                                                   == 
                                                   (0x0000007fU 
@@ -167,12 +173,6 @@ void VysyxSoCFull_ysyx_26010011_IDU___nba_sequent__TOP__ysyxSoCFull__asic__cpu__
                                                     == 
                                                     (0x0000007fU 
                                                      & vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__IFU_0.__PVT__PC_command)));
-    vlSelfRef.__PVT__isSLT = (IData)((0x00002033U == 
-                                      (0xfe00707fU 
-                                       & vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__IFU_0.__PVT__PC_command)));
-    vlSelfRef.__PVT__isSLTU = (IData)((0x00003033U 
-                                       == (0xfe00707fU 
-                                           & vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__IFU_0.__PVT__PC_command)));
     vlSelfRef.__PVT__isXOR = (IData)((0x00004033U == 
                                       (0xfe00707fU 
                                        & vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__IFU_0.__PVT__PC_command)));
@@ -194,6 +194,16 @@ void VysyxSoCFull_ysyx_26010011_IDU___nba_sequent__TOP__ysyxSoCFull__asic__cpu__
     __VdfgRegularize_hd1728725_0_17 = (IData)((0x00005033U 
                                                == (0x0000707fU 
                                                    & vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__IFU_0.__PVT__PC_command)));
+    __VdfgRegularize_hd1728725_0_16 = (IData)((0x00000033U 
+                                               == (0x0000707fU 
+                                                   & vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__IFU_0.__PVT__PC_command)));
+    vlSelfRef.__PVT__isU = ((0x37U == (0x0000007fU 
+                                       & vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__IFU_0.__PVT__PC_command)) 
+                            | (0x17U == (0x0000007fU 
+                                         & vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__IFU_0.__PVT__PC_command)));
+    vlSelfRef.__PVT__isSLTIU = (IData)((0x00003013U 
+                                        == (0x0000707fU 
+                                            & vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__IFU_0.__PVT__PC_command)));
     vlSelfRef.__PVT__isBEQ = (IData)((0x00000063U == 
                                       (0x0000707fU 
                                        & vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__IFU_0.__PVT__PC_command)));
@@ -212,16 +222,6 @@ void VysyxSoCFull_ysyx_26010011_IDU___nba_sequent__TOP__ysyxSoCFull__asic__cpu__
     vlSelfRef.__PVT__isBLTU = (IData)((0x00006063U 
                                        == (0x0000707fU 
                                            & vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__IFU_0.__PVT__PC_command)));
-    vlSelfRef.__PVT__isU = ((0x37U == (0x0000007fU 
-                                       & vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__IFU_0.__PVT__PC_command)) 
-                            | (0x17U == (0x0000007fU 
-                                         & vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__IFU_0.__PVT__PC_command)));
-    __VdfgRegularize_hd1728725_0_16 = (IData)((0x00000033U 
-                                               == (0x0000707fU 
-                                                   & vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__IFU_0.__PVT__PC_command)));
-    vlSelfRef.__PVT__isSLTIU = (IData)((0x00003013U 
-                                        == (0x0000707fU 
-                                            & vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__IFU_0.__PVT__PC_command)));
     vlSelfRef.__PVT__isADDI = (IData)((0x00000013U 
                                        == (0x0000707fU 
                                            & vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__IFU_0.__PVT__PC_command)));
@@ -265,8 +265,6 @@ void VysyxSoCFull_ysyx_26010011_IDU___nba_sequent__TOP__ysyxSoCFull__asic__cpu__
     vlSelfRef.__PVT__isSRA = ((IData)(__VdfgRegularize_hd1728725_0_17) 
                               & (0x20U == (vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__IFU_0.__PVT__PC_command 
                                            >> 0x00000019U)));
-    __VdfgRegularize_hd1728725_0_24 = ((IData)(vlSelfRef.__PVT__isBLTU) 
-                                       | (IData)(vlSelfRef.__PVT__isBGEU));
     vlSelfRef.__PVT__isADD = ((IData)(__VdfgRegularize_hd1728725_0_16) 
                               & (0U == (vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__IFU_0.__PVT__PC_command 
                                         >> 0x00000019U)));
@@ -279,6 +277,8 @@ void VysyxSoCFull_ysyx_26010011_IDU___nba_sequent__TOP__ysyxSoCFull__asic__cpu__
                                                           (0x0000707fU 
                                                            & vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__IFU_0.__PVT__PC_command))) 
                                                  | (IData)(vlSelfRef.__PVT__isSLTIU));
+    __VdfgRegularize_hd1728725_0_24 = ((IData)(vlSelfRef.__PVT__isBLTU) 
+                                       | (IData)(vlSelfRef.__PVT__isBGEU));
     vlSelfRef.isJUMP = ((0x6fU == (0x0000007fU & vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__IFU_0.__PVT__PC_command)) 
                         | (IData)(vlSelfRef.__PVT__isJALR));
     vlSelfRef.__PVT__isSLL = ((0x33U == (0x0000007fU 

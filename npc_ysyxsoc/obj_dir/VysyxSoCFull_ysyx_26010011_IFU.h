@@ -42,7 +42,9 @@ class alignas(VL_CACHE_LINE_BYTES) VysyxSoCFull_ysyx_26010011_IFU final : public
     CData/*1:0*/ __PVT__icache_u0__DOT__state;
     CData/*1:0*/ __PVT__icache_u0__DOT__next_state;
     CData/*0:0*/ __PVT__icache_u0__DOT__r_fire;
+    CData/*0:0*/ __PVT__icache_u0__DOT__burst_cnt;
     CData/*0:0*/ __VdlySet__icache_u0__DOT__cache_mem__v0;
+    CData/*5:0*/ __VdlyLsb__icache_u0__DOT__cache_mem__v16;
     CData/*3:0*/ __VdlyDim0__icache_u0__DOT__cache_mem__v16;
     CData/*0:0*/ __VdlySet__icache_u0__DOT__cache_mem__v16;
     VL_OUT(PC,31,0);
@@ -54,9 +56,9 @@ class alignas(VL_CACHE_LINE_BYTES) VysyxSoCFull_ysyx_26010011_IFU final : public
     IData/*31:0*/ __PVT__icache_u0__DOT__unnamedblk1__DOT__i;
     IData/*31:0*/ __Vdly__PC;
     IData/*31:0*/ __VdlyVal__icache_u0__DOT__cache_mem__v16;
-    VlUnpacked<IData/*31:0*/, 16> __PVT__icache_u0__DOT__cache_mem;
+    VlUnpacked<QData/*63:0*/, 16> __PVT__icache_u0__DOT__cache_mem;
     VlUnpacked<CData/*0:0*/, 16> __PVT__icache_u0__DOT__cache_valid;
-    VlUnpacked<IData/*25:0*/, 16> __PVT__icache_u0__DOT__cache_tag;
+    VlUnpacked<IData/*24:0*/, 16> __PVT__icache_u0__DOT__cache_tag;
 
     // INTERNAL VARIABLES
     VysyxSoCFull__Syms* const vlSymsp;

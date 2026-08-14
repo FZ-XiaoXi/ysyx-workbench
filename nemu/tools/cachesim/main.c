@@ -14,7 +14,7 @@ uint32_t* PC_list = NULL;
 
 // uint32_t test_para_list[][2] = 
 
-void test(uint32_t block_size_bit, uint32_t block_num_bit){
+void test(uint32_t block_size_bit, uint32_t block_num_bit, double hit_wait, double miss_wait){
     
     uint64_t cnt_inst=0;
     uint64_t cnt_cache_hit=0;
@@ -44,7 +44,8 @@ void test(uint32_t block_size_bit, uint32_t block_num_bit){
             // printf("Count: %ld, Hit: %ld, Miss: %ld\n", cnt_inst, cnt_cache_hit, cnt_cache_miss);
         }
     }
-    printf("Size %03u\tBlock %03u\tCount: %ld\tHit: %010ld\tMiss: %010ld\t[%f%%]\n", block_size, block_num, cnt_inst, cnt_cache_hit, cnt_cache_miss, (double)cnt_cache_hit / (double)cnt_inst * 100.0);
+    double hit_rate = (double)cnt_cache_hit / (double)cnt_inst;
+    printf("Size %03u\tBlock %03u\tCount: %ld\tHit: %010ld\tMiss: %010ld\t[hit rate: %f%%][clk: %.2f] \n", block_size, block_num, cnt_inst, cnt_cache_hit, cnt_cache_miss, hit_rate*100.0, (double)(hit_rate * hit_wait + (1.0-hit_rate) * miss_wait));
 
     
 }
@@ -78,7 +79,7 @@ int main() {
 
     for(int i=0;i<8;i++){
         for(int j=0;j<8;j++){
-            test(i, j);
+            test(i, j, 1.0, 21.05);
         }
     }
     

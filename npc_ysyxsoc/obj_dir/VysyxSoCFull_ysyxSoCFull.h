@@ -91,9 +91,9 @@ class alignas(VL_CACHE_LINE_BYTES) VysyxSoCFull_ysyxSoCFull final : public Veril
         CData/*3:0*/ __PVT__sdram__DOT__sdram_32_1__DOT__u_sdram_16_H__DOT__next_count;
         CData/*0:0*/ __PVT__sdram__DOT__sdram_32_1__DOT__u_sdram_16_H__DOT__clock;
         CData/*3:0*/ __VdfgRegularize_h6e95ff9d_0_29;
-        CData/*3:0*/ __VdfgRegularize_h6e95ff9d_0_32;
-        CData/*3:0*/ __VdfgRegularize_h6e95ff9d_0_35;
-        CData/*3:0*/ __VdfgRegularize_h6e95ff9d_0_38;
+        CData/*3:0*/ __VdfgRegularize_h6e95ff9d_0_33;
+        CData/*3:0*/ __VdfgRegularize_h6e95ff9d_0_36;
+        CData/*3:0*/ __VdfgRegularize_h6e95ff9d_0_39;
         CData/*2:0*/ __Vdly__flash__DOT__state;
         CData/*7:0*/ __Vdly__flash__DOT__counter;
         CData/*7:0*/ __Vdly__flash__DOT__cmd;

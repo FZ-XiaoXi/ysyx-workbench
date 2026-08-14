@@ -109,7 +109,7 @@ void difftest_step(uint32_t pc, uint32_t npc, uint32_t mem_addr) {;
   	}
 }
 void difftest_skip_ref(int reason) {
-	// Log("Differential testing: %s because of %d", ANSI_FMT("REF is skipped", ANSI_FG_YELLOW), reason);
+	Log("Differential testing: %s because of %08x", ANSI_FMT("REF is skipped", ANSI_FG_YELLOW), reason);
   is_skip_ref = true;
 }
 void difftest_mem_set(int addr){
