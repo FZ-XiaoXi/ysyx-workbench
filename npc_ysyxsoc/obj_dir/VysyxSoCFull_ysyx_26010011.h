@@ -79,22 +79,30 @@ class alignas(VL_CACHE_LINE_BYTES) VysyxSoCFull_ysyx_26010011 final : public Ver
         VL_OUT8(__PVT__io_slave_rlast,0,0);
         VL_OUT8(__PVT__io_slave_rid,3,0);
         CData/*0:0*/ wbu_final;
+        CData/*0:0*/ __PVT__IROM_arready;
+        CData/*0:0*/ __PVT__DRAM_awready;
         CData/*0:0*/ __PVT__DRAM_wready;
+        CData/*0:0*/ __PVT__DRAM_arready;
+        CData/*0:0*/ __PVT__RAM_AXI4LiteArbiter__DOT__M1_awready;
         CData/*0:0*/ __PVT__RAM_AXI4LiteArbiter__DOT__M1_wready;
         CData/*0:0*/ __PVT__RAM_AXI4LiteArbiter__DOT__M2_awvalid;
         CData/*1:0*/ __PVT__RAM_AXI4LiteArbiter__DOT__M2_bresp;
         CData/*0:0*/ __PVT__RAM_AXI4LiteArbiter__DOT__M2_bvalid;
         CData/*0:0*/ __PVT__RAM_AXI4LiteArbiter__DOT__M2_bready;
+    };
+    struct {
         CData/*0:0*/ __PVT__RAM_AXI4LiteArbiter__DOT__M2_arvalid;
         CData/*2:0*/ __PVT__RAM_AXI4LiteArbiter__DOT__M2_arsize;
         CData/*1:0*/ __PVT__RAM_AXI4LiteArbiter__DOT__M2_rresp;
         CData/*0:0*/ __PVT__RAM_AXI4LiteArbiter__DOT__M2_rvalid;
-    };
-    struct {
         CData/*0:0*/ __PVT__RAM_AXI4LiteArbiter__DOT__M2_rready;
+        CData/*0:0*/ __PVT__RAM_AXI4LiteArbiter__DOT__S_awready;
+        CData/*0:0*/ __PVT__RAM_AXI4LiteArbiter__DOT__S_wready;
         CData/*1:0*/ __PVT__RAM_AXI4LiteArbiter__DOT__S_bresp;
         CData/*0:0*/ __PVT__RAM_AXI4LiteArbiter__DOT__S_bvalid;
+        CData/*0:0*/ __PVT__RAM_AXI4LiteArbiter__DOT__S_bready;
         CData/*3:0*/ __PVT__RAM_AXI4LiteArbiter__DOT__S_bid;
+        CData/*0:0*/ __PVT__RAM_AXI4LiteArbiter__DOT__S_arready;
         CData/*1:0*/ __PVT__RAM_AXI4LiteArbiter__DOT__S_rresp;
         CData/*0:0*/ __PVT__RAM_AXI4LiteArbiter__DOT__S_rvalid;
         CData/*0:0*/ __PVT__RAM_AXI4LiteArbiter__DOT__S_rready;

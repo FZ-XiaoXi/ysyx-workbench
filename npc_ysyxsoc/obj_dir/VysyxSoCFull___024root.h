@@ -58,7 +58,7 @@ class alignas(VL_CACHE_LINE_BYTES) VysyxSoCFull___024root final : public Verilat
     VlUnpacked<QData/*63:0*/, 1> __VicoTriggered;
     VlUnpacked<QData/*63:0*/, 1> __VactTriggered;
     VlUnpacked<QData/*63:0*/, 1> __VnbaTriggered;
-    VlUnpacked<CData/*0:0*/, 19> __Vm_traceActivity;
+    VlUnpacked<CData/*0:0*/, 18> __Vm_traceActivity;
 
     // INTERNAL VARIABLES
     VysyxSoCFull__Syms* const vlSymsp;

@@ -56,7 +56,6 @@ class alignas(VL_CACHE_LINE_BYTES) VysyxSoCFull_ysyx_26010011_LSU final : public
     CData/*0:0*/ r_fire;
     CData/*2:0*/ __PVT__awsize_q;
     CData/*3:0*/ __PVT__wstrb_q;
-    CData/*0:0*/ __VdfgExtracted_hd51ce84d__0;
     VL_IN(lsu_addr,31,0);
     VL_OUT(__PVT__lsu_rdata,31,0);
     VL_IN(lsu_wdata,31,0);

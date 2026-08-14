@@ -126,10 +126,10 @@ module ysyx_26010011_LSU(
                 (awaddr >= 32'h30000000 && awaddr < 32'h31000000)
               ||(awaddr >= 32'h0f000000 && awaddr < 32'h0f002000)
               ||(awaddr >= 32'h80000000 && awaddr < 32'h80400000)
-              ||(awaddr >= 32'ha0000000 && awaddr < 32'ha2000000)
+              ||(awaddr >= 32'ha0000000 && awaddr < 32'ha8000000)
               ||(awaddr >= 32'h20000000 && awaddr < 32'h20001000)
               )) begin
-            difftest_skip_ref(lsu_addr);
+            // difftest_skip_ref(lsu_addr);
         end
     end
 

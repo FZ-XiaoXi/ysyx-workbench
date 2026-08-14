@@ -12,7 +12,7 @@ VM_TIMING = 0
 # Coverage output mode?  0/1 (from --coverage)
 VM_COVERAGE = 0
 # Parallel builds?  0/1 (from --output-split)
-VM_PARALLEL_BUILDS = 0
+VM_PARALLEL_BUILDS = 1
 # Tracing output mode?  0/1 (from --trace-fst/--trace-saif/--trace-vcd)
 VM_TRACE = 1
 # Tracing output mode in FST format?  0/1 (from --trace-fst)
@@ -30,6 +30,7 @@ VM_CLASSES_FAST += \
   VysyxSoCFull_ysyxSoCFull__0 \
   VysyxSoCFull___024unit__0 \
   VysyxSoCFull_ysyxSoCASIC__0 \
+  VysyxSoCFull_ysyxSoCASIC__1 \
   VysyxSoCFull_ysyx_26010011__0 \
   VysyxSoCFull_uart_top_apb__0 \
   VysyxSoCFull_ysyx_26010011_IFU__0 \
