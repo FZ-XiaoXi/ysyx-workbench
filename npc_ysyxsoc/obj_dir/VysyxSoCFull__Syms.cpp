@@ -42,7 +42,7 @@ VysyxSoCFull__Syms::VysyxSoCFull__Syms(VerilatedContext* contextp, const char* n
     , TOP__ysyxSoCFull__asic__luart__muart__Uregs{this, Verilated::catName(namep, "ysyxSoCFull.asic.luart.muart.Uregs")}
 {
     // Check resources
-    Verilated::stackCheck(2152);
+    Verilated::stackCheck(2172);
     // Configure time unit / time precision
     _vm_contextp__->timeunit(-9);
     _vm_contextp__->timeprecision(-12);
@@ -98,6 +98,7 @@ VysyxSoCFull__Syms::VysyxSoCFull__Syms(VerilatedContext* contextp, const char* n
         __Vscope_ysyxSoCFull__asic__cpu__cpu.varInsert(__Vfinal,"dnpc", &(TOP__ysyxSoCFull__asic__cpu__cpu.dnpc), false, VLVT_UINT32,VLVD_NODIR|VLVF_PUB_RW,0,1 ,31,0);
         __Vscope_ysyxSoCFull__asic__cpu__cpu.varInsert(__Vfinal,"reset", &(TOP__ysyxSoCFull__asic__cpu__cpu.reset), false, VLVT_UINT8,VLVD_IN|VLVF_PUB_RW,0,0);
         __Vscope_ysyxSoCFull__asic__cpu__cpu.varInsert(__Vfinal,"snpc", &(TOP__ysyxSoCFull__asic__cpu__cpu.snpc), false, VLVT_UINT32,VLVD_NODIR|VLVF_PUB_RW,0,1 ,31,0);
+        __Vscope_ysyxSoCFull__asic__cpu__cpu.varInsert(__Vfinal,"wbu_final", &(TOP__ysyxSoCFull__asic__cpu__cpu.wbu_final), false, VLVT_UINT8,VLVD_NODIR|VLVF_PUB_RW,0,0);
         __Vscope_ysyxSoCFull__asic__cpu__cpu__IDU_0.varInsert(__Vfinal,"isB", &(TOP__ysyxSoCFull__asic__cpu__cpu__IDU_0.isB), false, VLVT_UINT8,VLVD_NODIR|VLVF_PUB_RW,0,0);
         __Vscope_ysyxSoCFull__asic__cpu__cpu__IDU_0.varInsert(__Vfinal,"isCSR", &(TOP__ysyxSoCFull__asic__cpu__cpu__IDU_0.isCSR), false, VLVT_UINT8,VLVD_OUT|VLVF_PUB_RW,0,1 ,1,0);
         __Vscope_ysyxSoCFull__asic__cpu__cpu__IDU_0.varInsert(__Vfinal,"isJUMP", &(TOP__ysyxSoCFull__asic__cpu__cpu__IDU_0.isJUMP), false, VLVT_UINT8,VLVD_OUT|VLVF_PUB_RW,0,0);

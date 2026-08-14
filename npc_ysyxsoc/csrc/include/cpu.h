@@ -11,8 +11,10 @@ typedef struct{
     uint64_t count;
     
     uint8_t ifu_state;
+    uint8_t ifu_state_last;
     uint8_t lsu_state;
     uint8_t wbu_state;
+    uint8_t wbu_final;
     uint8_t idu_state;
     uint32_t mem_access_addr;
     int state;

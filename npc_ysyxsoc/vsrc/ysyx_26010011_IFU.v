@@ -28,52 +28,61 @@ module ysyx_26010011_IFU(
     input             rlast,
     input  [3:0]      rid
 );
-    localparam S_IDLE       = 2'b00;
-    localparam S_WAIT_READY = 2'b01; // 等待地址通道接受地址
-    localparam S_WAIT_DATA  = 2'b10; // 等待数据返回
+    ysyx_26010011_IFU_icache #(.CACHE_BLOCK_SIZE(4), .CACHE_SIZE(16)) icache_u0(
+        .clock(clock),
+        .reset(reset),
+        .in_addr(in_addr),
+        .in_reqValid(in_reqValid),
+        .in_respValid(in_respValid),
+        .in_rdata(in_rdata),
+
+        .out_araddr(araddr),
+        .out_arvalid(arvalid),
+        .out_arready(arready),
+        .out_arid(arid),
+        .out_arlen(arlen),
+        .out_arsize(arsize),
+        .out_arbureset(arbureset),
+        .out_rdata(rdata),
+        .out_rresp(rresp),
+        .out_rvalid(rvalid),
+        .out_rready(rready),
+        .out_rlast(rlast),
+        .out_rid(rid)
+    );
+    wire [31:0] in_addr,in_rdata;
+    assign in_addr = PC;
+    wire in_respValid;
+    localparam S_FETCH       = 2'b00;
     localparam S_WAIT_EXEC  = 2'b11; // 指令读取完成，等待CPU执行完毕
 
     reg [1:0] state/*verilator public*/, next_state;
 
     // 握手成功标志
-    wire ar_fire = arvalid && arready;
-    wire r_fire/*verilator public*/  = rvalid && rready;
+    wire r_fire/*verilator public*/ = (state==S_FETCH) && in_respValid;
+    wire in_reqValid = (state==S_FETCH) && !reset;
 
-    assign araddr  = PC;
-    assign arid    = 4'b0;
-    assign arlen   = 8'b0;
-    assign arsize  = 3'b010;
-    assign arbureset = 2'b01;
-    assign arvalid = ((state == S_IDLE) || (state == S_WAIT_READY))&!reset;
-    assign rready  = (state != S_WAIT_EXEC)&!reset;
 
     always @(*) begin
-        next_state = state;
         case(state)
-            S_IDLE, S_WAIT_READY: begin
-                if (ar_fire) begin
-                    if (r_fire)  next_state = S_WAIT_EXEC;
-                    else         next_state = S_WAIT_DATA;
-                end else begin
-                    next_state = S_WAIT_READY;
-                end
-            end
-            S_WAIT_DATA: begin
+            S_FETCH: begin
                 if (r_fire) begin
                     next_state = S_WAIT_EXEC;
+                end else begin
+                    next_state = S_FETCH;
                 end
             end
             S_WAIT_EXEC: begin
                 if (wbu_final) begin
-                    next_state = S_IDLE;
+                    next_state = S_FETCH;
                 end
             end
-            default: next_state = S_IDLE;
+            default: next_state = S_FETCH;
         endcase
     end
 
     always @(posedge clock) begin
-        if (reset) state <= S_IDLE;
+        if (reset) state <= S_FETCH;
         else     state <= next_state;
     end
 
@@ -85,7 +94,9 @@ module ysyx_26010011_IFU(
         if (reset) begin
             PC_command <= 32'h0;
         end else if (r_fire) begin
-            PC_command <= rdata;
+            PC_command <= in_rdata;
+        end else if (wbu_final) begin
+            PC_command <= 32'hdddddddd;
         end
     end
 
@@ -101,4 +112,134 @@ module ysyx_26010011_IFU(
         end
     end
     assign snpc = PC + 4;
+endmodule
+
+module ysyx_26010011_IFU_icache #(
+    parameter CACHE_BLOCK_SIZE = 4,
+    parameter CACHE_SIZE = 16
+)(
+    input     clock,
+    input     reset,
+
+    input      [31:0] in_addr,
+    input             in_reqValid,
+    output reg        in_respValid,
+    output reg [31:0] in_rdata,
+
+
+    output [31:0]     out_araddr, output            out_arvalid,input             out_arready,output [3:0]      out_arid,
+    output [7:0]      out_arlen,  output [2:0]      out_arsize, output [1:0]      out_arbureset,
+
+    input  [31:0]     out_rdata,  input  [1:0]      out_rresp,  input             out_rvalid, output            out_rready,
+    input             out_rlast,  input  [3:0]      out_rid
+);
+
+
+    parameter BLOCK_W = CACHE_BLOCK_SIZE * 8;
+    parameter INDEX_W = $clog2(CACHE_SIZE);
+    parameter OFFSET_W = $clog2(CACHE_BLOCK_SIZE);
+    parameter TAG_W   = 32 - OFFSET_W - INDEX_W;
+
+    wire [INDEX_W-1:0] now_index = {in_addr[31:OFFSET_W]}[INDEX_W-1:0] ;
+    wire [TAG_W-1:0]   now_tag   = {in_addr[31:OFFSET_W]}[INDEX_W + TAG_W - 1: INDEX_W];
+    wire is_hit = cache_valid[now_index] && (cache_tag[now_index] == now_tag);
+
+    reg [BLOCK_W-1:0] cache_mem   [0:CACHE_SIZE-1];
+    reg               cache_valid [0:CACHE_SIZE-1];
+    reg [TAG_W-1:0]   cache_tag   [0:CACHE_SIZE-1];
+    //IDLE -> 
+    // reg 
+
+    always @(posedge clock) begin
+        if (reset) begin
+            integer i;
+            for (i = 0; i < CACHE_SIZE; i = i + 1) begin
+                cache_valid[i] <= 1'b0;
+                cache_tag[i]   <= {TAG_W{1'b0}};
+                cache_mem[i]   <= {BLOCK_W{1'b0}};
+            end
+        end else begin
+            if(((state != S_IDLE) | in_reqValid) & r_fire & !is_hit) begin
+                cache_valid[now_index] <= 1'b1;
+                cache_tag[now_index]   <= now_tag;
+                cache_mem[now_index]   <= out_rdata;
+            end
+        end
+    end
+
+
+    localparam S_IDLE       = 2'b00;
+    localparam S_WAIT_READY = 2'b01; // 等待地址通道接受地址
+    localparam S_WAIT_DATA  = 2'b10; // 等待数据返回
+
+    reg [1:0] state, next_state;
+
+    // 握手成功标志
+    wire ar_fire = out_arvalid && out_arready;
+    wire r_fire  = out_rvalid && out_rready;
+
+    assign out_araddr  = in_addr;
+    assign out_arid    = 4'b0;
+    assign out_arlen   = 8'b0;
+    assign out_arsize  = 3'b010;
+    assign out_arbureset = 2'b01;
+    assign out_arvalid = (!is_hit & (((state == S_IDLE) && in_reqValid) || (state == S_WAIT_READY)))&!reset;
+    assign out_rready  = !reset;
+
+    always @(*) begin
+        in_rdata = (is_hit) ? cache_mem[now_index] : out_rdata;
+        if(state == S_IDLE) begin
+            if(in_reqValid && is_hit) begin
+                in_respValid = 1'b1;
+            end else if(in_reqValid && r_fire) begin
+                in_respValid = 1'b1;
+            end else begin
+                in_respValid = 1'b0;
+            end
+        end else if(next_state == S_IDLE) begin
+            in_respValid = 1'b1;
+        end else begin
+            in_respValid = 1'b0;
+        end
+    end
+
+    always @(*) begin
+        next_state = state;
+        case(state)
+            S_IDLE: begin
+                if(in_reqValid & is_hit) begin
+                    next_state = S_IDLE;
+                end else if(in_reqValid) begin
+                    if (ar_fire) begin
+                        if (r_fire)  next_state = S_IDLE;
+                        else         next_state = S_WAIT_DATA;
+                    end else begin
+                        next_state = S_WAIT_READY;
+                    end
+                end else begin
+                    next_state = S_IDLE;
+                end
+            end
+            S_WAIT_READY: begin
+                if (ar_fire) begin
+                    if (r_fire)  next_state = S_IDLE;
+                    else         next_state = S_WAIT_DATA;
+                end else begin
+                    next_state = S_WAIT_READY;
+                end
+            end
+            S_WAIT_DATA: begin
+                if (r_fire) begin
+                    next_state = S_IDLE;
+                end
+            end
+            default: next_state = S_IDLE;
+        endcase
+    end
+
+    always @(posedge clock) begin
+        if (reset) state <= S_IDLE;
+        else       state <= next_state;
+    end
+
 endmodule
