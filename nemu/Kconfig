@@ -68,9 +68,8 @@ config TARGET_AM
   bool "Application on Abstract-Machine (DON'T CHOOSE)"
 endchoice
 
-config TARGET_SHARE_YSYXSOC
-  depends on TARGET_SHARE
-  bool "ysyxSoC shared object build"
+config TARGET_YSYXSOC
+  bool "ysyxSoC build"
   default n
 
 menu "Build Options"

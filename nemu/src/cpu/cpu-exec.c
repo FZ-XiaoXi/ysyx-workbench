@@ -54,13 +54,30 @@ void print_ring_inst_buf(){
 
 void device_update();
 
-
+static bool itrace_log_init = false;
+FILE *itrace_log_fp = NULL;
+void init_itrace_log(){
+    if (itrace_log_fp == NULL) {
+      FILE *fp = fopen("itrace.log", "w");
+      Assert(fp, "Can not open '%s'", "./itrace.log");
+      itrace_log_fp = fp;
+    }
+    Log("ITrace log is written to %s", "./itrace.log");
+    itrace_log_init = true;
+}
 
 static void trace_and_difftest(Decode *_this, vaddr_t dnpc) {
 #ifdef CONFIG_ITRACE_COND
-  if (ITRACE_COND) { log_write("%s\n", _this->logbuf); }
+  if (ITRACE_COND) {
+    log_write("%s\n", _this->logbuf);
+    if(!itrace_log_init) init_itrace_log();
+    // 写入字节 _this->pc
+    fwrite(&_this->pc, sizeof(_this->pc), 1, itrace_log_fp);
+  }
 #endif
-  if (g_print_step) { IFDEF(CONFIG_ITRACE, puts(_this->logbuf)); }
+  if (g_print_step) {
+    IFDEF(CONFIG_ITRACE, puts(_this->logbuf));
+  }
 
 #ifdef CONFIG_ITRACE_RING
   if(CONFIG_ITRACE_RING_MAX>0){

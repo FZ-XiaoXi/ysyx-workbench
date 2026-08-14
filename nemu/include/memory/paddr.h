@@ -37,11 +37,11 @@
 #define YSYXSOC_PSRAM_LEFT  ((paddr_t)0x80000000)
 #define YSYXSOC_PSRAM_RIGHT ((paddr_t)YSYXSOC_PSRAM_LEFT + YSYXSOC_PSRAM_SIZE - 1)
 
-#define YSYXSOC_SDRAM_SIZE  ((paddr_t)0x02000000)
+#define YSYXSOC_SDRAM_SIZE  ((paddr_t)0x08000000)
 #define YSYXSOC_SDRAM_LEFT  ((paddr_t)0xA0000000)
 #define YSYXSOC_SDRAM_RIGHT ((paddr_t)YSYXSOC_SDRAM_LEFT + YSYXSOC_SDRAM_SIZE - 1)
 
-#if !defined(CONFIG_TARGET_SHARE_YSYXSOC)
+#if !defined(CONFIG_TARGET_YSYXSOC)
 #define RESET_VECTOR (PMEM_LEFT + CONFIG_PC_RESET_OFFSET)
 #else
 #define RESET_VECTOR (YSYXSOC_FLASH_LEFT)
@@ -55,7 +55,7 @@ paddr_t host_to_guest(uint8_t *haddr);
 
 
 static inline bool in_pmem(paddr_t addr) {
-  #if !defined(CONFIG_TARGET_SHARE_YSYXSOC)
+  #if !defined(CONFIG_TARGET_YSYXSOC)
     return addr - CONFIG_MBASE < CONFIG_MSIZE;
   #else
     return (   (addr >= YSYXSOC_MROM_LEFT && addr <= YSYXSOC_MROM_RIGHT) \
