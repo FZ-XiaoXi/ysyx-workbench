@@ -78,6 +78,7 @@ class alignas(VL_CACHE_LINE_BYTES) VysyxSoCFull_ysyx_26010011 final : public Ver
         VL_OUT8(__PVT__io_slave_rresp,1,0);
         VL_OUT8(__PVT__io_slave_rlast,0,0);
         VL_OUT8(__PVT__io_slave_rid,3,0);
+        CData/*0:0*/ wbu_final;
         CData/*0:0*/ __PVT__DRAM_wready;
         CData/*0:0*/ __PVT__RAM_AXI4LiteArbiter__DOT__M1_wready;
         CData/*0:0*/ __PVT__RAM_AXI4LiteArbiter__DOT__M2_awvalid;
@@ -88,9 +89,9 @@ class alignas(VL_CACHE_LINE_BYTES) VysyxSoCFull_ysyx_26010011 final : public Ver
         CData/*0:0*/ __PVT__RAM_AXI4LiteArbiter__DOT__M2_bready;
         CData/*0:0*/ __PVT__RAM_AXI4LiteArbiter__DOT__M2_arvalid;
         CData/*2:0*/ __PVT__RAM_AXI4LiteArbiter__DOT__M2_arsize;
-        CData/*1:0*/ __PVT__RAM_AXI4LiteArbiter__DOT__M2_rresp;
     };
     struct {
+        CData/*1:0*/ __PVT__RAM_AXI4LiteArbiter__DOT__M2_rresp;
         CData/*0:0*/ __PVT__RAM_AXI4LiteArbiter__DOT__M2_rvalid;
         CData/*0:0*/ __PVT__RAM_AXI4LiteArbiter__DOT__M2_rready;
         CData/*1:0*/ __PVT__RAM_AXI4LiteArbiter__DOT__S_bresp;

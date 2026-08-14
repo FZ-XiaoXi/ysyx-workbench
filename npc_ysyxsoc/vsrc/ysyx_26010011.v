@@ -83,7 +83,7 @@ module ysyx_26010011(
   wire lsu_access_fault;
   wire [31:0]PC/* verilator public */,dnpc/* verilator public */,snpc/* verilator public */;
   // verilator lint_off PINMISSING
-  wire lsu_final,lsu_reqEN,wbu_final;
+  wire lsu_final,lsu_reqEN,wbu_final/*verilator public*/;
   wire [31:0] command;
   
   wire isR,isI,isS,isB,isU,isJ,isCR;
@@ -110,7 +110,7 @@ module ysyx_26010011(
   wire [31:0]csr_mepc,csr_mtvec;
   wire bus_valid;
   ysyx_26010011_REG REG_0(.clock(clock),.reset(reset),.addRA(rs1_add),.addRB(rs2_add),.addW(gpr_address),.addCSR(rcsr_add),.outA(rs1_val),.outB(rs2_val),.inData(reg_data),.gpr_WEN(gpr_WEN),.CSR_BUS(CSR_data),.WCSREN(|isCSR),.isECALL(isECALL),.isMRET(isMRET),.csr_mepc(csr_mepc),.csr_mtvec(csr_mtvec),.pc(PC),.bus_valid(bus_valid));/*verilator public_module*/
-  ysyx_26010011_WBU WBU_0(.clock(clock),.reset(reset),.LSU_data(lsu_rdata),.EXU_data(EXU_data),.COMP_data(COMP_data),.address(rd_add),.isLOAD(isLOAD),.isWRITE(isWRITE),.isJUMP(isJUMP),.snpc(snpc),.gpr_WEN(gpr_WEN),.reg_data(reg_data),.gpr_address(gpr_address),.isCOMPARE(isCOMPARE),.CSR_data(CSR_data),.isCSR(isCSR),.lsu_final(lsu_final),.wbu_final(wbu_final),.isSTORE(isSTORE));
+  ysyx_26010011_WBU WBU_0(.clock(clock),.reset(reset),.LSU_data(lsu_rdata),.EXU_data(EXU_data),.COMP_data(COMP_data),.address(rd_add),.isLOAD(isLOAD),.isWRITE(isWRITE),.isJUMP(isJUMP),.snpc(snpc),.gpr_WEN(gpr_WEN),.reg_data(reg_data),.gpr_address(gpr_address),.isCOMPARE(isCOMPARE),.CSR_data(CSR_data),.isCSR(isCSR),.lsu_final(lsu_final),.wbu_final(wbu_final),.isSTORE(isSTORE),.bus_valid(bus_valid));/*verilator public_module*/
   
   ysyx_26010011_IFU IFU_0(
     .clock(clock),

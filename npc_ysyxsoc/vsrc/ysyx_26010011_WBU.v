@@ -14,6 +14,7 @@ module ysyx_26010011_WBU(
     input isJUMP,
     input isCOMPARE,
     input lsu_final,
+    input bus_valid,
     output gpr_WEN,
     output reg [31:0]reg_data,
     output [4:0]gpr_address,
@@ -41,15 +42,15 @@ module ysyx_26010011_WBU(
     assign gpr_WEN=(isLOAD)?(lsu_final?1:0):(isWRITE| |isCSR?1:0);
     always @(*) begin
         if(gpr_WEN)begin
-            wbu_final = 1;
+            wbu_final = 1 & bus_valid;
         end else if(isLOAD | isSTORE)begin
             if(lsu_final) begin
-                wbu_final = 1;
+                wbu_final = 1 & bus_valid;
             end else begin
                 wbu_final = 0;
             end
         end else begin
-            wbu_final = 1;
+            wbu_final = 1 & bus_valid;
         end
     end
 endmodule

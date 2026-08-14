@@ -71,10 +71,12 @@ void cpu_exec(uint64_t n){
 		// 	// if(cpu.pc == 0x00000044) while(1);
 		// }
 		// cpu.lsu_state = CPUTop->LSU_0->state;
+		cpu.ifu_state_last = cpu.ifu_state;
 		cpu.ifu_state = CPUTop->IFU_0->state;
+		cpu.wbu_final = CPUTop->wbu_final;
 		// cpu.idu_state = CPUTop->IDU_0->state;
 		uint8_t reset_state = CPUTop->reset;
-		cpu_get_reg();
+		
 		static uint8_t ifu_rfire=0,ifu_rfire_last=0;
 		ifu_rfire_last = ifu_rfire;
 		ifu_rfire = CPUTop->IFU_0->r_fire;
@@ -102,11 +104,9 @@ void cpu_exec(uint64_t n){
 
 		}else{
 			cpu.counter_IFU_get_inst_cyc++;
-
 		}
 		if(ifu_rfire){
 			cpu.counter_IFU_get_inst++;
-			cpu.inst = CPUTop->IFU_0->rdata;
 			// Log("IFU get a valid instruction[" FMT_WORD "] at pc = " FMT_WORD , cpu.inst, cpu.pc);
 		}
 		if(ifu_rfire_last){
@@ -138,13 +138,14 @@ void cpu_exec(uint64_t n){
 		// Log("PC=" FMT_WORD " INST=" FMT_WORD , cpu.pc, cpu.inst);
 		
 		
-		if(cpu.ifu_state == 0 && !reset_state){
+		if(cpu.ifu_state == 0 && !reset_state && cpu.ifu_state_last){
+			cpu_get_reg();
 			this_cnt = 0;
 			// Log("PC=" FMT_WORD , cpu.pc);
 			n--;
 			cpu.counter_inst++;
 			static int cnt = 0;
-			if((cnt++==100000) || (cpu.state != NPC_RUNNING)){
+			if((cnt++==10000) || (cpu.state != NPC_RUNNING)){
 				Log("[sp=0x%08x][cyc=%ld][inst=%lu][AvgIPC=%.2f] pc = " FMT_WORD,cpu.gpr[2],  cpu.counter_cycle,cpu.counter_inst, (float)cpu.counter_inst/(float)cpu.counter_cycle, cpu.pc);
 				Log("[IFUGetInst=%lu cyc%.2f][LSUGetData=%lu cyc%.2f][LSUPutData=%lu cyc%.2f][IDUMem=%lu cyc%.2f][IDUCSR=%lu cyc%.2f][IDUCalc=%lu cyc%.2f] pc = " FMT_WORD,
 					cpu.counter_IFU_get_inst, (float)((float)cpu.counter_IFU_get_inst_cyc / (cpu.counter_IFU_get_inst==0?1:(float)cpu.counter_IFU_get_inst)),

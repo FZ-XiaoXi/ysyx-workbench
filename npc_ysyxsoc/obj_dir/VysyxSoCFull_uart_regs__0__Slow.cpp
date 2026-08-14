@@ -110,7 +110,7 @@ VL_ATTR_COLD void VysyxSoCFull_uart_regs___stl_sequent__TOP__ysyxSoCFull__asic__
     vlSelfRef.__PVT__transmitter__DOT__stx_pad_o = 
         ((~ ((IData)(vlSelfRef.lcr) >> 6U)) & (IData)(vlSelfRef.__PVT__transmitter__DOT__stx_o_tmp));
     if ((0x00000010U & (IData)(vlSelfRef.__PVT__mcr))) {
-        vlSelfRef.__VdfgRegularize_h6e95ff9d_0_22 = 
+        vlSelfRef.__VdfgRegularize_h6e95ff9d_0_23 = 
             ((0x0000000cU & ((IData)(vlSelfRef.__PVT__mcr) 
                              << 2U)) | ((2U & ((IData)(vlSelfRef.__PVT__mcr) 
                                                >> 1U)) 
@@ -118,7 +118,7 @@ VL_ATTR_COLD void VysyxSoCFull_uart_regs___stl_sequent__TOP__ysyxSoCFull__asic__
                                                  >> 3U))));
         vlSelfRef.__PVT__serial_in = vlSelfRef.__PVT__transmitter__DOT__stx_pad_o;
     } else {
-        vlSelfRef.__VdfgRegularize_h6e95ff9d_0_22 = 8U;
+        vlSelfRef.__VdfgRegularize_h6e95ff9d_0_23 = 8U;
         vlSelfRef.__PVT__serial_in = vlSelfRef.__PVT__srx_pad;
     }
     vlSelfRef.lsr = ((((((IData)(vlSelfRef.__PVT__lsr7r) 
@@ -337,7 +337,7 @@ VL_ATTR_COLD void VysyxSoCFull_uart_regs___ctor_var_reset(VysyxSoCFull_uart_regs
     for (int __Vi0 = 0; __Vi0 < 16; ++__Vi0) {
         vlSelf->__PVT__receiver__DOT__fifo_rx__DOT__rfifo__DOT__ram[__Vi0] = VL_SCOPED_RAND_RESET_I(8, __VscopeHash, 15017189915600075184ull);
     }
-    vlSelf->__VdfgRegularize_h6e95ff9d_0_22 = VL_SCOPED_RAND_RESET_I(4, __VscopeHash, 11213412160197177738ull);
+    vlSelf->__VdfgRegularize_h6e95ff9d_0_23 = VL_SCOPED_RAND_RESET_I(4, __VscopeHash, 5636033458343060846ull);
     vlSelf->__VdlyVal__receiver__DOT__fifo_rx__DOT__rfifo__DOT__ram__v0 = VL_SCOPED_RAND_RESET_I(8, __VscopeHash, 17753358839271978711ull);
     vlSelf->__VdlyDim0__receiver__DOT__fifo_rx__DOT__rfifo__DOT__ram__v0 = VL_SCOPED_RAND_RESET_I(4, __VscopeHash, 5043112644181916801ull);
     vlSelf->__VdlySet__receiver__DOT__fifo_rx__DOT__rfifo__DOT__ram__v0 = 0;
