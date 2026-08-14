@@ -14,18 +14,13 @@ void VysyxSoCFull_ysyx_26010011_IFU___ico_sequent__TOP__ysyxSoCFull__asic__cpu__
     CData/*7:0*/ __Vtableidx1;
     __Vtableidx1 = 0;
     // Body
-    vlSelfRef.__PVT__icache_u0__DOT__is_hit = (vlSelfRef.__PVT__icache_u0__DOT__cache_valid
-                                               [(0x0000000fU 
-                                                 & (vlSelfRef.PC 
-                                                    >> 2U))] 
-                                               & (vlSelfRef.__PVT__icache_u0__DOT__cache_tag
-                                                  [
-                                                  (0x0000000fU 
-                                                   & (vlSelfRef.PC 
-                                                      >> 2U))] 
-                                                  == 
-                                                  (vlSelfRef.PC 
-                                                   >> 6U)));
+    vlSelfRef.debug_is_hit = (vlSelfRef.__PVT__icache_u0__DOT__cache_valid
+                              [(0x0000000fU & (vlSelfRef.PC 
+                                               >> 2U))] 
+                              & (vlSelfRef.__PVT__icache_u0__DOT__cache_tag
+                                 [(0x0000000fU & (vlSelfRef.PC 
+                                                  >> 2U))] 
+                                 == (vlSelfRef.PC >> 6U)));
     vlSelfRef.bus_valid = (3U == (IData)(vlSelfRef.state));
     vlSelfRef.__PVT__icache_u0__DOT__r_fire = ((~ (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu.reset)) 
                                                & ((IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu.__PVT__RAM_AXI4LiteArbiter__DOT__R_state) 
@@ -33,7 +28,7 @@ void VysyxSoCFull_ysyx_26010011_IFU___ico_sequent__TOP__ysyxSoCFull__asic__cpu__
                                                      & (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu.__PVT__RAM_AXI4LiteArbiter__DOT__S_rvalid))));
     vlSelfRef.__PVT__in_reqValid = ((~ (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu.reset)) 
                                     & (0U == (IData)(vlSelfRef.state)));
-    vlSelfRef.__PVT__arvalid = ((~ (IData)(vlSelfRef.__PVT__icache_u0__DOT__is_hit)) 
+    vlSelfRef.__PVT__arvalid = ((~ (IData)(vlSelfRef.debug_is_hit)) 
                                 & ((~ (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu.reset)) 
                                    & (((0U == (IData)(vlSelfRef.__PVT__icache_u0__DOT__state)) 
                                        & (IData)(vlSelfRef.__PVT__in_reqValid)) 
@@ -49,7 +44,7 @@ void VysyxSoCFull_ysyx_26010011_IFU___ico_sequent__TOP__ysyxSoCFull__asic__cpu__
                                         : ((IData)(vlSelfRef.__PVT__arvalid) 
                                            && (1U & 
                                                (~ (IData)(vlSymsp->TOP__ysyxSoCFull__asic.__PVT__axi4frag__DOT__deq_q__DOT__full)))))) 
-                                   << 4U))) | (((IData)(vlSelfRef.__PVT__icache_u0__DOT__is_hit) 
+                                   << 4U))) | (((IData)(vlSelfRef.debug_is_hit) 
                                                 << 3U) 
                                                | (((IData)(vlSelfRef.__PVT__in_reqValid) 
                                                    << 2U) 
@@ -59,7 +54,7 @@ void VysyxSoCFull_ysyx_26010011_IFU___ico_sequent__TOP__ysyxSoCFull__asic__cpu__
     vlSelfRef.r_fire = ((0U == (IData)(vlSelfRef.state)) 
                         & ((0U == (IData)(vlSelfRef.__PVT__icache_u0__DOT__state))
                             ? ((IData)(vlSelfRef.__PVT__in_reqValid) 
-                               & ((IData)(vlSelfRef.__PVT__icache_u0__DOT__is_hit) 
+                               & ((IData)(vlSelfRef.debug_is_hit) 
                                   | (IData)(vlSelfRef.__PVT__icache_u0__DOT__r_fire)))
                             : (0U == (IData)(vlSelfRef.__PVT__icache_u0__DOT__next_state))));
 }
@@ -120,7 +115,7 @@ void VysyxSoCFull_ysyx_26010011_IFU___nba_sequent__TOP__ysyxSoCFull__asic__cpu__
         if (((((0U != (IData)(vlSelfRef.__PVT__icache_u0__DOT__state)) 
                | (IData)(vlSelfRef.__PVT__in_reqValid)) 
               & (IData)(vlSelfRef.__PVT__icache_u0__DOT__r_fire)) 
-             & (~ (IData)(vlSelfRef.__PVT__icache_u0__DOT__is_hit)))) {
+             & (~ (IData)(vlSelfRef.debug_is_hit)))) {
             vlSelfRef.__VdlyVal__icache_u0__DOT__cache_mem__v16 
                 = vlSelfRef.rdata;
             vlSelfRef.__VdlyDim0__icache_u0__DOT__cache_mem__v16 
@@ -217,7 +212,7 @@ void VysyxSoCFull_ysyx_26010011_IFU___nba_sequent__TOP__ysyxSoCFull__asic__cpu__
     if (vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu.reset) {
         vlSelfRef.__PVT__PC_command = 0U;
     } else if (vlSelfRef.r_fire) {
-        vlSelfRef.__PVT__PC_command = ((IData)(vlSelfRef.__PVT__icache_u0__DOT__is_hit)
+        vlSelfRef.__PVT__PC_command = ((IData)(vlSelfRef.debug_is_hit)
                                         ? vlSelfRef.__PVT__icache_u0__DOT__cache_mem
                                        [(0x0000000fU 
                                          & (vlSelfRef.PC 
@@ -253,18 +248,13 @@ void VysyxSoCFull_ysyx_26010011_IFU___nba_sequent__TOP__ysyxSoCFull__asic__cpu__
                             ? 0U : vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu.__PVT__RAM_AXI4LiteArbiter__DOT__S_rdata)
                         : 0U);
     vlSelfRef.PC = vlSelfRef.__Vdly__PC;
-    vlSelfRef.__PVT__icache_u0__DOT__is_hit = (vlSelfRef.__PVT__icache_u0__DOT__cache_valid
-                                               [(0x0000000fU 
-                                                 & (vlSelfRef.PC 
-                                                    >> 2U))] 
-                                               & (vlSelfRef.__PVT__icache_u0__DOT__cache_tag
-                                                  [
-                                                  (0x0000000fU 
-                                                   & (vlSelfRef.PC 
-                                                      >> 2U))] 
-                                                  == 
-                                                  (vlSelfRef.PC 
-                                                   >> 6U)));
+    vlSelfRef.debug_is_hit = (vlSelfRef.__PVT__icache_u0__DOT__cache_valid
+                              [(0x0000000fU & (vlSelfRef.PC 
+                                               >> 2U))] 
+                              & (vlSelfRef.__PVT__icache_u0__DOT__cache_tag
+                                 [(0x0000000fU & (vlSelfRef.PC 
+                                                  >> 2U))] 
+                                 == (vlSelfRef.PC >> 6U)));
 }
 
 void VysyxSoCFull_ysyx_26010011_IFU___nba_sequent__TOP__ysyxSoCFull__asic__cpu__cpu__IFU_0__2(VysyxSoCFull_ysyx_26010011_IFU* vlSelf) {
@@ -290,7 +280,7 @@ void VysyxSoCFull_ysyx_26010011_IFU___nba_sequent__TOP__ysyxSoCFull__asic__cpu__
                                                 == (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu.__PVT__RAM_AXI4LiteArbiter__DOT__M2_bresp)) 
                                                | (3U 
                                                   == (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu.__PVT__RAM_AXI4LiteArbiter__DOT__M2_bresp)))));
-    vlSelfRef.__PVT__arvalid = ((~ (IData)(vlSelfRef.__PVT__icache_u0__DOT__is_hit)) 
+    vlSelfRef.__PVT__arvalid = ((~ (IData)(vlSelfRef.debug_is_hit)) 
                                 & ((~ (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu.reset)) 
                                    & (((0U == (IData)(vlSelfRef.__PVT__icache_u0__DOT__state)) 
                                        & (IData)(vlSelfRef.__PVT__in_reqValid)) 
@@ -306,7 +296,7 @@ void VysyxSoCFull_ysyx_26010011_IFU___nba_sequent__TOP__ysyxSoCFull__asic__cpu__
                                         : ((IData)(vlSelfRef.__PVT__arvalid) 
                                            && (1U & 
                                                (~ (IData)(vlSymsp->TOP__ysyxSoCFull__asic.__PVT__axi4frag__DOT__deq_q__DOT__full)))))) 
-                                   << 4U))) | (((IData)(vlSelfRef.__PVT__icache_u0__DOT__is_hit) 
+                                   << 4U))) | (((IData)(vlSelfRef.debug_is_hit) 
                                                 << 3U) 
                                                | (((IData)(vlSelfRef.__PVT__in_reqValid) 
                                                    << 2U) 
@@ -316,7 +306,7 @@ void VysyxSoCFull_ysyx_26010011_IFU___nba_sequent__TOP__ysyxSoCFull__asic__cpu__
     vlSelfRef.r_fire = ((0U == (IData)(vlSelfRef.state)) 
                         & ((0U == (IData)(vlSelfRef.__PVT__icache_u0__DOT__state))
                             ? ((IData)(vlSelfRef.__PVT__in_reqValid) 
-                               & ((IData)(vlSelfRef.__PVT__icache_u0__DOT__is_hit) 
+                               & ((IData)(vlSelfRef.debug_is_hit) 
                                   | (IData)(vlSelfRef.__PVT__icache_u0__DOT__r_fire)))
                             : (0U == (IData)(vlSelfRef.__PVT__icache_u0__DOT__next_state))));
 }

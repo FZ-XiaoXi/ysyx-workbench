@@ -68,12 +68,13 @@ perf:
 	echo "[perf] 用时: $$((end - start)) 秒"
 
 perf-test:
-	@echo "git commit: $(shell git log -1 --format="%H")"
 	@echo "[perf] start: $$(date '+%F %T')"; \
 	start=$$(date +%s); \
 	$(MAKE) -C $(NPC_SOC_HOME)/../am-kernels/benchmarks/microbench/ run ARCH=riscv32e-ysyxsoc mainargs=test; \
 	end=$$(date +%s); \
 	echo "[perf] 用时: $$((end - start)) 秒"
+	@echo "ysyx git commit: $(shell git log -1 --format="%H")"
+	@echo "soc git commit: $(shell cd $(NPC_SOC_HOME)/../ysyxSoC && git log -1 --format="%H")"
 
 clean:
 	rm -rf obj_dir npc-waveform.vcd wave.fst

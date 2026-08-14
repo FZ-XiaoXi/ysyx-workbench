@@ -24,6 +24,7 @@ typedef struct{
     uint32_t inst;
     uint64_t counter_inst;
     uint64_t counter_cycle;
+    uint64_t counter_IFU_ichache_hit;
     uint64_t counter_IFU_get_inst;
     uint64_t counter_IFU_get_inst_cyc;
 

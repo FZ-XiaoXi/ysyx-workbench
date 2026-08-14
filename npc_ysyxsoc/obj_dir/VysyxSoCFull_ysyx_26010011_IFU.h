@@ -34,11 +34,11 @@ class alignas(VL_CACHE_LINE_BYTES) VysyxSoCFull_ysyx_26010011_IFU final : public
     VL_OUT8(__PVT__rready,0,0);
     VL_IN8(__PVT__rlast,0,0);
     VL_IN8(__PVT__rid,3,0);
+    CData/*0:0*/ debug_is_hit;
     CData/*1:0*/ state;
     CData/*1:0*/ __PVT__next_state;
     CData/*0:0*/ r_fire;
     CData/*0:0*/ __PVT__in_reqValid;
-    CData/*0:0*/ __PVT__icache_u0__DOT__is_hit;
     CData/*1:0*/ __PVT__icache_u0__DOT__state;
     CData/*1:0*/ __PVT__icache_u0__DOT__next_state;
     CData/*0:0*/ __PVT__icache_u0__DOT__r_fire;

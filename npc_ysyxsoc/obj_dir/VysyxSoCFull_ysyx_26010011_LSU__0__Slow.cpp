@@ -20,6 +20,19 @@ VL_ATTR_COLD void VysyxSoCFull_ysyx_26010011_LSU___stl_sequent__TOP__ysyxSoCFull
                                           >> 0x0000001fU))) 
                               << 0x00000018U) | (vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu.__PVT__RAM_AXI4LiteArbiter__DOT__M2_rdata 
                                                  >> 8U));
+    vlSelfRef.__VdfgExtracted_hd51ce84d__0 = (((IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu.__PVT__RAM_AXI4LiteArbiter__DOT__M2_awvalid) 
+                                               & (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu.__PVT__DRAM_wready)) 
+                                              & ((IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu.__PVT__RAM_AXI4LiteArbiter__DOT__W_state)
+                                                  ? 
+                                                 ((IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu.__PVT__RAM_AXI4LiteArbiter__DOT__W_master_sel)
+                                                   ? 
+                                                  (1U 
+                                                   & (~ (IData)(vlSymsp->TOP__ysyxSoCFull__asic.__PVT__axi4frag__DOT__deq_q_1__DOT__full)))
+                                                   : 0U)
+                                                  : 
+                                                 ((IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu.__PVT__RAM_AXI4LiteArbiter__DOT__M2_awvalid) 
+                                                  && (1U 
+                                                      & (~ (IData)(vlSymsp->TOP__ysyxSoCFull__asic.__PVT__axi4frag__DOT__deq_q_1__DOT__full))))));
     vlSelfRef.lsu_wmask = ((IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__IDU_0.__PVT__isSW)
                             ? 0x0fU : ((IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__IDU_0.__PVT__isSB)
                                         ? 1U : ((IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__IDU_0.__PVT__isSH)
@@ -153,9 +166,12 @@ VL_ATTR_COLD void VysyxSoCFull_ysyx_26010011_LSU___ctor_var_reset(VysyxSoCFull_y
     vlSelf->b_fire = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 5582104448376273005ull);
     vlSelf->__PVT__ar_fire = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 17531198051612780992ull);
     vlSelf->r_fire = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 9673292808138091229ull);
+    vlSelf->__PVT__awaddr_q = VL_SCOPED_RAND_RESET_I(32, __VscopeHash, 17609714532615789261ull);
+    vlSelf->__PVT__wdata_q = VL_SCOPED_RAND_RESET_I(32, __VscopeHash, 3076996247779096886ull);
+    vlSelf->__PVT__awsize_q = VL_SCOPED_RAND_RESET_I(3, __VscopeHash, 2779456212181688490ull);
+    vlSelf->__PVT__wstrb_q = VL_SCOPED_RAND_RESET_I(4, __VscopeHash, 15119205019504598704ull);
     vlSelf->__PVT__val1 = VL_SCOPED_RAND_RESET_I(32, __VscopeHash, 5324393166403162543ull);
     vlSelf->__PVT__val2 = VL_SCOPED_RAND_RESET_I(32, __VscopeHash, 10955695006771734379ull);
     vlSelf->__PVT__val = VL_SCOPED_RAND_RESET_I(32, __VscopeHash, 14157650751545541461ull);
     vlSelf->__VdfgExtracted_hd51ce84d__0 = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 9335344209823606835ull);
-    vlSelf->__VdfgRegularize_hc456a51f_0_1 = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 15981249670929310242ull);
 }
