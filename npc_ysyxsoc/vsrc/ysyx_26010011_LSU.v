@@ -70,20 +70,39 @@ module ysyx_26010011_LSU(
     wire ar_fire = arvalid && arready;
     wire r_fire/*verilator public*/  = rvalid && rready;
 
-    assign awaddr  = {lsu_addr};
+    assign awaddr  = {awaddr_q};
     assign awid    = 4'b0;
     assign awlen   = 8'b0;
     
-    assign awsize  = (lsu_wmask == 4'b0001) ? 3'b000 :
-                     (lsu_wmask == 4'b0011) ? 3'b001 : 3'b010;
+    assign awsize  = awsize_q;
     assign awburst = 2'b01;   // INCR
-
     // 对于 awsize=0(byte), wdata 只取 [7:0]，靠 wstrb 选 lane
     // 对于 awsize=1(half), wdata 只取 [15:0]
     // Fragmenter 对齐地址后 UART APB 用 paddr[1:0] 选字节，故数据必须放在对应 lane
-    assign wdata   = lsu_wdata << (awaddr[1:0] * 8);
-    assign wstrb   = lsu_wmask << awaddr[1:0];
+    assign wdata   = wdata_q;
+    assign wstrb   = wstrb_q;
     assign wlast   = 1'b1;    // single beat
+
+    reg [31:0] awaddr_q;
+    reg [31:0] wdata_q;
+    reg [2:0] awsize_q;
+    reg [3:0]wstrb_q;
+    always @(posedge clock) begin
+        if(reset) begin
+            awaddr_q <= 32'b0;
+            wdata_q  <= 32'b0;
+            awsize_q <= 3'b0;
+            wstrb_q  <= 4'b0;
+        end else begin
+            if(next_state == S_WAIT_BRESP || next_state == S_WAIT_AW_W) begin
+                awaddr_q <= lsu_addr;
+                wdata_q  <= lsu_wdata << (lsu_addr[1:0] * 8);
+                awsize_q <= (lsu_wmask == 4'b0001) ? 3'b000 :
+                            (lsu_wmask == 4'b0011) ? 3'b001 : 3'b010;
+                wstrb_q  <= lsu_wmask << lsu_addr[1:0];
+            end
+        end
+    end
 
     assign araddr  = lsu_addr;
     assign arid    = 4'b0;
@@ -92,8 +111,8 @@ module ysyx_26010011_LSU(
                      (rmask == 4'b0011) ? 3'b001 : 3'b010;
     assign arbureset = 2'b01;   // INCR
 
-    assign awvalid = ((state == S_IDLE && lsu_reqEN && lsu_wen) || (state == S_WAIT_AW_W)) & !reset;
-    assign wvalid  = ((state == S_IDLE && lsu_reqEN && lsu_wen) || (state == S_WAIT_AW_W)) & !reset;
+    assign awvalid = ((state == S_WAIT_AW_W)) & !reset;
+    assign wvalid  = ((state == S_WAIT_AW_W)) & !reset;
     assign arvalid = ((state == S_IDLE && lsu_reqEN && !lsu_wen) || (state == S_WAIT_AR)) & !reset;
 
     assign bready  = ((state == S_WAIT_BRESP) || (state == S_IDLE)) & !reset;

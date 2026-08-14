@@ -107,6 +107,9 @@ void cpu_exec(uint64_t n){
 		}
 		if(ifu_rfire){
 			cpu.counter_IFU_get_inst++;
+			if(CPUTop->IFU_0->debug_is_hit){
+				cpu.counter_IFU_ichache_hit++;
+			}
 			// Log("IFU get a valid instruction[" FMT_WORD "] at pc = " FMT_WORD , cpu.inst, cpu.pc);
 		}
 		if(ifu_rfire_last){
@@ -147,8 +150,9 @@ void cpu_exec(uint64_t n){
 			static int cnt = 0;
 			if((cnt++==10000) || (cpu.state != NPC_RUNNING)){
 				Log("[sp=0x%08x][cyc=%ld][inst=%lu][AvgIPC=%.2f] pc = " FMT_WORD,cpu.gpr[2],  cpu.counter_cycle,cpu.counter_inst, (float)cpu.counter_inst/(float)cpu.counter_cycle, cpu.pc);
-				Log("[IFUGetInst=%lu cyc%.2f][LSUGetData=%lu cyc%.2f][LSUPutData=%lu cyc%.2f][IDUMem=%lu cyc%.2f][IDUCSR=%lu cyc%.2f][IDUCalc=%lu cyc%.2f] pc = " FMT_WORD,
+				Log("[IFUGetInst=%lu cyc%.2f(hit=%.2f%%)][LSUGetData=%lu cyc%.2f][LSUPutData=%lu cyc%.2f][IDUMem=%lu cyc%.2f][IDUCSR=%lu cyc%.2f][IDUCalc=%lu cyc%.2f] pc = " FMT_WORD,
 					cpu.counter_IFU_get_inst, (float)((float)cpu.counter_IFU_get_inst_cyc / (cpu.counter_IFU_get_inst==0?1:(float)cpu.counter_IFU_get_inst)),
+					(float)((float)cpu.counter_IFU_ichache_hit / (cpu.counter_IFU_get_inst==0?1:(float)cpu.counter_IFU_get_inst)) * 100,
 					cpu.counter_LSU_get_data,   (float)((float)cpu.counter_LSU_load_cyc / (cpu.counter_LSU_get_data==0?1:(float)cpu.counter_LSU_get_data)),
 					cpu.counter_LSU_put_data,  (float)((float)cpu.counter_LSU_store_cyc / (cpu.counter_LSU_put_data==0?1:(float)cpu.counter_LSU_put_data)),
 					cpu.counter_IDU_mem,       (float)((float)cpu.counter_IDU_mem_cyc / (cpu.counter_IDU_mem==0?1:(float)cpu.counter_IDU_mem)),

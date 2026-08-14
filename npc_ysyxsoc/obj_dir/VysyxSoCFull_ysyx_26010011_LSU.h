@@ -54,8 +54,9 @@ class alignas(VL_CACHE_LINE_BYTES) VysyxSoCFull_ysyx_26010011_LSU final : public
     CData/*0:0*/ b_fire;
     CData/*0:0*/ __PVT__ar_fire;
     CData/*0:0*/ r_fire;
+    CData/*2:0*/ __PVT__awsize_q;
+    CData/*3:0*/ __PVT__wstrb_q;
     CData/*0:0*/ __VdfgExtracted_hd51ce84d__0;
-    CData/*0:0*/ __VdfgRegularize_hc456a51f_0_1;
     VL_IN(lsu_addr,31,0);
     VL_OUT(__PVT__lsu_rdata,31,0);
     VL_IN(lsu_wdata,31,0);
@@ -63,6 +64,8 @@ class alignas(VL_CACHE_LINE_BYTES) VysyxSoCFull_ysyx_26010011_LSU final : public
     VL_OUT(__PVT__wdata,31,0);
     VL_OUT(__PVT__araddr,31,0);
     VL_IN(__PVT__rdata,31,0);
+    IData/*31:0*/ __PVT__awaddr_q;
+    IData/*31:0*/ __PVT__wdata_q;
     IData/*31:0*/ __PVT__val1;
     IData/*31:0*/ __PVT__val2;
     IData/*31:0*/ __PVT__val;

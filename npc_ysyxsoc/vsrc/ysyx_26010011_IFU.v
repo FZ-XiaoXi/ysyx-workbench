@@ -48,8 +48,11 @@ module ysyx_26010011_IFU(
         .out_rvalid(rvalid),
         .out_rready(rready),
         .out_rlast(rlast),
-        .out_rid(rid)
+        .out_rid(rid),
+
+        .debug_is_hit(debug_is_hit)
     );
+    wire debug_is_hit/*verilator public*/;
     wire [31:0] in_addr,in_rdata;
     assign in_addr = PC;
     wire in_respValid;
@@ -112,6 +115,9 @@ module ysyx_26010011_IFU(
         end
     end
     assign snpc = PC + 4;
+
+    
+
 endmodule
 
 module ysyx_26010011_IFU_icache #(
@@ -131,19 +137,30 @@ module ysyx_26010011_IFU_icache #(
     output [7:0]      out_arlen,  output [2:0]      out_arsize, output [1:0]      out_arbureset,
 
     input  [31:0]     out_rdata,  input  [1:0]      out_rresp,  input             out_rvalid, output            out_rready,
-    input             out_rlast,  input  [3:0]      out_rid
+    input             out_rlast,  input  [3:0]      out_rid,
+
+    output           debug_is_hit
 );
 
+`ifdef FORMAL
+    always @(*) begin
+
+        c_assert: assert(1 == 1);
+    end
+`endif  // FORMAL
 
     parameter BLOCK_W = CACHE_BLOCK_SIZE * 8;
     parameter INDEX_W = $clog2(CACHE_SIZE);
     parameter OFFSET_W = $clog2(CACHE_BLOCK_SIZE);
     parameter TAG_W   = 32 - OFFSET_W - INDEX_W;
 
-    wire [INDEX_W-1:0] now_index = {in_addr[31:OFFSET_W]}[INDEX_W-1:0] ;
-    wire [TAG_W-1:0]   now_tag   = {in_addr[31:OFFSET_W]}[INDEX_W + TAG_W - 1: INDEX_W];
-    wire is_hit = cache_valid[now_index] && (cache_tag[now_index] == now_tag);
 
+
+
+    wire [INDEX_W-1:0] now_index = {in_addr[31:OFFSET_W][INDEX_W-1:0]} ;
+    wire [TAG_W-1:0]   now_tag   = {in_addr[31:OFFSET_W][INDEX_W + TAG_W - 1: INDEX_W]};
+    wire is_hit = cache_valid[now_index] && (cache_tag[now_index] == now_tag);
+    assign debug_is_hit = is_hit;
     reg [BLOCK_W-1:0] cache_mem   [0:CACHE_SIZE-1];
     reg               cache_valid [0:CACHE_SIZE-1];
     reg [TAG_W-1:0]   cache_tag   [0:CACHE_SIZE-1];
