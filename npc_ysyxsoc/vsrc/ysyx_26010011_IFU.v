@@ -28,7 +28,7 @@ module ysyx_26010011_IFU(
     input             rlast,
     input  [3:0]      rid
 );
-    ysyx_26010011_IFU_icache #(.CACHE_BLOCK_SIZE(8), .CACHE_SIZE(16)) icache_u0(
+    ysyx_26010011_IFU_icache #(.CACHE_BLOCK_SIZE(16), .CACHE_SIZE(8)) icache_u0(
         .clock(clock),
         .reset(reset),
         .in_addr(in_addr),
