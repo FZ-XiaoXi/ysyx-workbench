@@ -33,6 +33,7 @@ VL_ATTR_COLD void VysyxSoCFull_ysyx_26010011_IDU___ctor_var_reset(VysyxSoCFull_y
     vlSelf->__PVT__isEBREAK = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 6839703260753474825ull);
     vlSelf->__PVT__isECALL = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 1184926532974597313ull);
     vlSelf->__PVT__isMRET = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 4828884427583364781ull);
+    vlSelf->__PVT__isFENCEI = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 11820743514675021721ull);
     vlSelf->isLOAD = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 12374794229366285554ull);
     vlSelf->isSTORE = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 18188382112590621576ull);
     vlSelf->isWRITE = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 6837946082204981954ull);

@@ -31,6 +31,7 @@ class alignas(VL_CACHE_LINE_BYTES) VysyxSoCFull_ysyx_26010011_IDU final : public
         VL_OUT8(__PVT__isEBREAK,0,0);
         VL_OUT8(__PVT__isECALL,0,0);
         VL_OUT8(__PVT__isMRET,0,0);
+        VL_OUT8(__PVT__isFENCEI,0,0);
         VL_OUT8(isLOAD,0,0);
         VL_OUT8(isSTORE,0,0);
         VL_OUT8(isWRITE,0,0);
@@ -79,9 +80,9 @@ class alignas(VL_CACHE_LINE_BYTES) VysyxSoCFull_ysyx_26010011_IDU final : public
         CData/*0:0*/ __PVT__isSRL;
         CData/*0:0*/ __PVT__isSRA;
         CData/*0:0*/ __PVT__isOR;
-        CData/*0:0*/ __PVT__isAND;
     };
     struct {
+        CData/*0:0*/ __PVT__isAND;
         CData/*0:0*/ __PVT__isMUL;
         CData/*0:0*/ __PVT__isMULH;
         CData/*0:0*/ __PVT__isMULHSU;

@@ -25,6 +25,7 @@ module ysyx_26010011_IDU(
     output isEBREAK,
     output isECALL,
     output isMRET,
+    output isFENCEI,
     output isLOAD/*verilator public*/,
     output isSTORE/*verilator public*/,
     output isWRITE/*verilator public*/,
@@ -150,6 +151,8 @@ module ysyx_26010011_IDU(
     assign isCSRRS  = (opcode == 7'b1110011 && funct3 == 3'b010                         ) ? 1 : 0;
     assign isCSRRC  = (opcode == 7'b1110011 && funct3 == 3'b011                         ) ? 1 : 0;
 
+    assign isFENCEI = (command==32'b00000000000000000001000000001111                    ) ? 1 : 0;
+
 /////////////////////////
     assign isLOAD = (isLW|isLBU|isLB|isLH|isLHU)?1:0;
     assign isSTORE= (isSW|isSB|isSH)?1:0;
@@ -174,7 +177,6 @@ module ysyx_26010011_IDU(
         else if(isU)    imm={   {immU[31:12]} ,{12{1'b0}}};
         else if(isB)    imm={{19{immB[12:12]}},immB[12:1],1'b0};
         else imm=0;
-
     end
     //9-add sub mul div LL LR AR AND OR XOR-0
     /////////////////////////

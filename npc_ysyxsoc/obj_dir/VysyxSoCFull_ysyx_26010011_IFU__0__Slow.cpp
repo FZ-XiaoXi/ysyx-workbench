@@ -66,6 +66,7 @@ VL_ATTR_COLD void VysyxSoCFull_ysyx_26010011_IFU___ctor_var_reset(VysyxSoCFull_y
     const uint64_t __VscopeHash = VL_MURMUR64_HASH(vlSelf->name());
     vlSelf->__PVT__clock = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 5452235342940299466ull);
     vlSelf->__PVT__reset = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 9928399931838511862ull);
+    vlSelf->__PVT__flush_icache = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 15960668044320442430ull);
     vlSelf->PC = VL_SCOPED_RAND_RESET_I(32, __VscopeHash, 12700755172620096637ull);
     vlSelf->__PVT__dnpc = VL_SCOPED_RAND_RESET_I(32, __VscopeHash, 9558418065809668140ull);
     vlSelf->__PVT__snpc = VL_SCOPED_RAND_RESET_I(32, __VscopeHash, 17955041938888895009ull);
@@ -110,9 +111,8 @@ VL_ATTR_COLD void VysyxSoCFull_ysyx_26010011_IFU___ctor_var_reset(VysyxSoCFull_y
     vlSelf->__PVT__icache_u0__DOT__burst_cnt = VL_SCOPED_RAND_RESET_I(2, __VscopeHash, 11068008669111563468ull);
     vlSelf->__PVT__icache_u0__DOT__unnamedblk1__DOT__i = VL_SCOPED_RAND_RESET_I(32, __VscopeHash, 10682241052551442097ull);
     vlSelf->__Vdly__PC = VL_SCOPED_RAND_RESET_I(32, __VscopeHash, 13052621548465915527ull);
+    vlSelf->__VdlyVal__icache_u0__DOT__cache_mem__v0 = VL_SCOPED_RAND_RESET_I(32, __VscopeHash, 15869259070513224554ull);
+    vlSelf->__VdlyLsb__icache_u0__DOT__cache_mem__v0 = VL_SCOPED_RAND_RESET_I(7, __VscopeHash, 9407757553340516823ull);
+    vlSelf->__VdlyDim0__icache_u0__DOT__cache_mem__v0 = VL_SCOPED_RAND_RESET_I(3, __VscopeHash, 6640531279511046701ull);
     vlSelf->__VdlySet__icache_u0__DOT__cache_mem__v0 = 0;
-    vlSelf->__VdlyVal__icache_u0__DOT__cache_mem__v8 = VL_SCOPED_RAND_RESET_I(32, __VscopeHash, 18136734958097278189ull);
-    vlSelf->__VdlyLsb__icache_u0__DOT__cache_mem__v8 = VL_SCOPED_RAND_RESET_I(7, __VscopeHash, 11731918220528948332ull);
-    vlSelf->__VdlyDim0__icache_u0__DOT__cache_mem__v8 = VL_SCOPED_RAND_RESET_I(3, __VscopeHash, 2372729377157654090ull);
-    vlSelf->__VdlySet__icache_u0__DOT__cache_mem__v8 = 0;
 }
