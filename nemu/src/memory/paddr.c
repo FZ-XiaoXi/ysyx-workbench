@@ -159,15 +159,55 @@ void paddr_write(paddr_t addr, int len, word_t data) {
 }
 
 #else//////////////////////////////////////////////////////////////////////////////////
+
+typedef enum{MEMREAD,MEMWRITE} mtrace_t;
+void print_mtrace(mtrace_t op,paddr_t addr,uint32_t val,int len){
+#ifdef CONFIG_MTRACE
+
+  if(nemu_state.state != NEMU_RUNNING) return;
+  #if   defined(CONFIG_MTRACE_RANGE)
+    if(!(addr>=CONFIG_MTRACE_RANGE_START && addr<=CONFIG_MTRACE_RANGE_END)) return;
+  #endif
+  #ifdef CONFIG_TRACE_FILE_LOG
+  static bool mtrace_log_init = false;
+  static FILE *mtrace_log_fp = NULL;
+  if(!mtrace_log_init){
+    if (mtrace_log_fp == NULL) {
+      FILE *fp = fopen("mtrace.log", "w");
+      Assert(fp, "Can not open '%s'", "./mtrace.log");
+      mtrace_log_fp = fp;
+    }
+    Log("MTrace log is written to %s", "./mtrace.log");
+    mtrace_log_init = true;
+  }
+  uint32_t s;
+  if(op==MEMREAD){
+    s=0;
+    fwrite(&addr, sizeof(addr), 1, mtrace_log_fp);
+    fwrite(&s, sizeof(uint32_t), 1, mtrace_log_fp);
+  }
+  if(op==MEMWRITE){
+    s=1;
+    fwrite(&addr, sizeof(addr), 1, mtrace_log_fp);
+    fwrite(&s, sizeof(uint32_t), 1, mtrace_log_fp);
+  }
+  
+
+  #endif
+  if(op==MEMREAD){
+    Log("MEMTracer: READ  memory [0x%08x] = '0x%08x' at pc = '0x%08x' len = %d",addr,val,cpu.pc,len);
+  }
+  if(op==MEMWRITE){
+    Log("MEMTracer: WRITE memory [0x%08x] = '0x%08x' at pc = '0x%08x' len = %d",addr,val,cpu.pc,len);
+  }
+
+#endif
+}
+
 static void out_of_bound(paddr_t addr) {
   panic("address = " FMT_PADDR " is out of bound at pc = " FMT_WORD,
       addr, cpu.pc);
 }
-
-typedef enum{MEMREAD,MEMWRITE} mtrace_t;
-// static void print_mtrace(mtrace_t op,paddr_t addr,uint32_t val){
-//   UNUSED(op);UNUSED(addr);UNUSED(val);
-// }
 
 uint8_t* guest_to_host(paddr_t paddr) {
   if(paddr >= YSYXSOC_MROM_LEFT && paddr <= YSYXSOC_MROM_RIGHT){
@@ -242,7 +282,9 @@ void init_mem() {
 
 word_t paddr_read(paddr_t addr, int len) {
   if (likely(in_pmem(addr))){
+    
     uint32_t val = pmem_read(addr, len);
+    
     return val;
   }
   IFDEF(CONFIG_DEVICE, return mmio_read(addr, len));
@@ -253,6 +295,7 @@ word_t paddr_read(paddr_t addr, int len) {
 void paddr_write(paddr_t addr, int len, word_t data) {
   if (likely(in_pmem(addr))) {
     pmem_write(addr, len, data);
+    
     return;
   }
   IFDEF(CONFIG_DEVICE, mmio_write(addr, len, data); return);

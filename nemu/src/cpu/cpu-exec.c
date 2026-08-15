@@ -56,6 +56,7 @@ void device_update();
 
 static bool itrace_log_init = false;
 FILE *itrace_log_fp = NULL;
+#ifdef CONFIG_TRACE_FILE_LOG
 void init_itrace_log(){
     if (itrace_log_fp == NULL) {
       FILE *fp = fopen("itrace.log", "w");
@@ -65,14 +66,13 @@ void init_itrace_log(){
     Log("ITrace log is written to %s", "./itrace.log");
     itrace_log_init = true;
 }
-
+#endif
 static void trace_and_difftest(Decode *_this, vaddr_t dnpc) {
 #ifdef CONFIG_ITRACE_COND
   if (ITRACE_COND) {
-    log_write("%s\n", _this->logbuf);
-    if(!itrace_log_init) init_itrace_log();
+    // log_write("%s\n", _this->logbuf);
+    IFDEF(CONFIG_TRACE_FILE_LOG, do{if(!itrace_log_init) init_itrace_log();fwrite(&_this->pc, sizeof(_this->pc), 1, itrace_log_fp);}while(0));
     // 写入字节 _this->pc
-    fwrite(&_this->pc, sizeof(_this->pc), 1, itrace_log_fp);
   }
 #endif
   if (g_print_step) {

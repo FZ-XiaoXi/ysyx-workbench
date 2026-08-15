@@ -212,6 +212,12 @@ config ETRACE
   bool "Enable exception tracing"
   default y
 
+config TRACE_FILE_LOG
+  depends on ITRACE && MTRACE
+  bool "Enable trace file log"
+  default n
+
+
 # config DTRACE_RANGE
 #   depends on DTRACE
 #   bool "Enable address-range filtering for memory tracing"

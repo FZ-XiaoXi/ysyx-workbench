@@ -20,6 +20,21 @@ word_t vaddr_ifetch(vaddr_t addr, int len) {
   return paddr_read(addr, len);
 }
 
+#ifdef CONFIG_TARGET_YSYXSOC
+typedef enum{MEMREAD,MEMWRITE} mtrace_t;
+extern void print_mtrace(mtrace_t op,paddr_t addr,uint32_t val,int len);
+word_t vaddr_read(vaddr_t addr, int len) {
+  word_t val = paddr_read(addr, len);
+  print_mtrace(MEMREAD,addr,val,len);
+  return val;
+}
+
+void vaddr_write(vaddr_t addr, int len, word_t data) {
+  paddr_write(addr, len, data);
+  print_mtrace(MEMWRITE,addr,data,len);
+}
+#else
+
 word_t vaddr_read(vaddr_t addr, int len) {
   return paddr_read(addr, len);
 }
@@ -27,3 +42,4 @@ word_t vaddr_read(vaddr_t addr, int len) {
 void vaddr_write(vaddr_t addr, int len, word_t data) {
   paddr_write(addr, len, data);
 }
+#endif
