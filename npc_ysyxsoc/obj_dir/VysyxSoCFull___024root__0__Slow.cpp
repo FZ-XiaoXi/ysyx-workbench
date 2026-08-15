@@ -38,6 +38,8 @@ VL_ATTR_COLD void VysyxSoCFull___024root___eval_static(VysyxSoCFull___024root* v
     vlSelfRef.__Vtrigprevexpr___TOP__externalPins_ps2_clk__0 
         = vlSelfRef.externalPins_ps2_clk;
     vlSelfRef.__Vtrigprevexpr___TOP__reset__0 = vlSelfRef.reset;
+    vlSelfRef.__Vtrigprevexpr___TOP__ysyxSoCFull__asic__axi4delay_delayer__DOT____Vcellinp__inst_u0__reset__0 
+        = vlSymsp->TOP__ysyxSoCFull__asic.axi4delay_delayer__DOT____Vcellinp__inst_u0__reset;
 }
 
 VL_ATTR_COLD void VysyxSoCFull_ysyxSoCASIC___eval_initial__TOP__ysyxSoCFull__asic(VysyxSoCFull_ysyxSoCASIC* vlSelf);
@@ -309,6 +311,9 @@ VL_ATTR_COLD void VysyxSoCFull___024root___dump_triggers__act(const VlUnpacked<Q
     if ((1U & (IData)((triggers[0U] >> 9U)))) {
         VL_DBG_MSGS("         '" + tag + "' region trigger index 9 is active: @(posedge reset)\n");
     }
+    if ((1U & (IData)((triggers[0U] >> 0x0000000aU)))) {
+        VL_DBG_MSGS("         '" + tag + "' region trigger index 10 is active: @(posedge ysyxSoCFull.asic.axi4delay_delayer.__Vcellinp__inst_u0__reset)\n");
+    }
 }
 #endif  // VL_DEBUG
 
@@ -335,6 +340,8 @@ VL_ATTR_COLD void VysyxSoCFull___024root____Vm_traceActivitySetAll(VysyxSoCFull_
     vlSelfRef.__Vm_traceActivity[0x0000000fU] = 1U;
     vlSelfRef.__Vm_traceActivity[0x00000010U] = 1U;
     vlSelfRef.__Vm_traceActivity[0x00000011U] = 1U;
+    vlSelfRef.__Vm_traceActivity[0x00000012U] = 1U;
+    vlSelfRef.__Vm_traceActivity[0x00000013U] = 1U;
 }
 
 VL_ATTR_COLD void VysyxSoCFull___024root___ctor_var_reset(VysyxSoCFull___024root* vlSelf) {
@@ -384,10 +391,11 @@ VL_ATTR_COLD void VysyxSoCFull___024root___ctor_var_reset(VysyxSoCFull___024root
     vlSelf->__Vtrigprevexpr___TOP__clock__0 = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 13272892335938733197ull);
     vlSelf->__Vtrigprevexpr___TOP__externalPins_ps2_clk__0 = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 4062748326117743790ull);
     vlSelf->__Vtrigprevexpr___TOP__reset__0 = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 1487628987237401141ull);
+    vlSelf->__Vtrigprevexpr___TOP__ysyxSoCFull__asic__axi4delay_delayer__DOT____Vcellinp__inst_u0__reset__0 = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 8741629217924791844ull);
     for (int __Vi0 = 0; __Vi0 < 1; ++__Vi0) {
         vlSelf->__VnbaTriggered[__Vi0] = 0;
     }
-    for (int __Vi0 = 0; __Vi0 < 18; ++__Vi0) {
+    for (int __Vi0 = 0; __Vi0 < 20; ++__Vi0) {
         vlSelf->__Vm_traceActivity[__Vi0] = 0;
     }
 }
