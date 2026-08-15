@@ -63,7 +63,7 @@ module ysyx_26010011_IFU(
 
     // 握手成功标志
     wire r_fire/*verilator public*/ = (state==S_FETCH) && in_respValid;
-    wire in_reqValid = (state==S_FETCH) && !reset;
+    wire in_reqValid/*verilator public*/ = (state==S_FETCH) && !reset;
 
 
     always @(*) begin

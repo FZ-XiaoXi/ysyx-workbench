@@ -79,7 +79,7 @@ int main() {
 
     for(int i=0;i<8;i++){
         for(int j=0;j<8;j++){
-            test(i, j, 1.0, 21.05);
+            test(i, j, 1.0, 30.50);
         }
     }
     

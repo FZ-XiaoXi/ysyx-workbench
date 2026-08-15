@@ -68,7 +68,7 @@ extern FILE* log_fp;
 #define CONFIG_PC_RESET_OFFSET 0x0
 #define RESET_VECTOR (FLASH_LEFT + CONFIG_PC_RESET_OFFSET)
 
-#define CONFIG_NVBOARD_ENABLE
+// #define CONFIG_NVBOARD_ENABLE
 #ifdef CONFIG_NVBOARD_ENABLE
     #include "nvboard.h"
 #endif

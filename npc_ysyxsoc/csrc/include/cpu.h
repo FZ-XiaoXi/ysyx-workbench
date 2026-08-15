@@ -27,6 +27,7 @@ typedef struct{
     uint64_t counter_IFU_ichache_hit;
     uint64_t counter_IFU_get_inst;
     uint64_t counter_IFU_get_inst_cyc;
+    uint64_t counter_IFU_get_inst_miss_cyc;
 
     uint64_t counter_IDU_calc;
     uint64_t counter_IDU_mem;
