@@ -77,9 +77,10 @@ void cpu_exec(uint64_t n){
 		// cpu.idu_state = CPUTop->IDU_0->state;
 		uint8_t reset_state = CPUTop->reset;
 		
-		static uint8_t ifu_rfire=0,ifu_rfire_last=0;
+		static uint8_t ifu_rfire=0,ifu_rfire_last=0,ifu_reqValid=0;
 		ifu_rfire_last = ifu_rfire;
 		ifu_rfire = CPUTop->IFU_0->r_fire;
+		ifu_reqValid = CPUTop->IFU_0->in_reqValid;
 		uint8_t bus_valid = CPUTop->IFU_0->bus_valid;
 
 		if(bus_valid){
@@ -103,12 +104,17 @@ void cpu_exec(uint64_t n){
 			}
 
 		}else{
-			cpu.counter_IFU_get_inst_cyc++;
 		}
-		if(ifu_rfire){
-			cpu.counter_IFU_get_inst++;
-			if(CPUTop->IFU_0->debug_is_hit){
-				cpu.counter_IFU_ichache_hit++;
+		if(ifu_reqValid){
+			cpu.counter_IFU_get_inst_cyc++;
+			if(ifu_rfire){
+				cpu.counter_IFU_get_inst++;
+				if(CPUTop->IFU_0->debug_is_hit){
+					cpu.counter_IFU_ichache_hit++;
+				}
+			}
+			if(!CPUTop->IFU_0->debug_is_hit){
+				cpu.counter_IFU_get_inst_miss_cyc++;
 			}
 			// Log("IFU get a valid instruction[" FMT_WORD "] at pc = " FMT_WORD , cpu.inst, cpu.pc);
 		}
@@ -150,9 +156,10 @@ void cpu_exec(uint64_t n){
 			static int cnt = 0;
 			if((cnt++==10000) || (cpu.state != NPC_RUNNING)){
 				Log("[sp=0x%08x][cyc=%ld][inst=%lu][AvgIPC=%.2f] pc = " FMT_WORD,cpu.gpr[2],  cpu.counter_cycle,cpu.counter_inst, (float)cpu.counter_inst/(float)cpu.counter_cycle, cpu.pc);
-				Log("[IFUGetInst=%lu cyc%.2f(hit=%.2f%%)][LSUGetData=%lu cyc%.2f][LSUPutData=%lu cyc%.2f][IDUMem=%lu cyc%.2f][IDUCSR=%lu cyc%.2f][IDUCalc=%lu cyc%.2f] pc = " FMT_WORD,
+				Log("[IFUGetInst=%lu cyc%.2f(hit=%.2f%%)(miss_cyc=%.2f)][LSUGetData=%lu cyc%.2f][LSUPutData=%lu cyc%.2f][IDUMem=%lu cyc%.2f][IDUCSR=%lu cyc%.2f][IDUCalc=%lu cyc%.2f] pc = " FMT_WORD,
 					cpu.counter_IFU_get_inst, (float)((float)cpu.counter_IFU_get_inst_cyc / (cpu.counter_IFU_get_inst==0?1:(float)cpu.counter_IFU_get_inst)),
 					(float)((float)cpu.counter_IFU_ichache_hit / (cpu.counter_IFU_get_inst==0?1:(float)cpu.counter_IFU_get_inst)) * 100,
+					((float)cpu.counter_IFU_get_inst_miss_cyc / (float)(cpu.counter_IFU_get_inst - cpu.counter_IFU_ichache_hit)),
 					cpu.counter_LSU_get_data,   (float)((float)cpu.counter_LSU_load_cyc / (cpu.counter_LSU_get_data==0?1:(float)cpu.counter_LSU_get_data)),
 					cpu.counter_LSU_put_data,  (float)((float)cpu.counter_LSU_store_cyc / (cpu.counter_LSU_put_data==0?1:(float)cpu.counter_LSU_put_data)),
 					cpu.counter_IDU_mem,       (float)((float)cpu.counter_IDU_mem_cyc / (cpu.counter_IDU_mem==0?1:(float)cpu.counter_IDU_mem)),

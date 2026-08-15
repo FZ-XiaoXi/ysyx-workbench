@@ -27,9 +27,6 @@ VL_ATTR_COLD void VysyxSoCFull_ysyxSoCASIC___eval_initial__TOP__ysyxSoCFull__asi
     vlSelfRef.__PVT__axi4delay_delayer__DOT__out_rresp_w[5U] = 0U;
     vlSelfRef.__PVT__axi4delay_delayer__DOT__out_rresp_w[6U] = 0U;
     vlSelfRef.__PVT__axi4delay_delayer__DOT__out_rresp_w[7U] = 0U;
-    VL_READMEM_N(true, 24, 307200, 0, "/home/seaber/ysyx-workbench/ysyxSoC/perip/vga/image_data.mif"s
-                 ,  &(vlSelfRef.__PVT__lvga__DOT__mvga__DOT__vmem_inst__DOT__ram)
-                 , 0, ~0ULL);
 }
 
 extern const VlUnpacked<VlWide<3>/*79:0*/, 16> VysyxSoCFull__ConstPool__TABLE_hcfb222df_0;
@@ -142,6 +139,12 @@ VL_ATTR_COLD void VysyxSoCFull_ysyxSoCASIC___stl_sequent__TOP__ysyxSoCFull__asic
     vlSelfRef.__PVT__lsdram_axi__DOT__msdram__DOT__u_sdram_axi__DOT__u_core__DOT__dbg_state[2U] 
         = VysyxSoCFull__ConstPool__TABLE_hcfb222df_0
         [__Vtableidx5][2U];
+    vlSelfRef.__PVT__lvga__DOT__mvga__DOT__h_valid 
+        = ((0x0090U < (IData)(vlSelfRef.__PVT__lvga__DOT__mvga__DOT__x_cnt)) 
+           & (0x0310U >= (IData)(vlSelfRef.__PVT__lvga__DOT__mvga__DOT__x_cnt)));
+    vlSelfRef.__PVT__lvga__DOT__mvga__DOT__v_valid 
+        = ((0x0023U < (IData)(vlSelfRef.__PVT__lvga__DOT__mvga__DOT__y_cnt)) 
+           & (0x0203U >= (IData)(vlSelfRef.__PVT__lvga__DOT__mvga__DOT__y_cnt)));
     vlSelfRef.lspi__DOT__mspi__DOT__u0_spi_top__DOT__shift__DOT____VdfgRegularize_ha14fb189_0_0 
         = ((0x00000080U & ((~ (0U != (0x0000007fU & (IData)(vlSelfRef.__PVT__lspi__DOT__mspi__DOT__u0_spi_top__DOT__ctrl)))) 
                            << 7U)) | (0x0000007fU & (IData)(vlSelfRef.__PVT__lspi__DOT__mspi__DOT__u0_spi_top__DOT__ctrl)));
@@ -438,12 +441,6 @@ VL_ATTR_COLD void VysyxSoCFull_ysyxSoCASIC___stl_sequent__TOP__ysyxSoCFull__asic
         = vlSelfRef.__PVT__axi4delay_delayer__DOT__inst_u6__DOT__rresp_reg;
     vlSelfRef.__PVT__axi4delay_delayer__DOT__in_rresp_w[7U] 
         = vlSelfRef.__PVT__axi4delay_delayer__DOT__inst_u7__DOT__rresp_reg;
-    vlSelfRef.__PVT__lvga__DOT__mvga__DOT__h_valid 
-        = ((0x0090U < (IData)(vlSelfRef.__PVT__lvga__DOT__mvga__DOT__x_cnt)) 
-           & (0x0310U >= (IData)(vlSelfRef.__PVT__lvga__DOT__mvga__DOT__x_cnt)));
-    vlSelfRef.__PVT__lvga__DOT__mvga__DOT__v_valid 
-        = ((0x0023U < (IData)(vlSelfRef.__PVT__lvga__DOT__mvga__DOT__y_cnt)) 
-           & (0x0203U >= (IData)(vlSelfRef.__PVT__lvga__DOT__mvga__DOT__y_cnt)));
     vlSelfRef.__PVT__axi4delay_delayer__DOT__in_rlast_w[0U] 
         = vlSelfRef.__PVT__axi4delay_delayer__DOT__inst_u0__DOT__rlast_reg;
     vlSelfRef.__PVT__axi4delay_delayer__DOT__in_rlast_w[1U] 
@@ -603,14 +600,6 @@ VL_ATTR_COLD void VysyxSoCFull_ysyxSoCASIC___stl_sequent__TOP__ysyxSoCFull__asic
     vlSelfRef.__PVT__axi4frag__DOT__len_1 = ((IData)(vlSelfRef.__PVT__axi4frag__DOT__busy_1)
                                               ? (IData)(vlSelfRef.__PVT__axi4frag__DOT__r_len_1)
                                               : (IData)(vlSelfRef.__PVT__axi4frag__DOT__deq_q_1__DOT__io_deq_bits_len));
-    vlSelfRef.__PVT__lvga__DOT__mvga__DOT__h_addr = 
-        ((IData)(vlSelfRef.__PVT__lvga__DOT__mvga__DOT__h_valid)
-          ? (0x000003ffU & ((IData)(vlSelfRef.__PVT__lvga__DOT__mvga__DOT__x_cnt) 
-                            - (IData)(0x0091U))) : 0U);
-    vlSelfRef.__PVT__lvga__DOT__mvga__DOT__v_addr = 
-        ((IData)(vlSelfRef.__PVT__lvga__DOT__mvga__DOT__v_valid)
-          ? (0x000003ffU & ((IData)(vlSelfRef.__PVT__lvga__DOT__mvga__DOT__y_cnt) 
-                            - (IData)(0x0024U))) : 0U);
     vlSelfRef.__PVT__axi4delay_delayer__DOT__in_rlast 
         = vlSelfRef.__PVT__axi4delay_delayer__DOT__in_rlast_w
         [vlSelfRef.__PVT__axi4delay_delayer__DOT__rrcnt];
@@ -923,9 +912,6 @@ VL_ATTR_COLD void VysyxSoCFull_ysyxSoCASIC___stl_sequent__TOP__ysyxSoCFull__asic
     vlSelfRef.__PVT__axi4buf__DOT__nodeIn_bdeq_q__DOT__empty 
         = ((~ (IData)(vlSelfRef.__PVT__axi4buf__DOT__nodeIn_bdeq_q__DOT__maybe_full)) 
            & (IData)(vlSelfRef.__PVT__axi4buf__DOT__nodeIn_bdeq_q__DOT__ptr_match));
-    vlSelfRef.__PVT__lvga__DOT__mvga__DOT__vmem_inst__DOT__linear_addr 
-        = (0x0007ffffU & (((IData)(0x00000280U) * (IData)(vlSelfRef.__PVT__lvga__DOT__mvga__DOT__v_addr)) 
-                          + (IData)(vlSelfRef.__PVT__lvga__DOT__mvga__DOT__h_addr)));
     vlSelfRef.__PVT__axi4delay_delayer__DOT__out_rdata_w[0U] 
         = vlSelfRef.__PVT__axi4delay_delayer__DOT__inst_u0__DOT__out_rdata;
     vlSelfRef.__PVT__axi4delay_delayer__DOT__out_rdata_w[1U] 
@@ -1025,13 +1011,6 @@ VL_ATTR_COLD void VysyxSoCFull_ysyxSoCASIC___stl_sequent__TOP__ysyxSoCFull__asic
     vlSelfRef.__PVT__axi4xbar_1__DOT__readys_valid_1 
         = (((IData)(vlSelfRef.__PVT__axi4ram__DOT__w_full) 
             << 2U) | (1U & (~ (IData)(vlSelfRef.__PVT__axi4buf__DOT__nodeIn_bdeq_q__DOT__empty))));
-    vlSelfRef.__PVT__lvga__DOT__mvga__DOT__vga_data 
-        = (((0x01e0U > (IData)(vlSelfRef.__PVT__lvga__DOT__mvga__DOT__v_addr)) 
-            & (0x0280U > (IData)(vlSelfRef.__PVT__lvga__DOT__mvga__DOT__h_addr)))
-            ? ((0x0004afffU >= vlSelfRef.__PVT__lvga__DOT__mvga__DOT__vmem_inst__DOT__linear_addr)
-                ? vlSelfRef.__PVT__lvga__DOT__mvga__DOT__vmem_inst__DOT__ram
-               [vlSelfRef.__PVT__lvga__DOT__mvga__DOT__vmem_inst__DOT__linear_addr]
-                : 0U) : 0U);
     vlSelfRef.__PVT__axi4delay_delayer__DOT__out_rvalid_w[0U] 
         = vlSelfRef.__PVT__axi4delay_delayer__DOT__inst_u0__DOT__out_rvalid;
     vlSelfRef.__PVT__axi4delay_delayer__DOT__out_rvalid_w[1U] 
@@ -1154,20 +1133,6 @@ VL_ATTR_COLD void VysyxSoCFull_ysyxSoCASIC___stl_sequent__TOP__ysyxSoCFull__asic
     vlSelfRef.__PVT__lpsram__DOT__mpsram__DOT__u0__DOT__size 
         = VysyxSoCFull__ConstPool__TABLE_h45f54a83_0
         [__Vtableidx8];
-    vlSelfRef.__PVT__lvga__DOT__mvga__DOT__vmem_inst__DOT__linear_waddr 
-        = (0x0007ffffU & (((IData)(0x00000280U) * (0x000003ffU 
-                                                   & VL_DIV_III(32, 
-                                                                VL_MODDIV_III(32, 
-                                                                              VL_SHIFTR_III(32,32,32, 
-                                                                                ((0x3fffffffU 
-                                                                                & vlSelfRef.__PVT__lpsram__DOT__mpsram__DOT__u0__DOT__adr_i) 
-                                                                                - (IData)(0x21000000U)), 2U), (IData)(0x0004b000U)), (IData)(0x00000280U)))) 
-                          + (0x000003ffU & VL_MODDIV_III(32, 
-                                                         VL_MODDIV_III(32, 
-                                                                       VL_SHIFTR_III(32,32,32, 
-                                                                                ((0x3fffffffU 
-                                                                                & vlSelfRef.__PVT__lpsram__DOT__mpsram__DOT__u0__DOT__adr_i) 
-                                                                                - (IData)(0x21000000U)), 2U), (IData)(0x0004b000U)), (IData)(0x00000280U)))));
     vlSelfRef.__PVT__lvga__DOT__mvga__DOT__in_psel 
         = (IData)(((0x20000000U == (0x30000000U & vlSelfRef.__PVT__lpsram__DOT__mpsram__DOT__u0__DOT__adr_i)) 
                    & (IData)(vlSelfRef.__PVT__apbdelay_delayer__DOT__in_psel)));
@@ -2317,7 +2282,7 @@ VL_ATTR_COLD void VysyxSoCFull_ysyxSoCASIC___stl_sequent__TOP__ysyxSoCFull__asic
                                    ? 1U : 2U) : ((2U 
                                                   == (IData)(vlSelfRef.__PVT__apbdelay_delayer__DOT__state))
                                                   ? 
-                                                 ((0x00000014U 
+                                                 ((1U 
                                                    > vlSelfRef.__PVT__apbdelay_delayer__DOT__cnt)
                                                    ? 0U
                                                    : 2U)
@@ -2437,7 +2402,7 @@ VL_ATTR_COLD void VysyxSoCFull_ysyxSoCASIC___stl_sequent__TOP__ysyxSoCFull__asic
         = ((2U & (IData)(vlSelfRef.__PVT__axi4delay_delayer__DOT__wstate))
             ? ((1U & (IData)(vlSelfRef.__PVT__axi4delay_delayer__DOT__wstate))
                 ? ((IData)(vlSelfRef.__PVT__axi4delay_delayer__DOT__in_bready)
-                    ? 0U : 3U) : ((0x00000014U > vlSelfRef.__PVT__axi4delay_delayer__DOT__wcnt)
+                    ? 0U : 3U) : ((1U > vlSelfRef.__PVT__axi4delay_delayer__DOT__wcnt)
                                    ? ((IData)(vlSelfRef.__PVT__axi4delay_delayer__DOT__in_bready)
                                        ? 0U : 3U) : 2U))
             : ((1U & (IData)(vlSelfRef.__PVT__axi4delay_delayer__DOT__wstate))
@@ -3015,20 +2980,12 @@ VL_ATTR_COLD void VysyxSoCFull_ysyxSoCASIC___ctor_var_reset(VysyxSoCFull_ysyxSoC
     vlSelf->__PVT__lvga__DOT__mvga__DOT__in_psel = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 6190015133185259762ull);
     vlSelf->__PVT__lvga__DOT__mvga__DOT__in_penable = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 2655765355461865813ull);
     vlSelf->__PVT__lvga__DOT__mvga__DOT__vga_data = VL_SCOPED_RAND_RESET_I(24, __VscopeHash, 11805507846535862600ull);
-    vlSelf->__PVT__lvga__DOT__mvga__DOT__h_addr = VL_SCOPED_RAND_RESET_I(10, __VscopeHash, 12542713249617522331ull);
-    vlSelf->__PVT__lvga__DOT__mvga__DOT__v_addr = VL_SCOPED_RAND_RESET_I(10, __VscopeHash, 11746626115182148628ull);
     vlSelf->__PVT__lvga__DOT__mvga__DOT__vsync = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 53380169274943626ull);
     vlSelf->__PVT__lvga__DOT__mvga__DOT__hsync = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 4751228119108564068ull);
     vlSelf->__PVT__lvga__DOT__mvga__DOT__x_cnt = VL_SCOPED_RAND_RESET_I(10, __VscopeHash, 16607061152432848089ull);
     vlSelf->__PVT__lvga__DOT__mvga__DOT__y_cnt = VL_SCOPED_RAND_RESET_I(10, __VscopeHash, 12709805147687894710ull);
     vlSelf->__PVT__lvga__DOT__mvga__DOT__h_valid = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 9267836749288648392ull);
     vlSelf->__PVT__lvga__DOT__mvga__DOT__v_valid = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 10072357056719766281ull);
-    for (int __Vi0 = 0; __Vi0 < 307200; ++__Vi0) {
-        vlSelf->__PVT__lvga__DOT__mvga__DOT__vmem_inst__DOT__ram[__Vi0] = VL_SCOPED_RAND_RESET_I(24, __VscopeHash, 11850330312921631124ull);
-    }
-    vlSelf->__PVT__lvga__DOT__mvga__DOT__vmem_inst__DOT__linear_addr = VL_SCOPED_RAND_RESET_I(19, __VscopeHash, 2557798870371193149ull);
-    vlSelf->__PVT__lvga__DOT__mvga__DOT__vmem_inst__DOT__linear_waddr = VL_SCOPED_RAND_RESET_I(19, __VscopeHash, 3453386451593313220ull);
-    vlSelf->lvga__DOT__mvga__DOT__vmem_inst__DOT____Vlvbound_heacdd1d6__0 = VL_SCOPED_RAND_RESET_I(24, __VscopeHash, 13554535694831031685ull);
     vlSelf->__PVT__lspi__DOT__mspi__DOT__in_psel = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 14947606545221717669ull);
     vlSelf->__PVT__lspi__DOT__mspi__DOT__spi_ss = VL_SCOPED_RAND_RESET_I(8, __VscopeHash, 6020510856435459155ull);
     vlSelf->__PVT__lspi__DOT__mspi__DOT__spi_irq_out = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 13430036266177605201ull);
