@@ -2,6 +2,8 @@ module ysyx_26010011_IFU(
     input clock,
     input reset,
     
+    input flush_icache,
+
     output reg [31:0] PC/*verilator public*/,
     input [31:0]      dnpc,
     output [31:0]     snpc,
@@ -31,6 +33,9 @@ module ysyx_26010011_IFU(
     ysyx_26010011_IFU_icache #(.CACHE_BLOCK_SIZE(16), .CACHE_SIZE(8)) icache_u0(
         .clock(clock),
         .reset(reset),
+
+        .flush(flush_icache),
+
         .in_addr(in_addr),
         .in_reqValid(in_reqValid),
         .in_respValid(in_respValid),
@@ -127,6 +132,8 @@ module ysyx_26010011_IFU_icache #(
     input     clock,
     input     reset,
 
+    input     flush,
+
     input      [31:0] in_addr,
     input             in_reqValid,
     output reg        in_respValid,
@@ -171,12 +178,10 @@ module ysyx_26010011_IFU_icache #(
     // reg 
 
     always @(posedge clock) begin
-        if (reset) begin
+        if (reset | flush) begin
             integer i;
             for (i = 0; i < CACHE_SIZE; i = i + 1) begin
                 cache_valid[i] <= 1'b0;
-                cache_tag[i]   <= {TAG_W{1'b0}};
-                cache_mem[i]   <= {BLOCK_W{1'b0}};
             end
         end else begin
             if((r_fire & (state == S_WAIT_DATA))) begin

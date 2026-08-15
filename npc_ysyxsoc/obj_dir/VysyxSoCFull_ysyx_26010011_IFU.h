@@ -16,6 +16,7 @@ class alignas(VL_CACHE_LINE_BYTES) VysyxSoCFull_ysyx_26010011_IFU final : public
     // DESIGN SPECIFIC STATE
     VL_IN8(__PVT__clock,0,0);
     VL_IN8(__PVT__reset,0,0);
+    VL_IN8(__PVT__flush_icache,0,0);
     VL_IN8(__PVT__isJUMP,0,0);
     VL_IN8(__PVT__isBRANCH,0,0);
     VL_IN8(__PVT__isECALL,0,0);
@@ -43,10 +44,9 @@ class alignas(VL_CACHE_LINE_BYTES) VysyxSoCFull_ysyx_26010011_IFU final : public
     CData/*1:0*/ __PVT__icache_u0__DOT__next_state;
     CData/*0:0*/ __PVT__icache_u0__DOT__r_fire;
     CData/*1:0*/ __PVT__icache_u0__DOT__burst_cnt;
+    CData/*6:0*/ __VdlyLsb__icache_u0__DOT__cache_mem__v0;
+    CData/*2:0*/ __VdlyDim0__icache_u0__DOT__cache_mem__v0;
     CData/*0:0*/ __VdlySet__icache_u0__DOT__cache_mem__v0;
-    CData/*6:0*/ __VdlyLsb__icache_u0__DOT__cache_mem__v8;
-    CData/*2:0*/ __VdlyDim0__icache_u0__DOT__cache_mem__v8;
-    CData/*0:0*/ __VdlySet__icache_u0__DOT__cache_mem__v8;
     VL_OUT(PC,31,0);
     VL_IN(__PVT__dnpc,31,0);
     VL_OUT(__PVT__snpc,31,0);
@@ -55,7 +55,7 @@ class alignas(VL_CACHE_LINE_BYTES) VysyxSoCFull_ysyx_26010011_IFU final : public
     VL_IN(rdata,31,0);
     IData/*31:0*/ __PVT__icache_u0__DOT__unnamedblk1__DOT__i;
     IData/*31:0*/ __Vdly__PC;
-    IData/*31:0*/ __VdlyVal__icache_u0__DOT__cache_mem__v8;
+    IData/*31:0*/ __VdlyVal__icache_u0__DOT__cache_mem__v0;
     VlUnpacked<VlWide<4>/*127:0*/, 8> __PVT__icache_u0__DOT__cache_mem;
     VlUnpacked<CData/*0:0*/, 8> __PVT__icache_u0__DOT__cache_valid;
     VlUnpacked<IData/*24:0*/, 8> __PVT__icache_u0__DOT__cache_tag;

@@ -91,7 +91,7 @@ module ysyx_26010011(
   wire [4:0] rd_add,rs1_add,rs2_add,gpr_address;
   wire [11:0] rcsr_add;
 
-
+  wire flush_icache;
   wire COMP_data;
   wire [31:0] EXU_inA,EXU_inB,EXU_data,CSR_data;
   wire [31:0] rs1_val,rs2_val,reg_data;
@@ -115,6 +115,7 @@ module ysyx_26010011(
   ysyx_26010011_IFU IFU_0(
     .clock(clock),
     .reset(reset),
+    .flush_icache(flush_icache),
     .PC(PC),
     .dnpc(dnpc),
     .snpc(snpc),
@@ -177,6 +178,7 @@ module ysyx_26010011(
     .isEBREAK(isEBREAK),
     .isECALL(isECALL),
     .isMRET(isMRET),
+    .isFENCEI(flush_icache),
     .isSigned(isSigned),
     .isCSR(isCSR),
     .LSU_WEN(LSU_WEN),
