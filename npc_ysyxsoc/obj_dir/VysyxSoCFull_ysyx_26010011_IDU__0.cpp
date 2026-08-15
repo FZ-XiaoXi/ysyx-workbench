@@ -89,7 +89,7 @@ void VysyxSoCFull_ysyx_26010011_IDU___ico_sequent__TOP__ysyxSoCFull__asic__cpu__
     // Body
     vlSelfRef.__PVT__isEQUAL = (0xffffffffU == (~ (vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu.__PVT__COMP_0__DOT__inA 
                                                    ^ vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu.__PVT__COMP_0__DOT__inB)));
-    vlSelfRef.__PVT__isGREATER = (1U & ((IData)(vlSelfRef.__VdfgRegularize_h6e95ff9d_0_15)
+    vlSelfRef.__PVT__isGREATER = (1U & ((IData)(vlSelfRef.__VdfgRegularize_h6e95ff9d_0_25)
                                          ? ((~ (IData)(
                                                        (1ULL 
                                                         & ((1ULL 
@@ -106,8 +106,8 @@ void VysyxSoCFull_ysyx_26010011_IDU___ico_sequent__TOP__ysyxSoCFull__asic__cpu__
                                                    >> 0x0000001fU)) 
                                                & (vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu.__PVT__COMP_0__DOT__inB 
                                                   >> 0x0000001fU)))));
-    vlSelfRef.__VdfgRegularize_h6e95ff9d_0_7 = ((IData)(vlSelfRef.__PVT__isGREATER) 
-                                                | (IData)(vlSelfRef.__PVT__isEQUAL));
+    vlSelfRef.__VdfgRegularize_h6e95ff9d_0_17 = ((IData)(vlSelfRef.__PVT__isGREATER) 
+                                                 | (IData)(vlSelfRef.__PVT__isEQUAL));
 }
 
 extern const VlUnpacked<CData/*0:0*/, 16> VysyxSoCFull__ConstPool__TABLE_h5244400f_0;
@@ -306,7 +306,7 @@ void VysyxSoCFull_ysyx_26010011_IDU___nba_sequent__TOP__ysyxSoCFull__asic__cpu__
     vlSelfRef.__PVT__isSRAI = ((IData)(__VdfgRegularize_hd1728725_0_13) 
                                & (0x20U == (vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__IFU_0.__PVT__PC_command 
                                             >> 0x00000019U)));
-    vlSelfRef.__VdfgRegularize_h6e95ff9d_0_15 = ((IData)(vlSelfRef.__PVT__isLBU) 
+    vlSelfRef.__VdfgRegularize_h6e95ff9d_0_25 = ((IData)(vlSelfRef.__PVT__isLBU) 
                                                  | ((IData)(vlSelfRef.__PVT__isLHU) 
                                                     | ((IData)(__VdfgRegularize_hd1728725_0_24) 
                                                        | ((IData)(vlSelfRef.__PVT__isSLTIU) 
