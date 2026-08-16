@@ -22,10 +22,14 @@
 
 #include "VysyxSoCFull_CPU.h"
 #include "VysyxSoCFull_ysyx_26010011.h"
-#include "VysyxSoCFull_ysyx_26010011_REG.h"
+#include "VysyxSoCFull_ysyx_26010011_GPRs.h"
+#include "VysyxSoCFull_ysyx_26010011_CSRs.h"
+#include "VysyxSoCFull_ysyx_26010011_IF_ID_pipeline.h"
+#include "VysyxSoCFull_ysyx_26010011_ID_EX_pipeline.h"
+#include "VysyxSoCFull_ysyx_26010011_EX_LS_pipeline.h"
+#include "VysyxSoCFull_ysyx_26010011_LS_WB_pipeline.h"
 #include "VysyxSoCFull_ysyx_26010011_IFU.h"
 #include "VysyxSoCFull_ysyx_26010011_LSU.h"
-#include "VysyxSoCFull_ysyx_26010011_IDU.h"
 #include "verilated_vcd_c.h"
 
 
@@ -68,7 +72,7 @@ extern FILE* log_fp;
 #define CONFIG_PC_RESET_OFFSET 0x0
 #define RESET_VECTOR (FLASH_LEFT + CONFIG_PC_RESET_OFFSET)
 
-// #define CONFIG_NVBOARD_ENABLE
+#define CONFIG_NVBOARD_ENABLE
 #ifdef CONFIG_NVBOARD_ENABLE
     #include "nvboard.h"
 #endif

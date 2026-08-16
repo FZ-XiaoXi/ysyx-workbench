@@ -136,7 +136,7 @@ class alignas(VL_CACHE_LINE_BYTES) VysyxSoCFull_uart_regs final : public Verilat
         CData/*3:0*/ __PVT__receiver__DOT__fifo_rx__DOT__bottom;
         CData/*3:0*/ __PVT__receiver__DOT__fifo_rx__DOT__top_plus_1;
         CData/*0:0*/ __PVT__receiver__DOT__fifo_rx__DOT__rfifo__DOT__we;
-        CData/*3:0*/ __VdfgRegularize_h6e95ff9d_0_33;
+        CData/*3:0*/ __VdfgRegularize_h6e95ff9d_0_28;
         CData/*7:0*/ __VdlyVal__receiver__DOT__fifo_rx__DOT__rfifo__DOT__ram__v0;
         CData/*3:0*/ __VdlyDim0__receiver__DOT__fifo_rx__DOT__rfifo__DOT__ram__v0;
         CData/*0:0*/ __VdlySet__receiver__DOT__fifo_rx__DOT__rfifo__DOT__ram__v0;

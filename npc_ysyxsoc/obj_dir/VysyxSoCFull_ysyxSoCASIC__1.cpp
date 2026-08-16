@@ -4,8 +4,8 @@
 
 #include "VysyxSoCFull__pch.h"
 
-void VysyxSoCFull_ysyxSoCASIC___nba_sequent__TOP__ysyxSoCFull__asic__4(VysyxSoCFull_ysyxSoCASIC* vlSelf) {
-    VL_DEBUG_IF(VL_DBG_MSGF("+        VysyxSoCFull_ysyxSoCASIC___nba_sequent__TOP__ysyxSoCFull__asic__4\n"); );
+void VysyxSoCFull_ysyxSoCASIC___nba_sequent__TOP__ysyxSoCFull__asic__3(VysyxSoCFull_ysyxSoCASIC* vlSelf) {
+    VL_DEBUG_IF(VL_DBG_MSGF("+        VysyxSoCFull_ysyxSoCASIC___nba_sequent__TOP__ysyxSoCFull__asic__3\n"); );
     VysyxSoCFull__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
     auto& vlSelfRef = std::ref(*vlSelf).get();
     // Locals
@@ -61,8 +61,8 @@ void VysyxSoCFull_ysyxSoCASIC___nba_sequent__TOP__ysyxSoCFull__asic__4(VysyxSoCF
         = __Vdly__lkeyboard__DOT__mps2__DOT__ps2_data_reg;
 }
 
-void VysyxSoCFull_ysyxSoCASIC___nba_sequent__TOP__ysyxSoCFull__asic__5(VysyxSoCFull_ysyxSoCASIC* vlSelf) {
-    VL_DEBUG_IF(VL_DBG_MSGF("+        VysyxSoCFull_ysyxSoCASIC___nba_sequent__TOP__ysyxSoCFull__asic__5\n"); );
+void VysyxSoCFull_ysyxSoCASIC___nba_sequent__TOP__ysyxSoCFull__asic__4(VysyxSoCFull_ysyxSoCASIC* vlSelf) {
+    VL_DEBUG_IF(VL_DBG_MSGF("+        VysyxSoCFull_ysyxSoCASIC___nba_sequent__TOP__ysyxSoCFull__asic__4\n"); );
     VysyxSoCFull__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
     auto& vlSelfRef = std::ref(*vlSelf).get();
     // Body
@@ -111,14 +111,26 @@ void VysyxSoCFull_ysyxSoCASIC___nba_sequent__TOP__ysyxSoCFull__asic__5(VysyxSoCF
     }
 }
 
-void VysyxSoCFull_ysyxSoCASIC___nba_sequent__TOP__ysyxSoCFull__asic__6(VysyxSoCFull_ysyxSoCASIC* vlSelf) {
-    VL_DEBUG_IF(VL_DBG_MSGF("+        VysyxSoCFull_ysyxSoCASIC___nba_sequent__TOP__ysyxSoCFull__asic__6\n"); );
+extern const VlUnpacked<CData/*2:0*/, 16> VysyxSoCFull__ConstPool__TABLE_h45f54a83_0;
+
+void VysyxSoCFull_ysyxSoCASIC___nba_sequent__TOP__ysyxSoCFull__asic__5(VysyxSoCFull_ysyxSoCASIC* vlSelf) {
+    VL_DEBUG_IF(VL_DBG_MSGF("+        VysyxSoCFull_ysyxSoCASIC___nba_sequent__TOP__ysyxSoCFull__asic__5\n"); );
     VysyxSoCFull__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
     auto& vlSelfRef = std::ref(*vlSelf).get();
     // Locals
-    CData/*0:0*/ __VdfgRegularize_h6e95ff9d_0_36;
-    __VdfgRegularize_h6e95ff9d_0_36 = 0;
+    CData/*3:0*/ __Vtableidx8;
+    __Vtableidx8 = 0;
+    CData/*0:0*/ __VdfgRegularize_h6e95ff9d_0_33;
+    __VdfgRegularize_h6e95ff9d_0_33 = 0;
     // Body
+    vlSelfRef.__PVT__lpsram__DOT__mpsram__DOT__u0__DOT__dat_i 
+        = ((IData)(vlSelfRef.__PVT__axi42apb__DOT__auto_in_awready)
+            ? (IData)((vlSelfRef.__PVT__axi4buf__DOT__nodeOut_wdeq_q__DOT__ram_ext__DOT__R0_data 
+                       >> 4U)) : vlSelfRef.__PVT__axi42apb__DOT__wdata_reg_r);
+    vlSelfRef.__PVT__lpsram__DOT__mpsram__DOT__u0__DOT__we_i 
+        = ((0U == (IData)(vlSelfRef.__PVT__axi42apb__DOT__state))
+            ? (IData)(vlSelfRef.__PVT__axi42apb__DOT__auto_in_awready)
+            : (IData)(vlSelfRef.__PVT__axi42apb__DOT__is_write_r));
     vlSelfRef.__PVT__lgpio__DOT__mgpio__DOT__reg_prdata 
         = vlSelfRef.__Vdly__lgpio__DOT__mgpio__DOT__reg_prdata;
     if (vlSelfRef.__VdlySet__lpsram__DOT__mpsram__DOT__u0__DOT__MR__DOT__data__v0) {
@@ -176,17 +188,52 @@ void VysyxSoCFull_ysyxSoCASIC___nba_sequent__TOP__ysyxSoCFull__asic__6(VysyxSoCF
             = vlSelfRef.__VdlyVal__lkeyboard__DOT__mps2__DOT__ps2_data_fifo__v23;
         vlSelfRef.__PVT__lkeyboard__DOT__mps2__DOT__ps2_data_fifo[7U] = 0U;
     }
-    vlSelfRef.__PVT__lpsram__DOT__mpsram__DOT__u0__DOT__adr_i 
-        = ((IData)(vlSelfRef.__PVT__lpsram__DOT__mpsram__DOT__u0__DOT__we_i)
-            ? ((IData)(vlSelfRef.__PVT__axi42apb__DOT__auto_in_awready)
-                ? (IData)((vlSelfRef.__PVT__axi4buf__DOT__nodeOut_awdeq_q__DOT__ram_ext__DOT__R0_data 
-                           >> 0x0000000bU)) : vlSelfRef.__PVT__axi42apb__DOT__awaddr_reg_r)
-            : ((IData)(vlSelfRef.__PVT__axi42apb__DOT__auto_in_arready)
+    if (vlSelfRef.__PVT__lpsram__DOT__mpsram__DOT__u0__DOT__we_i) {
+        if (vlSelfRef.__PVT__axi42apb__DOT__auto_in_awready) {
+            vlSelfRef.__PVT__lpsram__DOT__mpsram__DOT__u0__DOT__sel_i 
+                = (0x0000000fU & (IData)(vlSelfRef.__PVT__axi4buf__DOT__nodeOut_wdeq_q__DOT__ram_ext__DOT__R0_data));
+            vlSelfRef.__PVT__lpsram__DOT__mpsram__DOT__u0__DOT__adr_i 
+                = (IData)((vlSelfRef.__PVT__axi4buf__DOT__nodeOut_awdeq_q__DOT__ram_ext__DOT__R0_data 
+                           >> 0x0000000bU));
+        } else {
+            vlSelfRef.__PVT__lpsram__DOT__mpsram__DOT__u0__DOT__sel_i 
+                = (0x0000000fU & (IData)(vlSelfRef.__PVT__axi42apb__DOT__wstrb_reg_r));
+            vlSelfRef.__PVT__lpsram__DOT__mpsram__DOT__u0__DOT__adr_i 
+                = vlSelfRef.__PVT__axi42apb__DOT__awaddr_reg_r;
+        }
+    } else {
+        vlSelfRef.__PVT__lpsram__DOT__mpsram__DOT__u0__DOT__sel_i = 0U;
+        vlSelfRef.__PVT__lpsram__DOT__mpsram__DOT__u0__DOT__adr_i 
+            = ((IData)(vlSelfRef.__PVT__axi42apb__DOT__auto_in_arready)
                 ? (IData)((vlSelfRef.__PVT__axi4buf__DOT__nodeOut_ardeq_q__DOT__ram_ext__DOT__R0_data 
-                           >> 0x0000000bU)) : vlSelfRef.__PVT__axi42apb__DOT__araddr_reg_r));
+                           >> 0x0000000bU)) : vlSelfRef.__PVT__axi42apb__DOT__araddr_reg_r);
+    }
     vlSelfRef.__PVT__lkeyboard__DOT__mps2__DOT__ps2_data_fifo_empty 
         = ((IData)(vlSelfRef.__PVT__lkeyboard__DOT__mps2__DOT__ps2_data_fifo_read) 
            == (IData)(vlSelfRef.__PVT__lkeyboard__DOT__mps2__DOT__ps2_data_fifo_write));
+    vlSelfRef.__PVT__lpsram__DOT__mpsram__DOT__u0__DOT__byte1 
+        = (0x000000ffU & ((2U & (IData)(vlSelfRef.__PVT__lpsram__DOT__mpsram__DOT__u0__DOT__sel_i))
+                           ? (vlSelfRef.__PVT__lpsram__DOT__mpsram__DOT__u0__DOT__dat_i 
+                              >> 8U) : (vlSelfRef.__PVT__lpsram__DOT__mpsram__DOT__u0__DOT__dat_i 
+                                        >> 0x00000018U)));
+    __Vtableidx8 = vlSelfRef.__PVT__lpsram__DOT__mpsram__DOT__u0__DOT__sel_i;
+    vlSelfRef.__PVT__lpsram__DOT__mpsram__DOT__u0__DOT__size 
+        = VysyxSoCFull__ConstPool__TABLE_h45f54a83_0
+        [__Vtableidx8];
+    vlSelfRef.__PVT__lvga__DOT__mvga__DOT__vmem_inst__DOT__linear_waddr 
+        = (0x0007ffffU & (((IData)(0x00000280U) * (0x000003ffU 
+                                                   & VL_DIV_III(32, 
+                                                                VL_MODDIV_III(32, 
+                                                                              VL_SHIFTR_III(32,32,32, 
+                                                                                ((0x3fffffffU 
+                                                                                & vlSelfRef.__PVT__lpsram__DOT__mpsram__DOT__u0__DOT__adr_i) 
+                                                                                - (IData)(0x21000000U)), 2U), (IData)(0x0004b000U)), (IData)(0x00000280U)))) 
+                          + (0x000003ffU & VL_MODDIV_III(32, 
+                                                         VL_MODDIV_III(32, 
+                                                                       VL_SHIFTR_III(32,32,32, 
+                                                                                ((0x3fffffffU 
+                                                                                & vlSelfRef.__PVT__lpsram__DOT__mpsram__DOT__u0__DOT__adr_i) 
+                                                                                - (IData)(0x21000000U)), 2U), (IData)(0x0004b000U)), (IData)(0x00000280U)))));
     vlSelfRef.__PVT__lvga__DOT__mvga__DOT__in_psel 
         = (IData)(((0x20000000U == (0x30000000U & vlSelfRef.__PVT__lpsram__DOT__mpsram__DOT__u0__DOT__adr_i)) 
                    & (IData)(vlSelfRef.__PVT__apbdelay_delayer__DOT__in_psel)));
@@ -268,6 +315,34 @@ void VysyxSoCFull_ysyxSoCASIC___nba_sequent__TOP__ysyxSoCFull__asic__6(VysyxSoCF
                                                (3U 
                                                 & (vlSelfRef.__PVT__lpsram__DOT__mpsram__DOT__u0__DOT__adr_i 
                                                    >> 0x0000001cU))));
+    vlSelfRef.__PVT__lpsram__DOT__mpsram__DOT__u0__DOT__byte0 
+        = (0x000000ffU & ((1U & (IData)(vlSelfRef.__PVT__lpsram__DOT__mpsram__DOT__u0__DOT__sel_i))
+                           ? vlSelfRef.__PVT__lpsram__DOT__mpsram__DOT__u0__DOT__dat_i
+                           : ((((IData)(vlSelfRef.__PVT__lpsram__DOT__mpsram__DOT__u0__DOT__sel_i) 
+                                >> 1U) & (1U == (IData)(vlSelfRef.__PVT__lpsram__DOT__mpsram__DOT__u0__DOT__size)))
+                               ? (vlSelfRef.__PVT__lpsram__DOT__mpsram__DOT__u0__DOT__dat_i 
+                                  >> 8U) : ((((IData)(vlSelfRef.__PVT__lpsram__DOT__mpsram__DOT__u0__DOT__sel_i) 
+                                              >> 2U) 
+                                             & (1U 
+                                                == (IData)(vlSelfRef.__PVT__lpsram__DOT__mpsram__DOT__u0__DOT__size)))
+                                             ? (vlSelfRef.__PVT__lpsram__DOT__mpsram__DOT__u0__DOT__dat_i 
+                                                >> 0x00000010U)
+                                             : ((((IData)(vlSelfRef.__PVT__lpsram__DOT__mpsram__DOT__u0__DOT__sel_i) 
+                                                  >> 3U) 
+                                                 & (1U 
+                                                    == (IData)(vlSelfRef.__PVT__lpsram__DOT__mpsram__DOT__u0__DOT__size)))
+                                                 ? 
+                                                (vlSelfRef.__PVT__lpsram__DOT__mpsram__DOT__u0__DOT__dat_i 
+                                                 >> 0x00000018U)
+                                                 : 
+                                                ((((IData)(vlSelfRef.__PVT__lpsram__DOT__mpsram__DOT__u0__DOT__sel_i) 
+                                                   >> 2U) 
+                                                  & (2U 
+                                                     == (IData)(vlSelfRef.__PVT__lpsram__DOT__mpsram__DOT__u0__DOT__size)))
+                                                  ? 
+                                                 (vlSelfRef.__PVT__lpsram__DOT__mpsram__DOT__u0__DOT__dat_i 
+                                                  >> 0x00000010U)
+                                                  : vlSelfRef.__PVT__lpsram__DOT__mpsram__DOT__u0__DOT__dat_i))))));
     vlSelfRef.__PVT__lkeyboard__DOT__mps2__DOT__next_state 
         = ((0U == (IData)(vlSelfRef.__PVT__lkeyboard__DOT__mps2__DOT__state))
             ? ((((IData)(vlSelfRef.__PVT__apbxbar__DOT__sel_4) 
@@ -278,7 +353,7 @@ void VysyxSoCFull_ysyxSoCASIC___nba_sequent__TOP__ysyxSoCFull__asic__6(VysyxSoCF
                 ? 1U : 0U) : ((1U == (IData)(vlSelfRef.__PVT__lkeyboard__DOT__mps2__DOT__state))
                                ? ((IData)(vlSelfRef.__PVT__lkeyboard__DOT__mps2__DOT__pop_enable)
                                    ? 0U : 1U) : 0U));
-    __VdfgRegularize_h6e95ff9d_0_36 = ((~ ((IData)(vlSelfRef.__PVT__apbxbar__DOT__sel_3) 
+    __VdfgRegularize_h6e95ff9d_0_33 = ((~ ((IData)(vlSelfRef.__PVT__apbxbar__DOT__sel_3) 
                                            & (1U == (IData)(vlSelfRef.__PVT__axi42apb__DOT__state)))) 
                                        & ((IData)(vlSelfRef.__PVT__apbxbar__DOT__sel_3) 
                                           & (IData)(vlSelfRef.__PVT__apbdelay_delayer__DOT__in_psel)));
@@ -297,33 +372,50 @@ void VysyxSoCFull_ysyxSoCASIC___nba_sequent__TOP__ysyxSoCFull__asic__6(VysyxSoCF
     vlSelfRef.__PVT__lgpio__DOT__mgpio__DOT__next_state 
         = ((0U == (IData)(vlSelfRef.__PVT__lgpio__DOT__mgpio__DOT__state))
             ? (((IData)(vlSelfRef.__PVT__lpsram__DOT__mpsram__DOT__u0__DOT__we_i) 
-                & (IData)(__VdfgRegularize_h6e95ff9d_0_36))
+                & (IData)(__VdfgRegularize_h6e95ff9d_0_33))
                 ? 1U : (((~ (IData)(vlSelfRef.__PVT__lpsram__DOT__mpsram__DOT__u0__DOT__we_i)) 
-                         & (IData)(__VdfgRegularize_h6e95ff9d_0_36))
+                         & (IData)(__VdfgRegularize_h6e95ff9d_0_33))
                          ? 2U : 0U)) : 0U);
 }
 
-void VysyxSoCFull_ysyxSoCASIC___nba_sequent__TOP__ysyxSoCFull__asic__7(VysyxSoCFull_ysyxSoCASIC* vlSelf) {
-    VL_DEBUG_IF(VL_DBG_MSGF("+        VysyxSoCFull_ysyxSoCASIC___nba_sequent__TOP__ysyxSoCFull__asic__7\n"); );
+void VysyxSoCFull_ysyxSoCASIC___nba_sequent__TOP__ysyxSoCFull__asic__6(VysyxSoCFull_ysyxSoCASIC* vlSelf) {
+    VL_DEBUG_IF(VL_DBG_MSGF("+        VysyxSoCFull_ysyxSoCASIC___nba_sequent__TOP__ysyxSoCFull__asic__6\n"); );
     VysyxSoCFull__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
     auto& vlSelfRef = std::ref(*vlSelf).get();
     // Body
-    vlSelfRef.__PVT__axi4xbar_1__DOT__auto_anon_in_wdata 
-        = ((IData)(vlSelfRef.__PVT__axi4frag__DOT__in_wdeq_q__DOT__full)
-            ? (IData)((vlSelfRef.__PVT__axi4frag__DOT__in_wdeq_q__DOT__ram 
-                       >> 5U)) : vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu.__PVT__io_master_wdata);
     if (vlSelfRef.__PVT__axi4frag__DOT__deq_q_1__DOT__full) {
+        vlSelfRef.__PVT__axi4xbar_1__DOT__auto_anon_in_awburst 
+            = (3U & (IData)(vlSelfRef.__PVT__axi4frag__DOT__deq_q_1__DOT__ram));
+        vlSelfRef.__PVT__axi4xbar_1__DOT__auto_anon_in_awsize 
+            = (7U & (IData)((vlSelfRef.__PVT__axi4frag__DOT__deq_q_1__DOT__ram 
+                             >> 2U)));
         vlSelfRef.__PVT__axi4frag__DOT__deq_q_1__DOT__io_deq_bits_addr 
             = (IData)((vlSelfRef.__PVT__axi4frag__DOT__deq_q_1__DOT__ram 
                        >> 0x0000000dU));
-        vlSelfRef.__PVT__axi4xbar_1__DOT__auto_anon_in_awburst 
-            = (3U & (IData)(vlSelfRef.__PVT__axi4frag__DOT__deq_q_1__DOT__ram));
     } else {
-        vlSelfRef.__PVT__axi4frag__DOT__deq_q_1__DOT__io_deq_bits_addr 
-            = vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu.__PVT__io_master_awaddr;
         vlSelfRef.__PVT__axi4xbar_1__DOT__auto_anon_in_awburst 
             = (3U & (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu.__PVT__io_master_awburst));
+        vlSelfRef.__PVT__axi4xbar_1__DOT__auto_anon_in_awsize 
+            = (7U & (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu.__PVT__io_master_awsize));
+        vlSelfRef.__PVT__axi4frag__DOT__deq_q_1__DOT__io_deq_bits_addr 
+            = vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu.__PVT__io_master_awaddr;
     }
+    if (vlSelfRef.__PVT__axi4frag__DOT__in_wdeq_q__DOT__full) {
+        vlSelfRef.__PVT__axi4xbar_1__DOT__auto_anon_in_wdata 
+            = (IData)((vlSelfRef.__PVT__axi4frag__DOT__in_wdeq_q__DOT__ram 
+                       >> 5U));
+        vlSelfRef.__PVT__axi4xbar_1__DOT__auto_anon_in_wstrb 
+            = (0x0000000fU & (IData)((vlSelfRef.__PVT__axi4frag__DOT__in_wdeq_q__DOT__ram 
+                                      >> 1U)));
+    } else {
+        vlSelfRef.__PVT__axi4xbar_1__DOT__auto_anon_in_wdata 
+            = vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu.__PVT__io_master_wdata;
+        vlSelfRef.__PVT__axi4xbar_1__DOT__auto_anon_in_wstrb 
+            = (0x0000000fU & (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu.__PVT__io_master_wstrb));
+    }
+    vlSelfRef.__PVT__axi4xbar__DOT__awIn_0__DOT__io_enq_valid 
+        = ((~ (IData)(vlSelfRef.__PVT__axi4xbar__DOT__latched)) 
+           & (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu.__PVT__io_master_awvalid));
     vlSelfRef.__PVT__axi4xbar__DOT__requestAWIO_0_0 
         = (1U & ((~ (vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu.__PVT__io_master_awaddr 
                      >> 0x0000001fU)) | (0U == ((4U 
@@ -339,10 +431,12 @@ void VysyxSoCFull_ysyxSoCASIC___nba_sequent__TOP__ysyxSoCFull__asic__7(VysyxSoCF
                              >> 0x0000001fU)) << 2U)) 
                   | (3U & (2U ^ (vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu.__PVT__io_master_awaddr 
                                  >> 0x0000001cU)))));
-    vlSelfRef.__PVT__axi4frag__DOT__deq_q__DOT__io_deq_bits_len 
-        = (0x000000ffU & ((IData)(vlSelfRef.__PVT__axi4frag__DOT__deq_q__DOT__full)
-                           ? (IData)((vlSelfRef.__PVT__axi4frag__DOT__deq_q__DOT__ram 
-                                      >> 5U)) : (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu.__PVT__io_master_arlen)));
+    vlSelfRef.__PVT__axi4frag__DOT___wrapMask_T_3 = 
+        (0x007fffffU & ((0xffU | ((IData)(vlSelfRef.__PVT__axi4frag__DOT__deq_q_1__DOT__io_deq_bits_len) 
+                                  << 8U)) << (IData)(vlSelfRef.__PVT__axi4xbar_1__DOT__auto_anon_in_awsize)));
+    vlSelfRef.__PVT__axi4xbar__DOT__awIn_0__DOT__io_deq_valid 
+        = (1U & ((~ (IData)(vlSelfRef.__PVT__axi4xbar__DOT__awIn_0__DOT__empty)) 
+                 | (IData)(vlSelfRef.__PVT__axi4xbar__DOT__awIn_0__DOT__io_enq_valid)));
     vlSelfRef.__PVT__axi4frag__DOT__addr_1 = ((IData)(vlSelfRef.__PVT__axi4frag__DOT__busy_1)
                                                ? vlSelfRef.__PVT__axi4frag__DOT__r_addr_1
                                                : vlSelfRef.__PVT__axi4frag__DOT__deq_q_1__DOT__io_deq_bits_addr);
@@ -506,9 +600,8 @@ void VysyxSoCFull_ysyxSoCASIC___nba_sequent__TOP__ysyxSoCFull__asic__7(VysyxSoCF
                                                            == (IData)(vlSelfRef.__PVT__axi4xbar__DOT__requestAWIO_0_1))) 
                                                        & (7U 
                                                           != (IData)(vlSelfRef.__PVT__axi4xbar__DOT__awFIFOMap_0_count)))))));
-    vlSelfRef.__PVT__axi4frag__DOT__len = ((IData)(vlSelfRef.__PVT__axi4frag__DOT__busy)
-                                            ? (IData)(vlSelfRef.__PVT__axi4frag__DOT__r_len)
-                                            : (IData)(vlSelfRef.__PVT__axi4frag__DOT__deq_q__DOT__io_deq_bits_len));
+    vlSelfRef.__PVT__axi4xbar__DOT__in_0_wvalid = ((IData)(vlSelfRef.__PVT__axi4xbar__DOT__awIn_0__DOT__io_deq_valid) 
+                                                   & (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu.__PVT__io_master_wvalid));
     vlSelfRef.__PVT__axi4frag__DOT___inc_addr_T_3 = 
         (vlSelfRef.__PVT__axi4frag__DOT__addr_1 + (0x0000ffffU 
                                                    & ((IData)(1U) 
@@ -647,10 +740,6 @@ void VysyxSoCFull_ysyxSoCASIC___nba_comb__TOP__ysyxSoCFull__asic__0(VysyxSoCFull
     CData/*0:0*/ __VdfgRegularize_h6e95ff9d_0_2;
     __VdfgRegularize_h6e95ff9d_0_2 = 0;
     // Body
-    vlSelfRef.__PVT__lpsram__DOT__mpsram__DOT__u0__DOT__MW__DOT__done 
-        = ((IData)(vlSelfRef.__PVT__lpsram__DOT__mpsram__DOT__u0__DOT__MW__DOT__counter) 
-           == ((IData)(1U) + (0x000000ffU & ((IData)(7U) 
-                                             + VL_SHIFTL_III(8,8,32, (IData)(vlSelfRef.__PVT__lpsram__DOT__mpsram__DOT__u0__DOT__size), 1U)))));
     vlSelfRef.__PVT__axi4xbar__DOT__readys_valid_1 
         = (((IData)(vlSelfRef.__PVT__axi4delay_delayer__DOT__bvalid_reg) 
             << 1U) | (IData)(vlSelfRef.__PVT__axi4xbar__DOT__auto_anon_out_0_bvalid));
@@ -662,6 +751,13 @@ void VysyxSoCFull_ysyxSoCASIC___nba_comb__TOP__ysyxSoCFull__asic__0(VysyxSoCFull
     vlSelfRef.__PVT__axi4delay_delayer__DOT__in_rvalid 
         = vlSelfRef.__PVT__axi4delay_delayer__DOT__in_rvalid_w
         [vlSelfRef.__PVT__axi4delay_delayer__DOT__rrcnt];
+    vlSelfRef.__PVT__lvga__DOT__mvga__DOT__vmem_inst__DOT__linear_addr 
+        = (0x0007ffffU & (((IData)(0x00000280U) * (IData)(vlSelfRef.__PVT__lvga__DOT__mvga__DOT__v_addr)) 
+                          + (IData)(vlSelfRef.__PVT__lvga__DOT__mvga__DOT__h_addr)));
+    vlSelfRef.__PVT__lpsram__DOT__mpsram__DOT__u0__DOT__MW__DOT__done 
+        = ((IData)(vlSelfRef.__PVT__lpsram__DOT__mpsram__DOT__u0__DOT__MW__DOT__counter) 
+           == ((IData)(1U) + (0x000000ffU & ((IData)(7U) 
+                                             + VL_SHIFTL_III(8,8,32, (IData)(vlSelfRef.__PVT__lpsram__DOT__mpsram__DOT__u0__DOT__size), 1U)))));
     vlSelfRef.__PVT__lpsram__DOT__mpsram__DOT__u0__DOT__MW__DOT__dout 
         = ((0U == (IData)(vlSelfRef.__PVT__lpsram__DOT__mpsram__DOT__u0__DOT__MW__DOT__counter))
             ? 3U : ((1U == (IData)(vlSelfRef.__PVT__lpsram__DOT__mpsram__DOT__u0__DOT__MW__DOT__counter))
@@ -808,6 +904,20 @@ void VysyxSoCFull_ysyxSoCASIC___nba_comb__TOP__ysyxSoCFull__asic__0(VysyxSoCFull
             = VysyxSoCFull__ConstPool__TABLE_hb60b2f22_0
             [__Vtableidx1];
     }
+    __PVT__axi4xbar__DOT___readys_filter_T_3 = ((~ (IData)(vlSelfRef.__PVT__axi4xbar__DOT__readys_mask_1)) 
+                                                & (IData)(vlSelfRef.__PVT__axi4xbar__DOT__readys_valid_1));
+    vlSelfRef.__PVT__axi4xbar__DOT__readys_valid = 
+        (((IData)(vlSelfRef.__PVT__axi4delay_delayer__DOT__in_rvalid) 
+          << 1U) | (IData)(vlSelfRef.__PVT__axi4xbar__DOT__auto_anon_out_0_rvalid));
+    vlSelfRef.__PVT__axi4xbar__DOT__anyValid = ((IData)(vlSelfRef.__PVT__axi4xbar__DOT__auto_anon_out_0_rvalid) 
+                                                | (IData)(vlSelfRef.__PVT__axi4delay_delayer__DOT__in_rvalid));
+    vlSelfRef.__PVT__lvga__DOT__mvga__DOT__vga_data 
+        = (((0x01e0U > (IData)(vlSelfRef.__PVT__lvga__DOT__mvga__DOT__v_addr)) 
+            & (0x0280U > (IData)(vlSelfRef.__PVT__lvga__DOT__mvga__DOT__h_addr)))
+            ? ((0x0004afffU >= vlSelfRef.__PVT__lvga__DOT__mvga__DOT__vmem_inst__DOT__linear_addr)
+                ? vlSelfRef.__PVT__lvga__DOT__mvga__DOT__vmem_inst__DOT__ram
+               [vlSelfRef.__PVT__lvga__DOT__mvga__DOT__vmem_inst__DOT__linear_addr]
+                : 0U) : 0U);
     __Vtableidx3 = ((((((IData)(vlSelfRef.__PVT__lpsram__DOT__mpsram__DOT__u0__DOT__wb_re) 
                         << 3U) | ((0x16U == (IData)(vlSelfRef.__PVT__lpsram__DOT__mpsram__DOT__u0__DOT__MR__DOT__counter)) 
                                   << 2U)) | (((IData)(vlSelfRef.__PVT__lpsram__DOT__mpsram__DOT__u0__DOT__wb_we) 
@@ -857,13 +967,6 @@ void VysyxSoCFull_ysyxSoCASIC___nba_comb__TOP__ysyxSoCFull__asic__0(VysyxSoCFull
                                                                    == 
                                                                    (0x30000000U 
                                                                     & vlSelfRef.__PVT__lpsram__DOT__mpsram__DOT__u0__DOT__adr_i))))))));
-    __PVT__axi4xbar__DOT___readys_filter_T_3 = ((~ (IData)(vlSelfRef.__PVT__axi4xbar__DOT__readys_mask_1)) 
-                                                & (IData)(vlSelfRef.__PVT__axi4xbar__DOT__readys_valid_1));
-    vlSelfRef.__PVT__axi4xbar__DOT__readys_valid = 
-        (((IData)(vlSelfRef.__PVT__axi4delay_delayer__DOT__in_rvalid) 
-          << 1U) | (IData)(vlSelfRef.__PVT__axi4xbar__DOT__auto_anon_out_0_rvalid));
-    vlSelfRef.__PVT__axi4xbar__DOT__anyValid = ((IData)(vlSelfRef.__PVT__axi4xbar__DOT__auto_anon_out_0_rvalid) 
-                                                | (IData)(vlSelfRef.__PVT__axi4delay_delayer__DOT__in_rvalid));
     vlSelfRef.__PVT__lpsram__DOT__mpsram__DOT__u0__DOT__MR__DOT__nstate 
         = ((IData)(vlSelfRef.__PVT__lpsram__DOT__mpsram__DOT__u0__DOT__MR__DOT__state)
             ? (0x16U != (IData)(vlSelfRef.__PVT__lpsram__DOT__mpsram__DOT__u0__DOT__MR__DOT__counter))
@@ -990,6 +1093,15 @@ void VysyxSoCFull_ysyxSoCASIC___nba_comb__TOP__ysyxSoCFull__asic__0(VysyxSoCFull
                  & (1U == (IData)(vlSelfRef.__PVT__lspi__DOT__mspi__DOT__next_state))) 
                 | (1U == (IData)(vlSelfRef.__PVT__lspi__DOT__mspi__DOT__state))) 
                && (IData)(vlSelfRef.__PVT__lspi__DOT__mspi__DOT__spictrl_pready)));
+    vlSelfRef.__PVT__axi4xbar__DOT__readys_unready_1 
+        = (((4U & ((IData)(__PVT__axi4xbar__DOT___readys_filter_T_3) 
+                   << 1U)) | (((2U & ((IData)(__PVT__axi4xbar__DOT___readys_filter_T_3) 
+                                      << 1U)) | (IData)(vlSelfRef.__PVT__axi4delay_delayer__DOT__bvalid_reg)) 
+                              | (IData)(__PVT__axi4xbar__DOT___readys_filter_T_3))) 
+           | ((IData)(vlSelfRef.__PVT__axi4xbar__DOT__readys_mask_1) 
+              << 2U));
+    __PVT__axi4xbar__DOT___readys_filter_T_1 = ((~ (IData)(vlSelfRef.__PVT__axi4xbar__DOT__readys_mask)) 
+                                                & (IData)(vlSelfRef.__PVT__axi4xbar__DOT__readys_valid));
     vlSelfRef.__PVT__apbdelay_delayer__DOT__next_state 
         = ((0U == (IData)(vlSelfRef.__PVT__apbdelay_delayer__DOT__state))
             ? (((1U != (IData)(vlSelfRef.__PVT__axi42apb__DOT__state)) 
@@ -1004,15 +1116,6 @@ void VysyxSoCFull_ysyxSoCASIC___nba_comb__TOP__ysyxSoCFull__asic__0(VysyxSoCFull
                                                    ? 0U
                                                    : 2U)
                                                   : 0U)));
-    vlSelfRef.__PVT__axi4xbar__DOT__readys_unready_1 
-        = (((4U & ((IData)(__PVT__axi4xbar__DOT___readys_filter_T_3) 
-                   << 1U)) | (((2U & ((IData)(__PVT__axi4xbar__DOT___readys_filter_T_3) 
-                                      << 1U)) | (IData)(vlSelfRef.__PVT__axi4delay_delayer__DOT__bvalid_reg)) 
-                              | (IData)(__PVT__axi4xbar__DOT___readys_filter_T_3))) 
-           | ((IData)(vlSelfRef.__PVT__axi4xbar__DOT__readys_mask_1) 
-              << 2U));
-    __PVT__axi4xbar__DOT___readys_filter_T_1 = ((~ (IData)(vlSelfRef.__PVT__axi4xbar__DOT__readys_mask)) 
-                                                & (IData)(vlSelfRef.__PVT__axi4xbar__DOT__readys_valid));
     vlSelfRef.lpsram__DOT__mpsram__DOT__qspi_dio__out__strong__out0 
         = ((0x0eU & (IData)(vlSelfRef.lpsram__DOT__mpsram__DOT__qspi_dio__out__strong__out0)) 
            | (1U & ((IData)(vlSelfRef.__PVT__lpsram__DOT__mpsram__DOT__u0__DOT__douten) 
@@ -1057,8 +1160,6 @@ void VysyxSoCFull_ysyxSoCASIC___nba_comb__TOP__ysyxSoCFull__asic__0(VysyxSoCFull
                                                  & (IData)(vlSelfRef.__PVT__lspi__DOT__mspi__DOT__spi_XIP_inst__DOT__state)) 
                                                 || ((IData)(vlSelfRef.__PVT__lspi__DOT__mspi__DOT__spi_XIP_inst__DOT__wb_psel_i) 
                                                     & (~ (IData)(vlSelfRef.__PVT__lspi__DOT__mspi__DOT__spi_XIP_inst__DOT__wb_penable_i))))))));
-    __VdfgRegularize_h6e95ff9d_0_2 = ((2U == (IData)(vlSelfRef.__PVT__apbdelay_delayer__DOT__state)) 
-                                      & (0U == (IData)(vlSelfRef.__PVT__apbdelay_delayer__DOT__next_state)));
     vlSelfRef.__PVT__axi4xbar__DOT__readys_readys_1 
         = (3U & (~ (((IData)(vlSelfRef.__PVT__axi4xbar__DOT__readys_unready_1) 
                      >> 2U) & (IData)(vlSelfRef.__PVT__axi4xbar__DOT__readys_unready_1))));
@@ -1069,6 +1170,8 @@ void VysyxSoCFull_ysyxSoCASIC___nba_comb__TOP__ysyxSoCFull__asic__0(VysyxSoCFull
                               | (IData)(__PVT__axi4xbar__DOT___readys_filter_T_1))) 
            | ((IData)(vlSelfRef.__PVT__axi4xbar__DOT__readys_mask) 
               << 2U));
+    __VdfgRegularize_h6e95ff9d_0_2 = ((2U == (IData)(vlSelfRef.__PVT__apbdelay_delayer__DOT__state)) 
+                                      & (0U == (IData)(vlSelfRef.__PVT__apbdelay_delayer__DOT__next_state)));
     __Vtableidx9 = (((IData)(vlSelfRef.__PVT__lspi__DOT__mspi__DOT__spictrl_paddr) 
                      << 1U) | (IData)(vlSelfRef.lspi__DOT__mspi__DOT__u0_spi_top__DOT____VdfgRegularize_h189b3b9c_0_0));
     vlSelfRef.__PVT__lspi__DOT__mspi__DOT__u0_spi_top__DOT__spi_tx_sel 
@@ -1116,18 +1219,6 @@ void VysyxSoCFull_ysyxSoCASIC___nba_comb__TOP__ysyxSoCFull__asic__0(VysyxSoCFull
                                                 & (~ (IData)(vlSelfRef.__PVT__lspi__DOT__mspi__DOT__spi_XIP_inst__DOT__wb_penable_i)))
                                                 ? 1U
                                                 : 0U)))));
-    if (__VdfgRegularize_h6e95ff9d_0_2) {
-        vlSelfRef.__PVT__apbdelay_delayer__DOT__in_prdata 
-            = vlSelfRef.__PVT__apbdelay_delayer__DOT__prdata_reg;
-        vlSelfRef.__PVT__apbdelay_delayer__DOT__in_pslverr 
-            = vlSelfRef.__PVT__apbdelay_delayer__DOT__pslverr_reg;
-        vlSelfRef.__PVT__apbdelay_delayer__DOT__in_pready 
-            = vlSelfRef.__PVT__apbdelay_delayer__DOT__pready_reg;
-    } else {
-        vlSelfRef.__PVT__apbdelay_delayer__DOT__in_prdata = 0xdeaddeadU;
-        vlSelfRef.__PVT__apbdelay_delayer__DOT__in_pslverr = 0U;
-        vlSelfRef.__PVT__apbdelay_delayer__DOT__in_pready = 0U;
-    }
     vlSelfRef.__PVT__axi4xbar__DOT___readys_mask_T_5 
         = ((IData)(vlSelfRef.__PVT__axi4xbar__DOT__readys_readys_1) 
            & (IData)(vlSelfRef.__PVT__axi4xbar__DOT__readys_valid_1));
@@ -1150,17 +1241,21 @@ void VysyxSoCFull_ysyxSoCASIC___nba_comb__TOP__ysyxSoCFull__asic__0(VysyxSoCFull
     vlSelfRef.__PVT__axi4xbar__DOT__readys_readys = 
         (3U & (~ (((IData)(vlSelfRef.__PVT__axi4xbar__DOT__readys_unready) 
                    >> 2U) & (IData)(vlSelfRef.__PVT__axi4xbar__DOT__readys_unready))));
+    if (__VdfgRegularize_h6e95ff9d_0_2) {
+        vlSelfRef.__PVT__apbdelay_delayer__DOT__in_prdata 
+            = vlSelfRef.__PVT__apbdelay_delayer__DOT__prdata_reg;
+        vlSelfRef.__PVT__apbdelay_delayer__DOT__in_pslverr 
+            = vlSelfRef.__PVT__apbdelay_delayer__DOT__pslverr_reg;
+        vlSelfRef.__PVT__apbdelay_delayer__DOT__in_pready 
+            = vlSelfRef.__PVT__apbdelay_delayer__DOT__pready_reg;
+    } else {
+        vlSelfRef.__PVT__apbdelay_delayer__DOT__in_prdata = 0xdeaddeadU;
+        vlSelfRef.__PVT__apbdelay_delayer__DOT__in_pslverr = 0U;
+        vlSelfRef.__PVT__apbdelay_delayer__DOT__in_pready = 0U;
+    }
     vlSelfRef.__PVT__lspi__DOT__mspi__DOT__u0_spi_top__DOT__shift__DOT__latch 
         = ((IData)(vlSelfRef.__PVT__lspi__DOT__mspi__DOT__u0_spi_top__DOT__spi_tx_sel) 
            & (- (IData)((IData)(vlSelfRef.__PVT__lspi__DOT__mspi__DOT__spictrl_pwrite))));
-    vlSelfRef.__PVT__axi42apb__DOT__auto_in_bresp = 
-        ((1U == (IData)(vlSelfRef.__PVT__axi42apb__DOT__state))
-          ? ((IData)(vlSelfRef.__PVT__apbdelay_delayer__DOT__in_pslverr) 
-             << 1U) : (IData)(vlSelfRef.__PVT__axi42apb__DOT__resp_hold_r));
-    vlSelfRef.axi42apb__DOT____VdfgRegularize_h9342e4dc_0_0 
-        = (((1U == (IData)(vlSelfRef.__PVT__axi42apb__DOT__state)) 
-            & (IData)(vlSelfRef.__PVT__apbdelay_delayer__DOT__in_pready)) 
-           | (2U == (IData)(vlSelfRef.__PVT__axi42apb__DOT__state)));
     vlSelfRef.__PVT__axi4delay_delayer__DOT__wnext_state 
         = ((2U & (IData)(vlSelfRef.__PVT__axi4delay_delayer__DOT__wstate))
             ? ((1U & (IData)(vlSelfRef.__PVT__axi4delay_delayer__DOT__wstate))
@@ -1205,26 +1300,24 @@ void VysyxSoCFull_ysyxSoCASIC___nba_comb__TOP__ysyxSoCFull__asic__0(VysyxSoCFull
            & ((IData)(vlSelfRef.__PVT__axi4xbar__DOT__idle_2)
                ? (IData)(vlSelfRef.__PVT__axi4xbar__DOT__readys_readys)
                : (IData)(vlSelfRef.__PVT__axi4xbar__DOT__state_2_0)));
-    vlSelfRef.__PVT__axi4delay_delayer__DOT__in_rready 
-        = ((IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu.__PVT__RAM_AXI4LiteArbiter__DOT__S_rready) 
-           & ((IData)(vlSelfRef.__PVT__axi4xbar__DOT__idle_2)
-               ? ((IData)(vlSelfRef.__PVT__axi4xbar__DOT__readys_readys) 
-                  >> 1U) : (IData)(vlSelfRef.__PVT__axi4xbar__DOT__state_2_1)));
     vlSelfRef.__PVT__axi4xbar__DOT__prefixOR_1 = ((IData)(vlSelfRef.__PVT__axi4xbar__DOT__readys_readys) 
                                                   & (IData)(vlSelfRef.__PVT__axi4xbar__DOT__auto_anon_out_0_rvalid));
     vlSelfRef.__PVT__axi4xbar__DOT__winner_2_1 = (((IData)(vlSelfRef.__PVT__axi4xbar__DOT__readys_readys) 
                                                    >> 1U) 
                                                   & (IData)(vlSelfRef.__PVT__axi4delay_delayer__DOT__in_rvalid));
-    vlSelfRef.__PVT__axi4buf__DOT__nodeIn_bdeq_q__DOT__ram_ext__DOT__W0_en 
-        = ((~ ((IData)(vlSelfRef.__PVT__axi4buf__DOT__nodeIn_bdeq_q__DOT__ptr_match) 
-               & (IData)(vlSelfRef.__PVT__axi4buf__DOT__nodeIn_bdeq_q__DOT__maybe_full))) 
-           & ((IData)(vlSelfRef.__PVT__lpsram__DOT__mpsram__DOT__u0__DOT__we_i) 
-              & (IData)(vlSelfRef.axi42apb__DOT____VdfgRegularize_h9342e4dc_0_0)));
-    vlSelfRef.__PVT__axi4buf__DOT__nodeIn_rdeq_q__DOT__ram_ext__DOT__W0_en 
-        = ((~ ((IData)(vlSelfRef.__PVT__axi4buf__DOT__nodeIn_rdeq_q__DOT__ptr_match) 
-               & (IData)(vlSelfRef.__PVT__axi4buf__DOT__nodeIn_rdeq_q__DOT__maybe_full))) 
-           & ((~ (IData)(vlSelfRef.__PVT__lpsram__DOT__mpsram__DOT__u0__DOT__we_i)) 
-              & (IData)(vlSelfRef.axi42apb__DOT____VdfgRegularize_h9342e4dc_0_0)));
+    vlSelfRef.__PVT__axi4delay_delayer__DOT__in_rready 
+        = ((IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu.__PVT__RAM_AXI4LiteArbiter__DOT__S_rready) 
+           & ((IData)(vlSelfRef.__PVT__axi4xbar__DOT__idle_2)
+               ? ((IData)(vlSelfRef.__PVT__axi4xbar__DOT__readys_readys) 
+                  >> 1U) : (IData)(vlSelfRef.__PVT__axi4xbar__DOT__state_2_1)));
+    vlSelfRef.__PVT__axi42apb__DOT__auto_in_bresp = 
+        ((1U == (IData)(vlSelfRef.__PVT__axi42apb__DOT__state))
+          ? ((IData)(vlSelfRef.__PVT__apbdelay_delayer__DOT__in_pslverr) 
+             << 1U) : (IData)(vlSelfRef.__PVT__axi42apb__DOT__resp_hold_r));
+    vlSelfRef.axi42apb__DOT____VdfgRegularize_h9342e4dc_0_0 
+        = (((1U == (IData)(vlSelfRef.__PVT__axi42apb__DOT__state)) 
+            & (IData)(vlSelfRef.__PVT__apbdelay_delayer__DOT__in_pready)) 
+           | (2U == (IData)(vlSelfRef.__PVT__axi42apb__DOT__state)));
     vlSelfRef.axi4ram__DOT____VdfgRegularize_h9fc36335_0_0 
         = (1U & ((~ (IData)(vlSelfRef.__PVT__axi4ram__DOT__w_full)) 
                  | (IData)(vlSelfRef.__PVT__axi4xbar_1__DOT__auto_anon_out_2_bready)));
@@ -1242,6 +1335,17 @@ void VysyxSoCFull_ysyxSoCASIC___nba_comb__TOP__ysyxSoCFull__asic__0(VysyxSoCFull
            & ((IData)(vlSelfRef.__PVT__axi4xbar_1__DOT__idle_3)
                ? ((IData)(vlSelfRef.__PVT__axi4xbar_1__DOT__readys_readys) 
                   >> 2U) : (IData)(vlSelfRef.__PVT__axi4xbar_1__DOT__state_3_2)));
+    if (vlSelfRef.__PVT__axi4xbar__DOT__idle_2) {
+        vlSelfRef.__PVT__axi4xbar__DOT__muxState_2_0 
+            = vlSelfRef.__PVT__axi4xbar__DOT__prefixOR_1;
+        vlSelfRef.__PVT__axi4xbar__DOT__muxState_2_1 
+            = vlSelfRef.__PVT__axi4xbar__DOT__winner_2_1;
+    } else {
+        vlSelfRef.__PVT__axi4xbar__DOT__muxState_2_0 
+            = vlSelfRef.__PVT__axi4xbar__DOT__state_2_0;
+        vlSelfRef.__PVT__axi4xbar__DOT__muxState_2_1 
+            = vlSelfRef.__PVT__axi4xbar__DOT__state_2_1;
+    }
     vlSelfRef.axi4delay_delayer__DOT____Vcellinp__inst_u0__reset 
         = ((IData)(vlSymsp->TOP.reset) | ((IData)(vlSelfRef.__PVT__axi4delay_delayer__DOT__in_rready) 
                                           & ((IData)(vlSelfRef.__PVT__axi4delay_delayer__DOT__in_rvalid) 
@@ -1271,22 +1375,16 @@ void VysyxSoCFull_ysyxSoCASIC___nba_comb__TOP__ysyxSoCFull__asic__0(VysyxSoCFull
                & (IData)(vlSelfRef.__PVT__axi4delay_delayer__DOT__in_bready)) 
               | ((~ ((IData)(vlSelfRef.__PVT__lsdram_axi__DOT__msdram__DOT__u_sdram_axi__DOT__u_axi__DOT__req_out_w) 
                      >> 4U)) & (IData)(vlSelfRef.lsdram_axi__DOT__msdram__DOT__u_sdram_axi__DOT__u_axi__DOT____VdfgRegularize_h48a8691c_0_3))));
-    if (vlSelfRef.__PVT__axi4xbar__DOT__idle_2) {
-        vlSelfRef.__PVT__axi4xbar__DOT__muxState_2_0 
-            = vlSelfRef.__PVT__axi4xbar__DOT__prefixOR_1;
-        vlSelfRef.__PVT__axi4xbar__DOT__muxState_2_1 
-            = vlSelfRef.__PVT__axi4xbar__DOT__winner_2_1;
-    } else {
-        vlSelfRef.__PVT__axi4xbar__DOT__muxState_2_0 
-            = vlSelfRef.__PVT__axi4xbar__DOT__state_2_0;
-        vlSelfRef.__PVT__axi4xbar__DOT__muxState_2_1 
-            = vlSelfRef.__PVT__axi4xbar__DOT__state_2_1;
-    }
-    vlSelfRef.__VdfgRegularize_h6e95ff9d_0_4 = (2U 
-                                                & ((~ 
-                                                    ((IData)(vlSelfRef.__PVT__axi4buf__DOT__nodeIn_rdeq_q__DOT__ram_ext__DOT__W0_en) 
-                                                     | (IData)(vlSelfRef.__PVT__axi4buf__DOT__nodeIn_bdeq_q__DOT__ram_ext__DOT__W0_en))) 
-                                                   << 1U));
+    vlSelfRef.__PVT__axi4buf__DOT__nodeIn_bdeq_q__DOT__ram_ext__DOT__W0_en 
+        = ((~ ((IData)(vlSelfRef.__PVT__axi4buf__DOT__nodeIn_bdeq_q__DOT__ptr_match) 
+               & (IData)(vlSelfRef.__PVT__axi4buf__DOT__nodeIn_bdeq_q__DOT__maybe_full))) 
+           & ((IData)(vlSelfRef.__PVT__lpsram__DOT__mpsram__DOT__u0__DOT__we_i) 
+              & (IData)(vlSelfRef.axi42apb__DOT____VdfgRegularize_h9342e4dc_0_0)));
+    vlSelfRef.__PVT__axi4buf__DOT__nodeIn_rdeq_q__DOT__ram_ext__DOT__W0_en 
+        = ((~ ((IData)(vlSelfRef.__PVT__axi4buf__DOT__nodeIn_rdeq_q__DOT__ptr_match) 
+               & (IData)(vlSelfRef.__PVT__axi4buf__DOT__nodeIn_rdeq_q__DOT__maybe_full))) 
+           & ((~ (IData)(vlSelfRef.__PVT__lpsram__DOT__mpsram__DOT__u0__DOT__we_i)) 
+              & (IData)(vlSelfRef.axi42apb__DOT____VdfgRegularize_h9342e4dc_0_0)));
     vlSelfRef.__PVT__axi4xbar_1__DOT__in_0_wready = 
         (1U & (((~ (IData)(vlSelfRef.__PVT__axi4buf__DOT__nodeOut_wdeq_q__DOT__full)) 
                 & (IData)(vlSelfRef.__PVT__axi4xbar_1__DOT__awIn_0__DOT__io_deq_bits)) 
@@ -1315,6 +1413,25 @@ void VysyxSoCFull_ysyxSoCASIC___nba_comb__TOP__ysyxSoCFull__asic__0(VysyxSoCFull
         = vlSelfRef.__PVT__axi4delay_delayer__DOT__inst_u6__DOT__in_rready;
     vlSelfRef.__PVT__axi4delay_delayer__DOT__in_rready_w[7U] 
         = vlSelfRef.__PVT__axi4delay_delayer__DOT__inst_u7__DOT__in_rready;
+    vlSelfRef.__VdfgRegularize_h6e95ff9d_0_4 = (2U 
+                                                & ((~ 
+                                                    ((IData)(vlSelfRef.__PVT__axi4buf__DOT__nodeIn_rdeq_q__DOT__ram_ext__DOT__W0_en) 
+                                                     | (IData)(vlSelfRef.__PVT__axi4buf__DOT__nodeIn_bdeq_q__DOT__ram_ext__DOT__W0_en))) 
+                                                   << 1U));
+    vlSelfRef.__PVT__axi4xbar_1__DOT__auto_anon_in_wready 
+        = ((IData)(vlSelfRef.__PVT__axi4xbar_1__DOT__in_0_wready) 
+           & (IData)(vlSelfRef.__PVT__axi4xbar_1__DOT__awIn_0__DOT__io_deq_valid));
+    vlSelfRef.__PVT__axi4xbar_1__DOT__awIn_0__DOT__io_deq_ready 
+        = ((IData)(vlSelfRef.__PVT__axi4xbar_1__DOT__auto_anon_in_wvalid) 
+           & ((1U == (IData)(vlSelfRef.__PVT__axi4frag__DOT__w_todo)) 
+              & (IData)(vlSelfRef.__PVT__axi4xbar_1__DOT__in_0_wready)));
+    vlSelfRef.__PVT__axi4ram__DOT___GEN = ((IData)(vlSelfRef.__PVT__axi4xbar_1__DOT__auto_anon_out_2_awready) 
+                                           & (IData)(vlSelfRef.__PVT__axi4xbar_1__DOT__auto_anon_out_2_awvalid));
+    vlSelfRef.__PVT__axi4xbar_1__DOT__in_0_awready 
+        = (((~ (IData)(vlSelfRef.__PVT__axi4buf__DOT__nodeOut_awdeq_q__DOT__full)) 
+            & (IData)(vlSelfRef.__PVT__axi4xbar_1__DOT__requestAWIO_0_0)) 
+           | ((IData)(vlSelfRef.__PVT__axi4xbar_1__DOT__requestAWIO_0_2) 
+              & (IData)(vlSelfRef.__PVT__axi4xbar_1__DOT__auto_anon_out_2_awready)));
     vlSelfRef.__PVT__axi42apb__DOT__casez_tmp = ((0U 
                                                   == (IData)(vlSelfRef.__PVT__axi42apb__DOT__state))
                                                   ? 
@@ -1333,20 +1450,6 @@ void VysyxSoCFull_ysyxSoCASIC___nba_comb__TOP__ysyxSoCFull__asic__0(VysyxSoCFull
                                                     == (IData)(vlSelfRef.__PVT__axi42apb__DOT__state))
                                                     ? (IData)(vlSelfRef.__VdfgRegularize_h6e95ff9d_0_4)
                                                     : (IData)(vlSelfRef.__PVT__axi42apb__DOT__state))));
-    vlSelfRef.__PVT__axi4xbar_1__DOT__auto_anon_in_wready 
-        = ((IData)(vlSelfRef.__PVT__axi4xbar_1__DOT__in_0_wready) 
-           & (IData)(vlSelfRef.__PVT__axi4xbar_1__DOT__awIn_0__DOT__io_deq_valid));
-    vlSelfRef.__PVT__axi4xbar_1__DOT__awIn_0__DOT__io_deq_ready 
-        = ((IData)(vlSelfRef.__PVT__axi4xbar_1__DOT__auto_anon_in_wvalid) 
-           & ((1U == (IData)(vlSelfRef.__PVT__axi4frag__DOT__w_todo)) 
-              & (IData)(vlSelfRef.__PVT__axi4xbar_1__DOT__in_0_wready)));
-    vlSelfRef.__PVT__axi4ram__DOT___GEN = ((IData)(vlSelfRef.__PVT__axi4xbar_1__DOT__auto_anon_out_2_awready) 
-                                           & (IData)(vlSelfRef.__PVT__axi4xbar_1__DOT__auto_anon_out_2_awvalid));
-    vlSelfRef.__PVT__axi4xbar_1__DOT__in_0_awready 
-        = (((~ (IData)(vlSelfRef.__PVT__axi4buf__DOT__nodeOut_awdeq_q__DOT__full)) 
-            & (IData)(vlSelfRef.__PVT__axi4xbar_1__DOT__requestAWIO_0_0)) 
-           | ((IData)(vlSelfRef.__PVT__axi4xbar_1__DOT__requestAWIO_0_2) 
-              & (IData)(vlSelfRef.__PVT__axi4xbar_1__DOT__auto_anon_out_2_awready)));
     vlSelfRef.__PVT__axi4frag__DOT__in_wdeq_q__DOT__io_deq_ready 
         = ((IData)(vlSelfRef.__PVT__axi4xbar_1__DOT__auto_anon_in_wready) 
            & (IData)(vlSelfRef.axi4frag__DOT____VdfgRegularize_h068021ff_0_0));
@@ -1485,251 +1588,10 @@ void VysyxSoCFull_ysyxSoCASIC___nba_comb__TOP__ysyxSoCFull__asic__1(VysyxSoCFull
            & (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu.__PVT__RAM_AXI4LiteArbiter__DOT__S_rlast));
 }
 
-void VysyxSoCFull_ysyxSoCASIC____Vdpiimwrap_lmrom__DOT__mrom__DOT__mrom_read_TOP__ysyxSoCFull__asic(IData/*31:0*/ raddr, IData/*31:0*/ &rdata);
-
-void VysyxSoCFull_ysyxSoCASIC___nba_comb__TOP__ysyxSoCFull__asic__2(VysyxSoCFull_ysyxSoCASIC* vlSelf) {
-    VL_DEBUG_IF(VL_DBG_MSGF("+        VysyxSoCFull_ysyxSoCASIC___nba_comb__TOP__ysyxSoCFull__asic__2\n"); );
-    VysyxSoCFull__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
-    auto& vlSelfRef = std::ref(*vlSelf).get();
-    // Body
-    if (vlSelfRef.__PVT__axi4frag__DOT__deq_q__DOT__full) {
-        vlSelfRef.__PVT__axi4xbar_1__DOT__auto_anon_in_arburst 
-            = (3U & (IData)(vlSelfRef.__PVT__axi4frag__DOT__deq_q__DOT__ram));
-        vlSelfRef.__PVT__axi4xbar_1__DOT__auto_anon_in_arsize 
-            = (7U & (IData)((vlSelfRef.__PVT__axi4frag__DOT__deq_q__DOT__ram 
-                             >> 2U)));
-        vlSelfRef.__PVT__axi4frag__DOT__deq_q__DOT__io_deq_bits_addr 
-            = (IData)((vlSelfRef.__PVT__axi4frag__DOT__deq_q__DOT__ram 
-                       >> 0x0000000dU));
-    } else {
-        vlSelfRef.__PVT__axi4xbar_1__DOT__auto_anon_in_arburst 
-            = (3U & (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu.__PVT__io_master_arburst));
-        vlSelfRef.__PVT__axi4xbar_1__DOT__auto_anon_in_arsize 
-            = (7U & (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu.__PVT__io_master_arsize));
-        vlSelfRef.__PVT__axi4frag__DOT__deq_q__DOT__io_deq_bits_addr 
-            = vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu.__PVT__io_master_araddr;
-    }
-    vlSelfRef.__PVT__axi4xbar__DOT__requestARIO_0_0 
-        = (1U & ((~ (vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu.__PVT__io_master_araddr 
-                     >> 0x0000001fU)) | (0U == ((4U 
-                                                 & ((~ 
-                                                     (vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu.__PVT__io_master_araddr 
-                                                      >> 0x0000001fU)) 
-                                                    << 2U)) 
-                                                | (3U 
-                                                   & (vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu.__PVT__io_master_araddr 
-                                                      >> 0x0000001cU))))));
-    vlSelfRef.__PVT__axi4xbar__DOT__requestARIO_0_1 
-        = (0U == ((4U & ((~ (vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu.__PVT__io_master_araddr 
-                             >> 0x0000001fU)) << 2U)) 
-                  | (3U & (2U ^ (vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu.__PVT__io_master_araddr 
-                                 >> 0x0000001cU)))));
-    vlSelfRef.__PVT__axi4frag__DOT___wrapMask_T_1 = 
-        (0x007fffffU & ((0xffU | ((IData)(vlSelfRef.__PVT__axi4frag__DOT__deq_q__DOT__io_deq_bits_len) 
-                                  << 8U)) << (IData)(vlSelfRef.__PVT__axi4xbar_1__DOT__auto_anon_in_arsize)));
-    vlSelfRef.__PVT__axi4frag__DOT__addr = ((IData)(vlSelfRef.__PVT__axi4frag__DOT__busy)
-                                             ? vlSelfRef.__PVT__axi4frag__DOT__r_addr
-                                             : vlSelfRef.__PVT__axi4frag__DOT__deq_q__DOT__io_deq_bits_addr);
-    vlSelfRef.__PVT__axi4xbar__DOT__casez_tmp = (((0U 
-                                                   == (IData)(vlSelfRef.__PVT__axi4xbar__DOT__arFIFOMap_0_count)) 
-                                                  | ((IData)(vlSelfRef.__PVT__axi4xbar__DOT__arFIFOMap_0_last) 
-                                                     == (IData)(vlSelfRef.__PVT__axi4xbar__DOT__requestARIO_0_1))) 
-                                                 & (7U 
-                                                    != (IData)(vlSelfRef.__PVT__axi4xbar__DOT__arFIFOMap_0_count)));
-    vlSelfRef.__PVT__axi4frag__DOT___inc_addr_T_1 = 
-        (vlSelfRef.__PVT__axi4frag__DOT__addr + (0x0000ffffU 
-                                                 & ((IData)(1U) 
-                                                    << (IData)(vlSelfRef.__PVT__axi4xbar_1__DOT__auto_anon_in_arsize))));
-    vlSelfRef.__PVT__axi4xbar_1__DOT__auto_anon_in_araddr 
-        = (~ (((~ (vlSelfRef.__PVT__axi4frag__DOT__addr 
-                   >> 2U)) << 2U) | (3U & ((~ ((IData)(3U) 
-                                               << (IData)(vlSelfRef.__PVT__axi4xbar_1__DOT__auto_anon_in_arsize))) 
-                                           | (~ vlSelfRef.__PVT__axi4frag__DOT__addr)))));
-    vlSelfRef.__PVT__axi4xbar__DOT__in_0_arvalid = 
-        ((IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu.__PVT__io_master_arvalid) 
-         & (IData)(vlSelfRef.__PVT__axi4xbar__DOT__casez_tmp));
-    vlSelfRef.__PVT__axi4xbar_1__DOT__requestARIO_0_0 
-        = ((0U == ((2U & (vlSelfRef.__PVT__axi4xbar_1__DOT__auto_anon_in_araddr 
-                          >> 0x0000001cU)) | (1U & 
-                                              (vlSelfRef.__PVT__axi4xbar_1__DOT__auto_anon_in_araddr 
-                                               >> 0x00000018U)))) 
-           | ((0U == ((6U & (4U ^ (0x0000001eU & (vlSelfRef.__PVT__axi4xbar_1__DOT__auto_anon_in_araddr 
-                                                  >> 0x0000001bU)))) 
-                      | (1U & (~ (vlSelfRef.__PVT__axi4xbar_1__DOT__auto_anon_in_araddr 
-                                  >> 0x00000018U))))) 
-              | (3U == (3U & (vlSelfRef.__PVT__axi4xbar_1__DOT__auto_anon_in_araddr 
-                              >> 0x0000001cU)))));
-    vlSelfRef.__PVT__axi4xbar_1__DOT__requestARIO_0_2 
-        = (0U == ((6U & (vlSelfRef.__PVT__axi4xbar_1__DOT__auto_anon_in_araddr 
-                         >> 0x0000001bU)) | (1U & (~ 
-                                                   (vlSelfRef.__PVT__axi4xbar_1__DOT__auto_anon_in_araddr 
-                                                    >> 0x00000018U)))));
-    vlSelfRef.__PVT__axi4xbar_1__DOT__requestARIO_0_1 
-        = (0U == ((6U & (4U ^ (0x0000001eU & (vlSelfRef.__PVT__axi4xbar_1__DOT__auto_anon_in_araddr 
-                                              >> 0x0000001bU)))) 
-                  | (1U & (vlSelfRef.__PVT__axi4xbar_1__DOT__auto_anon_in_araddr 
-                           >> 0x00000018U))));
-    vlSelfRef.__PVT__axi4xbar__DOT__auto_anon_out_0_arvalid 
-        = ((IData)(vlSelfRef.__PVT__axi4xbar__DOT__in_0_arvalid) 
-           & (IData)(vlSelfRef.__PVT__axi4xbar__DOT__requestARIO_0_0));
-    vlSelfRef.__PVT__axi4delay_delayer__DOT__in_arvalid 
-        = ((IData)(vlSelfRef.__PVT__axi4xbar__DOT__in_0_arvalid) 
-           & (IData)(vlSelfRef.__PVT__axi4xbar__DOT__requestARIO_0_1));
-    vlSelfRef.__PVT__axi4xbar_1__DOT__auto_anon_in_arready 
-        = (((~ (IData)(vlSelfRef.__PVT__axi4buf__DOT__nodeOut_ardeq_q__DOT__full)) 
-            & (IData)(vlSelfRef.__PVT__axi4xbar_1__DOT__requestARIO_0_0)) 
-           | (((~ (IData)(vlSelfRef.__PVT__lmrom__DOT__state)) 
-               & (IData)(vlSelfRef.__PVT__axi4xbar_1__DOT__requestARIO_0_1)) 
-              | ((IData)(vlSelfRef.__PVT__axi4xbar_1__DOT__requestARIO_0_2) 
-                 & (IData)(vlSelfRef.__PVT__axi4xbar_1__DOT__auto_anon_out_2_arready))));
-    vlSelfRef.__PVT__axi4yank__DOT__auto_in_arvalid 
-        = ((IData)(vlSelfRef.__PVT__axi4frag__DOT__deq_q__DOT__full) 
-           | (IData)(vlSelfRef.__PVT__axi4xbar__DOT__auto_anon_out_0_arvalid));
-    vlSelfRef.__PVT__lsdram_axi__DOT__msdram__DOT__u_sdram_axi__DOT__u_core__DOT__inport_rd_i 
-        = ((~ (IData)(vlSelfRef.__PVT__lsdram_axi__DOT__msdram__DOT__u_sdram_axi__DOT__u_axi__DOT__req_wr_q)) 
-           & (((IData)(vlSelfRef.__PVT__axi4delay_delayer__DOT__in_arvalid) 
-               | (IData)(vlSelfRef.__PVT__lsdram_axi__DOT__msdram__DOT__u_sdram_axi__DOT__u_axi__DOT__req_rd_q)) 
-              & ((4U != (IData)(vlSelfRef.__PVT__lsdram_axi__DOT__msdram__DOT__u_sdram_axi__DOT__u_axi__DOT__u_requests__DOT__count)) 
-                 & (((~ ((IData)(vlSelfRef.__PVT__lsdram_axi__DOT__msdram__DOT__u_sdram_axi__DOT__u_axi__DOT__req_hold_wr_q) 
-                         | (IData)(vlSelfRef.__PVT__lsdram_axi__DOT__msdram__DOT__u_sdram_axi__DOT__u_axi__DOT__req_prio_q))) 
-                     | (IData)(vlSelfRef.__PVT__lsdram_axi__DOT__msdram__DOT__u_sdram_axi__DOT__u_axi__DOT__req_hold_rd_q)) 
-                    | ((~ (IData)(vlSelfRef.__PVT__axi4delay_delayer__DOT__in_awvalid)) 
-                       | (IData)(vlSelfRef.__PVT__lsdram_axi__DOT__msdram__DOT__u_sdram_axi__DOT__u_axi__DOT__req_rd_q))))));
-    vlSelfRef.__PVT__lsdram_axi__DOT__msdram__DOT__u_sdram_axi__DOT__u_axi__DOT__write_active_w 
-        = ((~ (IData)(vlSelfRef.__PVT__lsdram_axi__DOT__msdram__DOT__u_sdram_axi__DOT__u_axi__DOT__req_rd_q)) 
-           & (((IData)(vlSelfRef.__PVT__axi4delay_delayer__DOT__in_awvalid) 
-               | (IData)(vlSelfRef.__PVT__lsdram_axi__DOT__msdram__DOT__u_sdram_axi__DOT__u_axi__DOT__req_wr_q)) 
-              & ((4U != (IData)(vlSelfRef.__PVT__lsdram_axi__DOT__msdram__DOT__u_sdram_axi__DOT__u_axi__DOT__u_requests__DOT__count)) 
-                 & ((((~ (IData)(vlSelfRef.__PVT__lsdram_axi__DOT__msdram__DOT__u_sdram_axi__DOT__u_axi__DOT__req_hold_rd_q)) 
-                      & (IData)(vlSelfRef.__PVT__lsdram_axi__DOT__msdram__DOT__u_sdram_axi__DOT__u_axi__DOT__req_prio_q)) 
-                     | (IData)(vlSelfRef.__PVT__lsdram_axi__DOT__msdram__DOT__u_sdram_axi__DOT__u_axi__DOT__req_hold_wr_q)) 
-                    | ((~ (IData)(vlSelfRef.__PVT__axi4delay_delayer__DOT__in_arvalid)) 
-                       | (IData)(vlSelfRef.__PVT__lsdram_axi__DOT__msdram__DOT__u_sdram_axi__DOT__u_axi__DOT__req_wr_q))))));
-    vlSelfRef.__PVT__axi4yank__DOT__auto_in_arready 
-        = ((IData)(vlSelfRef.__PVT__axi4xbar_1__DOT__auto_anon_in_arready) 
-           & (IData)(vlSelfRef.__PVT__axi4yank__DOT__casez_tmp));
-    vlSelfRef.__PVT__axi4xbar_1__DOT__auto_anon_in_arvalid 
-        = ((IData)(vlSelfRef.__PVT__axi4yank__DOT__auto_in_arvalid) 
-           & (IData)(vlSelfRef.__PVT__axi4yank__DOT__casez_tmp));
-    vlSelfRef.__PVT__axi4yank__DOT___GEN_0 = ((IData)(vlSelfRef.__PVT__axi4yank__DOT__auto_in_arvalid) 
-                                              & (IData)(vlSelfRef.__PVT__axi4xbar_1__DOT__auto_anon_in_arready));
-    vlSelfRef.__PVT__axi4frag__DOT___GEN_1 = ((IData)(vlSelfRef.__PVT__axi4yank__DOT__auto_in_arvalid) 
-                                              & (IData)(vlSelfRef.__PVT__axi4yank__DOT__auto_in_arready));
-    vlSelfRef.__PVT__axi4frag__DOT__deq_q__DOT__io_deq_ready 
-        = ((~ (0U != (IData)(vlSelfRef.__PVT__axi4frag__DOT__len))) 
-           & (IData)(vlSelfRef.__PVT__axi4yank__DOT__auto_in_arready));
-    vlSelfRef.__PVT__axi4xbar_1__DOT___arFIFOMap_15_T_1 
-        = ((IData)(vlSelfRef.__PVT__axi4xbar_1__DOT__auto_anon_in_arready) 
-           & (IData)(vlSelfRef.__PVT__axi4xbar_1__DOT__auto_anon_in_arvalid));
-    vlSelfRef.__PVT__axi4ram__DOT__mem_ext__DOT__R0_en 
-        = ((IData)(vlSelfRef.__PVT__axi4xbar_1__DOT__auto_anon_out_2_arready) 
-           & ((IData)(vlSelfRef.__PVT__axi4xbar_1__DOT__auto_anon_in_arvalid) 
-              & (IData)(vlSelfRef.__PVT__axi4xbar_1__DOT__requestARIO_0_2)));
-    vlSelfRef.__PVT__axi4buf__DOT__nodeOut_ardeq_q__DOT__ram_ext__DOT__W0_en 
-        = ((~ (IData)(vlSelfRef.__PVT__axi4buf__DOT__nodeOut_ardeq_q__DOT__full)) 
-           & ((IData)(vlSelfRef.__PVT__axi4xbar_1__DOT__auto_anon_in_arvalid) 
-              & (IData)(vlSelfRef.__PVT__axi4xbar_1__DOT__requestARIO_0_0)));
-    vlSelfRef.__PVT__lmrom__DOT___nodeIn_rid_T = ((~ (IData)(vlSelfRef.__PVT__lmrom__DOT__state)) 
-                                                  & ((IData)(vlSelfRef.__PVT__axi4xbar_1__DOT__auto_anon_in_arvalid) 
-                                                     & (IData)(vlSelfRef.__PVT__axi4xbar_1__DOT__requestARIO_0_1)));
-    vlSelfRef.__PVT__axi4yank__DOT__Queue1_BundleMap__DOT__do_enq 
-        = ((~ (IData)(vlSelfRef.__PVT__axi4yank__DOT__Queue1_BundleMap__DOT__full)) 
-           & ((IData)(vlSelfRef.__PVT__axi4yank__DOT___GEN_0) 
-              & ((IData)(1U) << (IData)(vlSelfRef.__PVT__axi4xbar_1__DOT__auto_anon_in_arid))));
-    vlSelfRef.__PVT__axi4yank__DOT__Queue1_BundleMap_1__DOT__do_enq 
-        = (((~ (IData)(vlSelfRef.__PVT__axi4yank__DOT__Queue1_BundleMap_1__DOT__full)) 
-            & (IData)(vlSelfRef.__PVT__axi4yank__DOT___GEN_0)) 
-           & (((IData)(1U) << (IData)(vlSelfRef.__PVT__axi4xbar_1__DOT__auto_anon_in_arid)) 
-              >> 1U));
-    vlSelfRef.__PVT__axi4yank__DOT__Queue1_BundleMap_2__DOT__do_enq 
-        = (((~ (IData)(vlSelfRef.__PVT__axi4yank__DOT__Queue1_BundleMap_2__DOT__full)) 
-            & (IData)(vlSelfRef.__PVT__axi4yank__DOT___GEN_0)) 
-           & (((IData)(1U) << (IData)(vlSelfRef.__PVT__axi4xbar_1__DOT__auto_anon_in_arid)) 
-              >> 2U));
-    vlSelfRef.__PVT__axi4yank__DOT__Queue1_BundleMap_3__DOT__do_enq 
-        = (((~ (IData)(vlSelfRef.__PVT__axi4yank__DOT__Queue1_BundleMap_3__DOT__full)) 
-            & (IData)(vlSelfRef.__PVT__axi4yank__DOT___GEN_0)) 
-           & (((IData)(1U) << (IData)(vlSelfRef.__PVT__axi4xbar_1__DOT__auto_anon_in_arid)) 
-              >> 3U));
-    vlSelfRef.__PVT__axi4yank__DOT__Queue1_BundleMap_4__DOT__do_enq 
-        = (((~ (IData)(vlSelfRef.__PVT__axi4yank__DOT__Queue1_BundleMap_4__DOT__full)) 
-            & (IData)(vlSelfRef.__PVT__axi4yank__DOT___GEN_0)) 
-           & (((IData)(1U) << (IData)(vlSelfRef.__PVT__axi4xbar_1__DOT__auto_anon_in_arid)) 
-              >> 4U));
-    vlSelfRef.__PVT__axi4yank__DOT__Queue1_BundleMap_5__DOT__do_enq 
-        = (((~ (IData)(vlSelfRef.__PVT__axi4yank__DOT__Queue1_BundleMap_5__DOT__full)) 
-            & (IData)(vlSelfRef.__PVT__axi4yank__DOT___GEN_0)) 
-           & (((IData)(1U) << (IData)(vlSelfRef.__PVT__axi4xbar_1__DOT__auto_anon_in_arid)) 
-              >> 5U));
-    vlSelfRef.__PVT__axi4yank__DOT__Queue1_BundleMap_6__DOT__do_enq 
-        = (((~ (IData)(vlSelfRef.__PVT__axi4yank__DOT__Queue1_BundleMap_6__DOT__full)) 
-            & (IData)(vlSelfRef.__PVT__axi4yank__DOT___GEN_0)) 
-           & (((IData)(1U) << (IData)(vlSelfRef.__PVT__axi4xbar_1__DOT__auto_anon_in_arid)) 
-              >> 6U));
-    vlSelfRef.__PVT__axi4yank__DOT__Queue1_BundleMap_7__DOT__do_enq 
-        = (((~ (IData)(vlSelfRef.__PVT__axi4yank__DOT__Queue1_BundleMap_7__DOT__full)) 
-            & (IData)(vlSelfRef.__PVT__axi4yank__DOT___GEN_0)) 
-           & (((IData)(1U) << (IData)(vlSelfRef.__PVT__axi4xbar_1__DOT__auto_anon_in_arid)) 
-              >> 7U));
-    vlSelfRef.__PVT__axi4yank__DOT__Queue1_BundleMap_8__DOT__do_enq 
-        = (((~ (IData)(vlSelfRef.__PVT__axi4yank__DOT__Queue1_BundleMap_8__DOT__full)) 
-            & (IData)(vlSelfRef.__PVT__axi4yank__DOT___GEN_0)) 
-           & (((IData)(1U) << (IData)(vlSelfRef.__PVT__axi4xbar_1__DOT__auto_anon_in_arid)) 
-              >> 8U));
-    vlSelfRef.__PVT__axi4yank__DOT__Queue1_BundleMap_9__DOT__do_enq 
-        = (((~ (IData)(vlSelfRef.__PVT__axi4yank__DOT__Queue1_BundleMap_9__DOT__full)) 
-            & (IData)(vlSelfRef.__PVT__axi4yank__DOT___GEN_0)) 
-           & (((IData)(1U) << (IData)(vlSelfRef.__PVT__axi4xbar_1__DOT__auto_anon_in_arid)) 
-              >> 9U));
-    vlSelfRef.__PVT__axi4yank__DOT__Queue1_BundleMap_10__DOT__do_enq 
-        = (((~ (IData)(vlSelfRef.__PVT__axi4yank__DOT__Queue1_BundleMap_10__DOT__full)) 
-            & (IData)(vlSelfRef.__PVT__axi4yank__DOT___GEN_0)) 
-           & (((IData)(1U) << (IData)(vlSelfRef.__PVT__axi4xbar_1__DOT__auto_anon_in_arid)) 
-              >> 0x0000000aU));
-    vlSelfRef.__PVT__axi4yank__DOT__Queue1_BundleMap_11__DOT__do_enq 
-        = (((~ (IData)(vlSelfRef.__PVT__axi4yank__DOT__Queue1_BundleMap_11__DOT__full)) 
-            & (IData)(vlSelfRef.__PVT__axi4yank__DOT___GEN_0)) 
-           & (((IData)(1U) << (IData)(vlSelfRef.__PVT__axi4xbar_1__DOT__auto_anon_in_arid)) 
-              >> 0x0000000bU));
-    vlSelfRef.__PVT__axi4yank__DOT__Queue1_BundleMap_12__DOT__do_enq 
-        = (((~ (IData)(vlSelfRef.__PVT__axi4yank__DOT__Queue1_BundleMap_12__DOT__full)) 
-            & (IData)(vlSelfRef.__PVT__axi4yank__DOT___GEN_0)) 
-           & (((IData)(1U) << (IData)(vlSelfRef.__PVT__axi4xbar_1__DOT__auto_anon_in_arid)) 
-              >> 0x0000000cU));
-    vlSelfRef.__PVT__axi4yank__DOT__Queue1_BundleMap_13__DOT__do_enq 
-        = (((~ (IData)(vlSelfRef.__PVT__axi4yank__DOT__Queue1_BundleMap_13__DOT__full)) 
-            & (IData)(vlSelfRef.__PVT__axi4yank__DOT___GEN_0)) 
-           & (((IData)(1U) << (IData)(vlSelfRef.__PVT__axi4xbar_1__DOT__auto_anon_in_arid)) 
-              >> 0x0000000dU));
-    vlSelfRef.__PVT__axi4yank__DOT__Queue1_BundleMap_14__DOT__do_enq 
-        = (((~ (IData)(vlSelfRef.__PVT__axi4yank__DOT__Queue1_BundleMap_14__DOT__full)) 
-            & (IData)(vlSelfRef.__PVT__axi4yank__DOT___GEN_0)) 
-           & (((IData)(1U) << (IData)(vlSelfRef.__PVT__axi4xbar_1__DOT__auto_anon_in_arid)) 
-              >> 0x0000000eU));
-    vlSelfRef.__PVT__axi4yank__DOT__Queue1_BundleMap_15__DOT__do_enq 
-        = (((~ (IData)(vlSelfRef.__PVT__axi4yank__DOT__Queue1_BundleMap_15__DOT__full)) 
-            & (IData)(vlSelfRef.__PVT__axi4yank__DOT___GEN_0)) 
-           & (((IData)(1U) << (IData)(vlSelfRef.__PVT__axi4xbar_1__DOT__auto_anon_in_arid)) 
-              >> 0x0000000fU));
-    vlSelfRef.__PVT__axi4frag__DOT__deq_q__DOT__do_enq 
-        = ((~ ((~ (IData)(vlSelfRef.__PVT__axi4frag__DOT__deq_q__DOT__full)) 
-               & (IData)(vlSelfRef.__PVT__axi4frag__DOT__deq_q__DOT__io_deq_ready))) 
-           & ((~ (IData)(vlSelfRef.__PVT__axi4frag__DOT__deq_q__DOT__full)) 
-              & (IData)(vlSelfRef.__PVT__axi4xbar__DOT__auto_anon_out_0_arvalid)));
-    if (vlSelfRef.__PVT__lmrom__DOT___nodeIn_rid_T) {
-        VysyxSoCFull_ysyxSoCASIC____Vdpiimwrap_lmrom__DOT__mrom__DOT__mrom_read_TOP__ysyxSoCFull__asic(
-                                                                                (0x3fffffffU 
-                                                                                & vlSelfRef.__PVT__axi4xbar_1__DOT__auto_anon_in_araddr), vlSelfRef.__Vtask_lmrom__DOT__mrom__DOT__mrom_read__8__rdata);
-        vlSelfRef.__PVT__lmrom__DOT___mrom_rdata = vlSelfRef.__Vtask_lmrom__DOT__mrom__DOT__mrom_read__8__rdata;
-    } else {
-        vlSelfRef.__PVT__lmrom__DOT___mrom_rdata = 0U;
-    }
-}
-
 extern const VlUnpacked<VlWide<3>/*79:0*/, 16> VysyxSoCFull__ConstPool__TABLE_hcfb222df_0;
 
-void VysyxSoCFull_ysyxSoCASIC___nba_sequent__TOP__ysyxSoCFull__asic__8(VysyxSoCFull_ysyxSoCASIC* vlSelf) {
-    VL_DEBUG_IF(VL_DBG_MSGF("+        VysyxSoCFull_ysyxSoCASIC___nba_sequent__TOP__ysyxSoCFull__asic__8\n"); );
+void VysyxSoCFull_ysyxSoCASIC___nba_sequent__TOP__ysyxSoCFull__asic__7(VysyxSoCFull_ysyxSoCASIC* vlSelf) {
+    VL_DEBUG_IF(VL_DBG_MSGF("+        VysyxSoCFull_ysyxSoCASIC___nba_sequent__TOP__ysyxSoCFull__asic__7\n"); );
     VysyxSoCFull__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
     auto& vlSelfRef = std::ref(*vlSelf).get();
     // Locals
@@ -1892,113 +1754,288 @@ void VysyxSoCFull_ysyxSoCASIC___nba_sequent__TOP__ysyxSoCFull__asic__8(VysyxSoCF
            & (4U != (IData)(vlSelfRef.__PVT__lsdram_axi__DOT__msdram__DOT__u_sdram_axi__DOT__u_axi__DOT__u_requests__DOT__count)));
 }
 
-void VysyxSoCFull_ysyxSoCASIC___nba_comb__TOP__ysyxSoCFull__asic__3(VysyxSoCFull_ysyxSoCASIC* vlSelf) {
-    VL_DEBUG_IF(VL_DBG_MSGF("+        VysyxSoCFull_ysyxSoCASIC___nba_comb__TOP__ysyxSoCFull__asic__3\n"); );
-    VysyxSoCFull__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
-    auto& vlSelfRef = std::ref(*vlSelf).get();
-    // Body
-    vlSelfRef.__PVT__axi4delay_delayer__DOT__inst_u0__DOT__rnext_state 
-        = ((2U & (IData)(vlSelfRef.__PVT__axi4delay_delayer__DOT__inst_u0__DOT__rstate))
-            ? ((1U & (IData)(vlSelfRef.__PVT__axi4delay_delayer__DOT__inst_u0__DOT__rstate))
-                ? (vlSelfRef.__PVT__axi4delay_delayer__DOT__in_rready_w
-                   [0U] ? 0U : 3U) : ((1U > vlSelfRef.__PVT__axi4delay_delayer__DOT__inst_u0__DOT__rcnt)
-                                       ? (vlSelfRef.__PVT__axi4delay_delayer__DOT__in_rready_w
-                                          [0U] ? 0U
-                                           : 3U) : 2U))
-            : ((1U & (IData)(vlSelfRef.__PVT__axi4delay_delayer__DOT__inst_u0__DOT__rstate))
-                ? ((IData)(vlSelfRef.__PVT__axi4delay_delayer__DOT__inst_u0__DOT__out_rvalid)
-                    ? 2U : 1U) : ((IData)(vlSelfRef.__PVT__axi4delay_delayer__DOT__in_arvalid)
-                                   ? 1U : 0U)));
-    vlSelfRef.__PVT__axi4delay_delayer__DOT__inst_u1__DOT__rnext_state 
-        = ((2U & (IData)(vlSelfRef.__PVT__axi4delay_delayer__DOT__inst_u1__DOT__rstate))
-            ? ((1U & (IData)(vlSelfRef.__PVT__axi4delay_delayer__DOT__inst_u1__DOT__rstate))
-                ? (vlSelfRef.__PVT__axi4delay_delayer__DOT__in_rready_w
-                   [1U] ? 0U : 3U) : ((1U > vlSelfRef.__PVT__axi4delay_delayer__DOT__inst_u1__DOT__rcnt)
-                                       ? (vlSelfRef.__PVT__axi4delay_delayer__DOT__in_rready_w
-                                          [1U] ? 0U
-                                           : 3U) : 2U))
-            : ((1U & (IData)(vlSelfRef.__PVT__axi4delay_delayer__DOT__inst_u1__DOT__rstate))
-                ? ((IData)(vlSelfRef.__PVT__axi4delay_delayer__DOT__inst_u1__DOT__out_rvalid)
-                    ? 2U : 1U) : ((IData)(vlSelfRef.__PVT__axi4delay_delayer__DOT__in_arvalid)
-                                   ? 1U : 0U)));
-    vlSelfRef.__PVT__axi4delay_delayer__DOT__inst_u2__DOT__rnext_state 
-        = ((2U & (IData)(vlSelfRef.__PVT__axi4delay_delayer__DOT__inst_u2__DOT__rstate))
-            ? ((1U & (IData)(vlSelfRef.__PVT__axi4delay_delayer__DOT__inst_u2__DOT__rstate))
-                ? ((IData)(vlSelfRef.__PVT__axi4delay_delayer__DOT__inst_u2__DOT__in_rready)
-                    ? 0U : 3U) : ((1U > vlSelfRef.__PVT__axi4delay_delayer__DOT__inst_u2__DOT__rcnt)
-                                   ? ((IData)(vlSelfRef.__PVT__axi4delay_delayer__DOT__inst_u2__DOT__in_rready)
-                                       ? 0U : 3U) : 2U))
-            : ((1U & (IData)(vlSelfRef.__PVT__axi4delay_delayer__DOT__inst_u2__DOT__rstate))
-                ? ((IData)(vlSelfRef.__PVT__axi4delay_delayer__DOT__inst_u2__DOT__out_rvalid)
-                    ? 2U : 1U) : ((IData)(vlSelfRef.__PVT__axi4delay_delayer__DOT__in_arvalid)
-                                   ? 1U : 0U)));
-    vlSelfRef.__PVT__axi4delay_delayer__DOT__inst_u3__DOT__rnext_state 
-        = ((2U & (IData)(vlSelfRef.__PVT__axi4delay_delayer__DOT__inst_u3__DOT__rstate))
-            ? ((1U & (IData)(vlSelfRef.__PVT__axi4delay_delayer__DOT__inst_u3__DOT__rstate))
-                ? ((IData)(vlSelfRef.__PVT__axi4delay_delayer__DOT__inst_u3__DOT__in_rready)
-                    ? 0U : 3U) : ((1U > vlSelfRef.__PVT__axi4delay_delayer__DOT__inst_u3__DOT__rcnt)
-                                   ? ((IData)(vlSelfRef.__PVT__axi4delay_delayer__DOT__inst_u3__DOT__in_rready)
-                                       ? 0U : 3U) : 2U))
-            : ((1U & (IData)(vlSelfRef.__PVT__axi4delay_delayer__DOT__inst_u3__DOT__rstate))
-                ? ((IData)(vlSelfRef.__PVT__axi4delay_delayer__DOT__inst_u3__DOT__out_rvalid)
-                    ? 2U : 1U) : ((IData)(vlSelfRef.__PVT__axi4delay_delayer__DOT__in_arvalid)
-                                   ? 1U : 0U)));
-    vlSelfRef.__PVT__axi4delay_delayer__DOT__inst_u4__DOT__rnext_state 
-        = ((2U & (IData)(vlSelfRef.__PVT__axi4delay_delayer__DOT__inst_u4__DOT__rstate))
-            ? ((1U & (IData)(vlSelfRef.__PVT__axi4delay_delayer__DOT__inst_u4__DOT__rstate))
-                ? ((IData)(vlSelfRef.__PVT__axi4delay_delayer__DOT__inst_u4__DOT__in_rready)
-                    ? 0U : 3U) : ((1U > vlSelfRef.__PVT__axi4delay_delayer__DOT__inst_u4__DOT__rcnt)
-                                   ? ((IData)(vlSelfRef.__PVT__axi4delay_delayer__DOT__inst_u4__DOT__in_rready)
-                                       ? 0U : 3U) : 2U))
-            : ((1U & (IData)(vlSelfRef.__PVT__axi4delay_delayer__DOT__inst_u4__DOT__rstate))
-                ? ((IData)(vlSelfRef.__PVT__axi4delay_delayer__DOT__inst_u4__DOT__out_rvalid)
-                    ? 2U : 1U) : ((IData)(vlSelfRef.__PVT__axi4delay_delayer__DOT__in_arvalid)
-                                   ? 1U : 0U)));
-    vlSelfRef.__PVT__axi4delay_delayer__DOT__inst_u5__DOT__rnext_state 
-        = ((2U & (IData)(vlSelfRef.__PVT__axi4delay_delayer__DOT__inst_u5__DOT__rstate))
-            ? ((1U & (IData)(vlSelfRef.__PVT__axi4delay_delayer__DOT__inst_u5__DOT__rstate))
-                ? ((IData)(vlSelfRef.__PVT__axi4delay_delayer__DOT__inst_u5__DOT__in_rready)
-                    ? 0U : 3U) : ((1U > vlSelfRef.__PVT__axi4delay_delayer__DOT__inst_u5__DOT__rcnt)
-                                   ? ((IData)(vlSelfRef.__PVT__axi4delay_delayer__DOT__inst_u5__DOT__in_rready)
-                                       ? 0U : 3U) : 2U))
-            : ((1U & (IData)(vlSelfRef.__PVT__axi4delay_delayer__DOT__inst_u5__DOT__rstate))
-                ? ((IData)(vlSelfRef.__PVT__axi4delay_delayer__DOT__inst_u5__DOT__out_rvalid)
-                    ? 2U : 1U) : ((IData)(vlSelfRef.__PVT__axi4delay_delayer__DOT__in_arvalid)
-                                   ? 1U : 0U)));
-    vlSelfRef.__PVT__axi4delay_delayer__DOT__inst_u6__DOT__rnext_state 
-        = ((2U & (IData)(vlSelfRef.__PVT__axi4delay_delayer__DOT__inst_u6__DOT__rstate))
-            ? ((1U & (IData)(vlSelfRef.__PVT__axi4delay_delayer__DOT__inst_u6__DOT__rstate))
-                ? ((IData)(vlSelfRef.__PVT__axi4delay_delayer__DOT__inst_u6__DOT__in_rready)
-                    ? 0U : 3U) : ((1U > vlSelfRef.__PVT__axi4delay_delayer__DOT__inst_u6__DOT__rcnt)
-                                   ? ((IData)(vlSelfRef.__PVT__axi4delay_delayer__DOT__inst_u6__DOT__in_rready)
-                                       ? 0U : 3U) : 2U))
-            : ((1U & (IData)(vlSelfRef.__PVT__axi4delay_delayer__DOT__inst_u6__DOT__rstate))
-                ? ((IData)(vlSelfRef.__PVT__axi4delay_delayer__DOT__inst_u6__DOT__out_rvalid)
-                    ? 2U : 1U) : ((IData)(vlSelfRef.__PVT__axi4delay_delayer__DOT__in_arvalid)
-                                   ? 1U : 0U)));
-    vlSelfRef.__PVT__axi4delay_delayer__DOT__inst_u7__DOT__rnext_state 
-        = ((2U & (IData)(vlSelfRef.__PVT__axi4delay_delayer__DOT__inst_u7__DOT__rstate))
-            ? ((1U & (IData)(vlSelfRef.__PVT__axi4delay_delayer__DOT__inst_u7__DOT__rstate))
-                ? ((IData)(vlSelfRef.__PVT__axi4delay_delayer__DOT__inst_u7__DOT__in_rready)
-                    ? 0U : 3U) : ((1U > vlSelfRef.__PVT__axi4delay_delayer__DOT__inst_u7__DOT__rcnt)
-                                   ? ((IData)(vlSelfRef.__PVT__axi4delay_delayer__DOT__inst_u7__DOT__in_rready)
-                                       ? 0U : 3U) : 2U))
-            : ((1U & (IData)(vlSelfRef.__PVT__axi4delay_delayer__DOT__inst_u7__DOT__rstate))
-                ? ((IData)(vlSelfRef.__PVT__axi4delay_delayer__DOT__inst_u7__DOT__out_rvalid)
-                    ? 2U : 1U) : ((IData)(vlSelfRef.__PVT__axi4delay_delayer__DOT__in_arvalid)
-                                   ? 1U : 0U)));
-}
+void VysyxSoCFull_ysyxSoCASIC____Vdpiimwrap_lmrom__DOT__mrom__DOT__mrom_read_TOP__ysyxSoCFull__asic(IData/*31:0*/ raddr, IData/*31:0*/ &rdata);
 
-void VysyxSoCFull_ysyxSoCASIC___nba_comb__TOP__ysyxSoCFull__asic__4(VysyxSoCFull_ysyxSoCASIC* vlSelf) {
-    VL_DEBUG_IF(VL_DBG_MSGF("+        VysyxSoCFull_ysyxSoCASIC___nba_comb__TOP__ysyxSoCFull__asic__4\n"); );
+void VysyxSoCFull_ysyxSoCASIC___nba_comb__TOP__ysyxSoCFull__asic__2(VysyxSoCFull_ysyxSoCASIC* vlSelf) {
+    VL_DEBUG_IF(VL_DBG_MSGF("+        VysyxSoCFull_ysyxSoCASIC___nba_comb__TOP__ysyxSoCFull__asic__2\n"); );
     VysyxSoCFull__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
     auto& vlSelfRef = std::ref(*vlSelf).get();
     // Body
-    vlSelfRef.__PVT__lsdram_axi__DOT__msdram__DOT__u_sdram_axi__DOT__u_core__DOT__inport_wr_i 
-        = (((IData)(vlSelfRef.__PVT__lsdram_axi__DOT__msdram__DOT__u_sdram_axi__DOT__u_axi__DOT__write_active_w) 
-            & (IData)(vlSelfRef.__PVT__axi4delay_delayer__DOT__in_wvalid))
-            ? (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu.__PVT__io_master_wstrb)
-            : 0U);
+    if (vlSelfRef.__PVT__axi4frag__DOT__deq_q__DOT__full) {
+        vlSelfRef.__PVT__axi4xbar_1__DOT__auto_anon_in_arburst 
+            = (3U & (IData)(vlSelfRef.__PVT__axi4frag__DOT__deq_q__DOT__ram));
+        vlSelfRef.__PVT__axi4xbar_1__DOT__auto_anon_in_arsize 
+            = (7U & (IData)((vlSelfRef.__PVT__axi4frag__DOT__deq_q__DOT__ram 
+                             >> 2U)));
+        vlSelfRef.__PVT__axi4frag__DOT__deq_q__DOT__io_deq_bits_addr 
+            = (IData)((vlSelfRef.__PVT__axi4frag__DOT__deq_q__DOT__ram 
+                       >> 0x0000000dU));
+    } else {
+        vlSelfRef.__PVT__axi4xbar_1__DOT__auto_anon_in_arburst 
+            = (3U & (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu.__PVT__io_master_arburst));
+        vlSelfRef.__PVT__axi4xbar_1__DOT__auto_anon_in_arsize 
+            = (7U & (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu.__PVT__io_master_arsize));
+        vlSelfRef.__PVT__axi4frag__DOT__deq_q__DOT__io_deq_bits_addr 
+            = vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu.__PVT__io_master_araddr;
+    }
+    vlSelfRef.__PVT__axi4xbar__DOT__requestARIO_0_0 
+        = (1U & ((~ (vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu.__PVT__io_master_araddr 
+                     >> 0x0000001fU)) | (0U == ((4U 
+                                                 & ((~ 
+                                                     (vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu.__PVT__io_master_araddr 
+                                                      >> 0x0000001fU)) 
+                                                    << 2U)) 
+                                                | (3U 
+                                                   & (vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu.__PVT__io_master_araddr 
+                                                      >> 0x0000001cU))))));
+    vlSelfRef.__PVT__axi4xbar__DOT__requestARIO_0_1 
+        = (0U == ((4U & ((~ (vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu.__PVT__io_master_araddr 
+                             >> 0x0000001fU)) << 2U)) 
+                  | (3U & (2U ^ (vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu.__PVT__io_master_araddr 
+                                 >> 0x0000001cU)))));
+    vlSelfRef.__PVT__axi4frag__DOT___wrapMask_T_1 = 
+        (0x007fffffU & ((0xffU | ((IData)(vlSelfRef.__PVT__axi4frag__DOT__deq_q__DOT__io_deq_bits_len) 
+                                  << 8U)) << (IData)(vlSelfRef.__PVT__axi4xbar_1__DOT__auto_anon_in_arsize)));
+    vlSelfRef.__PVT__axi4frag__DOT__addr = ((IData)(vlSelfRef.__PVT__axi4frag__DOT__busy)
+                                             ? vlSelfRef.__PVT__axi4frag__DOT__r_addr
+                                             : vlSelfRef.__PVT__axi4frag__DOT__deq_q__DOT__io_deq_bits_addr);
+    vlSelfRef.__PVT__axi4xbar__DOT__casez_tmp = ((8U 
+                                                  & (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu.__PVT__io_master_arid))
+                                                  ? 
+                                                 ((4U 
+                                                   & (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu.__PVT__io_master_arid))
+                                                   ? 
+                                                  ((2U 
+                                                    & (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu.__PVT__io_master_arid))
+                                                    ? 
+                                                   ((1U 
+                                                     & (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu.__PVT__io_master_arid))
+                                                     ? 
+                                                    (((0U 
+                                                       == (IData)(vlSelfRef.__PVT__axi4xbar__DOT__arFIFOMap_15_count)) 
+                                                      | ((IData)(vlSelfRef.__PVT__axi4xbar__DOT__arFIFOMap_15_last) 
+                                                         == (IData)(vlSelfRef.__PVT__axi4xbar__DOT__requestARIO_0_1))) 
+                                                     & (7U 
+                                                        != (IData)(vlSelfRef.__PVT__axi4xbar__DOT__arFIFOMap_15_count)))
+                                                     : 
+                                                    (((0U 
+                                                       == (IData)(vlSelfRef.__PVT__axi4xbar__DOT__arFIFOMap_14_count)) 
+                                                      | ((IData)(vlSelfRef.__PVT__axi4xbar__DOT__arFIFOMap_14_last) 
+                                                         == (IData)(vlSelfRef.__PVT__axi4xbar__DOT__requestARIO_0_1))) 
+                                                     & (7U 
+                                                        != (IData)(vlSelfRef.__PVT__axi4xbar__DOT__arFIFOMap_14_count))))
+                                                    : 
+                                                   ((1U 
+                                                     & (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu.__PVT__io_master_arid))
+                                                     ? 
+                                                    (((0U 
+                                                       == (IData)(vlSelfRef.__PVT__axi4xbar__DOT__arFIFOMap_13_count)) 
+                                                      | ((IData)(vlSelfRef.__PVT__axi4xbar__DOT__arFIFOMap_13_last) 
+                                                         == (IData)(vlSelfRef.__PVT__axi4xbar__DOT__requestARIO_0_1))) 
+                                                     & (7U 
+                                                        != (IData)(vlSelfRef.__PVT__axi4xbar__DOT__arFIFOMap_13_count)))
+                                                     : 
+                                                    (((0U 
+                                                       == (IData)(vlSelfRef.__PVT__axi4xbar__DOT__arFIFOMap_12_count)) 
+                                                      | ((IData)(vlSelfRef.__PVT__axi4xbar__DOT__arFIFOMap_12_last) 
+                                                         == (IData)(vlSelfRef.__PVT__axi4xbar__DOT__requestARIO_0_1))) 
+                                                     & (7U 
+                                                        != (IData)(vlSelfRef.__PVT__axi4xbar__DOT__arFIFOMap_12_count)))))
+                                                   : 
+                                                  ((2U 
+                                                    & (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu.__PVT__io_master_arid))
+                                                    ? 
+                                                   ((1U 
+                                                     & (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu.__PVT__io_master_arid))
+                                                     ? 
+                                                    (((0U 
+                                                       == (IData)(vlSelfRef.__PVT__axi4xbar__DOT__arFIFOMap_11_count)) 
+                                                      | ((IData)(vlSelfRef.__PVT__axi4xbar__DOT__arFIFOMap_11_last) 
+                                                         == (IData)(vlSelfRef.__PVT__axi4xbar__DOT__requestARIO_0_1))) 
+                                                     & (7U 
+                                                        != (IData)(vlSelfRef.__PVT__axi4xbar__DOT__arFIFOMap_11_count)))
+                                                     : 
+                                                    (((0U 
+                                                       == (IData)(vlSelfRef.__PVT__axi4xbar__DOT__arFIFOMap_10_count)) 
+                                                      | ((IData)(vlSelfRef.__PVT__axi4xbar__DOT__arFIFOMap_10_last) 
+                                                         == (IData)(vlSelfRef.__PVT__axi4xbar__DOT__requestARIO_0_1))) 
+                                                     & (7U 
+                                                        != (IData)(vlSelfRef.__PVT__axi4xbar__DOT__arFIFOMap_10_count))))
+                                                    : 
+                                                   ((1U 
+                                                     & (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu.__PVT__io_master_arid))
+                                                     ? 
+                                                    (((0U 
+                                                       == (IData)(vlSelfRef.__PVT__axi4xbar__DOT__arFIFOMap_9_count)) 
+                                                      | ((IData)(vlSelfRef.__PVT__axi4xbar__DOT__arFIFOMap_9_last) 
+                                                         == (IData)(vlSelfRef.__PVT__axi4xbar__DOT__requestARIO_0_1))) 
+                                                     & (7U 
+                                                        != (IData)(vlSelfRef.__PVT__axi4xbar__DOT__arFIFOMap_9_count)))
+                                                     : 
+                                                    (((0U 
+                                                       == (IData)(vlSelfRef.__PVT__axi4xbar__DOT__arFIFOMap_8_count)) 
+                                                      | ((IData)(vlSelfRef.__PVT__axi4xbar__DOT__arFIFOMap_8_last) 
+                                                         == (IData)(vlSelfRef.__PVT__axi4xbar__DOT__requestARIO_0_1))) 
+                                                     & (7U 
+                                                        != (IData)(vlSelfRef.__PVT__axi4xbar__DOT__arFIFOMap_8_count))))))
+                                                  : 
+                                                 ((4U 
+                                                   & (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu.__PVT__io_master_arid))
+                                                   ? 
+                                                  ((2U 
+                                                    & (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu.__PVT__io_master_arid))
+                                                    ? 
+                                                   ((1U 
+                                                     & (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu.__PVT__io_master_arid))
+                                                     ? 
+                                                    (((0U 
+                                                       == (IData)(vlSelfRef.__PVT__axi4xbar__DOT__arFIFOMap_7_count)) 
+                                                      | ((IData)(vlSelfRef.__PVT__axi4xbar__DOT__arFIFOMap_7_last) 
+                                                         == (IData)(vlSelfRef.__PVT__axi4xbar__DOT__requestARIO_0_1))) 
+                                                     & (7U 
+                                                        != (IData)(vlSelfRef.__PVT__axi4xbar__DOT__arFIFOMap_7_count)))
+                                                     : 
+                                                    (((0U 
+                                                       == (IData)(vlSelfRef.__PVT__axi4xbar__DOT__arFIFOMap_6_count)) 
+                                                      | ((IData)(vlSelfRef.__PVT__axi4xbar__DOT__arFIFOMap_6_last) 
+                                                         == (IData)(vlSelfRef.__PVT__axi4xbar__DOT__requestARIO_0_1))) 
+                                                     & (7U 
+                                                        != (IData)(vlSelfRef.__PVT__axi4xbar__DOT__arFIFOMap_6_count))))
+                                                    : 
+                                                   ((1U 
+                                                     & (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu.__PVT__io_master_arid))
+                                                     ? 
+                                                    (((0U 
+                                                       == (IData)(vlSelfRef.__PVT__axi4xbar__DOT__arFIFOMap_5_count)) 
+                                                      | ((IData)(vlSelfRef.__PVT__axi4xbar__DOT__arFIFOMap_5_last) 
+                                                         == (IData)(vlSelfRef.__PVT__axi4xbar__DOT__requestARIO_0_1))) 
+                                                     & (7U 
+                                                        != (IData)(vlSelfRef.__PVT__axi4xbar__DOT__arFIFOMap_5_count)))
+                                                     : 
+                                                    (((0U 
+                                                       == (IData)(vlSelfRef.__PVT__axi4xbar__DOT__arFIFOMap_4_count)) 
+                                                      | ((IData)(vlSelfRef.__PVT__axi4xbar__DOT__arFIFOMap_4_last) 
+                                                         == (IData)(vlSelfRef.__PVT__axi4xbar__DOT__requestARIO_0_1))) 
+                                                     & (7U 
+                                                        != (IData)(vlSelfRef.__PVT__axi4xbar__DOT__arFIFOMap_4_count)))))
+                                                   : 
+                                                  ((2U 
+                                                    & (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu.__PVT__io_master_arid))
+                                                    ? 
+                                                   ((1U 
+                                                     & (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu.__PVT__io_master_arid))
+                                                     ? 
+                                                    (((0U 
+                                                       == (IData)(vlSelfRef.__PVT__axi4xbar__DOT__arFIFOMap_3_count)) 
+                                                      | ((IData)(vlSelfRef.__PVT__axi4xbar__DOT__arFIFOMap_3_last) 
+                                                         == (IData)(vlSelfRef.__PVT__axi4xbar__DOT__requestARIO_0_1))) 
+                                                     & (7U 
+                                                        != (IData)(vlSelfRef.__PVT__axi4xbar__DOT__arFIFOMap_3_count)))
+                                                     : 
+                                                    (((0U 
+                                                       == (IData)(vlSelfRef.__PVT__axi4xbar__DOT__arFIFOMap_2_count)) 
+                                                      | ((IData)(vlSelfRef.__PVT__axi4xbar__DOT__arFIFOMap_2_last) 
+                                                         == (IData)(vlSelfRef.__PVT__axi4xbar__DOT__requestARIO_0_1))) 
+                                                     & (7U 
+                                                        != (IData)(vlSelfRef.__PVT__axi4xbar__DOT__arFIFOMap_2_count))))
+                                                    : 
+                                                   ((1U 
+                                                     & (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu.__PVT__io_master_arid))
+                                                     ? 
+                                                    (((0U 
+                                                       == (IData)(vlSelfRef.__PVT__axi4xbar__DOT__arFIFOMap_1_count)) 
+                                                      | ((IData)(vlSelfRef.__PVT__axi4xbar__DOT__arFIFOMap_1_last) 
+                                                         == (IData)(vlSelfRef.__PVT__axi4xbar__DOT__requestARIO_0_1))) 
+                                                     & (7U 
+                                                        != (IData)(vlSelfRef.__PVT__axi4xbar__DOT__arFIFOMap_1_count)))
+                                                     : 
+                                                    (((0U 
+                                                       == (IData)(vlSelfRef.__PVT__axi4xbar__DOT__arFIFOMap_0_count)) 
+                                                      | ((IData)(vlSelfRef.__PVT__axi4xbar__DOT__arFIFOMap_0_last) 
+                                                         == (IData)(vlSelfRef.__PVT__axi4xbar__DOT__requestARIO_0_1))) 
+                                                     & (7U 
+                                                        != (IData)(vlSelfRef.__PVT__axi4xbar__DOT__arFIFOMap_0_count)))))));
+    vlSelfRef.__PVT__axi4frag__DOT___inc_addr_T_1 = 
+        (vlSelfRef.__PVT__axi4frag__DOT__addr + (0x0000ffffU 
+                                                 & ((IData)(1U) 
+                                                    << (IData)(vlSelfRef.__PVT__axi4xbar_1__DOT__auto_anon_in_arsize))));
+    vlSelfRef.__PVT__axi4xbar_1__DOT__auto_anon_in_araddr 
+        = (~ (((~ (vlSelfRef.__PVT__axi4frag__DOT__addr 
+                   >> 2U)) << 2U) | (3U & ((~ ((IData)(3U) 
+                                               << (IData)(vlSelfRef.__PVT__axi4xbar_1__DOT__auto_anon_in_arsize))) 
+                                           | (~ vlSelfRef.__PVT__axi4frag__DOT__addr)))));
+    vlSelfRef.__PVT__axi4xbar__DOT__in_0_arvalid = 
+        ((IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu.__PVT__io_master_arvalid) 
+         & (IData)(vlSelfRef.__PVT__axi4xbar__DOT__casez_tmp));
+    vlSelfRef.__PVT__axi4xbar_1__DOT__requestARIO_0_0 
+        = ((0U == ((2U & (vlSelfRef.__PVT__axi4xbar_1__DOT__auto_anon_in_araddr 
+                          >> 0x0000001cU)) | (1U & 
+                                              (vlSelfRef.__PVT__axi4xbar_1__DOT__auto_anon_in_araddr 
+                                               >> 0x00000018U)))) 
+           | ((0U == ((6U & (4U ^ (0x0000001eU & (vlSelfRef.__PVT__axi4xbar_1__DOT__auto_anon_in_araddr 
+                                                  >> 0x0000001bU)))) 
+                      | (1U & (~ (vlSelfRef.__PVT__axi4xbar_1__DOT__auto_anon_in_araddr 
+                                  >> 0x00000018U))))) 
+              | (3U == (3U & (vlSelfRef.__PVT__axi4xbar_1__DOT__auto_anon_in_araddr 
+                              >> 0x0000001cU)))));
+    vlSelfRef.__PVT__axi4xbar_1__DOT__requestARIO_0_2 
+        = (0U == ((6U & (vlSelfRef.__PVT__axi4xbar_1__DOT__auto_anon_in_araddr 
+                         >> 0x0000001bU)) | (1U & (~ 
+                                                   (vlSelfRef.__PVT__axi4xbar_1__DOT__auto_anon_in_araddr 
+                                                    >> 0x00000018U)))));
+    vlSelfRef.__PVT__axi4xbar_1__DOT__requestARIO_0_1 
+        = (0U == ((6U & (4U ^ (0x0000001eU & (vlSelfRef.__PVT__axi4xbar_1__DOT__auto_anon_in_araddr 
+                                              >> 0x0000001bU)))) 
+                  | (1U & (vlSelfRef.__PVT__axi4xbar_1__DOT__auto_anon_in_araddr 
+                           >> 0x00000018U))));
+    vlSelfRef.__PVT__axi4xbar__DOT__auto_anon_out_0_arvalid 
+        = ((IData)(vlSelfRef.__PVT__axi4xbar__DOT__in_0_arvalid) 
+           & (IData)(vlSelfRef.__PVT__axi4xbar__DOT__requestARIO_0_0));
+    vlSelfRef.__PVT__axi4delay_delayer__DOT__in_arvalid 
+        = ((IData)(vlSelfRef.__PVT__axi4xbar__DOT__in_0_arvalid) 
+           & (IData)(vlSelfRef.__PVT__axi4xbar__DOT__requestARIO_0_1));
+    vlSelfRef.__PVT__axi4xbar_1__DOT__auto_anon_in_arready 
+        = (((~ (IData)(vlSelfRef.__PVT__axi4buf__DOT__nodeOut_ardeq_q__DOT__full)) 
+            & (IData)(vlSelfRef.__PVT__axi4xbar_1__DOT__requestARIO_0_0)) 
+           | (((~ (IData)(vlSelfRef.__PVT__lmrom__DOT__state)) 
+               & (IData)(vlSelfRef.__PVT__axi4xbar_1__DOT__requestARIO_0_1)) 
+              | ((IData)(vlSelfRef.__PVT__axi4xbar_1__DOT__requestARIO_0_2) 
+                 & (IData)(vlSelfRef.__PVT__axi4xbar_1__DOT__auto_anon_out_2_arready))));
+    vlSelfRef.__PVT__axi4yank__DOT__auto_in_arvalid 
+        = ((IData)(vlSelfRef.__PVT__axi4frag__DOT__deq_q__DOT__full) 
+           | (IData)(vlSelfRef.__PVT__axi4xbar__DOT__auto_anon_out_0_arvalid));
+    vlSelfRef.__PVT__lsdram_axi__DOT__msdram__DOT__u_sdram_axi__DOT__u_core__DOT__inport_rd_i 
+        = ((~ (IData)(vlSelfRef.__PVT__lsdram_axi__DOT__msdram__DOT__u_sdram_axi__DOT__u_axi__DOT__req_wr_q)) 
+           & (((IData)(vlSelfRef.__PVT__axi4delay_delayer__DOT__in_arvalid) 
+               | (IData)(vlSelfRef.__PVT__lsdram_axi__DOT__msdram__DOT__u_sdram_axi__DOT__u_axi__DOT__req_rd_q)) 
+              & ((4U != (IData)(vlSelfRef.__PVT__lsdram_axi__DOT__msdram__DOT__u_sdram_axi__DOT__u_axi__DOT__u_requests__DOT__count)) 
+                 & (((~ ((IData)(vlSelfRef.__PVT__lsdram_axi__DOT__msdram__DOT__u_sdram_axi__DOT__u_axi__DOT__req_hold_wr_q) 
+                         | (IData)(vlSelfRef.__PVT__lsdram_axi__DOT__msdram__DOT__u_sdram_axi__DOT__u_axi__DOT__req_prio_q))) 
+                     | (IData)(vlSelfRef.__PVT__lsdram_axi__DOT__msdram__DOT__u_sdram_axi__DOT__u_axi__DOT__req_hold_rd_q)) 
+                    | ((~ (IData)(vlSelfRef.__PVT__axi4delay_delayer__DOT__in_awvalid)) 
+                       | (IData)(vlSelfRef.__PVT__lsdram_axi__DOT__msdram__DOT__u_sdram_axi__DOT__u_axi__DOT__req_rd_q))))));
+    vlSelfRef.__PVT__lsdram_axi__DOT__msdram__DOT__u_sdram_axi__DOT__u_axi__DOT__write_active_w 
+        = ((~ (IData)(vlSelfRef.__PVT__lsdram_axi__DOT__msdram__DOT__u_sdram_axi__DOT__u_axi__DOT__req_rd_q)) 
+           & (((IData)(vlSelfRef.__PVT__axi4delay_delayer__DOT__in_awvalid) 
+               | (IData)(vlSelfRef.__PVT__lsdram_axi__DOT__msdram__DOT__u_sdram_axi__DOT__u_axi__DOT__req_wr_q)) 
+              & ((4U != (IData)(vlSelfRef.__PVT__lsdram_axi__DOT__msdram__DOT__u_sdram_axi__DOT__u_axi__DOT__u_requests__DOT__count)) 
+                 & ((((~ (IData)(vlSelfRef.__PVT__lsdram_axi__DOT__msdram__DOT__u_sdram_axi__DOT__u_axi__DOT__req_hold_rd_q)) 
+                      & (IData)(vlSelfRef.__PVT__lsdram_axi__DOT__msdram__DOT__u_sdram_axi__DOT__u_axi__DOT__req_prio_q)) 
+                     | (IData)(vlSelfRef.__PVT__lsdram_axi__DOT__msdram__DOT__u_sdram_axi__DOT__u_axi__DOT__req_hold_wr_q)) 
+                    | ((~ (IData)(vlSelfRef.__PVT__axi4delay_delayer__DOT__in_arvalid)) 
+                       | (IData)(vlSelfRef.__PVT__lsdram_axi__DOT__msdram__DOT__u_sdram_axi__DOT__u_axi__DOT__req_wr_q))))));
+    vlSelfRef.__PVT__axi4yank__DOT__auto_in_arready 
+        = ((IData)(vlSelfRef.__PVT__axi4xbar_1__DOT__auto_anon_in_arready) 
+           & (IData)(vlSelfRef.__PVT__axi4yank__DOT__casez_tmp));
+    vlSelfRef.__PVT__axi4xbar_1__DOT__auto_anon_in_arvalid 
+        = ((IData)(vlSelfRef.__PVT__axi4yank__DOT__auto_in_arvalid) 
+           & (IData)(vlSelfRef.__PVT__axi4yank__DOT__casez_tmp));
+    vlSelfRef.__PVT__axi4yank__DOT___GEN_0 = ((IData)(vlSelfRef.__PVT__axi4yank__DOT__auto_in_arvalid) 
+                                              & (IData)(vlSelfRef.__PVT__axi4xbar_1__DOT__auto_anon_in_arready));
+    vlSelfRef.__PVT__axi4delay_delayer__DOT__in_arready 
+        = ((~ (IData)(vlSelfRef.__PVT__lsdram_axi__DOT__msdram__DOT__u_sdram_axi__DOT__u_axi__DOT__req_rd_q)) 
+           & ((IData)(vlSelfRef.__PVT__lsdram_axi__DOT__msdram__DOT__u_sdram_axi__DOT__u_core__DOT__inport_rd_i) 
+              & (IData)(vlSelfRef.lsdram_axi__DOT__msdram__DOT__u_sdram_axi__DOT__u_axi__DOT____VdfgRegularize_h48a8691c_0_2)));
     vlSelfRef.__PVT__lsdram_axi__DOT__msdram__DOT__u_sdram_axi__DOT__u_core__DOT__inport_addr_i 
         = (((IData)(vlSelfRef.__PVT__lsdram_axi__DOT__msdram__DOT__u_sdram_axi__DOT__u_axi__DOT__req_rd_q) 
             | (IData)(vlSelfRef.__PVT__lsdram_axi__DOT__msdram__DOT__u_sdram_axi__DOT__u_axi__DOT__req_wr_q))
@@ -2006,13 +2043,112 @@ void VysyxSoCFull_ysyxSoCASIC___nba_comb__TOP__ysyxSoCFull__asic__4(VysyxSoCFull
             : ((IData)(vlSelfRef.__PVT__lsdram_axi__DOT__msdram__DOT__u_sdram_axi__DOT__u_axi__DOT__write_active_w)
                 ? vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu.__PVT__io_master_awaddr
                 : vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu.__PVT__io_master_araddr));
-    vlSelfRef.__PVT__axi4delay_delayer__DOT__in_arready 
-        = ((~ (IData)(vlSelfRef.__PVT__lsdram_axi__DOT__msdram__DOT__u_sdram_axi__DOT__u_axi__DOT__req_rd_q)) 
-           & ((IData)(vlSelfRef.__PVT__lsdram_axi__DOT__msdram__DOT__u_sdram_axi__DOT__u_core__DOT__inport_rd_i) 
-              & (IData)(vlSelfRef.lsdram_axi__DOT__msdram__DOT__u_sdram_axi__DOT__u_axi__DOT____VdfgRegularize_h48a8691c_0_2)));
+    vlSelfRef.__PVT__lsdram_axi__DOT__msdram__DOT__u_sdram_axi__DOT__u_core__DOT__inport_wr_i 
+        = (((IData)(vlSelfRef.__PVT__lsdram_axi__DOT__msdram__DOT__u_sdram_axi__DOT__u_axi__DOT__write_active_w) 
+            & (IData)(vlSelfRef.__PVT__axi4delay_delayer__DOT__in_wvalid))
+            ? (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu.__PVT__io_master_wstrb)
+            : 0U);
     vlSelfRef.__PVT__axi4delay_delayer__DOT__in_wready 
         = ((IData)(vlSelfRef.__PVT__lsdram_axi__DOT__msdram__DOT__u_sdram_axi__DOT__u_axi__DOT__write_active_w) 
            & (IData)(vlSelfRef.lsdram_axi__DOT__msdram__DOT__u_sdram_axi__DOT__u_axi__DOT____VdfgRegularize_h48a8691c_0_2));
+    vlSelfRef.__PVT__axi4frag__DOT___GEN_1 = ((IData)(vlSelfRef.__PVT__axi4yank__DOT__auto_in_arvalid) 
+                                              & (IData)(vlSelfRef.__PVT__axi4yank__DOT__auto_in_arready));
+    vlSelfRef.__PVT__axi4frag__DOT__deq_q__DOT__io_deq_ready 
+        = ((~ (0U != (IData)(vlSelfRef.__PVT__axi4frag__DOT__len))) 
+           & (IData)(vlSelfRef.__PVT__axi4yank__DOT__auto_in_arready));
+    vlSelfRef.__PVT__axi4xbar_1__DOT___arFIFOMap_15_T_1 
+        = ((IData)(vlSelfRef.__PVT__axi4xbar_1__DOT__auto_anon_in_arready) 
+           & (IData)(vlSelfRef.__PVT__axi4xbar_1__DOT__auto_anon_in_arvalid));
+    vlSelfRef.__PVT__axi4ram__DOT__mem_ext__DOT__R0_en 
+        = ((IData)(vlSelfRef.__PVT__axi4xbar_1__DOT__auto_anon_out_2_arready) 
+           & ((IData)(vlSelfRef.__PVT__axi4xbar_1__DOT__auto_anon_in_arvalid) 
+              & (IData)(vlSelfRef.__PVT__axi4xbar_1__DOT__requestARIO_0_2)));
+    vlSelfRef.__PVT__axi4buf__DOT__nodeOut_ardeq_q__DOT__ram_ext__DOT__W0_en 
+        = ((~ (IData)(vlSelfRef.__PVT__axi4buf__DOT__nodeOut_ardeq_q__DOT__full)) 
+           & ((IData)(vlSelfRef.__PVT__axi4xbar_1__DOT__auto_anon_in_arvalid) 
+              & (IData)(vlSelfRef.__PVT__axi4xbar_1__DOT__requestARIO_0_0)));
+    vlSelfRef.__PVT__lmrom__DOT___nodeIn_rid_T = ((~ (IData)(vlSelfRef.__PVT__lmrom__DOT__state)) 
+                                                  & ((IData)(vlSelfRef.__PVT__axi4xbar_1__DOT__auto_anon_in_arvalid) 
+                                                     & (IData)(vlSelfRef.__PVT__axi4xbar_1__DOT__requestARIO_0_1)));
+    vlSelfRef.__PVT__axi4yank__DOT__Queue1_BundleMap__DOT__do_enq 
+        = ((~ (IData)(vlSelfRef.__PVT__axi4yank__DOT__Queue1_BundleMap__DOT__full)) 
+           & ((IData)(vlSelfRef.__PVT__axi4yank__DOT___GEN_0) 
+              & ((IData)(1U) << (IData)(vlSelfRef.__PVT__axi4xbar_1__DOT__auto_anon_in_arid))));
+    vlSelfRef.__PVT__axi4yank__DOT__Queue1_BundleMap_1__DOT__do_enq 
+        = (((~ (IData)(vlSelfRef.__PVT__axi4yank__DOT__Queue1_BundleMap_1__DOT__full)) 
+            & (IData)(vlSelfRef.__PVT__axi4yank__DOT___GEN_0)) 
+           & (((IData)(1U) << (IData)(vlSelfRef.__PVT__axi4xbar_1__DOT__auto_anon_in_arid)) 
+              >> 1U));
+    vlSelfRef.__PVT__axi4yank__DOT__Queue1_BundleMap_2__DOT__do_enq 
+        = (((~ (IData)(vlSelfRef.__PVT__axi4yank__DOT__Queue1_BundleMap_2__DOT__full)) 
+            & (IData)(vlSelfRef.__PVT__axi4yank__DOT___GEN_0)) 
+           & (((IData)(1U) << (IData)(vlSelfRef.__PVT__axi4xbar_1__DOT__auto_anon_in_arid)) 
+              >> 2U));
+    vlSelfRef.__PVT__axi4yank__DOT__Queue1_BundleMap_3__DOT__do_enq 
+        = (((~ (IData)(vlSelfRef.__PVT__axi4yank__DOT__Queue1_BundleMap_3__DOT__full)) 
+            & (IData)(vlSelfRef.__PVT__axi4yank__DOT___GEN_0)) 
+           & (((IData)(1U) << (IData)(vlSelfRef.__PVT__axi4xbar_1__DOT__auto_anon_in_arid)) 
+              >> 3U));
+    vlSelfRef.__PVT__axi4yank__DOT__Queue1_BundleMap_4__DOT__do_enq 
+        = (((~ (IData)(vlSelfRef.__PVT__axi4yank__DOT__Queue1_BundleMap_4__DOT__full)) 
+            & (IData)(vlSelfRef.__PVT__axi4yank__DOT___GEN_0)) 
+           & (((IData)(1U) << (IData)(vlSelfRef.__PVT__axi4xbar_1__DOT__auto_anon_in_arid)) 
+              >> 4U));
+    vlSelfRef.__PVT__axi4yank__DOT__Queue1_BundleMap_5__DOT__do_enq 
+        = (((~ (IData)(vlSelfRef.__PVT__axi4yank__DOT__Queue1_BundleMap_5__DOT__full)) 
+            & (IData)(vlSelfRef.__PVT__axi4yank__DOT___GEN_0)) 
+           & (((IData)(1U) << (IData)(vlSelfRef.__PVT__axi4xbar_1__DOT__auto_anon_in_arid)) 
+              >> 5U));
+    vlSelfRef.__PVT__axi4yank__DOT__Queue1_BundleMap_6__DOT__do_enq 
+        = (((~ (IData)(vlSelfRef.__PVT__axi4yank__DOT__Queue1_BundleMap_6__DOT__full)) 
+            & (IData)(vlSelfRef.__PVT__axi4yank__DOT___GEN_0)) 
+           & (((IData)(1U) << (IData)(vlSelfRef.__PVT__axi4xbar_1__DOT__auto_anon_in_arid)) 
+              >> 6U));
+    vlSelfRef.__PVT__axi4yank__DOT__Queue1_BundleMap_7__DOT__do_enq 
+        = (((~ (IData)(vlSelfRef.__PVT__axi4yank__DOT__Queue1_BundleMap_7__DOT__full)) 
+            & (IData)(vlSelfRef.__PVT__axi4yank__DOT___GEN_0)) 
+           & (((IData)(1U) << (IData)(vlSelfRef.__PVT__axi4xbar_1__DOT__auto_anon_in_arid)) 
+              >> 7U));
+    vlSelfRef.__PVT__axi4yank__DOT__Queue1_BundleMap_8__DOT__do_enq 
+        = (((~ (IData)(vlSelfRef.__PVT__axi4yank__DOT__Queue1_BundleMap_8__DOT__full)) 
+            & (IData)(vlSelfRef.__PVT__axi4yank__DOT___GEN_0)) 
+           & (((IData)(1U) << (IData)(vlSelfRef.__PVT__axi4xbar_1__DOT__auto_anon_in_arid)) 
+              >> 8U));
+    vlSelfRef.__PVT__axi4yank__DOT__Queue1_BundleMap_9__DOT__do_enq 
+        = (((~ (IData)(vlSelfRef.__PVT__axi4yank__DOT__Queue1_BundleMap_9__DOT__full)) 
+            & (IData)(vlSelfRef.__PVT__axi4yank__DOT___GEN_0)) 
+           & (((IData)(1U) << (IData)(vlSelfRef.__PVT__axi4xbar_1__DOT__auto_anon_in_arid)) 
+              >> 9U));
+    vlSelfRef.__PVT__axi4yank__DOT__Queue1_BundleMap_10__DOT__do_enq 
+        = (((~ (IData)(vlSelfRef.__PVT__axi4yank__DOT__Queue1_BundleMap_10__DOT__full)) 
+            & (IData)(vlSelfRef.__PVT__axi4yank__DOT___GEN_0)) 
+           & (((IData)(1U) << (IData)(vlSelfRef.__PVT__axi4xbar_1__DOT__auto_anon_in_arid)) 
+              >> 0x0000000aU));
+    vlSelfRef.__PVT__axi4yank__DOT__Queue1_BundleMap_11__DOT__do_enq 
+        = (((~ (IData)(vlSelfRef.__PVT__axi4yank__DOT__Queue1_BundleMap_11__DOT__full)) 
+            & (IData)(vlSelfRef.__PVT__axi4yank__DOT___GEN_0)) 
+           & (((IData)(1U) << (IData)(vlSelfRef.__PVT__axi4xbar_1__DOT__auto_anon_in_arid)) 
+              >> 0x0000000bU));
+    vlSelfRef.__PVT__axi4yank__DOT__Queue1_BundleMap_12__DOT__do_enq 
+        = (((~ (IData)(vlSelfRef.__PVT__axi4yank__DOT__Queue1_BundleMap_12__DOT__full)) 
+            & (IData)(vlSelfRef.__PVT__axi4yank__DOT___GEN_0)) 
+           & (((IData)(1U) << (IData)(vlSelfRef.__PVT__axi4xbar_1__DOT__auto_anon_in_arid)) 
+              >> 0x0000000cU));
+    vlSelfRef.__PVT__axi4yank__DOT__Queue1_BundleMap_13__DOT__do_enq 
+        = (((~ (IData)(vlSelfRef.__PVT__axi4yank__DOT__Queue1_BundleMap_13__DOT__full)) 
+            & (IData)(vlSelfRef.__PVT__axi4yank__DOT___GEN_0)) 
+           & (((IData)(1U) << (IData)(vlSelfRef.__PVT__axi4xbar_1__DOT__auto_anon_in_arid)) 
+              >> 0x0000000dU));
+    vlSelfRef.__PVT__axi4yank__DOT__Queue1_BundleMap_14__DOT__do_enq 
+        = (((~ (IData)(vlSelfRef.__PVT__axi4yank__DOT__Queue1_BundleMap_14__DOT__full)) 
+            & (IData)(vlSelfRef.__PVT__axi4yank__DOT___GEN_0)) 
+           & (((IData)(1U) << (IData)(vlSelfRef.__PVT__axi4xbar_1__DOT__auto_anon_in_arid)) 
+              >> 0x0000000eU));
+    vlSelfRef.__PVT__axi4yank__DOT__Queue1_BundleMap_15__DOT__do_enq 
+        = (((~ (IData)(vlSelfRef.__PVT__axi4yank__DOT__Queue1_BundleMap_15__DOT__full)) 
+            & (IData)(vlSelfRef.__PVT__axi4yank__DOT___GEN_0)) 
+           & (((IData)(1U) << (IData)(vlSelfRef.__PVT__axi4xbar_1__DOT__auto_anon_in_arid)) 
+              >> 0x0000000fU));
     vlSelfRef.__PVT__lsdram_axi__DOT__msdram__DOT__u_sdram_axi__DOT__u_axi__DOT__req_push_w 
         = (((IData)(vlSelfRef.__PVT__lsdram_axi__DOT__msdram__DOT__u_sdram_axi__DOT__u_core__DOT__inport_rd_i) 
             | (0U != (IData)(vlSelfRef.__PVT__lsdram_axi__DOT__msdram__DOT__u_sdram_axi__DOT__u_core__DOT__inport_wr_i))) 
@@ -2029,6 +2165,19 @@ void VysyxSoCFull_ysyxSoCASIC___nba_comb__TOP__ysyxSoCFull__asic__4(VysyxSoCFull
     vlSelfRef.__PVT__axi4delay_delayer__DOT__in_awready 
         = ((~ (IData)(vlSelfRef.__PVT__lsdram_axi__DOT__msdram__DOT__u_sdram_axi__DOT__u_axi__DOT__req_wr_q)) 
            & (IData)(vlSelfRef.__PVT__axi4delay_delayer__DOT__in_wready));
+    vlSelfRef.__PVT__axi4frag__DOT__deq_q__DOT__do_enq 
+        = ((~ ((~ (IData)(vlSelfRef.__PVT__axi4frag__DOT__deq_q__DOT__full)) 
+               & (IData)(vlSelfRef.__PVT__axi4frag__DOT__deq_q__DOT__io_deq_ready))) 
+           & ((~ (IData)(vlSelfRef.__PVT__axi4frag__DOT__deq_q__DOT__full)) 
+              & (IData)(vlSelfRef.__PVT__axi4xbar__DOT__auto_anon_out_0_arvalid)));
+    if (vlSelfRef.__PVT__lmrom__DOT___nodeIn_rid_T) {
+        VysyxSoCFull_ysyxSoCASIC____Vdpiimwrap_lmrom__DOT__mrom__DOT__mrom_read_TOP__ysyxSoCFull__asic(
+                                                                                (0x3fffffffU 
+                                                                                & vlSelfRef.__PVT__axi4xbar_1__DOT__auto_anon_in_araddr), vlSelfRef.__Vtask_lmrom__DOT__mrom__DOT__mrom_read__8__rdata);
+        vlSelfRef.__PVT__lmrom__DOT___mrom_rdata = vlSelfRef.__Vtask_lmrom__DOT__mrom__DOT__mrom_read__8__rdata;
+    } else {
+        vlSelfRef.__PVT__lmrom__DOT___mrom_rdata = 0U;
+    }
     vlSelfRef.__PVT__lsdram_axi__DOT__msdram__DOT__u_sdram_axi__DOT__u_core__DOT__next_state_r 
         = vlSelfRef.__PVT__lsdram_axi__DOT__msdram__DOT__u_sdram_axi__DOT__u_core__DOT__state_q;
     vlSelfRef.__PVT__lsdram_axi__DOT__msdram__DOT__u_sdram_axi__DOT__u_core__DOT__target_state_r 
@@ -2151,8 +2300,8 @@ void VysyxSoCFull_ysyxSoCASIC___nba_comb__TOP__ysyxSoCFull__asic__4(VysyxSoCFull
               & (IData)(vlSelfRef.__PVT__axi4xbar__DOT__awIn_0__DOT__io_enq_valid)));
 }
 
-void VysyxSoCFull_ysyxSoCASIC___nba_comb__TOP__ysyxSoCFull__asic__6(VysyxSoCFull_ysyxSoCASIC* vlSelf) {
-    VL_DEBUG_IF(VL_DBG_MSGF("+        VysyxSoCFull_ysyxSoCASIC___nba_comb__TOP__ysyxSoCFull__asic__6\n"); );
+void VysyxSoCFull_ysyxSoCASIC___nba_comb__TOP__ysyxSoCFull__asic__4(VysyxSoCFull_ysyxSoCASIC* vlSelf) {
+    VL_DEBUG_IF(VL_DBG_MSGF("+        VysyxSoCFull_ysyxSoCASIC___nba_comb__TOP__ysyxSoCFull__asic__4\n"); );
     VysyxSoCFull__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
     auto& vlSelfRef = std::ref(*vlSelf).get();
     // Body
@@ -2193,8 +2342,105 @@ void VysyxSoCFull_ysyxSoCASIC___nba_comb__TOP__ysyxSoCFull__asic__6(VysyxSoCFull
                                                        : 0U)));
 }
 
-void VysyxSoCFull_ysyxSoCASIC___nba_comb__TOP__ysyxSoCFull__asic__7(VysyxSoCFull_ysyxSoCASIC* vlSelf) {
-    VL_DEBUG_IF(VL_DBG_MSGF("+        VysyxSoCFull_ysyxSoCASIC___nba_comb__TOP__ysyxSoCFull__asic__7\n"); );
+void VysyxSoCFull_ysyxSoCASIC___nba_comb__TOP__ysyxSoCFull__asic__5(VysyxSoCFull_ysyxSoCASIC* vlSelf) {
+    VL_DEBUG_IF(VL_DBG_MSGF("+        VysyxSoCFull_ysyxSoCASIC___nba_comb__TOP__ysyxSoCFull__asic__5\n"); );
+    VysyxSoCFull__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
+    auto& vlSelfRef = std::ref(*vlSelf).get();
+    // Body
+    vlSelfRef.__PVT__axi4delay_delayer__DOT__inst_u0__DOT__rnext_state 
+        = ((2U & (IData)(vlSelfRef.__PVT__axi4delay_delayer__DOT__inst_u0__DOT__rstate))
+            ? ((1U & (IData)(vlSelfRef.__PVT__axi4delay_delayer__DOT__inst_u0__DOT__rstate))
+                ? (vlSelfRef.__PVT__axi4delay_delayer__DOT__in_rready_w
+                   [0U] ? 0U : 3U) : ((1U > vlSelfRef.__PVT__axi4delay_delayer__DOT__inst_u0__DOT__rcnt)
+                                       ? (vlSelfRef.__PVT__axi4delay_delayer__DOT__in_rready_w
+                                          [0U] ? 0U
+                                           : 3U) : 2U))
+            : ((1U & (IData)(vlSelfRef.__PVT__axi4delay_delayer__DOT__inst_u0__DOT__rstate))
+                ? ((IData)(vlSelfRef.__PVT__axi4delay_delayer__DOT__inst_u0__DOT__out_rvalid)
+                    ? 2U : 1U) : ((IData)(vlSelfRef.__PVT__axi4delay_delayer__DOT__in_arvalid)
+                                   ? 1U : 0U)));
+    vlSelfRef.__PVT__axi4delay_delayer__DOT__inst_u1__DOT__rnext_state 
+        = ((2U & (IData)(vlSelfRef.__PVT__axi4delay_delayer__DOT__inst_u1__DOT__rstate))
+            ? ((1U & (IData)(vlSelfRef.__PVT__axi4delay_delayer__DOT__inst_u1__DOT__rstate))
+                ? (vlSelfRef.__PVT__axi4delay_delayer__DOT__in_rready_w
+                   [1U] ? 0U : 3U) : ((1U > vlSelfRef.__PVT__axi4delay_delayer__DOT__inst_u1__DOT__rcnt)
+                                       ? (vlSelfRef.__PVT__axi4delay_delayer__DOT__in_rready_w
+                                          [1U] ? 0U
+                                           : 3U) : 2U))
+            : ((1U & (IData)(vlSelfRef.__PVT__axi4delay_delayer__DOT__inst_u1__DOT__rstate))
+                ? ((IData)(vlSelfRef.__PVT__axi4delay_delayer__DOT__inst_u1__DOT__out_rvalid)
+                    ? 2U : 1U) : ((IData)(vlSelfRef.__PVT__axi4delay_delayer__DOT__in_arvalid)
+                                   ? 1U : 0U)));
+    vlSelfRef.__PVT__axi4delay_delayer__DOT__inst_u2__DOT__rnext_state 
+        = ((2U & (IData)(vlSelfRef.__PVT__axi4delay_delayer__DOT__inst_u2__DOT__rstate))
+            ? ((1U & (IData)(vlSelfRef.__PVT__axi4delay_delayer__DOT__inst_u2__DOT__rstate))
+                ? ((IData)(vlSelfRef.__PVT__axi4delay_delayer__DOT__inst_u2__DOT__in_rready)
+                    ? 0U : 3U) : ((1U > vlSelfRef.__PVT__axi4delay_delayer__DOT__inst_u2__DOT__rcnt)
+                                   ? ((IData)(vlSelfRef.__PVT__axi4delay_delayer__DOT__inst_u2__DOT__in_rready)
+                                       ? 0U : 3U) : 2U))
+            : ((1U & (IData)(vlSelfRef.__PVT__axi4delay_delayer__DOT__inst_u2__DOT__rstate))
+                ? ((IData)(vlSelfRef.__PVT__axi4delay_delayer__DOT__inst_u2__DOT__out_rvalid)
+                    ? 2U : 1U) : ((IData)(vlSelfRef.__PVT__axi4delay_delayer__DOT__in_arvalid)
+                                   ? 1U : 0U)));
+    vlSelfRef.__PVT__axi4delay_delayer__DOT__inst_u3__DOT__rnext_state 
+        = ((2U & (IData)(vlSelfRef.__PVT__axi4delay_delayer__DOT__inst_u3__DOT__rstate))
+            ? ((1U & (IData)(vlSelfRef.__PVT__axi4delay_delayer__DOT__inst_u3__DOT__rstate))
+                ? ((IData)(vlSelfRef.__PVT__axi4delay_delayer__DOT__inst_u3__DOT__in_rready)
+                    ? 0U : 3U) : ((1U > vlSelfRef.__PVT__axi4delay_delayer__DOT__inst_u3__DOT__rcnt)
+                                   ? ((IData)(vlSelfRef.__PVT__axi4delay_delayer__DOT__inst_u3__DOT__in_rready)
+                                       ? 0U : 3U) : 2U))
+            : ((1U & (IData)(vlSelfRef.__PVT__axi4delay_delayer__DOT__inst_u3__DOT__rstate))
+                ? ((IData)(vlSelfRef.__PVT__axi4delay_delayer__DOT__inst_u3__DOT__out_rvalid)
+                    ? 2U : 1U) : ((IData)(vlSelfRef.__PVT__axi4delay_delayer__DOT__in_arvalid)
+                                   ? 1U : 0U)));
+    vlSelfRef.__PVT__axi4delay_delayer__DOT__inst_u4__DOT__rnext_state 
+        = ((2U & (IData)(vlSelfRef.__PVT__axi4delay_delayer__DOT__inst_u4__DOT__rstate))
+            ? ((1U & (IData)(vlSelfRef.__PVT__axi4delay_delayer__DOT__inst_u4__DOT__rstate))
+                ? ((IData)(vlSelfRef.__PVT__axi4delay_delayer__DOT__inst_u4__DOT__in_rready)
+                    ? 0U : 3U) : ((1U > vlSelfRef.__PVT__axi4delay_delayer__DOT__inst_u4__DOT__rcnt)
+                                   ? ((IData)(vlSelfRef.__PVT__axi4delay_delayer__DOT__inst_u4__DOT__in_rready)
+                                       ? 0U : 3U) : 2U))
+            : ((1U & (IData)(vlSelfRef.__PVT__axi4delay_delayer__DOT__inst_u4__DOT__rstate))
+                ? ((IData)(vlSelfRef.__PVT__axi4delay_delayer__DOT__inst_u4__DOT__out_rvalid)
+                    ? 2U : 1U) : ((IData)(vlSelfRef.__PVT__axi4delay_delayer__DOT__in_arvalid)
+                                   ? 1U : 0U)));
+    vlSelfRef.__PVT__axi4delay_delayer__DOT__inst_u5__DOT__rnext_state 
+        = ((2U & (IData)(vlSelfRef.__PVT__axi4delay_delayer__DOT__inst_u5__DOT__rstate))
+            ? ((1U & (IData)(vlSelfRef.__PVT__axi4delay_delayer__DOT__inst_u5__DOT__rstate))
+                ? ((IData)(vlSelfRef.__PVT__axi4delay_delayer__DOT__inst_u5__DOT__in_rready)
+                    ? 0U : 3U) : ((1U > vlSelfRef.__PVT__axi4delay_delayer__DOT__inst_u5__DOT__rcnt)
+                                   ? ((IData)(vlSelfRef.__PVT__axi4delay_delayer__DOT__inst_u5__DOT__in_rready)
+                                       ? 0U : 3U) : 2U))
+            : ((1U & (IData)(vlSelfRef.__PVT__axi4delay_delayer__DOT__inst_u5__DOT__rstate))
+                ? ((IData)(vlSelfRef.__PVT__axi4delay_delayer__DOT__inst_u5__DOT__out_rvalid)
+                    ? 2U : 1U) : ((IData)(vlSelfRef.__PVT__axi4delay_delayer__DOT__in_arvalid)
+                                   ? 1U : 0U)));
+    vlSelfRef.__PVT__axi4delay_delayer__DOT__inst_u6__DOT__rnext_state 
+        = ((2U & (IData)(vlSelfRef.__PVT__axi4delay_delayer__DOT__inst_u6__DOT__rstate))
+            ? ((1U & (IData)(vlSelfRef.__PVT__axi4delay_delayer__DOT__inst_u6__DOT__rstate))
+                ? ((IData)(vlSelfRef.__PVT__axi4delay_delayer__DOT__inst_u6__DOT__in_rready)
+                    ? 0U : 3U) : ((1U > vlSelfRef.__PVT__axi4delay_delayer__DOT__inst_u6__DOT__rcnt)
+                                   ? ((IData)(vlSelfRef.__PVT__axi4delay_delayer__DOT__inst_u6__DOT__in_rready)
+                                       ? 0U : 3U) : 2U))
+            : ((1U & (IData)(vlSelfRef.__PVT__axi4delay_delayer__DOT__inst_u6__DOT__rstate))
+                ? ((IData)(vlSelfRef.__PVT__axi4delay_delayer__DOT__inst_u6__DOT__out_rvalid)
+                    ? 2U : 1U) : ((IData)(vlSelfRef.__PVT__axi4delay_delayer__DOT__in_arvalid)
+                                   ? 1U : 0U)));
+    vlSelfRef.__PVT__axi4delay_delayer__DOT__inst_u7__DOT__rnext_state 
+        = ((2U & (IData)(vlSelfRef.__PVT__axi4delay_delayer__DOT__inst_u7__DOT__rstate))
+            ? ((1U & (IData)(vlSelfRef.__PVT__axi4delay_delayer__DOT__inst_u7__DOT__rstate))
+                ? ((IData)(vlSelfRef.__PVT__axi4delay_delayer__DOT__inst_u7__DOT__in_rready)
+                    ? 0U : 3U) : ((1U > vlSelfRef.__PVT__axi4delay_delayer__DOT__inst_u7__DOT__rcnt)
+                                   ? ((IData)(vlSelfRef.__PVT__axi4delay_delayer__DOT__inst_u7__DOT__in_rready)
+                                       ? 0U : 3U) : 2U))
+            : ((1U & (IData)(vlSelfRef.__PVT__axi4delay_delayer__DOT__inst_u7__DOT__rstate))
+                ? ((IData)(vlSelfRef.__PVT__axi4delay_delayer__DOT__inst_u7__DOT__out_rvalid)
+                    ? 2U : 1U) : ((IData)(vlSelfRef.__PVT__axi4delay_delayer__DOT__in_arvalid)
+                                   ? 1U : 0U)));
+}
+
+void VysyxSoCFull_ysyxSoCASIC___nba_comb__TOP__ysyxSoCFull__asic__6(VysyxSoCFull_ysyxSoCASIC* vlSelf) {
+    VL_DEBUG_IF(VL_DBG_MSGF("+        VysyxSoCFull_ysyxSoCASIC___nba_comb__TOP__ysyxSoCFull__asic__6\n"); );
     VysyxSoCFull__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
     auto& vlSelfRef = std::ref(*vlSelf).get();
     // Body

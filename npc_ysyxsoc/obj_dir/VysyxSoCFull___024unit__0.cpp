@@ -24,14 +24,6 @@ void VysyxSoCFull___024unit____Vdpiimwrap_difftest_skip_ref_TOP____024unit(IData
     difftest_skip_ref(reason__Vcvt);
 }
 
-extern "C" void ebreak();
-
-void VysyxSoCFull___024unit____Vdpiimwrap_ebreak_TOP____024unit() {
-    VL_DEBUG_IF(VL_DBG_MSGF("+        VysyxSoCFull___024unit____Vdpiimwrap_ebreak_TOP____024unit\n"); );
-    // Body
-    ebreak();
-}
-
 extern "C" int pmem_read(int raddr);
 
 void VysyxSoCFull___024unit____Vdpiimwrap_pmem_read_TOP____024unit(IData/*31:0*/ raddr, IData/*31:0*/ &pmem_read__Vfuncrtn) {

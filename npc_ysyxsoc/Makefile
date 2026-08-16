@@ -14,6 +14,7 @@ C_INC_PATH += $(NVBOARD_USR_INC)
 V_INC_PATH ?=
 V_INC_PATH += $(NPC_SOC_HOME)/../ysyxSoC/perip/uart16550/rtl/
 V_INC_PATH += $(NPC_SOC_HOME)/../ysyxSoC/perip/spi/rtl/
+V_INC_PATH += $(NPC_SOC_HOME)/vsrc/
 V_INC_PATH := $(abspath $(V_INC_PATH))
 
 
@@ -50,7 +51,7 @@ sim: $(SIM_C) $(SIM_V) $(NVBOARD_ARCHIVE)
 	verilator $(VERILATOR_FLAGS) --top-module $(TOPNAME) $^ $(addprefix -CFLAGS , $(CXXFLAGS)) $(addprefix -LDFLAGS , $(LDFLAGS))
 	@echo "ARGS = $(ARGS)"
 	@echo "ARGS_DIFF = $(ARGS_DIFF)"
-	LD_PRELOAD="$(shell gcc -print-file-name=libasan.so)" ./obj_dir/V$(TOPNAME) $(ARGS) $(IMG) $(ELF)
+	env ASAN_OPTIONS=new_delete_type_mismatch=0:detect_leaks=0 LD_PRELOAD="$(shell gcc -print-file-name=libasan.so)" ./obj_dir/V$(TOPNAME) $(ARGS) $(IMG) $(ELF)
 #	@echo "Write this Makefile by your self."
 wave:
 	gtkwave wave.vcd

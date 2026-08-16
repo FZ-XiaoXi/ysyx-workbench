@@ -1,4 +1,4 @@
-import "DPI-C" function void ebreak();
+// import "DPI-C" function void ebreak();
 import "DPI-C" function int pmem_read(input int raddr);
 import "DPI-C" function void pmem_write(input int waddr, input int wdata, input byte wmask);
 
@@ -79,54 +79,81 @@ module ysyx_26010011(
   assign io_slave_rdata=0;
   assign io_slave_rlast=0;
   assign io_slave_rid=0;
-  
-  wire lsu_access_fault;
-  wire [31:0]PC/* verilator public */,dnpc/* verilator public */,snpc/* verilator public */;
-  // verilator lint_off PINMISSING
-  wire lsu_final,lsu_reqEN,wbu_final/*verilator public*/;
-  wire [31:0] command;
-  
-  wire isR,isI,isS,isB,isU,isJ,isCR;
 
-  wire [4:0] rd_add,rs1_add,rs2_add,gpr_address;
-  wire [11:0] rcsr_add;
+  reg idu_ra_isRAW,idu_rb_isRAW,idu_csr_isRAW;
+  wire idu_isRAW/*verilator public*/;
+  assign idu_isRAW=(idu_ra_isRAW | idu_rb_isRAW | idu_csr_isRAW);
+  always @(*) begin
+      if(|gpr_raddra)begin
+        if((gpr_raddra==exu_in_bus_rd)&exu_in_valid&exu_in_bus_isWGPR)begin
+          idu_ra_isRAW = 1;
+        end else if((gpr_raddra==lsu_in_bus_rd)&lsu_in_valid&lsu_in_bus_isWGPR)begin
+          idu_ra_isRAW = 1;
+        end else if((gpr_raddra==wbu_in_bus_rd)&wbu_in_valid&wbu_in_bus_isWGPR)begin
+          idu_ra_isRAW = 1;
+        end else begin
+          idu_ra_isRAW = 0;
+        end
+      end else begin
+        idu_ra_isRAW=0;
+      end
+      if(|gpr_raddrb)begin
+        if((gpr_raddrb==exu_in_bus_rd)&exu_in_valid&exu_in_bus_isWGPR)begin
+          idu_rb_isRAW = 1;
+        end else if((gpr_raddrb==lsu_in_bus_rd)&lsu_in_valid&lsu_in_bus_isWGPR)begin
+          idu_rb_isRAW = 1;
+        end else if((gpr_raddrb==wbu_in_bus_rd)&wbu_in_valid&wbu_in_bus_isWGPR)begin
+          idu_rb_isRAW = 1;
+        end else begin
+          idu_rb_isRAW = 0;
+        end
+      end else begin
+        idu_rb_isRAW=0;
+      end
 
-  wire flush_icache;
-  wire COMP_data;
-  wire [31:0] EXU_inA,EXU_inB,EXU_data,CSR_data;
-  wire [31:0] rs1_val,rs2_val,reg_data;
-  wire [31:0] imm;
-  wire [31:0]lsu_addr;
-  wire [3:0]LSU_rmask,lsu_wmask;
-  wire [31:0]lsu_wdata;
-  wire LSU_WEN;
-  wire [31:0]lsu_rdata;
-  wire [31:0]PC_command;
-  wire gpr_WEN;
-  wire isEBREAK,isECALL,isMRET,isLOAD,isSTORE,isWRITE,isJUMP,isSigned,isPC;
-  wire [1:0]isCSR;
-  wire isGREATER,isEQUAL,isBRANCH,isCOMPARE;
-  wire [9:0]op;
-  wire [31:0]csr_mepc,csr_mtvec;
-  wire bus_valid;
-  ysyx_26010011_REG REG_0(.clock(clock),.reset(reset),.addRA(rs1_add),.addRB(rs2_add),.addW(gpr_address),.addCSR(rcsr_add),.outA(rs1_val),.outB(rs2_val),.inData(reg_data),.gpr_WEN(gpr_WEN),.CSR_BUS(CSR_data),.WCSREN(|isCSR),.isECALL(isECALL),.isMRET(isMRET),.csr_mepc(csr_mepc),.csr_mtvec(csr_mtvec),.pc(PC),.bus_valid(bus_valid));/*verilator public_module*/
-  ysyx_26010011_WBU WBU_0(.clock(clock),.reset(reset),.LSU_data(lsu_rdata),.EXU_data(EXU_data),.COMP_data(COMP_data),.address(rd_add),.isLOAD(isLOAD),.isWRITE(isWRITE),.isJUMP(isJUMP),.snpc(snpc),.gpr_WEN(gpr_WEN),.reg_data(reg_data),.gpr_address(gpr_address),.isCOMPARE(isCOMPARE),.CSR_data(CSR_data),.isCSR(isCSR),.lsu_final(lsu_final),.wbu_final(wbu_final),.isSTORE(isSTORE),.bus_valid(bus_valid));/*verilator public_module*/
-  
+      if((|idu_out_bus_csrrd) & (|idu_out_bus_opCSR) )begin
+        if(idu_out_bus_csrrd == `ADD_MCYCLE) begin
+          idu_csr_isRAW = 0;
+        end else if((idu_out_bus_csrrd==exu_in_bus_csrrd)&exu_in_valid&(|exu_in_bus_opCSR))begin
+          idu_csr_isRAW = 1;
+        end else if((idu_out_bus_csrrd==lsu_in_bus_csrrd)&lsu_in_valid&(|lsu_in_bus_opCSR))begin
+          idu_csr_isRAW = 1;
+        end else if((idu_out_bus_csrrd==wbu_in_bus_csrrd)&wbu_in_valid&(|wbu_in_bus_opCSR))begin
+          idu_csr_isRAW = 1;
+        end else begin
+          idu_csr_isRAW = 0;
+        end
+      end else begin
+        idu_csr_isRAW=0;
+      end
+  end
+
+  //dnpc
+  wire [31:0]dnpc;
+  wire dnpc_valid;
+  assign dnpc=(exu_in_bus_isECALL|exu_in_bus_isMRET)?exu_out_bus_csr_result:exu_out_bus_alu_result;
+  assign dnpc_valid=((exu_in_bus_isECALL|exu_in_bus_isMRET) & exu_in_valid & exu_out_ready) | (exu_in_bus_isJUMP & exu_in_valid & exu_out_ready) | (exu_in_bus_isBRANCH & exu_in_valid & exu_out_bus_comp_result & exu_out_ready);
+  //flush_valid
+  wire flush_valid/*verilator public*/,ifu_flush_valid,idu_flush_valid,exu_flush_valid;
+  assign flush_valid=dnpc_valid;
+  assign ifu_flush_valid=flush_valid;
+  assign idu_flush_valid=flush_valid;
+  assign exu_flush_valid=flush_valid;
   ysyx_26010011_IFU IFU_0(
     .clock(clock),
     .reset(reset),
-    .flush_icache(flush_icache),
-    .PC(PC),
+    
+    // input flush_icache,
     .dnpc(dnpc),
-    .snpc(snpc),
-    .isJUMP(isJUMP),
-    .isBRANCH(isBRANCH),
-    .isECALL(isECALL),
-    .isMRET(isMRET),
-    .wbu_final(wbu_final),
-    .PC_command(PC_command),
-    .bus_valid(bus_valid),
-    .lsu_access_fault(lsu_access_fault),
+    .flush_valid(ifu_flush_valid),
+    .dnpc_valid(dnpc_valid),
+
+    .ifu_out_valid(ifu_out_valid),
+    .ifu_out_ready(ifu_out_ready),
+    
+    .ifu_out_bus_instruction(ifu_out_bus_instruction),
+    .ifu_out_bus_pc(ifu_out_bus_pc),
+    .ifu_out_bus_snpc(ifu_out_bus_snpc),
 
     .araddr(IROM_araddr),
     .arvalid(IROM_arvalid),
@@ -153,70 +180,276 @@ module ysyx_26010011(
   wire IROM_rlast;
   wire [3:0] IROM_rid;
 
+  wire ifu_out_valid,ifu_out_ready;
+  wire [31:0]ifu_out_bus_instruction,ifu_out_bus_pc,ifu_out_bus_snpc;
+
+  ysyx_26010011_IF_ID_pipeline IF_ID_inst(
+    .clock(clock),
+    .reset(reset),
+    .flush_valid(idu_flush_valid),
+
+    .ifu_out_valid(ifu_out_valid),
+    .ifu_out_ready(ifu_out_ready),
+    .ifu_out_bus_instruction(ifu_out_bus_instruction),
+    .ifu_out_bus_pc(ifu_out_bus_pc),
+    .ifu_out_bus_snpc(ifu_out_bus_snpc),
+
+    .idu_in_valid(idu_in_valid),
+    .idu_in_ready(idu_in_ready),
+    .idu_in_bus_instruction(idu_in_bus_instruction),
+    .idu_in_bus_pc(idu_in_bus_pc),
+    .idu_in_bus_snpc(idu_in_bus_snpc)
+  );/*verilator public_module*/
+  //
+  wire idu_in_valid,idu_in_ready;
+  wire [31:0]idu_in_bus_instruction,idu_in_bus_pc,idu_in_bus_snpc;
 
   ysyx_26010011_IDU IDU_0(
     .clock(clock),
     .reset(reset),
-    .bus_valid(bus_valid),
-    .wbu_final(wbu_final),
-    .command(PC_command),
-    .opcode(),
-    .imm(imm),
-    .rd(rd_add),
-    .rs1(rs1_add),
-    .rs2(rs2_add),
-    .rcsr(rcsr_add),
-    .op(op),
-    .ctype({isR,isI,isS,isB,isU,isJ,isCR}),
-    .LSU_rmask(LSU_rmask),
-    .lsu_wmask(lsu_wmask),
-    .isLOAD(isLOAD),
-    .isSTORE(isSTORE),
-    .isWRITE(isWRITE),
-    .isJUMP(isJUMP),
-    .isCOMPARE(isCOMPARE),
-    .isEBREAK(isEBREAK),
-    .isECALL(isECALL),
-    .isMRET(isMRET),
-    .isFENCEI(flush_icache),
-    .isSigned(isSigned),
-    .isCSR(isCSR),
-    .LSU_WEN(LSU_WEN),
-    .lsu_reqEN(lsu_reqEN),
-    .isPC(isPC),
-    .isGREATER(isGREATER),
-    .isEQUAL(isEQUAL),
-    .isBRANCH(isBRANCH),
-    .COMP_data(COMP_data)
+    .idu_isRAW(idu_isRAW),
+    .idu_in_bus_instruction(idu_in_bus_instruction),
+    .idu_in_valid(idu_in_valid),
+    .idu_in_ready(idu_in_ready),
+
+    .idu_out_valid(idu_out_valid),
+    .idu_out_ready(idu_out_ready),
+    .idu_out_bus_rd(idu_out_bus_rd),
+    .idu_out_bus_csrrd(idu_out_bus_csrrd),  //CSR地址
+    .idu_out_bus_rs1(gpr_raddra),
+    .idu_out_bus_rs2(gpr_raddrb),
+    // .idu_out_bus_rcsr(idu_out_bus_rcsr),
+    .idu_out_bus_imm(idu_out_bus_imm),
+    .idu_out_bus_isEBREAK(idu_out_bus_isEBREAK),
+    .idu_out_bus_isECALL(idu_out_bus_isECALL),
+    .idu_out_bus_isMRET(idu_out_bus_isMRET),
+    .idu_out_bus_isLOAD(idu_out_bus_isLOAD),
+    .idu_out_bus_isSTORE(idu_out_bus_isSTORE),
+    .idu_out_bus_isWGPR(idu_out_bus_isWGPR),
+    .idu_out_bus_isJUMP(idu_out_bus_isJUMP),
+    .idu_out_bus_isWCOMP(idu_out_bus_isWCOMP),
+    .idu_out_bus_isBRANCH(idu_out_bus_isBRANCH),
+    .idu_out_bus_opCSR(idu_out_bus_opCSR),
+    .idu_out_bus_isUnSigned(idu_out_bus_isUnSigned),
+    .idu_out_bus_isUsePC(idu_out_bus_isUsePC),
+    .idu_out_bus_alu_isUseImm(idu_out_bus_alu_isUseImm),
+    .idu_out_bus_comp_isUseImm(idu_out_bus_comp_isUseImm),
+    .idu_out_bus_alu_op(idu_out_bus_alu_op),
+    .idu_out_bus_comp_op(idu_out_bus_comp_op),
+    .idu_out_bus_perip_mask(idu_out_bus_perip_mask)
   );/*verilator public_module*/
-  ////////////////////////////////////////
 
-  assign EXU_inB=(isI|isU|isB|isS|isJ)?imm:((|isCSR)?rs1_val:rs2_val);
-  assign EXU_inA=(isI|isU|isB|isS|isJ)?((isPC)?PC:rs1_val):rs1_val;
-  ysyx_26010011_EXU EXU_0(.inA(EXU_inA),.inB(EXU_inB),.op(op),.out(EXU_data));
+  wire idu_out_valid,idu_out_ready;
+  wire [11:0]idu_out_bus_csrrd;
+  wire [31:0]idu_out_bus_imm,idu_out_bus_csr;   //idu_out_bus_imm 可作CSR地址
+  wire [12:0]idu_out_bus_signals;
+  wire idu_out_bus_isEBREAK,idu_out_bus_isECALL,idu_out_bus_isMRET,idu_out_bus_isLOAD,idu_out_bus_isSTORE,idu_out_bus_isWGPR,idu_out_bus_isJUMP,idu_out_bus_isWCOMP,idu_out_bus_isBRANCH,idu_out_bus_isUnSigned,idu_out_bus_isUsePC,idu_out_bus_alu_isUseImm,idu_out_bus_comp_isUseImm;
+  wire [ 9:0]idu_out_bus_alu_op;
+  wire [ 1:0]idu_out_bus_comp_op,idu_out_bus_perip_mask;
+  wire [ 2:0]idu_out_bus_opCSR;
+  wire [4:0]idu_out_bus_rd;
 
-  wire [31:0]COMP_inA,COMP_inB;
-  assign COMP_inB=(isI)?imm:rs2_val;
-  assign COMP_inA=rs1_val;
-  ysyx_26010011_COMP COMP_0(.inA(COMP_inA),.inB(COMP_inB),.isCompSigned(isSigned),.isGREATER(isGREATER),.isEQUAL(isEQUAL));
+
+  ysyx_26010011_ID_EX_pipeline ID_EX_inst(
+    .clock(clock),
+    .reset(reset),
+    .flush_valid(exu_flush_valid),
+
+    .idu_out_valid(idu_out_valid),
+    .idu_out_ready(idu_out_ready),
+    .idu_out_bus_rd(idu_out_bus_rd),
+    .idu_out_bus_csrrd(idu_out_bus_csrrd),  //CSR地址
+    .idu_out_bus_rs1(gpr_raddra),
+    .idu_out_bus_rs2(gpr_raddrb),
+    .idu_out_bus_rs1_val(
+      ((|idu_out_bus_opCSR)?
+        (
+          ((idu_out_bus_opCSR[2])?
+            (
+              ((idu_out_bus_opCSR[1]&~idu_out_bus_opCSR[0])?
+                (~{{27{1'b0}},gpr_raddra})
+                :{{27{1'b0}},gpr_raddra}
+              )
+            )
+            :(
+              (idu_out_bus_opCSR[1]&~idu_out_bus_opCSR[0])?
+              (~gpr_rdataa)
+              :gpr_rdataa
+            )
+          )
+        )
+        :gpr_rdataa
+      )
+    ), //[~]zimm or rs1_val
+    .idu_out_bus_rs2_val(gpr_rdatab),
+    .idu_out_bus_imm((|idu_out_bus_opCSR)?csr_rdata:idu_out_bus_imm),     //CSR值
+    .idu_out_bus_instruction(idu_in_bus_instruction),
+    .idu_out_bus_isEBREAK(idu_out_bus_isEBREAK),
+    .idu_out_bus_isECALL(idu_out_bus_isECALL),
+    .idu_out_bus_isMRET(idu_out_bus_isMRET),
+    .idu_out_bus_isLOAD(idu_out_bus_isLOAD),
+    .idu_out_bus_isSTORE(idu_out_bus_isSTORE),
+    .idu_out_bus_isWGPR(idu_out_bus_isWGPR),
+    .idu_out_bus_isJUMP(idu_out_bus_isJUMP),
+    .idu_out_bus_isWCOMP(idu_out_bus_isWCOMP),
+    .idu_out_bus_isBRANCH(idu_out_bus_isBRANCH),
+    .idu_out_bus_opCSR(idu_out_bus_opCSR),
+    .idu_out_bus_isUnSigned(idu_out_bus_isUnSigned),
+    .idu_out_bus_isUsePC(idu_out_bus_isUsePC),
+    .idu_out_bus_alu_isUseImm(idu_out_bus_alu_isUseImm),
+    .idu_out_bus_comp_isUseImm(idu_out_bus_comp_isUseImm),
+    .idu_out_bus_alu_op(idu_out_bus_alu_op),
+    .idu_out_bus_comp_op(idu_out_bus_comp_op),
+    .idu_out_bus_perip_mask(idu_out_bus_perip_mask),
+    .idu_out_bus_pc(idu_in_bus_pc),
+    .idu_out_bus_snpc(idu_in_bus_snpc),
+
+    .exu_in_valid(exu_in_valid),
+    .exu_in_ready(exu_in_ready),
+    .exu_in_bus_rd(exu_in_bus_rd),
+    .exu_in_bus_csrrd(exu_in_bus_csrrd),
+    .exu_in_bus_rs1(exu_in_bus_rs1),
+    .exu_in_bus_rs2(exu_in_bus_rs2),
+    .exu_in_bus_rs1_val(exu_in_bus_rs1_val),
+    .exu_in_bus_rs2_val(exu_in_bus_rs2_val),
+    // .exu_in_bus_rcsr(),
+    .exu_in_bus_imm(exu_in_bus_imm),
+    .exu_in_bus_instruction(exu_in_bus_instruction),
+    .exu_in_bus_isEBREAK(exu_in_bus_isEBREAK),
+    .exu_in_bus_isECALL(exu_in_bus_isECALL),
+    .exu_in_bus_isMRET(exu_in_bus_isMRET),
+    .exu_in_bus_isLOAD(exu_in_bus_isLOAD),
+    .exu_in_bus_isSTORE(exu_in_bus_isSTORE),
+    .exu_in_bus_isWGPR(exu_in_bus_isWGPR),
+    .exu_in_bus_isJUMP(exu_in_bus_isJUMP),
+    .exu_in_bus_isWCOMP(exu_in_bus_isWCOMP),
+    .exu_in_bus_isBRANCH(exu_in_bus_isBRANCH),
+    .exu_in_bus_opCSR(exu_in_bus_opCSR),
+    .exu_in_bus_isUnSigned(exu_in_bus_isUnSigned),
+    .exu_in_bus_isUsePC(exu_in_bus_isUsePC),
+    .exu_in_bus_alu_isUseImm(exu_in_bus_alu_isUseImm),
+    .exu_in_bus_comp_isUseImm(exu_in_bus_comp_isUseImm),
+    .exu_in_bus_alu_op(exu_in_bus_alu_op),
+    .exu_in_bus_comp_op(exu_in_bus_comp_op),
+    .exu_in_bus_perip_mask(exu_in_bus_perip_mask),
+    .exu_in_bus_pc(exu_in_bus_pc),
+    .exu_in_bus_snpc(exu_in_bus_snpc)
+  );/*verilator public_module*/
+
+  wire exu_in_valid,exu_in_ready,exu_in_bus_isEBREAK,exu_in_bus_isECALL,exu_in_bus_isMRET,exu_in_bus_isLOAD,exu_in_bus_isSTORE,exu_in_bus_isWGPR,exu_in_bus_isJUMP,exu_in_bus_isWCOMP,exu_in_bus_isBRANCH,exu_in_bus_isUnSigned,exu_in_bus_isUsePC,exu_in_bus_alu_isUseImm,exu_in_bus_comp_isUseImm;
+  wire [4:0]exu_in_bus_rd,exu_in_bus_rs1,exu_in_bus_rs2;
+  wire [31:0]exu_in_bus_rs1_val,exu_in_bus_rs2_val,exu_in_bus_imm,exu_in_bus_instruction,exu_in_bus_pc,exu_in_bus_snpc;
+  wire [9:0]exu_in_bus_alu_op;
+  wire [1:0]exu_in_bus_comp_op,exu_in_bus_perip_mask;
+  wire [2:0]exu_in_bus_opCSR;
+  wire [12:0]exu_in_bus_signals;
+  wire [11:0]exu_in_bus_csrrd;
+
+  ysyx_26010011_EXU EXU_0(
+    .clock(clock),
+    .reset(reset),
+    .flush_valid(exu_flush_valid),
+
+    .exu_in_valid(exu_in_valid),
+    .exu_in_ready(exu_in_ready),
+    .exu_in_bus_a(exu_in_bus_rs1_val),
+    .exu_in_bus_b(exu_in_bus_rs2_val),
+    .exu_in_bus_pc(exu_in_bus_pc),
+    .exu_in_bus_imm(exu_in_bus_imm),
+    .exu_in_bus_alu_op(exu_in_bus_alu_op),
+    .exu_in_bus_comp_op(exu_in_bus_comp_op),
+    .exu_in_bus_opCSR(exu_in_bus_opCSR),
+    .exu_in_bus_isUnSigned(exu_in_bus_isUnSigned),
+    .exu_in_bus_isUsePC(exu_in_bus_isUsePC),//PC+imm
+    .exu_in_bus_alu_isUseImm(exu_in_bus_alu_isUseImm),//imm
+    .exu_in_bus_comp_isUseImm(exu_in_bus_comp_isUseImm),//imm
+
+    .exu_out_valid(exu_out_valid),
+    .exu_out_ready(exu_out_ready),
+    .exu_out_bus_alu_result(exu_out_bus_alu_result),
+    .exu_out_bus_csr_result(exu_out_bus_csr_result),
+    .exu_out_bus_comp_result(exu_out_bus_comp_result)       //暂存CSR目的地址
+);/*verilator public_module*/
   
-  assign dnpc=(isECALL || lsu_access_fault)?csr_mtvec:(isMRET?csr_mepc:EXU_data);
-  assign lsu_addr=EXU_data;
-  assign lsu_wdata=rs2_val;
+  wire exu_out_valid,exu_out_ready,exu_out_bus_comp_result;
+  wire [31:0]exu_out_bus_alu_result,exu_out_bus_csr_result;
+
+  ysyx_26010011_EX_LS_pipeline EX_LS_inst(
+    .clock(clock),
+    .reset(reset),
+    .flush_valid(),
+
+    .exu_out_valid(exu_out_valid),
+    .exu_out_ready(exu_out_ready),
+    .exu_out_bus_alu_result(exu_out_bus_alu_result),
+    .exu_out_bus_csr_result(exu_out_bus_csr_result),
+    .exu_out_bus_comp_result(exu_out_bus_comp_result),
+    .exu_out_bus_lsu_val(exu_in_bus_rs2_val),
+    .exu_out_bus_rd(exu_in_bus_rd),
+    .exu_out_bus_csrrd(exu_in_bus_csrrd),
+    .exu_out_bus_instruction(exu_in_bus_instruction),
+    .exu_out_bus_isEBREAK(exu_in_bus_isEBREAK),
+    .exu_out_bus_isECALL(exu_in_bus_isECALL),
+    .exu_out_bus_isMRET(exu_in_bus_isMRET),
+    .exu_out_bus_isLOAD(exu_in_bus_isLOAD),
+    .exu_out_bus_isSTORE(exu_in_bus_isSTORE),
+    .exu_out_bus_isWGPR(exu_in_bus_isWGPR),
+    .exu_out_bus_isJUMP(exu_in_bus_isJUMP),
+    .exu_out_bus_isWCOMP(exu_in_bus_isWCOMP),
+    .exu_out_bus_isBRANCH(exu_in_bus_isBRANCH),
+    .exu_out_bus_opCSR(exu_in_bus_opCSR),
+    .exu_out_bus_isUnSigned(exu_in_bus_isUnSigned),
+    .exu_out_bus_perip_mask(exu_in_bus_perip_mask),
+    .exu_out_bus_pc(exu_in_bus_pc),
+    .exu_out_bus_snpc(exu_in_bus_snpc),
+
+    .lsu_in_valid(lsu_in_valid),
+    .lsu_in_ready(lsu_in_ready),
+    .lsu_in_bus_alu_result(lsu_in_bus_alu_result),
+    .lsu_in_bus_csr_result(lsu_in_bus_csr_result),
+    .lsu_in_bus_comp_result(lsu_in_bus_comp_result),
+    .lsu_in_bus_lsu_val(lsu_in_bus_wdata),
+    .lsu_in_bus_rd(lsu_in_bus_rd),
+    .lsu_in_bus_csrrd(lsu_in_bus_csrrd),
+    .lsu_in_bus_instruction(lsu_in_bus_instruction),
+    .lsu_in_bus_isEBREAK(lsu_in_bus_isEBREAK),
+    .lsu_in_bus_isECALL(lsu_in_bus_isECALL),
+    .lsu_in_bus_isMRET(lsu_in_bus_isMRET),
+    .lsu_in_bus_isLOAD(lsu_in_bus_isLOAD),
+    .lsu_in_bus_isSTORE(lsu_in_bus_isSTORE),
+    .lsu_in_bus_isWGPR(lsu_in_bus_isWGPR),
+    .lsu_in_bus_isJUMP(lsu_in_bus_isJUMP),
+    .lsu_in_bus_isWCOMP(lsu_in_bus_isWCOMP),
+    .lsu_in_bus_isBRANCH(lsu_in_bus_isBRANCH),
+    .lsu_in_bus_opCSR(lsu_in_bus_opCSR),
+    .lsu_in_bus_isUnSigned(lsu_in_bus_isUnSigned),
+    .lsu_in_bus_perip_mask(lsu_in_bus_perip_mask),
+    .lsu_in_bus_pc(lsu_in_bus_pc),
+    .lsu_in_bus_snpc(lsu_in_bus_snpc)
+  );/*verilator public_module*/
+  wire lsu_in_valid,lsu_in_ready,lsu_in_bus_comp_result,lsu_in_bus_isEBREAK,lsu_in_bus_isECALL,lsu_in_bus_isMRET,lsu_in_bus_isLOAD,lsu_in_bus_isSTORE,lsu_in_bus_isWGPR,lsu_in_bus_isJUMP,lsu_in_bus_isWCOMP,lsu_in_bus_isBRANCH,lsu_in_bus_isUnSigned;
+  wire [31:0]lsu_in_bus_alu_result,lsu_in_bus_wdata,lsu_in_bus_instruction,lsu_in_bus_pc,lsu_in_bus_snpc,lsu_in_bus_csr_result;
+  wire [1:0]lsu_in_bus_perip_mask;
+  wire [4:0]lsu_in_bus_rd;
+  wire [11:0]lsu_in_bus_csrrd;
+  wire [2:0]lsu_in_bus_opCSR;
+
   ysyx_26010011_LSU LSU_0(
     .clock(clock),
     .reset(reset),
-    .lsu_addr(lsu_addr),
-    .lsu_rdata(lsu_rdata),
-    .lsu_wdata(lsu_wdata),
-    .lsu_wen(LSU_WEN),
-    .lsu_reqEN(lsu_reqEN),
-    .lsu_final(lsu_final),
-    .rmask(LSU_rmask),
-    .lsu_wmask(lsu_wmask),
-    .isSigned(isSigned),
-    .bus_valid(bus_valid),
-    .lsu_access_fault(lsu_access_fault),
+    .flush_valid(),
+    .lsu_in_valid(lsu_in_valid),
+    .lsu_in_ready(lsu_in_ready),
+    .lsu_in_bus_addr(lsu_in_bus_alu_result),
+    .lsu_in_bus_wdata(lsu_in_bus_wdata),
+    .lsu_in_bus_perip_mask(lsu_in_bus_perip_mask),
+    .lsu_in_bus_isUnSigned(lsu_in_bus_isUnSigned),
+    .lsu_in_bus_isLOAD(lsu_in_bus_isLOAD),
+    .lsu_in_bus_isSTORE(lsu_in_bus_isSTORE),
+
+    .lsu_out_valid(lsu_out_valid),
+    .lsu_out_ready(lsu_out_ready),
+    .lsu_out_bus_rdata(lsu_out_bus_lsu_result),
 
     .awaddr(DRAM_awaddr),
     .awvalid(DRAM_awvalid),
@@ -261,6 +494,128 @@ module ysyx_26010011(
   wire DRAM_rlast;
   wire [3:0] DRAM_rid;
 
+  wire lsu_out_valid,lsu_out_ready,lsu_out_bus_comp_result;
+  wire [31:0]lsu_out_bus_alu_result,lsu_out_bus_lsu_result;
+  assign lsu_out_bus_alu_result=lsu_in_bus_alu_result;
+  assign lsu_out_bus_comp_result=lsu_in_bus_comp_result;
+  ysyx_26010011_LS_WB_pipeline LS_WB_inst(
+    .clock(clock),
+    .reset(reset),
+    .flush_valid(),
+
+    .lsu_out_valid(lsu_out_valid),
+    .lsu_out_ready(lsu_out_ready),
+    .lsu_out_bus_alu_result(lsu_out_bus_alu_result),
+    .lsu_out_bus_csr_result(lsu_in_bus_csr_result),
+    .lsu_out_bus_comp_result(lsu_in_bus_comp_result),
+    .lsu_out_bus_lsu_result(lsu_out_bus_lsu_result),
+    .lsu_out_bus_rd(lsu_in_bus_rd),
+    .lsu_out_bus_csrrd(lsu_in_bus_csrrd),
+    .lsu_out_bus_instruction(lsu_in_bus_instruction),
+    .lsu_out_bus_isEBREAK(lsu_in_bus_isEBREAK),
+    .lsu_out_bus_isECALL(lsu_in_bus_isECALL),
+    .lsu_out_bus_isMRET(lsu_in_bus_isMRET),
+    .lsu_out_bus_isLOAD(lsu_in_bus_isLOAD),
+    .lsu_out_bus_isSTORE(lsu_in_bus_isSTORE),
+    .lsu_out_bus_isWGPR(lsu_in_bus_isWGPR),
+    .lsu_out_bus_isJUMP(lsu_in_bus_isJUMP),
+    .lsu_out_bus_isWCOMP(lsu_in_bus_isWCOMP),
+    .lsu_out_bus_isBRANCH(lsu_in_bus_isBRANCH),
+    .lsu_out_bus_opCSR(lsu_in_bus_opCSR),
+    .lsu_out_bus_pc(lsu_in_bus_pc),
+    .lsu_out_bus_snpc(lsu_in_bus_snpc),
+
+
+    .wbu_in_valid(wbu_in_valid),
+    .wbu_in_ready(wbu_in_ready),
+    .wbu_in_bus_lsu_result(wbu_in_bus_lsu_result),
+    .wbu_in_bus_alu_result(wbu_in_bus_alu_result),
+    .wbu_in_bus_csr_result(wbu_in_bus_csr_result),
+    .wbu_in_bus_comp_result(wbu_in_bus_comp_result),
+    .wbu_in_bus_rd(wbu_in_bus_rd),
+    .wbu_in_bus_csrrd(wbu_in_bus_csrrd),
+    .wbu_in_bus_instruction(wbu_in_bus_instruction),
+    .wbu_in_bus_isEBREAK(wbu_in_bus_isEBREAK),
+    .wbu_in_bus_isECALL(wbu_in_bus_isECALL),
+    .wbu_in_bus_isMRET(wbu_in_bus_isMRET),
+    .wbu_in_bus_isLOAD(wbu_in_bus_isLOAD),
+    .wbu_in_bus_isSTORE(wbu_in_bus_isSTORE),
+    .wbu_in_bus_isWGPR(wbu_in_bus_isWGPR),
+    .wbu_in_bus_isJUMP(wbu_in_bus_isJUMP),
+    .wbu_in_bus_isWCOMP(wbu_in_bus_isWCOMP),
+    .wbu_in_bus_isBRANCH(wbu_in_bus_isBRANCH),
+    .wbu_in_bus_opCSR(wbu_in_bus_opCSR),
+    .wbu_in_bus_pc(wbu_in_bus_pc),
+    .wbu_in_bus_snpc(wbu_in_bus_snpc)
+  );/*verilator public_module*/
+
+  wire wbu_in_valid,wbu_in_ready,wbu_in_bus_isLOAD,wbu_in_bus_isSTORE,wbu_in_bus_isWGPR,wbu_in_bus_isJUMP,wbu_in_bus_isWCOMP,wbu_in_bus_isBRANCH;
+  wire wbu_in_bus_isECALL,wbu_in_bus_isMRET,wbu_in_bus_isEBREAK;
+  wire [31:0]wbu_in_bus_pc,wbu_in_bus_snpc,wbu_in_bus_instruction;
+  wire [31:0]wbu_in_bus_lsu_result,wbu_in_bus_alu_result,wbu_in_bus_csr_result;
+  wire wbu_in_bus_comp_result;
+  wire [11:0]wbu_in_bus_csrrd;
+  wire [2:0]wbu_in_bus_opCSR;
+  wire [4:0]wbu_in_bus_rd;
+
+  ysyx_26010011_WBU WBU_0(
+    .clock(clock),
+    .reset(reset),
+    .flush_valid(),
+
+    .wbu_in_valid(wbu_in_valid),
+    .wbu_in_ready(wbu_in_ready),
+    .wbu_in_bus_pc(wbu_in_bus_pc),
+    .wbu_in_bus_instruction(wbu_in_bus_instruction),
+    .wbu_in_bus_lsu_result(wbu_in_bus_lsu_result),
+    .wbu_in_bus_alu_result(wbu_in_bus_alu_result),
+    .wbu_in_bus_csr_result(wbu_in_bus_csr_result),
+    .wbu_in_bus_comp_result(wbu_in_bus_comp_result),
+    .wbu_in_bus_snpc(wbu_in_bus_snpc),
+    .wbu_in_bus_rd(wbu_in_bus_rd),
+    .wbu_in_bus_csrrd(wbu_in_bus_csrrd),
+    .wbu_in_bus_isLOAD(wbu_in_bus_isLOAD),
+    .wbu_in_bus_isSTORE(wbu_in_bus_isSTORE),
+    .wbu_in_bus_isWGPR(wbu_in_bus_isWGPR),
+    .wbu_in_bus_isJUMP(wbu_in_bus_isJUMP),
+    .wbu_in_bus_isWCOMP(wbu_in_bus_isWCOMP),
+    .wbu_in_bus_opCSR(wbu_in_bus_opCSR),
+    .gpr_we(gpr_we),
+    .gpr_wdata(gpr_wdata),
+    .gpr_address(gpr_waddr),
+    .csr_we(csr_we),
+    .csr_wdata(csr_wdata),
+    .csr_address(csr_waddr)
+  );/*verilator public_module*/
+  //WBU FINAL
+  reg tb_isFINAL/*verilator public*/,tb_dnpc_valid/*verilator public*/,tb_isMEM/*verilator public*/;
+  reg [31:0]tb_FINAL_pc/*verilator public*/,tb_FINAL_npc/*verilator public*/,tb_alu_result/*verilator public*/,tb_FINAL_inst/*verilator public*/;
+  always @(posedge clock,posedge reset) begin
+    if(reset) begin
+      tb_isFINAL<=0;
+      tb_FINAL_pc<=0;
+      tb_FINAL_npc<=0;
+      tb_dnpc_valid<=0;
+      tb_isMEM<=0;
+      tb_FINAL_inst<=0;
+    end else if(wbu_in_valid) begin
+      tb_isFINAL<=1;
+      tb_FINAL_pc<=wbu_in_bus_pc;
+      tb_FINAL_npc<=(wbu_in_bus_isJUMP | (wbu_in_bus_isBRANCH&wbu_in_bus_comp_result)) ? wbu_in_bus_alu_result : ((wbu_in_bus_isECALL|wbu_in_bus_isMRET)?wbu_in_bus_csr_result:wbu_in_bus_snpc);
+      tb_dnpc_valid<=(wbu_in_bus_isJUMP | (wbu_in_bus_isBRANCH&wbu_in_bus_comp_result) | (wbu_in_bus_isECALL|wbu_in_bus_isMRET));
+      tb_isMEM<=(wbu_in_bus_isLOAD | wbu_in_bus_isSTORE)&wbu_in_valid;
+      tb_FINAL_inst<=wbu_in_bus_instruction;
+    end else begin
+      tb_isFINAL<=0;
+      tb_FINAL_pc<=tb_FINAL_pc;
+      tb_FINAL_npc<=tb_FINAL_npc;
+      tb_dnpc_valid<=0;
+      tb_isMEM<=0;
+      tb_FINAL_inst<=tb_FINAL_inst;
+    end
+
+  end
+  
 
   ysyx_26010011_AXI4LiteArbiter RAM_AXI4LiteArbiter(
     .clock(clock),
@@ -314,7 +669,44 @@ module ysyx_26010011(
     .S_rdata(io_master_rdata),    .S_rresp(io_master_rresp),      .S_rvalid(io_master_rvalid),    .S_rready(io_master_rready),
     .S_rlast(io_master_rlast),    .S_rid(io_master_rid)
   );
-  always @(posedge clock) begin
-    if(isEBREAK)  ebreak();
-  end
+  wire [4:0] gpr_raddra,gpr_raddrb,gpr_waddr;
+  wire [31:0]gpr_rdataa,gpr_rdatab,gpr_wdata,csr_mtvec,csr_mepc,csr_pc;
+  wire gpr_we;
+  ysyx_26010011_GPRs GPR_0(
+    .clock(clock),
+    .reset(reset),
+    .gpr_in_addra(gpr_raddra),
+    .gpr_in_addrb(gpr_raddrb),
+    .gpr_out_a(gpr_rdataa),
+    .gpr_out_b(gpr_rdatab),
+    .gpr_in_addw(gpr_waddr),
+    .gpr_in_data(gpr_wdata),
+    .gpr_in_wen(gpr_we)
+  );/*verilator public_module*/
+
+  wire [11:0]csr_waddr;
+  wire [31:0]csr_wdata,csr_rdata;
+  wire csr_we,csr_isECALL;
+  assign csr_pc = wbu_in_bus_pc;
+  assign csr_isECALL = wbu_in_bus_isECALL;
+  // assign csr_isMRET  = wbu_in_bus_isMRET;
+  ysyx_26010011_CSRs CSR_0(
+    .clock(clock),
+    .reset(reset),
+    .csr_in_addr(idu_out_bus_csrrd),
+    .csr_out_data(csr_rdata),
+
+    .csr_in_data(csr_wdata),
+    .csr_in_wen(csr_we),
+    .csr_in_addw(csr_waddr),
+    
+    .csr_pc(csr_pc),
+    .csr_mtvec(csr_mtvec),
+    .csr_mepc(csr_mepc),
+    .csr_isECALL(csr_isECALL)
+    // .csr_isMRET(csr_isMRET)
+  );/*verilator public_module*/
+  // always @(posedge clock) begin
+  //   if(isEBREAK)  ebreak();
+  // end
 endmodule

@@ -61,9 +61,9 @@ static bool checkregs(CPUState *ref, uint32_t pc, uint32_t npc) {
 			success = false;
 		}
   	}
-  	if(ref->pc != npc) {
+  	if(ref->tb_FINAL_npc != npc) {
     	//printf("===%08x===%08x===\n",ref_r->pc,pc);
-    	Log("%s DUT:%08x REF:%08x at pc:%08x",ANSI_FMT("Different NEXT PC!", ANSI_FG_RED),npc,ref->pc,pc);
+    	Log("%s DUT:%08x REF:%08x at pc:%08x",ANSI_FMT("Different NEXT PC!", ANSI_FG_RED),npc,ref->tb_FINAL_npc,pc);
     	success = false;
   	}	
 	return success;
@@ -78,7 +78,7 @@ void difftest_step(uint32_t pc, uint32_t npc, uint32_t mem_addr) {;
 		return;
 	}
 	ref_difftest_exec(1);
-	ref_difftest_regcpy(ref.gpr, &ref.pc, DIFFTEST_TO_DUT);
+	ref_difftest_regcpy(ref.gpr, &ref.tb_FINAL_npc, DIFFTEST_TO_DUT);
 	bool success = checkregs(&ref, pc, npc);
 	uint32_t ref_mem_s;
 	ref_difftest_memcpy((0x20000048&~0x03), (void *)&ref_mem_s, 4, DIFFTEST_TO_DUT);

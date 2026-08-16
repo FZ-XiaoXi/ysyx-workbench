@@ -69,10 +69,10 @@ module ysyx_26010011_AXI4LiteArbiter(
         R_master_sel_next=R_master_sel;
         case(R_state)
             R_IDLE:begin
-                if(M1_arvalid) begin
+                if(M1_arvalid & S_arready) begin
                     R_next_state = R_BUSY;
                     R_master_sel_next = 0;
-                end else if(M2_arvalid) begin
+                end else if(M2_arvalid & S_arready) begin
                     R_next_state = R_BUSY;
                     R_master_sel_next = 1;
                 end else begin
