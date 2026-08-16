@@ -3,18 +3,20 @@ import "DPI-C" function void difftest_mem_set(int addr);
 module ysyx_26010011_LSU(
     input             clock,
     input             reset,
+    input             flush_valid,
     // CPU 流水线接口
-    input [31:0]      lsu_addr/*verilator public*/,
-    output reg [31:0] lsu_rdata,
-    input [31:0]      lsu_wdata/*verilator public*/,
-    input             lsu_wen/*verilator public*/,
-    input             lsu_reqEN/*verilator public*/,
-    output            lsu_final,
-    input [3:0]       rmask,
-    input [3:0]       lsu_wmask/*verilator public*/,
-    input             isSigned,
-    input             bus_valid,
-    output            lsu_access_fault,
+    input            lsu_in_valid,
+    output           lsu_in_ready,
+    input      [31:0]lsu_in_bus_addr,
+    input      [31:0]lsu_in_bus_wdata,
+    input      [ 1:0]lsu_in_bus_perip_mask,
+    input            lsu_in_bus_isUnSigned,
+    input            lsu_in_bus_isLOAD,
+    input            lsu_in_bus_isSTORE,
+
+    output           lsu_out_valid,
+    input            lsu_out_ready,
+    output reg [31:0]lsu_out_bus_rdata,
     
     // AXI4 写地址通道
     output [31:0]     awaddr,
@@ -53,7 +55,7 @@ module ysyx_26010011_LSU(
     input  [3:0]      rid
 );
 
-    assign lsu_access_fault = (rvalid && (rresp==2'b10 || rresp==2'b11)) || (bvalid && (bresp==2'b10 || bresp==2'b11));
+    // assign lsu_access_fault = (rvalid && (rresp==2'b10 || rresp==2'b11)) || (bvalid && (bresp==2'b10 || bresp==2'b11));
 
     localparam S_IDLE        = 3'd0;
     localparam S_WAIT_AW_W   = 3'd1; // 等待写地址与写数据握手
@@ -83,10 +85,10 @@ module ysyx_26010011_LSU(
     assign wstrb   = wstrb_q;
     assign wlast   = 1'b1;    // single beat
 
-    reg [31:0] awaddr_q;
-    reg [31:0] wdata_q;
-    reg [2:0] awsize_q;
-    reg [3:0]wstrb_q;
+    reg [31:0]  awaddr_q;
+    reg [31:0]  wdata_q;
+    reg [2:0]   awsize_q;
+    reg [3:0]   wstrb_q;
     always @(posedge clock) begin
         if(reset) begin
             awaddr_q <= 32'b0;
@@ -95,41 +97,44 @@ module ysyx_26010011_LSU(
             wstrb_q  <= 4'b0;
         end else begin
             if(next_state == S_WAIT_BRESP || next_state == S_WAIT_AW_W) begin
-                awaddr_q <= lsu_addr;
-                wdata_q  <= lsu_wdata << (lsu_addr[1:0] * 8);
-                awsize_q <= (lsu_wmask == 4'b0001) ? 3'b000 :
-                            (lsu_wmask == 4'b0011) ? 3'b001 : 3'b010;
-                wstrb_q  <= lsu_wmask << lsu_addr[1:0];
+                awaddr_q <= lsu_in_bus_addr;
+                wdata_q  <= lsu_in_bus_wdata << (lsu_in_bus_addr[1:0] * 8);
+                awsize_q <= (lsu_in_bus_perip_mask == 2'b00) ? 3'b000 :
+                            (lsu_in_bus_perip_mask == 2'b01) ? 3'b001 : 3'b010;
+                wstrb_q  <= (
+                            (lsu_in_bus_perip_mask == 2'b00) ? 4'b0001 :
+                            (lsu_in_bus_perip_mask == 2'b01) ? 4'b0011 : 
+                                                               4'b1111 ) << lsu_in_bus_addr[1:0];
             end
         end
     end
 
-    assign araddr  = lsu_addr;
+    assign araddr  = lsu_in_bus_addr;
     assign arid    = 4'b0;
     assign arlen   = 8'b0;
-    assign arsize  = (rmask == 4'b0001) ? 3'b000 :
-                     (rmask == 4'b0011) ? 3'b001 : 3'b010;
+    assign arsize  = (lsu_in_bus_perip_mask == 2'b00) ? 3'b000 :
+                     (lsu_in_bus_perip_mask == 2'b01) ? 3'b001 : 3'b010;
     assign arbureset = 2'b01;   // INCR
 
     assign awvalid = ((state == S_WAIT_AW_W)) & !reset;
     assign wvalid  = ((state == S_WAIT_AW_W)) & !reset;
-    assign arvalid = ((state == S_IDLE && lsu_reqEN && !lsu_wen) || (state == S_WAIT_AR)) & !reset;
+    assign arvalid = ((state == S_IDLE && lsu_in_valid && lsu_in_bus_isLOAD) || (state == S_WAIT_AR)) & !reset;
 
-    assign bready  = ((state == S_WAIT_BRESP) || (state == S_IDLE)) & !reset;
-    assign rready  = ((state == S_WAIT_RDATA) || (state == S_IDLE)) & !reset;
+    assign bready  = ((state == S_WAIT_BRESP) || (state == S_IDLE)) & lsu_out_ready & !reset;
+    assign rready  = ((state == S_WAIT_RDATA) || (state == S_IDLE)) & lsu_out_ready & !reset;
 
     always @(*) begin
         // if(lsu_wen && lsu_reqEN) begin
         //     difftest_mem_set(lsu_addr);
         // end
-        if(((lsu_wen && lsu_reqEN)||(arvalid && lsu_reqEN)) && !(
-                (awaddr >= 32'h30000000 && awaddr < 32'h31000000)
-              ||(awaddr >= 32'h0f000000 && awaddr < 32'h0f002000)
-              ||(awaddr >= 32'h80000000 && awaddr < 32'h80400000)
-              ||(awaddr >= 32'ha0000000 && awaddr < 32'ha8000000)
-              ||(awaddr >= 32'h20000000 && awaddr < 32'h20001000)
-              )) begin
-            // difftest_skip_ref(lsu_addr);
+        if(((lsu_in_bus_isSTORE && lsu_in_valid)||(lsu_in_bus_isLOAD && lsu_in_valid)) && !(
+                (lsu_in_bus_addr >= 32'h30000000 && lsu_in_bus_addr < 32'h31000000)
+              ||(lsu_in_bus_addr >= 32'h0f000000 && lsu_in_bus_addr < 32'h0f002000)
+              ||(lsu_in_bus_addr >= 32'h80000000 && lsu_in_bus_addr < 32'h80400000)
+              ||(lsu_in_bus_addr >= 32'ha0000000 && lsu_in_bus_addr < 32'ha8000000)
+              ||(lsu_in_bus_addr >= 32'h20000000 && lsu_in_bus_addr < 32'h20001000)
+        )) begin
+            difftest_skip_ref(lsu_in_bus_addr);
         end
     end
 
@@ -137,13 +142,15 @@ module ysyx_26010011_LSU(
         next_state = state;
         case(state)
             S_IDLE: begin
-                if (lsu_reqEN) begin
-                    if (lsu_wen) begin
+                if (lsu_in_valid) begin
+                    if (lsu_in_bus_isSTORE) begin
                         if (aw_fire && w_fire) next_state = S_WAIT_BRESP;
                         else                   next_state = S_WAIT_AW_W;
-                    end else begin
+                    end else if(lsu_in_bus_isLOAD)begin
                         if (ar_fire) next_state = S_WAIT_RDATA;
                         else         next_state = S_WAIT_AR;
+                    end else begin
+                        next_state = S_IDLE;
                     end
                 end
             end
@@ -177,9 +184,10 @@ module ysyx_26010011_LSU(
         else     state <= next_state;
     end
 
-    assign lsu_final = (state == S_WAIT_RDATA && r_fire) || 
-                       (state == S_WAIT_BRESP && b_fire);
-
+    assign lsu_out_valid =  lsu_in_valid & 
+                            ((state == S_WAIT_RDATA && r_fire) || 
+                             (state == S_WAIT_BRESP && b_fire) || !(lsu_in_bus_isLOAD || lsu_in_bus_isSTORE));
+    assign lsu_in_ready = (lsu_in_valid & (lsu_in_bus_isLOAD | lsu_in_bus_isSTORE)) ? (lsu_out_ready & (r_fire | b_fire)):(1);
 
     wire [31:0] val0 = rdata; 
     wire [31:0] val1 = {{8{val0[31]}}, val0[31:8]};
@@ -189,7 +197,7 @@ module ysyx_26010011_LSU(
     reg[31:0]val;
     // assign val = val0;
     always @(*) begin
-        case(lsu_addr[1:0])
+        case(lsu_in_bus_addr[1:0])
             2'b00: val = val0;
             2'b01: val = val1;
             2'b10: val = val2;
@@ -198,18 +206,20 @@ module ysyx_26010011_LSU(
         endcase
     end
 
-    wire [31:0] lsu_rdata1 = (isSigned) ? {{24{val[7]}},  val[7:0]}  : {{24{1'b0}}, val[7:0]};
-    wire [31:0] lsu_rdata2 = (isSigned) ? {{16{val[15]}}, val[15:0]} : {{16{1'b0}}, val[15:0]};
+    wire [31:0] lsu_rdata1 = (!lsu_in_bus_isUnSigned) ? {{24{val[7]}},  val[7:0]}  : {{24{1'b0}}, val[7:0]};
+    wire [31:0] lsu_rdata2 = (!lsu_in_bus_isUnSigned) ? {{16{val[15]}}, val[15:0]} : {{16{1'b0}}, val[15:0]};
     wire [31:0] lsu_rdata4 = val[31:0];
     
     always @(*) begin
-        case(rmask)
-            4'b0001: lsu_rdata = lsu_rdata1;
-            4'b0011: lsu_rdata = lsu_rdata2;
-            4'b0111: lsu_rdata = 32'hffffffff;
-            4'b1111: lsu_rdata = lsu_rdata4;
-            default: lsu_rdata = 32'hffffffff;
+        case(lsu_in_bus_perip_mask)
+            2'b00: lsu_out_bus_rdata = lsu_rdata1;
+            2'b01: lsu_out_bus_rdata = lsu_rdata2;
+            2'b10: lsu_out_bus_rdata = lsu_rdata4;
+            default: lsu_out_bus_rdata = 32'hffffffff;
         endcase
     end
-
+    wire debug_LSU_LOADING/*verilator public*/ = (state!=S_IDLE)&lsu_in_bus_isLOAD&lsu_in_valid;
+    wire debug_LSU_WRITING/*verilator public*/ = (state!=S_IDLE)&lsu_in_bus_isSTORE&lsu_in_valid;
+    wire debug_LSU_WRITE_FINAL/*verilator public*/ = lsu_out_ready&lsu_out_valid&lsu_in_bus_isSTORE&lsu_in_valid;
+    wire debug_LSU_LOAD_FINAL/*verilator public*/ = lsu_out_ready&lsu_out_valid&lsu_in_bus_isLOAD&lsu_in_valid;
 endmodule

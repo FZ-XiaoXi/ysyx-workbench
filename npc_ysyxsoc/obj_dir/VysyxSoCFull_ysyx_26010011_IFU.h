@@ -6,24 +6,23 @@
 #define VERILATED_VYSYXSOCFULL_YSYX_26010011_IFU_H_  // guard
 
 #include "verilated.h"
+class VysyxSoCFull_ysyx_26010011_IFU_icache;
 
 
 class VysyxSoCFull__Syms;
 
 class alignas(VL_CACHE_LINE_BYTES) VysyxSoCFull_ysyx_26010011_IFU final : public VerilatedModule {
   public:
+    // CELLS
+    VysyxSoCFull_ysyx_26010011_IFU_icache* icache_u0;
 
     // DESIGN SPECIFIC STATE
     VL_IN8(__PVT__clock,0,0);
     VL_IN8(__PVT__reset,0,0);
-    VL_IN8(__PVT__flush_icache,0,0);
-    VL_IN8(__PVT__isJUMP,0,0);
-    VL_IN8(__PVT__isBRANCH,0,0);
-    VL_IN8(__PVT__isECALL,0,0);
-    VL_IN8(__PVT__isMRET,0,0);
-    VL_IN8(__PVT__wbu_final,0,0);
-    VL_OUT8(bus_valid,0,0);
-    VL_IN8(__PVT__lsu_access_fault,0,0);
+    VL_IN8(__PVT__flush_valid,0,0);
+    VL_IN8(__PVT__dnpc_valid,0,0);
+    VL_OUT8(ifu_out_valid,0,0);
+    VL_IN8(ifu_out_ready,0,0);
     VL_OUT8(__PVT__arvalid,0,0);
     VL_IN8(__PVT__arready,0,0);
     VL_OUT8(__PVT__arid,3,0);
@@ -35,30 +34,22 @@ class alignas(VL_CACHE_LINE_BYTES) VysyxSoCFull_ysyx_26010011_IFU final : public
     VL_OUT8(__PVT__rready,0,0);
     VL_IN8(__PVT__rlast,0,0);
     VL_IN8(__PVT__rid,3,0);
-    CData/*0:0*/ debug_is_hit;
-    CData/*1:0*/ state;
-    CData/*1:0*/ __PVT__next_state;
-    CData/*0:0*/ r_fire;
-    CData/*0:0*/ in_reqValid;
-    CData/*1:0*/ __PVT__icache_u0__DOT__state;
-    CData/*1:0*/ __PVT__icache_u0__DOT__next_state;
-    CData/*0:0*/ __PVT__icache_u0__DOT__r_fire;
-    CData/*1:0*/ __PVT__icache_u0__DOT__burst_cnt;
-    CData/*6:0*/ __VdlyLsb__icache_u0__DOT__cache_mem__v0;
-    CData/*2:0*/ __VdlyDim0__icache_u0__DOT__cache_mem__v0;
-    CData/*0:0*/ __VdlySet__icache_u0__DOT__cache_mem__v0;
-    VL_OUT(PC,31,0);
+    CData/*0:0*/ __PVT__ifu_out_valid_r;
+    CData/*0:0*/ __PVT__in_reqValid;
+    CData/*0:0*/ debug_IFU_is_hit;
+    CData/*0:0*/ debug_IFU_is_hit_inst;
+    CData/*0:0*/ debug_IFU_get_inst;
+    CData/*0:0*/ __VdfgRegularize_hb9205a68_0_1;
     VL_IN(__PVT__dnpc,31,0);
-    VL_OUT(__PVT__snpc,31,0);
-    VL_OUT(__PVT__PC_command,31,0);
+    VL_OUT(__PVT__ifu_out_bus_instruction,31,0);
+    VL_OUT(ifu_out_bus_pc,31,0);
+    VL_OUT(__PVT__ifu_out_bus_snpc,31,0);
     VL_OUT(__PVT__araddr,31,0);
     VL_IN(rdata,31,0);
-    IData/*31:0*/ __PVT__icache_u0__DOT__unnamedblk1__DOT__i;
-    IData/*31:0*/ __Vdly__PC;
-    IData/*31:0*/ __VdlyVal__icache_u0__DOT__cache_mem__v0;
-    VlUnpacked<VlWide<4>/*127:0*/, 8> __PVT__icache_u0__DOT__cache_mem;
-    VlUnpacked<CData/*0:0*/, 8> __PVT__icache_u0__DOT__cache_valid;
-    VlUnpacked<IData/*24:0*/, 8> __PVT__icache_u0__DOT__cache_tag;
+    IData/*31:0*/ __PVT__ifu_out_bus_instruction_r;
+    IData/*31:0*/ __PVT__ifu_out_bus_pc_r;
+    IData/*31:0*/ __PVT__ifu_out_bus_snpc_r;
+    IData/*31:0*/ PC;
 
     // INTERNAL VARIABLES
     VysyxSoCFull__Syms* const vlSymsp;

@@ -54,9 +54,10 @@ void print_ring_inst_buf(){
 
 void device_update();
 
+
+#ifdef CONFIG_TRACE_FILE_LOG
 static bool itrace_log_init = false;
 FILE *itrace_log_fp = NULL;
-#ifdef CONFIG_TRACE_FILE_LOG
 void init_itrace_log(){
     if (itrace_log_fp == NULL) {
       FILE *fp = fopen("itrace.log", "w");

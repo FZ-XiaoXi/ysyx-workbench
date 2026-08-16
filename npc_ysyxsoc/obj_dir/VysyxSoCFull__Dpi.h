@@ -20,8 +20,6 @@ extern "C" {
     extern void difftest_mem_set(int addr);
     // DPI import at vsrc/ysyx_26010011_REG.v:1:30
     extern void difftest_skip_ref(int reason);
-    // DPI import at vsrc/ysyx_26010011.v:1:30
-    extern void ebreak();
     // DPI import at /home/seaber/ysyx-workbench/npc_ysyxsoc/../ysyxSoC/perip/flash/flash.v:87:30
     extern void flash_read(int addr, int* data);
     // DPI import at /home/seaber/ysyx-workbench/npc_ysyxsoc/../ysyxSoC/build/ysyxSoCFull.v:7143:30
