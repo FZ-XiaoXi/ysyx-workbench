@@ -3,6 +3,8 @@
 #include <cstdint>
 
 
+#define CPUTop top->ysyxSoCFull->asic->cpu->cpu
+#define CPUSRAMTop top->ysyxSoCFull->asic->axi4ram->mem_ext->Memory
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -14,8 +16,8 @@
 #include "VysyxSoCFull.h"
 #include "VysyxSoCFull_ysyxSoCFull.h"
 #include "VysyxSoCFull_ysyxSoCASIC.h"
-// #include "VysyxSoCFull_AXI4RAM.h"
-// #include "VysyxSoCFull_mem_2048x32.h"
+#include "VysyxSoCFull_AXI4RAM.h"
+#include "VysyxSoCFull_mem_2048x32.h"
 #include "VysyxSoCFull_APBUart16550.h"
 #include "VysyxSoCFull_uart_top_apb.h"
 #include "VysyxSoCFull_uart_regs.h"
@@ -79,7 +81,7 @@ extern FILE* log_fp;
 
 // #define CONFIG_DIFFTEST_ENABLE
 #ifdef CONFIG_DIFFTEST_ENABLE
-    // #define CONFIG_DIFFTEST_MEM_ENABLE
+    #define CONFIG_DIFFTEST_MEM_ENABLE
 #endif
 
 // #define CONFIG_WATCHPOINT_ENABLE

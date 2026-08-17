@@ -154,6 +154,7 @@ module ysyx_26010011(
     .ifu_out_bus_instruction(ifu_out_bus_instruction),
     .ifu_out_bus_pc(ifu_out_bus_pc),
     .ifu_out_bus_snpc(ifu_out_bus_snpc),
+    .ifu_out_bus_exception(ifu_out_bus_exception),
 
     .araddr(IROM_araddr),
     .arvalid(IROM_arvalid),
@@ -182,6 +183,7 @@ module ysyx_26010011(
 
   wire ifu_out_valid,ifu_out_ready;
   wire [31:0]ifu_out_bus_instruction,ifu_out_bus_pc,ifu_out_bus_snpc;
+  wire [4:0]ifu_out_bus_exception;
 
   ysyx_26010011_IF_ID_pipeline IF_ID_inst(
     .clock(clock),
@@ -193,28 +195,33 @@ module ysyx_26010011(
     .ifu_out_bus_instruction(ifu_out_bus_instruction),
     .ifu_out_bus_pc(ifu_out_bus_pc),
     .ifu_out_bus_snpc(ifu_out_bus_snpc),
+    .ifu_out_bus_exception(ifu_out_bus_exception),
 
     .idu_in_valid(idu_in_valid),
     .idu_in_ready(idu_in_ready),
     .idu_in_bus_instruction(idu_in_bus_instruction),
+    .idu_in_bus_exception(idu_in_bus_exception),
     .idu_in_bus_pc(idu_in_bus_pc),
     .idu_in_bus_snpc(idu_in_bus_snpc)
   );/*verilator public_module*/
   //
   wire idu_in_valid,idu_in_ready;
   wire [31:0]idu_in_bus_instruction,idu_in_bus_pc,idu_in_bus_snpc;
+  wire [4:0]idu_in_bus_exception;
 
   ysyx_26010011_IDU IDU_0(
     .clock(clock),
     .reset(reset),
     .idu_isRAW(idu_isRAW),
     .idu_in_bus_instruction(idu_in_bus_instruction),
+    .idu_in_bus_exception(idu_in_bus_exception),
     .idu_in_valid(idu_in_valid),
     .idu_in_ready(idu_in_ready),
 
     .idu_out_valid(idu_out_valid),
     .idu_out_ready(idu_out_ready),
     .idu_out_bus_rd(idu_out_bus_rd),
+    .idu_out_bus_exception(idu_out_bus_exception),
     .idu_out_bus_csrrd(idu_out_bus_csrrd),  //CSR地址
     .idu_out_bus_rs1(gpr_raddra),
     .idu_out_bus_rs2(gpr_raddrb),
@@ -247,14 +254,14 @@ module ysyx_26010011(
   wire [ 9:0]idu_out_bus_alu_op;
   wire [ 1:0]idu_out_bus_comp_op,idu_out_bus_perip_mask;
   wire [ 2:0]idu_out_bus_opCSR;
-  wire [4:0]idu_out_bus_rd;
+  wire [4:0]idu_out_bus_rd,idu_out_bus_exception;
 
 
   ysyx_26010011_ID_EX_pipeline ID_EX_inst(
     .clock(clock),
     .reset(reset),
     .flush_valid(exu_flush_valid),
-
+    .idu_out_bus_exception(idu_out_bus_exception),
     .idu_out_valid(idu_out_valid),
     .idu_out_ready(idu_out_ready),
     .idu_out_bus_rd(idu_out_bus_rd),
@@ -305,6 +312,7 @@ module ysyx_26010011(
     .idu_out_bus_snpc(idu_in_bus_snpc),
 
     .exu_in_valid(exu_in_valid),
+    .exu_in_bus_exception(exu_in_bus_exception),
     .exu_in_ready(exu_in_ready),
     .exu_in_bus_rd(exu_in_bus_rd),
     .exu_in_bus_csrrd(exu_in_bus_csrrd),
@@ -338,6 +346,7 @@ module ysyx_26010011(
 
   wire exu_in_valid,exu_in_ready,exu_in_bus_isEBREAK,exu_in_bus_isECALL,exu_in_bus_isMRET,exu_in_bus_isLOAD,exu_in_bus_isSTORE,exu_in_bus_isWGPR,exu_in_bus_isJUMP,exu_in_bus_isWCOMP,exu_in_bus_isBRANCH,exu_in_bus_isUnSigned,exu_in_bus_isUsePC,exu_in_bus_alu_isUseImm,exu_in_bus_comp_isUseImm;
   wire [4:0]exu_in_bus_rd,exu_in_bus_rs1,exu_in_bus_rs2;
+  wire [4:0]exu_in_bus_exception;
   wire [31:0]exu_in_bus_rs1_val,exu_in_bus_rs2_val,exu_in_bus_imm,exu_in_bus_instruction,exu_in_bus_pc,exu_in_bus_snpc;
   wire [9:0]exu_in_bus_alu_op;
   wire [1:0]exu_in_bus_comp_op,exu_in_bus_perip_mask;
@@ -352,6 +361,7 @@ module ysyx_26010011(
 
     .exu_in_valid(exu_in_valid),
     .exu_in_ready(exu_in_ready),
+    .exu_in_bus_exception(exu_in_bus_exception),
     .exu_in_bus_a(exu_in_bus_rs1_val),
     .exu_in_bus_b(exu_in_bus_rs2_val),
     .exu_in_bus_pc(exu_in_bus_pc),
@@ -365,6 +375,7 @@ module ysyx_26010011(
     .exu_in_bus_comp_isUseImm(exu_in_bus_comp_isUseImm),//imm
 
     .exu_out_valid(exu_out_valid),
+    .exu_out_bus_exception(exu_out_bus_exception),
     .exu_out_ready(exu_out_ready),
     .exu_out_bus_alu_result(exu_out_bus_alu_result),
     .exu_out_bus_csr_result(exu_out_bus_csr_result),
@@ -372,6 +383,7 @@ module ysyx_26010011(
 );/*verilator public_module*/
   
   wire exu_out_valid,exu_out_ready,exu_out_bus_comp_result;
+  wire [4:0]exu_out_bus_exception;
   wire [31:0]exu_out_bus_alu_result,exu_out_bus_csr_result;
 
   ysyx_26010011_EX_LS_pipeline EX_LS_inst(
@@ -386,6 +398,7 @@ module ysyx_26010011(
     .exu_out_bus_comp_result(exu_out_bus_comp_result),
     .exu_out_bus_lsu_val(exu_in_bus_rs2_val),
     .exu_out_bus_rd(exu_in_bus_rd),
+    .exu_out_bus_exception(exu_out_bus_exception),
     .exu_out_bus_csrrd(exu_in_bus_csrrd),
     .exu_out_bus_instruction(exu_in_bus_instruction),
     .exu_out_bus_isEBREAK(exu_in_bus_isEBREAK),
@@ -404,6 +417,7 @@ module ysyx_26010011(
     .exu_out_bus_snpc(exu_in_bus_snpc),
 
     .lsu_in_valid(lsu_in_valid),
+    .lsu_in_bus_exception(lsu_in_bus_exception),
     .lsu_in_ready(lsu_in_ready),
     .lsu_in_bus_alu_result(lsu_in_bus_alu_result),
     .lsu_in_bus_csr_result(lsu_in_bus_csr_result),
@@ -431,6 +445,7 @@ module ysyx_26010011(
   wire [31:0]lsu_in_bus_alu_result,lsu_in_bus_wdata,lsu_in_bus_instruction,lsu_in_bus_pc,lsu_in_bus_snpc,lsu_in_bus_csr_result;
   wire [1:0]lsu_in_bus_perip_mask;
   wire [4:0]lsu_in_bus_rd;
+  wire [4:0]lsu_in_bus_exception;
   wire [11:0]lsu_in_bus_csrrd;
   wire [2:0]lsu_in_bus_opCSR;
 
@@ -440,6 +455,7 @@ module ysyx_26010011(
     .flush_valid(),
     .lsu_in_valid(lsu_in_valid),
     .lsu_in_ready(lsu_in_ready),
+    .lsu_in_bus_exception(lsu_in_bus_exception),
     .lsu_in_bus_addr(lsu_in_bus_alu_result),
     .lsu_in_bus_wdata(lsu_in_bus_wdata),
     .lsu_in_bus_perip_mask(lsu_in_bus_perip_mask),
@@ -448,6 +464,7 @@ module ysyx_26010011(
     .lsu_in_bus_isSTORE(lsu_in_bus_isSTORE),
 
     .lsu_out_valid(lsu_out_valid),
+    .lsu_out_bus_exception(lsu_out_bus_exception),
     .lsu_out_ready(lsu_out_ready),
     .lsu_out_bus_rdata(lsu_out_bus_lsu_result),
 
@@ -495,6 +512,7 @@ module ysyx_26010011(
   wire [3:0] DRAM_rid;
 
   wire lsu_out_valid,lsu_out_ready,lsu_out_bus_comp_result;
+  wire [4:0]lsu_out_bus_exception;
   wire [31:0]lsu_out_bus_alu_result,lsu_out_bus_lsu_result;
   assign lsu_out_bus_alu_result=lsu_in_bus_alu_result;
   assign lsu_out_bus_comp_result=lsu_in_bus_comp_result;
@@ -510,6 +528,7 @@ module ysyx_26010011(
     .lsu_out_bus_comp_result(lsu_in_bus_comp_result),
     .lsu_out_bus_lsu_result(lsu_out_bus_lsu_result),
     .lsu_out_bus_rd(lsu_in_bus_rd),
+    .lsu_out_bus_exception(lsu_out_bus_exception),
     .lsu_out_bus_csrrd(lsu_in_bus_csrrd),
     .lsu_out_bus_instruction(lsu_in_bus_instruction),
     .lsu_out_bus_isEBREAK(lsu_in_bus_isEBREAK),
@@ -533,6 +552,7 @@ module ysyx_26010011(
     .wbu_in_bus_csr_result(wbu_in_bus_csr_result),
     .wbu_in_bus_comp_result(wbu_in_bus_comp_result),
     .wbu_in_bus_rd(wbu_in_bus_rd),
+    .wbu_in_bus_exception(wbu_in_bus_exception),
     .wbu_in_bus_csrrd(wbu_in_bus_csrrd),
     .wbu_in_bus_instruction(wbu_in_bus_instruction),
     .wbu_in_bus_isEBREAK(wbu_in_bus_isEBREAK),
@@ -557,6 +577,7 @@ module ysyx_26010011(
   wire [11:0]wbu_in_bus_csrrd;
   wire [2:0]wbu_in_bus_opCSR;
   wire [4:0]wbu_in_bus_rd;
+  wire [4:0]wbu_in_bus_exception;
 
   ysyx_26010011_WBU WBU_0(
     .clock(clock),
@@ -580,6 +601,7 @@ module ysyx_26010011(
     .wbu_in_bus_isJUMP(wbu_in_bus_isJUMP),
     .wbu_in_bus_isWCOMP(wbu_in_bus_isWCOMP),
     .wbu_in_bus_opCSR(wbu_in_bus_opCSR),
+    .wbu_in_bus_exception(wbu_in_bus_exception),
     .gpr_we(gpr_we),
     .gpr_wdata(gpr_wdata),
     .gpr_address(gpr_waddr),

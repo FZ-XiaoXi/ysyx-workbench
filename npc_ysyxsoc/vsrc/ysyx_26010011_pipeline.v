@@ -9,12 +9,14 @@ module ysyx_26010011_IF_ID_pipeline(
     input      [31:0]ifu_out_bus_instruction,
     input      [31:0]ifu_out_bus_pc,
     input      [31:0]ifu_out_bus_snpc,
+    input      [ 4:0]ifu_out_bus_exception,
 
     output reg       idu_in_valid/*verilator public*/,
     input            idu_in_ready,
     output reg [31:0]idu_in_bus_instruction,
     output reg [31:0]idu_in_bus_pc/*verilator public*/,
-    output reg [31:0]idu_in_bus_snpc
+    output reg [31:0]idu_in_bus_snpc,
+    output reg [ 4:0]idu_in_bus_exception
 );
     assign ifu_out_ready = idu_in_ready | !idu_in_valid;
     always @(posedge clock, posedge reset)begin
@@ -23,21 +25,25 @@ module ysyx_26010011_IF_ID_pipeline(
             idu_in_bus_instruction <= 0;
             idu_in_bus_pc <= 0;
             idu_in_bus_snpc <= 0;
+            idu_in_bus_exception <= 0;
         end else if(flush_valid)begin
             idu_in_valid <= 0;///////////////////////
             idu_in_bus_instruction <= 0;
             idu_in_bus_pc <= 0;
             idu_in_bus_snpc <= 0;
+            idu_in_bus_exception <= 0;
         end else if(idu_in_ready | !idu_in_valid)begin
             idu_in_valid <= ifu_out_valid;
             idu_in_bus_instruction <= ifu_out_bus_instruction;
             idu_in_bus_pc <= ifu_out_bus_pc;
             idu_in_bus_snpc <= ifu_out_bus_snpc;
+            idu_in_bus_exception <= ifu_out_bus_exception;
         end else begin
             idu_in_valid <= idu_in_valid;
             idu_in_bus_instruction <= idu_in_bus_instruction;
             idu_in_bus_pc <= idu_in_bus_pc;
             idu_in_bus_snpc <= idu_in_bus_snpc;
+            idu_in_bus_exception <= idu_in_bus_exception;
         end
     end
 endmodule
@@ -50,6 +56,7 @@ module ysyx_26010011_ID_EX_pipeline(
     input            idu_out_valid,
     output           idu_out_ready,
     input      [ 4:0]idu_out_bus_rd,
+    input      [ 4:0]idu_out_bus_exception,
     input      [11:0]idu_out_bus_csrrd,
     input      [ 4:0]idu_out_bus_rs1,
     input      [ 4:0]idu_out_bus_rs2,
@@ -80,6 +87,7 @@ module ysyx_26010011_ID_EX_pipeline(
     output reg       exu_in_valid/*verilator public*/,
     input            exu_in_ready,
     output reg [ 4:0]exu_in_bus_rd,
+    output reg [ 4:0]exu_in_bus_exception,
     output reg [11:0]exu_in_bus_csrrd,
     output reg [ 4:0]exu_in_bus_rs1,
     output reg [ 4:0]exu_in_bus_rs2,
@@ -112,6 +120,7 @@ module ysyx_26010011_ID_EX_pipeline(
         if(reset) begin
             exu_in_valid<=0;
             exu_in_bus_rd<=0;
+            exu_in_bus_exception<=0;
             exu_in_bus_csrrd<=0;
             exu_in_bus_rs1<=0;
             exu_in_bus_rs2<=0;
@@ -141,6 +150,7 @@ module ysyx_26010011_ID_EX_pipeline(
         end else if(flush_valid) begin
             exu_in_valid<=0;
             exu_in_bus_rd<=0;
+            exu_in_bus_exception<=0;
             exu_in_bus_csrrd<=0;
             exu_in_bus_rs1<=0;
             exu_in_bus_rs2<=0;
@@ -170,6 +180,7 @@ module ysyx_26010011_ID_EX_pipeline(
         end else if(exu_in_ready | !exu_in_valid) begin
             exu_in_valid<=idu_out_valid;
             exu_in_bus_rd<=idu_out_bus_rd;
+            exu_in_bus_exception<=idu_out_bus_exception;
             exu_in_bus_csrrd<=idu_out_bus_csrrd;
             exu_in_bus_rs1<=idu_out_bus_rs1;
             exu_in_bus_rs2<=idu_out_bus_rs2;
@@ -199,6 +210,7 @@ module ysyx_26010011_ID_EX_pipeline(
         end else begin
             exu_in_valid<=exu_in_valid;
             exu_in_bus_rd<=exu_in_bus_rd;
+            exu_in_bus_exception<=exu_in_bus_exception;
             exu_in_bus_csrrd<=exu_in_bus_csrrd;
             exu_in_bus_rs1<=exu_in_bus_rs1;
             exu_in_bus_rs2<=exu_in_bus_rs2;
@@ -241,6 +253,7 @@ module ysyx_26010011_EX_LS_pipeline(
     input            exu_out_bus_comp_result,
     input      [31:0]exu_out_bus_lsu_val,
     input      [ 4:0]exu_out_bus_rd,
+    input      [ 4:0]exu_out_bus_exception,
     input      [11:0]exu_out_bus_csrrd,
     input      [31:0]exu_out_bus_instruction,
     input            exu_out_bus_isEBREAK,
@@ -265,6 +278,7 @@ module ysyx_26010011_EX_LS_pipeline(
     output reg       lsu_in_bus_comp_result,
     output reg [31:0]lsu_in_bus_lsu_val,
     output reg [ 4:0]lsu_in_bus_rd,
+    output reg [ 4:0]lsu_in_bus_exception,
     output reg [11:0]lsu_in_bus_csrrd,
     output reg [31:0]lsu_in_bus_instruction,
     output reg       lsu_in_bus_isEBREAK,
@@ -291,6 +305,7 @@ module ysyx_26010011_EX_LS_pipeline(
             lsu_in_bus_comp_result<=0;
             lsu_in_bus_lsu_val<=0;
             lsu_in_bus_rd<=0;
+            lsu_in_bus_exception<=0;
             lsu_in_bus_csrrd<=0;
             lsu_in_bus_instruction<=0;
             lsu_in_bus_isEBREAK<=0;
@@ -314,6 +329,7 @@ module ysyx_26010011_EX_LS_pipeline(
             lsu_in_bus_comp_result<=0;
             lsu_in_bus_lsu_val<=0;
             lsu_in_bus_rd<=0;
+            lsu_in_bus_exception<=0;
             lsu_in_bus_csrrd<=0;
             lsu_in_bus_instruction<=0;
             lsu_in_bus_isEBREAK<=0;
@@ -337,6 +353,7 @@ module ysyx_26010011_EX_LS_pipeline(
             lsu_in_bus_comp_result<=exu_out_bus_comp_result;
             lsu_in_bus_lsu_val<=exu_out_bus_lsu_val;
             lsu_in_bus_rd<=exu_out_bus_rd;
+            lsu_in_bus_exception<=exu_out_bus_exception;
             lsu_in_bus_csrrd<=exu_out_bus_csrrd;
             lsu_in_bus_instruction<=exu_out_bus_instruction;
             lsu_in_bus_isEBREAK<=exu_out_bus_isEBREAK;
@@ -360,6 +377,7 @@ module ysyx_26010011_EX_LS_pipeline(
             lsu_in_bus_comp_result<=lsu_in_bus_comp_result;
             lsu_in_bus_lsu_val<=lsu_in_bus_lsu_val;
             lsu_in_bus_rd<=lsu_in_bus_rd;
+            lsu_in_bus_exception<=lsu_in_bus_exception;
             lsu_in_bus_csrrd<=lsu_in_bus_csrrd;
             lsu_in_bus_instruction<=lsu_in_bus_instruction;
             lsu_in_bus_isEBREAK<=lsu_in_bus_isEBREAK;
@@ -393,6 +411,7 @@ module ysyx_26010011_LS_WB_pipeline(
     input            lsu_out_bus_comp_result,
     input      [31:0]lsu_out_bus_lsu_result,
     input      [ 4:0]lsu_out_bus_rd,
+    input      [ 4:0]lsu_out_bus_exception,
     input      [11:0]lsu_out_bus_csrrd,
     input      [31:0]lsu_out_bus_instruction,
     input            lsu_out_bus_isEBREAK,
@@ -416,6 +435,7 @@ module ysyx_26010011_LS_WB_pipeline(
     output reg [31:0]wbu_in_bus_csr_result,
     output reg       wbu_in_bus_comp_result,
     output reg [ 4:0]wbu_in_bus_rd,
+    output reg [ 4:0]wbu_in_bus_exception,
     output reg [11:0]wbu_in_bus_csrrd,
     output reg [31:0]wbu_in_bus_instruction,
     output reg       wbu_in_bus_isEBREAK,
@@ -443,6 +463,7 @@ module ysyx_26010011_LS_WB_pipeline(
             wbu_in_bus_comp_result<=0;
             wbu_in_bus_snpc<=0;
             wbu_in_bus_rd<=0;
+            wbu_in_bus_exception<=0;
             wbu_in_bus_csrrd<=0;
             wbu_in_bus_isEBREAK<=0;
             wbu_in_bus_isECALL<=0;
@@ -464,6 +485,7 @@ module ysyx_26010011_LS_WB_pipeline(
             wbu_in_bus_comp_result<=0;
             wbu_in_bus_snpc<=0;
             wbu_in_bus_rd<=0;
+            wbu_in_bus_exception<=0;
             wbu_in_bus_csrrd<=0;
             wbu_in_bus_isEBREAK<=0;
             wbu_in_bus_isECALL<=0;
@@ -485,6 +507,7 @@ module ysyx_26010011_LS_WB_pipeline(
             wbu_in_bus_comp_result<=lsu_out_bus_comp_result;
             wbu_in_bus_snpc<=lsu_out_bus_snpc;
             wbu_in_bus_rd<=lsu_out_bus_rd;
+            wbu_in_bus_exception<=lsu_out_bus_exception;
             wbu_in_bus_csrrd<=lsu_out_bus_csrrd;
             wbu_in_bus_isEBREAK<=lsu_out_bus_isEBREAK;
             wbu_in_bus_isECALL<=lsu_out_bus_isECALL;
@@ -506,6 +529,7 @@ module ysyx_26010011_LS_WB_pipeline(
             wbu_in_bus_comp_result<=wbu_in_bus_comp_result;
             wbu_in_bus_snpc<=wbu_in_bus_snpc;
             wbu_in_bus_rd<=wbu_in_bus_rd;
+            wbu_in_bus_exception<=wbu_in_bus_exception;
             wbu_in_bus_csrrd<=wbu_in_bus_csrrd;
             wbu_in_bus_isEBREAK<=wbu_in_bus_isEBREAK;
             wbu_in_bus_isECALL<=wbu_in_bus_isECALL;

@@ -19,9 +19,12 @@ class alignas(VL_CACHE_LINE_BYTES) VysyxSoCFull_ysyx_26010011_IF_ID_pipeline fin
     VL_IN8(__PVT__flush_valid,0,0);
     VL_IN8(__PVT__ifu_out_valid,0,0);
     VL_OUT8(__PVT__ifu_out_ready,0,0);
+    VL_IN8(__PVT__ifu_out_bus_exception,4,0);
     VL_OUT8(idu_in_valid,0,0);
     VL_IN8(__PVT__idu_in_ready,0,0);
+    VL_OUT8(__PVT__idu_in_bus_exception,4,0);
     CData/*0:0*/ __Vdly__idu_in_valid;
+    CData/*4:0*/ __Vdly__idu_in_bus_exception;
     VL_IN(__PVT__ifu_out_bus_instruction,31,0);
     VL_IN(__PVT__ifu_out_bus_pc,31,0);
     VL_IN(__PVT__ifu_out_bus_snpc,31,0);

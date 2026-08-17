@@ -13,6 +13,7 @@ module ysyx_26010011_IFU(
 	output     [31:0]   ifu_out_bus_instruction,
 	output     [31:0]   ifu_out_bus_pc/*verilator public*/,
 	output     [31:0]   ifu_out_bus_snpc,
+	output     [ 4:0]   ifu_out_bus_exception,
 
 
 	output [31:0]     araddr,
@@ -63,6 +64,7 @@ module ysyx_26010011_IFU(
 	assign ifu_out_bus_instruction = (in_reqValid & in_respValid)?in_rdata:ifu_out_bus_instruction_r;
 	assign ifu_out_bus_snpc = (in_reqValid & in_respValid)?(PC + 4):ifu_out_bus_snpc_r;
 	assign ifu_out_bus_pc = (in_reqValid & in_respValid)?PC:ifu_out_bus_pc_r;
+	assign ifu_out_bus_exception = 5'b0;
 	reg [31:0] PC/*verilator public*/;
 	always @(posedge clock) begin
 		if(reset) begin
@@ -88,7 +90,7 @@ module ysyx_26010011_IFU(
 				if(~ifu_out_ready) begin
 					in_reqValid <= 1'b0;
 				end else begin
-					in_reqValid <= 1'b0;
+					in_reqValid <= 1'b1;
 				end
 			end else begin
 				in_reqValid <= 1'b1;

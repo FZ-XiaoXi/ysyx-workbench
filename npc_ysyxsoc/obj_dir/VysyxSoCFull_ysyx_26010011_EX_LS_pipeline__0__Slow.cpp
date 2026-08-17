@@ -20,6 +20,7 @@ VL_ATTR_COLD void VysyxSoCFull_ysyx_26010011_EX_LS_pipeline___ctor_var_reset(Vys
     vlSelf->__PVT__exu_out_bus_comp_result = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 5402745377302856199ull);
     vlSelf->__PVT__exu_out_bus_lsu_val = VL_SCOPED_RAND_RESET_I(32, __VscopeHash, 3420429308660478757ull);
     vlSelf->__PVT__exu_out_bus_rd = VL_SCOPED_RAND_RESET_I(5, __VscopeHash, 11096303818826192329ull);
+    vlSelf->__PVT__exu_out_bus_exception = VL_SCOPED_RAND_RESET_I(5, __VscopeHash, 12053201596965599409ull);
     vlSelf->__PVT__exu_out_bus_csrrd = VL_SCOPED_RAND_RESET_I(12, __VscopeHash, 4837142392932910122ull);
     vlSelf->__PVT__exu_out_bus_instruction = VL_SCOPED_RAND_RESET_I(32, __VscopeHash, 15245031494321883429ull);
     vlSelf->__PVT__exu_out_bus_isEBREAK = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 17175386412686252129ull);
@@ -43,6 +44,7 @@ VL_ATTR_COLD void VysyxSoCFull_ysyx_26010011_EX_LS_pipeline___ctor_var_reset(Vys
     vlSelf->__PVT__lsu_in_bus_comp_result = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 12964005584040338278ull);
     vlSelf->__PVT__lsu_in_bus_lsu_val = VL_SCOPED_RAND_RESET_I(32, __VscopeHash, 14969151609686512394ull);
     vlSelf->__PVT__lsu_in_bus_rd = VL_SCOPED_RAND_RESET_I(5, __VscopeHash, 16833310774733762949ull);
+    vlSelf->__PVT__lsu_in_bus_exception = VL_SCOPED_RAND_RESET_I(5, __VscopeHash, 6526339356017408647ull);
     vlSelf->__PVT__lsu_in_bus_csrrd = VL_SCOPED_RAND_RESET_I(12, __VscopeHash, 5856448274621661494ull);
     vlSelf->__PVT__lsu_in_bus_instruction = VL_SCOPED_RAND_RESET_I(32, __VscopeHash, 3462536390724582597ull);
     vlSelf->__PVT__lsu_in_bus_isEBREAK = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 16023930255320817293ull);
@@ -59,11 +61,12 @@ VL_ATTR_COLD void VysyxSoCFull_ysyx_26010011_EX_LS_pipeline___ctor_var_reset(Vys
     vlSelf->__PVT__lsu_in_bus_perip_mask = VL_SCOPED_RAND_RESET_I(2, __VscopeHash, 11626300850549645301ull);
     vlSelf->lsu_in_bus_pc = VL_SCOPED_RAND_RESET_I(32, __VscopeHash, 9813440319487010523ull);
     vlSelf->__PVT__lsu_in_bus_snpc = VL_SCOPED_RAND_RESET_I(32, __VscopeHash, 3702223484292238112ull);
-    vlSelf->__VdfgRegularize_h6e95ff9d_0_31 = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 17993641521919435761ull);
+    vlSelf->__VdfgRegularize_h6e95ff9d_0_30 = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 732631769977400134ull);
     vlSelf->__Vdly__lsu_in_bus_alu_result = VL_SCOPED_RAND_RESET_I(32, __VscopeHash, 3479646451587634432ull);
     vlSelf->__Vdly__lsu_in_bus_csr_result = VL_SCOPED_RAND_RESET_I(32, __VscopeHash, 1683457039337163205ull);
     vlSelf->__Vdly__lsu_in_bus_comp_result = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 6482002854481314763ull);
     vlSelf->__Vdly__lsu_in_bus_rd = VL_SCOPED_RAND_RESET_I(5, __VscopeHash, 10176080516434417339ull);
+    vlSelf->__Vdly__lsu_in_bus_exception = VL_SCOPED_RAND_RESET_I(5, __VscopeHash, 591456772224799378ull);
     vlSelf->__Vdly__lsu_in_bus_csrrd = VL_SCOPED_RAND_RESET_I(12, __VscopeHash, 6325231883562630731ull);
     vlSelf->__Vdly__lsu_in_bus_instruction = VL_SCOPED_RAND_RESET_I(32, __VscopeHash, 6090763722862181945ull);
     vlSelf->__Vdly__lsu_in_bus_isEBREAK = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 4371255069553192967ull);

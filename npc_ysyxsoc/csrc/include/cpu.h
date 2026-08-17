@@ -1,7 +1,6 @@
 #ifndef __CPU_H__
 #define __CPU_H__
 #include "common.h"
-#define CPUTop top->ysyxSoCFull->asic->cpu->cpu
 enum { NPC_RUNNING, NPC_STOP, NPC_END, NPC_ABORT, NPC_QUIT } NPCState;
 
 typedef struct{

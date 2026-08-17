@@ -62,7 +62,6 @@ static bool checkregs(CPUState *ref, uint32_t pc, uint32_t npc) {
 		}
   	}
   	if(ref->tb_FINAL_npc != npc) {
-    	//printf("===%08x===%08x===\n",ref_r->pc,pc);
     	Log("%s DUT:%08x REF:%08x at pc:%08x",ANSI_FMT("Different NEXT PC!", ANSI_FG_RED),npc,ref->tb_FINAL_npc,pc);
     	success = false;
   	}	
@@ -80,25 +79,20 @@ void difftest_step(uint32_t pc, uint32_t npc, uint32_t mem_addr) {;
 	ref_difftest_exec(1);
 	ref_difftest_regcpy(ref.gpr, &ref.tb_FINAL_npc, DIFFTEST_TO_DUT);
 	bool success = checkregs(&ref, pc, npc);
-	uint32_t ref_mem_s;
-	ref_difftest_memcpy((0x20000048&~0x03), (void *)&ref_mem_s, 4, DIFFTEST_TO_DUT);
-	// Log("DUT MEM[0x20000048] = %08x REF MEM[0x20000048] = %08x at pc:%08x", 0, ref_mem_s, pc);
-	// if(mem_addr != 0 && success) {
-	// 	// Log("Check memory at address " FMT_WORD, mem_addr);
-	// 	if(check_sram_bound(mem_addr)){
-	// 		uint32_t ref_mem,dut_mem;
-	// 		ref_difftest_memcpy((mem_addr&~0x03), (void *)&ref_mem, 4, DIFFTEST_TO_DUT);
-			
-	// 		dut_mem = MEM(mem_addr);
-	// 		if(ref_mem != dut_mem) {
-	// 			Log("%s DUT MEM[" FMT_WORD "] = %08x REF MEM[" FMT_WORD "] = %08x at pc:%08x",ANSI_FMT("Different Memory!", ANSI_FG_RED),mem_addr, dut_mem, mem_addr, ref_mem, pc);
-	// 			success = false;
-	// 		}else{
-	// 			// Log("Memory at address " FMT_WORD " is the same: %08x", mem_addr, dut_mem);
-
-	// 		}
-	// 	}
-	// }
+	if(mem_addr != 0 && success) {
+		// Log("Check memory at address " FMT_WORD, mem_addr);
+		if(1){
+			uint32_t ref_mem,dut_mem;
+			ref_difftest_memcpy((mem_addr&~0x03), (void *)&ref_mem, 4, DIFFTEST_TO_DUT);
+			dut_mem = pmem_read(mem_addr&~0x03);
+			if(ref_mem != dut_mem) {
+				Log("%s DUT MEM[" FMT_WORD "] = %08x REF MEM[" FMT_WORD "] = %08x at pc:%08x",ANSI_FMT("Different Memory!", ANSI_FG_RED),mem_addr, dut_mem, mem_addr, ref_mem, pc);
+				success = false;
+			}else{
+				// Log("Memory at address " FMT_WORD " is the same: %08x", mem_addr, dut_mem);
+			}
+		}
+	}
 	if (!success) {
     	cpu.state = NPC_ABORT;
     	//cpu.halt_pc = pc;
@@ -109,15 +103,18 @@ void difftest_step(uint32_t pc, uint32_t npc, uint32_t mem_addr) {;
   	}
 }
 void difftest_skip_ref(int reason) {
-	Log("Differential testing: %s because of %08x", ANSI_FMT("REF is skipped", ANSI_FG_YELLOW), reason);
+	if(reason >= 0x10000000 && reason <= 0x10000005){
+
+	}else{
+		Log("Differential testing: %s because of %08x", ANSI_FMT("REF is skipped", ANSI_FG_YELLOW), reason);
+	}
+	
   is_skip_ref = true;
 }
 void difftest_mem_set(int addr){
 	#ifdef CONFIG_DIFFTEST_MEM_ENABLE
-	//Log("Differential testing: Set memory address " FMT_WORD, addr);
-	if(check_sram_bound(addr)){
-		cpu.mem_access_addr = (uint32_t)addr;
-	}
+	// Log("Differential testing: Set memory address " FMT_WORD, addr);
+	cpu.mem_access_addr = (uint32_t)addr;
 	#endif
 }
 #else

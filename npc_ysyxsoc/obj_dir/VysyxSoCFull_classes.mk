@@ -31,8 +31,10 @@ VM_CLASSES_FAST += \
   VysyxSoCFull___024unit__0 \
   VysyxSoCFull_ysyxSoCASIC__0 \
   VysyxSoCFull_ysyxSoCASIC__1 \
+  VysyxSoCFull_AXI4RAM__0 \
   VysyxSoCFull_ysyx_26010011__0 \
   VysyxSoCFull_uart_top_apb__0 \
+  VysyxSoCFull_mem_2048x32__0 \
   VysyxSoCFull_ysyx_26010011_IFU__0 \
   VysyxSoCFull_ysyx_26010011_LSU__0 \
   VysyxSoCFull_ysyx_26010011_GPRs__0 \
@@ -59,10 +61,14 @@ VM_CLASSES_SLOW += \
   VysyxSoCFull_CPU__0__Slow \
   VysyxSoCFull_APBUart16550__Slow \
   VysyxSoCFull_APBUart16550__0__Slow \
+  VysyxSoCFull_AXI4RAM__Slow \
+  VysyxSoCFull_AXI4RAM__0__Slow \
   VysyxSoCFull_ysyx_26010011__Slow \
   VysyxSoCFull_ysyx_26010011__0__Slow \
   VysyxSoCFull_uart_top_apb__Slow \
   VysyxSoCFull_uart_top_apb__0__Slow \
+  VysyxSoCFull_mem_2048x32__Slow \
+  VysyxSoCFull_mem_2048x32__0__Slow \
   VysyxSoCFull_ysyx_26010011_IFU__Slow \
   VysyxSoCFull_ysyx_26010011_IFU__0__Slow \
   VysyxSoCFull_ysyx_26010011_LSU__Slow \

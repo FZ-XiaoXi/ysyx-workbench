@@ -23,6 +23,7 @@ class alignas(VL_CACHE_LINE_BYTES) VysyxSoCFull_ysyx_26010011_EX_LS_pipeline fin
         VL_OUT8(__PVT__exu_out_ready,0,0);
         VL_IN8(__PVT__exu_out_bus_comp_result,0,0);
         VL_IN8(__PVT__exu_out_bus_rd,4,0);
+        VL_IN8(__PVT__exu_out_bus_exception,4,0);
         VL_IN8(__PVT__exu_out_bus_isEBREAK,0,0);
         VL_IN8(__PVT__exu_out_bus_isECALL,0,0);
         VL_IN8(__PVT__exu_out_bus_isMRET,0,0);
@@ -39,6 +40,7 @@ class alignas(VL_CACHE_LINE_BYTES) VysyxSoCFull_ysyx_26010011_EX_LS_pipeline fin
         VL_IN8(__PVT__lsu_in_ready,0,0);
         VL_OUT8(__PVT__lsu_in_bus_comp_result,0,0);
         VL_OUT8(__PVT__lsu_in_bus_rd,4,0);
+        VL_OUT8(__PVT__lsu_in_bus_exception,4,0);
         VL_OUT8(__PVT__lsu_in_bus_isEBREAK,0,0);
         VL_OUT8(__PVT__lsu_in_bus_isECALL,0,0);
         VL_OUT8(__PVT__lsu_in_bus_isMRET,0,0);
@@ -51,9 +53,10 @@ class alignas(VL_CACHE_LINE_BYTES) VysyxSoCFull_ysyx_26010011_EX_LS_pipeline fin
         VL_OUT8(__PVT__lsu_in_bus_opCSR,2,0);
         VL_OUT8(__PVT__lsu_in_bus_isUnSigned,0,0);
         VL_OUT8(__PVT__lsu_in_bus_perip_mask,1,0);
-        CData/*0:0*/ __VdfgRegularize_h6e95ff9d_0_31;
+        CData/*0:0*/ __VdfgRegularize_h6e95ff9d_0_30;
         CData/*0:0*/ __Vdly__lsu_in_bus_comp_result;
         CData/*4:0*/ __Vdly__lsu_in_bus_rd;
+        CData/*4:0*/ __Vdly__lsu_in_bus_exception;
         CData/*0:0*/ __Vdly__lsu_in_bus_isEBREAK;
         CData/*0:0*/ __Vdly__lsu_in_bus_isECALL;
         CData/*0:0*/ __Vdly__lsu_in_bus_isMRET;
@@ -77,11 +80,11 @@ class alignas(VL_CACHE_LINE_BYTES) VysyxSoCFull_ysyx_26010011_EX_LS_pipeline fin
         VL_IN(__PVT__exu_out_bus_snpc,31,0);
         VL_OUT(__PVT__lsu_in_bus_alu_result,31,0);
         VL_OUT(__PVT__lsu_in_bus_csr_result,31,0);
+    };
+    struct {
         VL_OUT(__PVT__lsu_in_bus_lsu_val,31,0);
         VL_OUT(__PVT__lsu_in_bus_instruction,31,0);
         VL_OUT(lsu_in_bus_pc,31,0);
-    };
-    struct {
         VL_OUT(__PVT__lsu_in_bus_snpc,31,0);
         IData/*31:0*/ __Vdly__lsu_in_bus_alu_result;
         IData/*31:0*/ __Vdly__lsu_in_bus_csr_result;

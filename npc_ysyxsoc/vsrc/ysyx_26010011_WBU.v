@@ -10,7 +10,6 @@ module ysyx_26010011_WBU(
     input [31:0]wbu_in_bus_lsu_result,
     input [31:0]wbu_in_bus_alu_result,
     input [31:0]wbu_in_bus_csr_result,
-    // input [31:0]wbu_in_bus_csr_data,
     input wbu_in_bus_comp_result,
     input [31:0]wbu_in_bus_snpc,
     input [4:0]wbu_in_bus_rd,
@@ -21,6 +20,7 @@ module ysyx_26010011_WBU(
     input wbu_in_bus_isJUMP,
     input wbu_in_bus_isWCOMP,
     input [2:0]wbu_in_bus_opCSR,
+    input [4:0]wbu_in_bus_exception,
 
 
     output gpr_we,
@@ -42,10 +42,6 @@ module ysyx_26010011_WBU(
         end else if(wbu_in_bus_isWGPR) begin
             if(wbu_in_bus_isWCOMP)           gpr_wdata = {31'b0,wbu_in_bus_comp_result};
             else                    gpr_wdata = wbu_in_bus_alu_result;
-        // end else if(|isCSR) begin
-        //     if(isCSR == 2'b01)      gpr_wdata = wbu_in_bus_csr_data | wbu_in_bus_alu_result;//CSRRS
-        //     else if(isCSR == 2'b10) gpr_wdata = wbu_in_bus_csr_data & ~wbu_in_bus_alu_result;//CSRRC
-        //     else                    gpr_wdata = wbu_in_bus_alu_result;//CSRRW
         end else begin
                                     gpr_wdata = 32'hf0f0f0f0;
         end

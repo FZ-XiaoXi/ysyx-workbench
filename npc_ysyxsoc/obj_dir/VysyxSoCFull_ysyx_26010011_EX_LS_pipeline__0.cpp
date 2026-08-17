@@ -9,7 +9,7 @@ void VysyxSoCFull_ysyx_26010011_EX_LS_pipeline___ico_sequent__TOP__ysyxSoCFull__
     VysyxSoCFull__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
     auto& vlSelfRef = std::ref(*vlSelf).get();
     // Body
-    vlSelfRef.__VdfgRegularize_h6e95ff9d_0_31 = ((IData)(vlSelfRef.__PVT__lsu_in_bus_isWGPR) 
+    vlSelfRef.__VdfgRegularize_h6e95ff9d_0_30 = ((IData)(vlSelfRef.__PVT__lsu_in_bus_isWGPR) 
                                                  & (IData)(vlSelfRef.lsu_in_valid));
 }
 
@@ -26,6 +26,7 @@ void VysyxSoCFull_ysyx_26010011_EX_LS_pipeline___nba_sequent__TOP__ysyxSoCFull__
     vlSelfRef.__Vdly__lsu_in_bus_csr_result = vlSelfRef.__PVT__lsu_in_bus_csr_result;
     vlSelfRef.__Vdly__lsu_in_bus_comp_result = vlSelfRef.__PVT__lsu_in_bus_comp_result;
     __Vdly__lsu_in_bus_lsu_val = vlSelfRef.__PVT__lsu_in_bus_lsu_val;
+    vlSelfRef.__Vdly__lsu_in_bus_exception = vlSelfRef.__PVT__lsu_in_bus_exception;
     vlSelfRef.__Vdly__lsu_in_bus_instruction = vlSelfRef.__PVT__lsu_in_bus_instruction;
     vlSelfRef.__Vdly__lsu_in_bus_isEBREAK = vlSelfRef.__PVT__lsu_in_bus_isEBREAK;
     vlSelfRef.__Vdly__lsu_in_bus_isECALL = vlSelfRef.__PVT__lsu_in_bus_isECALL;
@@ -52,6 +53,7 @@ void VysyxSoCFull_ysyx_26010011_EX_LS_pipeline___nba_sequent__TOP__ysyxSoCFull__
         vlSelfRef.__Vdly__lsu_in_bus_comp_result = 0U;
         __Vdly__lsu_in_bus_lsu_val = 0U;
         vlSelfRef.__Vdly__lsu_in_bus_rd = 0U;
+        vlSelfRef.__Vdly__lsu_in_bus_exception = 0U;
         vlSelfRef.__Vdly__lsu_in_bus_csrrd = 0U;
         vlSelfRef.__Vdly__lsu_in_bus_instruction = 0U;
         vlSelfRef.__Vdly__lsu_in_bus_isEBREAK = 0U;
@@ -75,6 +77,7 @@ void VysyxSoCFull_ysyx_26010011_EX_LS_pipeline___nba_sequent__TOP__ysyxSoCFull__
         vlSelfRef.__Vdly__lsu_in_bus_comp_result = 0U;
         __Vdly__lsu_in_bus_lsu_val = 0U;
         vlSelfRef.__Vdly__lsu_in_bus_rd = 0U;
+        vlSelfRef.__Vdly__lsu_in_bus_exception = 0U;
         vlSelfRef.__Vdly__lsu_in_bus_csrrd = 0U;
         vlSelfRef.__Vdly__lsu_in_bus_instruction = 0U;
         vlSelfRef.__Vdly__lsu_in_bus_isEBREAK = 0U;
@@ -99,6 +102,7 @@ void VysyxSoCFull_ysyx_26010011_EX_LS_pipeline___nba_sequent__TOP__ysyxSoCFull__
         vlSelfRef.__Vdly__lsu_in_bus_comp_result = vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu.__PVT__EXU_0__DOT__exu_out_bus_comp_result;
         __Vdly__lsu_in_bus_lsu_val = vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__ID_EX_inst.__PVT__exu_in_bus_rs2_val;
         vlSelfRef.__Vdly__lsu_in_bus_rd = vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__ID_EX_inst.__PVT__exu_in_bus_rd;
+        vlSelfRef.__Vdly__lsu_in_bus_exception = vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__ID_EX_inst.__PVT__exu_in_bus_exception;
         vlSelfRef.__Vdly__lsu_in_bus_csrrd = vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__ID_EX_inst.__PVT__exu_in_bus_csrrd;
         vlSelfRef.__Vdly__lsu_in_bus_instruction = vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__ID_EX_inst.__PVT__exu_in_bus_instruction;
         vlSelfRef.__Vdly__lsu_in_bus_isEBREAK = vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__ID_EX_inst.__PVT__exu_in_bus_isEBREAK;
@@ -122,6 +126,7 @@ void VysyxSoCFull_ysyx_26010011_EX_LS_pipeline___nba_sequent__TOP__ysyxSoCFull__
         vlSelfRef.__Vdly__lsu_in_bus_comp_result = vlSelfRef.__PVT__lsu_in_bus_comp_result;
         __Vdly__lsu_in_bus_lsu_val = vlSelfRef.__PVT__lsu_in_bus_lsu_val;
         vlSelfRef.__Vdly__lsu_in_bus_rd = vlSelfRef.__PVT__lsu_in_bus_rd;
+        vlSelfRef.__Vdly__lsu_in_bus_exception = vlSelfRef.__PVT__lsu_in_bus_exception;
         vlSelfRef.__Vdly__lsu_in_bus_csrrd = vlSelfRef.__PVT__lsu_in_bus_csrrd;
         vlSelfRef.__Vdly__lsu_in_bus_instruction = vlSelfRef.__PVT__lsu_in_bus_instruction;
         vlSelfRef.__Vdly__lsu_in_bus_isEBREAK = vlSelfRef.__PVT__lsu_in_bus_isEBREAK;
@@ -154,6 +159,7 @@ void VysyxSoCFull_ysyx_26010011_EX_LS_pipeline___nba_sequent__TOP__ysyxSoCFull__
     vlSelfRef.__PVT__lsu_in_bus_csr_result = vlSelfRef.__Vdly__lsu_in_bus_csr_result;
     vlSelfRef.__PVT__lsu_in_bus_comp_result = vlSelfRef.__Vdly__lsu_in_bus_comp_result;
     vlSelfRef.__PVT__lsu_in_bus_snpc = vlSelfRef.__Vdly__lsu_in_bus_snpc;
+    vlSelfRef.__PVT__lsu_in_bus_exception = vlSelfRef.__Vdly__lsu_in_bus_exception;
     vlSelfRef.__PVT__lsu_in_bus_isEBREAK = vlSelfRef.__Vdly__lsu_in_bus_isEBREAK;
     vlSelfRef.__PVT__lsu_in_bus_isECALL = vlSelfRef.__Vdly__lsu_in_bus_isECALL;
     vlSelfRef.__PVT__lsu_in_bus_isMRET = vlSelfRef.__Vdly__lsu_in_bus_isMRET;
@@ -168,6 +174,6 @@ void VysyxSoCFull_ysyx_26010011_EX_LS_pipeline___nba_sequent__TOP__ysyxSoCFull__
     vlSelfRef.__PVT__lsu_in_bus_alu_result = vlSelfRef.__Vdly__lsu_in_bus_alu_result;
     vlSelfRef.__PVT__lsu_in_bus_isSTORE = vlSelfRef.__Vdly__lsu_in_bus_isSTORE;
     vlSelfRef.__PVT__lsu_in_bus_isLOAD = vlSelfRef.__Vdly__lsu_in_bus_isLOAD;
-    vlSelfRef.__VdfgRegularize_h6e95ff9d_0_31 = ((IData)(vlSelfRef.__PVT__lsu_in_bus_isWGPR) 
+    vlSelfRef.__VdfgRegularize_h6e95ff9d_0_30 = ((IData)(vlSelfRef.__PVT__lsu_in_bus_isWGPR) 
                                                  & (IData)(vlSelfRef.lsu_in_valid));
 }
