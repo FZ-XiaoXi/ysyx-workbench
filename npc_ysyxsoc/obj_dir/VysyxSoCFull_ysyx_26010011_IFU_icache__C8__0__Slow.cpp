@@ -4,8 +4,8 @@
 
 #include "VysyxSoCFull__pch.h"
 
-VL_ATTR_COLD void VysyxSoCFull_ysyx_26010011_IFU_icache___eval_static__TOP__ysyxSoCFull__asic__cpu__cpu__IFU_0__icache_u0(VysyxSoCFull_ysyx_26010011_IFU_icache* vlSelf) {
-    VL_DEBUG_IF(VL_DBG_MSGF("+                VysyxSoCFull_ysyx_26010011_IFU_icache___eval_static__TOP__ysyxSoCFull__asic__cpu__cpu__IFU_0__icache_u0\n"); );
+VL_ATTR_COLD void VysyxSoCFull_ysyx_26010011_IFU_icache__C8___eval_static__TOP__ysyxSoCFull__asic__cpu__cpu__IFU_0__icache_u0(VysyxSoCFull_ysyx_26010011_IFU_icache__C8* vlSelf) {
+    VL_DEBUG_IF(VL_DBG_MSGF("+                VysyxSoCFull_ysyx_26010011_IFU_icache__C8___eval_static__TOP__ysyxSoCFull__asic__cpu__cpu__IFU_0__icache_u0\n"); );
     VysyxSoCFull__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
     auto& vlSelfRef = std::ref(*vlSelf).get();
     // Body
@@ -13,8 +13,8 @@ VL_ATTR_COLD void VysyxSoCFull_ysyx_26010011_IFU_icache___eval_static__TOP__ysyx
     vlSelfRef.__PVT__burst_cnt = 0U;
 }
 
-VL_ATTR_COLD void VysyxSoCFull_ysyx_26010011_IFU_icache___ctor_var_reset(VysyxSoCFull_ysyx_26010011_IFU_icache* vlSelf) {
-    VL_DEBUG_IF(VL_DBG_MSGF("+                VysyxSoCFull_ysyx_26010011_IFU_icache___ctor_var_reset\n"); );
+VL_ATTR_COLD void VysyxSoCFull_ysyx_26010011_IFU_icache__C8___ctor_var_reset(VysyxSoCFull_ysyx_26010011_IFU_icache__C8* vlSelf) {
+    VL_DEBUG_IF(VL_DBG_MSGF("+                VysyxSoCFull_ysyx_26010011_IFU_icache__C8___ctor_var_reset\n"); );
     VysyxSoCFull__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
     auto& vlSelfRef = std::ref(*vlSelf).get();
     // Body
@@ -42,18 +42,17 @@ VL_ATTR_COLD void VysyxSoCFull_ysyx_26010011_IFU_icache___ctor_var_reset(VysyxSo
     vlSelf->__PVT__out_rid = VL_SCOPED_RAND_RESET_I(4, __VscopeHash, 13197421409447846ull);
     vlSelf->__PVT__debug_is_hit = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 9597593556992448911ull);
     for (int __Vi0 = 0; __Vi0 < 16; ++__Vi0) {
-        vlSelf->__PVT__cache_mem[__Vi0] = VL_SCOPED_RAND_RESET_I(32, __VscopeHash, 16322108757504633651ull);
+        vlSelf->__PVT__cache_mem[__Vi0] = VL_SCOPED_RAND_RESET_Q(64, __VscopeHash, 16322108757504633651ull);
     }
     for (int __Vi0 = 0; __Vi0 < 16; ++__Vi0) {
         vlSelf->__PVT__cache_valid[__Vi0] = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 13624164365116228830ull);
     }
     for (int __Vi0 = 0; __Vi0 < 16; ++__Vi0) {
-        vlSelf->__PVT__cache_tag[__Vi0] = VL_SCOPED_RAND_RESET_I(26, __VscopeHash, 8916907887533138551ull);
+        vlSelf->__PVT__cache_tag[__Vi0] = VL_SCOPED_RAND_RESET_I(25, __VscopeHash, 8916907887533138551ull);
     }
     vlSelf->pc_flushed = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 7891879528763933891ull);
     vlSelf->__PVT__state = VL_SCOPED_RAND_RESET_I(3, __VscopeHash, 9404372463396948974ull);
     vlSelf->__PVT__next_state = VL_SCOPED_RAND_RESET_I(3, __VscopeHash, 10383377256973303270ull);
-    vlSelf->__PVT__ar_fire = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 17531198051612780992ull);
     vlSelf->__PVT__r_fire = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 9673292808138091229ull);
     vlSelf->__PVT__burst_cnt = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 17842020306072178892ull);
     vlSelf->__PVT__unnamedblk1__DOT__i = VL_SCOPED_RAND_RESET_I(32, __VscopeHash, 11372531115521842849ull);

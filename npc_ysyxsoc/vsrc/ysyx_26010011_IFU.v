@@ -99,7 +99,7 @@ module ysyx_26010011_IFU(
 		end
 	end;
 
-	ysyx_26010011_IFU_icache #(.CACHE_BLOCK_SIZE(4), .CACHE_SIZE(16)) icache_u0(
+	ysyx_26010011_IFU_icache #(.CACHE_BLOCK_SIZE(16), .CACHE_SIZE(8)) icache_u0(
 		.clock(clock),
 		.reset(reset),
 
@@ -257,6 +257,8 @@ module ysyx_26010011_IFU_icache #(
 			end else begin
 				burst_cnt <= burst_cnt + {{(BURST_W-1){1'b0}}, 1'b1};
 			end
+		end else if(ar_fire) begin
+			burst_cnt <= 0;
 		end else begin
 			burst_cnt <= burst_cnt;
 		end

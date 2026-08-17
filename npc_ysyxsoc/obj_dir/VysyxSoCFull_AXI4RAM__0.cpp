@@ -44,6 +44,9 @@ void VysyxSoCFull_AXI4RAM___nba_sequent__TOP__ysyxSoCFull__asic__axi4ram__0(Vysy
     if (vlSymsp->TOP__ysyxSoCFull__asic__axi4ram__mem_ext.__PVT__R0_en) {
         vlSelfRef.__PVT__r_id = vlSymsp->TOP__ysyxSoCFull__asic.__PVT__axi4xbar_1__DOT__auto_anon_in_arid;
     }
+    vlSelfRef.__PVT__w_sel1 = (0x7800U == (0x00007fffU 
+                                           & (vlSymsp->TOP__ysyxSoCFull__asic.__PVT__axi4xbar_1__DOT__auto_anon_in_awaddr 
+                                              >> 0x0000000dU)));
     if (vlSelfRef.__PVT__rdata_REG) {
         vlSelfRef.__PVT__rdata_r0 = (0x000000ffU & vlSymsp->TOP__ysyxSoCFull__asic__axi4ram__mem_ext.__PVT__R0_data);
         vlSelfRef.__PVT__rdata_r1 = (0x000000ffU & 
@@ -55,9 +58,6 @@ void VysyxSoCFull_AXI4RAM___nba_sequent__TOP__ysyxSoCFull__asic__axi4ram__0(Vysy
         vlSelfRef.__PVT__rdata_r3 = (vlSymsp->TOP__ysyxSoCFull__asic__axi4ram__mem_ext.__PVT__R0_data 
                                      >> 0x18U);
     }
-    vlSelfRef.__PVT__w_sel1 = (0x7800U == (0x00007fffU 
-                                           & (vlSymsp->TOP__ysyxSoCFull__asic.__PVT__axi4xbar_1__DOT__auto_anon_in_awaddr 
-                                              >> 0x0000000dU)));
     if (vlSelfRef.__PVT___GEN) {
         vlSelfRef.__PVT__w_id = vlSymsp->TOP__ysyxSoCFull__asic.__PVT__axi4xbar_1__DOT__auto_anon_in_awid;
     }

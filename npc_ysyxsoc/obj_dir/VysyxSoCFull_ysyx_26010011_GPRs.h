@@ -20,14 +20,10 @@ class alignas(VL_CACHE_LINE_BYTES) VysyxSoCFull_ysyx_26010011_GPRs final : publi
     VL_IN8(__PVT__gpr_in_addrb,4,0);
     VL_IN8(__PVT__gpr_in_addw,4,0);
     VL_IN8(__PVT__gpr_in_wen,0,0);
-    CData/*0:0*/ __VdlySet__GPR__v0;
-    CData/*4:0*/ __VdlyDim0__GPR__v32;
-    CData/*0:0*/ __VdlySet__GPR__v32;
     VL_OUT(__PVT__gpr_out_a,31,0);
     VL_OUT(__PVT__gpr_out_b,31,0);
     VL_IN(__PVT__gpr_in_data,31,0);
     IData/*31:0*/ __PVT__i;
-    IData/*31:0*/ __VdlyVal__GPR__v32;
     VlUnpacked<IData/*31:0*/, 32> GPR;
 
     // INTERNAL VARIABLES

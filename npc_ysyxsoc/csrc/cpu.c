@@ -83,7 +83,7 @@ void cpu_exec(uint64_t n){
 		#endif
 		cpu_get_state();
 
-		cpu.counter_IFU_get_inst_cyc ++;
+		if(!CPUTop->IFU_0->ifu_out_valid) cpu.counter_IFU_get_inst_cyc ++;
 		cpu.counter_cycle++;
 		if(CPUTop->IFU_0->debug_IFU_get_inst) {
 			cpu.counter_IFU_get_inst ++;

@@ -22,7 +22,7 @@
 #include "VysyxSoCFull_ysyx_26010011_EX_LS_pipeline.h"
 #include "VysyxSoCFull_ysyx_26010011_LS_WB_pipeline.h"
 #include "VysyxSoCFull_uart_regs.h"
-#include "VysyxSoCFull_ysyx_26010011_IFU_icache.h"
+#include "VysyxSoCFull_ysyx_26010011_IFU_icache__pi1.h"
 
 // FUNCTIONS
 VysyxSoCFull__Syms::~VysyxSoCFull__Syms()
@@ -56,7 +56,7 @@ VysyxSoCFull__Syms::VysyxSoCFull__Syms(VerilatedContext* contextp, const char* n
     , TOP__ysyxSoCFull__asic__luart__muart__Uregs{this, Verilated::catName(namep, "ysyxSoCFull.asic.luart.muart.Uregs")}
 {
     // Check resources
-    Verilated::stackCheck(2552);
+    Verilated::stackCheck(2572);
     // Configure time unit / time precision
     _vm_contextp__->timeunit(-9);
     _vm_contextp__->timeprecision(-12);

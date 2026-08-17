@@ -33,7 +33,7 @@
 #include "VysyxSoCFull_ysyx_26010011_EX_LS_pipeline.h"
 #include "VysyxSoCFull_ysyx_26010011_LS_WB_pipeline.h"
 #include "VysyxSoCFull_uart_regs.h"
-#include "VysyxSoCFull_ysyx_26010011_IFU_icache.h"
+#include "VysyxSoCFull_ysyx_26010011_IFU_icache__pi1.h"
 
 // DPI TYPES for DPI Export callbacks (Internal use)
 
@@ -61,7 +61,7 @@ class alignas(VL_CACHE_LINE_BYTES) VysyxSoCFull__Syms final : public VerilatedSy
     VysyxSoCFull_ysyx_26010011_GPRs TOP__ysyxSoCFull__asic__cpu__cpu__GPR_0;
     VysyxSoCFull_ysyx_26010011_ID_EX_pipeline TOP__ysyxSoCFull__asic__cpu__cpu__ID_EX_inst;
     VysyxSoCFull_ysyx_26010011_IFU TOP__ysyxSoCFull__asic__cpu__cpu__IFU_0;
-    VysyxSoCFull_ysyx_26010011_IFU_icache TOP__ysyxSoCFull__asic__cpu__cpu__IFU_0__icache_u0;
+    VysyxSoCFull_ysyx_26010011_IFU_icache__pi1 TOP__ysyxSoCFull__asic__cpu__cpu__IFU_0__icache_u0;
     VysyxSoCFull_ysyx_26010011_IF_ID_pipeline TOP__ysyxSoCFull__asic__cpu__cpu__IF_ID_inst;
     VysyxSoCFull_ysyx_26010011_LSU TOP__ysyxSoCFull__asic__cpu__cpu__LSU_0;
     VysyxSoCFull_ysyx_26010011_LS_WB_pipeline TOP__ysyxSoCFull__asic__cpu__cpu__LS_WB_inst;
