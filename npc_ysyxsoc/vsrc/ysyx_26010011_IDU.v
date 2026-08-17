@@ -12,14 +12,11 @@ module ysyx_26010011_IDU(
     output             idu_out_valid,
     input              idu_out_ready,
     output       [ 4:0]idu_out_bus_rd,
-    output       [ 4:0]idu_out_bus_exception,
+    output reg   [ 4:0]idu_out_bus_exception,
     output       [11:0]idu_out_bus_csrrd,
     output       [ 4:0]idu_out_bus_rs1,
     output       [ 4:0]idu_out_bus_rs2,
     output logic [31:0]idu_out_bus_imm,
-    output             idu_out_bus_isEBREAK,
-    output             idu_out_bus_isECALL,
-    output             idu_out_bus_isMRET,
     output             idu_out_bus_isLOAD,
     output             idu_out_bus_isSTORE,
     output             idu_out_bus_isWGPR,
@@ -35,8 +32,8 @@ module ysyx_26010011_IDU(
     output logic [ 1:0]idu_out_bus_comp_op,
     output       [ 1:0]idu_out_bus_perip_mask
 );
-    assign idu_in_ready = idu_out_ready & ~idu_isRAW;
-    assign idu_out_valid = idu_in_valid & ~idu_isRAW;
+    assign idu_in_ready = idu_out_ready & (~idu_isRAW | idu_out_bus_exception[4]);
+    assign idu_out_valid = idu_in_valid & (~idu_isRAW | idu_out_bus_exception[4]);
     
     logic [ 6: 0]opcode;
     logic [11: 0]immI;
@@ -47,6 +44,7 @@ module ysyx_26010011_IDU(
     logic [ 2: 0]funct3;
     logic [ 6: 0]funct7;
 
+    logic isECALL, isEBREAK, isMRET;
     logic isLUI, isAUIPC, isJAL, isJALR, isBEQ, isBNE, isBLT, isBGE, isBLTU, isBGEU;
     logic isLB, isLH, isLW, isLBU, isLHU, isSB, isSH, isSW, isADDI, isSLTI, isSLTIU;
     logic isXORI, isORI, isANDI, isSLLI, isSRLI, isSRAI, isADD, isSUB, isSLL, isSLT;
@@ -56,11 +54,20 @@ module ysyx_26010011_IDU(
     logic isCSRRW,isCSRRS,isCSRRC,isCSRRWI,isCSRRSI,isCSRRCI;
 
     logic isR,isI,isS,isB,isU,isJ;
+
+    logic all_inst = isLUI|isAUIPC|isJAL|isJALR|isBEQ|isBNE|isBLT|isBGE|isBLTU|isBGEU
+                    |isLB|isLH|isLW|isLBU|isLHU|isSB|isSH|isSW
+                    |isADDI|isSLTI|isSLTIU|isXORI|isORI|isANDI
+                    |isSLLI|isSRLI|isSRAI
+                    |isADD|isSUB|isSLL|isSLT|isSLTU
+                    |isXOR|isSRL|isSRA|isOR|isAND
+                    |(|idu_out_bus_opCSR)
+                    |isECALL|isEBREAK|isMRET;
+
     assign opcode=  idu_in_bus_instruction[ 6: 0];
-    assign idu_out_bus_exception = idu_in_bus_exception;
-    assign idu_out_bus_rd=      (idu_out_bus_isECALL|idu_out_bus_isMRET)?           5'b00000:idu_in_bus_instruction[11: 7];
-    assign idu_out_bus_csrrd=   (idu_out_bus_isECALL)?`ADD_MTVEC:(idu_out_bus_isMRET?`ADD_MEPC:idu_in_bus_instruction[31:20]);
-    assign idu_out_bus_rs1=     (idu_out_bus_isECALL|idu_out_bus_isMRET)?           5'b00000:idu_in_bus_instruction[19:15];
+    assign idu_out_bus_rd=      idu_in_bus_instruction[11: 7];
+    assign idu_out_bus_csrrd=   idu_in_bus_instruction[31:20];
+    assign idu_out_bus_rs1=     idu_in_bus_instruction[19:15];
     assign idu_out_bus_rs2=                                                                  idu_in_bus_instruction[24:20];
     assign funct3=  idu_in_bus_instruction[14:12];
     assign funct7=  idu_in_bus_instruction[31:25];
@@ -118,9 +125,9 @@ module ysyx_26010011_IDU(
     assign isCSRRW  = (opcode == 7'b1110011 && funct3 == 3'b001                         ) ? 1 : 0;
     assign isCSRRWI = (opcode == 7'b1110011 && funct3 == 3'b101                         ) ? 1 : 0;
 
-    assign idu_out_bus_isECALL  = (idu_in_bus_instruction==32'b00000000000000000000000001110011                    ) ? 1 : 0;
-    assign idu_out_bus_isEBREAK = (idu_in_bus_instruction==32'b00000000000100000000000001110011                    ) ? 1 : 0;
-    assign idu_out_bus_isMRET   = (idu_in_bus_instruction==32'b00110000001000000000000001110011                    ) ? 1 : 0;
+    assign isECALL  = (idu_in_bus_instruction==32'b00000000000000000000000001110011                    ) ? 1 : 0;
+    assign isEBREAK = (idu_in_bus_instruction==32'b00000000000100000000000001110011                    ) ? 1 : 0;
+    assign isMRET   = (idu_in_bus_instruction==32'b00110000001000000000000001110011                    ) ? 1 : 0;
 
     //M-ext R-ty
     assign isMUL    = (opcode == 7'b0110011 && funct3 == 3'b000 && funct7 == 7'b0000001 ) ? 1 : 0;
@@ -134,6 +141,7 @@ module ysyx_26010011_IDU(
 
 
 /////////////////////////
+
     assign idu_out_bus_isLOAD = (isLW|isLBU|isLB|isLH|isLHU)?1:0;
     assign idu_out_bus_isSTORE= (isSW|isSB|isSH)?1:0;
     assign idu_out_bus_isWGPR = (isLUI|isAUIPC|isJAL|isJALR|isADDI|isSLTI|isSLTIU|isXORI|isORI|isANDI|isSLLI|isSRLI|isSRAI|isADD|isSUB|isSLL|isSLT|isSLTU|isXOR|isSRL|isSRA|isOR|isAND|isMUL|isMULH|isMULHSU|isMULHU|isDIV|isDIVU|isREM|isREMU|idu_out_bus_isLOAD|(|idu_out_bus_opCSR))?1:0;
@@ -154,7 +162,6 @@ module ysyx_26010011_IDU(
         else if(isCSRRCI) idu_out_bus_opCSR=3'b110;
         else if(isCSRRW)  idu_out_bus_opCSR=3'b011;
         else if(isCSRRWI) idu_out_bus_opCSR=3'b111;
-        else if(idu_out_bus_isECALL|idu_out_bus_isMRET)  idu_out_bus_opCSR=3'b001;
         else              idu_out_bus_opCSR=3'b000;
     end
 
@@ -213,5 +220,22 @@ module ysyx_26010011_IDU(
     //BRANCH
     assign idu_out_bus_isBRANCH = (isBEQ | isBNE | isBLT | isBGE | isBLTU | isBGEU)?1:0;
 
+    always @(*) begin
+        if(idu_in_bus_exception[4]) begin
+            idu_out_bus_exception = idu_in_bus_exception;
+        end else begin
+            if(~all_inst) begin
+                idu_out_bus_exception = {1'b1,`EXCEPTION_ILLEGAL_INSTRUCTION};
+            end else if(isEBREAK)begin
+                idu_out_bus_exception = {1'b1,`EXCEPTION_BREAKPOINT};
+            end else if(isECALL)begin
+                idu_out_bus_exception = {1'b1,`EXCEPTION_BREAKPOINT};
+            end else if(isMRET)begin
+                idu_out_bus_exception = {1'b1,`EXCEPTION_MRET};
+            end else begin
+                idu_out_bus_exception = idu_in_bus_exception;
+            end
+        end
 
+    end
 endmodule

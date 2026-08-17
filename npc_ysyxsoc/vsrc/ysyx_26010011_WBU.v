@@ -29,8 +29,8 @@ module ysyx_26010011_WBU(
 
     output csr_we,
     output [31:0]csr_wdata,
-    output [11:0]csr_address
-
+    output [11:0]csr_address,
+    output [4:0]wbu_out_bus_exception
 
 );  
     assign wbu_in_ready=1;
@@ -48,9 +48,11 @@ module ysyx_26010011_WBU(
     end
 
     assign gpr_address=wbu_in_bus_rd;
-    assign gpr_we=(wbu_in_bus_isWGPR & wbu_in_valid)?1:0;
+    assign gpr_we=(wbu_in_bus_isWGPR & wbu_in_valid & ~wbu_in_bus_exception[4])?1:0;
+
+    assign wbu_out_bus_exception=(wbu_in_valid)?wbu_in_bus_exception:5'b0;
 
     assign csr_address=wbu_in_bus_csrrd;
-    assign csr_we=((|wbu_in_bus_opCSR) & wbu_in_valid)?1:0;
+    assign csr_we=((|wbu_in_bus_opCSR) & wbu_in_valid & ~wbu_in_bus_exception[4])?1:0;
     assign csr_wdata=wbu_in_bus_csr_result;
 endmodule

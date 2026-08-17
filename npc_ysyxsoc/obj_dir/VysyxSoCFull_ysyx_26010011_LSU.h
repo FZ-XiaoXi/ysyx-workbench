@@ -26,7 +26,7 @@ class alignas(VL_CACHE_LINE_BYTES) VysyxSoCFull_ysyx_26010011_LSU final : public
         VL_IN8(__PVT__lsu_in_bus_isUnSigned,0,0);
         VL_IN8(__PVT__lsu_in_bus_isLOAD,0,0);
         VL_IN8(__PVT__lsu_in_bus_isSTORE,0,0);
-        VL_OUT8(__PVT__lsu_out_valid,0,0);
+        VL_OUT8(lsu_out_valid,0,0);
         VL_OUT8(__PVT__lsu_out_bus_exception,4,0);
         VL_IN8(__PVT__lsu_out_ready,0,0);
         VL_OUT8(__PVT__awvalid,0,0);
@@ -69,6 +69,7 @@ class alignas(VL_CACHE_LINE_BYTES) VysyxSoCFull_ysyx_26010011_LSU final : public
         CData/*0:0*/ __VdfgRegularize_hc456a51f_0_4;
         CData/*0:0*/ __VdfgRegularize_hc456a51f_0_7;
         CData/*0:0*/ __VdfgRegularize_hc456a51f_0_8;
+        CData/*0:0*/ __VdfgRegularize_hc456a51f_0_10;
         VL_IN(__PVT__lsu_in_bus_addr,31,0);
         VL_IN(__PVT__lsu_in_bus_wdata,31,0);
         VL_OUT(__PVT__lsu_out_bus_rdata,31,0);
@@ -79,9 +80,9 @@ class alignas(VL_CACHE_LINE_BYTES) VysyxSoCFull_ysyx_26010011_LSU final : public
         IData/*31:0*/ __PVT__awaddr_q;
         IData/*31:0*/ __PVT__wdata_q;
         IData/*31:0*/ __PVT__val1;
-        IData/*31:0*/ __PVT__val2;
     };
     struct {
+        IData/*31:0*/ __PVT__val2;
         IData/*31:0*/ __PVT__val;
     };
 

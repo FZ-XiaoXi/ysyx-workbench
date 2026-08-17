@@ -20,7 +20,7 @@ VL_ATTR_COLD void VysyxSoCFull_ysyx_26010011_CSRs___ctor_var_reset(VysyxSoCFull_
     vlSelf->__PVT__csr_in_addw = VL_SCOPED_RAND_RESET_I(12, __VscopeHash, 377453252492950553ull);
     vlSelf->__PVT__csr_mtvec = VL_SCOPED_RAND_RESET_I(32, __VscopeHash, 16711562886451133210ull);
     vlSelf->__PVT__csr_mepc = VL_SCOPED_RAND_RESET_I(32, __VscopeHash, 14107046366709206832ull);
-    vlSelf->__PVT__csr_isECALL = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 4988352242987350720ull);
+    vlSelf->__PVT__csr_in_bus_exception = VL_SCOPED_RAND_RESET_I(5, __VscopeHash, 16682338572190360524ull);
     vlSelf->CSR_MCYCLE = VL_SCOPED_RAND_RESET_I(32, __VscopeHash, 11165352791181867570ull);
     vlSelf->CSR_MCYCLEH = VL_SCOPED_RAND_RESET_I(32, __VscopeHash, 16554325436592071722ull);
     vlSelf->CSR_MISA = VL_SCOPED_RAND_RESET_I(32, __VscopeHash, 13895988858667816389ull);
@@ -31,4 +31,7 @@ VL_ATTR_COLD void VysyxSoCFull_ysyx_26010011_CSRs___ctor_var_reset(VysyxSoCFull_
     vlSelf->CSR_MSTATUS = VL_SCOPED_RAND_RESET_I(32, __VscopeHash, 9103765532486773230ull);
     vlSelf->CSR_MVENDORID = VL_SCOPED_RAND_RESET_I(32, __VscopeHash, 16657965402645930187ull);
     vlSelf->CSR_MARCHID = VL_SCOPED_RAND_RESET_I(32, __VscopeHash, 3656773033635483453ull);
+    vlSelf->CSR_MTVAL = VL_SCOPED_RAND_RESET_I(32, __VscopeHash, 3083994470288762027ull);
+    vlSelf->__Vdly__CSR_MCYCLE = VL_SCOPED_RAND_RESET_I(32, __VscopeHash, 9136742363325421236ull);
+    vlSelf->__Vdly__CSR_MCYCLEH = VL_SCOPED_RAND_RESET_I(32, __VscopeHash, 13138794066615882441ull);
 }

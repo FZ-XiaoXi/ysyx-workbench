@@ -1,7 +1,6 @@
-// import "DPI-C" function void ebreak();
 import "DPI-C" function int pmem_read(input int raddr);
 import "DPI-C" function void pmem_write(input int waddr, input int wdata, input byte wmask);
-
+`include "ysyx_26010011_csr_defines.v"
 module ysyx_26010011(
   input clock,
   input reset/*verilator public*/,
@@ -131,14 +130,26 @@ module ysyx_26010011(
   //dnpc
   wire [31:0]dnpc;
   wire dnpc_valid;
-  assign dnpc=(exu_in_bus_isECALL|exu_in_bus_isMRET)?exu_out_bus_csr_result:exu_out_bus_alu_result;
-  assign dnpc_valid=((exu_in_bus_isECALL|exu_in_bus_isMRET) & exu_in_valid & exu_out_ready) | (exu_in_bus_isJUMP & exu_in_valid & exu_out_ready) | (exu_in_bus_isBRANCH & exu_in_valid & exu_out_bus_comp_result & exu_out_ready);
+  assign dnpc=(wbu_out_bus_exception[4])?
+            (
+              (wbu_out_bus_exception[3:0]==`EXCEPTION_MRET)?(csr_mepc):(csr_mtvec)
+            ):(
+              exu_out_bus_alu_result
+            );
+
+  assign dnpc_valid = exu_out_bus_dnpc_valid | flush_exception_valid;
   //flush_valid
-  wire flush_valid/*verilator public*/,ifu_flush_valid,idu_flush_valid,exu_flush_valid;
+  wire flush_valid/*verilator public*/,ifu_flush_valid,idu_flush_valid,exu_flush_valid,lsu_flush_valid,wbu_flush_valid;
+  wire flush_exception_valid/*verilator public*/ = wbu_out_bus_exception[4];
+
   assign flush_valid=dnpc_valid;
+
   assign ifu_flush_valid=flush_valid;
   assign idu_flush_valid=flush_valid;
   assign exu_flush_valid=flush_valid;
+  assign lsu_flush_valid=flush_exception_valid;
+  assign wbu_flush_valid=flush_exception_valid;
+
   ysyx_26010011_IFU IFU_0(
     .clock(clock),
     .reset(reset),
@@ -227,9 +238,6 @@ module ysyx_26010011(
     .idu_out_bus_rs2(gpr_raddrb),
     // .idu_out_bus_rcsr(idu_out_bus_rcsr),
     .idu_out_bus_imm(idu_out_bus_imm),
-    .idu_out_bus_isEBREAK(idu_out_bus_isEBREAK),
-    .idu_out_bus_isECALL(idu_out_bus_isECALL),
-    .idu_out_bus_isMRET(idu_out_bus_isMRET),
     .idu_out_bus_isLOAD(idu_out_bus_isLOAD),
     .idu_out_bus_isSTORE(idu_out_bus_isSTORE),
     .idu_out_bus_isWGPR(idu_out_bus_isWGPR),
@@ -250,7 +258,7 @@ module ysyx_26010011(
   wire [11:0]idu_out_bus_csrrd;
   wire [31:0]idu_out_bus_imm,idu_out_bus_csr;   //idu_out_bus_imm 可作CSR地址
   wire [12:0]idu_out_bus_signals;
-  wire idu_out_bus_isEBREAK,idu_out_bus_isECALL,idu_out_bus_isMRET,idu_out_bus_isLOAD,idu_out_bus_isSTORE,idu_out_bus_isWGPR,idu_out_bus_isJUMP,idu_out_bus_isWCOMP,idu_out_bus_isBRANCH,idu_out_bus_isUnSigned,idu_out_bus_isUsePC,idu_out_bus_alu_isUseImm,idu_out_bus_comp_isUseImm;
+  wire idu_out_bus_isLOAD,idu_out_bus_isSTORE,idu_out_bus_isWGPR,idu_out_bus_isJUMP,idu_out_bus_isWCOMP,idu_out_bus_isBRANCH,idu_out_bus_isUnSigned,idu_out_bus_isUsePC,idu_out_bus_alu_isUseImm,idu_out_bus_comp_isUseImm;
   wire [ 9:0]idu_out_bus_alu_op;
   wire [ 1:0]idu_out_bus_comp_op,idu_out_bus_perip_mask;
   wire [ 2:0]idu_out_bus_opCSR;
@@ -291,9 +299,6 @@ module ysyx_26010011(
     .idu_out_bus_rs2_val(gpr_rdatab),
     .idu_out_bus_imm((|idu_out_bus_opCSR)?csr_rdata:idu_out_bus_imm),     //CSR值
     .idu_out_bus_instruction(idu_in_bus_instruction),
-    .idu_out_bus_isEBREAK(idu_out_bus_isEBREAK),
-    .idu_out_bus_isECALL(idu_out_bus_isECALL),
-    .idu_out_bus_isMRET(idu_out_bus_isMRET),
     .idu_out_bus_isLOAD(idu_out_bus_isLOAD),
     .idu_out_bus_isSTORE(idu_out_bus_isSTORE),
     .idu_out_bus_isWGPR(idu_out_bus_isWGPR),
@@ -323,9 +328,6 @@ module ysyx_26010011(
     // .exu_in_bus_rcsr(),
     .exu_in_bus_imm(exu_in_bus_imm),
     .exu_in_bus_instruction(exu_in_bus_instruction),
-    .exu_in_bus_isEBREAK(exu_in_bus_isEBREAK),
-    .exu_in_bus_isECALL(exu_in_bus_isECALL),
-    .exu_in_bus_isMRET(exu_in_bus_isMRET),
     .exu_in_bus_isLOAD(exu_in_bus_isLOAD),
     .exu_in_bus_isSTORE(exu_in_bus_isSTORE),
     .exu_in_bus_isWGPR(exu_in_bus_isWGPR),
@@ -344,7 +346,7 @@ module ysyx_26010011(
     .exu_in_bus_snpc(exu_in_bus_snpc)
   );/*verilator public_module*/
 
-  wire exu_in_valid,exu_in_ready,exu_in_bus_isEBREAK,exu_in_bus_isECALL,exu_in_bus_isMRET,exu_in_bus_isLOAD,exu_in_bus_isSTORE,exu_in_bus_isWGPR,exu_in_bus_isJUMP,exu_in_bus_isWCOMP,exu_in_bus_isBRANCH,exu_in_bus_isUnSigned,exu_in_bus_isUsePC,exu_in_bus_alu_isUseImm,exu_in_bus_comp_isUseImm;
+  wire exu_in_valid,exu_in_ready,exu_in_bus_isLOAD,exu_in_bus_isSTORE,exu_in_bus_isWGPR,exu_in_bus_isJUMP,exu_in_bus_isWCOMP,exu_in_bus_isBRANCH,exu_in_bus_isUnSigned,exu_in_bus_isUsePC,exu_in_bus_alu_isUseImm,exu_in_bus_comp_isUseImm;
   wire [4:0]exu_in_bus_rd,exu_in_bus_rs1,exu_in_bus_rs2;
   wire [4:0]exu_in_bus_exception;
   wire [31:0]exu_in_bus_rs1_val,exu_in_bus_rs2_val,exu_in_bus_imm,exu_in_bus_instruction,exu_in_bus_pc,exu_in_bus_snpc;
@@ -368,6 +370,8 @@ module ysyx_26010011(
     .exu_in_bus_imm(exu_in_bus_imm),
     .exu_in_bus_alu_op(exu_in_bus_alu_op),
     .exu_in_bus_comp_op(exu_in_bus_comp_op),
+    .exu_in_bus_isJUMP(exu_in_bus_isJUMP),
+    .exu_in_bus_isBRANCH(exu_in_bus_isBRANCH),
     .exu_in_bus_opCSR(exu_in_bus_opCSR),
     .exu_in_bus_isUnSigned(exu_in_bus_isUnSigned),
     .exu_in_bus_isUsePC(exu_in_bus_isUsePC),//PC+imm
@@ -379,17 +383,18 @@ module ysyx_26010011(
     .exu_out_ready(exu_out_ready),
     .exu_out_bus_alu_result(exu_out_bus_alu_result),
     .exu_out_bus_csr_result(exu_out_bus_csr_result),
-    .exu_out_bus_comp_result(exu_out_bus_comp_result)       //暂存CSR目的地址
+    .exu_out_bus_comp_result(exu_out_bus_comp_result),       //暂存CSR目的地址
+    .exu_out_bus_dnpc_valid(exu_out_bus_dnpc_valid)
 );/*verilator public_module*/
   
-  wire exu_out_valid,exu_out_ready,exu_out_bus_comp_result;
+  wire exu_out_valid,exu_out_ready,exu_out_bus_comp_result,exu_out_bus_dnpc_valid;
   wire [4:0]exu_out_bus_exception;
   wire [31:0]exu_out_bus_alu_result,exu_out_bus_csr_result;
 
   ysyx_26010011_EX_LS_pipeline EX_LS_inst(
     .clock(clock),
     .reset(reset),
-    .flush_valid(),
+    .flush_valid(lsu_flush_valid),
 
     .exu_out_valid(exu_out_valid),
     .exu_out_ready(exu_out_ready),
@@ -401,9 +406,6 @@ module ysyx_26010011(
     .exu_out_bus_exception(exu_out_bus_exception),
     .exu_out_bus_csrrd(exu_in_bus_csrrd),
     .exu_out_bus_instruction(exu_in_bus_instruction),
-    .exu_out_bus_isEBREAK(exu_in_bus_isEBREAK),
-    .exu_out_bus_isECALL(exu_in_bus_isECALL),
-    .exu_out_bus_isMRET(exu_in_bus_isMRET),
     .exu_out_bus_isLOAD(exu_in_bus_isLOAD),
     .exu_out_bus_isSTORE(exu_in_bus_isSTORE),
     .exu_out_bus_isWGPR(exu_in_bus_isWGPR),
@@ -426,9 +428,6 @@ module ysyx_26010011(
     .lsu_in_bus_rd(lsu_in_bus_rd),
     .lsu_in_bus_csrrd(lsu_in_bus_csrrd),
     .lsu_in_bus_instruction(lsu_in_bus_instruction),
-    .lsu_in_bus_isEBREAK(lsu_in_bus_isEBREAK),
-    .lsu_in_bus_isECALL(lsu_in_bus_isECALL),
-    .lsu_in_bus_isMRET(lsu_in_bus_isMRET),
     .lsu_in_bus_isLOAD(lsu_in_bus_isLOAD),
     .lsu_in_bus_isSTORE(lsu_in_bus_isSTORE),
     .lsu_in_bus_isWGPR(lsu_in_bus_isWGPR),
@@ -441,7 +440,7 @@ module ysyx_26010011(
     .lsu_in_bus_pc(lsu_in_bus_pc),
     .lsu_in_bus_snpc(lsu_in_bus_snpc)
   );/*verilator public_module*/
-  wire lsu_in_valid,lsu_in_ready,lsu_in_bus_comp_result,lsu_in_bus_isEBREAK,lsu_in_bus_isECALL,lsu_in_bus_isMRET,lsu_in_bus_isLOAD,lsu_in_bus_isSTORE,lsu_in_bus_isWGPR,lsu_in_bus_isJUMP,lsu_in_bus_isWCOMP,lsu_in_bus_isBRANCH,lsu_in_bus_isUnSigned;
+  wire lsu_in_valid,lsu_in_ready,lsu_in_bus_comp_result,lsu_in_bus_isLOAD,lsu_in_bus_isSTORE,lsu_in_bus_isWGPR,lsu_in_bus_isJUMP,lsu_in_bus_isWCOMP,lsu_in_bus_isBRANCH,lsu_in_bus_isUnSigned;
   wire [31:0]lsu_in_bus_alu_result,lsu_in_bus_wdata,lsu_in_bus_instruction,lsu_in_bus_pc,lsu_in_bus_snpc,lsu_in_bus_csr_result;
   wire [1:0]lsu_in_bus_perip_mask;
   wire [4:0]lsu_in_bus_rd;
@@ -452,7 +451,7 @@ module ysyx_26010011(
   ysyx_26010011_LSU LSU_0(
     .clock(clock),
     .reset(reset),
-    .flush_valid(),
+    .flush_valid(lsu_flush_valid),
     .lsu_in_valid(lsu_in_valid),
     .lsu_in_ready(lsu_in_ready),
     .lsu_in_bus_exception(lsu_in_bus_exception),
@@ -519,7 +518,7 @@ module ysyx_26010011(
   ysyx_26010011_LS_WB_pipeline LS_WB_inst(
     .clock(clock),
     .reset(reset),
-    .flush_valid(),
+    .flush_valid(wbu_flush_valid),
 
     .lsu_out_valid(lsu_out_valid),
     .lsu_out_ready(lsu_out_ready),
@@ -531,9 +530,6 @@ module ysyx_26010011(
     .lsu_out_bus_exception(lsu_out_bus_exception),
     .lsu_out_bus_csrrd(lsu_in_bus_csrrd),
     .lsu_out_bus_instruction(lsu_in_bus_instruction),
-    .lsu_out_bus_isEBREAK(lsu_in_bus_isEBREAK),
-    .lsu_out_bus_isECALL(lsu_in_bus_isECALL),
-    .lsu_out_bus_isMRET(lsu_in_bus_isMRET),
     .lsu_out_bus_isLOAD(lsu_in_bus_isLOAD),
     .lsu_out_bus_isSTORE(lsu_in_bus_isSTORE),
     .lsu_out_bus_isWGPR(lsu_in_bus_isWGPR),
@@ -555,9 +551,6 @@ module ysyx_26010011(
     .wbu_in_bus_exception(wbu_in_bus_exception),
     .wbu_in_bus_csrrd(wbu_in_bus_csrrd),
     .wbu_in_bus_instruction(wbu_in_bus_instruction),
-    .wbu_in_bus_isEBREAK(wbu_in_bus_isEBREAK),
-    .wbu_in_bus_isECALL(wbu_in_bus_isECALL),
-    .wbu_in_bus_isMRET(wbu_in_bus_isMRET),
     .wbu_in_bus_isLOAD(wbu_in_bus_isLOAD),
     .wbu_in_bus_isSTORE(wbu_in_bus_isSTORE),
     .wbu_in_bus_isWGPR(wbu_in_bus_isWGPR),
@@ -570,7 +563,6 @@ module ysyx_26010011(
   );/*verilator public_module*/
 
   wire wbu_in_valid,wbu_in_ready,wbu_in_bus_isLOAD,wbu_in_bus_isSTORE,wbu_in_bus_isWGPR,wbu_in_bus_isJUMP,wbu_in_bus_isWCOMP,wbu_in_bus_isBRANCH;
-  wire wbu_in_bus_isECALL,wbu_in_bus_isMRET,wbu_in_bus_isEBREAK;
   wire [31:0]wbu_in_bus_pc,wbu_in_bus_snpc,wbu_in_bus_instruction;
   wire [31:0]wbu_in_bus_lsu_result,wbu_in_bus_alu_result,wbu_in_bus_csr_result;
   wire wbu_in_bus_comp_result;
@@ -582,7 +574,7 @@ module ysyx_26010011(
   ysyx_26010011_WBU WBU_0(
     .clock(clock),
     .reset(reset),
-    .flush_valid(),
+    .flush_valid(wbu_flush_valid),
 
     .wbu_in_valid(wbu_in_valid),
     .wbu_in_ready(wbu_in_ready),
@@ -602,6 +594,7 @@ module ysyx_26010011(
     .wbu_in_bus_isWCOMP(wbu_in_bus_isWCOMP),
     .wbu_in_bus_opCSR(wbu_in_bus_opCSR),
     .wbu_in_bus_exception(wbu_in_bus_exception),
+    .wbu_out_bus_exception(wbu_out_bus_exception),
     .gpr_we(gpr_we),
     .gpr_wdata(gpr_wdata),
     .gpr_address(gpr_waddr),
@@ -609,6 +602,7 @@ module ysyx_26010011(
     .csr_wdata(csr_wdata),
     .csr_address(csr_waddr)
   );/*verilator public_module*/
+  wire [4:0]wbu_out_bus_exception;
   //WBU FINAL
   reg tb_isFINAL/*verilator public*/,tb_dnpc_valid/*verilator public*/,tb_isMEM/*verilator public*/;
   reg [31:0]tb_FINAL_pc/*verilator public*/,tb_FINAL_npc/*verilator public*/,tb_alu_result/*verilator public*/,tb_FINAL_inst/*verilator public*/;
@@ -623,8 +617,9 @@ module ysyx_26010011(
     end else if(wbu_in_valid) begin
       tb_isFINAL<=1;
       tb_FINAL_pc<=wbu_in_bus_pc;
-      tb_FINAL_npc<=(wbu_in_bus_isJUMP | (wbu_in_bus_isBRANCH&wbu_in_bus_comp_result)) ? wbu_in_bus_alu_result : ((wbu_in_bus_isECALL|wbu_in_bus_isMRET)?wbu_in_bus_csr_result:wbu_in_bus_snpc);
-      tb_dnpc_valid<=(wbu_in_bus_isJUMP | (wbu_in_bus_isBRANCH&wbu_in_bus_comp_result) | (wbu_in_bus_isECALL|wbu_in_bus_isMRET));
+      tb_FINAL_npc<=(wbu_in_bus_isJUMP | (wbu_in_bus_isBRANCH&wbu_in_bus_comp_result)) ? wbu_in_bus_alu_result : ((wbu_in_bus_exception[4])?csr_mtvec:wbu_in_bus_snpc);//TODO MTVEC
+      tb_FINAL_npc<=(wbu_in_bus_exception[4])?((wbu_out_bus_exception[3:0]==`EXCEPTION_MRET)?csr_mepc:csr_mtvec):((wbu_in_bus_isJUMP | (wbu_in_bus_isBRANCH&wbu_in_bus_comp_result)) ? wbu_in_bus_alu_result : wbu_in_bus_snpc);//TODO MTVEC
+      tb_dnpc_valid<=(wbu_in_bus_isJUMP | (wbu_in_bus_isBRANCH&wbu_in_bus_comp_result) | (wbu_in_bus_exception[4]));
       tb_isMEM<=(wbu_in_bus_isLOAD | wbu_in_bus_isSTORE)&wbu_in_valid;
       tb_FINAL_inst<=wbu_in_bus_instruction;
     end else begin
@@ -708,10 +703,8 @@ module ysyx_26010011(
 
   wire [11:0]csr_waddr;
   wire [31:0]csr_wdata,csr_rdata;
-  wire csr_we,csr_isECALL;
+  wire csr_we;
   assign csr_pc = wbu_in_bus_pc;
-  assign csr_isECALL = wbu_in_bus_isECALL;
-  // assign csr_isMRET  = wbu_in_bus_isMRET;
   ysyx_26010011_CSRs CSR_0(
     .clock(clock),
     .reset(reset),
@@ -725,10 +718,6 @@ module ysyx_26010011(
     .csr_pc(csr_pc),
     .csr_mtvec(csr_mtvec),
     .csr_mepc(csr_mepc),
-    .csr_isECALL(csr_isECALL)
-    // .csr_isMRET(csr_isMRET)
+    .csr_in_bus_exception(wbu_out_bus_exception)
   );/*verilator public_module*/
-  // always @(posedge clock) begin
-  //   if(isEBREAK)  ebreak();
-  // end
 endmodule

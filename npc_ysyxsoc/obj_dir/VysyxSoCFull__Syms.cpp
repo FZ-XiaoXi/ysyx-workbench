@@ -56,7 +56,7 @@ VysyxSoCFull__Syms::VysyxSoCFull__Syms(VerilatedContext* contextp, const char* n
     , TOP__ysyxSoCFull__asic__luart__muart__Uregs{this, Verilated::catName(namep, "ysyxSoCFull.asic.luart.muart.Uregs")}
 {
     // Check resources
-    Verilated::stackCheck(2556);
+    Verilated::stackCheck(2552);
     // Configure time unit / time precision
     _vm_contextp__->timeunit(-9);
     _vm_contextp__->timeprecision(-12);
@@ -130,6 +130,7 @@ VysyxSoCFull__Syms::VysyxSoCFull__Syms(VerilatedContext* contextp, const char* n
     // Setup export functions
     for (int __Vfinal = 0; __Vfinal < 2; ++__Vfinal) {
         __Vscope_ysyxSoCFull__asic__axi4ram__mem_ext.varInsert(__Vfinal,"Memory", &(TOP__ysyxSoCFull__asic__axi4ram__mem_ext.Memory), false, VLVT_UINT32,VLVD_NODIR|VLVF_PUB_RW,1,1 ,0,2047 ,31,0);
+        __Vscope_ysyxSoCFull__asic__cpu__cpu.varInsert(__Vfinal,"flush_exception_valid", &(TOP__ysyxSoCFull__asic__cpu__cpu.flush_exception_valid), false, VLVT_UINT8,VLVD_NODIR|VLVF_PUB_RW,0,0);
         __Vscope_ysyxSoCFull__asic__cpu__cpu.varInsert(__Vfinal,"flush_valid", &(TOP__ysyxSoCFull__asic__cpu__cpu.flush_valid), false, VLVT_UINT8,VLVD_NODIR|VLVF_PUB_RW,0,0);
         __Vscope_ysyxSoCFull__asic__cpu__cpu.varInsert(__Vfinal,"idu_isRAW", &(TOP__ysyxSoCFull__asic__cpu__cpu.idu_isRAW), false, VLVT_UINT8,VLVD_NODIR|VLVF_PUB_RW,0,0);
         __Vscope_ysyxSoCFull__asic__cpu__cpu.varInsert(__Vfinal,"reset", &(TOP__ysyxSoCFull__asic__cpu__cpu.reset), false, VLVT_UINT8,VLVD_IN|VLVF_PUB_RW,0,0);
@@ -148,6 +149,7 @@ VysyxSoCFull__Syms::VysyxSoCFull__Syms(VerilatedContext* contextp, const char* n
         __Vscope_ysyxSoCFull__asic__cpu__cpu__CSR_0.varInsert(__Vfinal,"CSR_MISA", &(TOP__ysyxSoCFull__asic__cpu__cpu__CSR_0.CSR_MISA), false, VLVT_UINT32,VLVD_NODIR|VLVF_PUB_RW,0,1 ,31,0);
         __Vscope_ysyxSoCFull__asic__cpu__cpu__CSR_0.varInsert(__Vfinal,"CSR_MSCRATCH", &(TOP__ysyxSoCFull__asic__cpu__cpu__CSR_0.CSR_MSCRATCH), false, VLVT_UINT32,VLVD_NODIR|VLVF_PUB_RW,0,1 ,31,0);
         __Vscope_ysyxSoCFull__asic__cpu__cpu__CSR_0.varInsert(__Vfinal,"CSR_MSTATUS", &(TOP__ysyxSoCFull__asic__cpu__cpu__CSR_0.CSR_MSTATUS), false, VLVT_UINT32,VLVD_NODIR|VLVF_PUB_RW,0,1 ,31,0);
+        __Vscope_ysyxSoCFull__asic__cpu__cpu__CSR_0.varInsert(__Vfinal,"CSR_MTVAL", &(TOP__ysyxSoCFull__asic__cpu__cpu__CSR_0.CSR_MTVAL), false, VLVT_UINT32,VLVD_NODIR|VLVF_PUB_RW,0,1 ,31,0);
         __Vscope_ysyxSoCFull__asic__cpu__cpu__CSR_0.varInsert(__Vfinal,"CSR_MTVEC", &(TOP__ysyxSoCFull__asic__cpu__cpu__CSR_0.CSR_MTVEC), false, VLVT_UINT32,VLVD_NODIR|VLVF_PUB_RW,0,1 ,31,0);
         __Vscope_ysyxSoCFull__asic__cpu__cpu__CSR_0.varInsert(__Vfinal,"CSR_MVENDORID", &(TOP__ysyxSoCFull__asic__cpu__cpu__CSR_0.CSR_MVENDORID), false, VLVT_UINT32,VLVD_NODIR|VLVF_PUB_RW,0,1 ,31,0);
         __Vscope_ysyxSoCFull__asic__cpu__cpu__EX_LS_inst.varInsert(__Vfinal,"lsu_in_bus_pc", &(TOP__ysyxSoCFull__asic__cpu__cpu__EX_LS_inst.lsu_in_bus_pc), false, VLVT_UINT32,VLVD_OUT|VLVF_PUB_RW,0,1 ,31,0);
@@ -172,6 +174,7 @@ VysyxSoCFull__Syms::VysyxSoCFull__Syms(VerilatedContext* contextp, const char* n
         __Vscope_ysyxSoCFull__asic__cpu__cpu__LSU_0.varInsert(__Vfinal,"debug_LSU_LOAD_FINAL", &(TOP__ysyxSoCFull__asic__cpu__cpu__LSU_0.debug_LSU_LOAD_FINAL), false, VLVT_UINT8,VLVD_NODIR|VLVF_PUB_RW,0,0);
         __Vscope_ysyxSoCFull__asic__cpu__cpu__LSU_0.varInsert(__Vfinal,"debug_LSU_WRITE_FINAL", &(TOP__ysyxSoCFull__asic__cpu__cpu__LSU_0.debug_LSU_WRITE_FINAL), false, VLVT_UINT8,VLVD_NODIR|VLVF_PUB_RW,0,0);
         __Vscope_ysyxSoCFull__asic__cpu__cpu__LSU_0.varInsert(__Vfinal,"debug_LSU_WRITING", &(TOP__ysyxSoCFull__asic__cpu__cpu__LSU_0.debug_LSU_WRITING), false, VLVT_UINT8,VLVD_NODIR|VLVF_PUB_RW,0,0);
+        __Vscope_ysyxSoCFull__asic__cpu__cpu__LSU_0.varInsert(__Vfinal,"lsu_out_valid", &(TOP__ysyxSoCFull__asic__cpu__cpu__LSU_0.lsu_out_valid), false, VLVT_UINT8,VLVD_OUT|VLVF_PUB_RW,0,0);
         __Vscope_ysyxSoCFull__asic__cpu__cpu__LSU_0.varInsert(__Vfinal,"r_fire", &(TOP__ysyxSoCFull__asic__cpu__cpu__LSU_0.r_fire), false, VLVT_UINT8,VLVD_NODIR|VLVF_PUB_RW,0,0);
         __Vscope_ysyxSoCFull__asic__cpu__cpu__LSU_0.varInsert(__Vfinal,"state", &(TOP__ysyxSoCFull__asic__cpu__cpu__LSU_0.state), false, VLVT_UINT8,VLVD_NODIR|VLVF_PUB_RW,0,1 ,2,0);
         __Vscope_ysyxSoCFull__asic__cpu__cpu__LS_WB_inst.varInsert(__Vfinal,"wbu_in_bus_pc", &(TOP__ysyxSoCFull__asic__cpu__cpu__LS_WB_inst.wbu_in_bus_pc), false, VLVT_UINT32,VLVD_OUT|VLVF_PUB_RW,0,1 ,31,0);

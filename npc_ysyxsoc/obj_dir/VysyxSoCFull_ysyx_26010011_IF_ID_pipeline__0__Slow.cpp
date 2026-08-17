@@ -29,5 +29,4 @@ VL_ATTR_COLD void VysyxSoCFull_ysyx_26010011_IF_ID_pipeline___ctor_var_reset(Vys
     vlSelf->__Vdly__idu_in_bus_instruction = VL_SCOPED_RAND_RESET_I(32, __VscopeHash, 13433541435561990746ull);
     vlSelf->__Vdly__idu_in_bus_pc = VL_SCOPED_RAND_RESET_I(32, __VscopeHash, 1480325035876660660ull);
     vlSelf->__Vdly__idu_in_bus_snpc = VL_SCOPED_RAND_RESET_I(32, __VscopeHash, 6542986285180319241ull);
-    vlSelf->__Vdly__idu_in_bus_exception = VL_SCOPED_RAND_RESET_I(5, __VscopeHash, 11075674475090807948ull);
 }

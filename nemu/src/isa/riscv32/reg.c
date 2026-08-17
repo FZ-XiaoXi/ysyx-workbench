@@ -15,7 +15,7 @@
 
 #include <isa.h>
 #include "local-include/reg.h"
-
+#include <cpu/difftest.h>
 const char *regs[] = {
   "$0", "ra", "sp", "gp", "tp", "t0", "t1", "t2",
   "s0", "s1", "a0", "a1", "a2", "a3", "a4", "a5",
@@ -44,3 +44,56 @@ word_t isa_reg_str2val(const char *s, bool *success) {
   *success=false;
   return 0;
 }
+
+void isa_csr_w(word_t csraddr, word_t wdata){
+  if(
+      (csraddr == CSR_MCYCLE)
+    ||(csraddr == CSR_MCYCLEH)
+    ||(csraddr == CSR_MVENDORID)
+    ||(csraddr == CSR_MARCHID)
+    ||(csraddr == CSR_MISA)
+  ){
+
+  }else{
+    csr(csraddr) = wdata;
+  }
+
+}
+word_t isa_csr_r(word_t csraddr){
+  if(
+      (csraddr == CSR_MCYCLE)
+    ||(csraddr == CSR_MCYCLEH)
+  ){
+    difftest_skip_ref();
+  }else{
+
+  }
+  if(
+      (csraddr != CSR_MTVEC)
+    &&(csraddr != CSR_MSCRATCH)
+    &&(csraddr != CSR_MEPC)
+    &&(csraddr != CSR_MCAUSE)
+    &&(csraddr != CSR_MSTATUS)
+    &&(csraddr != CSR_MCYCLE)
+    &&(csraddr != CSR_MCYCLEH)
+    &&(csraddr != CSR_MISA)
+    &&(csraddr != CSR_MVENDORID)
+    &&(csraddr != CSR_MARCHID)
+    &&(csraddr != CSR_MTVAL)
+  ){
+    Assert(0,"Error Read CSR Address!");
+    return 0x67678787;
+  }
+  return csr(csraddr);
+}
+// #define CSR_MTVEC  0x305
+// #define CSR_MSCRATCH 0x340
+// #define CSR_MEPC   0x341
+// #define CSR_MCAUSE 0x342
+// #define CSR_MSTATUS 0x300
+// #define CSR_MCYCLE 0xb00
+// #define CSR_MCYCLEH 0xb80
+// #define CSR_MISA   0x301
+// #define CSR_MVENDORID 0xf11
+// #define CSR_MARCHID 0xf12
+// #endif

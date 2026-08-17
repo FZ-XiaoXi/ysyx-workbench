@@ -53,8 +53,7 @@ module ysyx_26010011_CSRs(
   output     [31:0]csr_mtvec,
   output     [31:0]csr_mepc,
   
-  input            csr_isECALL
-  // input            isMRET
+  input [4:0]csr_in_bus_exception
 );
 
 
@@ -68,6 +67,7 @@ module ysyx_26010011_CSRs(
   reg [31:0]CSR_MSTATUS/* verilator public */;
   reg [31:0]CSR_MVENDORID/* verilator public */;
   reg [31:0]CSR_MARCHID/* verilator public */;
+  reg [31:0]CSR_MTVAL/* verilator public */;
 
   always @(*) begin
     case(csr_in_addr)
@@ -81,6 +81,8 @@ module ysyx_26010011_CSRs(
       `ADD_MSTATUS:   csr_out_data = CSR_MSTATUS;
       `ADD_MVENDORID:   csr_out_data = CSR_MVENDORID;
       `ADD_MARCHID:   csr_out_data = CSR_MARCHID;
+      `ADD_MTVAL:      csr_out_data = CSR_MTVAL;
+      
       default:      csr_out_data = 32'h2b2b2b2b;
     endcase
   end
@@ -97,8 +99,14 @@ module ysyx_26010011_CSRs(
       CSR_MSTATUS <= 32'h1800;
       CSR_MVENDORID <= 32'h79737978;
       CSR_MARCHID <= 32'h018ce19b;
+      CSR_MTVAL <= 32'h00;
     end else if(1) begin
-      if(csr_in_wen) begin
+      if(csr_in_bus_exception[4]) begin
+        if(csr_in_bus_exception[3:0] != `EXCEPTION_MRET) begin
+          CSR_MEPC    <= csr_pc;
+          CSR_MCAUSE  <= {1'b0, 27'b0, csr_in_bus_exception[3:0]};
+        end
+      end else if(csr_in_wen) begin
         case (csr_in_addw)
             `ADD_MTVEC:      CSR_MTVEC   <= csr_in_data;
             `ADD_MSCRATCH: begin
@@ -108,23 +116,13 @@ module ysyx_26010011_CSRs(
             `ADD_MEPC:       CSR_MEPC    <= csr_in_data;
             `ADD_MCAUSE:     CSR_MCAUSE  <= csr_in_data;
             `ADD_MSTATUS:    CSR_MSTATUS <= csr_in_data;
+            `ADD_MTVAL:      CSR_MTVAL   <= csr_in_data;
             default:;
         endcase
-        if(csr_isECALL) begin
-          CSR_MEPC   <= csr_pc;
-          CSR_MCAUSE <= 32'd11;
-        end
-      // end else if(isECALL)begin
-      //   CSR_MEPC   <= pc;
-      //   CSR_MCAUSE <= 32'd11;
       end
 
       CSR_MCYCLE <= CSR_MCYCLE + 1;
       CSR_MCYCLEH <= (&CSR_MCYCLE)?(CSR_MCYCLEH + 1):CSR_MCYCLEH;
-
-
-      //ECALL
-      
     end
   end
 

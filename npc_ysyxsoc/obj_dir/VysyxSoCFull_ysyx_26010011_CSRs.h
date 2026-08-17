@@ -17,7 +17,7 @@ class alignas(VL_CACHE_LINE_BYTES) VysyxSoCFull_ysyx_26010011_CSRs final : publi
     VL_IN8(__PVT__clock,0,0);
     VL_IN8(__PVT__reset,0,0);
     VL_IN8(__PVT__csr_in_wen,0,0);
-    VL_IN8(__PVT__csr_isECALL,0,0);
+    VL_IN8(__PVT__csr_in_bus_exception,4,0);
     VL_IN16(__PVT__csr_in_addr,11,0);
     VL_IN16(__PVT__csr_in_addw,11,0);
     VL_OUT(__PVT__csr_out_data,31,0);
@@ -35,6 +35,9 @@ class alignas(VL_CACHE_LINE_BYTES) VysyxSoCFull_ysyx_26010011_CSRs final : publi
     IData/*31:0*/ CSR_MSTATUS;
     IData/*31:0*/ CSR_MVENDORID;
     IData/*31:0*/ CSR_MARCHID;
+    IData/*31:0*/ CSR_MTVAL;
+    IData/*31:0*/ __Vdly__CSR_MCYCLE;
+    IData/*31:0*/ __Vdly__CSR_MCYCLEH;
 
     // INTERNAL VARIABLES
     VysyxSoCFull__Syms* const vlSymsp;
