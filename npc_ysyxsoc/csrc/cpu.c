@@ -126,19 +126,19 @@ void cpu_exec(uint64_t n){
 			cpu.counter_inst++;
 			static int cnt=0;
 			if(cnt++ >= 10000 || (cpu.state != NPC_RUNNING)){
-				Log("\n[cyc=%ld][inst=%lu][AvgIPC=%.2f][Raw%ld][flush=%ld][PC=0x%08X]\n[GetI=%lu Cyc=%lu Hit=%.2f HC=%.2f Miss=%.2f MC=%.2f]\n[MemI=%lu Cyc=%lu Avg=%.2f|LI=%lu Cyc=%lu Avg=%.2f|SI=%lu Cyc=%lu Avg=%.2f]",
+				Log("\n[cyc=%ld][inst=%lu][AvgIPC=%.2f][Raw%ld][flush=%ld][PC=0x%08X]\n[GetI=%lu AvgCyc=%.2f Hit=%.2f HC=%.2f Miss=%.2f MC=%.2f]\n[MemI=%lu Avg=%.2f|LI=%lu Avg=%.2f|SI=%lu Avg=%.2f]",
 					cpu.counter_cycle,cpu.counter_inst,(float)((float)cpu.counter_inst/(float)cpu.counter_cycle),cpu.counter_raw,cpu.counter_flush,cpu.tb_FINAL_pc,
 
 					cpu.counter_IFU_get_inst,
-					cpu.counter_IFU_get_inst_cyc,
+					(float)(cpu.counter_IFU_get_inst_cyc)/(float)(cpu.counter_IFU_get_inst),
 					(float)(cpu.counter_IFU_ichache_hit)/(float)(cpu.counter_IFU_get_inst),
 					(float)(cpu.counter_IFU_get_inst_cyc - cpu.counter_IFU_get_inst_miss_cyc)/(float)(cpu.counter_IFU_ichache_hit),
 					(float)(cpu.counter_IFU_get_inst-cpu.counter_IFU_ichache_hit)/(float)(cpu.counter_IFU_get_inst),
 					(float)(cpu.counter_IFU_get_inst_miss_cyc)/(float)((cpu.counter_IFU_get_inst-cpu.counter_IFU_ichache_hit)),
 
-					cpu.counter_LSU_mem,(cpu.counter_LSU_load_cyc+cpu.counter_LSU_store_cyc),((float)(cpu.counter_LSU_load_cyc+cpu.counter_LSU_store_cyc)/(float)(cpu.counter_LSU_mem)),
-					cpu.counter_LSU_get_data,cpu.counter_LSU_load_cyc, (float)((float)(cpu.counter_LSU_load_cyc)/(float)(cpu.counter_LSU_get_data)),
-					cpu.counter_LSU_put_data,cpu.counter_LSU_store_cyc,(float)((float)(cpu.counter_LSU_store_cyc)/(float)(cpu.counter_LSU_put_data))
+					cpu.counter_LSU_mem, ((float)(cpu.counter_LSU_load_cyc+cpu.counter_LSU_store_cyc)/(float)(cpu.counter_LSU_mem)),
+					cpu.counter_LSU_get_data, (float)((float)(cpu.counter_LSU_load_cyc)/(float)(cpu.counter_LSU_get_data)),
+					cpu.counter_LSU_put_data, (float)((float)(cpu.counter_LSU_store_cyc)/(float)(cpu.counter_LSU_put_data))
 				);
 				cnt=0;
 			}

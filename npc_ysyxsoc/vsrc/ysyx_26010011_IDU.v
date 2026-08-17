@@ -5,12 +5,14 @@ module ysyx_26010011_IDU(
     input idu_isRAW,
     //IFU->IDU
     input        [31:0]idu_in_bus_instruction,
+    input        [ 4:0]idu_in_bus_exception,
     input              idu_in_valid,
     output             idu_in_ready,
     //IDU->EXU
     output             idu_out_valid,
     input              idu_out_ready,
     output       [ 4:0]idu_out_bus_rd,
+    output       [ 4:0]idu_out_bus_exception,
     output       [11:0]idu_out_bus_csrrd,
     output       [ 4:0]idu_out_bus_rs1,
     output       [ 4:0]idu_out_bus_rs2,
@@ -50,13 +52,12 @@ module ysyx_26010011_IDU(
     logic isXORI, isORI, isANDI, isSLLI, isSRLI, isSRAI, isADD, isSUB, isSLL, isSLT;
     logic isSLTU, isXOR, isSRL, isSRA, isOR, isAND, isMUL, isMULH, isMULHSU;
     logic isMULHU, isDIV, isDIVU, isREM, isREMU;
-    logic isXPERM4, isXPERM8;
-    logic isZEXT_H;
 
     logic isCSRRW,isCSRRS,isCSRRC,isCSRRWI,isCSRRSI,isCSRRCI;
 
     logic isR,isI,isS,isB,isU,isJ;
     assign opcode=  idu_in_bus_instruction[ 6: 0];
+    assign idu_out_bus_exception = idu_in_bus_exception;
     assign idu_out_bus_rd=      (idu_out_bus_isECALL|idu_out_bus_isMRET)?           5'b00000:idu_in_bus_instruction[11: 7];
     assign idu_out_bus_csrrd=   (idu_out_bus_isECALL)?`ADD_MTVEC:(idu_out_bus_isMRET?`ADD_MEPC:idu_in_bus_instruction[31:20]);
     assign idu_out_bus_rs1=     (idu_out_bus_isECALL|idu_out_bus_isMRET)?           5'b00000:idu_in_bus_instruction[19:15];
@@ -131,23 +132,17 @@ module ysyx_26010011_IDU(
     assign isREM    = (opcode == 7'b0110011 && funct3 == 3'b110 && funct7 == 7'b0000001 ) ? 1 : 0;
     assign isREMU   = (opcode == 7'b0110011 && funct3 == 3'b111 && funct7 == 7'b0000001 ) ? 1 : 0;
 
-    // Zbkx: crossbar permutation
-    assign isXPERM4 = (opcode == 7'b0110011 && funct3 == 3'b010 && funct7 == 7'b0010100 ) ? 1 : 0;
-    assign isXPERM8 = 0;
-    // Zbb: zero-extend halfword
-    assign isZEXT_H = (opcode == 7'b0110011 && funct3 == 3'b100 && funct7 == 7'b0000100 && idu_in_bus_instruction[24:20] == 5'd0) ? 1 : 0;
-
 
 /////////////////////////
     assign idu_out_bus_isLOAD = (isLW|isLBU|isLB|isLH|isLHU)?1:0;
     assign idu_out_bus_isSTORE= (isSW|isSB|isSH)?1:0;
-    assign idu_out_bus_isWGPR = (isLUI|isAUIPC|isJAL|isJALR|isADDI|isSLTI|isSLTIU|isXORI|isORI|isANDI|isSLLI|isSRLI|isSRAI|isADD|isSUB|isSLL|isSLT|isSLTU|isXOR|isSRL|isSRA|isOR|isAND|isMUL|isMULH|isMULHSU|isMULHU|isDIV|isDIVU|isREM|isREMU|isXPERM4|isXPERM8|isZEXT_H|idu_out_bus_isLOAD|(|idu_out_bus_opCSR))?1:0;
+    assign idu_out_bus_isWGPR = (isLUI|isAUIPC|isJAL|isJALR|isADDI|isSLTI|isSLTIU|isXORI|isORI|isANDI|isSLLI|isSRLI|isSRAI|isADD|isSUB|isSLL|isSLT|isSLTU|isXOR|isSRL|isSRA|isOR|isAND|isMUL|isMULH|isMULHSU|isMULHU|isDIV|isDIVU|isREM|isREMU|idu_out_bus_isLOAD|(|idu_out_bus_opCSR))?1:0;
     assign idu_out_bus_isJUMP= (isJAL|isJALR)?1:0;
     assign idu_out_bus_isUsePC = (isAUIPC|isJAL|isBEQ|isBNE|isBLT|isBGE|isBLTU|isBGEU)?1:0;
     assign idu_out_bus_isWCOMP=(isSLTI|isSLTIU|isSLT|isSLTU)?1:0;
 /////////////////////////
     assign isI=(isADDI|isSLTI|isSLTIU|isXORI|isORI|isANDI|isSLLI|isSRLI|isSRAI|isJALR|isLW|isLBU|isLB|isLH|isLHU|(|idu_out_bus_opCSR))?1:0;
-    assign isR=(isADD|isSUB|isSLL|isSLT|isSLTU|isXOR|isSRL|isSRA|isOR|isAND|isMUL|isMULH|isMULHSU|isMULHU|isDIV|isDIVU|isREM|isREMU|isXPERM4|isXPERM8|isZEXT_H)?1:0;
+    assign isR=(isADD|isSUB|isSLL|isSLT|isSLTU|isXOR|isSRL|isSRA|isOR|isAND|isMUL|isMULH|isMULHSU|isMULHU|isDIV|isDIVU|isREM|isREMU)?1:0;
     assign isS=(isSW|isSB|isSH)?1:0;
     assign isB=(isBEQ|isBNE|isBLT|isBGE|isBLTU|isBGEU)?1:0;
     assign isU=(isLUI|isAUIPC)?1:0;
@@ -192,8 +187,8 @@ module ysyx_26010011_IDU(
     assign idu_out_bus_alu_op[9]=(isAUIPC|isJAL|isJALR|isADD|isLW|isLBU|isLB|isLH|isSW|isSH|isSB|isADDI|isLHU|isBEQ|isBNE|isBLT|isBGE|isBLTU|isBGEU)?1:0;
     assign idu_out_bus_alu_op[8]=(isSUB)?1:0;
     // Zbc: alu_op[7]=1, comp_op encodes: 00=clmul, 01=clmulh, 10=clmulr
-    assign idu_out_bus_alu_op[7]=(isXPERM4|isXPERM8)?1:0;
-    assign idu_out_bus_alu_op[6]=(isZEXT_H)?1:0;
+    assign idu_out_bus_alu_op[7]=(0)?1:0;
+    assign idu_out_bus_alu_op[6]=(0)?1:0;
     assign idu_out_bus_alu_op[5]=(isSLLI|isSLL)?1:0;
     assign idu_out_bus_alu_op[4]=(isSRLI|isSRL)?1:0;
     assign idu_out_bus_alu_op[3]=(isSRAI|isSRA)?1:0;
@@ -206,8 +201,6 @@ module ysyx_26010011_IDU(
         else if(isBLTU|isBLT|isSLT|isSLTI|isSLTIU|isSLTU)   idu_out_bus_comp_op=2'b01;
         else if(isBNE)                                      idu_out_bus_comp_op=2'b10;
         else if(isBEQ)                                      idu_out_bus_comp_op=2'b11;
-        // Zbkx subtype: 00=xperm4, 01=xperm8
-        else if(isXPERM4)                                   idu_out_bus_comp_op=2'b00;
         else                                                idu_out_bus_comp_op=0;
     end
 

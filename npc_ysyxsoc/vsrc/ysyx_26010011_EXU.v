@@ -4,6 +4,7 @@ module ysyx_26010011_EXU(
     input            flush_valid,
 
     input            exu_in_valid,
+	input      [ 4:0]exu_in_bus_exception,
     output           exu_in_ready,
     input      [31:0]exu_in_bus_a,
     input      [31:0]exu_in_bus_b,
@@ -19,6 +20,7 @@ module ysyx_26010011_EXU(
 
 
     output           exu_out_valid,
+	output     [ 4:0]exu_out_bus_exception,
     input            exu_out_ready,
     output reg [31:0]exu_out_bus_alu_result,
     output reg [31:0]exu_out_bus_csr_result,
@@ -34,6 +36,7 @@ module ysyx_26010011_EXU(
 
     assign exu_in_ready = exu_out_ready;
     assign exu_out_valid = exu_in_valid;
+	assign exu_out_bus_exception = exu_in_bus_exception;
     wire [31:0]op_xor;
     wire [31:0]op_or;
     wire [31:0]op_and;

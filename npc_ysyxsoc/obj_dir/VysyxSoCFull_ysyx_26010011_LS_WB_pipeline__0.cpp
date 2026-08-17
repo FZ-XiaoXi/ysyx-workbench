@@ -19,6 +19,7 @@ void VysyxSoCFull_ysyx_26010011_LS_WB_pipeline___nba_sequent__TOP__ysyxSoCFull__
         vlSelfRef.__PVT__wbu_in_bus_comp_result = 0U;
         vlSelfRef.__PVT__wbu_in_bus_snpc = 0U;
         vlSelfRef.__PVT__wbu_in_bus_rd = 0U;
+        vlSelfRef.__PVT__wbu_in_bus_exception = 0U;
         vlSelfRef.__PVT__wbu_in_bus_csrrd = 0U;
         vlSelfRef.__PVT__wbu_in_bus_isEBREAK = 0U;
         vlSelfRef.__PVT__wbu_in_bus_isECALL = 0U;
@@ -40,6 +41,7 @@ void VysyxSoCFull_ysyx_26010011_LS_WB_pipeline___nba_sequent__TOP__ysyxSoCFull__
         vlSelfRef.__PVT__wbu_in_bus_comp_result = 0U;
         vlSelfRef.__PVT__wbu_in_bus_snpc = 0U;
         vlSelfRef.__PVT__wbu_in_bus_rd = 0U;
+        vlSelfRef.__PVT__wbu_in_bus_exception = 0U;
         vlSelfRef.__PVT__wbu_in_bus_csrrd = 0U;
         vlSelfRef.__PVT__wbu_in_bus_isEBREAK = 0U;
         vlSelfRef.__PVT__wbu_in_bus_isECALL = 0U;
@@ -96,6 +98,7 @@ void VysyxSoCFull_ysyx_26010011_LS_WB_pipeline___nba_sequent__TOP__ysyxSoCFull__
         vlSelfRef.__PVT__wbu_in_bus_comp_result = vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__EX_LS_inst.__PVT__lsu_in_bus_comp_result;
         vlSelfRef.__PVT__wbu_in_bus_snpc = vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__EX_LS_inst.__PVT__lsu_in_bus_snpc;
         vlSelfRef.__PVT__wbu_in_bus_rd = vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__EX_LS_inst.__PVT__lsu_in_bus_rd;
+        vlSelfRef.__PVT__wbu_in_bus_exception = vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__EX_LS_inst.__PVT__lsu_in_bus_exception;
         vlSelfRef.__PVT__wbu_in_bus_csrrd = vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__EX_LS_inst.__PVT__lsu_in_bus_csrrd;
         vlSelfRef.__PVT__wbu_in_bus_isEBREAK = vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__EX_LS_inst.__PVT__lsu_in_bus_isEBREAK;
         vlSelfRef.__PVT__wbu_in_bus_isECALL = vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__EX_LS_inst.__PVT__lsu_in_bus_isECALL;

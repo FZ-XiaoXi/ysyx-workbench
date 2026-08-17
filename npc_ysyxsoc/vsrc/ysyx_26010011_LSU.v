@@ -6,6 +6,7 @@ module ysyx_26010011_LSU(
     input             flush_valid,
     // CPU 流水线接口
     input            lsu_in_valid,
+    input      [ 4:0]lsu_in_bus_exception,
     output           lsu_in_ready,
     input      [31:0]lsu_in_bus_addr,
     input      [31:0]lsu_in_bus_wdata,
@@ -15,6 +16,7 @@ module ysyx_26010011_LSU(
     input            lsu_in_bus_isSTORE,
 
     output           lsu_out_valid,
+    output     [ 4:0]lsu_out_bus_exception,
     input            lsu_out_ready,
     output reg [31:0]lsu_out_bus_rdata,
     
@@ -124,9 +126,18 @@ module ysyx_26010011_LSU(
     assign rready  = ((state == S_WAIT_RDATA) || (state == S_IDLE)) & lsu_out_ready & !reset;
 
     always @(*) begin
-        // if(lsu_wen && lsu_reqEN) begin
-        //     difftest_mem_set(lsu_addr);
-        // end
+        if(lsu_in_bus_isSTORE && awvalid && awready) begin
+            if((
+                (lsu_in_bus_addr >= 32'h30000000 && lsu_in_bus_addr < 32'h31000000)
+                ||(lsu_in_bus_addr >= 32'h0f000000 && lsu_in_bus_addr < 32'h0f002000)
+                ||(lsu_in_bus_addr >= 32'h80000000 && lsu_in_bus_addr < 32'h80400000)
+                ||(lsu_in_bus_addr >= 32'ha0000000 && lsu_in_bus_addr < 32'ha8000000)
+                ||(lsu_in_bus_addr >= 32'h20000000 && lsu_in_bus_addr < 32'h20001000)
+            ))
+            begin
+                difftest_mem_set(lsu_in_bus_addr);
+            end
+        end
         if(((lsu_in_bus_isSTORE && lsu_in_valid)||(lsu_in_bus_isLOAD && lsu_in_valid)) && !(
                 (lsu_in_bus_addr >= 32'h30000000 && lsu_in_bus_addr < 32'h31000000)
               ||(lsu_in_bus_addr >= 32'h0f000000 && lsu_in_bus_addr < 32'h0f002000)
@@ -134,8 +145,12 @@ module ysyx_26010011_LSU(
               ||(lsu_in_bus_addr >= 32'ha0000000 && lsu_in_bus_addr < 32'ha8000000)
               ||(lsu_in_bus_addr >= 32'h20000000 && lsu_in_bus_addr < 32'h20001000)
         )) begin
-            difftest_skip_ref(lsu_in_bus_addr);
+            if((lsu_in_bus_addr >= 32'h10000000) && (lsu_in_bus_addr <= 32'h10000005)) begin
+                difftest_skip_ref(lsu_in_bus_addr);
+            end
         end
+
+
     end
 
     always @(*) begin
@@ -184,9 +199,10 @@ module ysyx_26010011_LSU(
         else     state <= next_state;
     end
 
-    assign lsu_out_valid =  lsu_in_valid & 
-                            ((state == S_WAIT_RDATA && r_fire) || 
+    assign lsu_out_valid =  lsu_in_valid &
+                            ((state == S_WAIT_RDATA && r_fire) ||
                              (state == S_WAIT_BRESP && b_fire) || !(lsu_in_bus_isLOAD || lsu_in_bus_isSTORE));
+    assign lsu_out_bus_exception = lsu_in_bus_exception;
     assign lsu_in_ready = (lsu_in_valid & (lsu_in_bus_isLOAD | lsu_in_bus_isSTORE)) ? (lsu_out_ready & (r_fire | b_fire)):(1);
 
     wire [31:0] val0 = rdata; 

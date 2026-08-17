@@ -23,6 +23,7 @@ extern uint16_t SDRAM10[CONFIG_SDRAMSIZE>>3];
 extern uint16_t SDRAM11[CONFIG_SDRAMSIZE>>3];
 void pmem_write(int waddr, int wdata, char wmask);
 int pmem_read(int raddr);
+uint32_t sdram_read_word(uint32_t raddr);
 bool check_sram_bound(uint32_t addr);
 bool check_mrom_bound(uint32_t addr);
 #endif

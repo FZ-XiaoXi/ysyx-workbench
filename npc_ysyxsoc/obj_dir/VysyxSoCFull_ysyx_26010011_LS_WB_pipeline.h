@@ -21,6 +21,7 @@ class alignas(VL_CACHE_LINE_BYTES) VysyxSoCFull_ysyx_26010011_LS_WB_pipeline fin
     VL_OUT8(__PVT__lsu_out_ready,0,0);
     VL_IN8(__PVT__lsu_out_bus_comp_result,0,0);
     VL_IN8(__PVT__lsu_out_bus_rd,4,0);
+    VL_IN8(__PVT__lsu_out_bus_exception,4,0);
     VL_IN8(__PVT__lsu_out_bus_isEBREAK,0,0);
     VL_IN8(__PVT__lsu_out_bus_isECALL,0,0);
     VL_IN8(__PVT__lsu_out_bus_isMRET,0,0);
@@ -35,6 +36,7 @@ class alignas(VL_CACHE_LINE_BYTES) VysyxSoCFull_ysyx_26010011_LS_WB_pipeline fin
     VL_IN8(__PVT__wbu_in_ready,0,0);
     VL_OUT8(__PVT__wbu_in_bus_comp_result,0,0);
     VL_OUT8(__PVT__wbu_in_bus_rd,4,0);
+    VL_OUT8(__PVT__wbu_in_bus_exception,4,0);
     VL_OUT8(__PVT__wbu_in_bus_isEBREAK,0,0);
     VL_OUT8(__PVT__wbu_in_bus_isECALL,0,0);
     VL_OUT8(__PVT__wbu_in_bus_isMRET,0,0);

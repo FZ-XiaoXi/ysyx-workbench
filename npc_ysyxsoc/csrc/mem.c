@@ -15,15 +15,18 @@ uint16_t SDRAM11[CONFIG_SDRAMSIZE>>3];
 
 
 int pmem_read(int raddr){
-	if(check_sram_bound(raddr)){
-		// 总是读取地址为`raddr & ~0x3u`的4字节返回
-		mtrace(raddr, 0x0000, 0);
-		return MEM(raddr);
+	if(raddr >= CONFIG_SRAMBASE && raddr < CONFIG_SRAMBASE + CONFIG_SRAMSIZE){
+		return CPUSRAMTop[(raddr - CONFIG_SRAMBASE)>>2];
+	}else if(raddr >= CONFIG_MROMBASE && raddr < CONFIG_MROMBASE + CONFIG_MROMSIZE){
+		return MROM(raddr);
+	}else if(raddr >= CONFIG_FLASHBASE && raddr < CONFIG_FLASHBASE + CONFIG_FLASHSIZE){
+		return FLASH(raddr);
+	}else if(raddr >= CONFIG_PSRAMBASE && raddr < CONFIG_PSRAMBASE + CONFIG_PSRAMSIZE){
+		return (uint32_t)PSRAM(raddr);
+	}else if(raddr >= CONFIG_SDRAMBASE && raddr < CONFIG_SDRAMBASE + CONFIG_SDRAMSIZE){
+		return sdram_read_word(raddr);
 	}else{
-		uint32_t data;
-		read_devices(raddr, &data);
-		//Assert(read_devices(raddr, &data), "Out of bound ["FMT_WORD"] (read pmem)", raddr);
-		return data;
+		return 0x2b2b2b2b;
 	}
 }
 
@@ -98,6 +101,25 @@ extern void sdram_read(int raddr, int count, int* rdata, int sel) {
 		default: Assert(0, "Invalid sel value for sdram_read");
 	}
 }
+
+uint32_t sdram_read_word(uint32_t raddr) {
+	uint16_t dataL,dataH;
+	uint32_t bank = (raddr >> 11) & 0x3;
+	uint32_t bank_ext = (raddr >> 13) & 0x1;
+	uint32_t row = (raddr>>14)&0x1fff;
+	uint32_t col = (raddr>>2)&0x1ff;
+	uint32_t wire_addr = (col << 2) | (bank << (2 + 9)) |( row << (2 + 9 + 2));
+
+	if(!bank_ext){
+		sdram_read(wire_addr, 0, (int*)&dataL, 0x0);
+		sdram_read(wire_addr, 0, (int*)&dataH, 0x1);
+	}else{
+		sdram_read(wire_addr, 0, (int*)&dataL, 0x2);
+		sdram_read(wire_addr, 0, (int*)&dataH, 0x3);
+	}
+	return (uint32_t)((uint32_t)dataL | ((uint32_t)dataH << 16));
+}
+
 extern void sdram_write(int waddr, int count, int wdata, int sel){
 	uint8_t wenH = (wdata >> 31)&0x1;
 	uint8_t wenL = (wdata >> 30)&0x1;

@@ -146,10 +146,7 @@ class alignas(VL_CACHE_LINE_BYTES) VysyxSoCFull_ysyx_26010011 final : public Ver
         CData/*0:0*/ __PVT__IDU_0__DOT__isMULHU;
         CData/*0:0*/ __PVT__IDU_0__DOT__isDIV;
         CData/*0:0*/ __PVT__IDU_0__DOT__isDIVU;
-        CData/*0:0*/ __PVT__IDU_0__DOT__isREM;
         CData/*0:0*/ __PVT__IDU_0__DOT__isREMU;
-        CData/*0:0*/ __PVT__IDU_0__DOT__isXPERM4;
-        CData/*0:0*/ __PVT__IDU_0__DOT__isZEXT_H;
         CData/*0:0*/ __PVT__IDU_0__DOT__isCSRRW;
         CData/*0:0*/ __PVT__IDU_0__DOT__isCSRRS;
         CData/*0:0*/ __PVT__IDU_0__DOT__isCSRRC;
@@ -159,14 +156,15 @@ class alignas(VL_CACHE_LINE_BYTES) VysyxSoCFull_ysyx_26010011 final : public Ver
         CData/*0:0*/ __PVT__IDU_0__DOT__isI;
         CData/*0:0*/ __PVT__IDU_0__DOT__isU;
         CData/*0:0*/ IDU_0__DOT____VdfgRegularize_hd1728725_0_1;
+        CData/*0:0*/ IDU_0__DOT____VdfgRegularize_hd1728725_0_24;
         CData/*0:0*/ IDU_0__DOT____VdfgRegularize_hd1728725_0_29;
         CData/*0:0*/ IDU_0__DOT____VdfgRegularize_hd1728725_0_30;
         CData/*0:0*/ IDU_0__DOT____VdfgRegularize_hd1728725_0_33;
         CData/*0:0*/ IDU_0__DOT____VdfgRegularize_hd1728725_0_34;
-    };
-    struct {
         CData/*0:0*/ IDU_0__DOT____VdfgRegularize_hd1728725_0_37;
         CData/*0:0*/ __PVT__EXU_0__DOT__exu_in_ready;
+    };
+    struct {
         CData/*0:0*/ __PVT__EXU_0__DOT__exu_out_bus_comp_result;
         CData/*0:0*/ __PVT__EXU_0__DOT__comp_isEQUAL;
         CData/*0:0*/ __PVT__WBU_0__DOT__flush_valid;
