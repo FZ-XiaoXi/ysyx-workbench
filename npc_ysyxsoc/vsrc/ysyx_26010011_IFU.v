@@ -1,3 +1,4 @@
+`include "ysyx_26010011_csr_defines.v"
 module ysyx_26010011_IFU(
 	input clock,
 	input reset,
@@ -60,20 +61,20 @@ module ysyx_26010011_IFU(
 		end
 	
 	end
-	assign ifu_out_valid = ~flush_valid & ((in_reqValid & in_respValid)?1:ifu_out_valid_r);
-	assign ifu_out_bus_instruction = (in_reqValid & in_respValid)?in_rdata:ifu_out_bus_instruction_r;
-	assign ifu_out_bus_snpc = (in_reqValid & in_respValid)?(PC + 4):ifu_out_bus_snpc_r;
-	assign ifu_out_bus_pc = (in_reqValid & in_respValid)?PC:ifu_out_bus_pc_r;
-	assign ifu_out_bus_exception = 5'b0;
+	assign ifu_out_valid = ~flush_valid & (((in_reqValid & in_respValid)?1:ifu_out_valid_r) | ifu_out_bus_exception[4]);
+	assign ifu_out_bus_instruction = (ifu_out_bus_exception[4])?(`INST_NOP):((in_reqValid & in_respValid)?in_rdata:ifu_out_bus_instruction_r);
+	assign ifu_out_bus_snpc = (in_reqValid & (in_respValid | ifu_out_bus_exception[4]))?(PC + 4):ifu_out_bus_snpc_r;
+	assign ifu_out_bus_pc = (in_reqValid & (in_respValid | ifu_out_bus_exception[4]))?PC:ifu_out_bus_pc_r;
+
 	reg [31:0] PC/*verilator public*/;
 	always @(posedge clock) begin
 		if(reset) begin
 			PC <= 32'h30000000;
 		end else if(flush_valid) begin
-			PC <= (dnpc_valid)?dnpc:ifu_out_bus_snpc;
+			PC <= (dnpc_valid)?{dnpc[31:1],1'b0}:{ifu_out_bus_snpc[31:1],1'b0};
 		end else begin
 			if(ifu_out_ready & ifu_out_valid) begin
-				PC <= (dnpc_valid)?dnpc:ifu_out_bus_snpc;
+				PC <= (dnpc_valid)?{dnpc[31:1],1'b0}:{ifu_out_bus_snpc[31:1],1'b0};
 			end
 		end
 	end
@@ -105,8 +106,8 @@ module ysyx_26010011_IFU(
 		.flush(0),
 		.pc_flush(flush_valid),
 
-		.in_addr(PC),
-		.in_reqValid(in_reqValid & ~flush_valid),
+		.in_addr({PC[31:1],1'b0}),
+		.in_reqValid(in_reqValid & ~flush_valid & ~ifu_out_bus_exception[4]),
 		.in_respValid(in_respValid),
 		.in_rdata(in_rdata),
 
@@ -129,6 +130,14 @@ module ysyx_26010011_IFU(
 	wire debug_IFU_is_hit/*verilator public*/;
 	wire debug_IFU_is_hit_inst/*verilator public*/ = ifu_out_valid & ifu_out_ready & debug_IFU_is_hit;
 	wire debug_IFU_get_inst/*verilator public*/ = ifu_out_valid & ifu_out_ready;
+
+	always @(*) begin
+		if(|PC[1:0]) begin
+			ifu_out_bus_exception = {1'b1,`EXCEPTION_MISALIGNED_FETCH};
+		end else begin
+			ifu_out_bus_exception = 5'b0;
+		end
+	end
 
 endmodule
 

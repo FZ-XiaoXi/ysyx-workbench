@@ -1,5 +1,5 @@
 import "DPI-C" function void difftest_mem_set(int addr);
-
+`include "ysyx_26010011_csr_defines.v"
 module ysyx_26010011_LSU(
     input             clock,
     input             reset,
@@ -15,8 +15,8 @@ module ysyx_26010011_LSU(
     input            lsu_in_bus_isLOAD,
     input            lsu_in_bus_isSTORE,
 
-    output           lsu_out_valid,
-    output     [ 4:0]lsu_out_bus_exception,
+    output           lsu_out_valid/*verilator public*/,
+    output reg [ 4:0]lsu_out_bus_exception,
     input            lsu_out_ready,
     output reg [31:0]lsu_out_bus_rdata,
     
@@ -118,9 +118,9 @@ module ysyx_26010011_LSU(
                      (lsu_in_bus_perip_mask == 2'b01) ? 3'b001 : 3'b010;
     assign arbureset = 2'b01;   // INCR
 
-    assign awvalid = ((state == S_WAIT_AW_W)) & !reset;
-    assign wvalid  = ((state == S_WAIT_AW_W)) & !reset;
-    assign arvalid = ((state == S_IDLE && lsu_in_valid && lsu_in_bus_isLOAD) || (state == S_WAIT_AR)) & !reset;
+    assign awvalid = ((state == S_WAIT_AW_W)) & !reset & ~lsu_out_bus_exception[4];
+    assign wvalid  = ((state == S_WAIT_AW_W)) & !reset & ~lsu_out_bus_exception[4];
+    assign arvalid = ((state == S_IDLE && lsu_in_valid && lsu_in_bus_isLOAD) || (state == S_WAIT_AR)) & !reset & ~lsu_out_bus_exception[4];
 
     assign bready  = ((state == S_WAIT_BRESP) || (state == S_IDLE)) & lsu_out_ready & !reset;
     assign rready  = ((state == S_WAIT_RDATA) || (state == S_IDLE)) & lsu_out_ready & !reset;
@@ -196,14 +196,13 @@ module ysyx_26010011_LSU(
 
     always @(posedge clock) begin
         if (reset) state <= S_IDLE;
-        else     state <= next_state;
+        else     state <= (lsu_in_valid&lsu_out_bus_exception[4])?S_IDLE:next_state;
     end
 
     assign lsu_out_valid =  lsu_in_valid &
                             ((state == S_WAIT_RDATA && r_fire) ||
-                             (state == S_WAIT_BRESP && b_fire) || !(lsu_in_bus_isLOAD || lsu_in_bus_isSTORE));
-    assign lsu_out_bus_exception = lsu_in_bus_exception;
-    assign lsu_in_ready = (lsu_in_valid & (lsu_in_bus_isLOAD | lsu_in_bus_isSTORE)) ? (lsu_out_ready & (r_fire | b_fire)):(1);
+                             (state == S_WAIT_BRESP && b_fire) || !(lsu_in_bus_isLOAD || lsu_in_bus_isSTORE) || lsu_out_bus_exception[4]);
+    assign lsu_in_ready = (lsu_in_valid & (lsu_in_bus_isLOAD | lsu_in_bus_isSTORE)) ? ((lsu_out_ready & (r_fire | b_fire)) | lsu_out_bus_exception[4]):(1);
 
     wire [31:0] val0 = rdata; 
     wire [31:0] val1 = {{8{val0[31]}}, val0[31:8]};
@@ -238,4 +237,32 @@ module ysyx_26010011_LSU(
     wire debug_LSU_WRITING/*verilator public*/ = (state!=S_IDLE)&lsu_in_bus_isSTORE&lsu_in_valid;
     wire debug_LSU_WRITE_FINAL/*verilator public*/ = lsu_out_ready&lsu_out_valid&lsu_in_bus_isSTORE&lsu_in_valid;
     wire debug_LSU_LOAD_FINAL/*verilator public*/ = lsu_out_ready&lsu_out_valid&lsu_in_bus_isLOAD&lsu_in_valid;
+
+    always @(*) begin
+        if(lsu_in_bus_exception[4]) begin
+            lsu_out_bus_exception = lsu_in_bus_exception;
+        end else begin
+            if(lsu_in_valid & (lsu_in_bus_isLOAD | lsu_in_bus_isSTORE)) begin
+                case (lsu_in_bus_perip_mask)
+                    2'b00: begin
+                        lsu_out_bus_exception = lsu_in_bus_exception;
+                    end
+                    2'b01: begin
+                        if(lsu_in_bus_addr[0]) lsu_out_bus_exception = {1'b1,(lsu_in_bus_isLOAD)?`EXCEPTION_MISALIGNED_LOAD:`EXCEPTION_MISALIGNED_STORE};
+                        else                   lsu_out_bus_exception = lsu_in_bus_exception;
+                    end
+                    2'b10: begin
+                        if(lsu_in_bus_addr[1:0]!=2'b00) lsu_out_bus_exception = {1'b1,(lsu_in_bus_isLOAD)?`EXCEPTION_MISALIGNED_LOAD:`EXCEPTION_MISALIGNED_STORE};
+                        else                           lsu_out_bus_exception = lsu_in_bus_exception;
+                    end
+                    default: begin
+                        lsu_out_bus_exception = {1'b1,(lsu_in_bus_isLOAD)?`EXCEPTION_MISALIGNED_LOAD:`EXCEPTION_MISALIGNED_STORE};
+                    end
+                endcase
+            end else begin
+                lsu_out_bus_exception = lsu_in_bus_exception;
+            end
+        end
+    end
+
 endmodule

@@ -23,6 +23,9 @@ static inline int check_reg_idx(int idx) {
   return idx;
 }
 
+void isa_csr_w(word_t csraddr, word_t wdata);
+word_t isa_csr_r(word_t csraddr);
+
 #define gpr(idx) (cpu.gpr[check_reg_idx(idx)])
 #define csr(idx) (cpu.csr[idx])
 
@@ -41,4 +44,5 @@ static inline const char* reg_name(int idx) {
 #define CSR_MISA   0x301
 #define CSR_MVENDORID 0xf11
 #define CSR_MARCHID 0xf12
+#define CSR_MTVAL 0x343
 #endif

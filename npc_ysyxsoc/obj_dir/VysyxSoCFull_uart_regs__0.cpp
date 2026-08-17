@@ -391,13 +391,13 @@ void VysyxSoCFull_uart_regs___nba_sequent__TOP__ysyxSoCFull__asic__luart__muart_
                                                   | (0x0eU 
                                                      ^ (IData)(vlSelfRef.__PVT__delayed_modem_signals))))));
         __Vdly__msr = ((0x0fU & (IData)(__Vdly__msr)) 
-                       | ((((2U & ((IData)(vlSelfRef.__VdfgRegularize_h6e95ff9d_0_27) 
+                       | ((((2U & ((IData)(vlSelfRef.__VdfgRegularize_h6e95ff9d_0_30) 
                                    << 1U)) | (1U & 
-                                              ((IData)(vlSelfRef.__VdfgRegularize_h6e95ff9d_0_27) 
+                                              ((IData)(vlSelfRef.__VdfgRegularize_h6e95ff9d_0_30) 
                                                >> 1U))) 
-                           << 6U) | (((2U & ((IData)(vlSelfRef.__VdfgRegularize_h6e95ff9d_0_27) 
+                           << 6U) | (((2U & ((IData)(vlSelfRef.__VdfgRegularize_h6e95ff9d_0_30) 
                                              >> 1U)) 
-                                      | (1U & ((IData)(vlSelfRef.__VdfgRegularize_h6e95ff9d_0_27) 
+                                      | (1U & ((IData)(vlSelfRef.__VdfgRegularize_h6e95ff9d_0_30) 
                                                >> 3U))) 
                                      << 4U)));
         if (vlSelfRef.__PVT__rf_pop) {
@@ -1180,7 +1180,7 @@ void VysyxSoCFull_uart_regs___nba_sequent__TOP__ysyxSoCFull__asic__luart__muart_
     vlSelfRef.__PVT__transmitter__DOT__stx_pad_o = 
         ((~ ((IData)(vlSelfRef.lcr) >> 6U)) & (IData)(vlSelfRef.__PVT__transmitter__DOT__stx_o_tmp));
     if ((0x00000010U & (IData)(vlSelfRef.__PVT__mcr))) {
-        vlSelfRef.__VdfgRegularize_h6e95ff9d_0_27 = 
+        vlSelfRef.__VdfgRegularize_h6e95ff9d_0_30 = 
             ((0x0000000cU & ((IData)(vlSelfRef.__PVT__mcr) 
                              << 2U)) | ((2U & ((IData)(vlSelfRef.__PVT__mcr) 
                                                >> 1U)) 
@@ -1188,7 +1188,7 @@ void VysyxSoCFull_uart_regs___nba_sequent__TOP__ysyxSoCFull__asic__luart__muart_
                                                  >> 3U))));
         vlSelfRef.__PVT__serial_in = vlSelfRef.__PVT__transmitter__DOT__stx_pad_o;
     } else {
-        vlSelfRef.__VdfgRegularize_h6e95ff9d_0_27 = 8U;
+        vlSelfRef.__VdfgRegularize_h6e95ff9d_0_30 = 8U;
         vlSelfRef.__PVT__serial_in = vlSelfRef.__PVT__srx_pad;
     }
 }

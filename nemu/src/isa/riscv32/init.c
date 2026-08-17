@@ -42,6 +42,7 @@ static void restart() {
   cpu.csr[CSR_MISA] = 0x40000100;
   cpu.csr[CSR_MVENDORID] = 0x79737978;
   cpu.csr[CSR_MARCHID] = 0x018ce19b;
+  cpu.csr[CSR_MTVAL] = 0x00;
   
   /* The zero register is always 0. */
   cpu.gpr[0] = 0;

@@ -21,8 +21,14 @@ void VysyxSoCFull_ysyx_26010011_IFU_icache___ico_sequent__TOP__ysyxSoCFull__asic
     auto& vlSelfRef = std::ref(*vlSelf).get();
     // Body
     vlSelfRef.pc_flush = vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu.flush_valid;
-    vlSelfRef.__PVT__in_reqValid = ((~ (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu.flush_valid)) 
-                                    & (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__IFU_0.__PVT__in_reqValid));
+    vlSelfRef.__PVT__in_reqValid = ((IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__IFU_0.__PVT__in_reqValid) 
+                                    & ((~ (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu.flush_valid)) 
+                                       & (~ (((0U != 
+                                               (3U 
+                                                & vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__IFU_0.PC))
+                                               ? 0x10U
+                                               : 0U) 
+                                             >> 4U))));
 }
 
 extern const VlUnpacked<CData/*0:0*/, 512> VysyxSoCFull__ConstPool__TABLE_hb96f65ad_0;
@@ -42,7 +48,7 @@ void VysyxSoCFull_ysyx_26010011_IFU_icache___ico_sequent__TOP__ysyxSoCFull__asic
                                           >> 2U))] 
                                      >> (0x0000001fU 
                                          & VL_SHIFTL_III(5,32,32, 
-                                                         (3U 
+                                                         (2U 
                                                           & vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__IFU_0.PC), 3U)))
                                   : vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__IFU_0.rdata);
     __Vtableidx1 = ((((((IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__IFU_0.debug_IFU_is_hit) 

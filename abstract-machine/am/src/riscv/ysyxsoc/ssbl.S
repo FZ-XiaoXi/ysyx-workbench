@@ -59,6 +59,16 @@ _bootloader_rodata_loop:
   j _bootloader_rodata_loop
 
 _bootloader_rodata_loop_end:
+  la t0, mtvec_handler
+  csrw mtvec, t0
   call _trm_init
 
 .size _ssbl, . - _ssbl
+
+.section .text
+.align 2
+.weak mtvec_handler
+mtvec_handler:
+  j .      # default weak handler: spin forever
+
+.size mtvec_handler, . - mtvec_handler

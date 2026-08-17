@@ -64,9 +64,6 @@ module ysyx_26010011_ID_EX_pipeline(
     input      [31:0]idu_out_bus_rs2_val,
     input      [31:0]idu_out_bus_imm,
     input      [31:0]idu_out_bus_instruction,
-    input            idu_out_bus_isEBREAK,
-    input            idu_out_bus_isECALL,
-    input            idu_out_bus_isMRET,
     input            idu_out_bus_isLOAD,
     input            idu_out_bus_isSTORE,
     input            idu_out_bus_isWGPR,
@@ -95,9 +92,6 @@ module ysyx_26010011_ID_EX_pipeline(
     output reg [31:0]exu_in_bus_rs2_val,
     output reg [31:0]exu_in_bus_imm,
     output reg [31:0]exu_in_bus_instruction,
-    output reg       exu_in_bus_isEBREAK,
-    output reg       exu_in_bus_isECALL,
-    output reg       exu_in_bus_isMRET,
     output reg       exu_in_bus_isLOAD,
     output reg       exu_in_bus_isSTORE,
     output reg       exu_in_bus_isWGPR,
@@ -128,9 +122,6 @@ module ysyx_26010011_ID_EX_pipeline(
             exu_in_bus_rs2_val<=0;
             exu_in_bus_imm<=0;
             exu_in_bus_instruction<=0;
-            exu_in_bus_isEBREAK<=0;
-            exu_in_bus_isECALL<=0;
-            exu_in_bus_isMRET<=0;
             exu_in_bus_isLOAD<=0;
             exu_in_bus_isSTORE<=0;
             exu_in_bus_isWGPR<=0;
@@ -158,9 +149,6 @@ module ysyx_26010011_ID_EX_pipeline(
             exu_in_bus_rs2_val<=0;
             exu_in_bus_imm<=0;
             exu_in_bus_instruction<=0;
-            exu_in_bus_isEBREAK<=0;
-            exu_in_bus_isECALL<=0;
-            exu_in_bus_isMRET<=0;
             exu_in_bus_isLOAD<=0;
             exu_in_bus_isSTORE<=0;
             exu_in_bus_isWGPR<=0;
@@ -188,9 +176,6 @@ module ysyx_26010011_ID_EX_pipeline(
             exu_in_bus_rs2_val<=idu_out_bus_rs2_val;
             exu_in_bus_imm<=idu_out_bus_imm;
             exu_in_bus_instruction<=idu_out_bus_instruction;
-            exu_in_bus_isEBREAK<=idu_out_bus_isEBREAK;
-            exu_in_bus_isECALL<=idu_out_bus_isECALL;
-            exu_in_bus_isMRET<=idu_out_bus_isMRET;
             exu_in_bus_isLOAD<=idu_out_bus_isLOAD;
             exu_in_bus_isSTORE<=idu_out_bus_isSTORE;
             exu_in_bus_isWGPR<=idu_out_bus_isWGPR;
@@ -218,9 +203,6 @@ module ysyx_26010011_ID_EX_pipeline(
             exu_in_bus_rs2_val<=exu_in_bus_rs2_val;
             exu_in_bus_imm<=exu_in_bus_imm;
             exu_in_bus_instruction<=exu_in_bus_instruction;
-            exu_in_bus_isEBREAK<=exu_in_bus_isEBREAK;
-            exu_in_bus_isECALL<=exu_in_bus_isECALL;
-            exu_in_bus_isMRET<=exu_in_bus_isMRET;
             exu_in_bus_isLOAD<=exu_in_bus_isLOAD;
             exu_in_bus_isSTORE<=exu_in_bus_isSTORE;
             exu_in_bus_isWGPR<=exu_in_bus_isWGPR;
@@ -256,9 +238,6 @@ module ysyx_26010011_EX_LS_pipeline(
     input      [ 4:0]exu_out_bus_exception,
     input      [11:0]exu_out_bus_csrrd,
     input      [31:0]exu_out_bus_instruction,
-    input            exu_out_bus_isEBREAK,
-    input            exu_out_bus_isECALL,
-    input            exu_out_bus_isMRET,
     input            exu_out_bus_isLOAD,
     input            exu_out_bus_isSTORE,
     input            exu_out_bus_isWGPR,
@@ -281,9 +260,6 @@ module ysyx_26010011_EX_LS_pipeline(
     output reg [ 4:0]lsu_in_bus_exception,
     output reg [11:0]lsu_in_bus_csrrd,
     output reg [31:0]lsu_in_bus_instruction,
-    output reg       lsu_in_bus_isEBREAK,
-    output reg       lsu_in_bus_isECALL,
-    output reg       lsu_in_bus_isMRET,
     output reg       lsu_in_bus_isLOAD,
     output reg       lsu_in_bus_isSTORE,
     output reg       lsu_in_bus_isWGPR,
@@ -308,9 +284,6 @@ module ysyx_26010011_EX_LS_pipeline(
             lsu_in_bus_exception<=0;
             lsu_in_bus_csrrd<=0;
             lsu_in_bus_instruction<=0;
-            lsu_in_bus_isEBREAK<=0;
-            lsu_in_bus_isECALL<=0;
-            lsu_in_bus_isMRET<=0;
             lsu_in_bus_isLOAD<=0;
             lsu_in_bus_isSTORE<=0;
             lsu_in_bus_isWGPR<=0;
@@ -332,9 +305,6 @@ module ysyx_26010011_EX_LS_pipeline(
             lsu_in_bus_exception<=0;
             lsu_in_bus_csrrd<=0;
             lsu_in_bus_instruction<=0;
-            lsu_in_bus_isEBREAK<=0;
-            lsu_in_bus_isECALL<=0;
-            lsu_in_bus_isMRET<=0;
             lsu_in_bus_isLOAD<=0;
             lsu_in_bus_isSTORE<=0;
             lsu_in_bus_isWGPR<=0;
@@ -356,9 +326,6 @@ module ysyx_26010011_EX_LS_pipeline(
             lsu_in_bus_exception<=exu_out_bus_exception;
             lsu_in_bus_csrrd<=exu_out_bus_csrrd;
             lsu_in_bus_instruction<=exu_out_bus_instruction;
-            lsu_in_bus_isEBREAK<=exu_out_bus_isEBREAK;
-            lsu_in_bus_isECALL<=exu_out_bus_isECALL;
-            lsu_in_bus_isMRET<=exu_out_bus_isMRET;
             lsu_in_bus_isLOAD<=exu_out_bus_isLOAD;
             lsu_in_bus_isSTORE<=exu_out_bus_isSTORE;
             lsu_in_bus_isWGPR<=exu_out_bus_isWGPR;
@@ -380,9 +347,6 @@ module ysyx_26010011_EX_LS_pipeline(
             lsu_in_bus_exception<=lsu_in_bus_exception;
             lsu_in_bus_csrrd<=lsu_in_bus_csrrd;
             lsu_in_bus_instruction<=lsu_in_bus_instruction;
-            lsu_in_bus_isEBREAK<=lsu_in_bus_isEBREAK;
-            lsu_in_bus_isECALL<=lsu_in_bus_isECALL;
-            lsu_in_bus_isMRET<=lsu_in_bus_isMRET;
             lsu_in_bus_isLOAD<=lsu_in_bus_isLOAD;
             lsu_in_bus_isSTORE<=lsu_in_bus_isSTORE;
             lsu_in_bus_isWGPR<=lsu_in_bus_isWGPR;
@@ -414,9 +378,6 @@ module ysyx_26010011_LS_WB_pipeline(
     input      [ 4:0]lsu_out_bus_exception,
     input      [11:0]lsu_out_bus_csrrd,
     input      [31:0]lsu_out_bus_instruction,
-    input            lsu_out_bus_isEBREAK,
-    input            lsu_out_bus_isECALL,
-    input            lsu_out_bus_isMRET,
     input            lsu_out_bus_isLOAD,
     input            lsu_out_bus_isSTORE,
     input            lsu_out_bus_isWGPR,
@@ -438,9 +399,6 @@ module ysyx_26010011_LS_WB_pipeline(
     output reg [ 4:0]wbu_in_bus_exception,
     output reg [11:0]wbu_in_bus_csrrd,
     output reg [31:0]wbu_in_bus_instruction,
-    output reg       wbu_in_bus_isEBREAK,
-    output reg       wbu_in_bus_isECALL,
-    output reg       wbu_in_bus_isMRET,
     output reg       wbu_in_bus_isLOAD,
     output reg       wbu_in_bus_isSTORE,
     output reg       wbu_in_bus_isWGPR,
@@ -465,9 +423,6 @@ module ysyx_26010011_LS_WB_pipeline(
             wbu_in_bus_rd<=0;
             wbu_in_bus_exception<=0;
             wbu_in_bus_csrrd<=0;
-            wbu_in_bus_isEBREAK<=0;
-            wbu_in_bus_isECALL<=0;
-            wbu_in_bus_isMRET<=0;
             wbu_in_bus_isLOAD<=1'b0;
             wbu_in_bus_isSTORE<=1'b0;
             wbu_in_bus_isWGPR<=1'b0;
@@ -487,9 +442,6 @@ module ysyx_26010011_LS_WB_pipeline(
             wbu_in_bus_rd<=0;
             wbu_in_bus_exception<=0;
             wbu_in_bus_csrrd<=0;
-            wbu_in_bus_isEBREAK<=0;
-            wbu_in_bus_isECALL<=0;
-            wbu_in_bus_isMRET<=0;
             wbu_in_bus_isLOAD<=1'b0;
             wbu_in_bus_isSTORE<=1'b0;
             wbu_in_bus_isWGPR<=1'b0;
@@ -509,9 +461,6 @@ module ysyx_26010011_LS_WB_pipeline(
             wbu_in_bus_rd<=lsu_out_bus_rd;
             wbu_in_bus_exception<=lsu_out_bus_exception;
             wbu_in_bus_csrrd<=lsu_out_bus_csrrd;
-            wbu_in_bus_isEBREAK<=lsu_out_bus_isEBREAK;
-            wbu_in_bus_isECALL<=lsu_out_bus_isECALL;
-            wbu_in_bus_isMRET<=lsu_out_bus_isMRET;
             wbu_in_bus_isLOAD<=lsu_out_bus_isLOAD;
             wbu_in_bus_isSTORE<=lsu_out_bus_isSTORE;
             wbu_in_bus_isWGPR<=lsu_out_bus_isWGPR;
@@ -531,9 +480,6 @@ module ysyx_26010011_LS_WB_pipeline(
             wbu_in_bus_rd<=wbu_in_bus_rd;
             wbu_in_bus_exception<=wbu_in_bus_exception;
             wbu_in_bus_csrrd<=wbu_in_bus_csrrd;
-            wbu_in_bus_isEBREAK<=wbu_in_bus_isEBREAK;
-            wbu_in_bus_isECALL<=wbu_in_bus_isECALL;
-            wbu_in_bus_isMRET<=wbu_in_bus_isMRET;
             wbu_in_bus_isLOAD<=wbu_in_bus_isLOAD;
             wbu_in_bus_isSTORE<=wbu_in_bus_isSTORE;
             wbu_in_bus_isWGPR<=wbu_in_bus_isWGPR;

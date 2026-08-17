@@ -23,9 +23,6 @@ class alignas(VL_CACHE_LINE_BYTES) VysyxSoCFull_ysyx_26010011_ID_EX_pipeline fin
     VL_IN8(__PVT__idu_out_bus_exception,4,0);
     VL_IN8(__PVT__idu_out_bus_rs1,4,0);
     VL_IN8(__PVT__idu_out_bus_rs2,4,0);
-    VL_IN8(__PVT__idu_out_bus_isEBREAK,0,0);
-    VL_IN8(__PVT__idu_out_bus_isECALL,0,0);
-    VL_IN8(__PVT__idu_out_bus_isMRET,0,0);
     VL_IN8(__PVT__idu_out_bus_isLOAD,0,0);
     VL_IN8(__PVT__idu_out_bus_isSTORE,0,0);
     VL_IN8(__PVT__idu_out_bus_isWGPR,0,0);
@@ -45,9 +42,6 @@ class alignas(VL_CACHE_LINE_BYTES) VysyxSoCFull_ysyx_26010011_ID_EX_pipeline fin
     VL_OUT8(__PVT__exu_in_bus_exception,4,0);
     VL_OUT8(__PVT__exu_in_bus_rs1,4,0);
     VL_OUT8(__PVT__exu_in_bus_rs2,4,0);
-    VL_OUT8(__PVT__exu_in_bus_isEBREAK,0,0);
-    VL_OUT8(__PVT__exu_in_bus_isECALL,0,0);
-    VL_OUT8(__PVT__exu_in_bus_isMRET,0,0);
     VL_OUT8(__PVT__exu_in_bus_isLOAD,0,0);
     VL_OUT8(__PVT__exu_in_bus_isSTORE,0,0);
     VL_OUT8(__PVT__exu_in_bus_isWGPR,0,0);
@@ -61,7 +55,7 @@ class alignas(VL_CACHE_LINE_BYTES) VysyxSoCFull_ysyx_26010011_ID_EX_pipeline fin
     VL_OUT8(__PVT__exu_in_bus_comp_isUseImm,0,0);
     VL_OUT8(__PVT__exu_in_bus_comp_op,1,0);
     VL_OUT8(__PVT__exu_in_bus_perip_mask,1,0);
-    CData/*0:0*/ __VdfgRegularize_h6e95ff9d_0_31;
+    CData/*0:0*/ __VdfgRegularize_h6e95ff9d_0_35;
     VL_IN16(__PVT__idu_out_bus_csrrd,11,0);
     VL_IN16(__PVT__idu_out_bus_alu_op,9,0);
     VL_OUT16(__PVT__exu_in_bus_csrrd,11,0);

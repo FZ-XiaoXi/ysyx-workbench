@@ -89,14 +89,14 @@ void cpu_exec(uint64_t n){
 			cpu.counter_IFU_get_inst ++;
 		}
 		if(CPUTop->IFU_0->debug_IFU_is_hit_inst) cpu.counter_IFU_ichache_hit++;
-		if(!CPUTop->IFU_0->debug_IFU_is_hit) cpu.counter_IFU_get_inst_miss_cyc ++;
+		if(!CPUTop->IFU_0->debug_IFU_is_hit && !CPUTop->IFU_0->ifu_out_valid) cpu.counter_IFU_get_inst_miss_cyc ++;
 
 
 		if(cpu.isRAW) cpu.counter_raw++;
 
 		if(cpu.tb_isMEM) cpu.counter_LSU_mem++;
-		if(CPUTop->LSU_0->debug_LSU_LOADING) cpu.counter_LSU_load_cyc++;
-		else if(CPUTop->LSU_0->debug_LSU_WRITING) cpu.counter_LSU_store_cyc++;
+		if(CPUTop->LSU_0->debug_LSU_LOADING && !CPUTop->LSU_0->lsu_out_valid) cpu.counter_LSU_load_cyc++;
+		else if(CPUTop->LSU_0->debug_LSU_WRITING && !CPUTop->LSU_0->lsu_out_valid) cpu.counter_LSU_store_cyc++;
 		if(CPUTop->LSU_0->debug_LSU_LOAD_FINAL)	cpu.counter_LSU_get_data++;
 		else if(CPUTop->LSU_0->debug_LSU_WRITE_FINAL) cpu.counter_LSU_put_data++;
 
@@ -115,9 +115,6 @@ void cpu_exec(uint64_t n){
 			// 	cpu.tb_dnpc_valid ? 'd' : 's', cpu.tb_FINAL_npc);
 			// Log("cycle=%lu inst=%lu bubble=%lu raw=%lu jump=%lu mem=%lu", cpu.inst_count + cpu.bubble_count, cpu.inst_count, cpu.bubble_count, cpu.raw_count, cpu.jump_count, cpu.mem_count);
 
-		}
-		if(cpu.tb_FINAL_inst==_EBREAK && cpu.tb_isFINAL){
-			ebreak();
 		}
 		if(cpu.tb_isFINAL){
 			// this_cnt = 0;
@@ -142,8 +139,11 @@ void cpu_exec(uint64_t n){
 				);
 				cnt=0;
 			}
-			
-			trace_and_difftest();
+			if(cpu.tb_FINAL_inst==_EBREAK && cpu.tb_isFINAL){
+				ebreak();
+			}else{
+				trace_and_difftest();
+			}
 			// cpu.mem_access_addr = 0;
 			if(cpu.state != NPC_RUNNING) break;
 		}
