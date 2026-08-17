@@ -112,6 +112,35 @@ void VysyxSoCFull_ysyx_26010011_LSU___ico_sequent__TOP__ysyxSoCFull__asic__cpu__
                              : ((1U & vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__EX_LS_inst.__PVT__lsu_in_bus_alu_result)
                                  ? vlSelfRef.__PVT__val1
                                  : vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu.__PVT__RAM_AXI4LiteArbiter__DOT__M2_rdata));
+    vlSelfRef.__PVT__lsu_out_bus_rdata = ((0U == (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__EX_LS_inst.__PVT__lsu_in_bus_perip_mask))
+                                           ? ((IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__EX_LS_inst.__PVT__lsu_in_bus_isUnSigned)
+                                               ? (0x000000ffU 
+                                                  & vlSelfRef.__PVT__val)
+                                               : ((
+                                                   (- (IData)(
+                                                              (1U 
+                                                               & (vlSelfRef.__PVT__val 
+                                                                  >> 7U)))) 
+                                                   << 8U) 
+                                                  | (0x000000ffU 
+                                                     & vlSelfRef.__PVT__val)))
+                                           : ((1U == (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__EX_LS_inst.__PVT__lsu_in_bus_perip_mask))
+                                               ? ((IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__EX_LS_inst.__PVT__lsu_in_bus_isUnSigned)
+                                                   ? 
+                                                  (0x0000ffffU 
+                                                   & vlSelfRef.__PVT__val)
+                                                   : 
+                                                  (((- (IData)(
+                                                               (1U 
+                                                                & (vlSelfRef.__PVT__val 
+                                                                   >> 0x0000000fU)))) 
+                                                    << 0x00000010U) 
+                                                   | (0x0000ffffU 
+                                                      & vlSelfRef.__PVT__val)))
+                                               : ((2U 
+                                                   == (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__EX_LS_inst.__PVT__lsu_in_bus_perip_mask))
+                                                   ? vlSelfRef.__PVT__val
+                                                   : 0xffffffffU)));
 }
 
 void VysyxSoCFull___024unit____Vdpiimwrap_difftest_mem_set_TOP____024unit(IData/*31:0*/ addr);
@@ -200,23 +229,23 @@ void VysyxSoCFull_ysyx_26010011_LSU___nba_sequent__TOP__ysyxSoCFull__asic__cpu__
     auto& vlSelfRef = std::ref(*vlSelf).get();
     // Body
     if (vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu.reset) {
-        vlSelfRef.__PVT__wdata_q = 0U;
         vlSelfRef.__PVT__awsize_q = 0U;
+        vlSelfRef.__PVT__wdata_q = 0U;
         vlSelfRef.__PVT__awaddr_q = 0U;
         vlSelfRef.__PVT__wstrb_q = 0U;
         vlSelfRef.state = 0U;
     } else {
         if (((2U == (IData)(vlSelfRef.__PVT__next_state)) 
              | (1U == (IData)(vlSelfRef.__PVT__next_state)))) {
-            vlSelfRef.__PVT__wdata_q = VL_SHIFTL_III(32,32,32, vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__EX_LS_inst.__PVT__lsu_in_bus_lsu_val, 
-                                                     VL_SHIFTL_III(32,32,32, 
-                                                                   (3U 
-                                                                    & vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__EX_LS_inst.__PVT__lsu_in_bus_alu_result), 3U));
             vlSelfRef.__PVT__awsize_q = ((0U == (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__EX_LS_inst.__PVT__lsu_in_bus_perip_mask))
                                           ? 0U : ((1U 
                                                    == (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__EX_LS_inst.__PVT__lsu_in_bus_perip_mask))
                                                    ? 1U
                                                    : 2U));
+            vlSelfRef.__PVT__wdata_q = VL_SHIFTL_III(32,32,32, vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__EX_LS_inst.__PVT__lsu_in_bus_lsu_val, 
+                                                     VL_SHIFTL_III(32,32,32, 
+                                                                   (3U 
+                                                                    & vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__EX_LS_inst.__PVT__lsu_in_bus_alu_result), 3U));
             vlSelfRef.__PVT__awaddr_q = vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__EX_LS_inst.__PVT__lsu_in_bus_alu_result;
             vlSelfRef.__PVT__wstrb_q = (0x0000000fU 
                                         & (((0U == (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__EX_LS_inst.__PVT__lsu_in_bus_perip_mask))
@@ -311,17 +340,6 @@ void VysyxSoCFull_ysyx_26010011_LSU___nba_comb__TOP__ysyxSoCFull__asic__cpu__cpu
     VysyxSoCFull__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
     auto& vlSelfRef = std::ref(*vlSelf).get();
     // Body
-    vlSelfRef.debug_LSU_WRITING = ((0U != (IData)(vlSelfRef.state)) 
-                                   & (IData)(vlSelfRef.__VdfgRegularize_hc456a51f_0_8));
-    vlSelfRef.debug_LSU_LOADING = ((0U != (IData)(vlSelfRef.state)) 
-                                   & (IData)(vlSelfRef.__VdfgRegularize_hc456a51f_0_7));
-}
-
-void VysyxSoCFull_ysyx_26010011_LSU___nba_comb__TOP__ysyxSoCFull__asic__cpu__cpu__LSU_0__2(VysyxSoCFull_ysyx_26010011_LSU* vlSelf) {
-    VL_DEBUG_IF(VL_DBG_MSGF("+              VysyxSoCFull_ysyx_26010011_LSU___nba_comb__TOP__ysyxSoCFull__asic__cpu__cpu__LSU_0__2\n"); );
-    VysyxSoCFull__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
-    auto& vlSelfRef = std::ref(*vlSelf).get();
-    // Body
     vlSelfRef.__PVT__val = ((2U & vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__EX_LS_inst.__PVT__lsu_in_bus_alu_result)
                              ? ((1U & vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__EX_LS_inst.__PVT__lsu_in_bus_alu_result)
                                  ? (((- (IData)((vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu.__PVT__RAM_AXI4LiteArbiter__DOT__M2_rdata 
@@ -332,6 +350,51 @@ void VysyxSoCFull_ysyx_26010011_LSU___nba_comb__TOP__ysyxSoCFull__asic__cpu__cpu
                              : ((1U & vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__EX_LS_inst.__PVT__lsu_in_bus_alu_result)
                                  ? vlSelfRef.__PVT__val1
                                  : vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu.__PVT__RAM_AXI4LiteArbiter__DOT__M2_rdata));
+    vlSelfRef.__PVT__lsu_out_bus_rdata = ((0U == (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__EX_LS_inst.__PVT__lsu_in_bus_perip_mask))
+                                           ? ((IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__EX_LS_inst.__PVT__lsu_in_bus_isUnSigned)
+                                               ? (0x000000ffU 
+                                                  & vlSelfRef.__PVT__val)
+                                               : ((
+                                                   (- (IData)(
+                                                              (1U 
+                                                               & (vlSelfRef.__PVT__val 
+                                                                  >> 7U)))) 
+                                                   << 8U) 
+                                                  | (0x000000ffU 
+                                                     & vlSelfRef.__PVT__val)))
+                                           : ((1U == (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__EX_LS_inst.__PVT__lsu_in_bus_perip_mask))
+                                               ? ((IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__EX_LS_inst.__PVT__lsu_in_bus_isUnSigned)
+                                                   ? 
+                                                  (0x0000ffffU 
+                                                   & vlSelfRef.__PVT__val)
+                                                   : 
+                                                  (((- (IData)(
+                                                               (1U 
+                                                                & (vlSelfRef.__PVT__val 
+                                                                   >> 0x0000000fU)))) 
+                                                    << 0x00000010U) 
+                                                   | (0x0000ffffU 
+                                                      & vlSelfRef.__PVT__val)))
+                                               : ((2U 
+                                                   == (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__EX_LS_inst.__PVT__lsu_in_bus_perip_mask))
+                                                   ? vlSelfRef.__PVT__val
+                                                   : 0xffffffffU)));
+}
+
+void VysyxSoCFull_ysyx_26010011_LSU___nba_comb__TOP__ysyxSoCFull__asic__cpu__cpu__LSU_0__2(VysyxSoCFull_ysyx_26010011_LSU* vlSelf) {
+    VL_DEBUG_IF(VL_DBG_MSGF("+              VysyxSoCFull_ysyx_26010011_LSU___nba_comb__TOP__ysyxSoCFull__asic__cpu__cpu__LSU_0__2\n"); );
+    VysyxSoCFull__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
+    auto& vlSelfRef = std::ref(*vlSelf).get();
+    // Body
+    vlSelfRef.debug_LSU_WRITING = ((0U != (IData)(vlSelfRef.state)) 
+                                   & (IData)(vlSelfRef.__VdfgRegularize_hc456a51f_0_8));
+    vlSelfRef.debug_LSU_LOADING = ((0U != (IData)(vlSelfRef.state)) 
+                                   & (IData)(vlSelfRef.__VdfgRegularize_hc456a51f_0_7));
+    vlSelfRef.__VdfgRegularize_hc456a51f_0_10 = (1U 
+                                                 & ((~ (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu.reset)) 
+                                                    & (~ 
+                                                       ((IData)(vlSelfRef.__PVT__lsu_out_bus_exception) 
+                                                        >> 4U))));
 }
 
 void VysyxSoCFull_ysyx_26010011_LSU___nba_comb__TOP__ysyxSoCFull__asic__cpu__cpu__LSU_0__3(VysyxSoCFull_ysyx_26010011_LSU* vlSelf) {
@@ -351,18 +414,6 @@ void VysyxSoCFull_ysyx_26010011_LSU___nba_comb__TOP__ysyxSoCFull__asic__cpu__cpu
 
 void VysyxSoCFull_ysyx_26010011_LSU___nba_comb__TOP__ysyxSoCFull__asic__cpu__cpu__LSU_0__4(VysyxSoCFull_ysyx_26010011_LSU* vlSelf) {
     VL_DEBUG_IF(VL_DBG_MSGF("+              VysyxSoCFull_ysyx_26010011_LSU___nba_comb__TOP__ysyxSoCFull__asic__cpu__cpu__LSU_0__4\n"); );
-    VysyxSoCFull__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
-    auto& vlSelfRef = std::ref(*vlSelf).get();
-    // Body
-    vlSelfRef.__VdfgRegularize_hc456a51f_0_10 = (1U 
-                                                 & ((~ (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu.reset)) 
-                                                    & (~ 
-                                                       ((IData)(vlSelfRef.__PVT__lsu_out_bus_exception) 
-                                                        >> 4U))));
-}
-
-void VysyxSoCFull_ysyx_26010011_LSU___nba_comb__TOP__ysyxSoCFull__asic__cpu__cpu__LSU_0__5(VysyxSoCFull_ysyx_26010011_LSU* vlSelf) {
-    VL_DEBUG_IF(VL_DBG_MSGF("+              VysyxSoCFull_ysyx_26010011_LSU___nba_comb__TOP__ysyxSoCFull__asic__cpu__cpu__LSU_0__5\n"); );
     VysyxSoCFull__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
     auto& vlSelfRef = std::ref(*vlSelf).get();
     // Body

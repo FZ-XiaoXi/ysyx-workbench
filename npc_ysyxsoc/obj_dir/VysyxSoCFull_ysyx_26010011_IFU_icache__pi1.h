@@ -2,15 +2,15 @@
 // DESCRIPTION: Verilator output: Design internal header
 // See VysyxSoCFull.h for the primary calling header
 
-#ifndef VERILATED_VYSYXSOCFULL_YSYX_26010011_IFU_ICACHE_H_
-#define VERILATED_VYSYXSOCFULL_YSYX_26010011_IFU_ICACHE_H_  // guard
+#ifndef VERILATED_VYSYXSOCFULL_YSYX_26010011_IFU_ICACHE__PI1_H_
+#define VERILATED_VYSYXSOCFULL_YSYX_26010011_IFU_ICACHE__PI1_H_  // guard
 
 #include "verilated.h"
 
 
 class VysyxSoCFull__Syms;
 
-class alignas(VL_CACHE_LINE_BYTES) VysyxSoCFull_ysyx_26010011_IFU_icache final : public VerilatedModule {
+class alignas(VL_CACHE_LINE_BYTES) VysyxSoCFull_ysyx_26010011_IFU_icache__pi1 final : public VerilatedModule {
   public:
 
     // DESIGN SPECIFIC STATE
@@ -37,23 +37,23 @@ class alignas(VL_CACHE_LINE_BYTES) VysyxSoCFull_ysyx_26010011_IFU_icache final :
     CData/*2:0*/ __PVT__next_state;
     CData/*0:0*/ __PVT__ar_fire;
     CData/*0:0*/ __PVT__r_fire;
-    CData/*0:0*/ __PVT__burst_cnt;
+    CData/*1:0*/ __PVT__burst_cnt;
     VL_IN(__PVT__in_addr,31,0);
     VL_OUT(__PVT__in_rdata,31,0);
     VL_OUT(__PVT__out_araddr,31,0);
     VL_IN(__PVT__out_rdata,31,0);
     IData/*31:0*/ __PVT__unnamedblk1__DOT__i;
-    VlUnpacked<IData/*31:0*/, 16> __PVT__cache_mem;
-    VlUnpacked<CData/*0:0*/, 16> __PVT__cache_valid;
-    VlUnpacked<IData/*25:0*/, 16> __PVT__cache_tag;
+    VlUnpacked<VlWide<4>/*127:0*/, 8> __PVT__cache_mem;
+    VlUnpacked<CData/*0:0*/, 8> __PVT__cache_valid;
+    VlUnpacked<IData/*24:0*/, 8> __PVT__cache_tag;
 
     // INTERNAL VARIABLES
     VysyxSoCFull__Syms* const vlSymsp;
 
     // CONSTRUCTORS
-    VysyxSoCFull_ysyx_26010011_IFU_icache(VysyxSoCFull__Syms* symsp, const char* v__name);
-    ~VysyxSoCFull_ysyx_26010011_IFU_icache();
-    VL_UNCOPYABLE(VysyxSoCFull_ysyx_26010011_IFU_icache);
+    VysyxSoCFull_ysyx_26010011_IFU_icache__pi1(VysyxSoCFull__Syms* symsp, const char* v__name);
+    ~VysyxSoCFull_ysyx_26010011_IFU_icache__pi1();
+    VL_UNCOPYABLE(VysyxSoCFull_ysyx_26010011_IFU_icache__pi1);
 
     // INTERNAL METHODS
     void __Vconfigure(bool first);

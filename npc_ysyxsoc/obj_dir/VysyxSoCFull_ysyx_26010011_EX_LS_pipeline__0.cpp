@@ -9,8 +9,6 @@ void VysyxSoCFull_ysyx_26010011_EX_LS_pipeline___ico_sequent__TOP__ysyxSoCFull__
     VysyxSoCFull__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
     auto& vlSelfRef = std::ref(*vlSelf).get();
     // Body
-    vlSelfRef.__VdfgRegularize_h6e95ff9d_0_34 = ((IData)(vlSelfRef.__PVT__lsu_in_bus_isWGPR) 
-                                                 & (IData)(vlSelfRef.lsu_in_valid));
     vlSelfRef.__VdfgRegularize_h6e95ff9d_0_20 = ((IData)(vlSelfRef.lsu_in_valid) 
                                                  & (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__LSU_0.__VdfgRegularize_hc456a51f_0_4));
 }
@@ -26,23 +24,27 @@ void VysyxSoCFull_ysyx_26010011_EX_LS_pipeline___nba_sequent__TOP__ysyxSoCFull__
     __Vdly__lsu_in_bus_lsu_val = 0;
     CData/*4:0*/ __Vdly__lsu_in_bus_exception;
     __Vdly__lsu_in_bus_exception = 0;
+    CData/*0:0*/ __Vdly__lsu_in_bus_isUnSigned;
+    __Vdly__lsu_in_bus_isUnSigned = 0;
+    CData/*1:0*/ __Vdly__lsu_in_bus_perip_mask;
+    __Vdly__lsu_in_bus_perip_mask = 0;
     // Body
     vlSelfRef.__Vdly__lsu_in_bus_csr_result = vlSelfRef.__PVT__lsu_in_bus_csr_result;
-    vlSelfRef.__Vdly__lsu_in_bus_comp_result = vlSelfRef.__PVT__lsu_in_bus_comp_result;
     __Vdly__lsu_in_bus_lsu_val = vlSelfRef.__PVT__lsu_in_bus_lsu_val;
     vlSelfRef.__Vdly__lsu_in_bus_instruction = vlSelfRef.__PVT__lsu_in_bus_instruction;
-    vlSelfRef.__Vdly__lsu_in_bus_isJUMP = vlSelfRef.__PVT__lsu_in_bus_isJUMP;
-    vlSelfRef.__Vdly__lsu_in_bus_isWCOMP = vlSelfRef.__PVT__lsu_in_bus_isWCOMP;
     vlSelfRef.__Vdly__lsu_in_bus_isBRANCH = vlSelfRef.__PVT__lsu_in_bus_isBRANCH;
-    vlSelfRef.__Vdly__lsu_in_bus_isUnSigned = vlSelfRef.__PVT__lsu_in_bus_isUnSigned;
     vlSelfRef.__Vdly__lsu_in_bus_pc = vlSelfRef.lsu_in_bus_pc;
-    vlSelfRef.__Vdly__lsu_in_bus_snpc = vlSelfRef.__PVT__lsu_in_bus_snpc;
-    vlSelfRef.__Vdly__lsu_in_bus_rd = vlSelfRef.__PVT__lsu_in_bus_rd;
     vlSelfRef.__Vdly__lsu_in_bus_csrrd = vlSelfRef.__PVT__lsu_in_bus_csrrd;
     vlSelfRef.__Vdly__lsu_in_bus_opCSR = vlSelfRef.__PVT__lsu_in_bus_opCSR;
+    vlSelfRef.__Vdly__lsu_in_bus_comp_result = vlSelfRef.__PVT__lsu_in_bus_comp_result;
+    vlSelfRef.__Vdly__lsu_in_bus_isJUMP = vlSelfRef.__PVT__lsu_in_bus_isJUMP;
+    vlSelfRef.__Vdly__lsu_in_bus_isWCOMP = vlSelfRef.__PVT__lsu_in_bus_isWCOMP;
+    vlSelfRef.__Vdly__lsu_in_bus_snpc = vlSelfRef.__PVT__lsu_in_bus_snpc;
+    __Vdly__lsu_in_bus_isUnSigned = vlSelfRef.__PVT__lsu_in_bus_isUnSigned;
+    vlSelfRef.__Vdly__lsu_in_bus_rd = vlSelfRef.__PVT__lsu_in_bus_rd;
     vlSelfRef.__Vdly__lsu_in_bus_isWGPR = vlSelfRef.__PVT__lsu_in_bus_isWGPR;
     __Vdly__lsu_in_bus_exception = vlSelfRef.__PVT__lsu_in_bus_exception;
-    vlSelfRef.__Vdly__lsu_in_bus_perip_mask = vlSelfRef.__PVT__lsu_in_bus_perip_mask;
+    __Vdly__lsu_in_bus_perip_mask = vlSelfRef.__PVT__lsu_in_bus_perip_mask;
     vlSelfRef.__Vdly__lsu_in_bus_alu_result = vlSelfRef.__PVT__lsu_in_bus_alu_result;
     vlSelfRef.__Vdly__lsu_in_bus_isSTORE = vlSelfRef.__PVT__lsu_in_bus_isSTORE;
     __Vdly__lsu_in_valid = vlSelfRef.lsu_in_valid;
@@ -64,8 +66,8 @@ void VysyxSoCFull_ysyx_26010011_EX_LS_pipeline___nba_sequent__TOP__ysyxSoCFull__
         vlSelfRef.__Vdly__lsu_in_bus_isWCOMP = 0U;
         vlSelfRef.__Vdly__lsu_in_bus_isBRANCH = 0U;
         vlSelfRef.__Vdly__lsu_in_bus_opCSR = 0U;
-        vlSelfRef.__Vdly__lsu_in_bus_isUnSigned = 0U;
-        vlSelfRef.__Vdly__lsu_in_bus_perip_mask = 0U;
+        __Vdly__lsu_in_bus_isUnSigned = 0U;
+        __Vdly__lsu_in_bus_perip_mask = 0U;
         vlSelfRef.__Vdly__lsu_in_bus_pc = 0U;
         vlSelfRef.__Vdly__lsu_in_bus_snpc = 0U;
     } else if (vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu.flush_exception_valid) {
@@ -85,8 +87,8 @@ void VysyxSoCFull_ysyx_26010011_EX_LS_pipeline___nba_sequent__TOP__ysyxSoCFull__
         vlSelfRef.__Vdly__lsu_in_bus_isWCOMP = 0U;
         vlSelfRef.__Vdly__lsu_in_bus_isBRANCH = 0U;
         vlSelfRef.__Vdly__lsu_in_bus_opCSR = 0U;
-        vlSelfRef.__Vdly__lsu_in_bus_isUnSigned = 0U;
-        vlSelfRef.__Vdly__lsu_in_bus_perip_mask = 0U;
+        __Vdly__lsu_in_bus_isUnSigned = 0U;
+        __Vdly__lsu_in_bus_perip_mask = 0U;
         vlSelfRef.__Vdly__lsu_in_bus_pc = 0U;
         vlSelfRef.__Vdly__lsu_in_bus_snpc = 0U;
     } else if ((1U & ((IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__LSU_0.__PVT__lsu_in_ready) 
@@ -120,8 +122,8 @@ void VysyxSoCFull_ysyx_26010011_EX_LS_pipeline___nba_sequent__TOP__ysyxSoCFull__
         vlSelfRef.__Vdly__lsu_in_bus_isWCOMP = vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__ID_EX_inst.__PVT__exu_in_bus_isWCOMP;
         vlSelfRef.__Vdly__lsu_in_bus_isBRANCH = vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__ID_EX_inst.__PVT__exu_in_bus_isBRANCH;
         vlSelfRef.__Vdly__lsu_in_bus_opCSR = vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__ID_EX_inst.__PVT__exu_in_bus_opCSR;
-        vlSelfRef.__Vdly__lsu_in_bus_isUnSigned = vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__ID_EX_inst.__PVT__exu_in_bus_isUnSigned;
-        vlSelfRef.__Vdly__lsu_in_bus_perip_mask = vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__ID_EX_inst.__PVT__exu_in_bus_perip_mask;
+        __Vdly__lsu_in_bus_isUnSigned = vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__ID_EX_inst.__PVT__exu_in_bus_isUnSigned;
+        __Vdly__lsu_in_bus_perip_mask = vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__ID_EX_inst.__PVT__exu_in_bus_perip_mask;
         vlSelfRef.__Vdly__lsu_in_bus_pc = vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__ID_EX_inst.exu_in_bus_pc;
         vlSelfRef.__Vdly__lsu_in_bus_snpc = vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__ID_EX_inst.__PVT__exu_in_bus_snpc;
     } else {
@@ -141,13 +143,15 @@ void VysyxSoCFull_ysyx_26010011_EX_LS_pipeline___nba_sequent__TOP__ysyxSoCFull__
         vlSelfRef.__Vdly__lsu_in_bus_isWCOMP = vlSelfRef.__PVT__lsu_in_bus_isWCOMP;
         vlSelfRef.__Vdly__lsu_in_bus_isBRANCH = vlSelfRef.__PVT__lsu_in_bus_isBRANCH;
         vlSelfRef.__Vdly__lsu_in_bus_opCSR = vlSelfRef.__PVT__lsu_in_bus_opCSR;
-        vlSelfRef.__Vdly__lsu_in_bus_isUnSigned = vlSelfRef.__PVT__lsu_in_bus_isUnSigned;
-        vlSelfRef.__Vdly__lsu_in_bus_perip_mask = vlSelfRef.__PVT__lsu_in_bus_perip_mask;
+        __Vdly__lsu_in_bus_isUnSigned = vlSelfRef.__PVT__lsu_in_bus_isUnSigned;
+        __Vdly__lsu_in_bus_perip_mask = vlSelfRef.__PVT__lsu_in_bus_perip_mask;
         vlSelfRef.__Vdly__lsu_in_bus_pc = vlSelfRef.lsu_in_bus_pc;
         vlSelfRef.__Vdly__lsu_in_bus_snpc = vlSelfRef.__PVT__lsu_in_bus_snpc;
     }
+    vlSelfRef.__PVT__lsu_in_bus_isUnSigned = __Vdly__lsu_in_bus_isUnSigned;
     vlSelfRef.__PVT__lsu_in_bus_exception = __Vdly__lsu_in_bus_exception;
     vlSelfRef.__PVT__lsu_in_bus_lsu_val = __Vdly__lsu_in_bus_lsu_val;
+    vlSelfRef.__PVT__lsu_in_bus_perip_mask = __Vdly__lsu_in_bus_perip_mask;
     vlSelfRef.lsu_in_valid = __Vdly__lsu_in_valid;
 }
 
@@ -158,30 +162,17 @@ void VysyxSoCFull_ysyx_26010011_EX_LS_pipeline___nba_sequent__TOP__ysyxSoCFull__
     // Body
     vlSelfRef.lsu_in_bus_pc = vlSelfRef.__Vdly__lsu_in_bus_pc;
     vlSelfRef.__PVT__lsu_in_bus_instruction = vlSelfRef.__Vdly__lsu_in_bus_instruction;
-    vlSelfRef.__PVT__lsu_in_bus_isUnSigned = vlSelfRef.__Vdly__lsu_in_bus_isUnSigned;
     vlSelfRef.__PVT__lsu_in_bus_csr_result = vlSelfRef.__Vdly__lsu_in_bus_csr_result;
+    vlSelfRef.__PVT__lsu_in_bus_isBRANCH = vlSelfRef.__Vdly__lsu_in_bus_isBRANCH;
+    vlSelfRef.__PVT__lsu_in_bus_csrrd = vlSelfRef.__Vdly__lsu_in_bus_csrrd;
+    vlSelfRef.__PVT__lsu_in_bus_opCSR = vlSelfRef.__Vdly__lsu_in_bus_opCSR;
     vlSelfRef.__PVT__lsu_in_bus_comp_result = vlSelfRef.__Vdly__lsu_in_bus_comp_result;
     vlSelfRef.__PVT__lsu_in_bus_snpc = vlSelfRef.__Vdly__lsu_in_bus_snpc;
     vlSelfRef.__PVT__lsu_in_bus_isJUMP = vlSelfRef.__Vdly__lsu_in_bus_isJUMP;
     vlSelfRef.__PVT__lsu_in_bus_isWCOMP = vlSelfRef.__Vdly__lsu_in_bus_isWCOMP;
-    vlSelfRef.__PVT__lsu_in_bus_isBRANCH = vlSelfRef.__Vdly__lsu_in_bus_isBRANCH;
     vlSelfRef.__PVT__lsu_in_bus_rd = vlSelfRef.__Vdly__lsu_in_bus_rd;
-    vlSelfRef.__PVT__lsu_in_bus_csrrd = vlSelfRef.__Vdly__lsu_in_bus_csrrd;
-    vlSelfRef.__PVT__lsu_in_bus_opCSR = vlSelfRef.__Vdly__lsu_in_bus_opCSR;
     vlSelfRef.__PVT__lsu_in_bus_isWGPR = vlSelfRef.__Vdly__lsu_in_bus_isWGPR;
-    vlSelfRef.__PVT__lsu_in_bus_perip_mask = vlSelfRef.__Vdly__lsu_in_bus_perip_mask;
     vlSelfRef.__PVT__lsu_in_bus_alu_result = vlSelfRef.__Vdly__lsu_in_bus_alu_result;
     vlSelfRef.__PVT__lsu_in_bus_isSTORE = vlSelfRef.__Vdly__lsu_in_bus_isSTORE;
     vlSelfRef.__PVT__lsu_in_bus_isLOAD = vlSelfRef.__Vdly__lsu_in_bus_isLOAD;
-    vlSelfRef.__VdfgRegularize_h6e95ff9d_0_34 = ((IData)(vlSelfRef.__PVT__lsu_in_bus_isWGPR) 
-                                                 & (IData)(vlSelfRef.lsu_in_valid));
-}
-
-void VysyxSoCFull_ysyx_26010011_EX_LS_pipeline___nba_sequent__TOP__ysyxSoCFull__asic__cpu__cpu__EX_LS_inst__2(VysyxSoCFull_ysyx_26010011_EX_LS_pipeline* vlSelf) {
-    VL_DEBUG_IF(VL_DBG_MSGF("+              VysyxSoCFull_ysyx_26010011_EX_LS_pipeline___nba_sequent__TOP__ysyxSoCFull__asic__cpu__cpu__EX_LS_inst__2\n"); );
-    VysyxSoCFull__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
-    auto& vlSelfRef = std::ref(*vlSelf).get();
-    // Body
-    vlSelfRef.__VdfgRegularize_h6e95ff9d_0_20 = ((IData)(vlSelfRef.lsu_in_valid) 
-                                                 & (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__LSU_0.__VdfgRegularize_hc456a51f_0_4));
 }

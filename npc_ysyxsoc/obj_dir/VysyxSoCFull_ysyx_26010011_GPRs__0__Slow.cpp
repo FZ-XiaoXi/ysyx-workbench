@@ -23,8 +23,4 @@ VL_ATTR_COLD void VysyxSoCFull_ysyx_26010011_GPRs___ctor_var_reset(VysyxSoCFull_
         vlSelf->GPR[__Vi0] = VL_SCOPED_RAND_RESET_I(32, __VscopeHash, 3611090588693839745ull);
     }
     vlSelf->__PVT__i = VL_SCOPED_RAND_RESET_I(32, __VscopeHash, 15817570140490810055ull);
-    vlSelf->__VdlySet__GPR__v0 = 0;
-    vlSelf->__VdlyVal__GPR__v32 = VL_SCOPED_RAND_RESET_I(32, __VscopeHash, 7877042706286998557ull);
-    vlSelf->__VdlyDim0__GPR__v32 = VL_SCOPED_RAND_RESET_I(5, __VscopeHash, 15236612488448686784ull);
-    vlSelf->__VdlySet__GPR__v32 = 0;
 }

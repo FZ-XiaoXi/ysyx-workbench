@@ -6,7 +6,7 @@
 #define VERILATED_VYSYXSOCFULL_YSYX_26010011_IFU_H_  // guard
 
 #include "verilated.h"
-class VysyxSoCFull_ysyx_26010011_IFU_icache;
+class VysyxSoCFull_ysyx_26010011_IFU_icache__pi1;
 
 
 class VysyxSoCFull__Syms;
@@ -14,7 +14,7 @@ class VysyxSoCFull__Syms;
 class alignas(VL_CACHE_LINE_BYTES) VysyxSoCFull_ysyx_26010011_IFU final : public VerilatedModule {
   public:
     // CELLS
-    VysyxSoCFull_ysyx_26010011_IFU_icache* icache_u0;
+    VysyxSoCFull_ysyx_26010011_IFU_icache__pi1* icache_u0;
 
     // DESIGN SPECIFIC STATE
     VL_IN8(__PVT__clock,0,0);

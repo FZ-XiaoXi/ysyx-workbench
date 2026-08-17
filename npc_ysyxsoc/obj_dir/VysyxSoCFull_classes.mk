@@ -44,7 +44,7 @@ VM_CLASSES_FAST += \
   VysyxSoCFull_ysyx_26010011_EX_LS_pipeline__0 \
   VysyxSoCFull_ysyx_26010011_LS_WB_pipeline__0 \
   VysyxSoCFull_uart_regs__0 \
-  VysyxSoCFull_ysyx_26010011_IFU_icache__0 \
+  VysyxSoCFull_ysyx_26010011_IFU_icache__pi1__0 \
 
 # Generated module classes, non-fast-path, compile with low/medium optimization
 VM_CLASSES_SLOW += \
@@ -87,8 +87,8 @@ VM_CLASSES_SLOW += \
   VysyxSoCFull_ysyx_26010011_LS_WB_pipeline__0__Slow \
   VysyxSoCFull_uart_regs__Slow \
   VysyxSoCFull_uart_regs__0__Slow \
-  VysyxSoCFull_ysyx_26010011_IFU_icache__Slow \
-  VysyxSoCFull_ysyx_26010011_IFU_icache__0__Slow \
+  VysyxSoCFull_ysyx_26010011_IFU_icache__pi1__Slow \
+  VysyxSoCFull_ysyx_26010011_IFU_icache__pi1__0__Slow \
 
 # Generated support classes, fast-path, compile with highest optimization
 VM_SUPPORT_FAST += \
