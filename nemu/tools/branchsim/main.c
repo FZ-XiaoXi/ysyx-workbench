@@ -96,27 +96,49 @@ uint32_t*  ISJUMP_list = NULL;
     
 // }
 
-void branch_sim(uint64_t BRANCH_count){
+void branch_sim(uint64_t BRANCH_count,uint32_t block_num_bit){
+    
+
+
+    uint32_t block_size = 1 << 2;
+    uint32_t block_num = 1 << block_num_bit;
+    uint32_t CACHE_tag[block_num];
+    uint32_t CACHE_valid[block_num];
+
     uint64_t hit_count=0;
+    uint64_t cache_hit_count=0;
     for(uint64_t i=0;i<BRANCH_count;i++){
         uint32_t PC = BRANCH_list[i];
         uint32_t target = TARGET_list[i];
         uint32_t is_jump = ISJUMP_list[i];
-
-        int my_jump=0;
-
-        if(target < PC) {
-            my_jump=1;
+        
+        uint32_t block_index = (PC >> 2) & (block_num - 1);
+        uint32_t tag = (PC >> 2) >> block_num_bit;
+        if(CACHE_valid[block_index] && CACHE_tag[block_index] == tag){
+            int my_jump=0;
+            if(target < PC) {
+                my_jump=1;
+            }else{
+                my_jump=0;
+            }
+            if(my_jump == is_jump){
+                hit_count++;
+            }
+            cache_hit_count++;
         }else{
-            my_jump=0;
+            CACHE_valid[block_index] = 1;
+            CACHE_tag[block_index] = tag;
         }
-        if(my_jump == is_jump){
-            hit_count++;
-        }
+            // printf("Cache hit!\n");
+
+        
+
+        
         // printf("PC: %08X, Target: %08X, IsJump: %d\n", PC, target, is_jump);
     }
-    printf("ALL=%ld\n", BRANCH_count);
-    printf("Hit count: %ld %.2f%%\nMiss count: %ld %.2f%%\n", hit_count, (double)hit_count / (double)BRANCH_count * 100.0, BRANCH_count - hit_count, (double)(BRANCH_count - hit_count) / (double)BRANCH_count * 100.0);
+    printf("NUM=%d ", block_num);
+    printf("Cache Hit=%ld %.2f%% ", cache_hit_count, (double)cache_hit_count / (double)BRANCH_count * 100.0);
+    printf("Hit count: %ld %.2f%% Miss count: %ld %.2f%%\n", hit_count, (double)hit_count / (double)BRANCH_count * 100.0, BRANCH_count - hit_count, (double)(BRANCH_count - hit_count) / (double)BRANCH_count * 100.0);
 
 }
 
@@ -171,13 +193,11 @@ int main() {
     }
     fclose(fp);
     printf("%ld\n",BRANCH_count);
-    branch_sim(BRANCH_count);
+    
 
-    // for(int i=0;i<8;i++){
-    //     for(int j=0;j<8;j++){
-    //         test(i, j, 1.0, 111.51);
-    //     }
-    // }
+    for(int i=0;i<8;i++){
+        branch_sim(BRANCH_count, i);
+    }
     // for(int i=0;i<8;i++){
     //     for(int j=0;j<8;j++){
     //         M_test(i, j, 1.0, 111.51);
