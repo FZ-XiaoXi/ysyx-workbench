@@ -11,42 +11,8 @@ void VysyxSoCFull_ysyx_26010011_LS_WB_pipeline___nba_sequent__TOP__ysyxSoCFull__
     // Body
     if (vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu.reset) {
         vlSelfRef.wbu_in_valid = 0U;
-        vlSelfRef.wbu_in_bus_pc = 0U;
-        vlSelfRef.__PVT__wbu_in_bus_instruction = 0U;
-        vlSelfRef.__PVT__wbu_in_bus_lsu_result = 0U;
-        vlSelfRef.__PVT__wbu_in_bus_alu_result = 0U;
-        vlSelfRef.__PVT__wbu_in_bus_csr_result = 0U;
-        vlSelfRef.__PVT__wbu_in_bus_comp_result = 0U;
-        vlSelfRef.__PVT__wbu_in_bus_snpc = 0U;
-        vlSelfRef.__PVT__wbu_in_bus_rd = 0U;
-        vlSelfRef.__PVT__wbu_in_bus_exception = 0U;
-        vlSelfRef.__PVT__wbu_in_bus_csrrd = 0U;
-        vlSelfRef.__PVT__wbu_in_bus_isLOAD = 0U;
-        vlSelfRef.__PVT__wbu_in_bus_isSTORE = 0U;
-        vlSelfRef.__PVT__wbu_in_bus_isWGPR = 0U;
-        vlSelfRef.__PVT__wbu_in_bus_isJUMP = 0U;
-        vlSelfRef.__PVT__wbu_in_bus_isWCOMP = 0U;
-        vlSelfRef.__PVT__wbu_in_bus_isBRANCH = 0U;
-        vlSelfRef.__PVT__wbu_in_bus_opCSR = 0U;
     } else if (vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu.flush_exception_valid) {
         vlSelfRef.wbu_in_valid = 0U;
-        vlSelfRef.wbu_in_bus_pc = 0U;
-        vlSelfRef.__PVT__wbu_in_bus_instruction = 0U;
-        vlSelfRef.__PVT__wbu_in_bus_lsu_result = 0U;
-        vlSelfRef.__PVT__wbu_in_bus_alu_result = 0U;
-        vlSelfRef.__PVT__wbu_in_bus_csr_result = 0U;
-        vlSelfRef.__PVT__wbu_in_bus_comp_result = 0U;
-        vlSelfRef.__PVT__wbu_in_bus_snpc = 0U;
-        vlSelfRef.__PVT__wbu_in_bus_rd = 0U;
-        vlSelfRef.__PVT__wbu_in_bus_exception = 0U;
-        vlSelfRef.__PVT__wbu_in_bus_csrrd = 0U;
-        vlSelfRef.__PVT__wbu_in_bus_isLOAD = 0U;
-        vlSelfRef.__PVT__wbu_in_bus_isSTORE = 0U;
-        vlSelfRef.__PVT__wbu_in_bus_isWGPR = 0U;
-        vlSelfRef.__PVT__wbu_in_bus_isJUMP = 0U;
-        vlSelfRef.__PVT__wbu_in_bus_isWCOMP = 0U;
-        vlSelfRef.__PVT__wbu_in_bus_isBRANCH = 0U;
-        vlSelfRef.__PVT__wbu_in_bus_opCSR = 0U;
     } else {
         vlSelfRef.wbu_in_valid = vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__LSU_0.lsu_out_valid;
         vlSelfRef.wbu_in_bus_pc = vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__EX_LS_inst.lsu_in_bus_pc;

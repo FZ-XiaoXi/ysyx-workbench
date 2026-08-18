@@ -1,4 +1,4 @@
-import "DPI-C" function void difftest_skip_ref(int reason);
+//IN_SYN// import "DPI-C" function void difftest_skip_ref(int reason);
 `include "ysyx_26010011_csr_defines.v"
 module ysyx_26010011_GPRs(
   input        clock,
@@ -133,7 +133,7 @@ module ysyx_26010011_CSRs(
 
   always @(*) begin
       if (csr_in_wen & ((csr_in_addw==`ADD_MCYCLE) | (csr_in_addw==`ADD_MCYCLEH))) begin
-         difftest_skip_ref(4);
+//IN_SYN//          difftest_skip_ref(4);
       end
   end
 endmodule

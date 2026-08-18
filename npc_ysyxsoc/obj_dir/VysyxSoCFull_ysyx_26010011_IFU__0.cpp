@@ -66,13 +66,13 @@ void VysyxSoCFull_ysyx_26010011_IFU___ico_sequent__TOP__ysyxSoCFull__asic__cpu__
     // Body
     vlSelfRef.debug_IFU_is_hit = ((IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__IFU_0__icache_u0.__PVT__in_reqValid) 
                                   & (vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__IFU_0__icache_u0.__PVT__cache_valid
-                                     [(7U & (vlSelfRef.PC 
+                                     [(3U & (vlSelfRef.PC 
                                              >> 3U))] 
                                      & (vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__IFU_0__icache_u0.__PVT__cache_tag
-                                        [(7U & (vlSelfRef.PC 
+                                        [(3U & (vlSelfRef.PC 
                                                 >> 3U))] 
                                         == (vlSelfRef.PC 
-                                            >> 6U))));
+                                            >> 5U))));
     vlSelfRef.__PVT__arvalid = ((~ (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu.reset)) 
                                 & (((~ (IData)(vlSelfRef.debug_IFU_is_hit)) 
                                     & ((0U == (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__IFU_0__icache_u0.__PVT__state)) 

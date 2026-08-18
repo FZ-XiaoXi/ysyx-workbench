@@ -41,14 +41,14 @@ VL_ATTR_COLD void VysyxSoCFull_ysyx_26010011_IFU_icache__pi1___ctor_var_reset(Vy
     vlSelf->__PVT__out_rlast = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 8059687719875503935ull);
     vlSelf->__PVT__out_rid = VL_SCOPED_RAND_RESET_I(4, __VscopeHash, 13197421409447846ull);
     vlSelf->__PVT__debug_is_hit = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 9597593556992448911ull);
-    for (int __Vi0 = 0; __Vi0 < 8; ++__Vi0) {
+    for (int __Vi0 = 0; __Vi0 < 4; ++__Vi0) {
         vlSelf->__PVT__cache_mem[__Vi0] = VL_SCOPED_RAND_RESET_Q(64, __VscopeHash, 16322108757504633651ull);
     }
-    for (int __Vi0 = 0; __Vi0 < 8; ++__Vi0) {
+    for (int __Vi0 = 0; __Vi0 < 4; ++__Vi0) {
         vlSelf->__PVT__cache_valid[__Vi0] = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 13624164365116228830ull);
     }
-    for (int __Vi0 = 0; __Vi0 < 8; ++__Vi0) {
-        vlSelf->__PVT__cache_tag[__Vi0] = VL_SCOPED_RAND_RESET_I(26, __VscopeHash, 8916907887533138551ull);
+    for (int __Vi0 = 0; __Vi0 < 4; ++__Vi0) {
+        vlSelf->__PVT__cache_tag[__Vi0] = VL_SCOPED_RAND_RESET_I(27, __VscopeHash, 8916907887533138551ull);
     }
     vlSelf->pc_flushed = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 7891879528763933891ull);
     vlSelf->__PVT__state = VL_SCOPED_RAND_RESET_I(3, __VscopeHash, 9404372463396948974ull);

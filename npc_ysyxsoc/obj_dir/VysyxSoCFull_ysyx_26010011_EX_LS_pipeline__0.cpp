@@ -51,46 +51,8 @@ void VysyxSoCFull_ysyx_26010011_EX_LS_pipeline___nba_sequent__TOP__ysyxSoCFull__
     vlSelfRef.__Vdly__lsu_in_bus_isLOAD = vlSelfRef.__PVT__lsu_in_bus_isLOAD;
     if (vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu.reset) {
         __Vdly__lsu_in_valid = 0U;
-        vlSelfRef.__Vdly__lsu_in_bus_alu_result = 0U;
-        vlSelfRef.__Vdly__lsu_in_bus_csr_result = 0U;
-        vlSelfRef.__Vdly__lsu_in_bus_comp_result = 0U;
-        __Vdly__lsu_in_bus_lsu_val = 0U;
-        vlSelfRef.__Vdly__lsu_in_bus_rd = 0U;
-        __Vdly__lsu_in_bus_exception = 0U;
-        vlSelfRef.__Vdly__lsu_in_bus_csrrd = 0U;
-        vlSelfRef.__Vdly__lsu_in_bus_instruction = 0U;
-        vlSelfRef.__Vdly__lsu_in_bus_isLOAD = 0U;
-        vlSelfRef.__Vdly__lsu_in_bus_isSTORE = 0U;
-        vlSelfRef.__Vdly__lsu_in_bus_isWGPR = 0U;
-        vlSelfRef.__Vdly__lsu_in_bus_isJUMP = 0U;
-        vlSelfRef.__Vdly__lsu_in_bus_isWCOMP = 0U;
-        vlSelfRef.__Vdly__lsu_in_bus_isBRANCH = 0U;
-        vlSelfRef.__Vdly__lsu_in_bus_opCSR = 0U;
-        __Vdly__lsu_in_bus_isUnSigned = 0U;
-        __Vdly__lsu_in_bus_perip_mask = 0U;
-        vlSelfRef.__Vdly__lsu_in_bus_pc = 0U;
-        vlSelfRef.__Vdly__lsu_in_bus_snpc = 0U;
     } else if (vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu.flush_exception_valid) {
         __Vdly__lsu_in_valid = 0U;
-        vlSelfRef.__Vdly__lsu_in_bus_alu_result = 0U;
-        vlSelfRef.__Vdly__lsu_in_bus_csr_result = 0U;
-        vlSelfRef.__Vdly__lsu_in_bus_comp_result = 0U;
-        __Vdly__lsu_in_bus_lsu_val = 0U;
-        vlSelfRef.__Vdly__lsu_in_bus_rd = 0U;
-        __Vdly__lsu_in_bus_exception = 0U;
-        vlSelfRef.__Vdly__lsu_in_bus_csrrd = 0U;
-        vlSelfRef.__Vdly__lsu_in_bus_instruction = 0U;
-        vlSelfRef.__Vdly__lsu_in_bus_isLOAD = 0U;
-        vlSelfRef.__Vdly__lsu_in_bus_isSTORE = 0U;
-        vlSelfRef.__Vdly__lsu_in_bus_isWGPR = 0U;
-        vlSelfRef.__Vdly__lsu_in_bus_isJUMP = 0U;
-        vlSelfRef.__Vdly__lsu_in_bus_isWCOMP = 0U;
-        vlSelfRef.__Vdly__lsu_in_bus_isBRANCH = 0U;
-        vlSelfRef.__Vdly__lsu_in_bus_opCSR = 0U;
-        __Vdly__lsu_in_bus_isUnSigned = 0U;
-        __Vdly__lsu_in_bus_perip_mask = 0U;
-        vlSelfRef.__Vdly__lsu_in_bus_pc = 0U;
-        vlSelfRef.__Vdly__lsu_in_bus_snpc = 0U;
     } else if ((1U & ((IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__LSU_0.__PVT__lsu_in_ready) 
                       | (~ (IData)(vlSelfRef.lsu_in_valid))))) {
         __Vdly__lsu_in_valid = vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__ID_EX_inst.exu_in_valid;

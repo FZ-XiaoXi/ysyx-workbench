@@ -1,5 +1,5 @@
-import "DPI-C" function int pmem_read(input int raddr);
-import "DPI-C" function void pmem_write(input int waddr, input int wdata, input byte wmask);
+//IN_SYN// import "DPI-C" function int pmem_read(input int raddr);
+//IN_SYN// import "DPI-C" function void pmem_write(input int waddr, input int wdata, input byte wmask);
 `include "ysyx_26010011_csr_defines.v"
 module ysyx_26010011(
   input clock,
