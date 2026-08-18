@@ -23,6 +23,7 @@
 `define EXCEPTION_STORE_ACCESS 4'd7
 `define EXCEPTION_ECALL_UMODE 4'd8
 `define EXCEPTION_ECALL_SMODE 4'd9
+`define EXCEPTION_FENCEI 4'd14                //RESERVED but used to indicate FENCE.I instruction, not a real exception
 `define EXCEPTION_ECALL_MMODE 4'd11
 `define EXCEPTION_FETCH_PAGE_FAULT 4'd12
 `define EXCEPTION_LOAD_PAGE_FAULT 4'd13

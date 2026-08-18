@@ -265,6 +265,8 @@ module ysyx_26010011_AXI4LiteArbiter(
                     S_wdata = 0;
                     S_wstrb = 0;
                     S_wlast = 0;
+                    M1_wready = 0;
+                    M2_wready = 0;
                 end
             end
             W_BUSY:begin

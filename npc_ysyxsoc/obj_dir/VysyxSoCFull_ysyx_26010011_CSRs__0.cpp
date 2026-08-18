@@ -4,8 +4,6 @@
 
 #include "VysyxSoCFull__pch.h"
 
-void VysyxSoCFull___024unit____Vdpiimwrap_difftest_skip_ref_TOP____024unit(IData/*31:0*/ reason);
-
 void VysyxSoCFull_ysyx_26010011_CSRs___ico_sequent__TOP__ysyxSoCFull__asic__cpu__cpu__CSR_0__0(VysyxSoCFull_ysyx_26010011_CSRs* vlSelf) {
     VL_DEBUG_IF(VL_DBG_MSGF("+              VysyxSoCFull_ysyx_26010011_CSRs___ico_sequent__TOP__ysyxSoCFull__asic__cpu__cpu__CSR_0__0\n"); );
     VysyxSoCFull__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
@@ -93,6 +91,15 @@ void VysyxSoCFull_ysyx_26010011_CSRs___ico_sequent__TOP__ysyxSoCFull__asic__cpu_
     vlSelfRef.__PVT__csr_in_bus_exception = ((IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__LS_WB_inst.wbu_in_valid)
                                               ? (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__LS_WB_inst.__PVT__wbu_in_bus_exception)
                                               : 0U);
+}
+
+void VysyxSoCFull___024unit____Vdpiimwrap_difftest_skip_ref_TOP____024unit(IData/*31:0*/ reason);
+
+void VysyxSoCFull_ysyx_26010011_CSRs___ico_sequent__TOP__ysyxSoCFull__asic__cpu__cpu__CSR_0__1(VysyxSoCFull_ysyx_26010011_CSRs* vlSelf) {
+    VL_DEBUG_IF(VL_DBG_MSGF("+              VysyxSoCFull_ysyx_26010011_CSRs___ico_sequent__TOP__ysyxSoCFull__asic__cpu__cpu__CSR_0__1\n"); );
+    VysyxSoCFull__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
+    auto& vlSelfRef = std::ref(*vlSelf).get();
+    // Body
     if ((((0U != (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__LS_WB_inst.__PVT__wbu_in_bus_opCSR)) 
           & (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu.WBU_0__DOT____VdfgRegularize_h03859d6a_0_0)) 
          & ((0x0b00U == (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__LS_WB_inst.__PVT__wbu_in_bus_csrrd)) 

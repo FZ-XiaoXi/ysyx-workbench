@@ -275,7 +275,7 @@ module ysyx_26010011(
   assign flush_valid=dnpc_valid;
 
   assign ifu_flush_valid=flush_valid;
-  assign idu_flush_valid=flush_valid;
+  assign idu_flush_valid=flush_valid | fencei_pass;
   assign exu_flush_valid=flush_valid;
   assign lsu_flush_valid=flush_exception_valid;
   assign wbu_flush_valid=flush_exception_valid;
@@ -315,7 +315,9 @@ module ysyx_26010011(
 	.r_pc(r_pc),
 	.r_tar(r_tar),
 	.r_valid(r_valid),
-	.r_type(r_type)
+	.r_type(r_type),
+	.fencei_flush(fencei_pass)
+
 	
   );/*verilator public_module*/
   wire [31:0] IROM_araddr,IROM_rdata;
@@ -359,6 +361,7 @@ module ysyx_26010011(
   ysyx_26010011_IDU IDU_0(
 	.clock(clock),
 	.reset(reset),
+	.flush_valid(idu_flush_valid),
 	.idu_isRAW(idu_isRAW),
 	.idu_in_bus_instruction(idu_in_bus_instruction),
 	.idu_in_bus_pc(idu_in_bus_pc),
@@ -393,11 +396,13 @@ module ysyx_26010011(
 	.w_pc(w_pc),
 	.w_tar(w_tar),
 	.w_valid(w_valid),
-	.w_type(w_type)
+	.w_type(w_type),
+	.fencei_pass(fencei_pass),
+	.fencei_flush(fencei_flush)
 
   );/*verilator public_module*/
 
-  wire idu_out_valid,idu_out_ready;
+  wire idu_out_valid,idu_out_ready,fencei_flush;
   wire [11:0]idu_out_bus_csrrd;
   wire [31:0]idu_out_bus_imm,idu_out_bus_csr;   //idu_out_bus_imm 可作CSR地址
   wire [12:0]idu_out_bus_signals;
@@ -713,7 +718,7 @@ module ysyx_26010011(
   wire [2:0]wbu_in_bus_opCSR;
   wire [4:0]wbu_in_bus_rd;
   wire [4:0]wbu_in_bus_exception;
-
+  wire fencei_pass;
   ysyx_26010011_WBU WBU_0(
 	.clock(clock),
 	.reset(reset),
@@ -743,7 +748,8 @@ module ysyx_26010011(
 	.gpr_address(gpr_waddr),
 	.csr_we(csr_we),
 	.csr_wdata(csr_wdata),
-	.csr_address(csr_waddr)
+	.csr_address(csr_waddr),
+	.fencei_pass(fencei_pass)
   );/*verilator public_module*/
   wire [4:0]wbu_out_bus_exception;
   //WBU FINAL
@@ -864,7 +870,7 @@ module ysyx_26010011(
 	.csr_in_bus_exception(wbu_out_bus_exception)
   );/*verilator public_module*/
 
-  ysyx_26010011_BCache #(.CACHE_SIZE(16)) bcache_u0(
+  ysyx_26010011_BCache #(.CACHE_SIZE(8)) bcache_u0(
 	.clock(clock),
 	.reset(reset),
 	.r_pc(r_pc),

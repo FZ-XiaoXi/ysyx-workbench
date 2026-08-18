@@ -2,6 +2,9 @@
 module ysyx_26010011_IDU(
     input clock,
     input reset,
+    input flush_valid,
+    input fencei_pass,
+    output fencei_flush,
     input idu_isRAW,
     //IFU->IDU
     input        [31:0]idu_in_bus_instruction,
@@ -39,14 +42,39 @@ module ysyx_26010011_IDU(
     output w_type
 
 );
+
+    reg state, next_state;
+    parameter S_WORKING = 1'b0, S_WAITING = 1'b1;
+    always @(posedge clock) begin
+        if(reset | flush_valid) state <= S_WORKING;
+        else      state <= next_state;
+    end
+
+    always @(*) begin
+        if(state == S_WORKING) begin
+            if(idu_in_valid && isFENCEI) begin
+                next_state = S_WAITING;
+            end else begin
+                next_state = S_WORKING;
+            end
+        end else if(state == S_WAITING) begin
+            if(fencei_pass) begin
+                next_state = S_WORKING;
+            end else begin
+                next_state = S_WAITING;
+            end
+        end
+    end
+    
     assign w_pc = idu_in_bus_pc;
     assign w_tar = idu_out_bus_imm + idu_in_bus_pc;
     assign w_valid = idu_in_valid & idu_out_valid & ~idu_out_bus_exception[4] & (idu_out_bus_isBRANCH|isJAL);
     assign w_type = isJAL;
 
-    assign idu_in_ready = idu_out_ready & (~idu_isRAW | idu_out_bus_exception[4]);
-    assign idu_out_valid = idu_in_valid & (~idu_isRAW | idu_out_bus_exception[4]);
-    
+    assign idu_in_ready = idu_out_ready & (~idu_isRAW | idu_out_bus_exception[4]) & (state == S_WORKING && next_state == S_WORKING);
+    assign idu_out_valid = idu_in_valid & (~idu_isRAW | idu_out_bus_exception[4]) & (state == S_WORKING);
+    assign fencei_flush = idu_in_valid & isFENCEI & (state == S_WORKING) & ~idu_out_bus_exception[4];
+
     logic [ 6: 0]opcode;
     logic [11: 0]immI;
     logic [11: 0]immS;
@@ -56,7 +84,7 @@ module ysyx_26010011_IDU(
     logic [ 2: 0]funct3;
     logic [ 6: 0]funct7;
 
-    logic isECALL, isEBREAK, isMRET;
+    logic isECALL, isEBREAK, isMRET,isFENCEI;
     logic isLUI, isAUIPC, isJAL, isJALR, isBEQ, isBNE, isBLT, isBGE, isBLTU, isBGEU;
     logic isLB, isLH, isLW, isLBU, isLHU, isSB, isSH, isSW, isADDI, isSLTI, isSLTIU;
     logic isXORI, isORI, isANDI, isSLLI, isSRLI, isSRAI, isADD, isSUB, isSLL, isSLT;
@@ -67,14 +95,15 @@ module ysyx_26010011_IDU(
 
     logic isR,isI,isS,isB,isU,isJ;
 
-    logic all_inst = isLUI|isAUIPC|isJAL|isJALR|isBEQ|isBNE|isBLT|isBGE|isBLTU|isBGEU
+    wire all_inst;
+    assign all_inst = (isLUI|isAUIPC|isJAL|isJALR|isBEQ|isBNE|isBLT|isBGE|isBLTU|isBGEU
                     |isLB|isLH|isLW|isLBU|isLHU|isSB|isSH|isSW
                     |isADDI|isSLTI|isSLTIU|isXORI|isORI|isANDI
                     |isSLLI|isSRLI|isSRAI
                     |isADD|isSUB|isSLL|isSLT|isSLTU
                     |isXOR|isSRL|isSRA|isOR|isAND
                     |(|idu_out_bus_opCSR)
-                    |isECALL|isEBREAK|isMRET;
+                    |isECALL|isEBREAK|isMRET|isFENCEI);//////////////////////////
 
     assign opcode=  idu_in_bus_instruction[ 6: 0];
     assign idu_out_bus_rd=      idu_in_bus_instruction[11: 7];
@@ -140,16 +169,17 @@ module ysyx_26010011_IDU(
     assign isECALL  = (idu_in_bus_instruction==32'b00000000000000000000000001110011                    ) ? 1 : 0;
     assign isEBREAK = (idu_in_bus_instruction==32'b00000000000100000000000001110011                    ) ? 1 : 0;
     assign isMRET   = (idu_in_bus_instruction==32'b00110000001000000000000001110011                    ) ? 1 : 0;
+    assign isFENCEI = (idu_in_bus_instruction==32'b00000000000000000001000000001111                    ) ? 1 : 0;
 
-    //M-ext R-ty
-    assign isMUL    = (opcode == 7'b0110011 && funct3 == 3'b000 && funct7 == 7'b0000001 ) ? 1 : 0;
-    assign isMULH   = (opcode == 7'b0110011 && funct3 == 3'b001 && funct7 == 7'b0000001 ) ? 1 : 0;
-    assign isMULHSU = (opcode == 7'b0110011 && funct3 == 3'b010 && funct7 == 7'b0000001 ) ? 1 : 0;
-    assign isMULHU  = (opcode == 7'b0110011 && funct3 == 3'b011 && funct7 == 7'b0000001 ) ? 1 : 0;
-    assign isDIV    = (opcode == 7'b0110011 && funct3 == 3'b100 && funct7 == 7'b0000001 ) ? 1 : 0;
-    assign isDIVU   = (opcode == 7'b0110011 && funct3 == 3'b101 && funct7 == 7'b0000001 ) ? 1 : 0;
-    assign isREM    = (opcode == 7'b0110011 && funct3 == 3'b110 && funct7 == 7'b0000001 ) ? 1 : 0;
-    assign isREMU   = (opcode == 7'b0110011 && funct3 == 3'b111 && funct7 == 7'b0000001 ) ? 1 : 0;
+    // //M-ext R-ty
+    // assign isMUL    = (opcode == 7'b0110011 && funct3 == 3'b000 && funct7 == 7'b0000001 ) ? 1 : 0;
+    // assign isMULH   = (opcode == 7'b0110011 && funct3 == 3'b001 && funct7 == 7'b0000001 ) ? 1 : 0;
+    // assign isMULHSU = (opcode == 7'b0110011 && funct3 == 3'b010 && funct7 == 7'b0000001 ) ? 1 : 0;
+    // assign isMULHU  = (opcode == 7'b0110011 && funct3 == 3'b011 && funct7 == 7'b0000001 ) ? 1 : 0;
+    // assign isDIV    = (opcode == 7'b0110011 && funct3 == 3'b100 && funct7 == 7'b0000001 ) ? 1 : 0;
+    // assign isDIVU   = (opcode == 7'b0110011 && funct3 == 3'b101 && funct7 == 7'b0000001 ) ? 1 : 0;
+    // assign isREM    = (opcode == 7'b0110011 && funct3 == 3'b110 && funct7 == 7'b0000001 ) ? 1 : 0;
+    // assign isREMU   = (opcode == 7'b0110011 && funct3 == 3'b111 && funct7 == 7'b0000001 ) ? 1 : 0;
 
 
 /////////////////////////
@@ -244,6 +274,8 @@ module ysyx_26010011_IDU(
                 idu_out_bus_exception = {1'b1,`EXCEPTION_ECALL_MMODE};
             end else if(isMRET)begin
                 idu_out_bus_exception = {1'b1,`EXCEPTION_MRET};
+            end else if(isFENCEI)begin
+                idu_out_bus_exception = {1'b0,`EXCEPTION_FENCEI};
             end else begin
                 idu_out_bus_exception = idu_in_bus_exception;
             end
