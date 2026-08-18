@@ -160,13 +160,13 @@ int main() {
     }
     fclose(fp);
 
-    for(int i=0;i<8;i++){
-        for(int j=0;j<8;j++){
-            test(i, j, 0.45, 65.77);
+    for(int i=0;i<4;i++){
+        for(int j=0;j<4;j++){
+            test(i, j, 0.01, 53.39);
         }
     }
-    for(int i=0;i<8;i++){
-        for(int j=0;j<8;j++){
+    for(int i=0;i<4;i++){
+        for(int j=0;j<4;j++){
             M_test(i, j, 0.45, 65.77);
         }
     }

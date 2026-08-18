@@ -1,4 +1,4 @@
-import "DPI-C" function void difftest_mem_set(int addr);
+//IN_SYN// import "DPI-C" function void difftest_mem_set(int addr);
 `include "ysyx_26010011_csr_defines.v"
 module ysyx_26010011_LSU(
     input             clock,
@@ -93,10 +93,10 @@ module ysyx_26010011_LSU(
     reg [3:0]   wstrb_q;
     always @(posedge clock) begin
         if(reset) begin
-            awaddr_q <= 32'b0;
-            wdata_q  <= 32'b0;
-            awsize_q <= 3'b0;
-            wstrb_q  <= 4'b0;
+            // awaddr_q <= 32'b0;
+            // wdata_q  <= 32'b0;
+            // awsize_q <= 3'b0;
+            // wstrb_q  <= 4'b0;
         end else begin
             if(next_state == S_WAIT_BRESP || next_state == S_WAIT_AW_W) begin
                 awaddr_q <= lsu_in_bus_addr;
@@ -135,7 +135,7 @@ module ysyx_26010011_LSU(
                 ||(lsu_in_bus_addr >= 32'h20000000 && lsu_in_bus_addr < 32'h20001000)
             ))
             begin
-                difftest_mem_set(lsu_in_bus_addr);
+//IN_SYN//                 difftest_mem_set(lsu_in_bus_addr);
             end
         end
         if(((lsu_in_bus_isSTORE && lsu_in_valid)||(lsu_in_bus_isLOAD && lsu_in_valid)) && !(
@@ -146,7 +146,7 @@ module ysyx_26010011_LSU(
               ||(lsu_in_bus_addr >= 32'h20000000 && lsu_in_bus_addr < 32'h20001000)
         )) begin
             if((lsu_in_bus_addr >= 32'h10000000) && (lsu_in_bus_addr <= 32'h10000005)) begin
-                difftest_skip_ref(lsu_in_bus_addr);
+//IN_SYN//                 difftest_skip_ref(lsu_in_bus_addr);
             end
         end
 
@@ -230,7 +230,8 @@ module ysyx_26010011_LSU(
             2'b00: lsu_out_bus_rdata = lsu_rdata1;
             2'b01: lsu_out_bus_rdata = lsu_rdata2;
             2'b10: lsu_out_bus_rdata = lsu_rdata4;
-            default: lsu_out_bus_rdata = 32'hffffffff;
+            default: lsu_out_bus_rdata = lsu_rdata1;
+            // default: lsu_out_bus_rdata = 32'hffffffff;
         endcase
     end
     wire debug_LSU_LOADING/*verilator public*/ = (state!=S_IDLE)&lsu_in_bus_isLOAD&lsu_in_valid;
