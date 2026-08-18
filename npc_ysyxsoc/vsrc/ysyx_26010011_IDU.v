@@ -236,8 +236,8 @@ module ysyx_26010011_IDU(
     assign idu_out_bus_alu_op[9]=(isAUIPC|isJAL|isJALR|isADD|isLW|isLBU|isLB|isLH|isSW|isSH|isSB|isADDI|isLHU|isBEQ|isBNE|isBLT|isBGE|isBLTU|isBGEU)?1:0;
     assign idu_out_bus_alu_op[8]=(isSUB)?1:0;
     // Zbc: alu_op[7]=1, comp_op encodes: 00=clmul, 01=clmulh, 10=clmulr
-    assign idu_out_bus_alu_op[7]=(0)?1:0;
-    assign idu_out_bus_alu_op[6]=(0)?1:0;
+    assign idu_out_bus_alu_op[7]=0;
+    assign idu_out_bus_alu_op[6]=0;
     assign idu_out_bus_alu_op[5]=(isSLLI|isSLL)?1:0;
     assign idu_out_bus_alu_op[4]=(isSRLI|isSRL)?1:0;
     assign idu_out_bus_alu_op[3]=(isSRAI|isSRA)?1:0;
