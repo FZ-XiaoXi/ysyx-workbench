@@ -40,11 +40,10 @@ module ysyx_26010011_WBU(
                                     gpr_wdata = wbu_in_bus_lsu_result;
         end else if(wbu_in_bus_isJUMP) begin
                                     gpr_wdata = wbu_in_bus_snpc;
-        end else if(wbu_in_bus_isWGPR) begin
+        // end else if(wbu_in_bus_isWGPR) begin
+        end else begin
             if(wbu_in_bus_isWCOMP)           gpr_wdata = {31'b0,wbu_in_bus_comp_result};
             else                    gpr_wdata = wbu_in_bus_alu_result;
-        end else begin
-                                    gpr_wdata = 32'hf0f0f0f0;
         end
     end
 
