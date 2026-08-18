@@ -162,12 +162,12 @@ int main() {
 
     for(int i=0;i<8;i++){
         for(int j=0;j<8;j++){
-            test(i, j, 1.0, 111.51);
+            test(i, j, 0.45, 65.77);
         }
     }
     for(int i=0;i<8;i++){
         for(int j=0;j<8;j++){
-            M_test(i, j, 1.0, 111.51);
+            M_test(i, j, 0.45, 65.77);
         }
     }
     
