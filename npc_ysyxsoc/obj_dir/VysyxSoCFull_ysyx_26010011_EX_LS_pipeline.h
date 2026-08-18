@@ -45,7 +45,7 @@ class alignas(VL_CACHE_LINE_BYTES) VysyxSoCFull_ysyx_26010011_EX_LS_pipeline fin
     VL_OUT8(__PVT__lsu_in_bus_opCSR,2,0);
     VL_OUT8(__PVT__lsu_in_bus_isUnSigned,0,0);
     VL_OUT8(__PVT__lsu_in_bus_perip_mask,1,0);
-    CData/*0:0*/ __VdfgRegularize_h6e95ff9d_0_20;
+    CData/*0:0*/ __VdfgRegularize_h6e95ff9d_0_21;
     CData/*0:0*/ __Vdly__lsu_in_bus_comp_result;
     CData/*4:0*/ __Vdly__lsu_in_bus_rd;
     CData/*0:0*/ __Vdly__lsu_in_bus_isLOAD;

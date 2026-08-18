@@ -21,14 +21,13 @@ void VysyxSoCFull_ysyx_26010011_IFU_icache__pi1___ico_sequent__TOP__ysyxSoCFull_
     auto& vlSelfRef = std::ref(*vlSelf).get();
     // Body
     vlSelfRef.pc_flush = vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu.flush_valid;
-    vlSelfRef.__PVT__in_reqValid = ((IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__IFU_0.__PVT__in_reqValid) 
-                                    & ((~ (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu.flush_valid)) 
-                                       & (~ (((0U != 
-                                               (3U 
-                                                & vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__IFU_0.PC))
-                                               ? 0x10U
-                                               : 0U) 
-                                             >> 4U))));
+    vlSelfRef.__PVT__in_reqValid = ((~ ((IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu.flush_valid) 
+                                        | (((0U != 
+                                             (3U & vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__IFU_0.PC))
+                                             ? 0x10U
+                                             : 0U) 
+                                           >> 4U))) 
+                                    & (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__IFU_0.__PVT__in_reqValid));
 }
 
 extern const VlUnpacked<CData/*0:0*/, 512> VysyxSoCFull__ConstPool__TABLE_hb96f65ad_0;

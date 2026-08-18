@@ -5,6 +5,7 @@ module ysyx_26010011_IDU(
     input idu_isRAW,
     //IFU->IDU
     input        [31:0]idu_in_bus_instruction,
+    input        [31:0]idu_in_bus_pc,
     input        [ 4:0]idu_in_bus_exception,
     input              idu_in_valid,
     output             idu_in_ready,
@@ -30,8 +31,19 @@ module ysyx_26010011_IDU(
     output             idu_out_bus_comp_isUseImm,
     output logic [ 9:0]idu_out_bus_alu_op,
     output logic [ 1:0]idu_out_bus_comp_op,
-    output       [ 1:0]idu_out_bus_perip_mask
+    output       [ 1:0]idu_out_bus_perip_mask,
+
+    output [31:0] w_pc,
+    output [31:0] w_tar,
+    output w_valid,
+    output w_type
+
 );
+    assign w_pc = idu_in_bus_pc;
+    assign w_tar = idu_out_bus_imm + idu_in_bus_pc;
+    assign w_valid = idu_in_valid & idu_out_valid & ~idu_out_bus_exception[4] & (idu_out_bus_isBRANCH|isJAL);
+    assign w_type = isJAL;
+
     assign idu_in_ready = idu_out_ready & (~idu_isRAW | idu_out_bus_exception[4]);
     assign idu_out_valid = idu_in_valid & (~idu_isRAW | idu_out_bus_exception[4]);
     
@@ -229,7 +241,7 @@ module ysyx_26010011_IDU(
             end else if(isEBREAK)begin
                 idu_out_bus_exception = {1'b1,`EXCEPTION_BREAKPOINT};
             end else if(isECALL)begin
-                idu_out_bus_exception = {1'b1,`EXCEPTION_BREAKPOINT};
+                idu_out_bus_exception = {1'b1,`EXCEPTION_ECALL_MMODE};
             end else if(isMRET)begin
                 idu_out_bus_exception = {1'b1,`EXCEPTION_MRET};
             end else begin
@@ -239,3 +251,5 @@ module ysyx_26010011_IDU(
 
     end
 endmodule
+
+

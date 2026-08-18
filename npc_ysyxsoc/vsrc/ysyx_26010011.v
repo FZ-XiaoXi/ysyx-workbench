@@ -231,15 +231,43 @@ module ysyx_26010011(
 
   //dnpc
   wire [31:0]dnpc;
-  wire dnpc_valid;
+  reg dnpc_valid;
   assign dnpc=(wbu_out_bus_exception[4])?
 			(
 			  (wbu_out_bus_exception[3:0]==`EXCEPTION_MRET)?(csr_mepc):(csr_mtvec)
 			):(
-			  exu_out_bus_alu_result
+			  (exu_in_bus_isBRANCH & ~exu_out_bus_dnpc_valid)?(exu_in_bus_snpc):(exu_out_bus_alu_result)
 			);
 
-  assign dnpc_valid = exu_out_bus_dnpc_valid | flush_exception_valid;
+  always @(*) begin
+	if(flush_exception_valid) begin
+		dnpc_valid = 1;
+	end else begin
+		if(exu_in_bus_isJUMP & exu_out_valid & exu_out_ready) begin
+			if(idu_out_valid) begin
+				dnpc_valid = (idu_in_bus_pc != exu_out_bus_alu_result);
+			end else begin
+				dnpc_valid = 1;
+			end
+		end else if(exu_in_bus_isBRANCH & exu_out_valid & exu_out_ready) begin
+			if(exu_out_bus_dnpc_valid) begin
+				if(idu_out_valid) begin
+					dnpc_valid = (idu_in_bus_pc != exu_out_bus_alu_result);
+				end else begin
+					dnpc_valid = 1;
+				end
+			end else begin
+				if(idu_out_valid) begin
+					dnpc_valid = (idu_in_bus_pc != exu_in_bus_snpc);
+				end else begin
+					dnpc_valid = 1;
+				end
+			end
+		end else begin
+			dnpc_valid = 0;
+		end
+	end
+  end
   //flush_valid
   wire flush_valid/*verilator public*/,ifu_flush_valid,idu_flush_valid,exu_flush_valid,lsu_flush_valid,wbu_flush_valid;
   wire flush_exception_valid/*verilator public*/ = wbu_out_bus_exception[4];
@@ -265,6 +293,7 @@ module ysyx_26010011(
 	.ifu_out_ready(ifu_out_ready),
 	
 	.ifu_out_bus_instruction(ifu_out_bus_instruction),
+	.ifu_out_bus_fetching(ifu_out_bus_fetching),
 	.ifu_out_bus_pc(ifu_out_bus_pc),
 	.ifu_out_bus_snpc(ifu_out_bus_snpc),
 	.ifu_out_bus_exception(ifu_out_bus_exception),
@@ -281,7 +310,12 @@ module ysyx_26010011(
 	.rvalid(IROM_rvalid),
 	.rready(IROM_rready),
 	.rlast(IROM_rlast),
-	.rid(IROM_rid)
+	.rid(IROM_rid),
+
+	.r_pc(r_pc),
+	.r_tar(r_tar),
+	.r_valid(r_valid),
+	.r_type(r_type)
 	
   );/*verilator public_module*/
   wire [31:0] IROM_araddr,IROM_rdata;
@@ -295,7 +329,7 @@ module ysyx_26010011(
   wire [3:0] IROM_rid;
 
   wire ifu_out_valid,ifu_out_ready;
-  wire [31:0]ifu_out_bus_instruction,ifu_out_bus_pc,ifu_out_bus_snpc;
+  wire [31:0]ifu_out_bus_instruction,ifu_out_bus_pc,ifu_out_bus_snpc,ifu_out_bus_fetching;
   wire [4:0]ifu_out_bus_exception;
 
   ysyx_26010011_IF_ID_pipeline IF_ID_inst(
@@ -327,6 +361,7 @@ module ysyx_26010011(
 	.reset(reset),
 	.idu_isRAW(idu_isRAW),
 	.idu_in_bus_instruction(idu_in_bus_instruction),
+	.idu_in_bus_pc(idu_in_bus_pc),
 	.idu_in_bus_exception(idu_in_bus_exception),
 	.idu_in_valid(idu_in_valid),
 	.idu_in_ready(idu_in_ready),
@@ -353,7 +388,13 @@ module ysyx_26010011(
 	.idu_out_bus_comp_isUseImm(idu_out_bus_comp_isUseImm),
 	.idu_out_bus_alu_op(idu_out_bus_alu_op),
 	.idu_out_bus_comp_op(idu_out_bus_comp_op),
-	.idu_out_bus_perip_mask(idu_out_bus_perip_mask)
+	.idu_out_bus_perip_mask(idu_out_bus_perip_mask),
+
+	.w_pc(w_pc),
+	.w_tar(w_tar),
+	.w_valid(w_valid),
+	.w_type(w_type)
+
   );/*verilator public_module*/
 
   wire idu_out_valid,idu_out_ready;
@@ -822,4 +863,76 @@ module ysyx_26010011(
 	.csr_mepc(csr_mepc),
 	.csr_in_bus_exception(wbu_out_bus_exception)
   );/*verilator public_module*/
+
+  ysyx_26010011_BCache #(.CACHE_SIZE(16)) bcache_u0(
+	.clock(clock),
+	.reset(reset),
+	.r_pc(r_pc),
+	.r_tar(r_tar),
+	.r_valid(r_valid),
+	.r_type(r_type),
+	.w_pc(w_pc),
+	.w_tar(w_tar),
+	.w_valid(w_valid),
+	.w_type(w_type)
+  );
+
+  wire [31:0] r_pc,r_tar,w_pc,w_tar;
+  wire r_valid,w_valid,w_type,r_type;
+endmodule
+
+module ysyx_26010011_BCache #(
+	parameter CACHE_SIZE = 16
+)(
+	input	clock,
+	input	reset,
+
+	input  [31:0] r_pc,
+	output [31:0] r_tar,
+	output        r_valid,
+	output        r_type,
+
+	input  [31:0] w_pc,
+	input  [31:0] w_tar,
+	input         w_type,
+	input         w_valid
+);
+
+	parameter BLOCK_W = 32;
+	parameter INDEX_W = $clog2(CACHE_SIZE);
+	parameter OFFSET_W = 2;
+	parameter TAG_W   = 32 - OFFSET_W - INDEX_W;
+
+	wire [INDEX_W-1:0] R_index = {r_pc[31:OFFSET_W][INDEX_W-1:0]} ;
+	wire [TAG_W-1:0]   R_tag   = {r_pc[31:OFFSET_W][INDEX_W + TAG_W - 1: INDEX_W]};
+
+	wire [INDEX_W-1:0] W_index = {w_pc[31:OFFSET_W][INDEX_W-1:0]} ;
+	wire [TAG_W-1:0]   W_tag   = {w_pc[31:OFFSET_W][INDEX_W + TAG_W - 1: INDEX_W]};
+	
+	// assign debug_is_hit = is_hit;
+
+	reg [BLOCK_W-1:0] cache_mem   [0:CACHE_SIZE-1];
+	reg               cache_valid [0:CACHE_SIZE-1];
+	reg [TAG_W-1:0]   cache_tag   [0:CACHE_SIZE-1];
+	reg               cache_type  [0:CACHE_SIZE-1];
+	always @(posedge clock) begin
+		if (reset) begin
+			integer i;
+			for (i = 0; i < CACHE_SIZE; i = i + 1) begin
+				cache_valid[i] <= 1'b0;
+			end
+		end else begin
+			if(w_valid) begin
+				cache_valid[W_index] <= 1;
+				cache_type[W_index] <= w_type;
+				cache_tag[W_index]   <= W_tag;
+				cache_mem[W_index]   <= w_tar;
+			end
+		end
+	end
+
+	assign r_valid = (cache_tag[R_index] == R_tag) & (cache_valid[R_index]);
+	assign r_tar = cache_mem[R_index];
+	assign r_type = cache_type[R_index];
+
 endmodule

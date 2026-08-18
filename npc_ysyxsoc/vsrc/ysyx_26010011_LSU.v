@@ -6,7 +6,7 @@ module ysyx_26010011_LSU(
     input             flush_valid,
     // CPU 流水线接口
     input            lsu_in_valid,
-    input      [ 4:0]lsu_in_bus_exception,
+    input      [ 4:0]lsu_in_bus_exception,/////////////////////TODO 异常冲刷还未实现！不可中断进行中的axi4
     output           lsu_in_ready,
     input      [31:0]lsu_in_bus_addr,
     input      [31:0]lsu_in_bus_wdata,

@@ -121,6 +121,12 @@ void cpu_exec(uint64_t n){
 			// Log("PC=" FMT_WORD , cpu.pc);
 			// n--;
 			cpu.counter_inst++;
+			if(cpu.tb_FINAL_inst==_EBREAK && cpu.tb_isFINAL){
+				ebreak();
+			}else{
+				trace_and_difftest();
+			}
+			
 			static int cnt=0;
 			if(cnt++ >= 10000 || (cpu.state != NPC_RUNNING)){
 				Log("\n[cyc=%ld][inst=%lu][AvgIPC=%.2f][Raw%ld][flush=%ld][PC=0x%08X]\n[GetI=%lu AvgCyc=%.2f Hit=%.2f HC=%.2f Miss=%.2f MC=%.2f]\n[MemI=%lu Avg=%.2f|LI=%lu Avg=%.2f|SI=%lu Avg=%.2f]",
@@ -139,11 +145,7 @@ void cpu_exec(uint64_t n){
 				);
 				cnt=0;
 			}
-			if(cpu.tb_FINAL_inst==_EBREAK && cpu.tb_isFINAL){
-				ebreak();
-			}else{
-				trace_and_difftest();
-			}
+			
 			// cpu.mem_access_addr = 0;
 			if(cpu.state != NPC_RUNNING) break;
 		}

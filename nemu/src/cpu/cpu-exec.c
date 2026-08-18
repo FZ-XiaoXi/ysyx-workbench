@@ -67,7 +67,27 @@ void init_itrace_log(){
     Log("ITrace log is written to %s", "./itrace.log");
     itrace_log_init = true;
 }
+static bool btrace_log_init = false;
+FILE *btrace_log_fp = NULL;
+void init_btrace_log(){
+    if (btrace_log_fp == NULL) {
+      FILE *fp = fopen("btrace.log", "w");
+      Assert(fp, "Can not open '%s'", "./btrace.log");
+      btrace_log_fp = fp;
+    }
+    Log("BTrace log is written to %s", "./btrace.log");
+    btrace_log_init = true;
+}
 #endif
+void write_btrace_log(uint32_t pc,uint32_t tar,uint32_t is_jump){
+#ifdef CONFIG_TRACE_FILE_LOG
+  if(!btrace_log_init) init_btrace_log();
+  fwrite(&pc,  sizeof(uint32_t), 1, btrace_log_fp);
+  fwrite(&tar, sizeof(uint32_t), 1, btrace_log_fp);
+  fwrite(&is_jump, sizeof(uint32_t), 1, btrace_log_fp);
+#endif
+}
+
 static void trace_and_difftest(Decode *_this, vaddr_t dnpc) {
 #ifdef CONFIG_ITRACE_COND
   if (ITRACE_COND) {
@@ -100,6 +120,7 @@ static void trace_and_difftest(Decode *_this, vaddr_t dnpc) {
       printf("watchpoint[%d]\t%u\t->\t%u\t%s\n",i,wp->val,nval,wp->expr);
       wp->val=nval;
       nemu_state.state=NEMU_STOP;
+      IFDEF(CONFIG_ITRACE_RING,print_ring_inst_buf(););
     }
   }
 #endif
@@ -289,3 +310,4 @@ void ftracer_write_log(char *s){
   ftrace_log.len=strlen(ftrace_log.buf);
 }
 #endif
+

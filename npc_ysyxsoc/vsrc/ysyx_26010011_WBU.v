@@ -49,7 +49,7 @@ module ysyx_26010011_WBU(
 
     assign gpr_address=wbu_in_bus_rd;
     assign gpr_we=(wbu_in_bus_isWGPR & wbu_in_valid & ~wbu_in_bus_exception[4])?1:0;
-
+    
     assign wbu_out_bus_exception=(wbu_in_valid)?wbu_in_bus_exception:5'b0;
 
     assign csr_address=wbu_in_bus_csrrd;
