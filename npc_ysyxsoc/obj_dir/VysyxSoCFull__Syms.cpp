@@ -56,7 +56,7 @@ VysyxSoCFull__Syms::VysyxSoCFull__Syms(VerilatedContext* contextp, const char* n
     , TOP__ysyxSoCFull__asic__luart__muart__Uregs{this, Verilated::catName(namep, "ysyxSoCFull.asic.luart.muart.Uregs")}
 {
     // Check resources
-    Verilated::stackCheck(2572);
+    Verilated::stackCheck(2622);
     // Configure time unit / time precision
     _vm_contextp__->timeunit(-9);
     _vm_contextp__->timeprecision(-12);
@@ -161,6 +161,7 @@ VysyxSoCFull__Syms::VysyxSoCFull__Syms(VerilatedContext* contextp, const char* n
         __Vscope_ysyxSoCFull__asic__cpu__cpu__IFU_0.varInsert(__Vfinal,"debug_IFU_get_inst", &(TOP__ysyxSoCFull__asic__cpu__cpu__IFU_0.debug_IFU_get_inst), false, VLVT_UINT8,VLVD_NODIR|VLVF_PUB_RW,0,0);
         __Vscope_ysyxSoCFull__asic__cpu__cpu__IFU_0.varInsert(__Vfinal,"debug_IFU_is_hit", &(TOP__ysyxSoCFull__asic__cpu__cpu__IFU_0.debug_IFU_is_hit), false, VLVT_UINT8,VLVD_NODIR|VLVF_PUB_RW,0,0);
         __Vscope_ysyxSoCFull__asic__cpu__cpu__IFU_0.varInsert(__Vfinal,"debug_IFU_is_hit_inst", &(TOP__ysyxSoCFull__asic__cpu__cpu__IFU_0.debug_IFU_is_hit_inst), false, VLVT_UINT8,VLVD_NODIR|VLVF_PUB_RW,0,0);
+        __Vscope_ysyxSoCFull__asic__cpu__cpu__IFU_0.varInsert(__Vfinal,"ifu_out_bus_fetching", &(TOP__ysyxSoCFull__asic__cpu__cpu__IFU_0.ifu_out_bus_fetching), false, VLVT_UINT32,VLVD_OUT|VLVF_PUB_RW,0,1 ,31,0);
         __Vscope_ysyxSoCFull__asic__cpu__cpu__IFU_0.varInsert(__Vfinal,"ifu_out_bus_pc", &(TOP__ysyxSoCFull__asic__cpu__cpu__IFU_0.ifu_out_bus_pc), false, VLVT_UINT32,VLVD_OUT|VLVF_PUB_RW,0,1 ,31,0);
         __Vscope_ysyxSoCFull__asic__cpu__cpu__IFU_0.varInsert(__Vfinal,"ifu_out_ready", &(TOP__ysyxSoCFull__asic__cpu__cpu__IFU_0.ifu_out_ready), false, VLVT_UINT8,VLVD_IN|VLVF_PUB_RW,0,0);
         __Vscope_ysyxSoCFull__asic__cpu__cpu__IFU_0.varInsert(__Vfinal,"ifu_out_valid", &(TOP__ysyxSoCFull__asic__cpu__cpu__IFU_0.ifu_out_valid), false, VLVT_UINT8,VLVD_OUT|VLVF_PUB_RW,0,0);

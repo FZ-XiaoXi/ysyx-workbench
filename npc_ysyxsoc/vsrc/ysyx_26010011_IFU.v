@@ -13,6 +13,7 @@ module ysyx_26010011_IFU(
 	
 	output     [31:0]   ifu_out_bus_instruction,
 	output     [31:0]   ifu_out_bus_pc/*verilator public*/,
+	output     [31:0]   ifu_out_bus_fetching/*verilator public*/,
 	output     [31:0]   ifu_out_bus_snpc,
 	output     [ 4:0]   ifu_out_bus_exception,
 
@@ -29,8 +30,20 @@ module ysyx_26010011_IFU(
 	input             rvalid,
 	output            rready,
 	input             rlast,
-	input  [3:0]      rid
+	input  [3:0]      rid,
+
+	output [31:0]     r_pc,
+	input  [31:0]     r_tar,
+	input		      r_valid,
+	input		      r_type
 );
+////////////////////////////////TARGET PRE
+	assign r_pc = PC;
+	wire pre_branch = ((r_tar < r_pc) | r_type) & r_valid;
+
+
+////////////////////////////////
+	assign ifu_out_bus_fetching = PC;
 	reg ifu_out_valid_r;
 	reg [31:0]ifu_out_bus_instruction_r;
 	reg [31:0]ifu_out_bus_pc_r;
@@ -61,7 +74,7 @@ module ysyx_26010011_IFU(
 		end
 	
 	end
-	assign ifu_out_valid = ~flush_valid & (((in_reqValid & in_respValid)?1:ifu_out_valid_r) | ifu_out_bus_exception[4]);
+	assign ifu_out_valid = (((in_reqValid & in_respValid)?1:ifu_out_valid_r) | ifu_out_bus_exception[4]);
 	assign ifu_out_bus_instruction = (ifu_out_bus_exception[4])?(`INST_NOP):((in_reqValid & in_respValid)?in_rdata:ifu_out_bus_instruction_r);
 	assign ifu_out_bus_snpc = (in_reqValid & (in_respValid | ifu_out_bus_exception[4]))?(PC + 4):ifu_out_bus_snpc_r;
 	assign ifu_out_bus_pc = (in_reqValid & (in_respValid | ifu_out_bus_exception[4]))?PC:ifu_out_bus_pc_r;
@@ -74,7 +87,7 @@ module ysyx_26010011_IFU(
 			PC <= (dnpc_valid)?{dnpc[31:1],1'b0}:{ifu_out_bus_snpc[31:1],1'b0};
 		end else begin
 			if(ifu_out_ready & ifu_out_valid) begin
-				PC <= (dnpc_valid)?{dnpc[31:1],1'b0}:{ifu_out_bus_snpc[31:1],1'b0};
+				PC <= (dnpc_valid)?({dnpc[31:1],1'b0}):((pre_branch)?({r_tar[31:1],1'b0}):({ifu_out_bus_snpc[31:1],1'b0}));
 			end
 		end
 	end

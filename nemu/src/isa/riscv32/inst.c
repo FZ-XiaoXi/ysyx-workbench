@@ -27,7 +27,7 @@ enum {
   TYPE_I, TYPE_U, TYPE_S, TYPE_J, TYPE_R, TYPE_B, TYPE_CR, TYPE_CRI,
   TYPE_N, // none
 };
-
+static uint64_t branch_cnt=0;
 #define src1R() do { *src1 = R(rs1); } while (0)
 #define src2R() do { *src2 = R(rs2); } while (0)
 #define immI() do { *imm = SEXT(BITS(i, 31, 20), 12); } while(0)
@@ -60,6 +60,7 @@ static int decode_exec(Decode *s) {
   s->dnpc = s->snpc;
   extern void func_trace(Decode *s);
   extern void difftest_skip_ref();
+  extern void write_btrace_log(uint32_t pc,uint32_t tar,uint32_t is_jump);
 #define INSTPAT_INST(s) ((s)->isa.inst)
 #define INSTPAT_MATCH(s, name, type, ... /* execute body */ ) { \
   int rd = 0, rcsr = 0; \
@@ -75,12 +76,12 @@ static int decode_exec(Decode *s) {
     INSTPAT("??????? ????? ????? ??? ????? 00101 11", auipc  , U, R(rd) = s->pc + imm);
     INSTPAT("??????? ????? ????? ??? ????? 11011 11", jal    , J, if((s->pc+imm)&0x03)       {s->dnpc = isa_raise_intr(0, s->pc);}else{R(rd) = s->snpc; s->dnpc=s->pc + imm;};func_trace(s););
     INSTPAT("??????? ????? ????? 000 ????? 11001 11", jalr   , I, if((src1+imm)&0x03)        {s->dnpc = isa_raise_intr(0, s->pc);}else{R(rd) = s->snpc; s->dnpc=src1 + imm;};func_trace(s););
-    INSTPAT("??????? ????? ????? 000 ????? 11000 11", beq    , B, if(src1==src2)                    {if((s->pc + imm)&0x03){s->dnpc = isa_raise_intr(0, s->pc);}else{s->dnpc = s->pc + imm;}}  else{s->dnpc = s->snpc;});
-    INSTPAT("??????? ????? ????? 001 ????? 11000 11", bne    , B, if(src1!=src2)                    {if((s->pc + imm)&0x03){s->dnpc = isa_raise_intr(0, s->pc);}else{s->dnpc = s->pc + imm;}}  else{s->dnpc = s->snpc;});
-    INSTPAT("??????? ????? ????? 100 ????? 11000 11", blt    , B, if((sword_t)src1<(sword_t)src2)   {if((s->pc + imm)&0x03){s->dnpc = isa_raise_intr(0, s->pc);}else{s->dnpc = s->pc + imm;}}  else{s->dnpc = s->snpc;});
-    INSTPAT("??????? ????? ????? 101 ????? 11000 11", bge    , B, if((sword_t)src1>=(sword_t)src2)  {if((s->pc + imm)&0x03){s->dnpc = isa_raise_intr(0, s->pc);}else{s->dnpc = s->pc + imm;}}  else{s->dnpc = s->snpc;});
-    INSTPAT("??????? ????? ????? 110 ????? 11000 11", bltu   , B, if((word_t)src1<(word_t)src2)     {if((s->pc + imm)&0x03){s->dnpc = isa_raise_intr(0, s->pc);}else{s->dnpc = s->pc + imm;}}  else{s->dnpc = s->snpc;});
-    INSTPAT("??????? ????? ????? 111 ????? 11000 11", bgeu   , B, if((word_t)src1>=(word_t)src2)    {if((s->pc + imm)&0x03){s->dnpc = isa_raise_intr(0, s->pc);}else{s->dnpc = s->pc + imm;}}  else{s->dnpc = s->snpc;});
+    INSTPAT("??????? ????? ????? 000 ????? 11000 11", beq    , B, branch_cnt++;write_btrace_log(s->pc,s->pc + imm,(src1==src2));                  if(src1==src2)                    {if((s->pc + imm)&0x03){s->dnpc = isa_raise_intr(0, s->pc);}else{s->dnpc = s->pc + imm;}}  else{s->dnpc = s->snpc;});
+    INSTPAT("??????? ????? ????? 001 ????? 11000 11", bne    , B, branch_cnt++;write_btrace_log(s->pc,s->pc + imm,(src1!=src2));                  if(src1!=src2)                    {if((s->pc + imm)&0x03){s->dnpc = isa_raise_intr(0, s->pc);}else{s->dnpc = s->pc + imm;}}  else{s->dnpc = s->snpc;});
+    INSTPAT("??????? ????? ????? 100 ????? 11000 11", blt    , B, branch_cnt++;write_btrace_log(s->pc,s->pc + imm,((sword_t)src1<(sword_t)src2)); if((sword_t)src1<(sword_t)src2)   {if((s->pc + imm)&0x03){s->dnpc = isa_raise_intr(0, s->pc);}else{s->dnpc = s->pc + imm;}}  else{s->dnpc = s->snpc;});
+    INSTPAT("??????? ????? ????? 101 ????? 11000 11", bge    , B, branch_cnt++;write_btrace_log(s->pc,s->pc + imm,((sword_t)src1>=(sword_t)src2));if((sword_t)src1>=(sword_t)src2)  {if((s->pc + imm)&0x03){s->dnpc = isa_raise_intr(0, s->pc);}else{s->dnpc = s->pc + imm;}}  else{s->dnpc = s->snpc;});
+    INSTPAT("??????? ????? ????? 110 ????? 11000 11", bltu   , B, branch_cnt++;write_btrace_log(s->pc,s->pc + imm,((word_t)src1<(word_t)src2));   if((word_t)src1<(word_t)src2)     {if((s->pc + imm)&0x03){s->dnpc = isa_raise_intr(0, s->pc);}else{s->dnpc = s->pc + imm;}}  else{s->dnpc = s->snpc;});
+    INSTPAT("??????? ????? ????? 111 ????? 11000 11", bgeu   , B, branch_cnt++;write_btrace_log(s->pc,s->pc + imm,((word_t)src1>=(word_t)src2));  if((word_t)src1>=(word_t)src2)    {if((s->pc + imm)&0x03){s->dnpc = isa_raise_intr(0, s->pc);}else{s->dnpc = s->pc + imm;}}  else{s->dnpc = s->snpc;});
     INSTPAT("??????? ????? ????? 000 ????? 00000 11", lb     , I, R(rd) = SEXT(Mr(src1 + imm, 1), 8));
     INSTPAT("??????? ????? ????? 001 ????? 00000 11", lh     , I, R(rd) = SEXT(Mr(src1 + imm, 2), 16));
     INSTPAT("??????? ????? ????? 010 ????? 00000 11", lw     , I, R(rd) = Mr(src1 + imm, 4));
@@ -145,6 +146,7 @@ static int decode_exec(Decode *s) {
 }
 
 int isa_exec_once(Decode *s) {
+  // if(branch_cnt % 10000 == 0) Log("=%lu=",branch_cnt);
   s->isa.inst = inst_fetch(&s->snpc, 4);
   return decode_exec(s);
 }
