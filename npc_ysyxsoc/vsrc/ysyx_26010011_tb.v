@@ -222,12 +222,16 @@ module axi4_memory (
   end
 //////////////////////////////
   reg [3:0] rstate,rnext_state;
+  reg [31:0] raddr_reg;
 
   always @(posedge clock) begin
     if(reset) begin
-      rstate <= 4'b0;
+      rstate   <= 4'b0;
+      raddr_reg <= 32'b0;
     end else begin
       rstate <= rnext_state;
+      if (rstate == 4'b0000 && arvalid && arready)
+        raddr_reg <= araddr;
     end
   end
   always @(*) begin
@@ -267,32 +271,45 @@ module axi4_memory (
       end
     endcase
   end
-  reg [31:0] Memory [0:2097151]; //2048K*4B = 4MB 
+  localparam [31:0] MEM_BASE = 32'h80000000;
+  localparam [31:0] MEM_END  = 32'h80800000; // 8 MiB
+
+  reg [31:0] Memory [0:2097151]; // 2^21 words = 8 MiB
+
+  wire mem_write_valid =
+      awaddr >= MEM_BASE && awaddr < MEM_END;
+  wire mem_read_valid =
+      raddr_reg >= MEM_BASE && raddr_reg < MEM_END;
+
   always @(posedge clock) begin
-    if(wstate==4'b0000 && wnext_state==4'b0010) begin
-      if(awaddr >= 32'h80000000) begin
-        if(wstrb[0]) Memory[(awaddr-32'h80000000)>>2][7:0] <= wdata[7:0];
-        if(wstrb[1]) Memory[(awaddr-32'h80000000)>>2][15:8] <= wdata[15:8];
-        if(wstrb[2]) Memory[(awaddr-32'h80000000)>>2][23:16] <= wdata[23:16];
-        if(wstrb[3]) Memory[(awaddr-32'h80000000)>>2][31:24] <= wdata[31:24];
+    if(wstate == 4'b0000 && wnext_state == 4'b0010) begin
+      if (mem_write_valid) begin
+        if(wstrb[0]) Memory[(awaddr - MEM_BASE) >> 2][7:0]   <= wdata[7:0];
+        if(wstrb[1]) Memory[(awaddr - MEM_BASE) >> 2][15:8]  <= wdata[15:8];
+        if(wstrb[2]) Memory[(awaddr - MEM_BASE) >> 2][23:16] <= wdata[23:16];
+        if(wstrb[3]) Memory[(awaddr - MEM_BASE) >> 2][31:24] <= wdata[31:24];
       end else if (awaddr == 32'h10000000) begin
         $write("%c", wdata[7:0]);
+        $fflush;
       end
     end
-
   end
+
   assign rresp = 2'b0;
   assign bresp = 2'b0;
-  assign rdata = Memory[(araddr-32'h80000000)>>2];
+  assign rdata = mem_read_valid
+               ? Memory[(raddr_reg - MEM_BASE) >> 2]
+               : 32'b0;
 
   integer i;
   initial begin
     for (i = 0; i < 2097152; i = i + 1)
       Memory[i] = 32'b0;
 
+    $display("Loading RT-Thread image");
     $readmemh(
-      "/home/seaber/ysyx-workbench/rt-thread-am/bsp/abstract-machine/build/rtthread-riscv32e-iv",
-      // "/home/seaber/ysyx-workbench/am-kernels/benchmarks/microbench/build/microbench-riscv32e-iv",
+      // "/home/seaber/ysyx-workbench/rt-thread-am/bsp/abstract-machine/build/rtthread-riscv32e-iv",
+      "/home/seaber/ysyx-workbench/am-kernels/benchmarks/microbench/build/microbench-riscv32e-iv",
       Memory
     );
   end
