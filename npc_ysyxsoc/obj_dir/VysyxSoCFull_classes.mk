@@ -35,14 +35,14 @@ VM_CLASSES_FAST += \
   VysyxSoCFull_ysyx_26010011__0 \
   VysyxSoCFull_uart_top_apb__0 \
   VysyxSoCFull_mem_2048x32__0 \
-  VysyxSoCFull_ysyx_26010011_LSU__0 \
   VysyxSoCFull_ysyx_26010011_IFU__0 \
-  VysyxSoCFull_ysyx_26010011_GPRs__0 \
-  VysyxSoCFull_ysyx_26010011_CSRs__0 \
+  VysyxSoCFull_ysyx_26010011_LSU__0 \
   VysyxSoCFull_ysyx_26010011_IF_ID_pipeline__0 \
   VysyxSoCFull_ysyx_26010011_ID_EX_pipeline__0 \
   VysyxSoCFull_ysyx_26010011_EX_LS_pipeline__0 \
   VysyxSoCFull_ysyx_26010011_LS_WB_pipeline__0 \
+  VysyxSoCFull_ysyx_26010011_GPRs__0 \
+  VysyxSoCFull_ysyx_26010011_CSRs__0 \
   VysyxSoCFull_uart_regs__0 \
   VysyxSoCFull_ysyx_26010011_IFU_icache__pi1__0 \
 
@@ -69,14 +69,10 @@ VM_CLASSES_SLOW += \
   VysyxSoCFull_uart_top_apb__0__Slow \
   VysyxSoCFull_mem_2048x32__Slow \
   VysyxSoCFull_mem_2048x32__0__Slow \
-  VysyxSoCFull_ysyx_26010011_LSU__Slow \
-  VysyxSoCFull_ysyx_26010011_LSU__0__Slow \
   VysyxSoCFull_ysyx_26010011_IFU__Slow \
   VysyxSoCFull_ysyx_26010011_IFU__0__Slow \
-  VysyxSoCFull_ysyx_26010011_GPRs__Slow \
-  VysyxSoCFull_ysyx_26010011_GPRs__0__Slow \
-  VysyxSoCFull_ysyx_26010011_CSRs__Slow \
-  VysyxSoCFull_ysyx_26010011_CSRs__0__Slow \
+  VysyxSoCFull_ysyx_26010011_LSU__Slow \
+  VysyxSoCFull_ysyx_26010011_LSU__0__Slow \
   VysyxSoCFull_ysyx_26010011_IF_ID_pipeline__Slow \
   VysyxSoCFull_ysyx_26010011_IF_ID_pipeline__0__Slow \
   VysyxSoCFull_ysyx_26010011_ID_EX_pipeline__Slow \
@@ -85,6 +81,10 @@ VM_CLASSES_SLOW += \
   VysyxSoCFull_ysyx_26010011_EX_LS_pipeline__0__Slow \
   VysyxSoCFull_ysyx_26010011_LS_WB_pipeline__Slow \
   VysyxSoCFull_ysyx_26010011_LS_WB_pipeline__0__Slow \
+  VysyxSoCFull_ysyx_26010011_GPRs__Slow \
+  VysyxSoCFull_ysyx_26010011_GPRs__0__Slow \
+  VysyxSoCFull_ysyx_26010011_CSRs__Slow \
+  VysyxSoCFull_ysyx_26010011_CSRs__0__Slow \
   VysyxSoCFull_uart_regs__Slow \
   VysyxSoCFull_uart_regs__0__Slow \
   VysyxSoCFull_ysyx_26010011_IFU_icache__pi1__Slow \

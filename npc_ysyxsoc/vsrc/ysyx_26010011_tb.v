@@ -267,10 +267,10 @@ module axi4_memory (
       end
     endcase
   end
-  reg [31:0] Memory [0:16383]; //16K*4B = 64KB 
+  reg [31:0] Memory [0:32767]; //32K*4B = 128KB 
   always @(posedge clock) begin
     if(wstate==4'b0000 && wnext_state==4'b0001) begin
-      if(awaddr >= 32'h80000000 && awaddr < 32'h80010000) begin
+      if(awaddr >= 32'h80000000 && awaddr < 32'h80020000) begin
         if(wstrb[0]) Memory[(awaddr-32'h80000000)>>2][7:0] <= wdata[7:0];
         if(wstrb[1]) Memory[(awaddr-32'h80000000)>>2][15:8] <= wdata[15:8];
         if(wstrb[2]) Memory[(awaddr-32'h80000000)>>2][23:16] <= wdata[23:16];
@@ -287,18 +287,18 @@ module axi4_memory (
 
   integer i;
   initial begin
-    for (i = 0; i < 16384; i = i + 1)
-      Memmakeory[i] = 32'b0;
+    for (i = 0; i < 32768; i = i + 1)
+      Memory[i] = 32'b0;
 
     $readmemh(
       "/home/seaber/ysyx-workbench/am-kernels/benchmarks/microbench/build/microbench-riscv32e-iv",
       Memory
     );
   end
-  initial
-  begin
-    $dumpfile("test.vcd");
-    $dumpvars(0,cpu);
-  end
+  // initial
+  // begin
+  //   $dumpfile("test.vcd");
+  //   $dumpvars(0,cpu);
+  // end
 `endif
 endmodule

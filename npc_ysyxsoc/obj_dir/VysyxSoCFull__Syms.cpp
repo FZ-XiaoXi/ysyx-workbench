@@ -13,14 +13,14 @@
 #include "VysyxSoCFull_ysyx_26010011.h"
 #include "VysyxSoCFull_uart_top_apb.h"
 #include "VysyxSoCFull_mem_2048x32.h"
-#include "VysyxSoCFull_ysyx_26010011_LSU.h"
 #include "VysyxSoCFull_ysyx_26010011_IFU.h"
-#include "VysyxSoCFull_ysyx_26010011_GPRs.h"
-#include "VysyxSoCFull_ysyx_26010011_CSRs.h"
+#include "VysyxSoCFull_ysyx_26010011_LSU.h"
 #include "VysyxSoCFull_ysyx_26010011_IF_ID_pipeline.h"
 #include "VysyxSoCFull_ysyx_26010011_ID_EX_pipeline.h"
 #include "VysyxSoCFull_ysyx_26010011_EX_LS_pipeline.h"
 #include "VysyxSoCFull_ysyx_26010011_LS_WB_pipeline.h"
+#include "VysyxSoCFull_ysyx_26010011_GPRs.h"
+#include "VysyxSoCFull_ysyx_26010011_CSRs.h"
 #include "VysyxSoCFull_uart_regs.h"
 #include "VysyxSoCFull_ysyx_26010011_IFU_icache__pi1.h"
 
@@ -56,7 +56,7 @@ VysyxSoCFull__Syms::VysyxSoCFull__Syms(VerilatedContext* contextp, const char* n
     , TOP__ysyxSoCFull__asic__luart__muart__Uregs{this, Verilated::catName(namep, "ysyxSoCFull.asic.luart.muart.Uregs")}
 {
     // Check resources
-    Verilated::stackCheck(2320);
+    Verilated::stackCheck(2326);
     // Configure time unit / time precision
     _vm_contextp__->timeunit(-9);
     _vm_contextp__->timeprecision(-12);

@@ -117,7 +117,7 @@ void VysyxSoCFull_ysyx_26010011_IFU_icache__pi1___ico_sequent__TOP__ysyxSoCFull_
                         << 4U) | (((IData)(vlSelfRef.pc_flushed) 
                                    << 3U) | ((IData)(vlSelfRef.pc_flush) 
                                              << 2U))) 
-                      | (((IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu.__PVT__IROM_rlast) 
+                      | (((IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__IFU_0.__PVT__rlast) 
                           << 1U) | (IData)(vlSelfRef.__PVT__r_fire))) 
                      << 4U) | (((IData)(vlSelfRef.__PVT__state) 
                                 << 1U) | (IData)(vlSelfRef.__PVT__in_reqValid)));
@@ -135,7 +135,7 @@ void VysyxSoCFull_ysyx_26010011_IFU_icache__pi1___ico_sequent__TOP__ysyxSoCFull_
     SData/*9:0*/ __Vtableidx3;
     __Vtableidx3 = 0;
     // Body
-    vlSelfRef.__PVT__ar_fire = ((IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu.__PVT__IROM_arvalid) 
+    vlSelfRef.__PVT__ar_fire = ((IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__IFU_0.__PVT__arvalid) 
                                 & (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu.__PVT__IROM_arready));
     __Vtableidx3 = ((((((IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__IFU_0.debug_IFU_is_hit) 
                         << 4U) | (((IData)(vlSelfRef.__PVT__in_reqValid) 
@@ -143,7 +143,7 @@ void VysyxSoCFull_ysyx_26010011_IFU_icache__pi1___ico_sequent__TOP__ysyxSoCFull_
                                              << 2U))) 
                       | (((IData)(vlSelfRef.pc_flush) 
                           << 1U) | (IData)(vlSelfRef.__PVT__ar_fire))) 
-                     << 5U) | (((IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu.__PVT__IROM_rlast) 
+                     << 5U) | (((IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__IFU_0.__PVT__rlast) 
                                 << 4U) | (((IData)(vlSelfRef.__PVT__r_fire) 
                                            << 3U) | (IData)(vlSelfRef.__PVT__state))));
     vlSelfRef.__PVT__next_state = VysyxSoCFull__ConstPool__TABLE_h70231852_0
@@ -195,14 +195,14 @@ void VysyxSoCFull_ysyx_26010011_IFU_icache__pi1___nba_sequent__TOP__ysyxSoCFull_
     __VdlySet__cache_valid__v4 = 0U;
     __VdlySet__cache_valid__v5 = 0U;
     if (((IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu.reset) 
-         | (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu.__PVT__fencei_pass))) {
+         | (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__IFU_0.__PVT__fencei_flush))) {
         vlSelfRef.__PVT__unnamedblk1__DOT__i = 4U;
         __VdlySet__cache_valid__v0 = 1U;
     } else if ((((IData)(vlSelfRef.__PVT__r_fire) & 
                  (2U == (IData)(vlSelfRef.__PVT__state))) 
                 & (~ (IData)(vlSelfRef.pc_flush)))) {
         __VdlyVal__cache_valid__v4 = ((IData)(vlSelfRef.__PVT__r_fire) 
-                                      & (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu.__PVT__IROM_rlast));
+                                      & (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__IFU_0.__PVT__rlast));
         __VdlyDim0__cache_valid__v4 = (3U & (vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__IFU_0.PC 
                                              >> 4U));
         __VdlySet__cache_valid__v4 = 1U;
@@ -214,7 +214,7 @@ void VysyxSoCFull_ysyx_26010011_IFU_icache__pi1___nba_sequent__TOP__ysyxSoCFull_
         __VdlySet__cache_valid__v5 = 1U;
     }
     __Vtableidx1 = ((((IData)(vlSelfRef.__PVT__ar_fire) 
-                      << 7U) | (((IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu.__PVT__IROM_rlast) 
+                      << 7U) | (((IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__IFU_0.__PVT__rlast) 
                                  << 6U) | ((IData)(vlSelfRef.__PVT__burst_cnt) 
                                            << 4U))) 
                     | ((((IData)(vlSelfRef.__PVT__r_fire) 
@@ -225,7 +225,7 @@ void VysyxSoCFull_ysyx_26010011_IFU_icache__pi1___nba_sequent__TOP__ysyxSoCFull_
     __Vdly__burst_cnt = VysyxSoCFull__ConstPool__TABLE_h84a1fca3_0
         [__Vtableidx1];
     if ((1U & (~ ((IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu.reset) 
-                  | (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu.__PVT__fencei_pass))))) {
+                  | (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__IFU_0.__PVT__fencei_flush))))) {
         if ((((IData)(vlSelfRef.__PVT__r_fire) & (2U 
                                                   == (IData)(vlSelfRef.__PVT__state))) 
              & (~ (IData)(vlSelfRef.pc_flush)))) {
