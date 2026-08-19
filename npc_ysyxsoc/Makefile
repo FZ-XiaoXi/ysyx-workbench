@@ -20,7 +20,8 @@ V_INC_PATH := $(abspath $(V_INC_PATH))
 
 
 SIM_C := $(wildcard csrc/*.c* csrc/monitor/*.c* csrc/devices/*.c* csrc/utils/*.c*)
-SIM_V := $(shell find vsrc/ -type f \( -name "*.v" -o -name "*.sv" \))
+# SIM_V := $(shell find vsrc/ -type f \( -name "*.v" -o -name "*.sv" \))
+SIM_V := vsrc/ysyx_26010011.v
 SIM_V += $(shell find $(NPC_SOC_HOME)/../ysyxSoC/perip/ -type f  -name "*.v" )
 SIM_V += $(NPC_SOC_HOME)/../ysyxSoC/build/ysyxSoCFull.v
 
