@@ -1,5 +1,5 @@
 TOPNAME=top
-VERILATOR_FLAGS=--cc --exe --build --trace --top-module $(TOPNAME) 
+VERILATOR_FLAGS=--cc --exe --build --autoflush --trace --top-module $(TOPNAME) 
 LD_PRELOAD ?=
 LD_PRELOAD += $(gcc -print-file-name=libasan.so)
 INC_PATH ?=
