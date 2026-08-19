@@ -596,9 +596,11 @@ void Vtop_top___nba_sequent__TOP__top__0(Vtop_top* vlSelf) {
     // Body
     if (VL_UNLIKELY((vlSelfRef.__PVT__CLINT_inst__DOT__w_req_fire))) {
         VL_WRITEF_NX("Error! CLINT Only READ!\n",0);
+        Verilated::runFlushCallbacks();
     }
     if (VL_UNLIKELY((vlSelfRef.__PVT__UART_inst__DOT__write_delay_inst__DOT__start))) {
         VL_WRITEF_NX("%c",0,8,(0x000000ffU & vlSelfRef.__PVT__UART_wdata));
+        Verilated::runFlushCallbacks();
         Vtop___024unit____Vdpiimwrap_difftest_skip_ref_TOP____024unit(2U);
     }
     if (vlSelfRef.__PVT__RAM__DOT__write_delay_inst__DOT__start) {
