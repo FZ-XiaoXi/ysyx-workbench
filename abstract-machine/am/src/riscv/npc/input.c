@@ -7,5 +7,5 @@ void __am_input_keybrd(AM_INPUT_KEYBRD_T *kbd) {
 
 void __am_uart_rx(AM_UART_RX_T *val)
 {
-  val->data = 0xff;
+  val->data = 0x00;
 }
