@@ -190,7 +190,7 @@ module axi4_memory (
     wnext_state = wstate;
     case(wstate)
       4'b0000: begin
-        if(awvalid & wvalid) wnext_state = 4'b0001;
+        if(awvalid & wvalid) wnext_state = 4'b0010;
       end
       4'b0001: begin
         wnext_state = 4'b0010;
@@ -234,7 +234,7 @@ module axi4_memory (
     rnext_state = rstate;
     case(rstate)
       4'b0000: begin
-        if(arvalid) rnext_state = 4'b0001;
+        if(arvalid) rnext_state = 4'b0010;
       end
       4'b0001: begin
         rnext_state = 4'b0010;
@@ -267,10 +267,10 @@ module axi4_memory (
       end
     endcase
   end
-  reg [31:0] Memory [0:32767]; //32K*4B = 128KB 
+  reg [31:0] Memory [0:2097151]; //2048K*4B = 4MB 
   always @(posedge clock) begin
-    if(wstate==4'b0000 && wnext_state==4'b0001) begin
-      if(awaddr >= 32'h80000000 && awaddr < 32'h80020000) begin
+    if(wstate==4'b0000 && wnext_state==4'b0010) begin
+      if(awaddr >= 32'h80000000) begin
         if(wstrb[0]) Memory[(awaddr-32'h80000000)>>2][7:0] <= wdata[7:0];
         if(wstrb[1]) Memory[(awaddr-32'h80000000)>>2][15:8] <= wdata[15:8];
         if(wstrb[2]) Memory[(awaddr-32'h80000000)>>2][23:16] <= wdata[23:16];
@@ -287,11 +287,12 @@ module axi4_memory (
 
   integer i;
   initial begin
-    for (i = 0; i < 32768; i = i + 1)
+    for (i = 0; i < 2097152; i = i + 1)
       Memory[i] = 32'b0;
 
     $readmemh(
-      "/home/seaber/ysyx-workbench/am-kernels/benchmarks/microbench/build/microbench-riscv32e-iv",
+      "/home/seaber/ysyx-workbench/rt-thread-am/bsp/abstract-machine/build/rtthread-riscv32e-iv",
+      // "/home/seaber/ysyx-workbench/am-kernels/benchmarks/microbench/build/microbench-riscv32e-iv",
       Memory
     );
   end
