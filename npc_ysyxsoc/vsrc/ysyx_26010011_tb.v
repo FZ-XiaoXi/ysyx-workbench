@@ -1,5 +1,5 @@
 module CPUTop_tb;
-// `ifdef __ICARUS__
+`ifdef __ICARUS__
   reg clock;
   reg reset;
   wire io_interrupt;
@@ -300,5 +300,5 @@ module axi4_memory (
     $dumpfile("test.vcd");
     $dumpvars(0,cpu);
   end
-// `endif
+`endif
 endmodule
