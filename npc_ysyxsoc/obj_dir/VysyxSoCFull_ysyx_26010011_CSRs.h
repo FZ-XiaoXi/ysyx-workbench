@@ -36,8 +36,6 @@ class alignas(VL_CACHE_LINE_BYTES) VysyxSoCFull_ysyx_26010011_CSRs final : publi
     IData/*31:0*/ CSR_MVENDORID;
     IData/*31:0*/ CSR_MARCHID;
     IData/*31:0*/ CSR_MTVAL;
-    IData/*31:0*/ __Vdly__CSR_MCYCLE;
-    IData/*31:0*/ __Vdly__CSR_MCYCLEH;
 
     // INTERNAL VARIABLES
     VysyxSoCFull__Syms* const vlSymsp;

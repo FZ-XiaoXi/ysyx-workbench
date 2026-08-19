@@ -1,4 +1,12 @@
-`include "ysyx_26010011_csr_defines.v"
+
+
+// ███████╗ ██╗  ██╗ ██╗   ██╗
+// ██╔════╝ ╚██╗██╔╝ ██║   ██║
+// █████╗    ╚███╔╝  ██║   ██║
+// ██╔══╝    ██╔██╗  ██║   ██║
+// ███████╗ ██╔╝ ██╗ ╚██████╔╝
+// ╚══════╝ ╚═╝  ╚═╝  ╚═════╝
+`include "csr_defines.v"
 module ysyx_26010011_EXU(
 	input            clock,
 	input            reset,
@@ -97,7 +105,7 @@ module ysyx_26010011_EXU(
 			if( exu_in_bus_isJUMP | (exu_in_bus_isBRANCH & exu_out_bus_comp_result) ) begin
 				if(|exu_out_bus_alu_result[1:0]) begin
 					exu_out_bus_dnpc_valid = 0;
-					exu_out_bus_exception = {1'b1,`EXCEPTION_MISALIGNED_FETCH};
+					exu_out_bus_exception = {1'b1,`ysyx_26010011_EXCEPTION_MISALIGNED_FETCH};
 				end else begin
 					exu_out_bus_dnpc_valid = 1;
 					exu_out_bus_exception = exu_in_bus_exception;
@@ -114,12 +122,12 @@ module ysyx_26010011_EXU(
 endmodule
 
 
-module ysyx_26010011_M_ADDER(
-	input [32:0] inA,
-	input [32:0] inB,
-	input cin,
-	output [31:0] out,
-	output carry
-);
-	assign {carry,out} = inA + inB + {32'b0,cin};
-endmodule
+// module ysyx_26010011_M_ADDER(
+// 	input [32:0] inA,
+// 	input [32:0] inB,
+// 	input cin,
+// 	output [31:0] out,
+// 	output carry
+// );
+// 	assign {carry,out} = inA + inB + {32'b0,cin};
+// endmodule

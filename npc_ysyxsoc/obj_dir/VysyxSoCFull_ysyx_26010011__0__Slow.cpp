@@ -35,13 +35,103 @@ VL_ATTR_COLD void VysyxSoCFull_ysyx_26010011___stl_sequent__TOP__ysyxSoCFull__as
     vlSelfRef.IDU_0__DOT____VdfgRegularize_hd1728725_0_25 
         = ((0x17U == (0x0000007fU & vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__IF_ID_inst.__PVT__idu_in_bus_instruction)) 
            | (0x6fU == (0x0000007fU & vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__IF_ID_inst.__PVT__idu_in_bus_instruction)));
+    vlSelfRef.__PVT__r_tar = vlSelfRef.__PVT__bcache_u0__DOT__cache_mem
+        [(7U & (vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__IFU_0.PC 
+                >> 2U))];
+    vlSelfRef.__PVT__csr_rdata = ((((0x0b00U == (vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__IF_ID_inst.__PVT__idu_in_bus_instruction 
+                                                 >> 0x00000014U)) 
+                                    | (0x0b80U == (vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__IF_ID_inst.__PVT__idu_in_bus_instruction 
+                                                   >> 0x00000014U))) 
+                                   | (((0x0301U == 
+                                        (vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__IF_ID_inst.__PVT__idu_in_bus_instruction 
+                                         >> 0x00000014U)) 
+                                       | (0x0305U == 
+                                          (vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__IF_ID_inst.__PVT__idu_in_bus_instruction 
+                                           >> 0x00000014U))) 
+                                      | ((0x0340U == 
+                                          (vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__IF_ID_inst.__PVT__idu_in_bus_instruction 
+                                           >> 0x00000014U)) 
+                                         | ((0x0341U 
+                                             == (vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__IF_ID_inst.__PVT__idu_in_bus_instruction 
+                                                 >> 0x00000014U)) 
+                                            | ((0x0342U 
+                                                == 
+                                                (vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__IF_ID_inst.__PVT__idu_in_bus_instruction 
+                                                 >> 0x00000014U)) 
+                                               | (0x0300U 
+                                                  == 
+                                                  (vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__IF_ID_inst.__PVT__idu_in_bus_instruction 
+                                                   >> 0x00000014U)))))))
+                                   ? ((0x0b00U == (vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__IF_ID_inst.__PVT__idu_in_bus_instruction 
+                                                   >> 0x00000014U))
+                                       ? vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__CSR_0.CSR_MCYCLE
+                                       : ((0x0b80U 
+                                           == (vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__IF_ID_inst.__PVT__idu_in_bus_instruction 
+                                               >> 0x00000014U))
+                                           ? vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__CSR_0.CSR_MCYCLEH
+                                           : ((0x0301U 
+                                               == (vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__IF_ID_inst.__PVT__idu_in_bus_instruction 
+                                                   >> 0x00000014U))
+                                               ? vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__CSR_0.CSR_MISA
+                                               : ((0x0305U 
+                                                   == 
+                                                   (vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__IF_ID_inst.__PVT__idu_in_bus_instruction 
+                                                    >> 0x00000014U))
+                                                   ? vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__CSR_0.CSR_MTVEC
+                                                   : 
+                                                  ((0x0340U 
+                                                    == 
+                                                    (vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__IF_ID_inst.__PVT__idu_in_bus_instruction 
+                                                     >> 0x00000014U))
+                                                    ? vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__CSR_0.CSR_MSCRATCH
+                                                    : 
+                                                   ((0x0341U 
+                                                     == 
+                                                     (vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__IF_ID_inst.__PVT__idu_in_bus_instruction 
+                                                      >> 0x00000014U))
+                                                     ? vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__CSR_0.CSR_MEPC
+                                                     : 
+                                                    ((0x0342U 
+                                                      == 
+                                                      (vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__IF_ID_inst.__PVT__idu_in_bus_instruction 
+                                                       >> 0x00000014U))
+                                                      ? vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__CSR_0.CSR_MCAUSE
+                                                      : vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__CSR_0.CSR_MSTATUS)))))))
+                                   : ((0x0f11U == (vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__IF_ID_inst.__PVT__idu_in_bus_instruction 
+                                                   >> 0x00000014U))
+                                       ? vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__CSR_0.CSR_MVENDORID
+                                       : ((0x0f12U 
+                                           == (vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__IF_ID_inst.__PVT__idu_in_bus_instruction 
+                                               >> 0x00000014U))
+                                           ? vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__CSR_0.CSR_MARCHID
+                                           : ((0x0343U 
+                                               == (vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__IF_ID_inst.__PVT__idu_in_bus_instruction 
+                                                   >> 0x00000014U))
+                                               ? vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__CSR_0.CSR_MTVAL
+                                               : 0x2b2b2b2bU))));
     vlSelfRef.WBU_0__DOT____VdfgRegularize_h03859d6a_0_0 
         = ((~ ((IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__LS_WB_inst.__PVT__wbu_in_bus_exception) 
                >> 4U)) & (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__LS_WB_inst.wbu_in_valid));
-    vlSelfRef.__PVT__RAM_AXI4LiteArbiter__DOT__M2_arsize 
-        = ((0U == (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__EX_LS_inst.__PVT__lsu_in_bus_perip_mask))
-            ? 0U : ((1U == (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__EX_LS_inst.__PVT__lsu_in_bus_perip_mask))
-                     ? 1U : 2U));
+    vlSelfRef.__PVT__gpr_rdataa = ((0U == (0x0000001fU 
+                                           & (vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__IF_ID_inst.__PVT__idu_in_bus_instruction 
+                                              >> 0x0000000fU)))
+                                    ? 0U : vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__GPR_0.GPR
+                                   [(0x0000001fU & 
+                                     (vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__IF_ID_inst.__PVT__idu_in_bus_instruction 
+                                      >> 0x0000000fU))]);
+    vlSelfRef.__PVT__gpr_rdatab = ((0U == (0x0000001fU 
+                                           & (vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__IF_ID_inst.__PVT__idu_in_bus_instruction 
+                                              >> 0x00000014U)))
+                                    ? 0U : vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__GPR_0.GPR
+                                   [(0x0000001fU & 
+                                     (vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__IF_ID_inst.__PVT__idu_in_bus_instruction 
+                                      >> 0x00000014U))]);
+    vlSelfRef.__PVT__DRAM_arsize = ((0U == (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__EX_LS_inst.__PVT__lsu_in_bus_perip_mask))
+                                     ? 0U : ((1U == (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__EX_LS_inst.__PVT__lsu_in_bus_perip_mask))
+                                              ? 1U : 2U));
+    vlSelfRef.__PVT__wbu_out_bus_exception = ((IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__LS_WB_inst.wbu_in_valid)
+                                               ? (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__LS_WB_inst.__PVT__wbu_in_bus_exception)
+                                               : 0U);
     vlSelfRef.__PVT__IDU_0__DOT__isXOR = (IData)((0x00004033U 
                                                   == 
                                                   (0xfe00707fU 
@@ -205,89 +295,117 @@ VL_ATTR_COLD void VysyxSoCFull_ysyx_26010011___stl_sequent__TOP__ysyxSoCFull__as
     vlSelfRef.__PVT__EXU_0__DOT__comp_b = ((IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__ID_EX_inst.__PVT__exu_in_bus_comp_isUseImm)
                                             ? vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__ID_EX_inst.__PVT__exu_in_bus_imm
                                             : vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__ID_EX_inst.__PVT__exu_in_bus_rs2_val);
-    vlSelfRef.__PVT__EXU_0__DOT__b = ((IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__ID_EX_inst.__PVT__exu_in_bus_alu_isUseImm)
-                                       ? vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__ID_EX_inst.__PVT__exu_in_bus_imm
-                                       : vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__ID_EX_inst.__PVT__exu_in_bus_rs2_val);
-    vlSelfRef.__PVT__EXU_0__DOT__a = (((IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__ID_EX_inst.__PVT__exu_in_bus_alu_isUseImm) 
-                                       & (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__ID_EX_inst.__PVT__exu_in_bus_isUsePC))
-                                       ? vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__ID_EX_inst.exu_in_bus_pc
-                                       : vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__ID_EX_inst.__PVT__exu_in_bus_rs1_val);
+    if (vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__ID_EX_inst.__PVT__exu_in_bus_alu_isUseImm) {
+        vlSelfRef.__PVT__EXU_0__DOT__b = vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__ID_EX_inst.__PVT__exu_in_bus_imm;
+        vlSelfRef.__PVT__EXU_0__DOT__a = ((IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__ID_EX_inst.__PVT__exu_in_bus_isUsePC)
+                                           ? vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__ID_EX_inst.exu_in_bus_pc
+                                           : vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__ID_EX_inst.__PVT__exu_in_bus_rs1_val);
+    } else {
+        vlSelfRef.__PVT__EXU_0__DOT__b = vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__ID_EX_inst.__PVT__exu_in_bus_rs2_val;
+        vlSelfRef.__PVT__EXU_0__DOT__a = vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__ID_EX_inst.__PVT__exu_in_bus_rs1_val;
+    }
     vlSelfRef.reset = ((IData)(vlSymsp->TOP.reset) 
                        | (IData)(vlSymsp->TOP__ysyxSoCFull__asic.__PVT__cpu_reset_chain__DOT__output_chain__DOT__sync_0));
-    vlSelfRef.__PVT__RAM_AXI4LiteArbiter__DOT__S_rvalid 
-        = ((IData)(vlSymsp->TOP__ysyxSoCFull__asic.__PVT__axi4xbar__DOT__idle_2)
-            ? (IData)(vlSymsp->TOP__ysyxSoCFull__asic.__PVT__axi4xbar__DOT__anyValid)
-            : (((IData)(vlSymsp->TOP__ysyxSoCFull__asic.__PVT__axi4xbar__DOT__auto_anon_out_0_rvalid) 
-                & (IData)(vlSymsp->TOP__ysyxSoCFull__asic.__PVT__axi4xbar__DOT__state_2_0)) 
-               | ((IData)(vlSymsp->TOP__ysyxSoCFull__asic.__PVT__axi4delay_delayer__DOT__in_rvalid) 
-                  & (IData)(vlSymsp->TOP__ysyxSoCFull__asic.__PVT__axi4xbar__DOT__state_2_1))));
-    vlSelfRef.__PVT__RAM_AXI4LiteArbiter__DOT__S_rid 
-        = (((IData)(vlSymsp->TOP__ysyxSoCFull__asic.__PVT__axi4xbar__DOT__muxState_2_0)
-             ? (IData)(vlSymsp->TOP__ysyxSoCFull__asic.__PVT__axi4xbar__DOT__auto_anon_out_0_rid)
-             : 0U) | ((IData)(vlSymsp->TOP__ysyxSoCFull__asic.__PVT__axi4xbar__DOT__muxState_2_1)
-                       ? vlSymsp->TOP__ysyxSoCFull__asic.__PVT__axi4delay_delayer__DOT__in_rid_w
-                      [vlSymsp->TOP__ysyxSoCFull__asic.__PVT__axi4delay_delayer__DOT__rrcnt]
-                       : 0U));
-    vlSelfRef.__PVT__RAM_AXI4LiteArbiter__DOT__S_rlast 
-        = (((IData)(vlSymsp->TOP__ysyxSoCFull__asic.__PVT__axi4xbar__DOT__muxState_2_0) 
-            & (((8U & (IData)(vlSymsp->TOP__ysyxSoCFull__asic.__PVT__axi4xbar__DOT__auto_anon_out_0_rid))
-                 ? ((4U & (IData)(vlSymsp->TOP__ysyxSoCFull__asic.__PVT__axi4xbar__DOT__auto_anon_out_0_rid))
-                     ? ((2U & (IData)(vlSymsp->TOP__ysyxSoCFull__asic.__PVT__axi4xbar__DOT__auto_anon_out_0_rid))
-                         ? ((1U & (IData)(vlSymsp->TOP__ysyxSoCFull__asic.__PVT__axi4xbar__DOT__auto_anon_out_0_rid))
-                             ? (IData)(vlSymsp->TOP__ysyxSoCFull__asic.__PVT__axi4yank__DOT__Queue1_BundleMap_15__DOT__ram_real_last)
-                             : (IData)(vlSymsp->TOP__ysyxSoCFull__asic.__PVT__axi4yank__DOT__Queue1_BundleMap_14__DOT__ram_real_last))
-                         : ((1U & (IData)(vlSymsp->TOP__ysyxSoCFull__asic.__PVT__axi4xbar__DOT__auto_anon_out_0_rid))
-                             ? (IData)(vlSymsp->TOP__ysyxSoCFull__asic.__PVT__axi4yank__DOT__Queue1_BundleMap_13__DOT__ram_real_last)
-                             : (IData)(vlSymsp->TOP__ysyxSoCFull__asic.__PVT__axi4yank__DOT__Queue1_BundleMap_12__DOT__ram_real_last)))
-                     : ((2U & (IData)(vlSymsp->TOP__ysyxSoCFull__asic.__PVT__axi4xbar__DOT__auto_anon_out_0_rid))
-                         ? ((1U & (IData)(vlSymsp->TOP__ysyxSoCFull__asic.__PVT__axi4xbar__DOT__auto_anon_out_0_rid))
-                             ? (IData)(vlSymsp->TOP__ysyxSoCFull__asic.__PVT__axi4yank__DOT__Queue1_BundleMap_11__DOT__ram_real_last)
-                             : (IData)(vlSymsp->TOP__ysyxSoCFull__asic.__PVT__axi4yank__DOT__Queue1_BundleMap_10__DOT__ram_real_last))
-                         : ((1U & (IData)(vlSymsp->TOP__ysyxSoCFull__asic.__PVT__axi4xbar__DOT__auto_anon_out_0_rid))
-                             ? (IData)(vlSymsp->TOP__ysyxSoCFull__asic.__PVT__axi4yank__DOT__Queue1_BundleMap_9__DOT__ram_real_last)
-                             : (IData)(vlSymsp->TOP__ysyxSoCFull__asic.__PVT__axi4yank__DOT__Queue1_BundleMap_8__DOT__ram_real_last))))
-                 : ((4U & (IData)(vlSymsp->TOP__ysyxSoCFull__asic.__PVT__axi4xbar__DOT__auto_anon_out_0_rid))
-                     ? ((2U & (IData)(vlSymsp->TOP__ysyxSoCFull__asic.__PVT__axi4xbar__DOT__auto_anon_out_0_rid))
-                         ? ((1U & (IData)(vlSymsp->TOP__ysyxSoCFull__asic.__PVT__axi4xbar__DOT__auto_anon_out_0_rid))
-                             ? (IData)(vlSymsp->TOP__ysyxSoCFull__asic.__PVT__axi4yank__DOT__Queue1_BundleMap_7__DOT__ram_real_last)
-                             : (IData)(vlSymsp->TOP__ysyxSoCFull__asic.__PVT__axi4yank__DOT__Queue1_BundleMap_6__DOT__ram_real_last))
-                         : ((1U & (IData)(vlSymsp->TOP__ysyxSoCFull__asic.__PVT__axi4xbar__DOT__auto_anon_out_0_rid))
-                             ? (IData)(vlSymsp->TOP__ysyxSoCFull__asic.__PVT__axi4yank__DOT__Queue1_BundleMap_5__DOT__ram_real_last)
-                             : (IData)(vlSymsp->TOP__ysyxSoCFull__asic.__PVT__axi4yank__DOT__Queue1_BundleMap_4__DOT__ram_real_last)))
-                     : ((2U & (IData)(vlSymsp->TOP__ysyxSoCFull__asic.__PVT__axi4xbar__DOT__auto_anon_out_0_rid))
-                         ? ((1U & (IData)(vlSymsp->TOP__ysyxSoCFull__asic.__PVT__axi4xbar__DOT__auto_anon_out_0_rid))
-                             ? (IData)(vlSymsp->TOP__ysyxSoCFull__asic.__PVT__axi4yank__DOT__Queue1_BundleMap_3__DOT__ram_real_last)
-                             : (IData)(vlSymsp->TOP__ysyxSoCFull__asic.__PVT__axi4yank__DOT__Queue1_BundleMap_2__DOT__ram_real_last))
-                         : ((1U & (IData)(vlSymsp->TOP__ysyxSoCFull__asic.__PVT__axi4xbar__DOT__auto_anon_out_0_rid))
-                             ? (IData)(vlSymsp->TOP__ysyxSoCFull__asic.__PVT__axi4yank__DOT__Queue1_BundleMap_1__DOT__ram_real_last)
-                             : (IData)(vlSymsp->TOP__ysyxSoCFull__asic.__PVT__axi4yank__DOT__Queue1_BundleMap__DOT__ram_real_last))))) 
-               & (IData)(vlSymsp->TOP__ysyxSoCFull__asic.__PVT__axi4xbar_1__DOT__auto_anon_in_rlast))) 
-           | ((IData)(vlSymsp->TOP__ysyxSoCFull__asic.__PVT__axi4xbar__DOT__muxState_2_1) 
-              & (IData)(vlSymsp->TOP__ysyxSoCFull__asic.__PVT__axi4delay_delayer__DOT__in_rlast)));
-    vlSelfRef.__PVT__RAM_AXI4LiteArbiter__DOT__M2_bvalid 
-        = ((IData)(vlSymsp->TOP__ysyxSoCFull__asic.__PVT__axi4xbar__DOT__idle_3)
-            ? (IData)(vlSymsp->TOP__ysyxSoCFull__asic.__PVT__axi4xbar__DOT__anyValid_1)
-            : (((IData)(vlSymsp->TOP__ysyxSoCFull__asic.__PVT__axi4xbar__DOT__auto_anon_out_0_bvalid) 
-                & (IData)(vlSymsp->TOP__ysyxSoCFull__asic.__PVT__axi4xbar__DOT__state_3_0)) 
-               | ((IData)(vlSymsp->TOP__ysyxSoCFull__asic.__PVT__axi4delay_delayer__DOT__bvalid_reg) 
-                  & (IData)(vlSymsp->TOP__ysyxSoCFull__asic.__PVT__axi4xbar__DOT__state_3_1))));
-    vlSelfRef.__PVT__RAM_AXI4LiteArbiter__DOT__M2_bid 
-        = ((((IData)(vlSymsp->TOP__ysyxSoCFull__asic.__PVT__axi4xbar__DOT__idle_3)
-              ? (IData)(vlSymsp->TOP__ysyxSoCFull__asic.__PVT__axi4xbar__DOT__winner_3_0)
-              : (IData)(vlSymsp->TOP__ysyxSoCFull__asic.__PVT__axi4xbar__DOT__state_3_0))
-             ? (IData)(vlSymsp->TOP__ysyxSoCFull__asic.__PVT__axi4xbar__DOT__auto_anon_out_0_bid)
-             : 0U) | (((IData)(vlSymsp->TOP__ysyxSoCFull__asic.__PVT__axi4xbar__DOT__idle_3)
-                        ? (IData)(vlSymsp->TOP__ysyxSoCFull__asic.__PVT__axi4xbar__DOT__winner_3_1)
-                        : (IData)(vlSymsp->TOP__ysyxSoCFull__asic.__PVT__axi4xbar__DOT__state_3_1))
-                       ? (IData)(vlSymsp->TOP__ysyxSoCFull__asic.__PVT__axi4delay_delayer__DOT__bid_reg)
-                       : 0U));
+    vlSelfRef.__PVT__io_master_rvalid = ((IData)(vlSymsp->TOP__ysyxSoCFull__asic.__PVT__axi4xbar__DOT__idle_2)
+                                          ? (IData)(vlSymsp->TOP__ysyxSoCFull__asic.__PVT__axi4xbar__DOT__anyValid)
+                                          : (((IData)(vlSymsp->TOP__ysyxSoCFull__asic.__PVT__axi4xbar__DOT__auto_anon_out_0_rvalid) 
+                                              & (IData)(vlSymsp->TOP__ysyxSoCFull__asic.__PVT__axi4xbar__DOT__state_2_0)) 
+                                             | ((IData)(vlSymsp->TOP__ysyxSoCFull__asic.__PVT__axi4delay_delayer__DOT__in_rvalid) 
+                                                & (IData)(vlSymsp->TOP__ysyxSoCFull__asic.__PVT__axi4xbar__DOT__state_2_1))));
+    vlSelfRef.__PVT__io_master_rid = (((IData)(vlSymsp->TOP__ysyxSoCFull__asic.__PVT__axi4xbar__DOT__muxState_2_0)
+                                        ? (IData)(vlSymsp->TOP__ysyxSoCFull__asic.__PVT__axi4xbar__DOT__auto_anon_out_0_rid)
+                                        : 0U) | ((IData)(vlSymsp->TOP__ysyxSoCFull__asic.__PVT__axi4xbar__DOT__muxState_2_1)
+                                                  ? 
+                                                 vlSymsp->TOP__ysyxSoCFull__asic.__PVT__axi4delay_delayer__DOT__in_rid_w
+                                                 [vlSymsp->TOP__ysyxSoCFull__asic.__PVT__axi4delay_delayer__DOT__rrcnt]
+                                                  : 0U));
+    vlSelfRef.__PVT__io_master_rlast = (((IData)(vlSymsp->TOP__ysyxSoCFull__asic.__PVT__axi4xbar__DOT__muxState_2_0) 
+                                         & (((8U & (IData)(vlSymsp->TOP__ysyxSoCFull__asic.__PVT__axi4xbar__DOT__auto_anon_out_0_rid))
+                                              ? ((4U 
+                                                  & (IData)(vlSymsp->TOP__ysyxSoCFull__asic.__PVT__axi4xbar__DOT__auto_anon_out_0_rid))
+                                                  ? 
+                                                 ((2U 
+                                                   & (IData)(vlSymsp->TOP__ysyxSoCFull__asic.__PVT__axi4xbar__DOT__auto_anon_out_0_rid))
+                                                   ? 
+                                                  ((1U 
+                                                    & (IData)(vlSymsp->TOP__ysyxSoCFull__asic.__PVT__axi4xbar__DOT__auto_anon_out_0_rid))
+                                                    ? (IData)(vlSymsp->TOP__ysyxSoCFull__asic.__PVT__axi4yank__DOT__Queue1_BundleMap_15__DOT__ram_real_last)
+                                                    : (IData)(vlSymsp->TOP__ysyxSoCFull__asic.__PVT__axi4yank__DOT__Queue1_BundleMap_14__DOT__ram_real_last))
+                                                   : 
+                                                  ((1U 
+                                                    & (IData)(vlSymsp->TOP__ysyxSoCFull__asic.__PVT__axi4xbar__DOT__auto_anon_out_0_rid))
+                                                    ? (IData)(vlSymsp->TOP__ysyxSoCFull__asic.__PVT__axi4yank__DOT__Queue1_BundleMap_13__DOT__ram_real_last)
+                                                    : (IData)(vlSymsp->TOP__ysyxSoCFull__asic.__PVT__axi4yank__DOT__Queue1_BundleMap_12__DOT__ram_real_last)))
+                                                  : 
+                                                 ((2U 
+                                                   & (IData)(vlSymsp->TOP__ysyxSoCFull__asic.__PVT__axi4xbar__DOT__auto_anon_out_0_rid))
+                                                   ? 
+                                                  ((1U 
+                                                    & (IData)(vlSymsp->TOP__ysyxSoCFull__asic.__PVT__axi4xbar__DOT__auto_anon_out_0_rid))
+                                                    ? (IData)(vlSymsp->TOP__ysyxSoCFull__asic.__PVT__axi4yank__DOT__Queue1_BundleMap_11__DOT__ram_real_last)
+                                                    : (IData)(vlSymsp->TOP__ysyxSoCFull__asic.__PVT__axi4yank__DOT__Queue1_BundleMap_10__DOT__ram_real_last))
+                                                   : 
+                                                  ((1U 
+                                                    & (IData)(vlSymsp->TOP__ysyxSoCFull__asic.__PVT__axi4xbar__DOT__auto_anon_out_0_rid))
+                                                    ? (IData)(vlSymsp->TOP__ysyxSoCFull__asic.__PVT__axi4yank__DOT__Queue1_BundleMap_9__DOT__ram_real_last)
+                                                    : (IData)(vlSymsp->TOP__ysyxSoCFull__asic.__PVT__axi4yank__DOT__Queue1_BundleMap_8__DOT__ram_real_last))))
+                                              : ((4U 
+                                                  & (IData)(vlSymsp->TOP__ysyxSoCFull__asic.__PVT__axi4xbar__DOT__auto_anon_out_0_rid))
+                                                  ? 
+                                                 ((2U 
+                                                   & (IData)(vlSymsp->TOP__ysyxSoCFull__asic.__PVT__axi4xbar__DOT__auto_anon_out_0_rid))
+                                                   ? 
+                                                  ((1U 
+                                                    & (IData)(vlSymsp->TOP__ysyxSoCFull__asic.__PVT__axi4xbar__DOT__auto_anon_out_0_rid))
+                                                    ? (IData)(vlSymsp->TOP__ysyxSoCFull__asic.__PVT__axi4yank__DOT__Queue1_BundleMap_7__DOT__ram_real_last)
+                                                    : (IData)(vlSymsp->TOP__ysyxSoCFull__asic.__PVT__axi4yank__DOT__Queue1_BundleMap_6__DOT__ram_real_last))
+                                                   : 
+                                                  ((1U 
+                                                    & (IData)(vlSymsp->TOP__ysyxSoCFull__asic.__PVT__axi4xbar__DOT__auto_anon_out_0_rid))
+                                                    ? (IData)(vlSymsp->TOP__ysyxSoCFull__asic.__PVT__axi4yank__DOT__Queue1_BundleMap_5__DOT__ram_real_last)
+                                                    : (IData)(vlSymsp->TOP__ysyxSoCFull__asic.__PVT__axi4yank__DOT__Queue1_BundleMap_4__DOT__ram_real_last)))
+                                                  : 
+                                                 ((2U 
+                                                   & (IData)(vlSymsp->TOP__ysyxSoCFull__asic.__PVT__axi4xbar__DOT__auto_anon_out_0_rid))
+                                                   ? 
+                                                  ((1U 
+                                                    & (IData)(vlSymsp->TOP__ysyxSoCFull__asic.__PVT__axi4xbar__DOT__auto_anon_out_0_rid))
+                                                    ? (IData)(vlSymsp->TOP__ysyxSoCFull__asic.__PVT__axi4yank__DOT__Queue1_BundleMap_3__DOT__ram_real_last)
+                                                    : (IData)(vlSymsp->TOP__ysyxSoCFull__asic.__PVT__axi4yank__DOT__Queue1_BundleMap_2__DOT__ram_real_last))
+                                                   : 
+                                                  ((1U 
+                                                    & (IData)(vlSymsp->TOP__ysyxSoCFull__asic.__PVT__axi4xbar__DOT__auto_anon_out_0_rid))
+                                                    ? (IData)(vlSymsp->TOP__ysyxSoCFull__asic.__PVT__axi4yank__DOT__Queue1_BundleMap_1__DOT__ram_real_last)
+                                                    : (IData)(vlSymsp->TOP__ysyxSoCFull__asic.__PVT__axi4yank__DOT__Queue1_BundleMap__DOT__ram_real_last))))) 
+                                            & (IData)(vlSymsp->TOP__ysyxSoCFull__asic.__PVT__axi4xbar_1__DOT__auto_anon_in_rlast))) 
+                                        | ((IData)(vlSymsp->TOP__ysyxSoCFull__asic.__PVT__axi4xbar__DOT__muxState_2_1) 
+                                           & (IData)(vlSymsp->TOP__ysyxSoCFull__asic.__PVT__axi4delay_delayer__DOT__in_rlast)));
+    vlSelfRef.__PVT__io_master_bvalid = ((IData)(vlSymsp->TOP__ysyxSoCFull__asic.__PVT__axi4xbar__DOT__idle_3)
+                                          ? (IData)(vlSymsp->TOP__ysyxSoCFull__asic.__PVT__axi4xbar__DOT__anyValid_1)
+                                          : (((IData)(vlSymsp->TOP__ysyxSoCFull__asic.__PVT__axi4xbar__DOT__auto_anon_out_0_bvalid) 
+                                              & (IData)(vlSymsp->TOP__ysyxSoCFull__asic.__PVT__axi4xbar__DOT__state_3_0)) 
+                                             | ((IData)(vlSymsp->TOP__ysyxSoCFull__asic.__PVT__axi4delay_delayer__DOT__bvalid_reg) 
+                                                & (IData)(vlSymsp->TOP__ysyxSoCFull__asic.__PVT__axi4xbar__DOT__state_3_1))));
+    vlSelfRef.__PVT__io_master_bid = ((((IData)(vlSymsp->TOP__ysyxSoCFull__asic.__PVT__axi4xbar__DOT__idle_3)
+                                         ? (IData)(vlSymsp->TOP__ysyxSoCFull__asic.__PVT__axi4xbar__DOT__winner_3_0)
+                                         : (IData)(vlSymsp->TOP__ysyxSoCFull__asic.__PVT__axi4xbar__DOT__state_3_0))
+                                        ? (IData)(vlSymsp->TOP__ysyxSoCFull__asic.__PVT__axi4xbar__DOT__auto_anon_out_0_bid)
+                                        : 0U) | (((IData)(vlSymsp->TOP__ysyxSoCFull__asic.__PVT__axi4xbar__DOT__idle_3)
+                                                   ? (IData)(vlSymsp->TOP__ysyxSoCFull__asic.__PVT__axi4xbar__DOT__winner_3_1)
+                                                   : (IData)(vlSymsp->TOP__ysyxSoCFull__asic.__PVT__axi4xbar__DOT__state_3_1))
+                                                  ? (IData)(vlSymsp->TOP__ysyxSoCFull__asic.__PVT__axi4delay_delayer__DOT__bid_reg)
+                                                  : 0U));
+    vlSelfRef.__PVT__fencei_pass = ((IData)(vlSelfRef.WBU_0__DOT____VdfgRegularize_h03859d6a_0_0) 
+                                    & (0x0eU == (0x0000000fU 
+                                                 & (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__LS_WB_inst.__PVT__wbu_in_bus_exception))));
+    vlSelfRef.flush_exception_valid = (1U & ((IData)(vlSelfRef.__PVT__wbu_out_bus_exception) 
+                                             >> 4U));
     vlSelfRef.IDU_0__DOT____VdfgRegularize_hd1728725_0_33 
         = ((IData)(vlSelfRef.__PVT__IDU_0__DOT__isSLT) 
            | (IData)(vlSelfRef.__PVT__IDU_0__DOT__isSLTU));
-    vlSelfRef.__PVT__IDU_0__DOT__idu_out_bus_isSTORE 
-        = ((IData)(vlSelfRef.__PVT__IDU_0__DOT__isSW) 
-           | ((IData)(vlSelfRef.__PVT__IDU_0__DOT__isSB) 
-              | (IData)(vlSelfRef.__PVT__IDU_0__DOT__isSH)));
+    vlSelfRef.__PVT__idu_out_bus_isSTORE = ((IData)(vlSelfRef.__PVT__IDU_0__DOT__isSW) 
+                                            | ((IData)(vlSelfRef.__PVT__IDU_0__DOT__isSB) 
+                                               | (IData)(vlSelfRef.__PVT__IDU_0__DOT__isSH)));
     vlSelfRef.IDU_0__DOT____VdfgRegularize_hd1728725_0_3 
         = ((IData)(vlSelfRef.__PVT__IDU_0__DOT__isU) 
            | (0x6fU == (0x0000007fU & vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__IF_ID_inst.__PVT__idu_in_bus_instruction)));
@@ -297,9 +415,8 @@ VL_ATTR_COLD void VysyxSoCFull_ysyx_26010011___stl_sequent__TOP__ysyxSoCFull__as
     vlSelfRef.IDU_0__DOT____VdfgRegularize_hd1728725_0_30 
         = ((IData)(vlSelfRef.__PVT__IDU_0__DOT__isBLTU) 
            | (IData)(vlSelfRef.__PVT__IDU_0__DOT__isBGEU));
-    vlSelfRef.__PVT__IDU_0__DOT__idu_out_bus_comp_isUseImm 
-        = ((IData)(vlSelfRef.__PVT__IDU_0__DOT__isSLTI) 
-           | (IData)(vlSelfRef.__PVT__IDU_0__DOT__isSLTIU));
+    vlSelfRef.__PVT__idu_out_bus_comp_isUseImm = ((IData)(vlSelfRef.__PVT__IDU_0__DOT__isSLTI) 
+                                                  | (IData)(vlSelfRef.__PVT__IDU_0__DOT__isSLTIU));
     vlSelfRef.IDU_0__DOT____VdfgRegularize_hd1728725_0_29 
         = ((IData)(vlSelfRef.__PVT__IDU_0__DOT__isSLTIU) 
            | (IData)(vlSelfRef.__PVT__IDU_0__DOT__isSLTU));
@@ -331,13 +448,12 @@ VL_ATTR_COLD void VysyxSoCFull_ysyx_26010011___stl_sequent__TOP__ysyxSoCFull__as
                                    << 1U) | (IData)(vlSelfRef.__PVT__IDU_0__DOT__isCSRRS))));
     vlSelfRef.__PVT__idu_out_bus_opCSR = VysyxSoCFull__ConstPool__TABLE_h986ffb83_0
         [__Vtableidx2];
-    vlSelfRef.IDU_0__DOT____VdfgRegularize_hd1728725_0_35 
-        = ((IData)(vlSelfRef.__PVT__IDU_0__DOT__isCSRRS) 
-           | ((IData)(vlSelfRef.__PVT__IDU_0__DOT__isCSRRSI) 
-              | ((IData)(vlSelfRef.__PVT__IDU_0__DOT__isCSRRC) 
-                 | ((IData)(vlSelfRef.__PVT__IDU_0__DOT__isCSRRCI) 
-                    | ((IData)(vlSelfRef.__PVT__IDU_0__DOT__isCSRRW) 
-                       | (IData)(vlSelfRef.__PVT__IDU_0__DOT__isCSRRWI))))));
+    vlSelfRef.__VdfgRegularize_he0d61652_0_0 = ((IData)(vlSelfRef.__PVT__IDU_0__DOT__isCSRRS) 
+                                                | ((IData)(vlSelfRef.__PVT__IDU_0__DOT__isCSRRSI) 
+                                                   | ((IData)(vlSelfRef.__PVT__IDU_0__DOT__isCSRRC) 
+                                                      | ((IData)(vlSelfRef.__PVT__IDU_0__DOT__isCSRRCI) 
+                                                         | ((IData)(vlSelfRef.__PVT__IDU_0__DOT__isCSRRW) 
+                                                            | (IData)(vlSelfRef.__PVT__IDU_0__DOT__isCSRRWI))))));
     vlSelfRef.__PVT__IDU_0__DOT__isSLL = ((0x33U == 
                                            (0x0000007fU 
                                             & vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__IF_ID_inst.__PVT__idu_in_bus_instruction)) 
@@ -367,27 +483,33 @@ VL_ATTR_COLD void VysyxSoCFull_ysyx_26010011___stl_sequent__TOP__ysyxSoCFull__as
                                            & vlSelfRef.__PVT__EXU_0__DOT__b);
     vlSelfRef.__PVT__EXU_0__DOT__op_or = (vlSelfRef.__PVT__EXU_0__DOT__a 
                                           | vlSelfRef.__PVT__EXU_0__DOT__b);
-    vlSelfRef.__PVT__RAM_AXI4LiteArbiter__DOT__M2_bready 
-        = (((2U == (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__LSU_0.state)) 
-            | (0U == (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__LSU_0.state))) 
-           & (~ (IData)(vlSelfRef.reset)));
-    vlSelfRef.__PVT__RAM_AXI4LiteArbiter__DOT__M2_rready 
-        = (((4U == (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__LSU_0.state)) 
-            | (0U == (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__LSU_0.state))) 
-           & (~ (IData)(vlSelfRef.reset)));
+    vlSelfRef.__PVT__io_master_bready = (((2U == (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__LSU_0.state)) 
+                                          | (0U == (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__LSU_0.state))) 
+                                         & (~ (IData)(vlSelfRef.reset)));
+    vlSelfRef.__PVT__DRAM_rready = (((4U == (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__LSU_0.state)) 
+                                     | (0U == (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__LSU_0.state))) 
+                                    & (~ (IData)(vlSelfRef.reset)));
+    vlSelfRef.__PVT__IROM_rlast = ((IData)(vlSelfRef.__PVT__RAM_AXI4Arbiter__DOT__R_state) 
+                                   & (IData)(vlSelfRef.__PVT__io_master_rlast));
+    vlSelfRef.__PVT__IDU_0__DOT__next_state = (1U & 
+                                               ((IData)(vlSelfRef.__PVT__IDU_0__DOT__state)
+                                                 ? 
+                                                (~ (IData)(vlSelfRef.__PVT__fencei_pass))
+                                                 : 
+                                                ((IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__IF_ID_inst.idu_in_valid) 
+                                                 & (0x0000100fU 
+                                                    == vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__IF_ID_inst.__PVT__idu_in_bus_instruction))));
     vlSelfRef.IDU_0__DOT____VdfgRegularize_hd1728725_0_4 
         = ((IData)(vlSelfRef.IDU_0__DOT____VdfgRegularize_hd1728725_0_3) 
            | (IData)(vlSelfRef.__PVT__IDU_0__DOT__isJALR));
-    vlSelfRef.__PVT__IDU_0__DOT__idu_out_bus_isBRANCH 
-        = ((IData)(vlSelfRef.IDU_0__DOT____VdfgRegularize_hd1728725_0_27) 
-           | ((IData)(vlSelfRef.__PVT__IDU_0__DOT__isBLT) 
-              | ((IData)(vlSelfRef.__PVT__IDU_0__DOT__isBGE) 
-                 | (IData)(vlSelfRef.IDU_0__DOT____VdfgRegularize_hd1728725_0_30))));
-    vlSelfRef.__PVT__IDU_0__DOT__idu_out_bus_isLOAD 
-        = ((IData)(vlSelfRef.IDU_0__DOT____VdfgRegularize_hd1728725_0_24) 
-           | ((IData)(vlSelfRef.__PVT__IDU_0__DOT__isLB) 
-              | ((IData)(vlSelfRef.__PVT__IDU_0__DOT__isLH) 
-                 | (IData)(vlSelfRef.__PVT__IDU_0__DOT__isLHU))));
+    vlSelfRef.__PVT__idu_out_bus_isBRANCH = ((IData)(vlSelfRef.IDU_0__DOT____VdfgRegularize_hd1728725_0_27) 
+                                             | ((IData)(vlSelfRef.__PVT__IDU_0__DOT__isBLT) 
+                                                | ((IData)(vlSelfRef.__PVT__IDU_0__DOT__isBGE) 
+                                                   | (IData)(vlSelfRef.IDU_0__DOT____VdfgRegularize_hd1728725_0_30))));
+    vlSelfRef.__PVT__idu_out_bus_isLOAD = ((IData)(vlSelfRef.IDU_0__DOT____VdfgRegularize_hd1728725_0_24) 
+                                           | ((IData)(vlSelfRef.__PVT__IDU_0__DOT__isLB) 
+                                              | ((IData)(vlSelfRef.__PVT__IDU_0__DOT__isLH) 
+                                                 | (IData)(vlSelfRef.__PVT__IDU_0__DOT__isLHU))));
     vlSelfRef.__VdfgRegularize_he0d61652_0_2 = (IData)(
                                                        (2U 
                                                         == 
@@ -407,7 +529,7 @@ VL_ATTR_COLD void VysyxSoCFull_ysyx_26010011___stl_sequent__TOP__ysyxSoCFull__as
                                                                       | ((IData)(vlSelfRef.__PVT__IDU_0__DOT__isLB) 
                                                                          | ((IData)(vlSelfRef.__PVT__IDU_0__DOT__isLH) 
                                                                             | ((IData)(vlSelfRef.__PVT__IDU_0__DOT__isLHU) 
-                                                                               | (IData)(vlSelfRef.IDU_0__DOT____VdfgRegularize_hd1728725_0_35)))))))))))))));
+                                                                               | (IData)(vlSelfRef.__VdfgRegularize_he0d61652_0_0)))))))))))))));
     EXU_0__DOT____VdfgExtracted_hbeeeed61__0 = (1U 
                                                 & ((IData)(vlSelfRef.__PVT__EXU_0__DOT__comp_isEQUAL) 
                                                    | ((IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__ID_EX_inst.__PVT__exu_in_bus_isUnSigned)
@@ -432,60 +554,86 @@ VL_ATTR_COLD void VysyxSoCFull_ysyx_26010011___stl_sequent__TOP__ysyxSoCFull__as
                                                             >> 0x0000001fU)) 
                                                           & (vlSelfRef.__PVT__EXU_0__DOT__comp_b 
                                                              >> 0x0000001fU))))));
-    vlSelfRef.__PVT__EXU_0__DOT__exu_out_bus_alu_result 
-        = ((IData)((0U != (0x0300U & (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__ID_EX_inst.__PVT__exu_in_bus_alu_op))))
-            ? ((0x00000100U & (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__ID_EX_inst.__PVT__exu_in_bus_alu_op))
-                ? (vlSelfRef.__PVT__EXU_0__DOT__a - vlSelfRef.__PVT__EXU_0__DOT__b)
-                : (vlSelfRef.__PVT__EXU_0__DOT__a + vlSelfRef.__PVT__EXU_0__DOT__b))
-            : ((0x00000020U & (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__ID_EX_inst.__PVT__exu_in_bus_alu_op))
-                ? VL_SHIFTL_III(32,32,32, vlSelfRef.__PVT__EXU_0__DOT__a, 
-                                (0x0000001fU & vlSelfRef.__PVT__EXU_0__DOT__b))
-                : ((0x00000010U & (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__ID_EX_inst.__PVT__exu_in_bus_alu_op))
-                    ? VL_SHIFTR_III(32,32,32, vlSelfRef.__PVT__EXU_0__DOT__a, 
-                                    (0x0000001fU & vlSelfRef.__PVT__EXU_0__DOT__b))
-                    : ((8U & (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__ID_EX_inst.__PVT__exu_in_bus_alu_op))
-                        ? VL_SHIFTRS_III(32,32,32, vlSelfRef.__PVT__EXU_0__DOT__a, 
-                                         (0x0000001fU 
-                                          & vlSelfRef.__PVT__EXU_0__DOT__b))
-                        : ((4U & (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__ID_EX_inst.__PVT__exu_in_bus_alu_op))
-                            ? vlSelfRef.__PVT__EXU_0__DOT__op_and
-                            : ((2U & (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__ID_EX_inst.__PVT__exu_in_bus_alu_op))
-                                ? vlSelfRef.__PVT__EXU_0__DOT__op_or
-                                : ((1U & (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__ID_EX_inst.__PVT__exu_in_bus_alu_op))
-                                    ? (vlSelfRef.__PVT__EXU_0__DOT__a 
-                                       ^ vlSelfRef.__PVT__EXU_0__DOT__b)
-                                    : vlSelfRef.__PVT__EXU_0__DOT__b)))))));
-    vlSelfRef.__PVT__RAM_AXI4LiteArbiter__DOT__S_rready 
-        = ((IData)(vlSelfRef.__PVT__RAM_AXI4LiteArbiter__DOT__R_state) 
-           & ((IData)(vlSelfRef.__PVT__RAM_AXI4LiteArbiter__DOT__R_master_sel)
-               ? (IData)(vlSelfRef.__PVT__RAM_AXI4LiteArbiter__DOT__M2_rready)
-               : (~ (IData)(vlSelfRef.reset))));
-    vlSelfRef.__PVT__IDU_0__DOT__idu_out_bus_exception 
-        = ((0x00000010U & (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__IF_ID_inst.__PVT__idu_in_bus_exception))
-            ? (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__IF_ID_inst.__PVT__idu_in_bus_exception)
-            : (((IData)(vlSelfRef.IDU_0__DOT____VdfgRegularize_hd1728725_0_4) 
-                | ((IData)(vlSelfRef.IDU_0__DOT____VdfgRegularize_hd1728725_0_27) 
-                   | ((IData)(vlSelfRef.__PVT__IDU_0__DOT__isBLT) 
-                      | ((IData)(vlSelfRef.__PVT__IDU_0__DOT__isBGE) 
-                         | ((IData)(vlSelfRef.IDU_0__DOT____VdfgRegularize_hd1728725_0_30) 
-                            | ((IData)(vlSelfRef.__PVT__IDU_0__DOT__isLB) 
-                               | ((IData)(vlSelfRef.__PVT__IDU_0__DOT__isLH) 
-                                  | ((IData)(vlSelfRef.IDU_0__DOT____VdfgRegularize_hd1728725_0_24) 
-                                     | ((IData)(vlSelfRef.__PVT__IDU_0__DOT__isLHU) 
-                                        | ((IData)(vlSelfRef.__PVT__IDU_0__DOT__isSB) 
-                                           | ((IData)(vlSelfRef.__PVT__IDU_0__DOT__isSH) 
-                                              | ((IData)(vlSelfRef.__PVT__IDU_0__DOT__isSW) 
-                                                 | ((IData)(vlSelfRef.__PVT__IDU_0__DOT__isADDI) 
-                                                    | ((IData)(vlSelfRef.__PVT__IDU_0__DOT__isSLTI) 
-                                                       | ((IData)(vlSelfRef.__PVT__IDU_0__DOT__isSLTIU) 
-                                                          | ((IData)(vlSelfRef.__PVT__IDU_0__DOT__isXORI) 
-                                                             | ((IData)(vlSelfRef.__PVT__IDU_0__DOT__isORI) 
-                                                                | ((IData)(vlSelfRef.__PVT__IDU_0__DOT__isANDI) 
-                                                                   | ((IData)(vlSelfRef.__PVT__IDU_0__DOT__isSLLI) 
-                                                                      | ((IData)(vlSelfRef.__PVT__IDU_0__DOT__isSRLI) 
-                                                                         | ((IData)(vlSelfRef.__PVT__IDU_0__DOT__isSRAI) 
-                                                                            | ((IData)(vlSelfRef.__PVT__IDU_0__DOT__isADD) 
-                                                                               | ((IData)(vlSelfRef.__PVT__IDU_0__DOT__isSUB) 
+    vlSelfRef.__PVT__exu_out_bus_alu_result = ((IData)(
+                                                       (0U 
+                                                        != 
+                                                        (0x0300U 
+                                                         & (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__ID_EX_inst.__PVT__exu_in_bus_alu_op))))
+                                                ? (
+                                                   (0x00000100U 
+                                                    & (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__ID_EX_inst.__PVT__exu_in_bus_alu_op))
+                                                    ? 
+                                                   (vlSelfRef.__PVT__EXU_0__DOT__a 
+                                                    - vlSelfRef.__PVT__EXU_0__DOT__b)
+                                                    : 
+                                                   (vlSelfRef.__PVT__EXU_0__DOT__a 
+                                                    + vlSelfRef.__PVT__EXU_0__DOT__b))
+                                                : (
+                                                   (0x00000020U 
+                                                    & (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__ID_EX_inst.__PVT__exu_in_bus_alu_op))
+                                                    ? 
+                                                   VL_SHIFTL_III(32,32,32, vlSelfRef.__PVT__EXU_0__DOT__a, 
+                                                                 (0x0000001fU 
+                                                                  & vlSelfRef.__PVT__EXU_0__DOT__b))
+                                                    : 
+                                                   ((0x00000010U 
+                                                     & (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__ID_EX_inst.__PVT__exu_in_bus_alu_op))
+                                                     ? 
+                                                    VL_SHIFTR_III(32,32,32, vlSelfRef.__PVT__EXU_0__DOT__a, 
+                                                                  (0x0000001fU 
+                                                                   & vlSelfRef.__PVT__EXU_0__DOT__b))
+                                                     : 
+                                                    ((8U 
+                                                      & (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__ID_EX_inst.__PVT__exu_in_bus_alu_op))
+                                                      ? 
+                                                     VL_SHIFTRS_III(32,32,32, vlSelfRef.__PVT__EXU_0__DOT__a, 
+                                                                    (0x0000001fU 
+                                                                     & vlSelfRef.__PVT__EXU_0__DOT__b))
+                                                      : 
+                                                     ((4U 
+                                                       & (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__ID_EX_inst.__PVT__exu_in_bus_alu_op))
+                                                       ? vlSelfRef.__PVT__EXU_0__DOT__op_and
+                                                       : 
+                                                      ((2U 
+                                                        & (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__ID_EX_inst.__PVT__exu_in_bus_alu_op))
+                                                        ? vlSelfRef.__PVT__EXU_0__DOT__op_or
+                                                        : 
+                                                       ((1U 
+                                                         & (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__ID_EX_inst.__PVT__exu_in_bus_alu_op))
+                                                         ? 
+                                                        (vlSelfRef.__PVT__EXU_0__DOT__a 
+                                                         ^ vlSelfRef.__PVT__EXU_0__DOT__b)
+                                                         : vlSelfRef.__PVT__EXU_0__DOT__b)))))));
+    vlSelfRef.__PVT__io_master_rready = ((IData)(vlSelfRef.__PVT__RAM_AXI4Arbiter__DOT__R_state) 
+                                         & ((IData)(vlSelfRef.__PVT__RAM_AXI4Arbiter__DOT__R_master_sel)
+                                             ? (IData)(vlSelfRef.__PVT__DRAM_rready)
+                                             : (~ (IData)(vlSelfRef.reset))));
+    vlSelfRef.__PVT__idu_out_bus_exception = ((0x00000010U 
+                                               & (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__IF_ID_inst.__PVT__idu_in_bus_exception))
+                                               ? (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__IF_ID_inst.__PVT__idu_in_bus_exception)
+                                               : (((IData)(vlSelfRef.IDU_0__DOT____VdfgRegularize_hd1728725_0_4) 
+                                                   | ((IData)(vlSelfRef.IDU_0__DOT____VdfgRegularize_hd1728725_0_27) 
+                                                      | ((IData)(vlSelfRef.__PVT__IDU_0__DOT__isBLT) 
+                                                         | ((IData)(vlSelfRef.__PVT__IDU_0__DOT__isBGE) 
+                                                            | ((IData)(vlSelfRef.IDU_0__DOT____VdfgRegularize_hd1728725_0_30) 
+                                                               | ((IData)(vlSelfRef.__PVT__IDU_0__DOT__isLB) 
+                                                                  | ((IData)(vlSelfRef.__PVT__IDU_0__DOT__isLH) 
+                                                                     | ((IData)(vlSelfRef.IDU_0__DOT____VdfgRegularize_hd1728725_0_24) 
+                                                                        | ((IData)(vlSelfRef.__PVT__IDU_0__DOT__isLHU) 
+                                                                           | ((IData)(vlSelfRef.__PVT__IDU_0__DOT__isSB) 
+                                                                              | ((IData)(vlSelfRef.__PVT__IDU_0__DOT__isSH) 
+                                                                                | ((IData)(vlSelfRef.__PVT__IDU_0__DOT__isSW) 
+                                                                                | ((IData)(vlSelfRef.__PVT__IDU_0__DOT__isADDI) 
+                                                                                | ((IData)(vlSelfRef.__PVT__IDU_0__DOT__isSLTI) 
+                                                                                | ((IData)(vlSelfRef.__PVT__IDU_0__DOT__isSLTIU) 
+                                                                                | ((IData)(vlSelfRef.__PVT__IDU_0__DOT__isXORI) 
+                                                                                | ((IData)(vlSelfRef.__PVT__IDU_0__DOT__isORI) 
+                                                                                | ((IData)(vlSelfRef.__PVT__IDU_0__DOT__isANDI) 
+                                                                                | ((IData)(vlSelfRef.__PVT__IDU_0__DOT__isSLLI) 
+                                                                                | ((IData)(vlSelfRef.__PVT__IDU_0__DOT__isSRLI) 
+                                                                                | ((IData)(vlSelfRef.__PVT__IDU_0__DOT__isSRAI) 
+                                                                                | ((IData)(vlSelfRef.__PVT__IDU_0__DOT__isADD) 
+                                                                                | ((IData)(vlSelfRef.__PVT__IDU_0__DOT__isSUB) 
                                                                                 | ((IData)(vlSelfRef.__PVT__IDU_0__DOT__isSLL) 
                                                                                 | ((IData)(vlSelfRef.IDU_0__DOT____VdfgRegularize_hd1728725_0_33) 
                                                                                 | ((IData)(vlSelfRef.__PVT__IDU_0__DOT__isXOR) 
@@ -493,7 +641,7 @@ VL_ATTR_COLD void VysyxSoCFull_ysyx_26010011___stl_sequent__TOP__ysyxSoCFull__as
                                                                                 | ((IData)(vlSelfRef.__PVT__IDU_0__DOT__isSRA) 
                                                                                 | ((IData)(vlSelfRef.__PVT__IDU_0__DOT__isOR) 
                                                                                 | ((IData)(vlSelfRef.__PVT__IDU_0__DOT__isAND) 
-                                                                                | ((IData)(vlSelfRef.IDU_0__DOT____VdfgRegularize_hd1728725_0_35) 
+                                                                                | ((IData)(vlSelfRef.__VdfgRegularize_he0d61652_0_0) 
                                                                                 | ((0x00000073U 
                                                                                 == vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__IF_ID_inst.__PVT__idu_in_bus_instruction) 
                                                                                 | ((0x00100073U 
@@ -502,418 +650,105 @@ VL_ATTR_COLD void VysyxSoCFull_ysyx_26010011___stl_sequent__TOP__ysyxSoCFull__as
                                                                                 == vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__IF_ID_inst.__PVT__idu_in_bus_instruction) 
                                                                                 | (0x0000100fU 
                                                                                 == vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__IF_ID_inst.__PVT__idu_in_bus_instruction)))))))))))))))))))))))))))))))))))
-                ? ((0x00100073U == vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__IF_ID_inst.__PVT__idu_in_bus_instruction)
-                    ? 0x13U : ((0x00000073U == vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__IF_ID_inst.__PVT__idu_in_bus_instruction)
-                                ? 0x1bU : ((0x30200073U 
-                                            == vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__IF_ID_inst.__PVT__idu_in_bus_instruction)
-                                            ? 0x1eU
-                                            : ((0x0000100fU 
-                                                == vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__IF_ID_inst.__PVT__idu_in_bus_instruction)
-                                                ? 0x0eU
-                                                : (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__IF_ID_inst.__PVT__idu_in_bus_exception)))))
-                : 0x12U));
-    vlSelfRef.__PVT__IDU_0__DOT__idu_out_bus_imm = 
-        ((IData)(vlSelfRef.__PVT__IDU_0__DOT__isI) ? 
-         (((- (IData)((vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__IF_ID_inst.__PVT__idu_in_bus_instruction 
-                       >> 0x0000001fU))) << 0x0000000cU) 
-          | (vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__IF_ID_inst.__PVT__idu_in_bus_instruction 
-             >> 0x00000014U)) : ((0x6fU == (0x0000007fU 
-                                            & vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__IF_ID_inst.__PVT__idu_in_bus_instruction))
-                                  ? ((((0x00000ffeU 
-                                        & ((- (IData)(
-                                                      (vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__IF_ID_inst.__PVT__idu_in_bus_instruction 
-                                                       >> 0x0000001fU))) 
-                                           << 1U)) 
-                                       | (vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__IF_ID_inst.__PVT__idu_in_bus_instruction 
-                                          >> 0x0000001fU)) 
-                                      << 0x00000014U) 
-                                     | ((((0x000001feU 
-                                           & (vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__IF_ID_inst.__PVT__idu_in_bus_instruction 
-                                              >> 0x0000000bU)) 
-                                          | (1U & (vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__IF_ID_inst.__PVT__idu_in_bus_instruction 
-                                                   >> 0x00000014U))) 
-                                         << 0x0000000bU) 
-                                        | (0x000007feU 
-                                           & (vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__IF_ID_inst.__PVT__idu_in_bus_instruction 
-                                              >> 0x00000014U))))
-                                  : ((IData)(vlSelfRef.__PVT__IDU_0__DOT__idu_out_bus_isSTORE)
-                                      ? (((- (IData)(
-                                                     (vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__IF_ID_inst.__PVT__idu_in_bus_instruction 
-                                                      >> 0x0000001fU))) 
-                                          << 0x0000000cU) 
-                                         | ((0x00000fe0U 
-                                             & (vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__IF_ID_inst.__PVT__idu_in_bus_instruction 
-                                                >> 0x00000014U)) 
-                                            | (0x0000001fU 
-                                               & (vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__IF_ID_inst.__PVT__idu_in_bus_instruction 
-                                                  >> 7U))))
-                                      : ((IData)(vlSelfRef.__PVT__IDU_0__DOT__isU)
-                                          ? (0xfffff000U 
-                                             & vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__IF_ID_inst.__PVT__idu_in_bus_instruction)
-                                          : ((IData)(vlSelfRef.__PVT__IDU_0__DOT__idu_out_bus_isBRANCH)
-                                              ? (((- (IData)(
+                                                   ? 
+                                                  ((0x00100073U 
+                                                    == vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__IF_ID_inst.__PVT__idu_in_bus_instruction)
+                                                    ? 0x13U
+                                                    : 
+                                                   ((0x00000073U 
+                                                     == vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__IF_ID_inst.__PVT__idu_in_bus_instruction)
+                                                     ? 0x1bU
+                                                     : 
+                                                    ((0x30200073U 
+                                                      == vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__IF_ID_inst.__PVT__idu_in_bus_instruction)
+                                                      ? 0x1eU
+                                                      : 
+                                                     ((0x0000100fU 
+                                                       == vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__IF_ID_inst.__PVT__idu_in_bus_instruction)
+                                                       ? 0x0eU
+                                                       : (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__IF_ID_inst.__PVT__idu_in_bus_exception)))))
+                                                   : 0x12U));
+    vlSelfRef.__PVT__idu_out_bus_imm = ((IData)(vlSelfRef.__PVT__IDU_0__DOT__isI)
+                                         ? (((- (IData)(
+                                                        (vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__IF_ID_inst.__PVT__idu_in_bus_instruction 
+                                                         >> 0x0000001fU))) 
+                                             << 0x0000000cU) 
+                                            | (vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__IF_ID_inst.__PVT__idu_in_bus_instruction 
+                                               >> 0x00000014U))
+                                         : ((0x6fU 
+                                             == (0x0000007fU 
+                                                 & vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__IF_ID_inst.__PVT__idu_in_bus_instruction))
+                                             ? ((((0x00000ffeU 
+                                                   & ((- (IData)(
+                                                                 (vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__IF_ID_inst.__PVT__idu_in_bus_instruction 
+                                                                  >> 0x0000001fU))) 
+                                                      << 1U)) 
+                                                  | (vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__IF_ID_inst.__PVT__idu_in_bus_instruction 
+                                                     >> 0x0000001fU)) 
+                                                 << 0x00000014U) 
+                                                | ((((0x000001feU 
+                                                      & (vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__IF_ID_inst.__PVT__idu_in_bus_instruction 
+                                                         >> 0x0000000bU)) 
+                                                     | (1U 
+                                                        & (vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__IF_ID_inst.__PVT__idu_in_bus_instruction 
+                                                           >> 0x00000014U))) 
+                                                    << 0x0000000bU) 
+                                                   | (0x000007feU 
+                                                      & (vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__IF_ID_inst.__PVT__idu_in_bus_instruction 
+                                                         >> 0x00000014U))))
+                                             : ((IData)(vlSelfRef.__PVT__idu_out_bus_isSTORE)
+                                                 ? 
+                                                (((- (IData)(
                                                              (vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__IF_ID_inst.__PVT__idu_in_bus_instruction 
                                                               >> 0x0000001fU))) 
-                                                  << 0x0000000dU) 
-                                                 | ((((2U 
+                                                  << 0x0000000cU) 
+                                                 | ((0x00000fe0U 
+                                                     & (vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__IF_ID_inst.__PVT__idu_in_bus_instruction 
+                                                        >> 0x00000014U)) 
+                                                    | (0x0000001fU 
                                                        & (vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__IF_ID_inst.__PVT__idu_in_bus_instruction 
-                                                          >> 0x0000001eU)) 
-                                                      | (1U 
-                                                         & (vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__IF_ID_inst.__PVT__idu_in_bus_instruction 
-                                                            >> 7U))) 
-                                                     << 0x0000000bU) 
-                                                    | ((0x000007e0U 
-                                                        & (vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__IF_ID_inst.__PVT__idu_in_bus_instruction 
-                                                           >> 0x00000014U)) 
-                                                       | (0x0000001eU 
-                                                          & (vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__IF_ID_inst.__PVT__idu_in_bus_instruction 
-                                                             >> 7U)))))
-                                              : 0U)))));
-    vlSelfRef.__PVT__EXU_0__DOT__exu_out_bus_comp_result 
-        = (1U & ((2U & (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__ID_EX_inst.__PVT__exu_in_bus_comp_op))
-                  ? ((1U & (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__ID_EX_inst.__PVT__exu_in_bus_comp_op))
-                      ? (IData)(vlSelfRef.__PVT__EXU_0__DOT__comp_isEQUAL)
-                      : (~ (IData)(vlSelfRef.__PVT__EXU_0__DOT__comp_isEQUAL)))
-                  : ((1U & (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__ID_EX_inst.__PVT__exu_in_bus_comp_op))
-                      ? (~ (IData)(EXU_0__DOT____VdfgExtracted_hbeeeed61__0))
-                      : (IData)(EXU_0__DOT____VdfgExtracted_hbeeeed61__0))));
-}
-
-VL_ATTR_COLD void VysyxSoCFull_ysyx_26010011___stl_sequent__TOP__ysyxSoCFull__asic__cpu__cpu__1(VysyxSoCFull_ysyx_26010011* vlSelf) {
-    VL_DEBUG_IF(VL_DBG_MSGF("+            VysyxSoCFull_ysyx_26010011___stl_sequent__TOP__ysyxSoCFull__asic__cpu__cpu__1\n"); );
-    VysyxSoCFull__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
-    auto& vlSelfRef = std::ref(*vlSelf).get();
-    // Body
-    vlSelfRef.__PVT__IDU_0__DOT__next_state = (1U & 
-                                               ((IData)(vlSelfRef.__PVT__IDU_0__DOT__state)
-                                                 ? 
-                                                (~ (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__IFU_0.__PVT__fencei_flush))
+                                                          >> 7U))))
                                                  : 
-                                                ((IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__IF_ID_inst.idu_in_valid) 
-                                                 & (0x0000100fU 
-                                                    == vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__IF_ID_inst.__PVT__idu_in_bus_instruction))));
-    vlSelfRef.flush_exception_valid = (1U & ((IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__CSR_0.__PVT__csr_in_bus_exception) 
-                                             >> 4U));
-}
-
-VL_ATTR_COLD void VysyxSoCFull_ysyx_26010011___stl_sequent__TOP__ysyxSoCFull__asic__cpu__cpu__2(VysyxSoCFull_ysyx_26010011* vlSelf) {
-    VL_DEBUG_IF(VL_DBG_MSGF("+            VysyxSoCFull_ysyx_26010011___stl_sequent__TOP__ysyxSoCFull__asic__cpu__cpu__2\n"); );
-    VysyxSoCFull__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
-    auto& vlSelfRef = std::ref(*vlSelf).get();
-    // Locals
-    CData/*0:0*/ IDU_0__DOT____VdfgRegularize_hd1728725_0_1;
-    IDU_0__DOT____VdfgRegularize_hd1728725_0_1 = 0;
-    CData/*0:0*/ __VdfgRegularize_h6e95ff9d_0_31;
-    __VdfgRegularize_h6e95ff9d_0_31 = 0;
-    // Body
-    vlSelfRef.__PVT__RAM_AXI4LiteArbiter__DOT__M2_awvalid 
-        = ((1U == (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__LSU_0.state)) 
-           & (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__LSU_0.__VdfgRegularize_hc456a51f_0_10));
-    vlSelfRef.__PVT__RAM_AXI4LiteArbiter__DOT__M2_arvalid 
-        = ((((0U == (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__LSU_0.state)) 
-             & (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__LSU_0.__VdfgRegularize_hc456a51f_0_7)) 
-            | (3U == (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__LSU_0.state))) 
-           & (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__LSU_0.__VdfgRegularize_hc456a51f_0_10));
-    vlSelfRef.__PVT__EXU_0__DOT__exu_in_ready = (1U 
-                                                 & ((~ (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__EX_LS_inst.lsu_in_valid)) 
-                                                    | (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__LSU_0.__PVT__lsu_in_ready)));
-    vlSelfRef.idu_isRAW = (((0U != (0x0000001fU & (vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__IF_ID_inst.__PVT__idu_in_bus_instruction 
-                                                   >> 0x0000000fU))) 
-                            && (1U & (((((0x0000001fU 
-                                          & (vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__IF_ID_inst.__PVT__idu_in_bus_instruction 
-                                             >> 0x0000000fU)) 
-                                         == (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__ID_EX_inst.__PVT__exu_in_bus_rd)) 
-                                        & (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__ID_EX_inst.exu_in_valid)) 
-                                       & (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__ID_EX_inst.__PVT__exu_in_bus_isWGPR))
-                                       ? (~ ((IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__ID_EX_inst.exu_in_valid) 
-                                             & (~ (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__ID_EX_inst.__PVT__exu_in_bus_isLOAD))))
-                                       : (((((0x0000001fU 
-                                              & (vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__IF_ID_inst.__PVT__idu_in_bus_instruction 
-                                                 >> 0x0000000fU)) 
-                                             == (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__EX_LS_inst.__PVT__lsu_in_bus_rd)) 
-                                            & (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__EX_LS_inst.lsu_in_valid)) 
-                                           & (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__EX_LS_inst.__PVT__lsu_in_bus_isWGPR))
-                                           ? ((1U & 
-                                               (~ ((IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__LSU_0.lsu_out_valid) 
-                                                   & (~ (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__EX_LS_inst.__PVT__lsu_in_bus_isLOAD))))) 
-                                              && (1U 
-                                                  & (~ 
-                                                     ((IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__LSU_0.lsu_out_valid) 
-                                                      & (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__EX_LS_inst.__PVT__lsu_in_bus_isLOAD)))))
-                                           : (((((0x0000001fU 
-                                                  & (vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__IF_ID_inst.__PVT__idu_in_bus_instruction 
-                                                     >> 0x0000000fU)) 
-                                                 == (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__LS_WB_inst.__PVT__wbu_in_bus_rd)) 
-                                                & (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__LS_WB_inst.wbu_in_valid)) 
-                                               & (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__LS_WB_inst.__PVT__wbu_in_bus_isWGPR)) 
-                                              && ((1U 
-                                                   & (~ 
-                                                      ((IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__LS_WB_inst.wbu_in_valid) 
-                                                       & (~ (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__LS_WB_inst.__PVT__wbu_in_bus_isLOAD))))) 
-                                                  && (1U 
-                                                      & (~ 
-                                                         ((IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__LS_WB_inst.wbu_in_valid) 
-                                                          & (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__LS_WB_inst.__PVT__wbu_in_bus_isLOAD)))))))))) 
-                           | (((0U != (vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__IF_ID_inst.__PVT__idu_in_bus_instruction 
-                                       >> 0x00000014U)) 
-                               & ((0U != (IData)(vlSelfRef.__PVT__idu_out_bus_opCSR)) 
-                                  & ((0x0b00U != (vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__IF_ID_inst.__PVT__idu_in_bus_instruction 
-                                                  >> 0x00000014U)) 
-                                     & ((((vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__IF_ID_inst.__PVT__idu_in_bus_instruction 
-                                           >> 0x00000014U) 
-                                          == (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__ID_EX_inst.__PVT__exu_in_bus_csrrd)) 
-                                         & ((IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__ID_EX_inst.exu_in_valid) 
-                                            & (0U != (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__ID_EX_inst.__PVT__exu_in_bus_opCSR)))) 
-                                        | ((((vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__IF_ID_inst.__PVT__idu_in_bus_instruction 
-                                              >> 0x00000014U) 
-                                             == (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__EX_LS_inst.__PVT__lsu_in_bus_csrrd)) 
-                                            & ((IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__EX_LS_inst.lsu_in_valid) 
-                                               & (0U 
-                                                  != (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__EX_LS_inst.__PVT__lsu_in_bus_opCSR)))) 
-                                           | (((vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__IF_ID_inst.__PVT__idu_in_bus_instruction 
-                                                >> 0x00000014U) 
-                                               == (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__LS_WB_inst.__PVT__wbu_in_bus_csrrd)) 
-                                              & ((IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__LS_WB_inst.wbu_in_valid) 
-                                                 & (0U 
-                                                    != (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__LS_WB_inst.__PVT__wbu_in_bus_opCSR))))))))) 
-                              | ((0U != (0x0000001fU 
-                                         & (vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__IF_ID_inst.__PVT__idu_in_bus_instruction 
-                                            >> 0x00000014U))) 
-                                 && (1U & (((((0x0000001fU 
-                                               & (vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__IF_ID_inst.__PVT__idu_in_bus_instruction 
-                                                  >> 0x00000014U)) 
-                                              == (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__ID_EX_inst.__PVT__exu_in_bus_rd)) 
-                                             & (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__ID_EX_inst.exu_in_valid)) 
-                                            & (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__ID_EX_inst.__PVT__exu_in_bus_isWGPR))
-                                            ? (~ ((IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__ID_EX_inst.exu_in_valid) 
-                                                  & (~ (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__ID_EX_inst.__PVT__exu_in_bus_isLOAD))))
-                                            : (((((0x0000001fU 
-                                                   & (vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__IF_ID_inst.__PVT__idu_in_bus_instruction 
-                                                      >> 0x00000014U)) 
-                                                  == (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__EX_LS_inst.__PVT__lsu_in_bus_rd)) 
-                                                 & (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__EX_LS_inst.lsu_in_valid)) 
-                                                & (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__EX_LS_inst.__PVT__lsu_in_bus_isWGPR))
-                                                ? (
-                                                   (1U 
-                                                    & (~ 
-                                                       ((IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__LSU_0.lsu_out_valid) 
-                                                        & (~ (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__EX_LS_inst.__PVT__lsu_in_bus_isLOAD))))) 
-                                                   && (1U 
-                                                       & (~ 
-                                                          ((IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__LSU_0.lsu_out_valid) 
-                                                           & (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__EX_LS_inst.__PVT__lsu_in_bus_isLOAD)))))
-                                                : (
-                                                   ((((0x0000001fU 
-                                                       & (vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__IF_ID_inst.__PVT__idu_in_bus_instruction 
-                                                          >> 0x00000014U)) 
-                                                      == (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__LS_WB_inst.__PVT__wbu_in_bus_rd)) 
-                                                     & (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__LS_WB_inst.wbu_in_valid)) 
-                                                    & (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__LS_WB_inst.__PVT__wbu_in_bus_isWGPR)) 
-                                                   && ((1U 
-                                                        & (~ 
-                                                           ((IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__LS_WB_inst.wbu_in_valid) 
-                                                            & (~ (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__LS_WB_inst.__PVT__wbu_in_bus_isLOAD))))) 
-                                                       && (1U 
-                                                           & (~ 
-                                                              ((IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__LS_WB_inst.wbu_in_valid) 
-                                                               & (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__LS_WB_inst.__PVT__wbu_in_bus_isLOAD))))))))))));
-    vlSelfRef.__PVT__idu_ra_bypass = ((0U != (0x0000001fU 
-                                              & (vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__IF_ID_inst.__PVT__idu_in_bus_instruction 
-                                                 >> 0x0000000fU)))
-                                       ? (((((0x0000001fU 
-                                              & (vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__IF_ID_inst.__PVT__idu_in_bus_instruction 
-                                                 >> 0x0000000fU)) 
-                                             == (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__ID_EX_inst.__PVT__exu_in_bus_rd)) 
-                                            & (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__ID_EX_inst.exu_in_valid)) 
-                                           & (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__ID_EX_inst.__PVT__exu_in_bus_isWGPR))
-                                           ? (((IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__ID_EX_inst.exu_in_valid) 
-                                               & (~ (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__ID_EX_inst.__PVT__exu_in_bus_isLOAD)))
-                                               ? ((IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__ID_EX_inst.__PVT__exu_in_bus_isWCOMP)
-                                                   ? (IData)(vlSelfRef.__PVT__EXU_0__DOT__exu_out_bus_comp_result)
-                                                   : 
-                                                  ((IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__ID_EX_inst.__PVT__exu_in_bus_isJUMP)
-                                                    ? vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__ID_EX_inst.__PVT__exu_in_bus_snpc
-                                                    : vlSelfRef.__PVT__EXU_0__DOT__exu_out_bus_alu_result))
-                                               : 0U)
-                                           : (((((0x0000001fU 
-                                                  & (vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__IF_ID_inst.__PVT__idu_in_bus_instruction 
-                                                     >> 0x0000000fU)) 
-                                                 == (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__EX_LS_inst.__PVT__lsu_in_bus_rd)) 
-                                                & (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__EX_LS_inst.lsu_in_valid)) 
-                                               & (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__EX_LS_inst.__PVT__lsu_in_bus_isWGPR))
-                                               ? (((IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__LSU_0.lsu_out_valid) 
-                                                   & (~ (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__EX_LS_inst.__PVT__lsu_in_bus_isLOAD)))
+                                                ((IData)(vlSelfRef.__PVT__IDU_0__DOT__isU)
+                                                  ? 
+                                                 (0xfffff000U 
+                                                  & vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__IF_ID_inst.__PVT__idu_in_bus_instruction)
+                                                  : 
+                                                 ((IData)(vlSelfRef.__PVT__idu_out_bus_isBRANCH)
                                                    ? 
-                                                  ((IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__EX_LS_inst.__PVT__lsu_in_bus_isWCOMP)
-                                                    ? (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__EX_LS_inst.__PVT__lsu_in_bus_comp_result)
-                                                    : 
-                                                   ((IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__EX_LS_inst.__PVT__lsu_in_bus_isJUMP)
-                                                     ? vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__EX_LS_inst.__PVT__lsu_in_bus_snpc
-                                                     : vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__EX_LS_inst.__PVT__lsu_in_bus_alu_result))
-                                                   : 
-                                                  (((IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__LSU_0.lsu_out_valid) 
-                                                    & (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__EX_LS_inst.__PVT__lsu_in_bus_isLOAD))
-                                                    ? vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__LSU_0.__PVT__lsu_out_bus_rdata
-                                                    : 0U))
-                                               : ((
-                                                   (((0x0000001fU 
-                                                      & (vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__IF_ID_inst.__PVT__idu_in_bus_instruction 
-                                                         >> 0x0000000fU)) 
-                                                     == (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__LS_WB_inst.__PVT__wbu_in_bus_rd)) 
-                                                    & (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__LS_WB_inst.wbu_in_valid)) 
-                                                   & (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__LS_WB_inst.__PVT__wbu_in_bus_isWGPR))
-                                                   ? 
-                                                  (((IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__LS_WB_inst.wbu_in_valid) 
-                                                    & (~ (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__LS_WB_inst.__PVT__wbu_in_bus_isLOAD)))
+                                                  (((- (IData)(
+                                                               (vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__IF_ID_inst.__PVT__idu_in_bus_instruction 
+                                                                >> 0x0000001fU))) 
+                                                    << 0x0000000dU) 
+                                                   | ((((2U 
+                                                         & (vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__IF_ID_inst.__PVT__idu_in_bus_instruction 
+                                                            >> 0x0000001eU)) 
+                                                        | (1U 
+                                                           & (vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__IF_ID_inst.__PVT__idu_in_bus_instruction 
+                                                              >> 7U))) 
+                                                       << 0x0000000bU) 
+                                                      | ((0x000007e0U 
+                                                          & (vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__IF_ID_inst.__PVT__idu_in_bus_instruction 
+                                                             >> 0x00000014U)) 
+                                                         | (0x0000001eU 
+                                                            & (vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__IF_ID_inst.__PVT__idu_in_bus_instruction 
+                                                               >> 7U)))))
+                                                   : 0U)))));
+    vlSelfRef.__PVT__exu_out_bus_comp_result = (1U 
+                                                & ((2U 
+                                                    & (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__ID_EX_inst.__PVT__exu_in_bus_comp_op))
                                                     ? 
-                                                   ((IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__LS_WB_inst.__PVT__wbu_in_bus_isWCOMP)
-                                                     ? (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__LS_WB_inst.__PVT__wbu_in_bus_comp_result)
+                                                   ((1U 
+                                                     & (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__ID_EX_inst.__PVT__exu_in_bus_comp_op))
+                                                     ? (IData)(vlSelfRef.__PVT__EXU_0__DOT__comp_isEQUAL)
                                                      : 
-                                                    ((IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__LS_WB_inst.__PVT__wbu_in_bus_isJUMP)
-                                                      ? vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__LS_WB_inst.__PVT__wbu_in_bus_snpc
-                                                      : vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__LS_WB_inst.__PVT__wbu_in_bus_alu_result))
+                                                    (~ (IData)(vlSelfRef.__PVT__EXU_0__DOT__comp_isEQUAL)))
                                                     : 
-                                                   (((IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__LS_WB_inst.wbu_in_valid) 
-                                                     & (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__LS_WB_inst.__PVT__wbu_in_bus_isLOAD))
-                                                     ? vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__LS_WB_inst.__PVT__wbu_in_bus_lsu_result
-                                                     : 0U))
-                                                   : vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__GPR_0.__PVT__gpr_out_a)))
-                                       : vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__GPR_0.__PVT__gpr_out_a);
-    vlSelfRef.__PVT__idu_rb_bypass = ((0U != (0x0000001fU 
-                                              & (vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__IF_ID_inst.__PVT__idu_in_bus_instruction 
-                                                 >> 0x00000014U)))
-                                       ? (((((0x0000001fU 
-                                              & (vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__IF_ID_inst.__PVT__idu_in_bus_instruction 
-                                                 >> 0x00000014U)) 
-                                             == (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__ID_EX_inst.__PVT__exu_in_bus_rd)) 
-                                            & (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__ID_EX_inst.exu_in_valid)) 
-                                           & (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__ID_EX_inst.__PVT__exu_in_bus_isWGPR))
-                                           ? (((IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__ID_EX_inst.exu_in_valid) 
-                                               & (~ (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__ID_EX_inst.__PVT__exu_in_bus_isLOAD)))
-                                               ? ((IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__ID_EX_inst.__PVT__exu_in_bus_isWCOMP)
-                                                   ? (IData)(vlSelfRef.__PVT__EXU_0__DOT__exu_out_bus_comp_result)
-                                                   : 
-                                                  ((IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__ID_EX_inst.__PVT__exu_in_bus_isJUMP)
-                                                    ? vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__ID_EX_inst.__PVT__exu_in_bus_snpc
-                                                    : vlSelfRef.__PVT__EXU_0__DOT__exu_out_bus_alu_result))
-                                               : 0U)
-                                           : (((((0x0000001fU 
-                                                  & (vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__IF_ID_inst.__PVT__idu_in_bus_instruction 
-                                                     >> 0x00000014U)) 
-                                                 == (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__EX_LS_inst.__PVT__lsu_in_bus_rd)) 
-                                                & (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__EX_LS_inst.lsu_in_valid)) 
-                                               & (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__EX_LS_inst.__PVT__lsu_in_bus_isWGPR))
-                                               ? (((IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__LSU_0.lsu_out_valid) 
-                                                   & (~ (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__EX_LS_inst.__PVT__lsu_in_bus_isLOAD)))
-                                                   ? 
-                                                  ((IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__EX_LS_inst.__PVT__lsu_in_bus_isWCOMP)
-                                                    ? (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__EX_LS_inst.__PVT__lsu_in_bus_comp_result)
-                                                    : 
-                                                   ((IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__EX_LS_inst.__PVT__lsu_in_bus_isJUMP)
-                                                     ? vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__EX_LS_inst.__PVT__lsu_in_bus_snpc
-                                                     : vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__EX_LS_inst.__PVT__lsu_in_bus_alu_result))
-                                                   : 
-                                                  (((IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__LSU_0.lsu_out_valid) 
-                                                    & (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__EX_LS_inst.__PVT__lsu_in_bus_isLOAD))
-                                                    ? vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__LSU_0.__PVT__lsu_out_bus_rdata
-                                                    : 0U))
-                                               : ((
-                                                   (((0x0000001fU 
-                                                      & (vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__IF_ID_inst.__PVT__idu_in_bus_instruction 
-                                                         >> 0x00000014U)) 
-                                                     == (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__LS_WB_inst.__PVT__wbu_in_bus_rd)) 
-                                                    & (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__LS_WB_inst.wbu_in_valid)) 
-                                                   & (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__LS_WB_inst.__PVT__wbu_in_bus_isWGPR))
-                                                   ? 
-                                                  (((IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__LS_WB_inst.wbu_in_valid) 
-                                                    & (~ (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__LS_WB_inst.__PVT__wbu_in_bus_isLOAD)))
-                                                    ? 
-                                                   ((IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__LS_WB_inst.__PVT__wbu_in_bus_isWCOMP)
-                                                     ? (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__LS_WB_inst.__PVT__wbu_in_bus_comp_result)
-                                                     : 
-                                                    ((IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__LS_WB_inst.__PVT__wbu_in_bus_isJUMP)
-                                                      ? vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__LS_WB_inst.__PVT__wbu_in_bus_snpc
-                                                      : vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__LS_WB_inst.__PVT__wbu_in_bus_alu_result))
-                                                    : 
-                                                   (((IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__LS_WB_inst.wbu_in_valid) 
-                                                     & (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__LS_WB_inst.__PVT__wbu_in_bus_isLOAD))
-                                                     ? vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__LS_WB_inst.__PVT__wbu_in_bus_lsu_result
-                                                     : 0U))
-                                                   : vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__GPR_0.__PVT__gpr_out_b)))
-                                       : vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__GPR_0.__PVT__gpr_out_b);
-    vlSelfRef.__PVT__exu_out_bus_exception = ((0x00000010U 
-                                               & (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__ID_EX_inst.__PVT__exu_in_bus_exception))
-                                               ? (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__ID_EX_inst.__PVT__exu_in_bus_exception)
-                                               : (((IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__ID_EX_inst.exu_in_valid) 
-                                                   & (IData)(vlSelfRef.__PVT__EXU_0__DOT__exu_in_ready))
-                                                   ? 
-                                                  (((IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__ID_EX_inst.__PVT__exu_in_bus_isJUMP) 
-                                                    | ((IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__ID_EX_inst.__PVT__exu_in_bus_isBRANCH) 
-                                                       & (IData)(vlSelfRef.__PVT__EXU_0__DOT__exu_out_bus_comp_result)))
-                                                    ? 
-                                                   ((0U 
-                                                     != 
-                                                     (3U 
-                                                      & vlSelfRef.__PVT__EXU_0__DOT__exu_out_bus_alu_result))
-                                                     ? 0x10U
-                                                     : (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__ID_EX_inst.__PVT__exu_in_bus_exception))
-                                                    : (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__ID_EX_inst.__PVT__exu_in_bus_exception))
-                                                   : (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__ID_EX_inst.__PVT__exu_in_bus_exception)));
-    vlSelfRef.__PVT__exu_out_bus_dnpc_valid = ((1U 
-                                                & (~ 
-                                                   ((IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__ID_EX_inst.__PVT__exu_in_bus_exception) 
-                                                    >> 4U))) 
-                                               && (((IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__ID_EX_inst.exu_in_valid) 
-                                                    & (IData)(vlSelfRef.__PVT__EXU_0__DOT__exu_in_ready)) 
-                                                   && (((IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__ID_EX_inst.__PVT__exu_in_bus_isJUMP) 
-                                                        | ((IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__ID_EX_inst.__PVT__exu_in_bus_isBRANCH) 
-                                                           & (IData)(vlSelfRef.__PVT__EXU_0__DOT__exu_out_bus_comp_result))) 
-                                                       && (1U 
-                                                           & (~ 
-                                                              (0U 
-                                                               != 
-                                                               (3U 
-                                                                & vlSelfRef.__PVT__EXU_0__DOT__exu_out_bus_alu_result)))))));
-    IDU_0__DOT____VdfgRegularize_hd1728725_0_1 = (1U 
-                                                  & ((~ (IData)(vlSelfRef.idu_isRAW)) 
-                                                     | ((IData)(vlSelfRef.__PVT__IDU_0__DOT__idu_out_bus_exception) 
-                                                        >> 4U)));
-    vlSelfRef.__PVT__IDU_0__DOT__idu_in_ready = (((~ (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__ID_EX_inst.exu_in_valid)) 
-                                                  | (IData)(vlSelfRef.__PVT__EXU_0__DOT__exu_in_ready)) 
-                                                 & ((IData)(IDU_0__DOT____VdfgRegularize_hd1728725_0_1) 
-                                                    & ((~ (IData)(vlSelfRef.__PVT__IDU_0__DOT__state)) 
-                                                       & (~ (IData)(vlSelfRef.__PVT__IDU_0__DOT__next_state)))));
-    vlSelfRef.__PVT__IDU_0__DOT__idu_out_valid = ((IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__IF_ID_inst.idu_in_valid) 
-                                                  & ((~ (IData)(vlSelfRef.__PVT__IDU_0__DOT__state)) 
-                                                     & (IData)(IDU_0__DOT____VdfgRegularize_hd1728725_0_1)));
-    vlSelfRef.__PVT__IDU_0__DOT__w_valid = ((IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__IF_ID_inst.idu_in_valid) 
-                                            & ((IData)(vlSelfRef.__PVT__IDU_0__DOT__idu_out_valid) 
-                                               & ((~ 
-                                                   ((IData)(vlSelfRef.__PVT__IDU_0__DOT__idu_out_bus_exception) 
-                                                    >> 4U)) 
-                                                  & ((IData)(vlSelfRef.__PVT__IDU_0__DOT__idu_out_bus_isBRANCH) 
-                                                     | (0x6fU 
-                                                        == 
-                                                        (0x0000007fU 
-                                                         & vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__IF_ID_inst.__PVT__idu_in_bus_instruction))))));
-    __VdfgRegularize_h6e95ff9d_0_31 = (1U & ((~ (IData)(vlSelfRef.__PVT__IDU_0__DOT__idu_out_valid)) 
-                                             | (vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__IF_ID_inst.idu_in_bus_pc 
-                                                != vlSelfRef.__PVT__EXU_0__DOT__exu_out_bus_alu_result)));
-    vlSelfRef.flush_valid = ((IData)(vlSelfRef.flush_exception_valid) 
-                             | (((IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__ID_EX_inst.__PVT__exu_in_bus_isJUMP) 
-                                 & ((IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__ID_EX_inst.exu_in_valid) 
-                                    & (IData)(vlSelfRef.__PVT__EXU_0__DOT__exu_in_ready)))
-                                 ? (IData)(__VdfgRegularize_h6e95ff9d_0_31)
-                                 : (((IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__ID_EX_inst.__PVT__exu_in_bus_isBRANCH) 
-                                     & (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__ID_EX_inst.exu_in_valid)) 
-                                    & ((IData)(vlSelfRef.__PVT__EXU_0__DOT__exu_in_ready) 
-                                       & ((IData)(vlSelfRef.__PVT__exu_out_bus_dnpc_valid)
-                                           ? (IData)(__VdfgRegularize_h6e95ff9d_0_31)
-                                           : ((~ (IData)(vlSelfRef.__PVT__IDU_0__DOT__idu_out_valid)) 
-                                              | (vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__IF_ID_inst.idu_in_bus_pc 
-                                                 != vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__ID_EX_inst.__PVT__exu_in_bus_snpc)))))));
-    vlSelfRef.__PVT__IDU_0__DOT__flush_valid = ((IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__IFU_0.__PVT__fencei_flush) 
-                                                | (IData)(vlSelfRef.flush_valid));
+                                                   ((1U 
+                                                     & (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__ID_EX_inst.__PVT__exu_in_bus_comp_op))
+                                                     ? 
+                                                    (~ (IData)(EXU_0__DOT____VdfgExtracted_hbeeeed61__0))
+                                                     : (IData)(EXU_0__DOT____VdfgExtracted_hbeeeed61__0))));
 }
 
 VL_ATTR_COLD void VysyxSoCFull_ysyx_26010011___ctor_var_reset(VysyxSoCFull_ysyx_26010011* vlSelf) {
@@ -985,18 +820,40 @@ VL_ATTR_COLD void VysyxSoCFull_ysyx_26010011___ctor_var_reset(VysyxSoCFull_ysyx_
     vlSelf->__PVT__io_slave_rid = VL_SCOPED_RAND_RESET_I(4, __VscopeHash, 13355305980320080930ull);
     vlSelf->__PVT__idu_ra_bypass = VL_SCOPED_RAND_RESET_I(32, __VscopeHash, 18356435993976681273ull);
     vlSelf->__PVT__idu_rb_bypass = VL_SCOPED_RAND_RESET_I(32, __VscopeHash, 12395343302792411567ull);
-    vlSelf->__PVT__idu_csr_bypass = VL_SCOPED_RAND_RESET_I(32, __VscopeHash, 13402225378870115906ull);
     vlSelf->idu_isRAW = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 12484043471940668578ull);
+    vlSelf->__PVT__dnpc = VL_SCOPED_RAND_RESET_I(32, __VscopeHash, 9558418065809668140ull);
     vlSelf->flush_valid = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 2301687952925534331ull);
+    vlSelf->__PVT__idu_flush_valid = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 7432635751246148752ull);
     vlSelf->flush_exception_valid = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 2546405369257597732ull);
+    vlSelf->__PVT__IROM_arvalid = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 12096437173233939134ull);
     vlSelf->__PVT__IROM_arready = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 2564055601578176104ull);
+    vlSelf->__PVT__IROM_rlast = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 7324421825435562648ull);
+    vlSelf->__PVT__idu_in_ready = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 1715751720496286294ull);
+    vlSelf->__PVT__idu_out_valid = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 6511924958169895207ull);
+    vlSelf->__PVT__idu_out_bus_imm = VL_SCOPED_RAND_RESET_I(32, __VscopeHash, 12937762372200183453ull);
     vlSelf->__PVT__idu_out_bus_csr = VL_SCOPED_RAND_RESET_I(32, __VscopeHash, 14612417427095553734ull);
     vlSelf->__PVT__idu_out_bus_signals = VL_SCOPED_RAND_RESET_I(13, __VscopeHash, 4307571169491265713ull);
+    vlSelf->__PVT__idu_out_bus_isLOAD = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 11004728032774723394ull);
+    vlSelf->__PVT__idu_out_bus_isSTORE = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 4519748237212810333ull);
+    vlSelf->__PVT__idu_out_bus_isBRANCH = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 8914714928645611673ull);
+    vlSelf->__PVT__idu_out_bus_comp_isUseImm = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 3997477814729445796ull);
     vlSelf->__PVT__idu_out_bus_opCSR = VL_SCOPED_RAND_RESET_I(3, __VscopeHash, 16111935974516961794ull);
+    vlSelf->__PVT__idu_out_bus_exception = VL_SCOPED_RAND_RESET_I(5, __VscopeHash, 12188877952293993608ull);
+    vlSelf->__PVT__exu_in_ready = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 12311749930967227544ull);
     vlSelf->__PVT__exu_in_bus_signals = VL_SCOPED_RAND_RESET_I(13, __VscopeHash, 10157523231169252476ull);
+    vlSelf->__PVT__exu_out_bus_comp_result = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 5402745377302856199ull);
     vlSelf->__PVT__exu_out_bus_dnpc_valid = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 823560455559887883ull);
     vlSelf->__PVT__exu_out_bus_exception = VL_SCOPED_RAND_RESET_I(5, __VscopeHash, 12053201596965599409ull);
+    vlSelf->__PVT__exu_out_bus_alu_result = VL_SCOPED_RAND_RESET_I(32, __VscopeHash, 6464683271446975527ull);
+    vlSelf->__PVT__lsu_in_ready = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 1260193116019354778ull);
+    vlSelf->__PVT__DRAM_arvalid = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 11630808237936893483ull);
     vlSelf->__PVT__DRAM_arready = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 5977303994642059722ull);
+    vlSelf->__PVT__DRAM_rready = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 3328459483362833005ull);
+    vlSelf->__PVT__DRAM_arsize = VL_SCOPED_RAND_RESET_I(3, __VscopeHash, 11221385860920176321ull);
+    vlSelf->__PVT__lsu_out_bus_exception = VL_SCOPED_RAND_RESET_I(5, __VscopeHash, 904879937952889666ull);
+    vlSelf->__PVT__lsu_out_bus_lsu_result = VL_SCOPED_RAND_RESET_I(32, __VscopeHash, 609999572664879936ull);
+    vlSelf->__PVT__fencei_pass = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 4262940115577143696ull);
+    vlSelf->__PVT__wbu_out_bus_exception = VL_SCOPED_RAND_RESET_I(5, __VscopeHash, 9383206230036561355ull);
     vlSelf->tb_isFINAL = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 11082856627143475112ull);
     vlSelf->tb_dnpc_valid = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 1563376191479858902ull);
     vlSelf->tb_isMEM = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 3061164873628217955ull);
@@ -1004,17 +861,13 @@ VL_ATTR_COLD void VysyxSoCFull_ysyx_26010011___ctor_var_reset(VysyxSoCFull_ysyx_
     vlSelf->tb_FINAL_npc = VL_SCOPED_RAND_RESET_I(32, __VscopeHash, 14752332200549946389ull);
     vlSelf->tb_alu_result = VL_SCOPED_RAND_RESET_I(32, __VscopeHash, 8841514647440332300ull);
     vlSelf->tb_FINAL_inst = VL_SCOPED_RAND_RESET_I(32, __VscopeHash, 8747687828424263726ull);
+    vlSelf->__PVT__gpr_rdataa = VL_SCOPED_RAND_RESET_I(32, __VscopeHash, 5203038038572587880ull);
+    vlSelf->__PVT__gpr_rdatab = VL_SCOPED_RAND_RESET_I(32, __VscopeHash, 15552953170186826812ull);
+    vlSelf->__PVT__csr_rdata = VL_SCOPED_RAND_RESET_I(32, __VscopeHash, 8686967141507380524ull);
+    vlSelf->__PVT__r_tar = VL_SCOPED_RAND_RESET_I(32, __VscopeHash, 13835808927382882950ull);
+    vlSelf->__PVT__w_valid = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 1598689714110194787ull);
+    vlSelf->__VdfgRegularize_he0d61652_0_0 = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 7036214523555703079ull);
     vlSelf->__VdfgRegularize_he0d61652_0_2 = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 13585657684134075245ull);
-    vlSelf->__PVT__IDU_0__DOT__flush_valid = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 14606055568787714890ull);
-    vlSelf->__PVT__IDU_0__DOT__idu_in_ready = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 14517647677361810231ull);
-    vlSelf->__PVT__IDU_0__DOT__idu_out_valid = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 18080012761385849434ull);
-    vlSelf->__PVT__IDU_0__DOT__idu_out_bus_exception = VL_SCOPED_RAND_RESET_I(5, __VscopeHash, 16320428996405793283ull);
-    vlSelf->__PVT__IDU_0__DOT__idu_out_bus_imm = VL_SCOPED_RAND_RESET_I(32, __VscopeHash, 12120500881062225989ull);
-    vlSelf->__PVT__IDU_0__DOT__idu_out_bus_isLOAD = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 15972667424962257401ull);
-    vlSelf->__PVT__IDU_0__DOT__idu_out_bus_isSTORE = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 1528139171483306698ull);
-    vlSelf->__PVT__IDU_0__DOT__idu_out_bus_isBRANCH = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 7265443920011843129ull);
-    vlSelf->__PVT__IDU_0__DOT__idu_out_bus_comp_isUseImm = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 6215337356815067075ull);
-    vlSelf->__PVT__IDU_0__DOT__w_valid = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 6929198551930428011ull);
     vlSelf->__PVT__IDU_0__DOT__state = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 5420118350948990268ull);
     vlSelf->__PVT__IDU_0__DOT__next_state = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 218229782486346919ull);
     vlSelf->__PVT__IDU_0__DOT__isJALR = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 5246149202446548276ull);
@@ -1051,14 +904,6 @@ VL_ATTR_COLD void VysyxSoCFull_ysyx_26010011___ctor_var_reset(VysyxSoCFull_ysyx_
     vlSelf->__PVT__IDU_0__DOT__isSRA = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 5660971777432264299ull);
     vlSelf->__PVT__IDU_0__DOT__isOR = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 3838239279485465388ull);
     vlSelf->__PVT__IDU_0__DOT__isAND = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 14356565034287140481ull);
-    vlSelf->__PVT__IDU_0__DOT__isMUL = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 18036492203445108247ull);
-    vlSelf->__PVT__IDU_0__DOT__isMULH = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 14854889311158192348ull);
-    vlSelf->__PVT__IDU_0__DOT__isMULHSU = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 7973178407309227113ull);
-    vlSelf->__PVT__IDU_0__DOT__isMULHU = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 13925527503688309936ull);
-    vlSelf->__PVT__IDU_0__DOT__isDIV = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 1375078672743788475ull);
-    vlSelf->__PVT__IDU_0__DOT__isDIVU = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 12964295156948227219ull);
-    vlSelf->__PVT__IDU_0__DOT__isREM = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 17734828331219909678ull);
-    vlSelf->__PVT__IDU_0__DOT__isREMU = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 13938434389085550834ull);
     vlSelf->__PVT__IDU_0__DOT__isCSRRW = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 5812807253477557170ull);
     vlSelf->__PVT__IDU_0__DOT__isCSRRS = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 10186486172149556751ull);
     vlSelf->__PVT__IDU_0__DOT__isCSRRC = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 2600342929540430619ull);
@@ -1075,10 +920,6 @@ VL_ATTR_COLD void VysyxSoCFull_ysyx_26010011___ctor_var_reset(VysyxSoCFull_ysyx_
     vlSelf->IDU_0__DOT____VdfgRegularize_hd1728725_0_29 = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 8829797479805470112ull);
     vlSelf->IDU_0__DOT____VdfgRegularize_hd1728725_0_30 = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 13372089706797872786ull);
     vlSelf->IDU_0__DOT____VdfgRegularize_hd1728725_0_33 = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 10066467965634193766ull);
-    vlSelf->IDU_0__DOT____VdfgRegularize_hd1728725_0_35 = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 7524934807882156038ull);
-    vlSelf->__PVT__EXU_0__DOT__exu_in_ready = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 9341556635326236284ull);
-    vlSelf->__PVT__EXU_0__DOT__exu_out_bus_alu_result = VL_SCOPED_RAND_RESET_I(32, __VscopeHash, 2754888502402517461ull);
-    vlSelf->__PVT__EXU_0__DOT__exu_out_bus_comp_result = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 8720627632724693175ull);
     vlSelf->__PVT__EXU_0__DOT__a = VL_SCOPED_RAND_RESET_I(32, __VscopeHash, 13652677756713014227ull);
     vlSelf->__PVT__EXU_0__DOT__b = VL_SCOPED_RAND_RESET_I(32, __VscopeHash, 8215853323861242264ull);
     vlSelf->__PVT__EXU_0__DOT__comp_b = VL_SCOPED_RAND_RESET_I(32, __VscopeHash, 16952493944377901889ull);
@@ -1087,23 +928,10 @@ VL_ATTR_COLD void VysyxSoCFull_ysyx_26010011___ctor_var_reset(VysyxSoCFull_ysyx_
     vlSelf->__PVT__EXU_0__DOT__comp_isEQUAL = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 11674233027819119710ull);
     vlSelf->__PVT__EXU_0__DOT__comp_suber_out = VL_SCOPED_RAND_RESET_I(32, __VscopeHash, 16892173914364491116ull);
     vlSelf->WBU_0__DOT____VdfgRegularize_h03859d6a_0_0 = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 12865560808515542011ull);
-    vlSelf->__PVT__RAM_AXI4LiteArbiter__DOT__M2_awvalid = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 12375025885305802629ull);
-    vlSelf->__PVT__RAM_AXI4LiteArbiter__DOT__M2_awready = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 3896451495054636471ull);
-    vlSelf->__PVT__RAM_AXI4LiteArbiter__DOT__M2_bvalid = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 8372100413251766363ull);
-    vlSelf->__PVT__RAM_AXI4LiteArbiter__DOT__M2_bready = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 8274023529088780226ull);
-    vlSelf->__PVT__RAM_AXI4LiteArbiter__DOT__M2_bid = VL_SCOPED_RAND_RESET_I(4, __VscopeHash, 3204467275169976625ull);
-    vlSelf->__PVT__RAM_AXI4LiteArbiter__DOT__M2_arvalid = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 2042498477824767762ull);
-    vlSelf->__PVT__RAM_AXI4LiteArbiter__DOT__M2_arsize = VL_SCOPED_RAND_RESET_I(3, __VscopeHash, 7078843289582663211ull);
-    vlSelf->__PVT__RAM_AXI4LiteArbiter__DOT__M2_rready = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 6252876650602622408ull);
-    vlSelf->__PVT__RAM_AXI4LiteArbiter__DOT__S_arready = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 17810295575027080342ull);
-    vlSelf->__PVT__RAM_AXI4LiteArbiter__DOT__S_rvalid = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 7341170536629540755ull);
-    vlSelf->__PVT__RAM_AXI4LiteArbiter__DOT__S_rready = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 18067147664974863826ull);
-    vlSelf->__PVT__RAM_AXI4LiteArbiter__DOT__S_rlast = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 7696361206244790670ull);
-    vlSelf->__PVT__RAM_AXI4LiteArbiter__DOT__S_rid = VL_SCOPED_RAND_RESET_I(4, __VscopeHash, 908287147003379626ull);
-    vlSelf->__PVT__RAM_AXI4LiteArbiter__DOT__R_state = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 4823501578651874595ull);
-    vlSelf->__PVT__RAM_AXI4LiteArbiter__DOT__R_next_state = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 7933074762801967304ull);
-    vlSelf->__PVT__RAM_AXI4LiteArbiter__DOT__R_master_sel = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 12550448643891412737ull);
-    vlSelf->__PVT__RAM_AXI4LiteArbiter__DOT__R_master_sel_next = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 5689625827797009683ull);
+    vlSelf->__PVT__RAM_AXI4Arbiter__DOT__R_state = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 8295886986111117788ull);
+    vlSelf->__PVT__RAM_AXI4Arbiter__DOT__R_next_state = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 11101650068390281325ull);
+    vlSelf->__PVT__RAM_AXI4Arbiter__DOT__R_master_sel = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 4693431511555116030ull);
+    vlSelf->__PVT__RAM_AXI4Arbiter__DOT__R_master_sel_next = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 17927734390465701358ull);
     for (int __Vi0 = 0; __Vi0 < 8; ++__Vi0) {
         vlSelf->__PVT__bcache_u0__DOT__cache_mem[__Vi0] = VL_SCOPED_RAND_RESET_I(32, __VscopeHash, 6550682797354898912ull);
     }

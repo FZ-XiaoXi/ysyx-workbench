@@ -80,4 +80,8 @@ perf-test:
 
 clean:
 	rm -rf obj_dir npc-waveform.vcd wave.fst
+
+concat:
+	cat vsrc/csr_defines.v vsrc/IFU.v vsrc/IDU.v vsrc/EXU.v vsrc/LSU.v vsrc/WBU.v vsrc/pipeline.v vsrc/REG.v vsrc/CPU.v vsrc/AXI4Arbiter.v > vsrc/ysyx_26010011.v
+	sed -i 's#`include#//`include#' vsrc/ysyx_26010011.v
 include ~/ysyx-workbench/Makefile

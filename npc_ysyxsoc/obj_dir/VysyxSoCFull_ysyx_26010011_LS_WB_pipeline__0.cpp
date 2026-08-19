@@ -4,8 +4,8 @@
 
 #include "VysyxSoCFull__pch.h"
 
-void VysyxSoCFull_ysyx_26010011_LS_WB_pipeline___nba_sequent__TOP__ysyxSoCFull__asic__cpu__cpu__LS_WB_inst__1(VysyxSoCFull_ysyx_26010011_LS_WB_pipeline* vlSelf) {
-    VL_DEBUG_IF(VL_DBG_MSGF("+              VysyxSoCFull_ysyx_26010011_LS_WB_pipeline___nba_sequent__TOP__ysyxSoCFull__asic__cpu__cpu__LS_WB_inst__1\n"); );
+void VysyxSoCFull_ysyx_26010011_LS_WB_pipeline___nba_sequent__TOP__ysyxSoCFull__asic__cpu__cpu__LS_WB_inst__0(VysyxSoCFull_ysyx_26010011_LS_WB_pipeline* vlSelf) {
+    VL_DEBUG_IF(VL_DBG_MSGF("+              VysyxSoCFull_ysyx_26010011_LS_WB_pipeline___nba_sequent__TOP__ysyxSoCFull__asic__cpu__cpu__LS_WB_inst__0\n"); );
     VysyxSoCFull__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
     auto& vlSelfRef = std::ref(*vlSelf).get();
     // Body
@@ -17,13 +17,13 @@ void VysyxSoCFull_ysyx_26010011_LS_WB_pipeline___nba_sequent__TOP__ysyxSoCFull__
         vlSelfRef.wbu_in_valid = vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__LSU_0.lsu_out_valid;
         vlSelfRef.wbu_in_bus_pc = vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__EX_LS_inst.lsu_in_bus_pc;
         vlSelfRef.__PVT__wbu_in_bus_instruction = vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__EX_LS_inst.__PVT__lsu_in_bus_instruction;
-        vlSelfRef.__PVT__wbu_in_bus_lsu_result = vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__LSU_0.__PVT__lsu_out_bus_rdata;
+        vlSelfRef.__PVT__wbu_in_bus_lsu_result = vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu.__PVT__lsu_out_bus_lsu_result;
         vlSelfRef.__PVT__wbu_in_bus_alu_result = vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__EX_LS_inst.__PVT__lsu_in_bus_alu_result;
         vlSelfRef.__PVT__wbu_in_bus_csr_result = vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__EX_LS_inst.__PVT__lsu_in_bus_csr_result;
         vlSelfRef.__PVT__wbu_in_bus_comp_result = vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__EX_LS_inst.__PVT__lsu_in_bus_comp_result;
         vlSelfRef.__PVT__wbu_in_bus_snpc = vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__EX_LS_inst.__PVT__lsu_in_bus_snpc;
         vlSelfRef.__PVT__wbu_in_bus_rd = vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__EX_LS_inst.__PVT__lsu_in_bus_rd;
-        vlSelfRef.__PVT__wbu_in_bus_exception = vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__LSU_0.__PVT__lsu_out_bus_exception;
+        vlSelfRef.__PVT__wbu_in_bus_exception = vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu.__PVT__lsu_out_bus_exception;
         vlSelfRef.__PVT__wbu_in_bus_csrrd = vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__EX_LS_inst.__PVT__lsu_in_bus_csrrd;
         vlSelfRef.__PVT__wbu_in_bus_isLOAD = vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__EX_LS_inst.__PVT__lsu_in_bus_isLOAD;
         vlSelfRef.__PVT__wbu_in_bus_isSTORE = vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__EX_LS_inst.__PVT__lsu_in_bus_isSTORE;

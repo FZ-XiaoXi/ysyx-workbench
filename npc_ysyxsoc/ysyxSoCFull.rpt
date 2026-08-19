@@ -49,8 +49,8 @@ Generate the report at 2026-08-14T12:40:31, GitVersion: aa25008b3778a76ae1975c83
 | asic.cpu.cpu.LSU_0.state_4__AOA211X1P4H7L_B0_C0_INVX1P4H7L_Y:A (INVX1P4H7L)                                                                         |        | 0.001       | 0.000      | 0.104      |             | 0.000  | 0.321f           |
 | asic.cpu.cpu.LSU_0.state_4__AOA211X1P4H7L_B0_C0_INVX1P4H7L_Y:Y (INVX1P4H7L)                                                                         |        | 0.008       | 0.000      | 0.157      |             | 0.125  | 0.447r           |
 | asic.cpu.cpu.LSU_0.state_4__AOA211X1P4H7L_B0_C0 (net)                                                                                               | 11     |             |            |            | 0.000       |        |                  |
-| asic.cpu.cpu.RAM_AXI4LiteArbiter.W_state_AOI21X0P5H7L_B0:A1 (AOI21X0P5H7L)                                                                          |        | 0.001       | 0.000      | 0.157      |             | 0.000  | 0.447r           |
-| asic.cpu.cpu.RAM_AXI4LiteArbiter.W_state_AOI21X0P5H7L_B0:Y (AOI21X0P5H7L)                                                                           |        | 0.002       | 0.000      | 0.111      |             | 0.108  | 0.555f           |
+| asic.cpu.cpu.RAM_AXI4Arbiter.W_state_AOI21X0P5H7L_B0:A1 (AOI21X0P5H7L)                                                                          |        | 0.001       | 0.000      | 0.157      |             | 0.000  | 0.447r           |
+| asic.cpu.cpu.RAM_AXI4Arbiter.W_state_AOI21X0P5H7L_B0:Y (AOI21X0P5H7L)                                                                           |        | 0.002       | 0.000      | 0.111      |             | 0.108  | 0.555f           |
 | asic.cpu.cpu.DRAM_wready_$_DLATCH_N__Q_E (net)                                                                                                      | 3      |             |            |            | 0.000       |        |                  |
 | asic.cpu.cpu.DRAM_awaddr_5__NOR2BX1P4H7L_AN_B_OR2X1P4H7L_Y:A (OR2X1P4H7L)                                                                           |        | 0.001       | 0.000      | 0.111      |             | 0.000  | 0.555f           |
 | asic.cpu.cpu.DRAM_awaddr_5__NOR2BX1P4H7L_AN_B_OR2X1P4H7L_Y:Y (OR2X1P4H7L)                                                                           |        | 0.003       | 0.000      | 0.055      |             | 0.137  | 0.692f           |
@@ -111,8 +111,8 @@ Generate the report at 2026-08-14T12:40:31, GitVersion: aa25008b3778a76ae1975c83
 | asic.cpu.cpu.LSU_0.state_4__AOA211X1P4H7L_B0_C0_INVX1P4H7L_Y:A (INVX1P4H7L)  |        | 0.001       | 0.000      | 0.104      |             | 0.000  | 0.321f           |
 | asic.cpu.cpu.LSU_0.state_4__AOA211X1P4H7L_B0_C0_INVX1P4H7L_Y:Y (INVX1P4H7L)  |        | 0.008       | 0.000      | 0.157      |             | 0.125  | 0.447r           |
 | asic.cpu.cpu.LSU_0.state_4__AOA211X1P4H7L_B0_C0 (net)                        | 11     |             |            |            | 0.000       |        |                  |
-| asic.cpu.cpu.RAM_AXI4LiteArbiter.W_state_AOI21X0P5H7L_B0:A1 (AOI21X0P5H7L)   |        | 0.001       | 0.000      | 0.157      |             | 0.000  | 0.447r           |
-| asic.cpu.cpu.RAM_AXI4LiteArbiter.W_state_AOI21X0P5H7L_B0:Y (AOI21X0P5H7L)    |        | 0.002       | 0.000      | 0.111      |             | 0.108  | 0.555f           |
+| asic.cpu.cpu.RAM_AXI4Arbiter.W_state_AOI21X0P5H7L_B0:A1 (AOI21X0P5H7L)   |        | 0.001       | 0.000      | 0.157      |             | 0.000  | 0.447r           |
+| asic.cpu.cpu.RAM_AXI4Arbiter.W_state_AOI21X0P5H7L_B0:Y (AOI21X0P5H7L)    |        | 0.002       | 0.000      | 0.111      |             | 0.108  | 0.555f           |
 | asic.cpu.cpu.DRAM_wready_$_DLATCH_N__Q_E (net)                               | 3      |             |            |            | 0.000       |        |                  |
 | asic.cpu.cpu.DRAM_awaddr_5__NOR2BX1P4H7L_AN_B_OR2X1P4H7L_Y:A (OR2X1P4H7L)    |        | 0.001       | 0.000      | 0.111      |             | 0.000  | 0.555f           |
 | asic.cpu.cpu.DRAM_awaddr_5__NOR2BX1P4H7L_AN_B_OR2X1P4H7L_Y:Y (OR2X1P4H7L)    |        | 0.003       | 0.000      | 0.055      |             | 0.137  | 0.692f           |
@@ -173,8 +173,8 @@ Generate the report at 2026-08-14T12:40:31, GitVersion: aa25008b3778a76ae1975c83
 | asic.cpu.cpu.LSU_0.state_4__AOA211X1P4H7L_B0_C0_INVX1P4H7L_Y:A (INVX1P4H7L)  |        | 0.001       | 0.000      | 0.104      |             | 0.000  | 0.321f           |
 | asic.cpu.cpu.LSU_0.state_4__AOA211X1P4H7L_B0_C0_INVX1P4H7L_Y:Y (INVX1P4H7L)  |        | 0.008       | 0.000      | 0.157      |             | 0.125  | 0.447r           |
 | asic.cpu.cpu.LSU_0.state_4__AOA211X1P4H7L_B0_C0 (net)                        | 11     |             |            |            | 0.000       |        |                  |
-| asic.cpu.cpu.RAM_AXI4LiteArbiter.W_state_AOI21X0P5H7L_B0:A1 (AOI21X0P5H7L)   |        | 0.001       | 0.000      | 0.157      |             | 0.000  | 0.447r           |
-| asic.cpu.cpu.RAM_AXI4LiteArbiter.W_state_AOI21X0P5H7L_B0:Y (AOI21X0P5H7L)    |        | 0.002       | 0.000      | 0.111      |             | 0.108  | 0.555f           |
+| asic.cpu.cpu.RAM_AXI4Arbiter.W_state_AOI21X0P5H7L_B0:A1 (AOI21X0P5H7L)   |        | 0.001       | 0.000      | 0.157      |             | 0.000  | 0.447r           |
+| asic.cpu.cpu.RAM_AXI4Arbiter.W_state_AOI21X0P5H7L_B0:Y (AOI21X0P5H7L)    |        | 0.002       | 0.000      | 0.111      |             | 0.108  | 0.555f           |
 | asic.cpu.cpu.DRAM_wready_$_DLATCH_N__Q_E (net)                               | 3      |             |            |            | 0.000       |        |                  |
 | asic.cpu.cpu.DRAM_awaddr_5__NOR2BX1P4H7L_AN_B_OR2X1P4H7L_Y:A (OR2X1P4H7L)    |        | 0.001       | 0.000      | 0.111      |             | 0.000  | 0.555f           |
 | asic.cpu.cpu.DRAM_awaddr_5__NOR2BX1P4H7L_AN_B_OR2X1P4H7L_Y:Y (OR2X1P4H7L)    |        | 0.003       | 0.000      | 0.055      |             | 0.137  | 0.692f           |
@@ -235,8 +235,8 @@ Generate the report at 2026-08-14T12:40:31, GitVersion: aa25008b3778a76ae1975c83
 | asic.cpu.cpu.LSU_0.state_4__AOA211X1P4H7L_B0_C0_INVX1P4H7L_Y:A (INVX1P4H7L)  |        | 0.001       | 0.000      | 0.104      |             | 0.000  | 0.321f           |
 | asic.cpu.cpu.LSU_0.state_4__AOA211X1P4H7L_B0_C0_INVX1P4H7L_Y:Y (INVX1P4H7L)  |        | 0.008       | 0.000      | 0.157      |             | 0.125  | 0.447r           |
 | asic.cpu.cpu.LSU_0.state_4__AOA211X1P4H7L_B0_C0 (net)                        | 11     |             |            |            | 0.000       |        |                  |
-| asic.cpu.cpu.RAM_AXI4LiteArbiter.W_state_AOI21X0P5H7L_B0:A1 (AOI21X0P5H7L)   |        | 0.001       | 0.000      | 0.157      |             | 0.000  | 0.447r           |
-| asic.cpu.cpu.RAM_AXI4LiteArbiter.W_state_AOI21X0P5H7L_B0:Y (AOI21X0P5H7L)    |        | 0.002       | 0.000      | 0.111      |             | 0.108  | 0.555f           |
+| asic.cpu.cpu.RAM_AXI4Arbiter.W_state_AOI21X0P5H7L_B0:A1 (AOI21X0P5H7L)   |        | 0.001       | 0.000      | 0.157      |             | 0.000  | 0.447r           |
+| asic.cpu.cpu.RAM_AXI4Arbiter.W_state_AOI21X0P5H7L_B0:Y (AOI21X0P5H7L)    |        | 0.002       | 0.000      | 0.111      |             | 0.108  | 0.555f           |
 | asic.cpu.cpu.DRAM_wready_$_DLATCH_N__Q_E (net)                               | 3      |             |            |            | 0.000       |        |                  |
 | asic.cpu.cpu.DRAM_awaddr_5__NOR2BX1P4H7L_AN_B_OR2X1P4H7L_Y:A (OR2X1P4H7L)    |        | 0.001       | 0.000      | 0.111      |             | 0.000  | 0.555f           |
 | asic.cpu.cpu.DRAM_awaddr_5__NOR2BX1P4H7L_AN_B_OR2X1P4H7L_Y:Y (OR2X1P4H7L)    |        | 0.003       | 0.000      | 0.055      |             | 0.137  | 0.692f           |
@@ -297,8 +297,8 @@ Generate the report at 2026-08-14T12:40:31, GitVersion: aa25008b3778a76ae1975c83
 | asic.cpu.cpu.LSU_0.state_4__AOA211X1P4H7L_B0_C0_INVX1P4H7L_Y:A (INVX1P4H7L)   |        | 0.001       | 0.000      | 0.104      |             | 0.000  | 0.321f           |
 | asic.cpu.cpu.LSU_0.state_4__AOA211X1P4H7L_B0_C0_INVX1P4H7L_Y:Y (INVX1P4H7L)   |        | 0.008       | 0.000      | 0.157      |             | 0.125  | 0.447r           |
 | asic.cpu.cpu.LSU_0.state_4__AOA211X1P4H7L_B0_C0 (net)                         | 11     |             |            |            | 0.000       |        |                  |
-| asic.cpu.cpu.RAM_AXI4LiteArbiter.W_state_AOI21X0P5H7L_B0:A1 (AOI21X0P5H7L)    |        | 0.001       | 0.000      | 0.157      |             | 0.000  | 0.447r           |
-| asic.cpu.cpu.RAM_AXI4LiteArbiter.W_state_AOI21X0P5H7L_B0:Y (AOI21X0P5H7L)     |        | 0.002       | 0.000      | 0.111      |             | 0.108  | 0.555f           |
+| asic.cpu.cpu.RAM_AXI4Arbiter.W_state_AOI21X0P5H7L_B0:A1 (AOI21X0P5H7L)    |        | 0.001       | 0.000      | 0.157      |             | 0.000  | 0.447r           |
+| asic.cpu.cpu.RAM_AXI4Arbiter.W_state_AOI21X0P5H7L_B0:Y (AOI21X0P5H7L)     |        | 0.002       | 0.000      | 0.111      |             | 0.108  | 0.555f           |
 | asic.cpu.cpu.DRAM_wready_$_DLATCH_N__Q_E (net)                                | 3      |             |            |            | 0.000       |        |                  |
 | asic.cpu.cpu.DRAM_awaddr_5__NOR2BX1P4H7L_AN_B_OR2X1P4H7L_Y:A (OR2X1P4H7L)     |        | 0.001       | 0.000      | 0.111      |             | 0.000  | 0.555f           |
 | asic.cpu.cpu.DRAM_awaddr_5__NOR2BX1P4H7L_AN_B_OR2X1P4H7L_Y:Y (OR2X1P4H7L)     |        | 0.003       | 0.000      | 0.055      |             | 0.137  | 0.692f           |

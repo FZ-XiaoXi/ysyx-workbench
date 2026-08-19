@@ -19,9 +19,9 @@ void VysyxSoCFull_ysyx_26010011_IF_ID_pipeline___nba_sequent__TOP__ysyxSoCFull__
     // Body
     if (vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu.reset) {
         vlSelfRef.__Vdly__idu_in_valid = 0U;
-    } else if (vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu.__PVT__IDU_0__DOT__flush_valid) {
+    } else if (vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu.__PVT__idu_flush_valid) {
         vlSelfRef.__Vdly__idu_in_valid = 0U;
-    } else if ((1U & ((IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu.__PVT__IDU_0__DOT__idu_in_ready) 
+    } else if ((1U & ((IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu.__PVT__idu_in_ready) 
                       | (~ (IData)(vlSelfRef.idu_in_valid))))) {
         vlSelfRef.__Vdly__idu_in_valid = vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__IFU_0.ifu_out_valid;
         vlSelfRef.__PVT__idu_in_bus_instruction = (

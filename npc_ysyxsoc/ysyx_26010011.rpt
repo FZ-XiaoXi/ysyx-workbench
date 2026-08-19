@@ -20,8 +20,8 @@ Generate the report at 2026-08-14T12:43:29, GitVersion: aa25008b3778a76ae1975c83
 | IFU_0.state_0__ICGX0P5H7L_E:E                                                                     | **clock_gating_default** | min        | 0.113f     | -0.012        | 0.000 | 0.125 | NA        |
 | IFU_0.state_0__ICGX0P5H7L_E:E                                                                     | **clock_gating_default** | min        | 0.146r     | -0.037        | 0.000 | 0.183 | NA        |
 | REG_0.CSR_MCYCLE_31__NAND2X0P5H7L_B_Y_NOR2X0P5H7L_B_Y_ICGX0P5H7L_E:E                              | **clock_gating_default** | min        | 0.191f     | -0.004        | 0.000 | 0.195 | NA        |
-| RAM_AXI4LiteArbiter.W_master_sel_reg_p_CK_ICGX0P5H7L_ECK:E                                        | **clock_gating_default** | min        | 0.200f     | -0.005        | 0.000 | 0.205 | NA        |
-| RAM_AXI4LiteArbiter.R_master_sel_reg_p_CK_ICGX0P5H7L_ECK:E                                        | **clock_gating_default** | min        | 0.216f     | -0.009        | 0.000 | 0.225 | NA        |
+| RAM_AXI4Arbiter.W_master_sel_reg_p_CK_ICGX0P5H7L_ECK:E                                        | **clock_gating_default** | min        | 0.200f     | -0.005        | 0.000 | 0.205 | NA        |
+| RAM_AXI4Arbiter.R_master_sel_reg_p_CK_ICGX0P5H7L_ECK:E                                        | **clock_gating_default** | min        | 0.216f     | -0.009        | 0.000 | 0.225 | NA        |
 +---------------------------------------------------------------------------------------------------+--------------------------+------------+------------+---------------+-------+-------+-----------+
 +------------+------------+-------+
 | Clock      | Delay Type | TNS   |
@@ -1177,23 +1177,23 @@ Generate the report at 2026-08-14T12:43:29, GitVersion: aa25008b3778a76ae1975c83
 +--------------------------------------------------------------------------+--------+-------------+------------+------------+-------------+--------+-----------------+
 | clock (port)                                                             |        | 0.094       | 0.000      | 0.000      |             | 0.000  | 0.000r          |
 | clock (clock net)                                                        | 102    |             |            |            | NA          |        |                 |
-| RAM_AXI4LiteArbiter.W_state_reg_p:CK (DFFQX1H7L)                         |        | 0.001       | 0.000      | 0.000      |             | 0.000  | 0.000r          |
+| RAM_AXI4Arbiter.W_state_reg_p:CK (DFFQX1H7L)                         |        | 0.001       | 0.000      | 0.000      |             | 0.000  | 0.000r          |
 | clock core_clock (rise edge)                                             |        |             |            |            |             | 0      | 0               |
 | clock network delay (ideal)                                              |        |             |            |            |             | 0.000  | 0.000           |
-| RAM_AXI4LiteArbiter.W_state_reg_p:CK (DFFQX1H7L)                         |        | 0.001       | 0.000      | 0.000      |             | 0.000  | 0.000r          |
-| RAM_AXI4LiteArbiter.W_state_reg_p:Q (DFFQX1H7L)                          |        | 0.003       | 0.000      | 0.066      |             | 0.163  | 0.163r          |
-| RAM_AXI4LiteArbiter.W_state (net)                                        | 5      |             |            |            | 0.000       |        |                 |
+| RAM_AXI4Arbiter.W_state_reg_p:CK (DFFQX1H7L)                         |        | 0.001       | 0.000      | 0.000      |             | 0.000  | 0.000r          |
+| RAM_AXI4Arbiter.W_state_reg_p:Q (DFFQX1H7L)                          |        | 0.003       | 0.000      | 0.066      |             | 0.163  | 0.163r          |
+| RAM_AXI4Arbiter.W_state (net)                                        | 5      |             |            |            | 0.000       |        |                 |
 | io_master_awvalid_NOR2X0P5H7L_Y_A_NOR2X0P5H7L_B:A (NOR2X0P5H7L)          |        | 0.001       | 0.000      | 0.066      |             | 0.000  | 0.163r          |
 | io_master_awvalid_NOR2X0P5H7L_Y_A_NOR2X0P5H7L_B:Y (NOR2X0P5H7L)          |        | 0.001       | 0.000      | 0.027      |             | 0.037  | 0.200f          |
-| RAM_AXI4LiteArbiter.W_master_sel_reg_p_CK_ICGX0P5H7L_ECK_E (net)         | 1      |             |            |            | 0.000       |        |                 |
-| RAM_AXI4LiteArbiter.W_master_sel_reg_p_CK_ICGX0P5H7L_ECK:E (ICGX0P5H7L)  |        | 0.001       | 0.000      | 0.027      |             | 0.000  | 0.200f          |
+| RAM_AXI4Arbiter.W_master_sel_reg_p_CK_ICGX0P5H7L_ECK_E (net)         | 1      |             |            |            | 0.000       |        |                 |
+| RAM_AXI4Arbiter.W_master_sel_reg_p_CK_ICGX0P5H7L_ECK:E (ICGX0P5H7L)  |        | 0.001       | 0.000      | 0.027      |             | 0.000  | 0.200f          |
 |                                                                          |        |             |            |            |             |        |                 |
 | clock (port)                                                             |        | 0.132       | 0.000      | 0.000      |             | 0.000  | 0.000r          |
 | clock (clock net)                                                        | 102    |             |            |            | NA          |        |                 |
-| RAM_AXI4LiteArbiter.W_master_sel_reg_p_CK_ICGX0P5H7L_ECK:CK (ICGX0P5H7L) |        | 0.002       | 0.000      | 0.000      |             | 0.000  | 0.000r          |
+| RAM_AXI4Arbiter.W_master_sel_reg_p_CK_ICGX0P5H7L_ECK:CK (ICGX0P5H7L) |        | 0.002       | 0.000      | 0.000      |             | 0.000  | 0.000r          |
 | clock core_clock (rise edge)                                             |        |             |            |            |             | 0      | 0               |
 | clock network delay (ideal)                                              |        |             |            |            |             | 0.000  | 0.000           |
-| RAM_AXI4LiteArbiter.W_master_sel_reg_p_CK_ICGX0P5H7L_ECK:CK (ICGX0P5H7L) |        |             |            |            |             |        | 0.000r          |
+| RAM_AXI4Arbiter.W_master_sel_reg_p_CK_ICGX0P5H7L_ECK:CK (ICGX0P5H7L) |        |             |            |            |             |        | 0.000r          |
 | library hold time                                                        |        |             |            |            |             | -0.005 | -0.005          |
 | clock reconvergence pessimism                                            |        |             |            |            |             | -0.000 | -0.005          |
 |                                                                          |        |             |            |            |             |        |                 |
@@ -1209,23 +1209,23 @@ Generate the report at 2026-08-14T12:43:29, GitVersion: aa25008b3778a76ae1975c83
 +-------------------------------------------------------------------------------------------------+--------+-------------+------------+------------+-------------+--------+-----------------+
 | clock (port)                                                                                    |        | 0.094       | 0.000      | 0.000      |             | 0.000  | 0.000r          |
 | clock (clock net)                                                                               | 102    |             |            |            | NA          |        |                 |
-| RAM_AXI4LiteArbiter.R_state_reg_p:CK (DFFQX1H7L)                                                |        | 0.001       | 0.000      | 0.000      |             | 0.000  | 0.000r          |
+| RAM_AXI4Arbiter.R_state_reg_p:CK (DFFQX1H7L)                                                |        | 0.001       | 0.000      | 0.000      |             | 0.000  | 0.000r          |
 | clock core_clock (rise edge)                                                                    |        |             |            |            |             | 0      | 0               |
 | clock network delay (ideal)                                                                     |        |             |            |            |             | 0.000  | 0.000           |
-| RAM_AXI4LiteArbiter.R_state_reg_p:CK (DFFQX1H7L)                                                |        | 0.001       | 0.000      | 0.000      |             | 0.000  | 0.000r          |
-| RAM_AXI4LiteArbiter.R_state_reg_p:Q (DFFQX1H7L)                                                 |        | 0.004       | 0.000      | 0.085      |             | 0.176  | 0.176r          |
-| RAM_AXI4LiteArbiter.R_state (net)                                                               | 8      |             |            |            | 0.000       |        |                 |
-| RAM_AXI4LiteArbiter.R_master_sel_reg_p_CK_ICGX0P5H7L_ECK_E_AOI2BB1X0P5H7L_Y:B0 (AOI2BB1X0P5H7L) |        | 0.001       | 0.000      | 0.085      |             | 0.000  | 0.176r          |
-| RAM_AXI4LiteArbiter.R_master_sel_reg_p_CK_ICGX0P5H7L_ECK_E_AOI2BB1X0P5H7L_Y:Y (AOI2BB1X0P5H7L)  |        | 0.001       | 0.000      | 0.038      |             | 0.040  | 0.216f          |
-| RAM_AXI4LiteArbiter.R_master_sel_reg_p_CK_ICGX0P5H7L_ECK_E (net)                                | 1      |             |            |            | 0.000       |        |                 |
-| RAM_AXI4LiteArbiter.R_master_sel_reg_p_CK_ICGX0P5H7L_ECK:E (ICGX0P5H7L)                         |        | 0.001       | 0.000      | 0.038      |             | 0.000  | 0.216f          |
+| RAM_AXI4Arbiter.R_state_reg_p:CK (DFFQX1H7L)                                                |        | 0.001       | 0.000      | 0.000      |             | 0.000  | 0.000r          |
+| RAM_AXI4Arbiter.R_state_reg_p:Q (DFFQX1H7L)                                                 |        | 0.004       | 0.000      | 0.085      |             | 0.176  | 0.176r          |
+| RAM_AXI4Arbiter.R_state (net)                                                               | 8      |             |            |            | 0.000       |        |                 |
+| RAM_AXI4Arbiter.R_master_sel_reg_p_CK_ICGX0P5H7L_ECK_E_AOI2BB1X0P5H7L_Y:B0 (AOI2BB1X0P5H7L) |        | 0.001       | 0.000      | 0.085      |             | 0.000  | 0.176r          |
+| RAM_AXI4Arbiter.R_master_sel_reg_p_CK_ICGX0P5H7L_ECK_E_AOI2BB1X0P5H7L_Y:Y (AOI2BB1X0P5H7L)  |        | 0.001       | 0.000      | 0.038      |             | 0.040  | 0.216f          |
+| RAM_AXI4Arbiter.R_master_sel_reg_p_CK_ICGX0P5H7L_ECK_E (net)                                | 1      |             |            |            | 0.000       |        |                 |
+| RAM_AXI4Arbiter.R_master_sel_reg_p_CK_ICGX0P5H7L_ECK:E (ICGX0P5H7L)                         |        | 0.001       | 0.000      | 0.038      |             | 0.000  | 0.216f          |
 |                                                                                                 |        |             |            |            |             |        |                 |
 | clock (port)                                                                                    |        | 0.132       | 0.000      | 0.000      |             | 0.000  | 0.000r          |
 | clock (clock net)                                                                               | 102    |             |            |            | NA          |        |                 |
-| RAM_AXI4LiteArbiter.R_master_sel_reg_p_CK_ICGX0P5H7L_ECK:CK (ICGX0P5H7L)                        |        | 0.002       | 0.000      | 0.000      |             | 0.000  | 0.000r          |
+| RAM_AXI4Arbiter.R_master_sel_reg_p_CK_ICGX0P5H7L_ECK:CK (ICGX0P5H7L)                        |        | 0.002       | 0.000      | 0.000      |             | 0.000  | 0.000r          |
 | clock core_clock (rise edge)                                                                    |        |             |            |            |             | 0      | 0               |
 | clock network delay (ideal)                                                                     |        |             |            |            |             | 0.000  | 0.000           |
-| RAM_AXI4LiteArbiter.R_master_sel_reg_p_CK_ICGX0P5H7L_ECK:CK (ICGX0P5H7L)                        |        |             |            |            |             |        | 0.000r          |
+| RAM_AXI4Arbiter.R_master_sel_reg_p_CK_ICGX0P5H7L_ECK:CK (ICGX0P5H7L)                        |        |             |            |            |             |        | 0.000r          |
 | library hold time                                                                               |        |             |            |            |             | -0.009 | -0.009          |
 | clock reconvergence pessimism                                                                   |        |             |            |            |             | -0.000 | -0.009          |
 |                                                                                                 |        |             |            |            |             |        |                 |

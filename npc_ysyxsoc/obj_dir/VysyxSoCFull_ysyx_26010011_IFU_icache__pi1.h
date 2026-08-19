@@ -37,15 +37,15 @@ class alignas(VL_CACHE_LINE_BYTES) VysyxSoCFull_ysyx_26010011_IFU_icache__pi1 fi
     CData/*2:0*/ __PVT__next_state;
     CData/*0:0*/ __PVT__ar_fire;
     CData/*0:0*/ __PVT__r_fire;
-    CData/*0:0*/ __PVT__burst_cnt;
+    CData/*1:0*/ __PVT__burst_cnt;
     VL_IN(__PVT__in_addr,31,0);
     VL_OUT(__PVT__in_rdata,31,0);
     VL_OUT(__PVT__out_araddr,31,0);
     VL_IN(__PVT__out_rdata,31,0);
     IData/*31:0*/ __PVT__unnamedblk1__DOT__i;
-    VlUnpacked<QData/*63:0*/, 8> __PVT__cache_mem;
-    VlUnpacked<CData/*0:0*/, 8> __PVT__cache_valid;
-    VlUnpacked<IData/*25:0*/, 8> __PVT__cache_tag;
+    VlUnpacked<VlWide<4>/*127:0*/, 4> __PVT__cache_mem;
+    VlUnpacked<CData/*0:0*/, 4> __PVT__cache_valid;
+    VlUnpacked<IData/*25:0*/, 4> __PVT__cache_tag;
 
     // INTERNAL VARIABLES
     VysyxSoCFull__Syms* const vlSymsp;
