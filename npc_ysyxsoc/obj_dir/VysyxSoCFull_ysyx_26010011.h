@@ -101,7 +101,6 @@ class alignas(VL_CACHE_LINE_BYTES) VysyxSoCFull_ysyx_26010011 final : public Ver
     struct {
         CData/*0:0*/ __VdfgRegularize_he0d61652_0_2;
         CData/*0:0*/ __PVT__IDU_0__DOT__flush_valid;
-        CData/*0:0*/ __PVT__IDU_0__DOT__fencei_pass;
         CData/*0:0*/ __PVT__IDU_0__DOT__idu_in_ready;
         CData/*0:0*/ __PVT__IDU_0__DOT__idu_out_valid;
         CData/*4:0*/ __PVT__IDU_0__DOT__idu_out_bus_exception;
@@ -163,9 +162,9 @@ class alignas(VL_CACHE_LINE_BYTES) VysyxSoCFull_ysyx_26010011 final : public Ver
         CData/*0:0*/ IDU_0__DOT____VdfgRegularize_hd1728725_0_32;
         CData/*0:0*/ IDU_0__DOT____VdfgRegularize_hd1728725_0_34;
         CData/*0:0*/ __PVT__EXU_0__DOT__exu_in_ready;
+        CData/*0:0*/ __PVT__EXU_0__DOT__exu_out_bus_comp_result;
     };
     struct {
-        CData/*0:0*/ __PVT__EXU_0__DOT__exu_out_bus_comp_result;
         CData/*0:0*/ __PVT__EXU_0__DOT__comp_isEQUAL;
         CData/*4:0*/ __PVT__WBU_0__DOT__wbu_out_bus_exception;
         CData/*0:0*/ WBU_0__DOT____VdfgRegularize_h03859d6a_0_0;
