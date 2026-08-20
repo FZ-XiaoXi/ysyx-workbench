@@ -1331,35 +1331,8 @@ module ysyx_26010011_ID_EX_pipeline(
     output reg [31:0]exu_in_bus_snpc
 );
     assign idu_out_ready = exu_in_ready | !exu_in_valid;
-    always @(posedge clock, posedge reset)begin
-        if(reset) begin
-            exu_in_valid<=0;
-            exu_in_bus_rd<=0;
-            exu_in_bus_exception<=0;
-            exu_in_bus_csrrd<=0;
-            exu_in_bus_rs1<=0;
-            exu_in_bus_rs2<=0;
-            exu_in_bus_rs1_val<=0;
-            exu_in_bus_rs2_val<=0;
-            exu_in_bus_imm<=0;
-            exu_in_bus_instruction<=0;
-            exu_in_bus_isLOAD<=0;
-            exu_in_bus_isSTORE<=0;
-            exu_in_bus_isWGPR<=0;
-            exu_in_bus_isJUMP<=0;
-            exu_in_bus_isWCOMP<=0;
-            exu_in_bus_isBRANCH<=0;
-            exu_in_bus_opCSR<=0;
-            exu_in_bus_isUnSigned<=0;
-            exu_in_bus_isUsePC<=0;
-            exu_in_bus_alu_isUseImm<=0;
-            exu_in_bus_comp_isUseImm<=0;
-            exu_in_bus_alu_op<=0;
-            exu_in_bus_comp_op<=0;
-            exu_in_bus_perip_mask<=0;
-            exu_in_bus_pc<=0;
-            exu_in_bus_snpc<=0;
-        end else if(flush_valid) begin
+    always @(posedge clock)begin
+        if(reset | flush_valid) begin
             exu_in_valid<=0;
             exu_in_bus_rd<=0;
             exu_in_bus_exception<=0;
@@ -1413,33 +1386,6 @@ module ysyx_26010011_ID_EX_pipeline(
             exu_in_bus_perip_mask<=idu_out_bus_perip_mask;
             exu_in_bus_pc<=idu_out_bus_pc;
             exu_in_bus_snpc<=idu_out_bus_snpc;
-        end else begin
-            exu_in_valid<=exu_in_valid;
-            exu_in_bus_rd<=exu_in_bus_rd;
-            exu_in_bus_exception<=exu_in_bus_exception;
-            exu_in_bus_csrrd<=exu_in_bus_csrrd;
-            exu_in_bus_rs1<=exu_in_bus_rs1;
-            exu_in_bus_rs2<=exu_in_bus_rs2;
-            exu_in_bus_rs1_val<=exu_in_bus_rs1_val;
-            exu_in_bus_rs2_val<=exu_in_bus_rs2_val;
-            exu_in_bus_imm<=exu_in_bus_imm;
-            exu_in_bus_instruction<=exu_in_bus_instruction;
-            exu_in_bus_isLOAD<=exu_in_bus_isLOAD;
-            exu_in_bus_isSTORE<=exu_in_bus_isSTORE;
-            exu_in_bus_isWGPR<=exu_in_bus_isWGPR;
-            exu_in_bus_isJUMP<=exu_in_bus_isJUMP;
-            exu_in_bus_isWCOMP<=exu_in_bus_isWCOMP;
-            exu_in_bus_isBRANCH<=exu_in_bus_isBRANCH;
-            exu_in_bus_opCSR<=exu_in_bus_opCSR;
-            exu_in_bus_isUnSigned<=exu_in_bus_isUnSigned;
-            exu_in_bus_isUsePC<=exu_in_bus_isUsePC;
-            exu_in_bus_alu_isUseImm<=exu_in_bus_alu_isUseImm;
-            exu_in_bus_comp_isUseImm<=exu_in_bus_comp_isUseImm;
-            exu_in_bus_alu_op<=exu_in_bus_alu_op;
-            exu_in_bus_comp_op<=exu_in_bus_comp_op;
-            exu_in_bus_perip_mask<=exu_in_bus_perip_mask;
-            exu_in_bus_pc<=exu_in_bus_pc;
-            exu_in_bus_snpc<=exu_in_bus_snpc;
         end
     end
 endmodule
@@ -1494,29 +1440,8 @@ module ysyx_26010011_EX_LS_pipeline(
     output reg [31:0]lsu_in_bus_snpc
 );
     assign exu_out_ready = lsu_in_ready | !lsu_in_valid;
-    always @(posedge clock, posedge reset)begin
-        if(reset) begin
-            lsu_in_valid<=0;
-            lsu_in_bus_alu_result<=0;
-            lsu_in_bus_csr_result<=0;
-            lsu_in_bus_comp_result<=0;
-            lsu_in_bus_lsu_val<=0;
-            lsu_in_bus_rd<=0;
-            lsu_in_bus_exception<=0;
-            lsu_in_bus_csrrd<=0;
-            lsu_in_bus_instruction<=0;
-            lsu_in_bus_isLOAD<=0;
-            lsu_in_bus_isSTORE<=0;
-            lsu_in_bus_isWGPR<=0;
-            lsu_in_bus_isJUMP<=0;
-            lsu_in_bus_isWCOMP<=0;
-            lsu_in_bus_isBRANCH<=0;
-            lsu_in_bus_opCSR<=0;
-            lsu_in_bus_isUnSigned<=0;
-            lsu_in_bus_perip_mask<=0;
-            lsu_in_bus_pc<=0;
-            lsu_in_bus_snpc<=0;
-        end else if(flush_valid)begin
+    always @(posedge clock)begin
+        if(reset | flush_valid) begin
             lsu_in_valid<=0;
             lsu_in_bus_alu_result<=0;
             lsu_in_bus_csr_result<=0;
@@ -1558,27 +1483,6 @@ module ysyx_26010011_EX_LS_pipeline(
             lsu_in_bus_perip_mask<=exu_out_bus_perip_mask;
             lsu_in_bus_pc<=exu_out_bus_pc;
             lsu_in_bus_snpc<=exu_out_bus_snpc;
-        end else begin
-            lsu_in_valid<=lsu_in_valid;
-            lsu_in_bus_alu_result<=lsu_in_bus_alu_result;
-            lsu_in_bus_csr_result<=lsu_in_bus_csr_result;
-            lsu_in_bus_comp_result<=lsu_in_bus_comp_result;
-            lsu_in_bus_lsu_val<=lsu_in_bus_lsu_val;
-            lsu_in_bus_rd<=lsu_in_bus_rd;
-            lsu_in_bus_exception<=lsu_in_bus_exception;
-            lsu_in_bus_csrrd<=lsu_in_bus_csrrd;
-            lsu_in_bus_instruction<=lsu_in_bus_instruction;
-            lsu_in_bus_isLOAD<=lsu_in_bus_isLOAD;
-            lsu_in_bus_isSTORE<=lsu_in_bus_isSTORE;
-            lsu_in_bus_isWGPR<=lsu_in_bus_isWGPR;
-            lsu_in_bus_isJUMP<=lsu_in_bus_isJUMP;
-            lsu_in_bus_isWCOMP<=lsu_in_bus_isWCOMP;
-            lsu_in_bus_isBRANCH<=lsu_in_bus_isBRANCH;
-            lsu_in_bus_opCSR<=lsu_in_bus_opCSR;
-            lsu_in_bus_isUnSigned<=lsu_in_bus_isUnSigned;
-            lsu_in_bus_perip_mask<=lsu_in_bus_perip_mask;
-            lsu_in_bus_pc<=lsu_in_bus_pc;
-            lsu_in_bus_snpc<=lsu_in_bus_snpc;
         end
     end
 endmodule
@@ -1631,27 +1535,8 @@ module ysyx_26010011_LS_WB_pipeline(
     output reg [31:0]wbu_in_bus_snpc
 );
     assign lsu_out_ready = wbu_in_ready | !wbu_in_valid;
-    always @(posedge clock, posedge reset)begin
-        if(reset) begin
-            wbu_in_valid<=0; 
-            wbu_in_bus_pc<=0;
-            wbu_in_bus_instruction<=0;
-            wbu_in_bus_lsu_result<=0;
-            wbu_in_bus_alu_result<=0;
-            wbu_in_bus_csr_result<=0;
-            wbu_in_bus_comp_result<=0;
-            wbu_in_bus_snpc<=0;
-            wbu_in_bus_rd<=0;
-            wbu_in_bus_exception<=0;
-            wbu_in_bus_csrrd<=0;
-            wbu_in_bus_isLOAD<=1'b0;
-            wbu_in_bus_isSTORE<=1'b0;
-            wbu_in_bus_isWGPR<=1'b0;
-            wbu_in_bus_isJUMP<=1'b0;
-            wbu_in_bus_isWCOMP<=1'b0;
-            wbu_in_bus_isBRANCH<=1'b0;
-            wbu_in_bus_opCSR<=0;
-        end else if(flush_valid)begin
+    always @(posedge clock)begin
+        if(reset | flush_valid) begin
             wbu_in_valid<=0; 
             wbu_in_bus_pc<=0;
             wbu_in_bus_instruction<=0;
@@ -1689,25 +1574,6 @@ module ysyx_26010011_LS_WB_pipeline(
             wbu_in_bus_isWCOMP<=lsu_out_bus_isWCOMP;
             wbu_in_bus_isBRANCH<=lsu_out_bus_isBRANCH;
             wbu_in_bus_opCSR<=lsu_out_bus_opCSR;
-        end else begin
-            wbu_in_valid<=wbu_in_valid; 
-            wbu_in_bus_pc<=wbu_in_bus_pc;
-            wbu_in_bus_instruction<=wbu_in_bus_instruction;
-            wbu_in_bus_lsu_result<=wbu_in_bus_lsu_result;
-            wbu_in_bus_alu_result<=wbu_in_bus_alu_result;
-            wbu_in_bus_csr_result<=wbu_in_bus_csr_result;
-            wbu_in_bus_comp_result<=wbu_in_bus_comp_result;
-            wbu_in_bus_snpc<=wbu_in_bus_snpc;
-            wbu_in_bus_rd<=wbu_in_bus_rd;
-            wbu_in_bus_exception<=wbu_in_bus_exception;
-            wbu_in_bus_csrrd<=wbu_in_bus_csrrd;
-            wbu_in_bus_isLOAD<=wbu_in_bus_isLOAD;
-            wbu_in_bus_isSTORE<=wbu_in_bus_isSTORE;
-            wbu_in_bus_isWGPR<=wbu_in_bus_isWGPR;
-            wbu_in_bus_isJUMP<=wbu_in_bus_isJUMP;
-            wbu_in_bus_isWCOMP<=wbu_in_bus_isWCOMP;
-            wbu_in_bus_isBRANCH<=wbu_in_bus_isBRANCH;
-            wbu_in_bus_opCSR<=wbu_in_bus_opCSR;
         end
     end
 endmodule
@@ -2824,15 +2690,15 @@ module ysyx_26010011_AXI4Arbiter(
     input     clock,
     input     reset,
 
-    // //MASTER1 AW
-    // input      [31:0] M1_awaddr,  input             M1_awvalid, output reg        M1_awready,
-    // input      [3:0]  M1_awid,    input      [7:0]  M1_awlen,   input      [2:0]  M1_awsize,  input      [1:0]  M1_awburst,
-    // //MASTER1 W
-    // input      [31:0] M1_wdata,   input      [3:0]  M1_wstrb,   input             M1_wvalid,  output reg        M1_wready,
-    // input             M1_wlast,
-    // //MASTER1 B
-    // output reg [1:0]  M1_bresp,   output reg        M1_bvalid,  input             M1_bready,
-    // output reg [3:0]  M1_bid,
+    //MASTER1 AW
+    input      [31:0] M1_awaddr,  input             M1_awvalid, output reg        M1_awready,
+    input      [3:0]  M1_awid,    input      [7:0]  M1_awlen,   input      [2:0]  M1_awsize,  input      [1:0]  M1_awburst,
+    //MASTER1 W
+    input      [31:0] M1_wdata,   input      [3:0]  M1_wstrb,   input             M1_wvalid,  output reg        M1_wready,
+    input             M1_wlast,
+    //MASTER1 B
+    output reg [1:0]  M1_bresp,   output reg        M1_bvalid,  input             M1_bready,
+    output reg [3:0]  M1_bid,
     //MASTER1 AR
     input      [31:0] M1_araddr,  input             M1_arvalid, output reg        M1_arready,
     input      [3:0]  M1_arid,    input      [7:0]  M1_arlen,   input      [2:0]  M1_arsize,  input      [1:0]  M1_arbureset,
@@ -2969,51 +2835,191 @@ module ysyx_26010011_AXI4Arbiter(
                 S_rready = 0;
             end
             R_BUSY:begin
-                M1_rdata = S_rdata;
-                M1_rresp = S_rresp;
+                M1_rdata = R_master_sel?0:S_rdata;
+                M1_rresp = R_master_sel?0:S_rresp;
                 M1_rvalid = R_master_sel?0:S_rvalid;
-                M1_rlast  = S_rlast;
-                M1_rid    = S_rid;
-                M2_rdata = S_rdata;
-                M2_rresp = S_rresp;
+                M1_rlast  = R_master_sel?0:S_rlast;
+                M1_rid    = R_master_sel?0:S_rid;
+                M2_rdata = R_master_sel?S_rdata:0;
+                M2_rresp = R_master_sel?S_rresp:0;
                 M2_rvalid = R_master_sel?S_rvalid:0;
-                M2_rlast  = S_rlast;
-                M2_rid    = S_rid;
+                M2_rlast  = R_master_sel?S_rlast:0;
+                M2_rid    = R_master_sel?S_rid:0;
                 S_rready = R_master_sel?M2_rready:M1_rready;
             end
-            default:begin
+            default: begin
                 M1_rvalid = 0; M1_rdata = 0; M1_rresp = 0; M1_rlast = 0; M1_rid = 0;
                 M2_rvalid = 0; M2_rdata = 0; M2_rresp = 0; M2_rlast = 0; M2_rid = 0;
                 S_rready = 0;
             end
+
         endcase
     end
     
 
 
 
-    //////
+    /////////////////////////////////////////////////////////////////////W - Arbiter
+    parameter W_IDLE = 1'b0, W_BUSY = 1'b1;
+    reg W_state, W_next_state;
+    reg W_master_sel, W_master_sel_next; // 0: M1, 1: M2
+    always @(posedge clock) begin
+        if(reset) begin
+            W_state<=W_IDLE;
+            W_master_sel<=0;
+        end else    begin
+            W_state<=W_next_state;
+            W_master_sel<=W_master_sel_next;
+        end
+    end
+
+    always @(*)begin
+        W_next_state=W_state;
+        W_master_sel_next=W_master_sel;
+        case(W_state)
+            W_IDLE:begin
+                if(M1_awvalid) begin
+                    W_next_state = W_BUSY;
+                    W_master_sel_next = 0;
+                end else if(M2_awvalid) begin
+                    W_next_state = W_BUSY;
+                    W_master_sel_next = 1;
+                end else begin
+                    W_next_state = W_IDLE;
+                    W_master_sel_next = W_master_sel;
+                end
+            end
+            W_BUSY:begin
+                case(W_master_sel)
+                    1'b0:begin
+                        if(S_bvalid & M1_bready) W_next_state=W_IDLE;
+                    end
+                    1'b1:begin
+                        if(S_bvalid & M2_bready) W_next_state=W_IDLE;
+                    end
+                endcase
+            end
+            default:
+                W_next_state=W_IDLE;
+        endcase
+    end
 
     //AW
-    assign M2_awready = S_awready;
-    assign S_awvalid = M2_awvalid;
-    assign S_awaddr = M2_awaddr;
-    assign S_awid   = M2_awid;
-    assign S_awlen  = M2_awlen;
-    assign S_awsize = M2_awsize;
-    assign S_awburst = M2_awburst;
+    always @(*)begin
+        case(W_state)
+            W_IDLE:begin
+                if(M1_awvalid) begin
+                    M1_awready = S_awready;
+                    M2_awready = 0;
+                    S_awvalid = 1;
+                    S_awaddr = M1_awaddr;
+                    S_awid   = M1_awid; S_awlen = M1_awlen; S_awsize = M1_awsize; S_awburst = M1_awburst;
+                end else if(M2_awvalid) begin
+                    M1_awready = 0;
+                    M2_awready = S_awready;
+                    S_awvalid = 1;
+                    S_awaddr = M2_awaddr;
+                    S_awid   = M2_awid; S_awlen = M2_awlen; S_awsize = M2_awsize; S_awburst = M2_awburst;
+                end else begin
+                    M1_awready = 0;
+                    M2_awready = 0;
+                    S_awvalid = 0;
+                    S_awaddr = 0;
+                    S_awid   = 0; S_awlen = 0; S_awsize = 0; S_awburst = 0;
+                end
+            end
+            W_BUSY:begin
+                M1_awready = W_master_sel?0:S_awready;
+                M2_awready = W_master_sel?S_awready:0;
+                S_awvalid = W_master_sel?M2_awvalid:M1_awvalid;
+                S_awaddr = W_master_sel?M2_awaddr:M1_awaddr;
+                S_awid   = W_master_sel?M2_awid:M1_awid;
+                S_awlen  = W_master_sel?M2_awlen:M1_awlen;
+                S_awsize = W_master_sel?M2_awsize:M1_awsize;
+                S_awburst = W_master_sel?M2_awburst:M1_awburst;
+            end
+            default:begin
+                M1_awready = 0;
+                M2_awready = 0;
+                S_awvalid = 0;
+                S_awaddr = 0;
+                S_awid   = 0; S_awlen = 0; S_awsize = 0; S_awburst = 0;
+            end
+        endcase
+    end
 
     //W
-    assign M2_wready = S_wready;
-    assign S_wvalid = M2_wvalid;
-    assign S_wdata = M2_wdata;
-    assign S_wstrb = M2_wstrb;
-    assign S_wlast = M2_wlast;
+    always @(*)begin
+        case(W_state)
+            W_IDLE:begin
+
+
+                if(M1_wvalid) begin
+                    S_wvalid = 1;
+                    S_wdata = M1_wdata;
+                    S_wstrb = M1_wstrb;
+                    S_wlast = M1_wlast;
+                    M1_wready = S_wready;
+                    M2_wready = 0;
+                end else if(M2_wvalid) begin
+                    S_wvalid = 1;
+                    S_wdata = M2_wdata;
+                    S_wstrb = M2_wstrb;
+                    S_wlast = M2_wlast;
+                    M1_wready = 0;
+                    M2_wready = S_wready;
+                end else begin
+                    S_wvalid = 0;
+                    S_wdata = 0;
+                    S_wstrb = 0;
+                    S_wlast = 0;
+                    M1_wready = 0;
+                    M2_wready = 0;
+                end
+            end
+            W_BUSY:begin
+                M1_wready = W_master_sel?0:S_wready;
+                M2_wready = W_master_sel?S_wready:0;
+                S_wvalid = W_master_sel?M2_wvalid:M1_wvalid;
+                S_wdata = W_master_sel?M2_wdata:M1_wdata;
+                S_wstrb = W_master_sel?M2_wstrb:M1_wstrb;
+                S_wlast = W_master_sel?M2_wlast:M1_wlast;
+            end
+            default:begin
+                S_wvalid = 0;
+                S_wdata = 0;
+                S_wstrb = 0;
+                S_wlast = 0;
+                M1_wready = 0;
+                M2_wready = 0;
+            end
+        endcase
+    end
 
 
     //B
-    assign M2_bresp = S_bresp;
-    assign M2_bvalid = S_bvalid;
-    assign M2_bid    = S_bid;
-    assign S_bready = M2_bready;
+    always @(*)begin
+        case(W_state)
+            W_IDLE:begin
+                M1_bresp = 0; M1_bvalid = 0; M1_bid = 0;
+                M2_bresp = 0; M2_bvalid = 0; M2_bid = 0;
+                S_bready = 0;
+            end
+            W_BUSY:begin
+                M1_bresp = W_master_sel?0:S_bresp;
+                M1_bvalid = W_master_sel?0:S_bvalid;
+                M1_bid    = W_master_sel?0:S_bid;
+                M2_bresp = W_master_sel?S_bresp:0;
+                M2_bvalid = W_master_sel?S_bvalid:0;
+                M2_bid    = W_master_sel?S_bid:0;
+                S_bready = W_master_sel?M2_bready:M1_bready;
+            end
+            default:begin
+                M1_bresp = 0; M1_bvalid = 0; M1_bid = 0;
+                M2_bresp = 0; M2_bvalid = 0; M2_bid = 0;
+                S_bready = 0;
+            end
+        endcase
+    end
+
 endmodule
