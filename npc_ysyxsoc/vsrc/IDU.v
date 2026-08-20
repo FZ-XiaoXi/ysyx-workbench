@@ -42,12 +42,12 @@ module ysyx_26010011_IDU(
     output             idu_out_bus_comp_isUseImm,
     output logic [ 9:0]idu_out_bus_alu_op,
     output logic [ 1:0]idu_out_bus_comp_op,
-    output       [ 1:0]idu_out_bus_perip_mask,
+    output       [ 1:0]idu_out_bus_perip_mask
 
-    output [31:0] w_pc,
-    output [31:0] w_tar,
-    output w_valid,
-    output w_type
+    // output [31:0] w_pc,
+    // output [31:0] w_tar,
+    // output w_valid,
+    // output w_type
 
 );
 
@@ -71,13 +71,10 @@ module ysyx_26010011_IDU(
             end else begin
                 next_state = S_WAITING;
             end
+        end else begin
+            next_state = S_WORKING;
         end
     end
-    
-    assign w_pc = idu_in_bus_pc;
-    assign w_tar = idu_out_bus_imm + idu_in_bus_pc;
-    assign w_valid = idu_in_valid & idu_out_valid & ~idu_out_bus_exception[4] & (idu_out_bus_isBRANCH|isJAL);
-    assign w_type = isJAL;
 
     assign idu_in_ready = idu_out_ready & (~idu_isRAW | idu_out_bus_exception[4]) & (state == S_WORKING && next_state == S_WORKING);
     assign idu_out_valid = idu_in_valid & (~idu_isRAW | idu_out_bus_exception[4]) & (state == S_WORKING);
@@ -117,7 +114,7 @@ module ysyx_26010011_IDU(
     assign idu_out_bus_rd=      idu_in_bus_instruction[11: 7];
     assign idu_out_bus_csrrd=   idu_in_bus_instruction[31:20];
     assign idu_out_bus_rs1=     idu_in_bus_instruction[19:15];
-    assign idu_out_bus_rs2=                                                                  idu_in_bus_instruction[24:20];
+    assign idu_out_bus_rs2=     idu_in_bus_instruction[24:20];
     assign funct3=  idu_in_bus_instruction[14:12];
     assign funct7=  idu_in_bus_instruction[31:25];
     

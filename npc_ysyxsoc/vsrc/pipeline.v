@@ -1,11 +1,3 @@
-
-
-// ██████╗  ██╗ ██████╗  ███████╗ ██╗      ██╗ ███╗   ██╗ ███████╗
-// ██╔══██╗ ██║ ██╔══██╗ ██╔════╝ ██║      ██║ ████╗  ██║ ██╔════╝
-// ██████╔╝ ██║ ██████╔╝ █████╗   ██║      ██║ ██╔██╗ ██║ █████╗
-// ██╔═══╝  ██║ ██╔═══╝  ██╔══╝   ██║      ██║ ██║╚██╗██║ ██╔══╝
-// ██║      ██║ ██║      ███████╗ ███████╗ ██║ ██║ ╚████║ ███████╗
-// ╚═╝      ╚═╝ ╚═╝      ╚══════╝ ╚══════╝ ╚═╝ ╚═╝  ╚═══╝ ╚══════╝
 //////////反压优化
 module ysyx_26010011_IF_ID_pipeline(
     input            clock,
@@ -27,17 +19,31 @@ module ysyx_26010011_IF_ID_pipeline(
     output reg [ 4:0]idu_in_bus_exception
 );
     assign ifu_out_ready = idu_in_ready | !idu_in_valid;
-    always @(posedge clock)begin
+    always @(posedge clock, posedge reset)begin
         if(reset) begin
             idu_in_valid <= 0;
+            idu_in_bus_instruction <= 0;
+            idu_in_bus_pc <= 0;
+            idu_in_bus_snpc <= 0;
+            idu_in_bus_exception <= 0;
         end else if(flush_valid)begin
             idu_in_valid <= 0;///////////////////////
+            idu_in_bus_instruction <= 0;
+            idu_in_bus_pc <= 0;
+            idu_in_bus_snpc <= 0;
+            idu_in_bus_exception <= 0;
         end else if(idu_in_ready | !idu_in_valid)begin
             idu_in_valid <= ifu_out_valid;
             idu_in_bus_instruction <= ifu_out_bus_instruction;
             idu_in_bus_pc <= ifu_out_bus_pc;
             idu_in_bus_snpc <= ifu_out_bus_snpc;
             idu_in_bus_exception <= ifu_out_bus_exception;
+        end else begin
+            idu_in_valid <= idu_in_valid;
+            idu_in_bus_instruction <= idu_in_bus_instruction;
+            idu_in_bus_pc <= idu_in_bus_pc;
+            idu_in_bus_snpc <= idu_in_bus_snpc;
+            idu_in_bus_exception <= idu_in_bus_exception;
         end
     end
 endmodule
@@ -104,11 +110,61 @@ module ysyx_26010011_ID_EX_pipeline(
     output reg [31:0]exu_in_bus_snpc
 );
     assign idu_out_ready = exu_in_ready | !exu_in_valid;
-    always @(posedge clock)begin
+    always @(posedge clock, posedge reset)begin
         if(reset) begin
             exu_in_valid<=0;
+            exu_in_bus_rd<=0;
+            exu_in_bus_exception<=0;
+            exu_in_bus_csrrd<=0;
+            exu_in_bus_rs1<=0;
+            exu_in_bus_rs2<=0;
+            exu_in_bus_rs1_val<=0;
+            exu_in_bus_rs2_val<=0;
+            exu_in_bus_imm<=0;
+            exu_in_bus_instruction<=0;
+            exu_in_bus_isLOAD<=0;
+            exu_in_bus_isSTORE<=0;
+            exu_in_bus_isWGPR<=0;
+            exu_in_bus_isJUMP<=0;
+            exu_in_bus_isWCOMP<=0;
+            exu_in_bus_isBRANCH<=0;
+            exu_in_bus_opCSR<=0;
+            exu_in_bus_isUnSigned<=0;
+            exu_in_bus_isUsePC<=0;
+            exu_in_bus_alu_isUseImm<=0;
+            exu_in_bus_comp_isUseImm<=0;
+            exu_in_bus_alu_op<=0;
+            exu_in_bus_comp_op<=0;
+            exu_in_bus_perip_mask<=0;
+            exu_in_bus_pc<=0;
+            exu_in_bus_snpc<=0;
         end else if(flush_valid) begin
             exu_in_valid<=0;
+            exu_in_bus_rd<=0;
+            exu_in_bus_exception<=0;
+            exu_in_bus_csrrd<=0;
+            exu_in_bus_rs1<=0;
+            exu_in_bus_rs2<=0;
+            exu_in_bus_rs1_val<=0;
+            exu_in_bus_rs2_val<=0;
+            exu_in_bus_imm<=0;
+            exu_in_bus_instruction<=0;
+            exu_in_bus_isLOAD<=0;
+            exu_in_bus_isSTORE<=0;
+            exu_in_bus_isWGPR<=0;
+            exu_in_bus_isJUMP<=0;
+            exu_in_bus_isWCOMP<=0;
+            exu_in_bus_isBRANCH<=0;
+            exu_in_bus_opCSR<=0;
+            exu_in_bus_isUnSigned<=0;
+            exu_in_bus_isUsePC<=0;
+            exu_in_bus_alu_isUseImm<=0;
+            exu_in_bus_comp_isUseImm<=0;
+            exu_in_bus_alu_op<=0;
+            exu_in_bus_comp_op<=0;
+            exu_in_bus_perip_mask<=0;
+            exu_in_bus_pc<=0;
+            exu_in_bus_snpc<=0;
         end else if(exu_in_ready | !exu_in_valid) begin
             exu_in_valid<=idu_out_valid;
             exu_in_bus_rd<=idu_out_bus_rd;
@@ -136,6 +192,33 @@ module ysyx_26010011_ID_EX_pipeline(
             exu_in_bus_perip_mask<=idu_out_bus_perip_mask;
             exu_in_bus_pc<=idu_out_bus_pc;
             exu_in_bus_snpc<=idu_out_bus_snpc;
+        end else begin
+            exu_in_valid<=exu_in_valid;
+            exu_in_bus_rd<=exu_in_bus_rd;
+            exu_in_bus_exception<=exu_in_bus_exception;
+            exu_in_bus_csrrd<=exu_in_bus_csrrd;
+            exu_in_bus_rs1<=exu_in_bus_rs1;
+            exu_in_bus_rs2<=exu_in_bus_rs2;
+            exu_in_bus_rs1_val<=exu_in_bus_rs1_val;
+            exu_in_bus_rs2_val<=exu_in_bus_rs2_val;
+            exu_in_bus_imm<=exu_in_bus_imm;
+            exu_in_bus_instruction<=exu_in_bus_instruction;
+            exu_in_bus_isLOAD<=exu_in_bus_isLOAD;
+            exu_in_bus_isSTORE<=exu_in_bus_isSTORE;
+            exu_in_bus_isWGPR<=exu_in_bus_isWGPR;
+            exu_in_bus_isJUMP<=exu_in_bus_isJUMP;
+            exu_in_bus_isWCOMP<=exu_in_bus_isWCOMP;
+            exu_in_bus_isBRANCH<=exu_in_bus_isBRANCH;
+            exu_in_bus_opCSR<=exu_in_bus_opCSR;
+            exu_in_bus_isUnSigned<=exu_in_bus_isUnSigned;
+            exu_in_bus_isUsePC<=exu_in_bus_isUsePC;
+            exu_in_bus_alu_isUseImm<=exu_in_bus_alu_isUseImm;
+            exu_in_bus_comp_isUseImm<=exu_in_bus_comp_isUseImm;
+            exu_in_bus_alu_op<=exu_in_bus_alu_op;
+            exu_in_bus_comp_op<=exu_in_bus_comp_op;
+            exu_in_bus_perip_mask<=exu_in_bus_perip_mask;
+            exu_in_bus_pc<=exu_in_bus_pc;
+            exu_in_bus_snpc<=exu_in_bus_snpc;
         end
     end
 endmodule
@@ -190,11 +273,49 @@ module ysyx_26010011_EX_LS_pipeline(
     output reg [31:0]lsu_in_bus_snpc
 );
     assign exu_out_ready = lsu_in_ready | !lsu_in_valid;
-    always @(posedge clock)begin
+    always @(posedge clock, posedge reset)begin
         if(reset) begin
             lsu_in_valid<=0;
+            lsu_in_bus_alu_result<=0;
+            lsu_in_bus_csr_result<=0;
+            lsu_in_bus_comp_result<=0;
+            lsu_in_bus_lsu_val<=0;
+            lsu_in_bus_rd<=0;
+            lsu_in_bus_exception<=0;
+            lsu_in_bus_csrrd<=0;
+            lsu_in_bus_instruction<=0;
+            lsu_in_bus_isLOAD<=0;
+            lsu_in_bus_isSTORE<=0;
+            lsu_in_bus_isWGPR<=0;
+            lsu_in_bus_isJUMP<=0;
+            lsu_in_bus_isWCOMP<=0;
+            lsu_in_bus_isBRANCH<=0;
+            lsu_in_bus_opCSR<=0;
+            lsu_in_bus_isUnSigned<=0;
+            lsu_in_bus_perip_mask<=0;
+            lsu_in_bus_pc<=0;
+            lsu_in_bus_snpc<=0;
         end else if(flush_valid)begin
             lsu_in_valid<=0;
+            lsu_in_bus_alu_result<=0;
+            lsu_in_bus_csr_result<=0;
+            lsu_in_bus_comp_result<=0;
+            lsu_in_bus_lsu_val<=0;
+            lsu_in_bus_rd<=0;
+            lsu_in_bus_exception<=0;
+            lsu_in_bus_csrrd<=0;
+            lsu_in_bus_instruction<=0;
+            lsu_in_bus_isLOAD<=0;
+            lsu_in_bus_isSTORE<=0;
+            lsu_in_bus_isWGPR<=0;
+            lsu_in_bus_isJUMP<=0;
+            lsu_in_bus_isWCOMP<=0;
+            lsu_in_bus_isBRANCH<=0;
+            lsu_in_bus_opCSR<=0;
+            lsu_in_bus_isUnSigned<=0;
+            lsu_in_bus_perip_mask<=0;
+            lsu_in_bus_pc<=0;
+            lsu_in_bus_snpc<=0;
         end else if(lsu_in_ready | !lsu_in_valid)begin
             lsu_in_valid<=exu_out_valid;
             lsu_in_bus_alu_result<=exu_out_bus_alu_result;
@@ -216,6 +337,27 @@ module ysyx_26010011_EX_LS_pipeline(
             lsu_in_bus_perip_mask<=exu_out_bus_perip_mask;
             lsu_in_bus_pc<=exu_out_bus_pc;
             lsu_in_bus_snpc<=exu_out_bus_snpc;
+        end else begin
+            lsu_in_valid<=lsu_in_valid;
+            lsu_in_bus_alu_result<=lsu_in_bus_alu_result;
+            lsu_in_bus_csr_result<=lsu_in_bus_csr_result;
+            lsu_in_bus_comp_result<=lsu_in_bus_comp_result;
+            lsu_in_bus_lsu_val<=lsu_in_bus_lsu_val;
+            lsu_in_bus_rd<=lsu_in_bus_rd;
+            lsu_in_bus_exception<=lsu_in_bus_exception;
+            lsu_in_bus_csrrd<=lsu_in_bus_csrrd;
+            lsu_in_bus_instruction<=lsu_in_bus_instruction;
+            lsu_in_bus_isLOAD<=lsu_in_bus_isLOAD;
+            lsu_in_bus_isSTORE<=lsu_in_bus_isSTORE;
+            lsu_in_bus_isWGPR<=lsu_in_bus_isWGPR;
+            lsu_in_bus_isJUMP<=lsu_in_bus_isJUMP;
+            lsu_in_bus_isWCOMP<=lsu_in_bus_isWCOMP;
+            lsu_in_bus_isBRANCH<=lsu_in_bus_isBRANCH;
+            lsu_in_bus_opCSR<=lsu_in_bus_opCSR;
+            lsu_in_bus_isUnSigned<=lsu_in_bus_isUnSigned;
+            lsu_in_bus_perip_mask<=lsu_in_bus_perip_mask;
+            lsu_in_bus_pc<=lsu_in_bus_pc;
+            lsu_in_bus_snpc<=lsu_in_bus_snpc;
         end
     end
 endmodule
@@ -268,11 +410,45 @@ module ysyx_26010011_LS_WB_pipeline(
     output reg [31:0]wbu_in_bus_snpc
 );
     assign lsu_out_ready = wbu_in_ready | !wbu_in_valid;
-    always @(posedge clock)begin
+    always @(posedge clock, posedge reset)begin
         if(reset) begin
             wbu_in_valid<=0; 
+            wbu_in_bus_pc<=0;
+            wbu_in_bus_instruction<=0;
+            wbu_in_bus_lsu_result<=0;
+            wbu_in_bus_alu_result<=0;
+            wbu_in_bus_csr_result<=0;
+            wbu_in_bus_comp_result<=0;
+            wbu_in_bus_snpc<=0;
+            wbu_in_bus_rd<=0;
+            wbu_in_bus_exception<=0;
+            wbu_in_bus_csrrd<=0;
+            wbu_in_bus_isLOAD<=1'b0;
+            wbu_in_bus_isSTORE<=1'b0;
+            wbu_in_bus_isWGPR<=1'b0;
+            wbu_in_bus_isJUMP<=1'b0;
+            wbu_in_bus_isWCOMP<=1'b0;
+            wbu_in_bus_isBRANCH<=1'b0;
+            wbu_in_bus_opCSR<=0;
         end else if(flush_valid)begin
             wbu_in_valid<=0; 
+            wbu_in_bus_pc<=0;
+            wbu_in_bus_instruction<=0;
+            wbu_in_bus_lsu_result<=0;
+            wbu_in_bus_alu_result<=0;
+            wbu_in_bus_csr_result<=0;
+            wbu_in_bus_comp_result<=0;
+            wbu_in_bus_snpc<=0;
+            wbu_in_bus_rd<=0;
+            wbu_in_bus_exception<=0;
+            wbu_in_bus_csrrd<=0;
+            wbu_in_bus_isLOAD<=1'b0;
+            wbu_in_bus_isSTORE<=1'b0;
+            wbu_in_bus_isWGPR<=1'b0;
+            wbu_in_bus_isJUMP<=1'b0;
+            wbu_in_bus_isWCOMP<=1'b0;
+            wbu_in_bus_isBRANCH<=1'b0;
+            wbu_in_bus_opCSR<=0;
         end else if(wbu_in_ready | !wbu_in_valid)begin
             wbu_in_valid<=lsu_out_valid; 
             wbu_in_bus_pc<=lsu_out_bus_pc;
@@ -292,6 +468,25 @@ module ysyx_26010011_LS_WB_pipeline(
             wbu_in_bus_isWCOMP<=lsu_out_bus_isWCOMP;
             wbu_in_bus_isBRANCH<=lsu_out_bus_isBRANCH;
             wbu_in_bus_opCSR<=lsu_out_bus_opCSR;
+        end else begin
+            wbu_in_valid<=wbu_in_valid; 
+            wbu_in_bus_pc<=wbu_in_bus_pc;
+            wbu_in_bus_instruction<=wbu_in_bus_instruction;
+            wbu_in_bus_lsu_result<=wbu_in_bus_lsu_result;
+            wbu_in_bus_alu_result<=wbu_in_bus_alu_result;
+            wbu_in_bus_csr_result<=wbu_in_bus_csr_result;
+            wbu_in_bus_comp_result<=wbu_in_bus_comp_result;
+            wbu_in_bus_snpc<=wbu_in_bus_snpc;
+            wbu_in_bus_rd<=wbu_in_bus_rd;
+            wbu_in_bus_exception<=wbu_in_bus_exception;
+            wbu_in_bus_csrrd<=wbu_in_bus_csrrd;
+            wbu_in_bus_isLOAD<=wbu_in_bus_isLOAD;
+            wbu_in_bus_isSTORE<=wbu_in_bus_isSTORE;
+            wbu_in_bus_isWGPR<=wbu_in_bus_isWGPR;
+            wbu_in_bus_isJUMP<=wbu_in_bus_isJUMP;
+            wbu_in_bus_isWCOMP<=wbu_in_bus_isWCOMP;
+            wbu_in_bus_isBRANCH<=wbu_in_bus_isBRANCH;
+            wbu_in_bus_opCSR<=wbu_in_bus_opCSR;
         end
     end
 endmodule

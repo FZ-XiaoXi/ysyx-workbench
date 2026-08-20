@@ -137,6 +137,13 @@ module ysyx_26010011_AXI4Arbiter(
                 S_arsize = R_master_sel?M2_arsize:M1_arsize;
                 S_arbureset = R_master_sel?M2_arbureset:M1_arbureset;
             end
+            default:begin
+                M1_arready = 0;
+                M2_arready = 0;
+                S_arvalid = 0;
+                S_araddr = 0;
+                S_arid   = 0; S_arlen = 0; S_arsize = 0; S_arbureset = 0;
+            end
         endcase
     end
     //R
@@ -159,6 +166,11 @@ module ysyx_26010011_AXI4Arbiter(
                 M2_rlast  = S_rlast;
                 M2_rid    = S_rid;
                 S_rready = R_master_sel?M2_rready:M1_rready;
+            end
+            default:begin
+                M1_rvalid = 0; M1_rdata = 0; M1_rresp = 0; M1_rlast = 0; M1_rid = 0;
+                M2_rvalid = 0; M2_rdata = 0; M2_rresp = 0; M2_rlast = 0; M2_rid = 0;
+                S_rready = 0;
             end
         endcase
     end

@@ -45,13 +45,13 @@ module CPUTop_tb;
 
   initial begin
     reset = 1;
-    #100;
+    #1000;
     reset = 0;
   end
 
   assign io_interrupt = 1'b0;
 
-  ysyx_26010011 cpu(
+  ysyx_26010011_dut cpu(
     .clock              (clock),
     .reset              (reset),
     .io_interrupt       (io_interrupt),
@@ -190,7 +190,7 @@ module axi4_memory (
     wnext_state = wstate;
     case(wstate)
       4'b0000: begin
-        if(awvalid & wvalid) wnext_state = 4'b0010;
+        if(awvalid & wvalid) wnext_state = 4'b0001;
       end
       4'b0001: begin
         wnext_state = 4'b0010;
@@ -238,7 +238,7 @@ module axi4_memory (
     rnext_state = rstate;
     case(rstate)
       4'b0000: begin
-        if(arvalid) rnext_state = 4'b0010;
+        if(arvalid) rnext_state = 4'b0001;
       end
       4'b0001: begin
         rnext_state = 4'b0010;
@@ -282,7 +282,7 @@ module axi4_memory (
       raddr_reg >= MEM_BASE && raddr_reg < MEM_END;
 
   always @(posedge clock) begin
-    if(wstate == 4'b0000 && wnext_state == 4'b0010) begin
+    if(wstate == 4'b0000 && wnext_state == 4'b0001) begin
       if (mem_write_valid) begin
         if(wstrb[0]) Memory[(awaddr - MEM_BASE) >> 2][7:0]   <= wdata[7:0];
         if(wstrb[1]) Memory[(awaddr - MEM_BASE) >> 2][15:8]  <= wdata[15:8];
@@ -306,17 +306,17 @@ module axi4_memory (
     for (i = 0; i < 2097152; i = i + 1)
       Memory[i] = 32'b0;
 
-    $display("Loading RT-Thread image");
+    $display("Loading image");
     $readmemh(
       // "/home/seaber/ysyx-workbench/rt-thread-am/bsp/abstract-machine/build/rtthread-riscv32e-iv",
       "/home/seaber/ysyx-workbench/am-kernels/benchmarks/microbench/build/microbench-riscv32e-iv",
       Memory
     );
   end
-  // initial
-  // begin
-  //   $dumpfile("test.vcd");
-  //   $dumpvars(0,cpu);
-  // end
+  initial
+  begin
+    $dumpfile("test.vcd");
+    $dumpvars(0,cpu);
+  end
 `endif
 endmodule

@@ -94,6 +94,8 @@ module ysyx_26010011_EXU(
 			2'b01: exu_out_bus_comp_result=~(comp_isEQUAL | comp_isGREATER);
 			2'b10: exu_out_bus_comp_result=~comp_isEQUAL;
 			2'b11: exu_out_bus_comp_result=comp_isEQUAL;
+			default:
+    			exu_out_bus_comp_result = 1'b0;
 		endcase
 	end
 

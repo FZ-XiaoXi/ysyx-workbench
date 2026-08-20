@@ -101,10 +101,10 @@ module ysyx_26010011_LSU(
     reg [3:0]   wstrb_q;
     always @(posedge clock) begin
         if(reset) begin
-            // awaddr_q <= 32'b0;
-            // wdata_q  <= 32'b0;
-            // awsize_q <= 3'b0;
-            // wstrb_q  <= 4'b0;
+            awaddr_q <= 32'b0;
+            wdata_q  <= 32'b0;
+            awsize_q <= 3'b0;
+            wstrb_q  <= 4'b0;
         end else begin
             if(next_state == S_WAIT_BRESP || next_state == S_WAIT_AW_W) begin
                 awaddr_q <= lsu_in_bus_addr;

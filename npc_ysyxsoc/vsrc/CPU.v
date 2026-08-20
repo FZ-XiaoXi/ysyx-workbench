@@ -293,12 +293,12 @@ module ysyx_26010011(
 	.reset(reset),
 	
 	// input flush_icache,
-	.dnpc(dnpc),
-	.flush_valid(ifu_flush_valid),
-	.dnpc_valid(dnpc_valid),
+	.dnpc(0),
+	.flush_valid(0),
+	.dnpc_valid(0),
 
 	.ifu_out_valid(ifu_out_valid),
-	.ifu_out_ready(ifu_out_ready),
+	.ifu_out_ready(1),
 	
 	.ifu_out_bus_instruction(ifu_out_bus_instruction),
 	.ifu_out_bus_fetching(ifu_out_bus_fetching),
@@ -320,12 +320,11 @@ module ysyx_26010011(
 	.rlast(IROM_rlast),
 	.rid(IROM_rid),
 
-	.r_pc(r_pc),
-	.r_tar(r_tar),
-	.r_valid(r_valid),
-	.r_type(r_type),
-	.fencei_flush(fencei_pass)
-
+	// .r_pc(r_pc),
+	// .r_tar(r_tar),
+	// .r_valid(r_valid),
+	// .r_type(r_type),
+	.fencei_flush(0)
 	
   );/*verilator public_module*/
   wire [31:0] IROM_araddr,IROM_rdata;
@@ -401,11 +400,11 @@ module ysyx_26010011(
 	.idu_out_bus_comp_op(idu_out_bus_comp_op),
 	.idu_out_bus_perip_mask(idu_out_bus_perip_mask),
 
-	.w_pc(w_pc),
-	.w_tar(w_tar),
-	.w_valid(w_valid),
-	.w_type(w_type),
-	.fencei_pass(fencei_pass),
+	// .w_pc(w_pc),
+	// .w_tar(w_tar),
+	// .w_valid(w_valid),
+	// .w_type(w_type),
+	// .fencei_pass(fencei_pass),
 	.fencei_flush(fencei_flush)
 
   );/*verilator public_module*/
@@ -812,16 +811,16 @@ module ysyx_26010011(
 	.M1_rlast(IROM_rlast),    .M1_rid(IROM_rid),
 
 	//MASTER2 AW
-	.M2_awaddr(DRAM_awaddr),  .M2_awvalid(DRAM_awvalid),  .M2_awready(DRAM_awready),
+	.M2_awaddr(DRAM_awaddr),  .M2_awvalid(0),  .M2_awready(DRAM_awready),
 	.M2_awid(DRAM_awid),      .M2_awlen(DRAM_awlen),      .M2_awsize(DRAM_awsize),    .M2_awburst(DRAM_awburst),
 	//MASTER2 W
-	.M2_wdata(DRAM_wdata),    .M2_wstrb(DRAM_wstrb),      .M2_wvalid(DRAM_wvalid),    .M2_wready(DRAM_wready),
+	.M2_wdata(DRAM_wdata),    .M2_wstrb(DRAM_wstrb),      .M2_wvalid(0),    .M2_wready(DRAM_wready),
 	.M2_wlast(DRAM_wlast),
 	//MASTER2 B
 	.M2_bresp(DRAM_bresp),    .M2_bvalid(DRAM_bvalid),    .M2_bready(DRAM_bready),
 	.M2_bid(DRAM_bid),
 	//MASTER2 AR
-	.M2_araddr(DRAM_araddr),  .M2_arvalid(DRAM_arvalid),  .M2_arready(DRAM_arready),
+	.M2_araddr(DRAM_araddr),  .M2_arvalid(0),  .M2_arready(DRAM_arready),
 	.M2_arid(DRAM_arid),      .M2_arlen(DRAM_arlen),      .M2_arsize(DRAM_arsize),    .M2_arbureset(DRAM_arbureset),
 	//MASTER2 R
 	.M2_rdata(DRAM_rdata),    .M2_rresp(DRAM_rresp),      .M2_rvalid(DRAM_rvalid),    .M2_rready(DRAM_rready),
@@ -878,75 +877,74 @@ module ysyx_26010011(
 	.csr_in_bus_exception(wbu_out_bus_exception)
   );/*verilator public_module*/
 
-  ysyx_26010011_BCache #(.CACHE_SIZE(8)) bcache_u0(
-	.clock(clock),
-	.reset(reset),
-	.r_pc(r_pc),
-	.r_tar(r_tar),
-	.r_valid(r_valid),
-	.r_type(r_type),
-	.w_pc(w_pc),
-	.w_tar(w_tar),
-	.w_valid(w_valid),
-	.w_type(w_type)
-  );
+//   ysyx_26010011_BCache #(.CACHE_SIZE(16)) bcache_u0(
+// 	.clock(clock),
+// 	.reset(reset),
+// 	.r_pc(r_pc),
+// 	.r_tar(r_tar),
+// 	.r_valid(r_valid),
+// 	.r_type(r_type),
+// 	.w_pc(w_pc),
+// 	.w_tar(w_tar),
+// 	.w_valid(w_valid),
+// 	.w_type(w_type)
+//   );
 
-  wire [31:0] r_pc,r_tar,w_pc,w_tar;
-  wire r_valid,w_valid,w_type,r_type;
+//   wire [31:0] r_pc,r_tar,w_pc,w_tar;
+//   wire r_valid,w_valid,w_type,r_type;
 endmodule
 
-module ysyx_26010011_BCache #(
-	parameter CACHE_SIZE = 16
-)(
-	input	clock,
-	input	reset,
+// module ysyx_26010011_BCache #(
+// 	parameter CACHE_SIZE = 16
+// )(
+// 	input	clock,
+// 	input	reset,
 
-	input  [31:0] r_pc,
-	output [31:0] r_tar,
-	output        r_valid,
-	output        r_type,
+// 	input  [31:0] r_pc,
+// 	output [31:0] r_tar,
+// 	output        r_valid,
+// 	output        r_type,
 
-	input  [31:0] w_pc,
-	input  [31:0] w_tar,
-	input         w_type,
-	input         w_valid
-);
+// 	input  [31:0] w_pc,
+// 	input  [31:0] w_tar,
+// 	input         w_type,
+// 	input         w_valid
+// );
+// 	parameter BLOCK_W = 32;
+// 	parameter INDEX_W = $clog2(CACHE_SIZE);
+// 	parameter OFFSET_W = 2;
+// 	parameter TAG_W   = 32 - OFFSET_W - INDEX_W;
 
-	parameter BLOCK_W = 32;
-	parameter INDEX_W = $clog2(CACHE_SIZE);
-	parameter OFFSET_W = 2;
-	parameter TAG_W   = 32 - OFFSET_W - INDEX_W;
+// 	wire [INDEX_W-1:0] R_index = {r_pc[INDEX_W-1+OFFSET_W:0+OFFSET_W]} ;
+// 	wire [TAG_W-1:0]   R_tag   = {r_pc[INDEX_W + TAG_W - 1+OFFSET_W: INDEX_W+OFFSET_W]};
 
-	wire [INDEX_W-1:0] R_index = {r_pc[INDEX_W-1+OFFSET_W:0+OFFSET_W]} ;
-	wire [TAG_W-1:0]   R_tag   = {r_pc[INDEX_W + TAG_W - 1+OFFSET_W: INDEX_W+OFFSET_W]};
-
-	wire [INDEX_W-1:0] W_index = {w_pc[INDEX_W-1+OFFSET_W:0+OFFSET_W]} ;
-	wire [TAG_W-1:0]   W_tag   = {w_pc[INDEX_W + TAG_W - 1+OFFSET_W: INDEX_W+OFFSET_W]};
+// 	wire [INDEX_W-1:0] W_index = {w_pc[INDEX_W-1+OFFSET_W:0+OFFSET_W]} ;
+// 	wire [TAG_W-1:0]   W_tag   = {w_pc[INDEX_W + TAG_W - 1+OFFSET_W: INDEX_W+OFFSET_W]};
 	
-	// assign debug_is_hit = is_hit;
+// 	// assign debug_is_hit = is_hit;
 
-	reg [BLOCK_W-1:0] cache_mem   [0:CACHE_SIZE-1];
-	reg               cache_valid [0:CACHE_SIZE-1];
-	reg [TAG_W-1:0]   cache_tag   [0:CACHE_SIZE-1];
-	reg               cache_type  [0:CACHE_SIZE-1];
-	always @(posedge clock) begin
-		if (reset) begin
-			integer i;
-			for (i = 0; i < CACHE_SIZE; i = i + 1) begin
-				cache_valid[i] <= 1'b0;
-			end
-		end else begin
-			if(w_valid) begin
-				cache_valid[W_index] <= 1;
-				cache_type[W_index] <= w_type;
-				cache_tag[W_index]   <= W_tag;
-				cache_mem[W_index]   <= w_tar;
-			end
-		end
-	end
+// 	reg [BLOCK_W-1:0] cache_mem   [0:CACHE_SIZE-1];
+// 	reg               cache_valid [0:CACHE_SIZE-1];
+// 	reg [TAG_W-1:0]   cache_tag   [0:CACHE_SIZE-1];
+// 	reg               cache_type  [0:CACHE_SIZE-1];
+// 	always @(posedge clock) begin
+// 		if (reset) begin
+// 			integer i;
+// 			for (i = 0; i < CACHE_SIZE; i = i + 1) begin
+// 				cache_valid[i] <= 1'b0;
+// 			end
+// 		end else begin
+// 			if(w_valid) begin
+// 				cache_valid[W_index] <= 1;
+// 				cache_type[W_index] <= w_type;
+// 				cache_tag[W_index]   <= W_tag;
+// 				cache_mem[W_index]   <= w_tar;
+// 			end
+// 		end
+// 	end
 
-	assign r_valid = (cache_tag[R_index] == R_tag) & (cache_valid[R_index]);
-	assign r_tar = cache_mem[R_index];
-	assign r_type = cache_type[R_index];
+// 	assign r_valid = (cache_tag[R_index] == R_tag) & (cache_valid[R_index]);
+// 	assign r_tar = cache_mem[R_index];
+// 	assign r_type = cache_type[R_index];
 
-endmodule
+// endmodule
