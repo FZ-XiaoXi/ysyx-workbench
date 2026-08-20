@@ -31,11 +31,7 @@ void VysyxSoCFull_ysyx_26010011_IF_ID_pipeline___nba_sequent__TOP__ysyxSoCFull__
         vlSelfRef.__Vdly__idu_in_bus_pc = 0U;
         vlSelfRef.__Vdly__idu_in_bus_snpc = 0U;
         __Vdly__idu_in_bus_exception = 0U;
-    } else if ((1U & ((((~ (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__ID_EX_inst.exu_in_valid)) 
-                        | (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu.__PVT__EXU_0__DOT__exu_in_ready)) 
-                       & ((IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu.IDU_0__DOT____VdfgRegularize_hd1728725_0_0) 
-                          & ((~ (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu.__PVT__IDU_0__DOT__state)) 
-                             & (~ (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu.__PVT__IDU_0__DOT__next_state))))) 
+    } else if ((1U & ((IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu.__PVT__IDU_0__DOT__idu_in_ready) 
                       | (~ (IData)(vlSelfRef.idu_in_valid))))) {
         __Vdly__idu_in_valid = vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__IFU_0.ifu_out_valid;
         vlSelfRef.__Vdly__idu_in_bus_instruction = 

@@ -4,14 +4,6 @@
 
 #include "VysyxSoCFull__pch.h"
 
-VL_ATTR_COLD void VysyxSoCFull_ysyx_26010011_IFU_icache__CB4___eval_initial__TOP__ysyxSoCFull__asic__cpu__cpu__IFU_0__icache_u0(VysyxSoCFull_ysyx_26010011_IFU_icache__CB4* vlSelf) {
-    VL_DEBUG_IF(VL_DBG_MSGF("+                VysyxSoCFull_ysyx_26010011_IFU_icache__CB4___eval_initial__TOP__ysyxSoCFull__asic__cpu__cpu__IFU_0__icache_u0\n"); );
-    VysyxSoCFull__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
-    auto& vlSelfRef = std::ref(*vlSelf).get();
-    // Body
-    vlSelfRef.pc_flush = 0U;
-}
-
 VL_ATTR_COLD void VysyxSoCFull_ysyx_26010011_IFU_icache__CB4___ctor_var_reset(VysyxSoCFull_ysyx_26010011_IFU_icache__CB4* vlSelf) {
     VL_DEBUG_IF(VL_DBG_MSGF("+                VysyxSoCFull_ysyx_26010011_IFU_icache__CB4___ctor_var_reset\n"); );
     VysyxSoCFull__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;

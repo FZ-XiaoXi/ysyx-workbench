@@ -40,10 +40,10 @@ module ysyx_26010011_IFU(
 	input             rlast,
 	input  [3:0]      rid,
 
-	output [31:0]     r_pc,
-	input  [31:0]     r_tar,
-	input		      r_valid,
-	input		      r_type,
+	// output [31:0]     r_pc,
+	// input  [31:0]     r_tar,
+	// input		      r_valid,
+	// input		      r_type,
 	input 		   fencei_flush
 );
 ////////////////////////////////TARGET PRE

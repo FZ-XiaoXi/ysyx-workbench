@@ -23,6 +23,13 @@ void VysyxSoCFull_mem_2048x32___ico_sequent__TOP__ysyxSoCFull__asic__axi4ram__me
     vlSelfRef.__PVT__W0_en = ((IData)(vlSymsp->TOP__ysyxSoCFull__asic__axi4ram.__PVT___GEN) 
                               & (0x0f000000U == (0x0fffe000U 
                                                  & vlSymsp->TOP__ysyxSoCFull__asic.__PVT__axi4xbar_1__DOT__auto_anon_in_awaddr)));
+}
+
+void VysyxSoCFull_mem_2048x32___ico_sequent__TOP__ysyxSoCFull__asic__axi4ram__mem_ext__2(VysyxSoCFull_mem_2048x32* vlSelf) {
+    VL_DEBUG_IF(VL_DBG_MSGF("+            VysyxSoCFull_mem_2048x32___ico_sequent__TOP__ysyxSoCFull__asic__axi4ram__mem_ext__2\n"); );
+    VysyxSoCFull__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
+    auto& vlSelfRef = std::ref(*vlSelf).get();
+    // Body
     vlSelfRef.__PVT__R0_en = ((IData)(vlSymsp->TOP__ysyxSoCFull__asic.__PVT__axi4xbar_1__DOT__auto_anon_out_2_arready) 
                               & ((IData)(vlSymsp->TOP__ysyxSoCFull__asic.__PVT__axi4xbar_1__DOT__auto_anon_in_arvalid) 
                                  & (IData)(vlSymsp->TOP__ysyxSoCFull__asic.__PVT__axi4xbar_1__DOT__requestARIO_0_2)));
@@ -115,24 +122,4 @@ void VysyxSoCFull_mem_2048x32___nba_sequent__TOP__ysyxSoCFull__asic__axi4ram__me
             ((0x00ffffffU & vlSelfRef.Memory[__VdlyDim0__Memory__v3]) 
              | ((IData)(__VdlyVal__Memory__v3) << 0x00000018U));
     }
-}
-
-void VysyxSoCFull_mem_2048x32___nba_comb__TOP__ysyxSoCFull__asic__axi4ram__mem_ext__0(VysyxSoCFull_mem_2048x32* vlSelf) {
-    VL_DEBUG_IF(VL_DBG_MSGF("+            VysyxSoCFull_mem_2048x32___nba_comb__TOP__ysyxSoCFull__asic__axi4ram__mem_ext__0\n"); );
-    VysyxSoCFull__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
-    auto& vlSelfRef = std::ref(*vlSelf).get();
-    // Body
-    vlSelfRef.__PVT__R0_en = ((IData)(vlSymsp->TOP__ysyxSoCFull__asic.__PVT__axi4xbar_1__DOT__auto_anon_out_2_arready) 
-                              & ((IData)(vlSymsp->TOP__ysyxSoCFull__asic.__PVT__axi4xbar_1__DOT__auto_anon_in_arvalid) 
-                                 & (IData)(vlSymsp->TOP__ysyxSoCFull__asic.__PVT__axi4xbar_1__DOT__requestARIO_0_2)));
-}
-
-void VysyxSoCFull_mem_2048x32___nba_comb__TOP__ysyxSoCFull__asic__axi4ram__mem_ext__1(VysyxSoCFull_mem_2048x32* vlSelf) {
-    VL_DEBUG_IF(VL_DBG_MSGF("+            VysyxSoCFull_mem_2048x32___nba_comb__TOP__ysyxSoCFull__asic__axi4ram__mem_ext__1\n"); );
-    VysyxSoCFull__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
-    auto& vlSelfRef = std::ref(*vlSelf).get();
-    // Body
-    vlSelfRef.__PVT__W0_en = ((IData)(vlSymsp->TOP__ysyxSoCFull__asic__axi4ram.__PVT___GEN) 
-                              & (0x0f000000U == (0x0fffe000U 
-                                                 & vlSymsp->TOP__ysyxSoCFull__asic.__PVT__axi4xbar_1__DOT__auto_anon_in_awaddr)));
 }

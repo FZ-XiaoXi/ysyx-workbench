@@ -11,6 +11,9 @@ VL_ATTR_COLD void VysyxSoCFull_ysyx_26010011_LSU___stl_sequent__TOP__ysyxSoCFull
     // Body
     vlSelfRef.__VdfgRegularize_hc456a51f_0_8 = ((IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__EX_LS_inst.__PVT__lsu_in_bus_isSTORE) 
                                                 & (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__EX_LS_inst.lsu_in_valid));
+    vlSelfRef.__PVT__arsize = ((0U == (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__EX_LS_inst.__PVT__lsu_in_bus_perip_mask))
+                                ? 0U : ((1U == (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__EX_LS_inst.__PVT__lsu_in_bus_perip_mask))
+                                         ? 1U : 2U));
     vlSelfRef.__VdfgRegularize_hc456a51f_0_7 = ((IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__EX_LS_inst.__PVT__lsu_in_bus_isLOAD) 
                                                 & (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__EX_LS_inst.lsu_in_valid));
     vlSelfRef.__VdfgRegularize_hc456a51f_0_4 = ((IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__EX_LS_inst.__PVT__lsu_in_bus_isLOAD) 
@@ -116,9 +119,7 @@ VL_ATTR_COLD void VysyxSoCFull_ysyx_26010011_LSU___ctor_var_reset(VysyxSoCFull_y
     vlSelf->debug_LSU_WRITING = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 16287232157371382891ull);
     vlSelf->debug_LSU_WRITE_FINAL = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 10767793145714837578ull);
     vlSelf->debug_LSU_LOAD_FINAL = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 6695111261364231803ull);
-    vlSelf->__VdfgExtracted_hd51ce84d__0 = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 9335344209823606835ull);
     vlSelf->__VdfgRegularize_hc456a51f_0_4 = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 12918316183802177736ull);
     vlSelf->__VdfgRegularize_hc456a51f_0_7 = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 11066857445123250650ull);
     vlSelf->__VdfgRegularize_hc456a51f_0_8 = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 16680877834489249309ull);
-    vlSelf->__VdfgRegularize_hc456a51f_0_10 = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 8916063245817288125ull);
 }
