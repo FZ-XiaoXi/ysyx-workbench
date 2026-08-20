@@ -63,9 +63,9 @@ void VysyxSoCFull_ysyx_26010011_IF_ID_pipeline___nba_sequent__TOP__ysyxSoCFull__
         __Vdly__idu_in_bus_snpc = vlSelfRef.__PVT__idu_in_bus_snpc;
         __Vdly__idu_in_bus_exception = vlSelfRef.__PVT__idu_in_bus_exception;
     }
-    vlSelfRef.__PVT__idu_in_bus_snpc = __Vdly__idu_in_bus_snpc;
-    vlSelfRef.idu_in_bus_pc = __Vdly__idu_in_bus_pc;
     vlSelfRef.idu_in_valid = __Vdly__idu_in_valid;
     vlSelfRef.__PVT__idu_in_bus_exception = __Vdly__idu_in_bus_exception;
+    vlSelfRef.__PVT__idu_in_bus_snpc = __Vdly__idu_in_bus_snpc;
+    vlSelfRef.idu_in_bus_pc = __Vdly__idu_in_bus_pc;
     vlSelfRef.__PVT__idu_in_bus_instruction = __Vdly__idu_in_bus_instruction;
 }

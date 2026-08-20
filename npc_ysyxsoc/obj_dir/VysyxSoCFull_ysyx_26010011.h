@@ -93,12 +93,14 @@ class alignas(VL_CACHE_LINE_BYTES) VysyxSoCFull_ysyx_26010011 final : public Ver
         CData/*2:0*/ __PVT__idu_out_bus_opCSR;
         CData/*0:0*/ __PVT__exu_out_bus_dnpc_valid;
         CData/*4:0*/ __PVT__exu_out_bus_exception;
+        CData/*0:0*/ __PVT__DRAM_awready;
+        CData/*0:0*/ __PVT__DRAM_wready;
         CData/*0:0*/ __PVT__DRAM_arready;
         CData/*0:0*/ tb_isFINAL;
-        CData/*0:0*/ tb_dnpc_valid;
-        CData/*0:0*/ tb_isMEM;
     };
     struct {
+        CData/*0:0*/ tb_dnpc_valid;
+        CData/*0:0*/ tb_isMEM;
         CData/*0:0*/ __VdfgRegularize_he0d61652_0_2;
         CData/*0:0*/ __PVT__IDU_0__DOT__flush_valid;
         CData/*0:0*/ __PVT__IDU_0__DOT__fencei_pass;
@@ -161,18 +163,33 @@ class alignas(VL_CACHE_LINE_BYTES) VysyxSoCFull_ysyx_26010011 final : public Ver
         CData/*0:0*/ IDU_0__DOT____VdfgRegularize_hd1728725_0_28;
         CData/*0:0*/ IDU_0__DOT____VdfgRegularize_hd1728725_0_29;
         CData/*0:0*/ IDU_0__DOT____VdfgRegularize_hd1728725_0_32;
-        CData/*0:0*/ IDU_0__DOT____VdfgRegularize_hd1728725_0_34;
-        CData/*0:0*/ __PVT__EXU_0__DOT__exu_in_ready;
     };
     struct {
+        CData/*0:0*/ IDU_0__DOT____VdfgRegularize_hd1728725_0_34;
+        CData/*0:0*/ __PVT__EXU_0__DOT__exu_in_ready;
         CData/*0:0*/ __PVT__EXU_0__DOT__exu_out_bus_comp_result;
         CData/*0:0*/ __PVT__EXU_0__DOT__comp_isEQUAL;
         CData/*4:0*/ __PVT__WBU_0__DOT__wbu_out_bus_exception;
         CData/*0:0*/ WBU_0__DOT____VdfgRegularize_h03859d6a_0_0;
+        CData/*0:0*/ __PVT__RAM_AXI4Arbiter__DOT__M1_awvalid;
+        CData/*0:0*/ __PVT__RAM_AXI4Arbiter__DOT__M1_awready;
+        CData/*3:0*/ __PVT__RAM_AXI4Arbiter__DOT__M1_awid;
+        CData/*7:0*/ __PVT__RAM_AXI4Arbiter__DOT__M1_awlen;
+        CData/*2:0*/ __PVT__RAM_AXI4Arbiter__DOT__M1_awsize;
+        CData/*1:0*/ __PVT__RAM_AXI4Arbiter__DOT__M1_awburst;
+        CData/*3:0*/ __PVT__RAM_AXI4Arbiter__DOT__M1_wstrb;
+        CData/*0:0*/ __PVT__RAM_AXI4Arbiter__DOT__M1_wvalid;
+        CData/*0:0*/ __PVT__RAM_AXI4Arbiter__DOT__M1_wready;
+        CData/*0:0*/ __PVT__RAM_AXI4Arbiter__DOT__M1_wlast;
+        CData/*0:0*/ __PVT__RAM_AXI4Arbiter__DOT__M1_bready;
         CData/*0:0*/ __PVT__RAM_AXI4Arbiter__DOT__R_state;
         CData/*0:0*/ __PVT__RAM_AXI4Arbiter__DOT__R_next_state;
         CData/*0:0*/ __PVT__RAM_AXI4Arbiter__DOT__R_master_sel;
         CData/*0:0*/ __PVT__RAM_AXI4Arbiter__DOT__R_master_sel_next;
+        CData/*0:0*/ __PVT__RAM_AXI4Arbiter__DOT__W_state;
+        CData/*0:0*/ __PVT__RAM_AXI4Arbiter__DOT__W_next_state;
+        CData/*0:0*/ __PVT__RAM_AXI4Arbiter__DOT__W_master_sel;
+        CData/*0:0*/ __PVT__RAM_AXI4Arbiter__DOT__W_master_sel_next;
         SData/*12:0*/ __PVT__idu_out_bus_signals;
         SData/*12:0*/ __PVT__exu_in_bus_signals;
         VL_OUT(__PVT__io_master_awaddr,31,0);
@@ -197,6 +214,8 @@ class alignas(VL_CACHE_LINE_BYTES) VysyxSoCFull_ysyx_26010011 final : public Ver
         IData/*31:0*/ __PVT__EXU_0__DOT__op_or;
         IData/*31:0*/ __PVT__EXU_0__DOT__op_and;
         IData/*31:0*/ __PVT__EXU_0__DOT__comp_suber_out;
+        IData/*31:0*/ __PVT__RAM_AXI4Arbiter__DOT__M1_awaddr;
+        IData/*31:0*/ __PVT__RAM_AXI4Arbiter__DOT__M1_wdata;
     };
 
     // INTERNAL VARIABLES

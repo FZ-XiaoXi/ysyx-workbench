@@ -19,7 +19,8 @@ VL_ATTR_COLD void VysyxSoCFull_ysyx_26010011_IFU___stl_sequent__TOP__ysyxSoCFull
     // Body
     vlSelfRef.ifu_out_bus_fetching = vlSelfRef.PC;
     vlSelfRef.__PVT__rlast = ((IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu.__PVT__RAM_AXI4Arbiter__DOT__R_state) 
-                              & (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu.__PVT__io_master_rlast));
+                              & ((~ (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu.__PVT__RAM_AXI4Arbiter__DOT__R_master_sel)) 
+                                 & (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu.__PVT__io_master_rlast)));
 }
 
 VL_ATTR_COLD void VysyxSoCFull_ysyx_26010011_IFU___ctor_var_reset(VysyxSoCFull_ysyx_26010011_IFU* vlSelf) {
