@@ -2098,6 +2098,7 @@ module ysyx_26010011(
   ysyx_26010011_IDU IDU_0(
 	.clock(clock),
 	.reset(reset),
+	.fencei_pass(fencei_pass),
 	.flush_valid(idu_flush_valid),
 	.idu_isRAW(idu_isRAW),
 	.idu_in_bus_instruction(idu_in_bus_instruction),
