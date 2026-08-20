@@ -267,12 +267,5 @@ void VysyxSoCFull_ysyx_26010011_ID_EX_pipeline___nba_sequent__TOP__ysyxSoCFull__
         vlSelfRef.exu_in_bus_pc = vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__IF_ID_inst.idu_in_bus_pc;
         vlSelfRef.__PVT__exu_in_bus_snpc = vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__IF_ID_inst.__PVT__idu_in_bus_snpc;
     }
-}
-
-void VysyxSoCFull_ysyx_26010011_ID_EX_pipeline___nba_sequent__TOP__ysyxSoCFull__asic__cpu__cpu__ID_EX_inst__2(VysyxSoCFull_ysyx_26010011_ID_EX_pipeline* vlSelf) {
-    VL_DEBUG_IF(VL_DBG_MSGF("+              VysyxSoCFull_ysyx_26010011_ID_EX_pipeline___nba_sequent__TOP__ysyxSoCFull__asic__cpu__cpu__ID_EX_inst__2\n"); );
-    VysyxSoCFull__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
-    auto& vlSelfRef = std::ref(*vlSelf).get();
-    // Body
     vlSelfRef.exu_in_valid = vlSelfRef.__Vdly__exu_in_valid;
 }

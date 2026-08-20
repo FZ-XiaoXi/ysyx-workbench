@@ -15,6 +15,21 @@ VL_ATTR_COLD void VysyxSoCFull_ysyx_26010011_LSU___stl_sequent__TOP__ysyxSoCFull
                                                 & (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__EX_LS_inst.lsu_in_valid));
     vlSelfRef.__VdfgRegularize_hc456a51f_0_4 = ((IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__EX_LS_inst.__PVT__lsu_in_bus_isLOAD) 
                                                 | (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__EX_LS_inst.__PVT__lsu_in_bus_isSTORE));
+    vlSelfRef.__PVT__bvalid = ((IData)(vlSymsp->TOP__ysyxSoCFull__asic.__PVT__axi4xbar__DOT__idle_3)
+                                ? (IData)(vlSymsp->TOP__ysyxSoCFull__asic.__PVT__axi4xbar__DOT__anyValid_1)
+                                : (((IData)(vlSymsp->TOP__ysyxSoCFull__asic.__PVT__axi4xbar__DOT__auto_anon_out_0_bvalid) 
+                                    & (IData)(vlSymsp->TOP__ysyxSoCFull__asic.__PVT__axi4xbar__DOT__state_3_0)) 
+                                   | ((IData)(vlSymsp->TOP__ysyxSoCFull__asic.__PVT__axi4delay_delayer__DOT__bvalid_reg) 
+                                      & (IData)(vlSymsp->TOP__ysyxSoCFull__asic.__PVT__axi4xbar__DOT__state_3_1))));
+    vlSelfRef.__PVT__bid = ((((IData)(vlSymsp->TOP__ysyxSoCFull__asic.__PVT__axi4xbar__DOT__idle_3)
+                               ? (IData)(vlSymsp->TOP__ysyxSoCFull__asic.__PVT__axi4xbar__DOT__winner_3_0)
+                               : (IData)(vlSymsp->TOP__ysyxSoCFull__asic.__PVT__axi4xbar__DOT__state_3_0))
+                              ? (IData)(vlSymsp->TOP__ysyxSoCFull__asic.__PVT__axi4xbar__DOT__auto_anon_out_0_bid)
+                              : 0U) | (((IData)(vlSymsp->TOP__ysyxSoCFull__asic.__PVT__axi4xbar__DOT__idle_3)
+                                         ? (IData)(vlSymsp->TOP__ysyxSoCFull__asic.__PVT__axi4xbar__DOT__winner_3_1)
+                                         : (IData)(vlSymsp->TOP__ysyxSoCFull__asic.__PVT__axi4xbar__DOT__state_3_1))
+                                        ? (IData)(vlSymsp->TOP__ysyxSoCFull__asic.__PVT__axi4delay_delayer__DOT__bid_reg)
+                                        : 0U));
     vlSelfRef.__PVT__bready = (((2U == (IData)(vlSelfRef.state)) 
                                 | (0U == (IData)(vlSelfRef.state))) 
                                & (~ (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu.reset)));
@@ -25,9 +40,7 @@ VL_ATTR_COLD void VysyxSoCFull_ysyx_26010011_LSU___stl_sequent__TOP__ysyxSoCFull
                                    & (IData)(vlSelfRef.__VdfgRegularize_hc456a51f_0_8));
     vlSelfRef.debug_LSU_LOADING = ((0U != (IData)(vlSelfRef.state)) 
                                    & (IData)(vlSelfRef.__VdfgRegularize_hc456a51f_0_7));
-    vlSelfRef.b_fire = (((IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu.__PVT__RAM_AXI4Arbiter__DOT__W_state) 
-                         & ((IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu.__PVT__RAM_AXI4Arbiter__DOT__W_master_sel) 
-                            & (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu.__PVT__io_master_bvalid))) 
+    vlSelfRef.b_fire = ((IData)(vlSelfRef.__PVT__bvalid) 
                         & (IData)(vlSelfRef.__PVT__bready));
     vlSelfRef.r_fire = (((IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu.__PVT__RAM_AXI4Arbiter__DOT__R_state) 
                          & ((IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu.__PVT__RAM_AXI4Arbiter__DOT__R_master_sel) 
@@ -103,6 +116,7 @@ VL_ATTR_COLD void VysyxSoCFull_ysyx_26010011_LSU___ctor_var_reset(VysyxSoCFull_y
     vlSelf->debug_LSU_WRITING = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 16287232157371382891ull);
     vlSelf->debug_LSU_WRITE_FINAL = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 10767793145714837578ull);
     vlSelf->debug_LSU_LOAD_FINAL = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 6695111261364231803ull);
+    vlSelf->__VdfgExtracted_hd51ce84d__0 = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 9335344209823606835ull);
     vlSelf->__VdfgRegularize_hc456a51f_0_4 = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 12918316183802177736ull);
     vlSelf->__VdfgRegularize_hc456a51f_0_7 = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 11066857445123250650ull);
     vlSelf->__VdfgRegularize_hc456a51f_0_8 = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 16680877834489249309ull);

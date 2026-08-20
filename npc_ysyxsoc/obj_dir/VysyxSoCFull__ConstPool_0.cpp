@@ -4,17 +4,6 @@
 
 #include "verilated.h"
 
-extern const VlUnpacked<CData/*0:0*/, 64> VysyxSoCFull__ConstPool__TABLE_h08ac2b18_0 = {{
-    0U, 1U, 0U, 1U, 0U, 1U, 0U, 1U,
-    0U, 1U, 0U, 1U, 0U, 1U, 0U, 0U,
-    0U, 1U, 0U, 1U, 0U, 0U, 0U, 1U,
-    0U, 1U, 0U, 1U, 0U, 0U, 0U, 0U,
-    1U, 1U, 1U, 1U, 1U, 1U, 1U, 1U,
-    1U, 1U, 1U, 1U, 1U, 1U, 1U, 0U,
-    1U, 1U, 1U, 1U, 1U, 0U, 1U, 1U,
-    1U, 1U, 1U, 1U, 1U, 0U, 1U, 0U
-}};
-
 extern const VlUnpacked<CData/*0:0*/, 128> VysyxSoCFull__ConstPool__TABLE_h0f588624_0 = {{
     0U, 1U, 0U, 1U, 0U, 1U, 0U, 1U,
     0U, 1U, 0U, 1U, 0U, 1U, 0U, 1U,
@@ -386,17 +375,6 @@ extern const VlUnpacked<CData/*0:0*/, 128> VysyxSoCFull__ConstPool__TABLE_h49d29
     1U, 0U, 1U, 0U, 0U, 0U, 0U, 0U,
     1U, 0U, 1U, 0U, 0U, 0U, 0U, 0U,
     1U, 0U, 1U, 0U, 0U, 0U, 0U, 0U
-}};
-
-extern const VlUnpacked<CData/*0:0*/, 64> VysyxSoCFull__ConstPool__TABLE_h601772b3_0 = {{
-    0U, 0U, 1U, 1U, 0U, 0U, 1U, 1U,
-    0U, 0U, 1U, 1U, 0U, 0U, 1U, 1U,
-    0U, 0U, 1U, 1U, 0U, 0U, 1U, 1U,
-    0U, 0U, 1U, 1U, 0U, 0U, 1U, 1U,
-    0U, 0U, 0U, 1U, 0U, 0U, 0U, 1U,
-    0U, 0U, 0U, 1U, 0U, 0U, 0U, 1U,
-    0U, 0U, 0U, 1U, 0U, 0U, 0U, 1U,
-    0U, 0U, 0U, 1U, 0U, 0U, 0U, 1U
 }};
 
 extern const VlUnpacked<CData/*7:0*/, 256> VysyxSoCFull__ConstPool__TABLE_h688915ee_0 = {{

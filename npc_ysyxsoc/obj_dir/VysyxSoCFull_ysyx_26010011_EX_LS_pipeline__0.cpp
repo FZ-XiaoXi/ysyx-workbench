@@ -21,8 +21,8 @@ void VysyxSoCFull_ysyx_26010011_EX_LS_pipeline___nba_sequent__TOP__ysyxSoCFull__
     vlSelfRef.__Vdly__lsu_in_valid = vlSelfRef.lsu_in_valid;
 }
 
-void VysyxSoCFull_ysyx_26010011_EX_LS_pipeline___nba_sequent__TOP__ysyxSoCFull__asic__cpu__cpu__EX_LS_inst__1(VysyxSoCFull_ysyx_26010011_EX_LS_pipeline* vlSelf) {
-    VL_DEBUG_IF(VL_DBG_MSGF("+              VysyxSoCFull_ysyx_26010011_EX_LS_pipeline___nba_sequent__TOP__ysyxSoCFull__asic__cpu__cpu__EX_LS_inst__1\n"); );
+void VysyxSoCFull_ysyx_26010011_EX_LS_pipeline___nba_sequent__TOP__ysyxSoCFull__asic__cpu__cpu__EX_LS_inst__2(VysyxSoCFull_ysyx_26010011_EX_LS_pipeline* vlSelf) {
+    VL_DEBUG_IF(VL_DBG_MSGF("+              VysyxSoCFull_ysyx_26010011_EX_LS_pipeline___nba_sequent__TOP__ysyxSoCFull__asic__cpu__cpu__EX_LS_inst__2\n"); );
     VysyxSoCFull__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
     auto& vlSelfRef = std::ref(*vlSelf).get();
     // Body

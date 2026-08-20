@@ -29,6 +29,9 @@ class alignas(VL_CACHE_LINE_BYTES) VysyxSoCFull_ysyx_26010011_IF_ID_pipeline fin
     VL_OUT(__PVT__idu_in_bus_instruction,31,0);
     VL_OUT(idu_in_bus_pc,31,0);
     VL_OUT(__PVT__idu_in_bus_snpc,31,0);
+    IData/*31:0*/ __Vdly__idu_in_bus_instruction;
+    IData/*31:0*/ __Vdly__idu_in_bus_pc;
+    IData/*31:0*/ __Vdly__idu_in_bus_snpc;
 
     // INTERNAL VARIABLES
     VysyxSoCFull__Syms* const vlSymsp;

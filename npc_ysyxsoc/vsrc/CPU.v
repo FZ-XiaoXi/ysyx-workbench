@@ -293,12 +293,12 @@ module ysyx_26010011(
 	.reset(reset),
 	
 	// input flush_icache,
-	.dnpc(0),
-	.flush_valid(0),
-	.dnpc_valid(0),
+	.dnpc(dnpc),
+	.flush_valid(flush_valid),
+	.dnpc_valid(dnpc_valid),
 
 	.ifu_out_valid(ifu_out_valid),
-	.ifu_out_ready(1),
+	.ifu_out_ready(ifu_out_ready),
 	
 	.ifu_out_bus_instruction(ifu_out_bus_instruction),
 	.ifu_out_bus_fetching(ifu_out_bus_fetching),
