@@ -78,7 +78,7 @@ void difftest_step(uint32_t pc, uint32_t npc, uint32_t mem_addr) {;
 	}
 	ref_difftest_exec(1);
 	ref_difftest_regcpy(ref.gpr, &ref.tb_FINAL_npc, DIFFTEST_TO_DUT);
-	Log("d pc=%08x", pc);
+	// Log("d pc=%08x", pc);
 	bool success = checkregs(&ref, pc, npc);
 	if(mem_addr != 0 && success) {
 		// Log("Check memory at address " FMT_WORD, mem_addr);

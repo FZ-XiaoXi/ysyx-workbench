@@ -100,7 +100,7 @@ void VysyxSoCFull_ysyx_26010011_IFU___nba_sequent__TOP__ysyxSoCFull__asic__cpu__
     // Body
     if (vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu.reset) {
         vlSelfRef.__PVT__ifu_out_valid_r = 0U;
-        vlSelfRef.__PVT__ifu_out_bus_pc_r = 0x80000000U;
+        vlSelfRef.__PVT__ifu_out_bus_pc_r = 0x30000000U;
     } else if (vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu.flush_valid) {
         vlSelfRef.__PVT__ifu_out_valid_r = 0U;
         vlSelfRef.__PVT__ifu_out_bus_pc_r = 0U;
@@ -121,7 +121,7 @@ void VysyxSoCFull_ysyx_26010011_IFU___nba_sequent__TOP__ysyxSoCFull__asic__cpu__
     // Body
     if (vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu.reset) {
         vlSelfRef.__PVT__ifu_out_bus_instruction_r = 0U;
-        vlSelfRef.PC = 0x80000000U;
+        vlSelfRef.PC = 0x30000000U;
     } else {
         if ((1U & (~ (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu.flush_valid)))) {
             if ((((IData)(vlSelfRef.__PVT__in_reqValid) 
