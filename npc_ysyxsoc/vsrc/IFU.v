@@ -59,7 +59,7 @@ module ysyx_26010011_IFU(
 	always @(posedge clock) begin
 		if(reset) begin
 			ifu_out_valid_r <= 0;
-			ifu_out_bus_pc_r <= 32'h80000000;
+			ifu_out_bus_pc_r <= 32'h30000000;
 			ifu_out_bus_instruction_r <= 0;
 		end else begin
 			if(flush_valid) begin
@@ -86,7 +86,7 @@ module ysyx_26010011_IFU(
 			`ifdef __ICARUS__
 			PC <= 32'h80000000;
 			`else
-			PC <= 32'h80000000;
+			PC <= 32'h30000000;
 			`endif
 			
 		end else if(flush_valid) begin
