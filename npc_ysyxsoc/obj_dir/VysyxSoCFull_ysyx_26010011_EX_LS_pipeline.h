@@ -46,9 +46,18 @@ class alignas(VL_CACHE_LINE_BYTES) VysyxSoCFull_ysyx_26010011_EX_LS_pipeline fin
     VL_OUT8(__PVT__lsu_in_bus_isUnSigned,0,0);
     VL_OUT8(__PVT__lsu_in_bus_perip_mask,1,0);
     CData/*0:0*/ __VdfgRegularize_h6e95ff9d_0_21;
-    CData/*0:0*/ __Vdly__lsu_in_valid;
+    CData/*0:0*/ __Vdly__lsu_in_bus_comp_result;
+    CData/*4:0*/ __Vdly__lsu_in_bus_rd;
+    CData/*0:0*/ __Vdly__lsu_in_bus_isLOAD;
+    CData/*0:0*/ __Vdly__lsu_in_bus_isSTORE;
+    CData/*0:0*/ __Vdly__lsu_in_bus_isWGPR;
+    CData/*0:0*/ __Vdly__lsu_in_bus_isJUMP;
+    CData/*0:0*/ __Vdly__lsu_in_bus_isWCOMP;
+    CData/*0:0*/ __Vdly__lsu_in_bus_isBRANCH;
+    CData/*2:0*/ __Vdly__lsu_in_bus_opCSR;
     VL_IN16(__PVT__exu_out_bus_csrrd,11,0);
     VL_OUT16(__PVT__lsu_in_bus_csrrd,11,0);
+    SData/*11:0*/ __Vdly__lsu_in_bus_csrrd;
     VL_IN(__PVT__exu_out_bus_alu_result,31,0);
     VL_IN(__PVT__exu_out_bus_csr_result,31,0);
     VL_IN(__PVT__exu_out_bus_lsu_val,31,0);
@@ -61,6 +70,12 @@ class alignas(VL_CACHE_LINE_BYTES) VysyxSoCFull_ysyx_26010011_EX_LS_pipeline fin
     VL_OUT(__PVT__lsu_in_bus_instruction,31,0);
     VL_OUT(lsu_in_bus_pc,31,0);
     VL_OUT(__PVT__lsu_in_bus_snpc,31,0);
+    IData/*31:0*/ __Vdly__lsu_in_bus_alu_result;
+    IData/*31:0*/ __Vdly__lsu_in_bus_csr_result;
+    IData/*31:0*/ __Vdly__lsu_in_bus_lsu_val;
+    IData/*31:0*/ __Vdly__lsu_in_bus_instruction;
+    IData/*31:0*/ __Vdly__lsu_in_bus_pc;
+    IData/*31:0*/ __Vdly__lsu_in_bus_snpc;
 
     // INTERNAL VARIABLES
     VysyxSoCFull__Syms* const vlSymsp;
