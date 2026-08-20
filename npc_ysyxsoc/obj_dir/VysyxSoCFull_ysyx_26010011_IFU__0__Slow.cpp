@@ -49,10 +49,6 @@ VL_ATTR_COLD void VysyxSoCFull_ysyx_26010011_IFU___ctor_var_reset(VysyxSoCFull_y
     vlSelf->__PVT__rready = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 8930348232195030647ull);
     vlSelf->__PVT__rlast = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 5670148758994432807ull);
     vlSelf->__PVT__rid = VL_SCOPED_RAND_RESET_I(4, __VscopeHash, 17711635114162165067ull);
-    vlSelf->__PVT__r_pc = VL_SCOPED_RAND_RESET_I(32, __VscopeHash, 10799784215337378194ull);
-    vlSelf->__PVT__r_tar = VL_SCOPED_RAND_RESET_I(32, __VscopeHash, 13835808927382882950ull);
-    vlSelf->__PVT__r_valid = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 8716220725288817265ull);
-    vlSelf->__PVT__r_type = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 17649322916488332397ull);
     vlSelf->__PVT__fencei_flush = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 14205880289312804791ull);
     vlSelf->__PVT__ifu_out_valid_r = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 5138845183988091424ull);
     vlSelf->__PVT__ifu_out_bus_instruction_r = VL_SCOPED_RAND_RESET_I(32, __VscopeHash, 10879476780930674004ull);
