@@ -294,7 +294,7 @@ module ysyx_26010011(
 	
 	// input flush_icache,
 	.dnpc(dnpc),
-	.flush_valid(flush_valid),
+	.flush_valid(ifu_flush_valid),
 	.dnpc_valid(dnpc_valid),
 
 	.ifu_out_valid(ifu_out_valid),
@@ -324,7 +324,7 @@ module ysyx_26010011(
 	// .r_tar(r_tar),
 	// .r_valid(r_valid),
 	// .r_type(r_type),
-	.fencei_flush(0)
+	.fencei_flush(fencei_pass)
 	
   );/*verilator public_module*/
   wire [31:0] IROM_araddr,IROM_rdata;
@@ -811,16 +811,16 @@ module ysyx_26010011(
 	.M1_rlast(IROM_rlast),    .M1_rid(IROM_rid),
 
 	//MASTER2 AW
-	.M2_awaddr(DRAM_awaddr),  .M2_awvalid(0),  .M2_awready(DRAM_awready),
+	.M2_awaddr(DRAM_awaddr),  .M2_awvalid(DRAM_awvalid),  .M2_awready(DRAM_awready),
 	.M2_awid(DRAM_awid),      .M2_awlen(DRAM_awlen),      .M2_awsize(DRAM_awsize),    .M2_awburst(DRAM_awburst),
 	//MASTER2 W
-	.M2_wdata(DRAM_wdata),    .M2_wstrb(DRAM_wstrb),      .M2_wvalid(0),    .M2_wready(DRAM_wready),
+	.M2_wdata(DRAM_wdata),    .M2_wstrb(DRAM_wstrb),      .M2_wvalid(DRAM_wvalid),    .M2_wready(DRAM_wready),
 	.M2_wlast(DRAM_wlast),
 	//MASTER2 B
 	.M2_bresp(DRAM_bresp),    .M2_bvalid(DRAM_bvalid),    .M2_bready(DRAM_bready),
 	.M2_bid(DRAM_bid),
 	//MASTER2 AR
-	.M2_araddr(DRAM_araddr),  .M2_arvalid(0),  .M2_arready(DRAM_arready),
+	.M2_araddr(DRAM_araddr),  .M2_arvalid(DRAM_arvalid),  .M2_arready(DRAM_arready),
 	.M2_arid(DRAM_arid),      .M2_arlen(DRAM_arlen),      .M2_arsize(DRAM_arsize),    .M2_arbureset(DRAM_arbureset),
 	//MASTER2 R
 	.M2_rdata(DRAM_rdata),    .M2_rresp(DRAM_rresp),      .M2_rvalid(DRAM_rvalid),    .M2_rready(DRAM_rready),

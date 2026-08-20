@@ -2023,12 +2023,12 @@ module ysyx_26010011(
 	.reset(reset),
 	
 	// input flush_icache,
-	.dnpc(0),
-	.flush_valid(0),
-	.dnpc_valid(0),
+	.dnpc(dnpc),
+	.flush_valid(ifu_flush_valid),
+	.dnpc_valid(dnpc_valid),
 
 	.ifu_out_valid(ifu_out_valid),
-	.ifu_out_ready(1),
+	.ifu_out_ready(ifu_out_ready),
 	
 	.ifu_out_bus_instruction(ifu_out_bus_instruction),
 	.ifu_out_bus_fetching(ifu_out_bus_fetching),
@@ -2054,7 +2054,7 @@ module ysyx_26010011(
 	// .r_tar(r_tar),
 	// .r_valid(r_valid),
 	// .r_type(r_type),
-	.fencei_flush(0)
+	.fencei_flush(fencei_pass)
 	
   );/*verilator public_module*/
   wire [31:0] IROM_araddr,IROM_rdata;
@@ -2541,16 +2541,16 @@ module ysyx_26010011(
 	.M1_rlast(IROM_rlast),    .M1_rid(IROM_rid),
 
 	//MASTER2 AW
-	.M2_awaddr(DRAM_awaddr),  .M2_awvalid(0),  .M2_awready(DRAM_awready),
+	.M2_awaddr(DRAM_awaddr),  .M2_awvalid(DRAM_awvalid),  .M2_awready(DRAM_awready),
 	.M2_awid(DRAM_awid),      .M2_awlen(DRAM_awlen),      .M2_awsize(DRAM_awsize),    .M2_awburst(DRAM_awburst),
 	//MASTER2 W
-	.M2_wdata(DRAM_wdata),    .M2_wstrb(DRAM_wstrb),      .M2_wvalid(0),    .M2_wready(DRAM_wready),
+	.M2_wdata(DRAM_wdata),    .M2_wstrb(DRAM_wstrb),      .M2_wvalid(DRAM_wvalid),    .M2_wready(DRAM_wready),
 	.M2_wlast(DRAM_wlast),
 	//MASTER2 B
 	.M2_bresp(DRAM_bresp),    .M2_bvalid(DRAM_bvalid),    .M2_bready(DRAM_bready),
 	.M2_bid(DRAM_bid),
 	//MASTER2 AR
-	.M2_araddr(DRAM_araddr),  .M2_arvalid(0),  .M2_arready(DRAM_arready),
+	.M2_araddr(DRAM_araddr),  .M2_arvalid(DRAM_arvalid),  .M2_arready(DRAM_arready),
 	.M2_arid(DRAM_arid),      .M2_arlen(DRAM_arlen),      .M2_arsize(DRAM_arsize),    .M2_arbureset(DRAM_arbureset),
 	//MASTER2 R
 	.M2_rdata(DRAM_rdata),    .M2_rresp(DRAM_rresp),      .M2_rvalid(DRAM_rvalid),    .M2_rready(DRAM_rready),
@@ -2707,14 +2707,14 @@ module ysyx_26010011_AXI4Arbiter(
     output reg        M1_rlast,   output reg [3:0]  M1_rid,
 
     //MASTER2 AW
-    input      [31:0] M2_awaddr,  input             M2_awvalid, output reg        M2_awready,
+    input      [31:0] M2_awaddr,  input             M2_awvalid, output            M2_awready,
     input      [3:0]  M2_awid,    input      [7:0]  M2_awlen,   input      [2:0]  M2_awsize,  input      [1:0]  M2_awburst,
     //MASTER2 W
-    input      [31:0] M2_wdata,   input      [3:0]  M2_wstrb,   input             M2_wvalid,  output reg        M2_wready,
+    input      [31:0] M2_wdata,   input      [3:0]  M2_wstrb,   input             M2_wvalid,  output            M2_wready,
     input             M2_wlast,
     //MASTER2 B
-    output reg [1:0]  M2_bresp,   output reg        M2_bvalid,  input             M2_bready,
-    output reg [3:0]  M2_bid,
+    output     [1:0]  M2_bresp,   output            M2_bvalid,  input             M2_bready,
+    output     [3:0]  M2_bid,
     //MASTER2 AR
     input      [31:0] M2_araddr,  input             M2_arvalid, output reg        M2_arready,
     input      [3:0]  M2_arid,    input      [7:0]  M2_arlen,   input      [2:0]  M2_arsize,  input      [1:0]  M2_arbureset,
@@ -2723,13 +2723,13 @@ module ysyx_26010011_AXI4Arbiter(
     output reg        M2_rlast,   output reg [3:0]  M2_rid,
 
     //SLAVE AW
-    output reg [31:0] S_awaddr,   output reg        S_awvalid,  input             S_awready,
-    output reg [3:0]  S_awid,     output reg [7:0]  S_awlen,    output reg [2:0]  S_awsize,   output reg [1:0]  S_awburst,
+    output     [31:0] S_awaddr,   output            S_awvalid,  input             S_awready,
+    output     [3:0]  S_awid,     output     [7:0]  S_awlen,    output     [2:0]  S_awsize,   output     [1:0]  S_awburst,
     //SLAVE W
-    output reg [31:0] S_wdata,    output reg [3:0]  S_wstrb,    output reg        S_wvalid,   input             S_wready,
-    output reg        S_wlast,
+    output     [31:0] S_wdata,    output     [3:0]  S_wstrb,    output            S_wvalid,   input             S_wready,
+    output            S_wlast,
     //SLAVE B
-    input      [1:0]  S_bresp,    input             S_bvalid,   output reg        S_bready,
+    input      [1:0]  S_bresp,    input             S_bvalid,   output            S_bready,
     input      [3:0]  S_bid,
     //SLAVE AR
     output reg [31:0] S_araddr,   output reg        S_arvalid,  input             S_arready,
