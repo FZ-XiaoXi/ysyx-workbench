@@ -79,13 +79,13 @@ extern FILE* log_fp;
     #include "nvboard.h"
 #endif
 
-// #define CONFIG_DIFFTEST_ENABLE
+#define CONFIG_DIFFTEST_ENABLE
 #ifdef CONFIG_DIFFTEST_ENABLE
     #define CONFIG_DIFFTEST_MEM_ENABLE
 #endif
 
 // #define CONFIG_WATCHPOINT_ENABLE
-// #define CONFIG_WAVE_ENABLE
+#define CONFIG_WAVE_ENABLE
 
 
 // #define CONFIG_TRACE_ENABLE
