@@ -883,7 +883,9 @@ endmodule
 // ██║      ╚════██║ ██║   ██║
 // ███████╗ ███████║ ╚██████╔╝
 // ╚══════╝ ╚══════╝  ╚═════╝
+`ifdef USE_VERILATOR
 import "DPI-C" function void difftest_mem_set(int addr);
+`endif
 //`include "csr_defines.v"
 module ysyx_26010011_LSU(
     input             clock,
@@ -1010,6 +1012,7 @@ module ysyx_26010011_LSU(
     assign bready  = ((state == S_WAIT_BRESP) || (state == S_IDLE)) & lsu_out_ready & !reset;
     assign rready  = ((state == S_WAIT_RDATA) || (state == S_IDLE)) & lsu_out_ready & !reset;
 
+`ifdef USE_VERILATOR
     always @(*) begin
         if(lsu_in_bus_isSTORE && awvalid && awready) begin
             if((
@@ -1034,9 +1037,8 @@ module ysyx_26010011_LSU(
                 difftest_skip_ref(lsu_in_bus_addr);
             end
         end
-
-
     end
+`endif
 
     always @(*) begin
         next_state = state;
@@ -1505,7 +1507,9 @@ endmodule
 // ██║   ██║ ██╔═══╝  ██╔══██╗
 // ╚██████╔╝ ██║      ██║  ██║
 //  ╚═════╝  ╚═╝      ╚═╝  ╚═╝
+`ifdef USE_VERILATOR
 import "DPI-C" function void difftest_skip_ref(int reason);
+`endif
 //`include "csr_defines.v"
 module ysyx_26010011_GPRs(
   input        clock,
@@ -1642,12 +1646,13 @@ module ysyx_26010011_CSRs(
   assign csr_mtvec = CSR_MTVEC;
 
 
-
+`ifdef USE_VERILATOR
   always @(*) begin
       if (csr_in_wen & ((csr_in_addw==`ysyx_26010011_ADD_MCYCLE) | (csr_in_addw==`ysyx_26010011_ADD_MCYCLEH))) begin
          difftest_skip_ref(4);
       end
   end
+`endif
 endmodule
 
 
@@ -2411,6 +2416,8 @@ module ysyx_26010011(
 	.fencei_pass(fencei_pass)
   );/*verilator public_module*/
   wire [4:0]wbu_out_bus_exception;
+
+  `ifdef USE_VERILATOR
   //WBU FINAL
   reg tb_isFINAL/*verilator public*/,tb_dnpc_valid/*verilator public*/,tb_isMEM/*verilator public*/;
   reg [31:0]tb_FINAL_pc/*verilator public*/,tb_FINAL_npc/*verilator public*/,tb_alu_result/*verilator public*/,tb_FINAL_inst/*verilator public*/;
@@ -2440,7 +2447,7 @@ module ysyx_26010011(
 	end
 
   end
-  
+  `endif
 
   ysyx_26010011_AXI4Arbiter RAM_AXI4Arbiter(
 	.clock(clock),
