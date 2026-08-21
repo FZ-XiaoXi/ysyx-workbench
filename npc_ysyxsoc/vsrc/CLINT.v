@@ -171,7 +171,7 @@ module ysyx_26010011_CLINT(
 
 	
 	reg [31:0]mtime_L,mtime_H;
-	always @(posedge clk) begin
+	always @(posedge clock) begin
 		if(rst) begin
 			mtime_L <= 32'd0;
 			mtime_H <= 32'd0;
