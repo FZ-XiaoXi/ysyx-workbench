@@ -2476,21 +2476,91 @@ module ysyx_26010011(
 	.M2_rlast(DRAM_rlast),    .M2_rid(DRAM_rid),
 
 	//SLAVE AW
-	.S_awaddr(io_master_awaddr),  .S_awvalid(io_master_awvalid),  .S_awready(io_master_awready),
-	.S_awid(io_master_awid),      .S_awlen(io_master_awlen),      .S_awsize(io_master_awsize),    .S_awburst(io_master_awburst),
+	.S_awaddr(S_awaddr),  .S_awvalid(S_awvalid),  .S_awready(S_awready),
+	.S_awid(S_awid),      .S_awlen(S_awlen),      .S_awsize(S_awsize),    .S_awburst(S_awburst),
 	//SLAVE W
-	.S_wdata(io_master_wdata),    .S_wstrb(io_master_wstrb),      .S_wvalid(io_master_wvalid),    .S_wready(io_master_wready),
-	.S_wlast(io_master_wlast),
+	.S_wdata(S_wdata),    .S_wstrb(S_wstrb),      .S_wvalid(S_wvalid),    .S_wready(S_wready),
+	.S_wlast(S_wlast),
 	//SLAVE B
-	.S_bresp(io_master_bresp),    .S_bvalid(io_master_bvalid),    .S_bready(io_master_bready),
-	.S_bid(io_master_bid),
+	.S_bresp(S_bresp),    .S_bvalid(S_bvalid),    .S_bready(S_bready),
+	.S_bid(S_bid),
 	//SLAVE AR
-	.S_araddr(io_master_araddr),  .S_arvalid(io_master_arvalid),  .S_arready(io_master_arready),
-	.S_arid(io_master_arid),      .S_arlen(io_master_arlen),      .S_arsize(io_master_arsize),    .S_arbureset(io_master_arburst),
+	.S_araddr(S_araddr),  .S_arvalid(S_arvalid),  .S_arready(S_arready),
+	.S_arid(S_arid),      .S_arlen(S_arlen),      .S_arsize(S_arsize),    .S_arbureset(S_arbureset),
 	//SLAVE R
-	.S_rdata(io_master_rdata),    .S_rresp(io_master_rresp),      .S_rvalid(io_master_rvalid),    .S_rready(io_master_rready),
-	.S_rlast(io_master_rlast),    .S_rid(io_master_rid)
+	.S_rdata(S_rdata),    .S_rresp(S_rresp),      .S_rvalid(S_rvalid),    .S_rready(S_rready),
+	.S_rlast(S_rlast),    .S_rid(S_rid)
   );
+	wire [31:0] S_araddr,S_rdata,S_awaddr,S_wdata;
+	wire S_arvalid,S_rvalid,S_awvalid,S_wvalid,S_bvalid,S_rlast,S_wlast;
+	wire S_arready,S_rready,S_awready,S_wready;
+	wire [1:0] S_rresp,S_bresp;
+	wire [3:0] S_wstrb;
+	wire [31:0] CLINT_araddr,CLINT_rdata,CLINT_awaddr,CLINT_wdata;
+	wire CLINT_arvalid,CLINT_rvalid,CLINT_awvalid,CLINT_wvalid,CLINT_bvalid,CLINT_rlast,CLINT_wlast;
+	wire CLINT_arready,CLINT_rready,CLINT_awready,CLINT_wready;
+	wire [1:0] CLINT_rresp,CLINT_bresp;
+	wire [3:0] CLINT_wstrb;
+	ysyx_26010011_bridge u_bridge(
+		.clock(clock),
+		.reset(reset),
+		
+		.S_araddr(S_araddr),  .S_arvalid(S_arvalid), .S_arready(S_arready),
+		.S_rdata(S_rdata),   .S_rresp(S_rresp),   .S_rvalid(S_rvalid),  .S_rready(S_rready), .S_rlast(S_rlast),
+		.S_awaddr(S_awaddr),  .S_awvalid(S_awvalid), .S_awready(S_awready),
+		.S_wdata(S_wdata),   .S_wstrb(S_wstrb),   .S_wvalid(S_wvalid),  .S_wready(S_wready),
+		.S_bresp(S_bresp),   .S_bvalid(S_bvalid),  .S_bready(S_bready),
+
+		///////////////////////////////////////////////////////
+		//MEM
+		.MEM_araddr(io_master_araddr),   .MEM_arvalid(io_master_arvalid),  .MEM_arready(io_master_arready),
+		.MEM_rdata(io_master_rdata),    .MEM_rresp(io_master_rresp),    .MEM_rvalid(io_master_rvalid),   .MEM_rready(io_master_rready), MEM_rlast(io_master_rlast),
+		.MEM_awaddr(io_master_awaddr),   .MEM_awvalid(io_master_awvalid),  .MEM_awready(io_master_awready),
+		.MEM_wdata(io_master_wdata),    .MEM_wstrb(io_master_wstrb),    .MEM_wvalid(io_master_wvalid),   .MEM_wready(io_master_wready),
+		.MEM_bresp(io_master_bresp),    .MEM_bvalid(io_master_bvalid),   .MEM_bready(io_master_bready),
+
+		//CLINT
+		.CLINT_araddr(CLINT_araddr),   .CLINT_arvalid(CLINT_arvalid),  .CLINT_arready(CLINT_arready),
+		.CLINT_rdata(CLINT_rdata),    .CLINT_rresp(CLINT_rresp),    .CLINT_rvalid(CLINT_rvalid),   .CLINT_rready(CLINT_rready),
+		.CLINT_awaddr(CLINT_awaddr),   .CLINT_awvalid(CLINT_awvalid),  .CLINT_awready(CLINT_awready),
+		.CLINT_wdata(CLINT_wdata),    .CLINT_wstrb(CLINT_wstrb),    .CLINT_wvalid(CLINT_wvalid),   .CLINT_wready(CLINT_wready),
+		.CLINT_bresp(CLINT_bresp),    .CLINT_bvalid(CLINT_bvalid),   .CLINT_bready(CLINT_bready)
+	);	
+
+	ysyx_26010011_CLINT u_clint(
+		.clock(clock),
+		.reset(reset),
+
+		//AR
+		.araddr(CLINT_araddr),
+		.arvalid(CLINT_arvalid),
+		.arready(CLINT_arready),
+
+		//R
+		.rdata(CLINT_rdata),
+		.rresp(CLINT_rresp),
+		.rvalid(CLINT_rvalid),
+		.rlast(CLINT_rlast),
+		.rready(CLINT_rready),
+
+		//AW
+		.awaddr(CLINT_awaddr),
+		.awvalid(CLINT_awvalid),
+		.awready(CLINT_awready),
+
+		//W
+		.wdata(CLINT_wdata),
+		.wstrb(CLINT_wstrb),
+		.wvalid(CLINT_wvalid),
+		.wready(CLINT_wready),
+
+		//B
+		.bresp(CLINT_bresp),
+		.bvalid(CLINT_bvalid),
+		.bready(CLINT_bready)
+	);
+
+
   wire [4:0] gpr_raddra,gpr_raddrb,gpr_waddr;
   wire [31:0]gpr_rdataa,gpr_rdatab,gpr_wdata,csr_mtvec,csr_mepc,csr_pc;
   wire gpr_we;
