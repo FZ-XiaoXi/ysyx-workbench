@@ -194,12 +194,12 @@ module ysyx_26010011_IFU_icache #(
 	output           debug_is_hit
 );
 
-`ifdef FORMAL
-	always @(*) begin
+// `ifdef FORMAL
+// 	always @(*) begin
 
-		c_assert: assert(1 == 1);
-	end
-`endif  // FORMAL
+// 		c_assert: assert(1 == 1);
+// 	end
+// `endif  // FORMAL
 
 	parameter BLOCK_W = CACHE_BLOCK_SIZE * 8;
 	parameter INDEX_W = $clog2(CACHE_SIZE);
