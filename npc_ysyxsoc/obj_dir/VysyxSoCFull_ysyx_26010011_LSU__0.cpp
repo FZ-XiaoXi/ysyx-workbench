@@ -288,8 +288,11 @@ void VysyxSoCFull_ysyx_26010011_LSU___nba_sequent__TOP__ysyxSoCFull__asic__cpu__
     if ((1U & (~ (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu.reset)))) {
         if (((2U == (IData)(vlSelfRef.__PVT__next_state)) 
              | (1U == (IData)(vlSelfRef.__PVT__next_state)))) {
-            vlSelfRef.__PVT__wdata_q = vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__EX_LS_inst.__PVT__lsu_in_bus_lsu_val;
             vlSelfRef.__PVT__awaddr_q = vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__EX_LS_inst.__PVT__lsu_in_bus_alu_result;
+            vlSelfRef.__PVT__wdata_q = VL_SHIFTL_III(32,32,32, vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__EX_LS_inst.__PVT__lsu_in_bus_lsu_val, 
+                                                     VL_SHIFTL_III(32,32,32, 
+                                                                   (3U 
+                                                                    & vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__EX_LS_inst.__PVT__lsu_in_bus_alu_result), 3U));
         }
     }
 }
