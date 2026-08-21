@@ -39,8 +39,13 @@ class alignas(VL_CACHE_LINE_BYTES) VysyxSoCFull___024root final : public Verilat
     VL_OUT8(externalPins_vga_valid,0,0);
     VL_IN8(externalPins_uart_rx,0,0);
     VL_OUT8(externalPins_uart_tx,0,0);
+    CData/*0:0*/ __Vtrigprevexpr___TOP__ysyxSoCFull__asic__cpu__cpu__LSU_0__r_fire__0;
+    CData/*0:0*/ __VstlDidInit;
     CData/*0:0*/ __VstlFirstIteration;
+    CData/*0:0*/ __Vtrigprevexpr___TOP__ysyxSoCFull__asic__cpu__cpu__LSU_0__r_fire__1;
+    CData/*0:0*/ __VicoDidInit;
     CData/*0:0*/ __VicoFirstIteration;
+    CData/*0:0*/ __Vtrigprevexpr___TOP__ysyxSoCFull__asic__cpu__cpu__LSU_0__r_fire__2;
     CData/*0:0*/ __Vtrigprevexpr___TOP__ysyxSoCFull____PVT__flash__DOT__reset__0;
     CData/*0:0*/ __Vtrigprevexpr___TOP__ysyxSoCFull__asic____PVT__spi_sck__0;
     CData/*0:0*/ __Vtrigprevexpr___TOP__ysyxSoCFull____PVT___asic_psram_ce_n__0;
@@ -52,14 +57,15 @@ class alignas(VL_CACHE_LINE_BYTES) VysyxSoCFull___024root final : public Verilat
     CData/*0:0*/ __Vtrigprevexpr___TOP__externalPins_ps2_clk__0;
     CData/*0:0*/ __Vtrigprevexpr___TOP__reset__0;
     CData/*0:0*/ __Vtrigprevexpr___TOP__ysyxSoCFull__asic__axi4delay_delayer__DOT____Vcellinp__inst_u0__reset__0;
+    CData/*0:0*/ __VactDidInit;
     VL_OUT16(externalPins_gpio_out,15,0);
     VL_IN16(externalPins_gpio_in,15,0);
     IData/*31:0*/ __VactIterCount;
-    VlUnpacked<QData/*63:0*/, 1> __VstlTriggered;
-    VlUnpacked<QData/*63:0*/, 1> __VicoTriggered;
+    VlUnpacked<QData/*63:0*/, 2> __VstlTriggered;
+    VlUnpacked<QData/*63:0*/, 2> __VicoTriggered;
     VlUnpacked<QData/*63:0*/, 1> __VactTriggered;
     VlUnpacked<QData/*63:0*/, 1> __VnbaTriggered;
-    VlUnpacked<CData/*0:0*/, 20> __Vm_traceActivity;
+    VlUnpacked<CData/*0:0*/, 22> __Vm_traceActivity;
 
     // INTERNAL VARIABLES
     VysyxSoCFull__Syms* const vlSymsp;

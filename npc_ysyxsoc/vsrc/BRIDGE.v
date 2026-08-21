@@ -139,7 +139,17 @@ module ysyx_26010011_bridge(
     assign CLINT_araddr = S_araddr;
     always @(*) begin
         //READ
-        if((R_state == STATE_IDLE)?ar_sel_now:ar_sel_reg == 1'b0) begin
+        if((R_state == STATE_IDLE)) begin
+            MEM_arvalid =   ar_sel_now?0:S_arvalid;
+            CLINT_arvalid = ar_sel_now?S_arvalid:0;
+
+            S_arready = ar_sel_now?CLINT_arready:MEM_arready;
+            S_rdata = ar_sel_now?CLINT_arready:MEM_rdata;
+            S_rresp = ar_sel_now?CLINT_rresp:MEM_rresp;
+            S_rvalid = ar_sel_now?CLINT_rvalid:MEM_rvalid;
+            S_rlast = ar_sel_now?CLINT_rlast:MEM_rlast;
+            S_rid = ar_sel_now?CLINT_rid:MEM_rid;
+        end else if(ar_sel_reg == 1'b0) begin
             MEM_arvalid = S_arvalid;
             CLINT_arvalid = 0;
 

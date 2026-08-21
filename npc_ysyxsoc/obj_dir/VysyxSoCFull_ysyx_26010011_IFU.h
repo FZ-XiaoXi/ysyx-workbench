@@ -38,6 +38,7 @@ class alignas(VL_CACHE_LINE_BYTES) VysyxSoCFull_ysyx_26010011_IFU final : public
     VL_IN8(__PVT__fencei_flush,0,0);
     CData/*0:0*/ __PVT__ifu_out_valid_r;
     CData/*0:0*/ __PVT__in_reqValid;
+    CData/*0:0*/ __Vcellinp__icache_u0__in_reqValid;
     CData/*0:0*/ debug_IFU_is_hit;
     CData/*0:0*/ debug_IFU_is_hit_inst;
     CData/*0:0*/ debug_IFU_get_inst;

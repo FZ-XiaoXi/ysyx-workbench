@@ -32,6 +32,7 @@ VL_ATTR_COLD void VysyxSoCFull_ysyx_26010011_IFU_icache__pi1___ctor_var_reset(Vy
     vlSelf->__PVT__out_rlast = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 8059687719875503935ull);
     vlSelf->__PVT__out_rid = VL_SCOPED_RAND_RESET_I(4, __VscopeHash, 13197421409447846ull);
     vlSelf->__PVT__debug_is_hit = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 9597593556992448911ull);
+    vlSelf->__PVT__is_hit = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 16274698441709290430ull);
     for (int __Vi0 = 0; __Vi0 < 4; ++__Vi0) {
         VL_SCOPED_RAND_RESET_W(128, vlSelf->__PVT__cache_mem[__Vi0], __VscopeHash, 16322108757504633651ull);
     }
