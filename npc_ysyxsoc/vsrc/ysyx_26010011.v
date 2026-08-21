@@ -2502,6 +2502,7 @@ module ysyx_26010011(
 	wire CLINT_arready,CLINT_rready,CLINT_awready,CLINT_wready;
 	wire [1:0] CLINT_rresp,CLINT_bresp;
 	wire [3:0] CLINT_wstrb;
+	wire CLINT_rlast;
 	ysyx_26010011_bridge u_bridge(
 		.clock(clock),
 		.reset(reset),
@@ -2522,7 +2523,7 @@ module ysyx_26010011(
 
 		//CLINT
 		.CLINT_araddr(CLINT_araddr),   .CLINT_arvalid(CLINT_arvalid),  .CLINT_arready(CLINT_arready), .CLINT_arid(), .CLINT_arlen(), .CLINT_arsize(CLINT_arsize), .CLINT_arbureset(),
-		.CLINT_rdata(CLINT_rdata),    .CLINT_rresp(CLINT_rresp),    .CLINT_rvalid(CLINT_rvalid),   .CLINT_rready(CLINT_rready), .CLINT_rlast(), .CLINT_rid(),
+		.CLINT_rdata(CLINT_rdata),    .CLINT_rresp(CLINT_rresp),    .CLINT_rvalid(CLINT_rvalid),   .CLINT_rready(CLINT_rready), .CLINT_rlast(CLINT_rlast), .CLINT_rid(),
 		.CLINT_awaddr(CLINT_awaddr),   .CLINT_awvalid(CLINT_awvalid),  .CLINT_awready(CLINT_awready), .CLINT_awid(), .CLINT_awlen(), .CLINT_awsize(CLINT_awsize), .CLINT_awburst(),
 		.CLINT_wdata(CLINT_wdata),    .CLINT_wstrb(CLINT_wstrb),    .CLINT_wvalid(CLINT_wvalid),   .CLINT_wready(CLINT_wready), .CLINT_wlast(),
 		.CLINT_bresp(CLINT_bresp),    .CLINT_bvalid(CLINT_bvalid),   .CLINT_bready(CLINT_bready), .CLINT_bid()
