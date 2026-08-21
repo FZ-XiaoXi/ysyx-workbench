@@ -1058,7 +1058,6 @@ VL_ATTR_COLD void VysyxSoCFull_ysyx_26010011___ctor_var_reset(VysyxSoCFull_ysyx_
     vlSelf->__PVT__CLINT_rvalid = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 9738362805277294602ull);
     vlSelf->__PVT__CLINT_bvalid = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 8745694234458599952ull);
     vlSelf->__PVT__CLINT_rlast = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 7946519429237841855ull);
-    vlSelf->__PVT__CLINT_wlast = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 13022938690100797215ull);
     vlSelf->__PVT__CLINT_arready = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 10330124965946453220ull);
     vlSelf->__PVT__CLINT_awready = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 15570911825675686818ull);
     vlSelf->__PVT__CLINT_wready = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 2261343286847082126ull);

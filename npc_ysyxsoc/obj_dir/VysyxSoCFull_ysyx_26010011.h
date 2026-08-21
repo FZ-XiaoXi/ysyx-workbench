@@ -111,7 +111,6 @@ class alignas(VL_CACHE_LINE_BYTES) VysyxSoCFull_ysyx_26010011 final : public Ver
         CData/*0:0*/ __PVT__CLINT_rvalid;
         CData/*0:0*/ __PVT__CLINT_bvalid;
         CData/*0:0*/ __PVT__CLINT_rlast;
-        CData/*0:0*/ __PVT__CLINT_wlast;
         CData/*0:0*/ __PVT__CLINT_arready;
         CData/*0:0*/ __PVT__CLINT_awready;
         CData/*0:0*/ __PVT__CLINT_wready;
@@ -163,9 +162,9 @@ class alignas(VL_CACHE_LINE_BYTES) VysyxSoCFull_ysyx_26010011 final : public Ver
         CData/*0:0*/ __PVT__IDU_0__DOT__isCSRRW;
         CData/*0:0*/ __PVT__IDU_0__DOT__isCSRRS;
         CData/*0:0*/ __PVT__IDU_0__DOT__isCSRRC;
+        CData/*0:0*/ __PVT__IDU_0__DOT__isCSRRWI;
     };
     struct {
-        CData/*0:0*/ __PVT__IDU_0__DOT__isCSRRWI;
         CData/*0:0*/ __PVT__IDU_0__DOT__isCSRRSI;
         CData/*0:0*/ __PVT__IDU_0__DOT__isCSRRCI;
         CData/*0:0*/ __PVT__IDU_0__DOT__isI;
