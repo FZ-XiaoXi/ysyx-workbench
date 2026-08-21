@@ -727,12 +727,15 @@ void VysyxSoCFull_ysyx_26010011___nba_sequent__TOP__ysyxSoCFull__asic__cpu__cpu_
         __Vdly__u_clint__DOT__rstate = 0U;
         vlSelfRef.__PVT__u_clint__DOT__raddr_reg = 0U;
     } else {
-        if ((((0U == (IData)(vlSelfRef.__PVT__u_clint__DOT__rstate)) 
-              & (IData)(vlSelfRef.__PVT__CLINT_arvalid)) 
-             & (IData)(vlSelfRef.__PVT__CLINT_arready))) {
+        if (VL_UNLIKELY(((((0U == (IData)(vlSelfRef.__PVT__u_clint__DOT__rstate)) 
+                           & (IData)(vlSelfRef.__PVT__CLINT_arvalid)) 
+                          & (IData)(vlSelfRef.__PVT__CLINT_arready))))) {
             VysyxSoCFull___024unit____Vdpiimwrap_difftest_skip_ref_TOP____024unit(0x78787878U);
             vlSelfRef.__PVT__u_clint__DOT__raddr_reg 
                 = vlSelfRef.__PVT__S_araddr;
+            VL_WRITEF_NX("CLINT Read from address: 0x%08x\n",0,
+                         32,vlSelfRef.__PVT__S_araddr);
+            Verilated::runFlushCallbacks();
         }
         __Vdly__u_clint__DOT__rstate = vlSelfRef.__PVT__u_clint__DOT__rnext_state;
     }
