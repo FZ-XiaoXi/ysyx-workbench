@@ -21,24 +21,24 @@ module ysyx_26010011_CLINT(
 	//R
 	output reg [31:0] rdata,
 	output [1:0]  rresp,
-	output        rvalid,
-	output        rlast,
+	output reg    rvalid,
+	output reg    rlast,
 	input         rready,
 
 	//AW
 	input  [31:0] awaddr,
 	input         awvalid,
-	output        awready,
+	output reg    awready,
 
 	//W
 	input  [31:0] wdata,
 	input  [3:0]  wstrb,
 	input         wvalid,
-	output        wready,
+	output reg    wready,
 	
 	//B
 	output [1:0]  bresp,
-	output        bvalid,
+	output reg    bvalid,
 	input         bready
 );
 

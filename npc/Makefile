@@ -114,10 +114,14 @@ iv: concat
 	iverilog -Wall -g2012 -o myCPU_iv -s CPUTop_tb vsrc/ysyx_26010011_tb.v vsrc/ysyx_26010011_dut.v vsrc/ysyx_26010011.v
 	vvp myCPU_iv
 
-verilog:
+verilog: concat
 
 
+IV_SRC = vsrc/ysyx_26010011_tb.v vsrc/ysyx_26010011_dut.v $(SIM_V_TOP)
+sim-iverilog: $(IMG) $(IV_SRC)
+	iverilog -Wall -g2012 -o build/myCPU_sim-iverilog -s CPUTop_tb $(IV_SRC)
+	vvp build/myCPU_sim-iverilog
 
 include ~/ysyx-workbench/Makefile
 
-.PHONY: all sim wave perf perf-test clean iv iv-netlist concat
+.PHONY: all sim wave perf perf-test clean iv iv-netlist concat verilog sim-iverilog

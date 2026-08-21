@@ -18,15 +18,15 @@ module ysyx_26010011_bridge(
     output reg [3:0]  S_bid,
     input      [31:0] S_araddr,  input             S_arvalid, output reg        S_arready,
     input      [3:0]  S_arid,    input      [7:0]  S_arlen,   input      [2:0]  S_arsize,  input      [1:0]  S_arburst,
-    output     [31:0] S_rdata,   output     [1:0]  S_rresp,   output reg        S_rvalid,  input             S_rready,
-    output            S_rlast,   output     [3:0]  S_rid,
+    output reg [31:0] S_rdata,   output reg [1:0]  S_rresp,   output reg        S_rvalid,  input             S_rready,
+    output reg        S_rlast,   output reg [3:0]  S_rid,
     ///////////////////////////////////////////////////////
     //MEM
     //SLAVE AW
-    output     [31:0] MEM_awaddr,   output            MEM_awvalid,  input             MEM_awready,
+    output     [31:0] MEM_awaddr,   output reg        MEM_awvalid,  input             MEM_awready,
     output     [3:0]  MEM_awid,     output     [7:0]  MEM_awlen,    output     [2:0]  MEM_awsize,   output     [1:0]  MEM_awburst,
     //SLAVE W
-    output     [31:0] MEM_wdata,    output     [3:0]  MEM_wstrb,    output            MEM_wvalid,   input             MEM_wready,
+    output     [31:0] MEM_wdata,    output     [3:0]  MEM_wstrb,    output reg        MEM_wvalid,   input             MEM_wready,
     output            MEM_wlast,
     //SLAVE B
     input      [1:0]  MEM_bresp,    input             MEM_bvalid,   output            MEM_bready,
@@ -40,10 +40,10 @@ module ysyx_26010011_bridge(
 
     //CLINT
     //SLAVE AW
-    output     [31:0] CLINT_awaddr,   output            CLINT_awvalid,  input             CLINT_awready,
+    output     [31:0] CLINT_awaddr,   output reg        CLINT_awvalid,  input             CLINT_awready,
     output     [3:0]  CLINT_awid,     output     [7:0]  CLINT_awlen,    output     [2:0]  CLINT_awsize,   output     [1:0]  CLINT_awburst,
     //SLAVE W
-    output     [31:0] CLINT_wdata,    output     [3:0]  CLINT_wstrb,    output            CLINT_wvalid,   input             CLINT_wready,
+    output     [31:0] CLINT_wdata,    output     [3:0]  CLINT_wstrb,    output reg        CLINT_wvalid,   input             CLINT_wready,
     output            CLINT_wlast,
     //SLAVE B
     input      [1:0]  CLINT_bresp,    input             CLINT_bvalid,   output            CLINT_bready,
