@@ -3001,7 +3001,7 @@ module ysyx_26010011_CLINT(
 	  rstate <= rnext_state;
 	  if (rstate == 4'b0000 && arvalid && arready) begin
         `ifdef USE_VERILATOR
-            difftest_arburst_ref(32'h78787878);
+            difftest_skip_ref(32'h78787878);
         `endif
         raddr_reg <= araddr;
       end
