@@ -48,7 +48,7 @@ NETLIST_CELLS ?= /home/seaber/ysyx-workbench/yosys-sta/pdk/nangate45/sim/cells.v
 all:
 
 concat:
-	cat vsrc/csr_defines.v vsrc/IFU.v vsrc/IDU.v vsrc/EXU.v vsrc/LSU.v vsrc/WBU.v vsrc/pipeline.v vsrc/REG.v vsrc/CPU.v vsrc/AXI4Arbiter.v vsrc/CLINT.v vsrc/BRIDGE.v > vsrc/ysyx_26010011.v
+	cat $(NPC_SOC_HOME)/vsrc/csr_defines.v $(NPC_SOC_HOME)/vsrc/IFU.v $(NPC_SOC_HOME)/vsrc/IDU.v $(NPC_SOC_HOME)/vsrc/EXU.v $(NPC_SOC_HOME)/vsrc/LSU.v $(NPC_SOC_HOME)/vsrc/WBU.v $(NPC_SOC_HOME)/vsrc/pipeline.v $(NPC_SOC_HOME)/vsrc/REG.v $(NPC_SOC_HOME)/vsrc/CPU.v $(NPC_SOC_HOME)/vsrc/AXI4Arbiter.v $(NPC_SOC_HOME)/vsrc/CLINT.v $(NPC_SOC_HOME)/vsrc/BRIDGE.v > $(NPC_SOC_HOME)/vsrc/ysyx_26010011.v
 	sed -i 's#`include#//`include#' vsrc/ysyx_26010011.v
 
 sim: $(SIM_C) $(SIM_V) $(NVBOARD_ARCHIVE) concat
