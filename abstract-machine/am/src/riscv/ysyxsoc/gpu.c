@@ -4,10 +4,10 @@
 // #define SYNC_ADDR (VGACTL_ADDR + 4)
 
 static int gpu_w,gpu_h;
-
 void __am_gpu_init() {
   gpu_w = 640;
   gpu_h = 480;
+  memset((void*)FB_ADDR, 0, gpu_w * gpu_h * 4);
 }
 
 void __am_gpu_config(AM_GPU_CONFIG_T *cfg) {
