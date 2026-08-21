@@ -3194,13 +3194,13 @@ module ysyx_26010011_bridge(
     assign MEM_arlen = S_arlen;
     assign MEM_arsize = S_arsize;
     assign MEM_arburst = S_arburst;
-    assign MEM_rready = S_arready;
+    assign MEM_rready = S_rready;
     assign MEM_araddr = S_araddr;
     assign CLINT_arid = S_arid;
     assign CLINT_arlen = S_arlen;
     assign CLINT_arsize = S_arsize;
     assign CLINT_arburst = S_arburst;
-    assign CLINT_rready = S_arready;
+    assign CLINT_rready = S_rready;
     assign CLINT_araddr = S_araddr;
     always @(*) begin
         //READ
