@@ -30,7 +30,7 @@ module ysyx_26010011_bridge(
     output reg [3:0]  MEM_arid,     output reg [7:0]  MEM_arlen,    output reg [2:0]  MEM_arsize,   output reg [1:0]  MEM_arbureset,
     //SLAVE R
     input      [31:0] MEM_rdata,    input      [1:0]  MEM_rresp,    input             MEM_rvalid,   output reg        MEM_rready,
-    input             MEM_rlast,    input      [3:0]  MEM_rid
+    input             MEM_rlast,    input      [3:0]  MEM_rid,
 
     //CLINT
     //SLAVE AW
