@@ -6,9 +6,9 @@
 // ██║      ██║      ██║ ██║╚██╗██║    ██║
 // ╚██████╗ ███████╗ ██║ ██║ ╚████║    ██║
 //  ╚═════╝ ╚══════╝ ╚═╝ ╚═╝  ╚═══╝    ╚═╝
-`ifdef USE_VERILATOR
-import "DPI-C" function void difftest_skip_ref(int reason);
-`endif
+// `ifdef USE_VERILATOR
+// import "DPI-C" function void difftest_skip_ref(int reason);
+// `endif
 module ysyx_26010011_CLINT(
 	input clock,
 	input reset,
