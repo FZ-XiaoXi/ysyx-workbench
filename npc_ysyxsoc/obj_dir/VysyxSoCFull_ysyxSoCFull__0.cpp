@@ -598,7 +598,7 @@ void VysyxSoCFull_ysyxSoCFull___nba_sequent__TOP__ysyxSoCFull__6(VysyxSoCFull_ys
         Verilated::runFlushCallbacks();
         VL_STOP_MT("/home/seaber/ysyx-workbench/npc_ysyxsoc/../ysyxSoC/perip/sdram/sdram.v", 312, "", false);
     }
-    vlSelfRef.__VdfgRegularize_h6e95ff9d_0_37 = ((1U 
+    vlSelfRef.__VdfgRegularize_h6e95ff9d_0_36 = ((1U 
                                                   == 
                                                   (7U 
                                                    & (IData)(vlSelfRef.__PVT__sdram__DOT__sdram_32_0__DOT__u_sdram_16_L__DOT__reg_mode)))
@@ -624,7 +624,7 @@ void VysyxSoCFull_ysyxSoCFull___nba_sequent__TOP__ysyxSoCFull__6(VysyxSoCFull_ys
         Verilated::runFlushCallbacks();
         VL_STOP_MT("/home/seaber/ysyx-workbench/npc_ysyxsoc/../ysyxSoC/perip/sdram/sdram.v", 312, "", false);
     }
-    vlSelfRef.__VdfgRegularize_h6e95ff9d_0_41 = ((1U 
+    vlSelfRef.__VdfgRegularize_h6e95ff9d_0_40 = ((1U 
                                                   == 
                                                   (7U 
                                                    & (IData)(vlSelfRef.__PVT__sdram__DOT__sdram_32_0__DOT__u_sdram_16_H__DOT__reg_mode)))
@@ -774,7 +774,7 @@ void VysyxSoCFull_ysyxSoCFull___nba_sequent__TOP__ysyxSoCFull__7(VysyxSoCFull_ys
         Verilated::runFlushCallbacks();
         VL_STOP_MT("/home/seaber/ysyx-workbench/npc_ysyxsoc/../ysyxSoC/perip/sdram/sdram.v", 312, "", false);
     }
-    vlSelfRef.__VdfgRegularize_h6e95ff9d_0_44 = ((1U 
+    vlSelfRef.__VdfgRegularize_h6e95ff9d_0_43 = ((1U 
                                                   == 
                                                   (7U 
                                                    & (IData)(vlSelfRef.__PVT__sdram__DOT__sdram_32_1__DOT__u_sdram_16_L__DOT__reg_mode)))
@@ -800,7 +800,7 @@ void VysyxSoCFull_ysyxSoCFull___nba_sequent__TOP__ysyxSoCFull__7(VysyxSoCFull_ys
         Verilated::runFlushCallbacks();
         VL_STOP_MT("/home/seaber/ysyx-workbench/npc_ysyxsoc/../ysyxSoC/perip/sdram/sdram.v", 312, "", false);
     }
-    vlSelfRef.__VdfgRegularize_h6e95ff9d_0_47 = ((1U 
+    vlSelfRef.__VdfgRegularize_h6e95ff9d_0_46 = ((1U 
                                                   == 
                                                   (7U 
                                                    & (IData)(vlSelfRef.__PVT__sdram__DOT__sdram_32_1__DOT__u_sdram_16_H__DOT__reg_mode)))
@@ -1123,7 +1123,7 @@ void VysyxSoCFull_ysyxSoCFull___nba_comb__TOP__ysyxSoCFull__6(VysyxSoCFull_ysyxS
                          ? ((2U & (IData)(vlSelfRef.__PVT__sdram__DOT__sdram_32_0__DOT__u_sdram_16_L__DOT__state))
                              ? 0U : ((1U & (IData)(vlSelfRef.__PVT__sdram__DOT__sdram_32_0__DOT__u_sdram_16_L__DOT__state))
                                       ? 0U : (((IData)(vlSelfRef.__PVT__sdram__DOT__sdram_32_0__DOT__u_sdram_16_L__DOT__count) 
-                                               == (IData)(vlSelfRef.__VdfgRegularize_h6e95ff9d_0_37))
+                                               == (IData)(vlSelfRef.__VdfgRegularize_h6e95ff9d_0_36))
                                                ? 0U
                                                : 4U)))
                          : ((2U & (IData)(vlSelfRef.__PVT__sdram__DOT__sdram_32_0__DOT__u_sdram_16_L__DOT__state))
@@ -1140,7 +1140,7 @@ void VysyxSoCFull_ysyxSoCFull___nba_comb__TOP__ysyxSoCFull__6(VysyxSoCFull_ysyxS
                                                       (7U 
                                                        & (IData)(vlSelfRef.__PVT__sdram__DOT__sdram_32_0__DOT__u_sdram_16_L__DOT__reg_mode)))
                                                       ? 0U
-                                                      : (IData)(vlSelfRef.__VdfgRegularize_h6e95ff9d_0_37)))
+                                                      : (IData)(vlSelfRef.__VdfgRegularize_h6e95ff9d_0_36)))
                                                     ? 
                                                    ((5U 
                                                      == 
@@ -1168,7 +1168,7 @@ void VysyxSoCFull_ysyxSoCFull___nba_comb__TOP__ysyxSoCFull__6(VysyxSoCFull_ysyxS
                          ? ((2U & (IData)(vlSelfRef.__PVT__sdram__DOT__sdram_32_0__DOT__u_sdram_16_H__DOT__state))
                              ? 0U : ((1U & (IData)(vlSelfRef.__PVT__sdram__DOT__sdram_32_0__DOT__u_sdram_16_H__DOT__state))
                                       ? 0U : (((IData)(vlSelfRef.__PVT__sdram__DOT__sdram_32_0__DOT__u_sdram_16_H__DOT__count) 
-                                               == (IData)(vlSelfRef.__VdfgRegularize_h6e95ff9d_0_41))
+                                               == (IData)(vlSelfRef.__VdfgRegularize_h6e95ff9d_0_40))
                                                ? 0U
                                                : 4U)))
                          : ((2U & (IData)(vlSelfRef.__PVT__sdram__DOT__sdram_32_0__DOT__u_sdram_16_H__DOT__state))
@@ -1185,7 +1185,7 @@ void VysyxSoCFull_ysyxSoCFull___nba_comb__TOP__ysyxSoCFull__6(VysyxSoCFull_ysyxS
                                                       (7U 
                                                        & (IData)(vlSelfRef.__PVT__sdram__DOT__sdram_32_0__DOT__u_sdram_16_H__DOT__reg_mode)))
                                                       ? 0U
-                                                      : (IData)(vlSelfRef.__VdfgRegularize_h6e95ff9d_0_41)))
+                                                      : (IData)(vlSelfRef.__VdfgRegularize_h6e95ff9d_0_40)))
                                                     ? 
                                                    ((5U 
                                                      == 
@@ -1272,7 +1272,7 @@ void VysyxSoCFull_ysyxSoCFull___nba_comb__TOP__ysyxSoCFull__7(VysyxSoCFull_ysyxS
                          ? ((2U & (IData)(vlSelfRef.__PVT__sdram__DOT__sdram_32_1__DOT__u_sdram_16_L__DOT__state))
                              ? 0U : ((1U & (IData)(vlSelfRef.__PVT__sdram__DOT__sdram_32_1__DOT__u_sdram_16_L__DOT__state))
                                       ? 0U : (((IData)(vlSelfRef.__PVT__sdram__DOT__sdram_32_1__DOT__u_sdram_16_L__DOT__count) 
-                                               == (IData)(vlSelfRef.__VdfgRegularize_h6e95ff9d_0_44))
+                                               == (IData)(vlSelfRef.__VdfgRegularize_h6e95ff9d_0_43))
                                                ? 0U
                                                : 4U)))
                          : ((2U & (IData)(vlSelfRef.__PVT__sdram__DOT__sdram_32_1__DOT__u_sdram_16_L__DOT__state))
@@ -1289,7 +1289,7 @@ void VysyxSoCFull_ysyxSoCFull___nba_comb__TOP__ysyxSoCFull__7(VysyxSoCFull_ysyxS
                                                       (7U 
                                                        & (IData)(vlSelfRef.__PVT__sdram__DOT__sdram_32_1__DOT__u_sdram_16_L__DOT__reg_mode)))
                                                       ? 0U
-                                                      : (IData)(vlSelfRef.__VdfgRegularize_h6e95ff9d_0_44)))
+                                                      : (IData)(vlSelfRef.__VdfgRegularize_h6e95ff9d_0_43)))
                                                     ? 
                                                    ((5U 
                                                      == 
@@ -1317,7 +1317,7 @@ void VysyxSoCFull_ysyxSoCFull___nba_comb__TOP__ysyxSoCFull__7(VysyxSoCFull_ysyxS
                          ? ((2U & (IData)(vlSelfRef.__PVT__sdram__DOT__sdram_32_1__DOT__u_sdram_16_H__DOT__state))
                              ? 0U : ((1U & (IData)(vlSelfRef.__PVT__sdram__DOT__sdram_32_1__DOT__u_sdram_16_H__DOT__state))
                                       ? 0U : (((IData)(vlSelfRef.__PVT__sdram__DOT__sdram_32_1__DOT__u_sdram_16_H__DOT__count) 
-                                               == (IData)(vlSelfRef.__VdfgRegularize_h6e95ff9d_0_47))
+                                               == (IData)(vlSelfRef.__VdfgRegularize_h6e95ff9d_0_46))
                                                ? 0U
                                                : 4U)))
                          : ((2U & (IData)(vlSelfRef.__PVT__sdram__DOT__sdram_32_1__DOT__u_sdram_16_H__DOT__state))
@@ -1334,7 +1334,7 @@ void VysyxSoCFull_ysyxSoCFull___nba_comb__TOP__ysyxSoCFull__7(VysyxSoCFull_ysyxS
                                                       (7U 
                                                        & (IData)(vlSelfRef.__PVT__sdram__DOT__sdram_32_1__DOT__u_sdram_16_H__DOT__reg_mode)))
                                                       ? 0U
-                                                      : (IData)(vlSelfRef.__VdfgRegularize_h6e95ff9d_0_47)))
+                                                      : (IData)(vlSelfRef.__VdfgRegularize_h6e95ff9d_0_46)))
                                                     ? 
                                                    ((5U 
                                                      == 

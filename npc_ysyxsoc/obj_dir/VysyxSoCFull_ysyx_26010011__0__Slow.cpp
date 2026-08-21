@@ -41,16 +41,17 @@ VL_ATTR_COLD void VysyxSoCFull_ysyx_26010011___stl_sequent__TOP__ysyxSoCFull__as
     vlSelfRef.IDU_0__DOT____VdfgRegularize_hd1728725_0_24 
         = ((0x17U == (0x0000007fU & vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__IF_ID_inst.__PVT__idu_in_bus_instruction)) 
            | (0x6fU == (0x0000007fU & vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__IF_ID_inst.__PVT__idu_in_bus_instruction)));
-    if (vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__LS_WB_inst.wbu_in_valid) {
-        vlSelfRef.WBU_0__DOT____VdfgRegularize_h03859d6a_0_0 
-            = (1U & (~ ((IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__LS_WB_inst.__PVT__wbu_in_bus_exception) 
-                        >> 4U)));
-        vlSelfRef.__PVT__WBU_0__DOT__wbu_out_bus_exception 
-            = vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__LS_WB_inst.__PVT__wbu_in_bus_exception;
-    } else {
-        vlSelfRef.WBU_0__DOT____VdfgRegularize_h03859d6a_0_0 = 0U;
-        vlSelfRef.__PVT__WBU_0__DOT__wbu_out_bus_exception = 0U;
-    }
+    vlSelfRef.WBU_0__DOT____VdfgRegularize_h03859d6a_0_0 
+        = ((~ ((IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__LS_WB_inst.__PVT__wbu_in_bus_exception) 
+               >> 4U)) & (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__LS_WB_inst.wbu_in_valid));
+    vlSelfRef.__PVT__u_bridge__DOT__aw_sel_now = ((0x02000000U 
+                                                   <= vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__LSU_0.__PVT__awaddr_q) 
+                                                  & (0x02000008U 
+                                                     > vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__LSU_0.__PVT__awaddr_q));
+    vlSelfRef.__PVT__WBU_0__DOT__wbu_out_bus_exception 
+        = ((IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__LS_WB_inst.wbu_in_valid)
+            ? (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__LS_WB_inst.__PVT__wbu_in_bus_exception)
+            : 0U);
     vlSelfRef.__PVT__IDU_0__DOT__isXOR = (IData)((0x00004033U 
                                                   == 
                                                   (0xfe00707fU 
@@ -228,15 +229,6 @@ VL_ATTR_COLD void VysyxSoCFull_ysyx_26010011___stl_sequent__TOP__ysyxSoCFull__as
         [__Vtableidx5];
     vlSelfRef.__PVT__CLINT_rlast = VysyxSoCFull__ConstPool__TABLE_hfc7a839a_0
         [__Vtableidx5];
-    vlSelfRef.__VdfgRegularize_h6e95ff9d_0_18 = (1U 
-                                                 & ((IData)(vlSelfRef.__PVT__u_bridge__DOT__W_state)
-                                                     ? 
-                                                    (~ (IData)(vlSelfRef.__PVT__u_bridge__DOT__aw_sel_reg))
-                                                     : 
-                                                    ((0x02000000U 
-                                                      <= vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__LSU_0.__PVT__awaddr_q) 
-                                                     & (0x02000008U 
-                                                        > vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__LSU_0.__PVT__awaddr_q))));
     if (vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__ID_EX_inst.__PVT__exu_in_bus_alu_isUseImm) {
         vlSelfRef.__PVT__EXU_0__DOT__b = vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__ID_EX_inst.__PVT__exu_in_bus_imm;
         vlSelfRef.__PVT__EXU_0__DOT__a = ((IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__ID_EX_inst.__PVT__exu_in_bus_isUsePC)
@@ -434,6 +426,15 @@ VL_ATTR_COLD void VysyxSoCFull_ysyx_26010011___stl_sequent__TOP__ysyxSoCFull__as
                                 && ((IData)(vlSelfRef.__PVT__u_bridge__DOT__ar_sel_reg)
                                      ? (IData)(vlSelfRef.__PVT__CLINT_rlast)
                                      : (IData)(vlSelfRef.__PVT__io_master_rlast)));
+    vlSelfRef.__PVT__S_bvalid = ((IData)(vlSelfRef.__PVT__u_bridge__DOT__W_state) 
+                                 && ((IData)(vlSelfRef.__PVT__u_bridge__DOT__aw_sel_reg)
+                                      ? (IData)(vlSelfRef.__PVT__CLINT_bvalid)
+                                      : (IData)(vlSelfRef.__PVT__io_master_bvalid)));
+    vlSelfRef.__PVT__S_bid = ((IData)(vlSelfRef.__PVT__u_bridge__DOT__W_state)
+                               ? ((IData)(vlSelfRef.__PVT__u_bridge__DOT__aw_sel_reg)
+                                   ? (IData)(vlSelfRef.__PVT__u_bridge__DOT__CLINT_bid)
+                                   : (IData)(vlSelfRef.__PVT__io_master_bid))
+                               : 0U);
     vlSelfRef.IDU_0__DOT____VdfgRegularize_hd1728725_0_3 
         = ((IData)(vlSelfRef.IDU_0__DOT____VdfgRegularize_hd1728725_0_2) 
            | (IData)(vlSelfRef.__PVT__IDU_0__DOT__isJALR));
@@ -658,8 +659,8 @@ VL_ATTR_COLD void VysyxSoCFull_ysyx_26010011___stl_sequent__TOP__ysyxSoCFull__as
     IDU_0__DOT____VdfgRegularize_hd1728725_0_0 = 0;
     CData/*5:0*/ __Vtableidx2;
     __Vtableidx2 = 0;
-    CData/*0:0*/ __VdfgRegularize_h6e95ff9d_0_33;
-    __VdfgRegularize_h6e95ff9d_0_33 = 0;
+    CData/*0:0*/ __VdfgRegularize_h6e95ff9d_0_32;
+    __VdfgRegularize_h6e95ff9d_0_32 = 0;
     // Body
     vlSelfRef.__PVT__EXU_0__DOT__exu_in_ready = (1U 
                                                  & ((~ (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__EX_LS_inst.lsu_in_valid)) 
@@ -764,22 +765,41 @@ VL_ATTR_COLD void VysyxSoCFull_ysyx_26010011___stl_sequent__TOP__ysyxSoCFull__as
                                                            & (~ 
                                                               ((IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__LS_WB_inst.wbu_in_valid) 
                                                                & (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__LS_WB_inst.__PVT__wbu_in_bus_isLOAD))))))))))));
-    __Vtableidx2 = (((IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__LSU_0.__PVT__bready) 
-                     << 5U) | ((((~ (IData)(vlSelfRef.__VdfgRegularize_h6e95ff9d_0_18)) 
-                                 & (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__LSU_0.__PVT__awvalid)) 
-                                << 4U) | (IData)(vlSelfRef.__PVT__u_clint__DOT__wstate)));
-    vlSelfRef.__PVT__u_clint__DOT__wnext_state = VysyxSoCFull__ConstPool__TABLE_hc136131a_0
-        [__Vtableidx2];
-    vlSelfRef.__PVT__io_master_awvalid = ((IData)(vlSelfRef.__VdfgRegularize_h6e95ff9d_0_18) 
-                                          & (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__LSU_0.__PVT__awvalid));
     if (vlSelfRef.__PVT__u_bridge__DOT__W_state) {
         vlSelfRef.__PVT__u_bridge__DOT__W_next_state = 1U;
+        vlSelfRef.__PVT__CLINT_wvalid = (1U & ((IData)(vlSelfRef.__PVT__u_bridge__DOT__aw_sel_reg) 
+                                               && (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__LSU_0.__PVT__awvalid)));
+        vlSelfRef.__PVT__CLINT_awvalid = (1U & ((IData)(vlSelfRef.__PVT__u_bridge__DOT__aw_sel_reg) 
+                                                && (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__LSU_0.__PVT__awvalid)));
+        vlSelfRef.__PVT__io_master_wvalid = (1U & (
+                                                   (1U 
+                                                    & (~ (IData)(vlSelfRef.__PVT__u_bridge__DOT__aw_sel_reg))) 
+                                                   && (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__LSU_0.__PVT__awvalid)));
+        vlSelfRef.__PVT__io_master_awvalid = (1U & 
+                                              ((1U 
+                                                & (~ (IData)(vlSelfRef.__PVT__u_bridge__DOT__aw_sel_reg))) 
+                                               && (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__LSU_0.__PVT__awvalid)));
         if (((IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__LSU_0.__PVT__bready) 
-             & (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__LSU_0.__PVT__bvalid))) {
+             & (IData)(vlSelfRef.__PVT__S_bvalid))) {
             vlSelfRef.__PVT__u_bridge__DOT__W_next_state = 0U;
         }
     } else {
         vlSelfRef.__PVT__u_bridge__DOT__W_next_state = 0U;
+        if (vlSelfRef.__PVT__u_bridge__DOT__aw_sel_now) {
+            vlSelfRef.__PVT__CLINT_wvalid = (1U & (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__LSU_0.__PVT__awvalid));
+            vlSelfRef.__PVT__CLINT_awvalid = (1U & (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__LSU_0.__PVT__awvalid));
+            vlSelfRef.__PVT__io_master_wvalid = (1U 
+                                                 & 0U);
+            vlSelfRef.__PVT__io_master_awvalid = (1U 
+                                                  & 0U);
+        } else {
+            vlSelfRef.__PVT__CLINT_wvalid = (1U & 0U);
+            vlSelfRef.__PVT__CLINT_awvalid = (1U & 0U);
+            vlSelfRef.__PVT__io_master_wvalid = (1U 
+                                                 & (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__LSU_0.__PVT__awvalid));
+            vlSelfRef.__PVT__io_master_awvalid = (1U 
+                                                  & (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__LSU_0.__PVT__awvalid));
+        }
         if (vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__LSU_0.__PVT__awvalid) {
             vlSelfRef.__PVT__u_bridge__DOT__W_next_state = 1U;
         }
@@ -945,6 +965,11 @@ VL_ATTR_COLD void VysyxSoCFull_ysyx_26010011___stl_sequent__TOP__ysyxSoCFull__as
                                                   & ((~ (IData)(vlSelfRef.idu_isRAW)) 
                                                      | ((IData)(vlSelfRef.__PVT__IDU_0__DOT__idu_out_bus_exception) 
                                                         >> 4U)));
+    __Vtableidx2 = (((IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__LSU_0.__PVT__bready) 
+                     << 5U) | (((IData)(vlSelfRef.__PVT__CLINT_awvalid) 
+                                << 4U) | (IData)(vlSelfRef.__PVT__u_clint__DOT__wstate)));
+    vlSelfRef.__PVT__u_clint__DOT__wnext_state = VysyxSoCFull__ConstPool__TABLE_hc136131a_0
+        [__Vtableidx2];
     vlSelfRef.__PVT__IDU_0__DOT__idu_in_ready = (((~ (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__ID_EX_inst.exu_in_valid)) 
                                                   | (IData)(vlSelfRef.__PVT__EXU_0__DOT__exu_in_ready)) 
                                                  & ((IData)(IDU_0__DOT____VdfgRegularize_hd1728725_0_0) 
@@ -953,19 +978,19 @@ VL_ATTR_COLD void VysyxSoCFull_ysyx_26010011___stl_sequent__TOP__ysyxSoCFull__as
     vlSelfRef.__PVT__IDU_0__DOT__idu_out_valid = ((IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__IF_ID_inst.idu_in_valid) 
                                                   & ((~ (IData)(vlSelfRef.__PVT__IDU_0__DOT__state)) 
                                                      & (IData)(IDU_0__DOT____VdfgRegularize_hd1728725_0_0)));
-    __VdfgRegularize_h6e95ff9d_0_33 = (1U & ((~ (IData)(vlSelfRef.__PVT__IDU_0__DOT__idu_out_valid)) 
+    __VdfgRegularize_h6e95ff9d_0_32 = (1U & ((~ (IData)(vlSelfRef.__PVT__IDU_0__DOT__idu_out_valid)) 
                                              | (vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__IF_ID_inst.idu_in_bus_pc 
                                                 != vlSelfRef.__PVT__EXU_0__DOT__exu_out_bus_alu_result)));
     vlSelfRef.flush_valid = ((IData)(vlSelfRef.flush_exception_valid) 
                              | (((IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__ID_EX_inst.__PVT__exu_in_bus_isJUMP) 
                                  & ((IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__ID_EX_inst.exu_in_valid) 
                                     & (IData)(vlSelfRef.__PVT__EXU_0__DOT__exu_in_ready)))
-                                 ? (IData)(__VdfgRegularize_h6e95ff9d_0_33)
+                                 ? (IData)(__VdfgRegularize_h6e95ff9d_0_32)
                                  : (((IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__ID_EX_inst.__PVT__exu_in_bus_isBRANCH) 
                                      & (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__ID_EX_inst.exu_in_valid)) 
                                     & ((IData)(vlSelfRef.__PVT__EXU_0__DOT__exu_in_ready) 
                                        & ((IData)(vlSelfRef.__PVT__exu_out_bus_dnpc_valid)
-                                           ? (IData)(__VdfgRegularize_h6e95ff9d_0_33)
+                                           ? (IData)(__VdfgRegularize_h6e95ff9d_0_32)
                                            : ((~ (IData)(vlSelfRef.__PVT__IDU_0__DOT__idu_out_valid)) 
                                               | (vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__IF_ID_inst.idu_in_bus_pc 
                                                  != vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__ID_EX_inst.__PVT__exu_in_bus_snpc)))))));
@@ -1064,15 +1089,21 @@ VL_ATTR_COLD void VysyxSoCFull_ysyx_26010011___ctor_var_reset(VysyxSoCFull_ysyx_
     vlSelf->__PVT__S_rdata = VL_SCOPED_RAND_RESET_I(32, __VscopeHash, 1989296464173262834ull);
     vlSelf->__PVT__S_arvalid = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 15658670427839457430ull);
     vlSelf->__PVT__S_rvalid = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 10761587303181714715ull);
+    vlSelf->__PVT__S_bvalid = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 17849579045641473566ull);
     vlSelf->__PVT__S_rlast = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 15435730343987244982ull);
     vlSelf->__PVT__S_arready = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 17122809408996733240ull);
+    vlSelf->__PVT__S_awready = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 17014021805460904505ull);
+    vlSelf->__PVT__S_wready = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 12852217189061255496ull);
     vlSelf->__PVT__S_arid = VL_SCOPED_RAND_RESET_I(4, __VscopeHash, 16968790080563890634ull);
+    vlSelf->__PVT__S_bid = VL_SCOPED_RAND_RESET_I(4, __VscopeHash, 13549630278632760757ull);
     vlSelf->__PVT__S_rid = VL_SCOPED_RAND_RESET_I(4, __VscopeHash, 3827061764519651058ull);
     vlSelf->__PVT__S_arburst = VL_SCOPED_RAND_RESET_I(2, __VscopeHash, 3476913524963226392ull);
     vlSelf->__PVT__S_arsize = VL_SCOPED_RAND_RESET_I(3, __VscopeHash, 774052082752397629ull);
     vlSelf->__PVT__S_arlen = VL_SCOPED_RAND_RESET_I(8, __VscopeHash, 18115728767137224371ull);
     vlSelf->__PVT__CLINT_arvalid = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 18369756256379185791ull);
     vlSelf->__PVT__CLINT_rvalid = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 9738362805277294602ull);
+    vlSelf->__PVT__CLINT_awvalid = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 6442187832335141260ull);
+    vlSelf->__PVT__CLINT_wvalid = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 14648121147685536134ull);
     vlSelf->__PVT__CLINT_bvalid = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 8745694234458599952ull);
     vlSelf->__PVT__CLINT_rlast = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 7946519429237841855ull);
     vlSelf->__PVT__CLINT_arready = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 10330124965946453220ull);
@@ -1160,6 +1191,7 @@ VL_ATTR_COLD void VysyxSoCFull_ysyx_26010011___ctor_var_reset(VysyxSoCFull_ysyx_
     vlSelf->__PVT__u_bridge__DOT__CLINT_rid = VL_SCOPED_RAND_RESET_I(4, __VscopeHash, 11989763900120530470ull);
     vlSelf->__PVT__u_bridge__DOT__aw_sel_reg = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 2216584772265930645ull);
     vlSelf->__PVT__u_bridge__DOT__ar_sel_reg = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 8784515397783432852ull);
+    vlSelf->__PVT__u_bridge__DOT__aw_sel_now = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 13271771386913532612ull);
     vlSelf->__PVT__u_bridge__DOT__ar_sel_now = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 11103760887218067669ull);
     vlSelf->__PVT__u_bridge__DOT__R_state = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 11197853852932998707ull);
     vlSelf->__PVT__u_bridge__DOT__R_next_state = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 9216759082398079978ull);
@@ -1172,5 +1204,4 @@ VL_ATTR_COLD void VysyxSoCFull_ysyx_26010011___ctor_var_reset(VysyxSoCFull_ysyx_
     vlSelf->__PVT__u_clint__DOT__raddr_reg = VL_SCOPED_RAND_RESET_I(32, __VscopeHash, 6239630701339536848ull);
     vlSelf->__PVT__u_clint__DOT__mtime_L = VL_SCOPED_RAND_RESET_I(32, __VscopeHash, 2852945115331758710ull);
     vlSelf->__PVT__u_clint__DOT__mtime_H = VL_SCOPED_RAND_RESET_I(32, __VscopeHash, 11716648817237412802ull);
-    vlSelf->__VdfgRegularize_h6e95ff9d_0_18 = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 11939574421513581282ull);
 }

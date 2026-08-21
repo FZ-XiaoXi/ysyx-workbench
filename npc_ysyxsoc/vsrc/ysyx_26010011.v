@@ -3196,12 +3196,10 @@ module ysyx_26010011_bridge(
         end else begin
             // 握手时寄存设备选择
             if(aw_fire) begin
-                if(S_awaddr >= ADDR_CLINT_BASE && S_awaddr < ADDR_CLINT_BASE + ADDR_CLINT_SIZE) begin aw_sel_reg <= 1'b1; end
-                else aw_sel_reg <= 1'b0;
+                aw_sel_reg <= aw_sel_now;
             end
             if(ar_fire) begin
-                if(S_araddr >= ADDR_CLINT_BASE && S_araddr < ADDR_CLINT_BASE + ADDR_CLINT_SIZE) begin ar_sel_reg <= 1'b1; end
-                else ar_sel_reg <= 1'b0;
+                ar_sel_reg <= ar_sel_now;
             end
             if(R_next_state == STATE_IDLE) ar_sel_reg <= 1'b0;
             if(W_next_state == STATE_IDLE) aw_sel_reg <= 1'b0;
