@@ -82,7 +82,6 @@ void VysyxSoCFull_ysyx_26010011___ico_sequent__TOP__ysyxSoCFull__asic__cpu__cpu_
 void VysyxSoCFull_ysyxSoCASIC___ico_sequent__TOP__ysyxSoCFull__asic__3(VysyxSoCFull_ysyxSoCASIC* vlSelf);
 void VysyxSoCFull_ysyx_26010011_LSU___ico_sequent__TOP__ysyxSoCFull__asic__cpu__cpu__LSU_0__3(VysyxSoCFull_ysyx_26010011_LSU* vlSelf);
 void VysyxSoCFull_ysyx_26010011_IFU_icache__pi1___ico_sequent__TOP__ysyxSoCFull__asic__cpu__cpu__IFU_0__icache_u0__3(VysyxSoCFull_ysyx_26010011_IFU_icache__pi1* vlSelf);
-void VysyxSoCFull_mem_2048x32___ico_sequent__TOP__ysyxSoCFull__asic__axi4ram__mem_ext__2(VysyxSoCFull_mem_2048x32* vlSelf);
 
 void VysyxSoCFull___024root___eval_ico(VysyxSoCFull___024root* vlSelf) {
     VL_DEBUG_IF(VL_DBG_MSGF("+    VysyxSoCFull___024root___eval_ico\n"); );
@@ -125,7 +124,6 @@ void VysyxSoCFull___024root___eval_ico(VysyxSoCFull___024root* vlSelf) {
         VysyxSoCFull_ysyxSoCASIC___ico_sequent__TOP__ysyxSoCFull__asic__3((&vlSymsp->TOP__ysyxSoCFull__asic));
         VysyxSoCFull_ysyx_26010011_LSU___ico_sequent__TOP__ysyxSoCFull__asic__cpu__cpu__LSU_0__3((&vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__LSU_0));
         VysyxSoCFull_ysyx_26010011_IFU_icache__pi1___ico_sequent__TOP__ysyxSoCFull__asic__cpu__cpu__IFU_0__icache_u0__3((&vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__IFU_0__icache_u0));
-        VysyxSoCFull_mem_2048x32___ico_sequent__TOP__ysyxSoCFull__asic__axi4ram__mem_ext__2((&vlSymsp->TOP__ysyxSoCFull__asic__axi4ram__mem_ext));
     }
 }
 
@@ -338,17 +336,18 @@ void VysyxSoCFull_ysyxSoCASIC___nba_comb__TOP__ysyxSoCFull__asic__1(VysyxSoCFull
 void VysyxSoCFull_ysyx_26010011_IFU___nba_comb__TOP__ysyxSoCFull__asic__cpu__cpu__IFU_0__0(VysyxSoCFull_ysyx_26010011_IFU* vlSelf);
 void VysyxSoCFull_ysyx_26010011___nba_comb__TOP__ysyxSoCFull__asic__cpu__cpu__1(VysyxSoCFull_ysyx_26010011* vlSelf);
 void VysyxSoCFull_ysyx_26010011_IFU___nba_comb__TOP__ysyxSoCFull__asic__cpu__cpu__IFU_0__1(VysyxSoCFull_ysyx_26010011_IFU* vlSelf);
+void VysyxSoCFull_mem_2048x32___nba_comb__TOP__ysyxSoCFull__asic__axi4ram__mem_ext__0(VysyxSoCFull_mem_2048x32* vlSelf);
 void VysyxSoCFull_ysyxSoCASIC___nba_comb__TOP__ysyxSoCFull__asic__2(VysyxSoCFull_ysyxSoCASIC* vlSelf);
+void VysyxSoCFull_mem_2048x32___nba_comb__TOP__ysyxSoCFull__asic__axi4ram__mem_ext__1(VysyxSoCFull_mem_2048x32* vlSelf);
 void VysyxSoCFull_ysyxSoCASIC___nba_sequent__TOP__ysyxSoCFull__asic__9(VysyxSoCFull_ysyxSoCASIC* vlSelf);
 void VysyxSoCFull_ysyxSoCFull___nba_sequent__TOP__ysyxSoCFull__11(VysyxSoCFull_ysyxSoCFull* vlSelf);
 void VysyxSoCFull_ysyxSoCFull___nba_comb__TOP__ysyxSoCFull__1(VysyxSoCFull_ysyxSoCFull* vlSelf);
-void VysyxSoCFull_ysyxSoCFull___nba_comb__TOP__ysyxSoCFull__2(VysyxSoCFull_ysyxSoCFull* vlSelf);
 void VysyxSoCFull_ysyxSoCASIC___nba_comb__TOP__ysyxSoCFull__asic__3(VysyxSoCFull_ysyxSoCASIC* vlSelf);
+void VysyxSoCFull_ysyxSoCFull___nba_comb__TOP__ysyxSoCFull__2(VysyxSoCFull_ysyxSoCFull* vlSelf);
 void VysyxSoCFull_ysyxSoCASIC___nba_comb__TOP__ysyxSoCFull__asic__4(VysyxSoCFull_ysyxSoCASIC* vlSelf);
 void VysyxSoCFull_ysyxSoCFull___nba_comb__TOP__ysyxSoCFull__3(VysyxSoCFull_ysyxSoCFull* vlSelf);
 void VysyxSoCFull_ysyxSoCFull___nba_comb__TOP__ysyxSoCFull__4(VysyxSoCFull_ysyxSoCFull* vlSelf);
 void VysyxSoCFull_ysyxSoCFull___nba_comb__TOP__ysyxSoCFull__5(VysyxSoCFull_ysyxSoCFull* vlSelf);
-void VysyxSoCFull_ysyxSoCASIC___nba_comb__TOP__ysyxSoCFull__asic__5(VysyxSoCFull_ysyxSoCASIC* vlSelf);
 void VysyxSoCFull_ysyxSoCASIC___nba_comb__TOP__ysyxSoCFull__asic__6(VysyxSoCFull_ysyxSoCASIC* vlSelf);
 void VysyxSoCFull_ysyxSoCFull___nba_comb__TOP__ysyxSoCFull__6(VysyxSoCFull_ysyxSoCFull* vlSelf);
 void VysyxSoCFull_ysyxSoCFull___nba_comb__TOP__ysyxSoCFull__7(VysyxSoCFull_ysyxSoCFull* vlSelf);
@@ -487,12 +486,13 @@ void VysyxSoCFull___024root___eval_nba(VysyxSoCFull___024root* vlSelf) {
         VysyxSoCFull_AXI4RAM___ico_sequent__TOP__ysyxSoCFull__asic__axi4ram__1((&vlSymsp->TOP__ysyxSoCFull__asic__axi4ram));
         VysyxSoCFull_ysyx_26010011_IFU___nba_comb__TOP__ysyxSoCFull__asic__cpu__cpu__IFU_0__1((&vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__IFU_0));
         VysyxSoCFull_ysyx_26010011_IFU_icache__pi1___ico_sequent__TOP__ysyxSoCFull__asic__cpu__cpu__IFU_0__icache_u0__1((&vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__IFU_0__icache_u0));
-        VysyxSoCFull_mem_2048x32___ico_sequent__TOP__ysyxSoCFull__asic__axi4ram__mem_ext__1((&vlSymsp->TOP__ysyxSoCFull__asic__axi4ram__mem_ext));
+        VysyxSoCFull_mem_2048x32___nba_comb__TOP__ysyxSoCFull__asic__axi4ram__mem_ext__0((&vlSymsp->TOP__ysyxSoCFull__asic__axi4ram__mem_ext));
         VysyxSoCFull_ysyx_26010011_IFU___ico_sequent__TOP__ysyxSoCFull__asic__cpu__cpu__IFU_0__3((&vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__IFU_0));
         VysyxSoCFull_ysyx_26010011_IFU_icache__pi1___ico_sequent__TOP__ysyxSoCFull__asic__cpu__cpu__IFU_0__icache_u0__2((&vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__IFU_0__icache_u0));
         VysyxSoCFull_ysyx_26010011___ico_sequent__TOP__ysyxSoCFull__asic__cpu__cpu__3((&vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu));
         VysyxSoCFull_ysyx_26010011_IFU___ico_sequent__TOP__ysyxSoCFull__asic__cpu__cpu__IFU_0__4((&vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__IFU_0));
         VysyxSoCFull_ysyxSoCASIC___nba_comb__TOP__ysyxSoCFull__asic__2((&vlSymsp->TOP__ysyxSoCFull__asic));
+        VysyxSoCFull_mem_2048x32___nba_comb__TOP__ysyxSoCFull__asic__axi4ram__mem_ext__1((&vlSymsp->TOP__ysyxSoCFull__asic__axi4ram__mem_ext));
     }
     if ((0x0000000000000280ULL & vlSelfRef.__VnbaTriggered
          [0U])) {
@@ -504,19 +504,23 @@ void VysyxSoCFull___024root___eval_nba(VysyxSoCFull___024root* vlSelf) {
          [0U])) {
         VysyxSoCFull_ysyxSoCFull___nba_comb__TOP__ysyxSoCFull__1((&vlSymsp->TOP__ysyxSoCFull));
     }
+    if ((0x0000000000000680ULL & vlSelfRef.__VnbaTriggered
+         [0U])) {
+        VysyxSoCFull_ysyxSoCASIC___nba_comb__TOP__ysyxSoCFull__asic__3((&vlSymsp->TOP__ysyxSoCFull__asic));
+        vlSelfRef.__Vm_traceActivity[0x0000000eU] = 1U;
+    }
     if ((0x0000000000000282ULL & vlSelfRef.__VnbaTriggered
          [0U])) {
         VysyxSoCFull_ysyxSoCFull___nba_comb__TOP__ysyxSoCFull__2((&vlSymsp->TOP__ysyxSoCFull));
     }
     if ((0x0000000000000280ULL & vlSelfRef.__VnbaTriggered
          [0U])) {
-        VysyxSoCFull_ysyxSoCASIC___nba_comb__TOP__ysyxSoCFull__asic__3((&vlSymsp->TOP__ysyxSoCFull__asic));
-        vlSelfRef.__Vm_traceActivity[0x0000000eU] = 1U;
-        VysyxSoCFull_ysyx_26010011___ico_sequent__TOP__ysyxSoCFull__asic__cpu__cpu__4((&vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu));
         VysyxSoCFull_ysyxSoCASIC___nba_comb__TOP__ysyxSoCFull__asic__4((&vlSymsp->TOP__ysyxSoCFull__asic));
+        vlSelfRef.__Vm_traceActivity[0x0000000fU] = 1U;
+        VysyxSoCFull_ysyx_26010011___ico_sequent__TOP__ysyxSoCFull__asic__cpu__cpu__4((&vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu));
+        VysyxSoCFull_ysyxSoCASIC___ico_sequent__TOP__ysyxSoCFull__asic__3((&vlSymsp->TOP__ysyxSoCFull__asic));
         VysyxSoCFull_ysyx_26010011_LSU___ico_sequent__TOP__ysyxSoCFull__asic__cpu__cpu__LSU_0__3((&vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__LSU_0));
         VysyxSoCFull_ysyx_26010011_IFU_icache__pi1___ico_sequent__TOP__ysyxSoCFull__asic__cpu__cpu__IFU_0__icache_u0__3((&vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__IFU_0__icache_u0));
-        VysyxSoCFull_mem_2048x32___ico_sequent__TOP__ysyxSoCFull__asic__axi4ram__mem_ext__2((&vlSymsp->TOP__ysyxSoCFull__asic__axi4ram__mem_ext));
     }
     if ((0x00000000000002a0ULL & vlSelfRef.__VnbaTriggered
          [0U])) {
@@ -529,16 +533,11 @@ void VysyxSoCFull___024root___eval_nba(VysyxSoCFull___024root* vlSelf) {
     if ((0x0000000000000290ULL & vlSelfRef.__VnbaTriggered
          [0U])) {
         VysyxSoCFull_ysyxSoCFull___nba_comb__TOP__ysyxSoCFull__5((&vlSymsp->TOP__ysyxSoCFull));
-        vlSelfRef.__Vm_traceActivity[0x0000000fU] = 1U;
+        vlSelfRef.__Vm_traceActivity[0x00000010U] = 1U;
     }
     if ((0x000000000000028cULL & vlSelfRef.__VnbaTriggered
          [0U])) {
-        VysyxSoCFull_ysyxSoCASIC___nba_comb__TOP__ysyxSoCFull__asic__5((&vlSymsp->TOP__ysyxSoCFull__asic));
-    }
-    if ((0x0000000000000680ULL & vlSelfRef.__VnbaTriggered
-         [0U])) {
         VysyxSoCFull_ysyxSoCASIC___nba_comb__TOP__ysyxSoCFull__asic__6((&vlSymsp->TOP__ysyxSoCFull__asic));
-        vlSelfRef.__Vm_traceActivity[0x00000010U] = 1U;
     }
     if ((0x00000000000002b0ULL & vlSelfRef.__VnbaTriggered
          [0U])) {

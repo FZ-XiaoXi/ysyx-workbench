@@ -883,7 +883,7 @@ endmodule
 // ██║      ╚════██║ ██║   ██║
 // ███████╗ ███████║ ╚██████╔╝
 // ╚══════╝ ╚══════╝  ╚═════╝
-//IN_SYN// import "DPI-C" function void difftest_mem_set(int addr);
+import "DPI-C" function void difftest_mem_set(int addr);
 //`include "csr_defines.v"
 module ysyx_26010011_LSU(
     input             clock,
@@ -1020,7 +1020,7 @@ module ysyx_26010011_LSU(
                 ||(lsu_in_bus_addr >= 32'h20000000 && lsu_in_bus_addr < 32'h20001000)
             ))
             begin
-//IN_SYN//                 difftest_mem_set(lsu_in_bus_addr);
+                difftest_mem_set(lsu_in_bus_addr);
             end
         end
         if(((lsu_in_bus_isSTORE && lsu_in_valid)||(lsu_in_bus_isLOAD && lsu_in_valid)) && !(
@@ -1031,7 +1031,7 @@ module ysyx_26010011_LSU(
               ||(lsu_in_bus_addr >= 32'h20000000 && lsu_in_bus_addr < 32'h20001000)
         )) begin
             if((lsu_in_bus_addr >= 32'h10000000) && (lsu_in_bus_addr <= 32'h10000005)) begin
-//IN_SYN//                 difftest_skip_ref(lsu_in_bus_addr);
+                difftest_skip_ref(lsu_in_bus_addr);
             end
         end
 
@@ -1505,7 +1505,7 @@ endmodule
 // ██║   ██║ ██╔═══╝  ██╔══██╗
 // ╚██████╔╝ ██║      ██║  ██║
 //  ╚═════╝  ╚═╝      ╚═╝  ╚═╝
-//IN_SYN// import "DPI-C" function void difftest_skip_ref(int reason);
+import "DPI-C" function void difftest_skip_ref(int reason);
 //`include "csr_defines.v"
 module ysyx_26010011_GPRs(
   input        clock,
@@ -1645,7 +1645,7 @@ module ysyx_26010011_CSRs(
 
   always @(*) begin
       if (csr_in_wen & ((csr_in_addw==`ysyx_26010011_ADD_MCYCLE) | (csr_in_addw==`ysyx_26010011_ADD_MCYCLEH))) begin
-//IN_SYN//          difftest_skip_ref(4);
+         difftest_skip_ref(4);
       end
   end
 endmodule
@@ -1657,8 +1657,8 @@ endmodule
 //    ██║    ██║   ██║ ██╔═══╝
 //    ██║    ╚██████╔╝ ██║
 //    ╚═╝     ╚═════╝  ╚═╝
-//IN_SYN// import "DPI-C" function int pmem_read(input int raddr);
-//IN_SYN// import "DPI-C" function void pmem_write(input int waddr, input int wdata, input byte wmask);
+import "DPI-C" function int pmem_read(input int raddr);
+import "DPI-C" function void pmem_write(input int waddr, input int wdata, input byte wmask);
 //`include "csr_defines.v"
 module ysyx_26010011(
   input clock,

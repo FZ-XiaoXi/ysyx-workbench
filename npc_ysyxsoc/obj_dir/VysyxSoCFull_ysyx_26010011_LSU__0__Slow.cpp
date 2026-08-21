@@ -18,10 +18,10 @@ VL_ATTR_COLD void VysyxSoCFull_ysyx_26010011_LSU___stl_sequent__TOP__ysyxSoCFull
                                                 & (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__EX_LS_inst.lsu_in_valid));
     vlSelfRef.__VdfgRegularize_hc456a51f_0_4 = ((IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__EX_LS_inst.__PVT__lsu_in_bus_isLOAD) 
                                                 | (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__EX_LS_inst.__PVT__lsu_in_bus_isSTORE));
-    vlSelfRef.__PVT__rready = (((4U == (IData)(vlSelfRef.state)) 
+    vlSelfRef.__PVT__bready = (((2U == (IData)(vlSelfRef.state)) 
                                 | (0U == (IData)(vlSelfRef.state))) 
                                & (~ (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu.reset)));
-    vlSelfRef.__PVT__bready = (((2U == (IData)(vlSelfRef.state)) 
+    vlSelfRef.__PVT__rready = (((4U == (IData)(vlSelfRef.state)) 
                                 | (0U == (IData)(vlSelfRef.state))) 
                                & (~ (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu.reset)));
     vlSelfRef.__PVT__bvalid = ((IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu.__PVT__u_bridge__DOT__aw_sel_reg)

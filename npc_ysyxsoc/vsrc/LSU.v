@@ -6,7 +6,9 @@
 // ██║      ╚════██║ ██║   ██║
 // ███████╗ ███████║ ╚██████╔╝
 // ╚══════╝ ╚══════╝  ╚═════╝
-//IN_SYN// import "DPI-C" function void difftest_mem_set(int addr);
+`ifdef USE_VERILATOR
+import "DPI-C" function void difftest_mem_set(int addr);
+`endif
 `include "csr_defines.v"
 module ysyx_26010011_LSU(
     input             clock,
@@ -133,6 +135,7 @@ module ysyx_26010011_LSU(
     assign bready  = ((state == S_WAIT_BRESP) || (state == S_IDLE)) & lsu_out_ready & !reset;
     assign rready  = ((state == S_WAIT_RDATA) || (state == S_IDLE)) & lsu_out_ready & !reset;
 
+`ifdef USE_VERILATOR
     always @(*) begin
         if(lsu_in_bus_isSTORE && awvalid && awready) begin
             if((
@@ -143,7 +146,7 @@ module ysyx_26010011_LSU(
                 ||(lsu_in_bus_addr >= 32'h20000000 && lsu_in_bus_addr < 32'h20001000)
             ))
             begin
-//IN_SYN//                 difftest_mem_set(lsu_in_bus_addr);
+                difftest_mem_set(lsu_in_bus_addr);
             end
         end
         if(((lsu_in_bus_isSTORE && lsu_in_valid)||(lsu_in_bus_isLOAD && lsu_in_valid)) && !(
@@ -154,12 +157,11 @@ module ysyx_26010011_LSU(
               ||(lsu_in_bus_addr >= 32'h20000000 && lsu_in_bus_addr < 32'h20001000)
         )) begin
             if((lsu_in_bus_addr >= 32'h10000000) && (lsu_in_bus_addr <= 32'h10000005)) begin
-//IN_SYN//                 difftest_skip_ref(lsu_in_bus_addr);
+                difftest_skip_ref(lsu_in_bus_addr);
             end
         end
-
-
     end
+`endif
 
     always @(*) begin
         next_state = state;

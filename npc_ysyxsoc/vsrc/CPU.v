@@ -6,8 +6,8 @@
 //    ██║    ██║   ██║ ██╔═══╝
 //    ██║    ╚██████╔╝ ██║
 //    ╚═╝     ╚═════╝  ╚═╝
-//IN_SYN// import "DPI-C" function int pmem_read(input int raddr);
-//IN_SYN// import "DPI-C" function void pmem_write(input int waddr, input int wdata, input byte wmask);
+import "DPI-C" function int pmem_read(input int raddr);
+import "DPI-C" function void pmem_write(input int waddr, input int wdata, input byte wmask);
 `include "csr_defines.v"
 module ysyx_26010011(
   input clock,
@@ -760,6 +760,8 @@ module ysyx_26010011(
 	.fencei_pass(fencei_pass)
   );/*verilator public_module*/
   wire [4:0]wbu_out_bus_exception;
+
+  `ifdef USE_VERILATOR
   //WBU FINAL
   reg tb_isFINAL/*verilator public*/,tb_dnpc_valid/*verilator public*/,tb_isMEM/*verilator public*/;
   reg [31:0]tb_FINAL_pc/*verilator public*/,tb_FINAL_npc/*verilator public*/,tb_alu_result/*verilator public*/,tb_FINAL_inst/*verilator public*/;
@@ -789,7 +791,7 @@ module ysyx_26010011(
 	end
 
   end
-  
+  `endif
 
   ysyx_26010011_AXI4Arbiter RAM_AXI4Arbiter(
 	.clock(clock),

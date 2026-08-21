@@ -6,7 +6,9 @@
 // ██║   ██║ ██╔═══╝  ██╔══██╗
 // ╚██████╔╝ ██║      ██║  ██║
 //  ╚═════╝  ╚═╝      ╚═╝  ╚═╝
-//IN_SYN// import "DPI-C" function void difftest_skip_ref(int reason);
+`ifdef USE_VERILATOR
+import "DPI-C" function void difftest_skip_ref(int reason);
+`endif
 `include "csr_defines.v"
 module ysyx_26010011_GPRs(
   input        clock,
@@ -143,10 +145,11 @@ module ysyx_26010011_CSRs(
   assign csr_mtvec = CSR_MTVEC;
 
 
-
+`ifdef USE_VERILATOR
   always @(*) begin
       if (csr_in_wen & ((csr_in_addw==`ysyx_26010011_ADD_MCYCLE) | (csr_in_addw==`ysyx_26010011_ADD_MCYCLEH))) begin
-//IN_SYN//          difftest_skip_ref(4);
+         difftest_skip_ref(4);
       end
   end
+`endif
 endmodule
