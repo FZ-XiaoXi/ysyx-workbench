@@ -103,12 +103,12 @@ module ysyx_26010011_IFU(
 	always @(posedge clock) begin
 		if(reset) begin
 			ifu_out_valid_r <= 0;
-			ifu_out_bus_pc_r <= 32'h30000000;
-			ifu_out_bus_instruction_r <= 0;
+			// ifu_out_bus_pc_r <= 32'h80000000;
+			// ifu_out_bus_instruction_r <= 0;
 		end else begin
 			if(flush_valid) begin
 				ifu_out_valid_r <= 0;
-				ifu_out_bus_pc_r <= 0;
+				// ifu_out_bus_pc_r <= 0;
 			end else if(in_reqValid & in_respValid & ~ifu_out_ready) begin
 				ifu_out_valid_r <= 1;
 				ifu_out_bus_instruction_r <= in_rdata;
@@ -130,7 +130,7 @@ module ysyx_26010011_IFU(
 			`ifdef __ICARUS__
 			PC <= 32'h80000000;
 			`else
-			PC <= 32'h30000000;
+			PC <= 32'h80000000;
 			`endif
 			
 		end else if(flush_valid) begin
@@ -166,7 +166,7 @@ module ysyx_26010011_IFU(
 `ifdef __ICARUS__
 	ysyx_26010011_IFU_icache #(.CACHE_BLOCK_SIZE(4), .CACHE_SIZE(16)) icache_u0(
 `else
-	ysyx_26010011_IFU_icache #(.CACHE_BLOCK_SIZE(4), .CACHE_SIZE(4)) icache_u0(
+	ysyx_26010011_IFU_icache #(.CACHE_BLOCK_SIZE(16), .CACHE_SIZE(4)) icache_u0(
 `endif
 	
 		.clock(clock),
@@ -268,8 +268,8 @@ module ysyx_26010011_IFU_icache #(
 			integer i;
 			for (i = 0; i < CACHE_SIZE; i = i + 1) begin
 				cache_valid[i] <= 1'b0;
-				cache_tag[i]   <= 0;
-				cache_mem[i]   <= 0;
+				// cache_tag[i]   <= 0;
+				// cache_mem[i]   <= 0;
 			end
 		end else begin
 			if((r_fire & (state == S_WAIT_DATA) & ~pc_flush)) begin
@@ -449,7 +449,6 @@ module ysyx_26010011_IFU_icache #(
 
 
 endmodule
-
 
 // ██╗ ██████╗  ██╗   ██╗
 // ██║ ██╔══██╗ ██║   ██║
@@ -836,8 +835,6 @@ module ysyx_26010011_EXU(
 			2'b01: exu_out_bus_comp_result=~(comp_isEQUAL | comp_isGREATER);
 			2'b10: exu_out_bus_comp_result=~comp_isEQUAL;
 			2'b11: exu_out_bus_comp_result=comp_isEQUAL;
-			default:
-    			exu_out_bus_comp_result = 1'b0;
 		endcase
 	end
 
@@ -978,14 +975,14 @@ module ysyx_26010011_LSU(
     reg [3:0]   wstrb_q;
     always @(posedge clock) begin
         if(reset) begin
-            awaddr_q <= 32'b0;
-            wdata_q  <= 32'b0;
-            awsize_q <= 3'b0;
-            wstrb_q  <= 4'b0;
+            // awaddr_q <= 32'b0;
+            // wdata_q  <= 32'b0;
+            // awsize_q <= 3'b0;
+            // wstrb_q  <= 4'b0;
         end else begin
             if(next_state == S_WAIT_BRESP || next_state == S_WAIT_AW_W) begin
                 awaddr_q <= lsu_in_bus_addr;
-                wdata_q  <= lsu_in_bus_wdata << (lsu_in_bus_addr[1:0] * 8);
+                wdata_q  <= lsu_in_bus_wdata << (lsu_in_bus_addr[1:0] << 3);
                 awsize_q <= (lsu_in_bus_perip_mask == 2'b00) ? 3'b000 :
                             (lsu_in_bus_perip_mask == 2'b01) ? 3'b001 : 3'b010;
                 wstrb_q  <= (
@@ -1004,7 +1001,7 @@ module ysyx_26010011_LSU(
     assign arbureset = 2'b01;   // INCR
 
     assign awvalid = ((state == S_WAIT_AW_W)) & !reset & ~lsu_out_bus_exception[4];
-    assign wvalid  = ((state == S_WAIT_AW_W)) & !reset & ~lsu_out_bus_exception[4];
+    assign wvalid  = awvalid;
     assign arvalid = ((state == S_IDLE && lsu_in_valid && lsu_in_bus_isLOAD) || (state == S_WAIT_AR)) & !reset & ~lsu_out_bus_exception[4];
 
     assign bready  = ((state == S_WAIT_BRESP) || (state == S_IDLE)) & lsu_out_ready & !reset;
@@ -1184,7 +1181,6 @@ module ysyx_26010011_WBU(
     input [2:0]wbu_in_bus_opCSR,
     input [4:0]wbu_in_bus_exception,
 
-
     output gpr_we,
     output reg [31:0]gpr_wdata,
     output [4:0]gpr_address,
@@ -1194,7 +1190,6 @@ module ysyx_26010011_WBU(
     output [11:0]csr_address,
     output [4:0]wbu_out_bus_exception,
     output fencei_pass
-
 );  
     assign wbu_in_ready=1;
     always @(*) begin
@@ -1240,31 +1235,15 @@ module ysyx_26010011_IF_ID_pipeline(
     output reg [ 4:0]idu_in_bus_exception
 );
     assign ifu_out_ready = idu_in_ready | !idu_in_valid;
-    always @(posedge clock, posedge reset)begin
-        if(reset) begin
+    always @(posedge clock)begin
+        if(reset | flush_valid) begin
             idu_in_valid <= 0;
-            idu_in_bus_instruction <= 0;
-            idu_in_bus_pc <= 0;
-            idu_in_bus_snpc <= 0;
-            idu_in_bus_exception <= 0;
-        end else if(flush_valid)begin
-            idu_in_valid <= 0;///////////////////////
-            idu_in_bus_instruction <= 0;
-            idu_in_bus_pc <= 0;
-            idu_in_bus_snpc <= 0;
-            idu_in_bus_exception <= 0;
         end else if(idu_in_ready | !idu_in_valid)begin
             idu_in_valid <= ifu_out_valid;
             idu_in_bus_instruction <= ifu_out_bus_instruction;
             idu_in_bus_pc <= ifu_out_bus_pc;
             idu_in_bus_snpc <= ifu_out_bus_snpc;
             idu_in_bus_exception <= ifu_out_bus_exception;
-        end else begin
-            idu_in_valid <= idu_in_valid;
-            idu_in_bus_instruction <= idu_in_bus_instruction;
-            idu_in_bus_pc <= idu_in_bus_pc;
-            idu_in_bus_snpc <= idu_in_bus_snpc;
-            idu_in_bus_exception <= idu_in_bus_exception;
         end
     end
 endmodule
@@ -1334,31 +1313,6 @@ module ysyx_26010011_ID_EX_pipeline(
     always @(posedge clock)begin
         if(reset | flush_valid) begin
             exu_in_valid<=0;
-            exu_in_bus_rd<=0;
-            exu_in_bus_exception<=0;
-            exu_in_bus_csrrd<=0;
-            exu_in_bus_rs1<=0;
-            exu_in_bus_rs2<=0;
-            exu_in_bus_rs1_val<=0;
-            exu_in_bus_rs2_val<=0;
-            exu_in_bus_imm<=0;
-            exu_in_bus_instruction<=0;
-            exu_in_bus_isLOAD<=0;
-            exu_in_bus_isSTORE<=0;
-            exu_in_bus_isWGPR<=0;
-            exu_in_bus_isJUMP<=0;
-            exu_in_bus_isWCOMP<=0;
-            exu_in_bus_isBRANCH<=0;
-            exu_in_bus_opCSR<=0;
-            exu_in_bus_isUnSigned<=0;
-            exu_in_bus_isUsePC<=0;
-            exu_in_bus_alu_isUseImm<=0;
-            exu_in_bus_comp_isUseImm<=0;
-            exu_in_bus_alu_op<=0;
-            exu_in_bus_comp_op<=0;
-            exu_in_bus_perip_mask<=0;
-            exu_in_bus_pc<=0;
-            exu_in_bus_snpc<=0;
         end else if(exu_in_ready | !exu_in_valid) begin
             exu_in_valid<=idu_out_valid;
             exu_in_bus_rd<=idu_out_bus_rd;
@@ -1443,25 +1397,6 @@ module ysyx_26010011_EX_LS_pipeline(
     always @(posedge clock)begin
         if(reset | flush_valid) begin
             lsu_in_valid<=0;
-            lsu_in_bus_alu_result<=0;
-            lsu_in_bus_csr_result<=0;
-            lsu_in_bus_comp_result<=0;
-            lsu_in_bus_lsu_val<=0;
-            lsu_in_bus_rd<=0;
-            lsu_in_bus_exception<=0;
-            lsu_in_bus_csrrd<=0;
-            lsu_in_bus_instruction<=0;
-            lsu_in_bus_isLOAD<=0;
-            lsu_in_bus_isSTORE<=0;
-            lsu_in_bus_isWGPR<=0;
-            lsu_in_bus_isJUMP<=0;
-            lsu_in_bus_isWCOMP<=0;
-            lsu_in_bus_isBRANCH<=0;
-            lsu_in_bus_opCSR<=0;
-            lsu_in_bus_isUnSigned<=0;
-            lsu_in_bus_perip_mask<=0;
-            lsu_in_bus_pc<=0;
-            lsu_in_bus_snpc<=0;
         end else if(lsu_in_ready | !lsu_in_valid)begin
             lsu_in_valid<=exu_out_valid;
             lsu_in_bus_alu_result<=exu_out_bus_alu_result;
@@ -1538,23 +1473,6 @@ module ysyx_26010011_LS_WB_pipeline(
     always @(posedge clock)begin
         if(reset | flush_valid) begin
             wbu_in_valid<=0; 
-            wbu_in_bus_pc<=0;
-            wbu_in_bus_instruction<=0;
-            wbu_in_bus_lsu_result<=0;
-            wbu_in_bus_alu_result<=0;
-            wbu_in_bus_csr_result<=0;
-            wbu_in_bus_comp_result<=0;
-            wbu_in_bus_snpc<=0;
-            wbu_in_bus_rd<=0;
-            wbu_in_bus_exception<=0;
-            wbu_in_bus_csrrd<=0;
-            wbu_in_bus_isLOAD<=1'b0;
-            wbu_in_bus_isSTORE<=1'b0;
-            wbu_in_bus_isWGPR<=1'b0;
-            wbu_in_bus_isJUMP<=1'b0;
-            wbu_in_bus_isWCOMP<=1'b0;
-            wbu_in_bus_isBRANCH<=1'b0;
-            wbu_in_bus_opCSR<=0;
         end else if(wbu_in_ready | !wbu_in_valid)begin
             wbu_in_valid<=lsu_out_valid; 
             wbu_in_bus_pc<=lsu_out_bus_pc;
@@ -1610,9 +1528,9 @@ module ysyx_26010011_GPRs(
   integer i;
   always @(posedge clock) begin
     if(reset) begin
-      for(i=0;i<32;i=i+1) begin
-        GPR[i]<={32{1'b0}};
-      end
+      // for(i=0;i<32;i=i+1) begin
+      //   // GPR[i]<={32{1'b0}};
+      // end
     end else begin
       if(gpr_in_wen) begin
         GPR[gpr_in_addw]<=(gpr_in_addw==5'b00000)?{32{1'b0}}:(gpr_in_data);
@@ -1676,7 +1594,7 @@ module ysyx_26010011_CSRs(
       `ysyx_26010011_ADD_MARCHID:   csr_out_data = CSR_MARCHID;
       `ysyx_26010011_ADD_MTVAL:      csr_out_data = CSR_MTVAL;
       
-      default:      csr_out_data = 32'h2b2b2b2b;
+      default:      csr_out_data = 32'h0;
     endcase
   end
 
@@ -1687,8 +1605,8 @@ module ysyx_26010011_CSRs(
       CSR_MISA <= 32'h40000100;
       CSR_MTVEC <= 32'h0;
       CSR_MSCRATCH <= 0;
-      CSR_MEPC <= 0;
-      CSR_MCAUSE <= 0;
+      // CSR_MEPC <= 0;
+      // CSR_MCAUSE <= 0;
       CSR_MSTATUS <= 32'h1800;
       CSR_MVENDORID <= 32'h79737978;
       CSR_MARCHID <= 32'h018ce19b;

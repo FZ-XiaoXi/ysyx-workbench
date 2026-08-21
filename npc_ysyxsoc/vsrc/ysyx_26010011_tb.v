@@ -171,13 +171,13 @@ module axi4_memory (
   // R 通道
   output reg    rvalid,
   output [1:0]  rresp,
-  output [31:0] rdata,
+  output reg[31:0] rdata,
   output reg    rlast,
   output [3:0]  rid,
   input         rready
 );
 
-  reg [3:0] wstate,wnext_state;
+  (* keep = "true" *) reg [3:0] wstate,wnext_state;
 
   always @(posedge clock) begin
     if(reset) begin
@@ -190,7 +190,7 @@ module axi4_memory (
     wnext_state = wstate;
     case(wstate)
       4'b0000: begin
-        if(awvalid & wvalid) wnext_state = 4'b0001;
+        if(awvalid) wnext_state = 4'b0001;
       end
       4'b0001: begin
         wnext_state = 4'b0010;
@@ -199,9 +199,15 @@ module axi4_memory (
         if(bready)  wnext_state = 4'b0000;
         else wnext_state = 4'b0010;
       end
+      default: begin
+        wnext_state = 4'b0000;
+      end
     endcase
   end
   always @(*) begin
+    awready = 0;
+    wready = 0;
+    bvalid = 0;
     case(wstate)
       4'b0000: begin
         awready = 1;
@@ -217,6 +223,11 @@ module axi4_memory (
         awready = 0;
         wready = 0;
         bvalid = 1;
+      end
+      default: begin
+        awready = 0;
+        wready = 0;
+        bvalid = 0;
       end
     endcase
   end
@@ -250,24 +261,29 @@ module axi4_memory (
     endcase
   end
   always @(*) begin
+    arready = 0;
+    rvalid = 0;
+    rlast = 0;
     case(rstate)
       4'b0000: begin
         arready = 1;
         rvalid = 0;
-        // rdata = 32'h0;
         rlast = 0;
       end
       4'b0001: begin
         arready = 0;
         rvalid = 0;
-        // rdata = 32'h0;
         rlast = 0;
       end
       4'b0010: begin
         arready = 0;
         rvalid = 1;
-        // rdata = 32'h0;
         rlast = 1;
+      end
+      default: begin
+        arready = 0;
+        rvalid = 0;
+        rlast = 0;
       end
     endcase
   end
@@ -278,8 +294,6 @@ module axi4_memory (
 
   wire mem_write_valid =
       awaddr >= MEM_BASE && awaddr < MEM_END;
-  wire mem_read_valid =
-      raddr_reg >= MEM_BASE && raddr_reg < MEM_END;
 
   always @(posedge clock) begin
     if(wstate == 4'b0000 && wnext_state == 4'b0001) begin
@@ -291,16 +305,28 @@ module axi4_memory (
       end else if (awaddr == 32'h10000000) begin
         $write("%c", wdata[7:0]);
         $fflush;
+      end else begin
+        $display("AXI4 Write to invalid address: 0x%08x", awaddr);
       end
     end
+
+    
   end
 
   assign rresp = 2'b0;
   assign bresp = 2'b0;
-  assign rdata = mem_read_valid
-               ? Memory[(raddr_reg - MEM_BASE) >> 2]
-               : 32'b0;
-
+  wire [31:0] tmp_r;
+  assign tmp_r = Memory[(raddr_reg - MEM_BASE) >> 2];
+  always @(*) begin
+    if(raddr_reg >= MEM_BASE && raddr_reg < MEM_END) begin
+      rdata = tmp_r;
+    end else if(raddr_reg == 32'h10000048 || raddr_reg == 32'h1000004c) begin
+      rdata = 32'h00000000;
+    end else begin
+      $display("AXI4 Read from invalid address: 0x%08x", raddr_reg);
+      rdata = 32'h00000000;
+    end
+  end
   integer i;
   initial begin
     for (i = 0; i < 2097152; i = i + 1)
@@ -313,10 +339,10 @@ module axi4_memory (
       Memory
     );
   end
-  initial
-  begin
-    $dumpfile("test.vcd");
-    $dumpvars(0,cpu);
-  end
+  // initial
+  // begin
+  //   $dumpfile("test.vcd");
+  //   $dumpvars(0,CPUTop_tb);
+  // end
 `endif
 endmodule

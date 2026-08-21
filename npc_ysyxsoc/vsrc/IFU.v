@@ -59,12 +59,12 @@ module ysyx_26010011_IFU(
 	always @(posedge clock) begin
 		if(reset) begin
 			ifu_out_valid_r <= 0;
-			ifu_out_bus_pc_r <= 32'h30000000;
-			ifu_out_bus_instruction_r <= 0;
+			// ifu_out_bus_pc_r <= 32'h80000000;
+			// ifu_out_bus_instruction_r <= 0;
 		end else begin
 			if(flush_valid) begin
 				ifu_out_valid_r <= 0;
-				ifu_out_bus_pc_r <= 0;
+				// ifu_out_bus_pc_r <= 0;
 			end else if(in_reqValid & in_respValid & ~ifu_out_ready) begin
 				ifu_out_valid_r <= 1;
 				ifu_out_bus_instruction_r <= in_rdata;
@@ -86,7 +86,7 @@ module ysyx_26010011_IFU(
 			`ifdef __ICARUS__
 			PC <= 32'h80000000;
 			`else
-			PC <= 32'h30000000;
+			PC <= 32'h80000000;
 			`endif
 			
 		end else if(flush_valid) begin
@@ -122,7 +122,7 @@ module ysyx_26010011_IFU(
 `ifdef __ICARUS__
 	ysyx_26010011_IFU_icache #(.CACHE_BLOCK_SIZE(4), .CACHE_SIZE(16)) icache_u0(
 `else
-	ysyx_26010011_IFU_icache #(.CACHE_BLOCK_SIZE(4), .CACHE_SIZE(4)) icache_u0(
+	ysyx_26010011_IFU_icache #(.CACHE_BLOCK_SIZE(16), .CACHE_SIZE(4)) icache_u0(
 `endif
 	
 		.clock(clock),
@@ -224,8 +224,8 @@ module ysyx_26010011_IFU_icache #(
 			integer i;
 			for (i = 0; i < CACHE_SIZE; i = i + 1) begin
 				cache_valid[i] <= 1'b0;
-				cache_tag[i]   <= 0;
-				cache_mem[i]   <= 0;
+				// cache_tag[i]   <= 0;
+				// cache_mem[i]   <= 0;
 			end
 		end else begin
 			if((r_fire & (state == S_WAIT_DATA) & ~pc_flush)) begin

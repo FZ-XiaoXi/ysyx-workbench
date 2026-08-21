@@ -19,31 +19,15 @@ module ysyx_26010011_IF_ID_pipeline(
     output reg [ 4:0]idu_in_bus_exception
 );
     assign ifu_out_ready = idu_in_ready | !idu_in_valid;
-    always @(posedge clock, posedge reset)begin
-        if(reset) begin
+    always @(posedge clock)begin
+        if(reset | flush_valid) begin
             idu_in_valid <= 0;
-            idu_in_bus_instruction <= 0;
-            idu_in_bus_pc <= 0;
-            idu_in_bus_snpc <= 0;
-            idu_in_bus_exception <= 0;
-        end else if(flush_valid)begin
-            idu_in_valid <= 0;///////////////////////
-            idu_in_bus_instruction <= 0;
-            idu_in_bus_pc <= 0;
-            idu_in_bus_snpc <= 0;
-            idu_in_bus_exception <= 0;
         end else if(idu_in_ready | !idu_in_valid)begin
             idu_in_valid <= ifu_out_valid;
             idu_in_bus_instruction <= ifu_out_bus_instruction;
             idu_in_bus_pc <= ifu_out_bus_pc;
             idu_in_bus_snpc <= ifu_out_bus_snpc;
             idu_in_bus_exception <= ifu_out_bus_exception;
-        end else begin
-            idu_in_valid <= idu_in_valid;
-            idu_in_bus_instruction <= idu_in_bus_instruction;
-            idu_in_bus_pc <= idu_in_bus_pc;
-            idu_in_bus_snpc <= idu_in_bus_snpc;
-            idu_in_bus_exception <= idu_in_bus_exception;
         end
     end
 endmodule
@@ -113,31 +97,6 @@ module ysyx_26010011_ID_EX_pipeline(
     always @(posedge clock)begin
         if(reset | flush_valid) begin
             exu_in_valid<=0;
-            exu_in_bus_rd<=0;
-            exu_in_bus_exception<=0;
-            exu_in_bus_csrrd<=0;
-            exu_in_bus_rs1<=0;
-            exu_in_bus_rs2<=0;
-            exu_in_bus_rs1_val<=0;
-            exu_in_bus_rs2_val<=0;
-            exu_in_bus_imm<=0;
-            exu_in_bus_instruction<=0;
-            exu_in_bus_isLOAD<=0;
-            exu_in_bus_isSTORE<=0;
-            exu_in_bus_isWGPR<=0;
-            exu_in_bus_isJUMP<=0;
-            exu_in_bus_isWCOMP<=0;
-            exu_in_bus_isBRANCH<=0;
-            exu_in_bus_opCSR<=0;
-            exu_in_bus_isUnSigned<=0;
-            exu_in_bus_isUsePC<=0;
-            exu_in_bus_alu_isUseImm<=0;
-            exu_in_bus_comp_isUseImm<=0;
-            exu_in_bus_alu_op<=0;
-            exu_in_bus_comp_op<=0;
-            exu_in_bus_perip_mask<=0;
-            exu_in_bus_pc<=0;
-            exu_in_bus_snpc<=0;
         end else if(exu_in_ready | !exu_in_valid) begin
             exu_in_valid<=idu_out_valid;
             exu_in_bus_rd<=idu_out_bus_rd;
@@ -222,25 +181,6 @@ module ysyx_26010011_EX_LS_pipeline(
     always @(posedge clock)begin
         if(reset | flush_valid) begin
             lsu_in_valid<=0;
-            lsu_in_bus_alu_result<=0;
-            lsu_in_bus_csr_result<=0;
-            lsu_in_bus_comp_result<=0;
-            lsu_in_bus_lsu_val<=0;
-            lsu_in_bus_rd<=0;
-            lsu_in_bus_exception<=0;
-            lsu_in_bus_csrrd<=0;
-            lsu_in_bus_instruction<=0;
-            lsu_in_bus_isLOAD<=0;
-            lsu_in_bus_isSTORE<=0;
-            lsu_in_bus_isWGPR<=0;
-            lsu_in_bus_isJUMP<=0;
-            lsu_in_bus_isWCOMP<=0;
-            lsu_in_bus_isBRANCH<=0;
-            lsu_in_bus_opCSR<=0;
-            lsu_in_bus_isUnSigned<=0;
-            lsu_in_bus_perip_mask<=0;
-            lsu_in_bus_pc<=0;
-            lsu_in_bus_snpc<=0;
         end else if(lsu_in_ready | !lsu_in_valid)begin
             lsu_in_valid<=exu_out_valid;
             lsu_in_bus_alu_result<=exu_out_bus_alu_result;
@@ -317,23 +257,6 @@ module ysyx_26010011_LS_WB_pipeline(
     always @(posedge clock)begin
         if(reset | flush_valid) begin
             wbu_in_valid<=0; 
-            wbu_in_bus_pc<=0;
-            wbu_in_bus_instruction<=0;
-            wbu_in_bus_lsu_result<=0;
-            wbu_in_bus_alu_result<=0;
-            wbu_in_bus_csr_result<=0;
-            wbu_in_bus_comp_result<=0;
-            wbu_in_bus_snpc<=0;
-            wbu_in_bus_rd<=0;
-            wbu_in_bus_exception<=0;
-            wbu_in_bus_csrrd<=0;
-            wbu_in_bus_isLOAD<=1'b0;
-            wbu_in_bus_isSTORE<=1'b0;
-            wbu_in_bus_isWGPR<=1'b0;
-            wbu_in_bus_isJUMP<=1'b0;
-            wbu_in_bus_isWCOMP<=1'b0;
-            wbu_in_bus_isBRANCH<=1'b0;
-            wbu_in_bus_opCSR<=0;
         end else if(wbu_in_ready | !wbu_in_valid)begin
             wbu_in_valid<=lsu_out_valid; 
             wbu_in_bus_pc<=lsu_out_bus_pc;

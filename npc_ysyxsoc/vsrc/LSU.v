@@ -101,14 +101,14 @@ module ysyx_26010011_LSU(
     reg [3:0]   wstrb_q;
     always @(posedge clock) begin
         if(reset) begin
-            awaddr_q <= 32'b0;
-            wdata_q  <= 32'b0;
-            awsize_q <= 3'b0;
-            wstrb_q  <= 4'b0;
+            // awaddr_q <= 32'b0;
+            // wdata_q  <= 32'b0;
+            // awsize_q <= 3'b0;
+            // wstrb_q  <= 4'b0;
         end else begin
             if(next_state == S_WAIT_BRESP || next_state == S_WAIT_AW_W) begin
                 awaddr_q <= lsu_in_bus_addr;
-                wdata_q  <= lsu_in_bus_wdata << (lsu_in_bus_addr[1:0] * 8);
+                wdata_q  <= lsu_in_bus_wdata << (lsu_in_bus_addr[1:0] << 3);
                 awsize_q <= (lsu_in_bus_perip_mask == 2'b00) ? 3'b000 :
                             (lsu_in_bus_perip_mask == 2'b01) ? 3'b001 : 3'b010;
                 wstrb_q  <= (
@@ -127,7 +127,7 @@ module ysyx_26010011_LSU(
     assign arbureset = 2'b01;   // INCR
 
     assign awvalid = ((state == S_WAIT_AW_W)) & !reset & ~lsu_out_bus_exception[4];
-    assign wvalid  = ((state == S_WAIT_AW_W)) & !reset & ~lsu_out_bus_exception[4];
+    assign wvalid  = awvalid;
     assign arvalid = ((state == S_IDLE && lsu_in_valid && lsu_in_bus_isLOAD) || (state == S_WAIT_AR)) & !reset & ~lsu_out_bus_exception[4];
 
     assign bready  = ((state == S_WAIT_BRESP) || (state == S_IDLE)) & lsu_out_ready & !reset;

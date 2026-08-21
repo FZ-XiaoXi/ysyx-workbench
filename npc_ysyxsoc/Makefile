@@ -41,7 +41,7 @@ override ARGS ?=
 override ARGS += $(ARGS_DIFF)
 IMG ?=
 ELF ?=
-NETLIST ?= /home/seaber/ysyx-workbench/yosys-sta/result/ysyx_26010011-100MHz/ysyx_26010011.v
+NETLIST ?= /home/seaber/ysyx-workbench/yosys-sta/result/ysyx_26010011-800MHz/ysyx_26010011.v
 NETLIST_CELLS ?= /home/seaber/ysyx-workbench/yosys-sta/pdk/nangate45/sim/cells.v
 
 

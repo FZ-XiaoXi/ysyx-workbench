@@ -30,7 +30,6 @@ module ysyx_26010011_WBU(
     input [2:0]wbu_in_bus_opCSR,
     input [4:0]wbu_in_bus_exception,
 
-
     output gpr_we,
     output reg [31:0]gpr_wdata,
     output [4:0]gpr_address,
@@ -40,7 +39,6 @@ module ysyx_26010011_WBU(
     output [11:0]csr_address,
     output [4:0]wbu_out_bus_exception,
     output fencei_pass
-
 );  
     assign wbu_in_ready=1;
     always @(*) begin

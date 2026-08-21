@@ -32,9 +32,9 @@ module ysyx_26010011_GPRs(
   integer i;
   always @(posedge clock) begin
     if(reset) begin
-      for(i=0;i<32;i=i+1) begin
-        GPR[i]<={32{1'b0}};
-      end
+      // for(i=0;i<32;i=i+1) begin
+      //   // GPR[i]<={32{1'b0}};
+      // end
     end else begin
       if(gpr_in_wen) begin
         GPR[gpr_in_addw]<=(gpr_in_addw==5'b00000)?{32{1'b0}}:(gpr_in_data);
@@ -98,7 +98,7 @@ module ysyx_26010011_CSRs(
       `ysyx_26010011_ADD_MARCHID:   csr_out_data = CSR_MARCHID;
       `ysyx_26010011_ADD_MTVAL:      csr_out_data = CSR_MTVAL;
       
-      default:      csr_out_data = 32'h2b2b2b2b;
+      default:      csr_out_data = 32'h0;
     endcase
   end
 
@@ -109,8 +109,8 @@ module ysyx_26010011_CSRs(
       CSR_MISA <= 32'h40000100;
       CSR_MTVEC <= 32'h0;
       CSR_MSCRATCH <= 0;
-      CSR_MEPC <= 0;
-      CSR_MCAUSE <= 0;
+      // CSR_MEPC <= 0;
+      // CSR_MCAUSE <= 0;
       CSR_MSTATUS <= 32'h1800;
       CSR_MVENDORID <= 32'h79737978;
       CSR_MARCHID <= 32'h018ce19b;
