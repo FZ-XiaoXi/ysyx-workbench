@@ -48,7 +48,7 @@ class alignas(VL_CACHE_LINE_BYTES) VysyxSoCFull_ysyx_26010011_LSU final : public
         VL_OUT8(__PVT__arid,3,0);
         VL_OUT8(__PVT__arlen,7,0);
         VL_OUT8(__PVT__arsize,2,0);
-        VL_OUT8(__PVT__arbureset,1,0);
+        VL_OUT8(__PVT__arburst,1,0);
         VL_IN8(__PVT__rresp,1,0);
         VL_IN8(__PVT__rvalid,0,0);
         VL_OUT8(__PVT__rready,0,0);

@@ -21,7 +21,7 @@ module ysyx_26010011_AXI4Arbiter(
     // output reg [3:0]  M1_bid,
     //MASTER1 AR
     input      [31:0] M1_araddr,  input             M1_arvalid, output reg        M1_arready,
-    input      [3:0]  M1_arid,    input      [7:0]  M1_arlen,   input      [2:0]  M1_arsize,  input      [1:0]  M1_arbureset,
+    input      [3:0]  M1_arid,    input      [7:0]  M1_arlen,   input      [2:0]  M1_arsize,  input      [1:0]  M1_arburst,
     //MASTER1 R
     output reg [31:0] M1_rdata,   output reg [1:0]  M1_rresp,   output reg        M1_rvalid,  input             M1_rready,
     output reg        M1_rlast,   output reg [3:0]  M1_rid,
@@ -37,7 +37,7 @@ module ysyx_26010011_AXI4Arbiter(
     output     [3:0]  M2_bid,
     //MASTER2 AR
     input      [31:0] M2_araddr,  input             M2_arvalid, output reg        M2_arready,
-    input      [3:0]  M2_arid,    input      [7:0]  M2_arlen,   input      [2:0]  M2_arsize,  input      [1:0]  M2_arbureset,
+    input      [3:0]  M2_arid,    input      [7:0]  M2_arlen,   input      [2:0]  M2_arsize,  input      [1:0]  M2_arburst,
     //MASTER2 R
     output reg [31:0] M2_rdata,   output reg [1:0]  M2_rresp,   output reg        M2_rvalid,  input             M2_rready,
     output reg        M2_rlast,   output reg [3:0]  M2_rid,
@@ -53,7 +53,7 @@ module ysyx_26010011_AXI4Arbiter(
     input      [3:0]  S_bid,
     //SLAVE AR
     output reg [31:0] S_araddr,   output reg        S_arvalid,  input             S_arready,
-    output reg [3:0]  S_arid,     output reg [7:0]  S_arlen,    output reg [2:0]  S_arsize,   output reg [1:0]  S_arbureset,
+    output reg [3:0]  S_arid,     output reg [7:0]  S_arlen,    output reg [2:0]  S_arsize,   output reg [1:0]  S_arburst,
     //SLAVE R
     input      [31:0] S_rdata,    input      [1:0]  S_rresp,    input             S_rvalid,   output reg        S_rready,
     input             S_rlast,    input      [3:0]  S_rid
@@ -112,19 +112,19 @@ module ysyx_26010011_AXI4Arbiter(
                     M2_arready = 0;
                     S_arvalid = 1;
                     S_araddr = M1_araddr;
-                    S_arid   = M1_arid; S_arlen = M1_arlen; S_arsize = M1_arsize; S_arbureset = M1_arbureset;
+                    S_arid   = M1_arid; S_arlen = M1_arlen; S_arsize = M1_arsize; S_arburst = M1_arburst;
                 end else if(M2_arvalid) begin
                     M1_arready = 0;
                     M2_arready = S_arready;
                     S_arvalid = 1;
                     S_araddr = M2_araddr;
-                    S_arid   = M2_arid; S_arlen = M2_arlen; S_arsize = M2_arsize; S_arbureset = M2_arbureset;
+                    S_arid   = M2_arid; S_arlen = M2_arlen; S_arsize = M2_arsize; S_arburst = M2_arburst;
                 end else begin
                     M1_arready = 0;
                     M2_arready = 0;
                     S_arvalid = 0;
                     S_araddr = 0;
-                    S_arid   = 0; S_arlen = 0; S_arsize = 0; S_arbureset = 0;
+                    S_arid   = 0; S_arlen = 0; S_arsize = 0; S_arburst = 0;
                 end
             end
             R_BUSY:begin
@@ -135,14 +135,14 @@ module ysyx_26010011_AXI4Arbiter(
                 S_arid   = R_master_sel?M2_arid:M1_arid;
                 S_arlen  = R_master_sel?M2_arlen:M1_arlen;
                 S_arsize = R_master_sel?M2_arsize:M1_arsize;
-                S_arbureset = R_master_sel?M2_arbureset:M1_arbureset;
+                S_arburst = R_master_sel?M2_arburst:M1_arburst;
             end
             default:begin
                 M1_arready = 0;
                 M2_arready = 0;
                 S_arvalid = 0;
                 S_araddr = 0;
-                S_arid   = 0; S_arlen = 0; S_arsize = 0; S_arbureset = 0;
+                S_arid   = 0; S_arlen = 0; S_arsize = 0; S_arburst = 0;
             end
         endcase
     end

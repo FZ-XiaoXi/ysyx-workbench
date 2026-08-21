@@ -55,7 +55,7 @@ module ysyx_26010011_LSU(
     output [3:0]      arid,
     output [7:0]      arlen,
     output [2:0]      arsize,
-    output [1:0]      arbureset,
+    output [1:0]      arburst,
     // AXI4 读数据通道
     input  [31:0]     rdata,
     input  [1:0]      rresp,
@@ -124,7 +124,7 @@ module ysyx_26010011_LSU(
     assign arlen   = 8'b0;
     assign arsize  = (lsu_in_bus_perip_mask == 2'b00) ? 3'b000 :
                      (lsu_in_bus_perip_mask == 2'b01) ? 3'b001 : 3'b010;
-    assign arbureset = 2'b01;   // INCR
+    assign arburst = 2'b01;   // INCR
 
     assign awvalid = ((state == S_WAIT_AW_W)) & !reset & ~lsu_out_bus_exception[4];
     assign wvalid  = awvalid;

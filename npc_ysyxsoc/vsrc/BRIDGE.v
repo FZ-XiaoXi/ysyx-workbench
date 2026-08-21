@@ -27,7 +27,7 @@ module ysyx_26010011_bridge(
     input      [3:0]  MEM_bid,
     //SLAVE AR
     output reg [31:0] MEM_araddr,   output reg        MEM_arvalid,  input             MEM_arready,
-    output reg [3:0]  MEM_arid,     output reg [7:0]  MEM_arlen,    output reg [2:0]  MEM_arsize,   output reg [1:0]  MEM_arbureset,
+    output reg [3:0]  MEM_arid,     output reg [7:0]  MEM_arlen,    output reg [2:0]  MEM_arsize,   output reg [1:0]  MEM_arburst,
     //SLAVE R
     input      [31:0] MEM_rdata,    input      [1:0]  MEM_rresp,    input             MEM_rvalid,   output reg        MEM_rready,
     input             MEM_rlast,    input      [3:0]  MEM_rid,
@@ -44,7 +44,7 @@ module ysyx_26010011_bridge(
     input      [3:0]  CLINT_bid,
     //SLAVE AR
     output reg [31:0] CLINT_araddr,   output reg        CLINT_arvalid,  input             CLINT_arready,
-    output reg [3:0]  CLINT_arid,     output reg [7:0]  CLINT_arlen,    output reg [2:0]  CLINT_arsize,   output reg [1:0]  CLINT_arbureset,
+    output reg [3:0]  CLINT_arid,     output reg [7:0]  CLINT_arlen,    output reg [2:0]  CLINT_arsize,   output reg [1:0]  CLINT_arburst,
     //SLAVE R
     input      [31:0] CLINT_rdata,    input      [1:0]  CLINT_rresp,    input             CLINT_rvalid,   output reg        CLINT_rready,
     input             CLINT_rlast,    input      [3:0]  CLINT_rid
@@ -120,13 +120,13 @@ module ysyx_26010011_bridge(
     assign MEM_arid = S_arid;
     assign MEM_arlen = S_arlen;
     assign MEM_arsize = S_arsize;
-    assign MEM_arbureset = S_arburst;
+    assign MEM_arburst = S_arburst;
     assign MEM_rready = S_arready;
     assign MEM_araddr = S_araddr;
     assign CLINT_arid = S_arid;
     assign CLINT_arlen = S_arlen;
     assign CLINT_arsize = S_arsize;
-    assign CLINT_arbureset = S_arburst;
+    assign CLINT_arburst = S_arburst;
     assign CLINT_rready = S_arready;
     assign CLINT_araddr = S_araddr;
     always @(*) begin

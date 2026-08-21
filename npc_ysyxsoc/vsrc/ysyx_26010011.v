@@ -76,7 +76,7 @@ module ysyx_26010011_IFU(
 	output [3:0]      arid,
 	output [7:0]      arlen,
 	output [2:0]      arsize,
-	output [1:0]      arbureset,
+	output [1:0]      arburst,
 	input  [31:0]     rdata/*verilator public*/,
 	input  [1:0]      rresp,
 	input             rvalid,
@@ -186,7 +186,7 @@ module ysyx_26010011_IFU(
 		.out_arid(arid),
 		.out_arlen(arlen),
 		.out_arsize(arsize),
-		.out_arburst(arbureset),
+		.out_arburst(arburst),
 		.out_rdata(rdata),
 		.out_rresp(rresp),
 		.out_rvalid(rvalid),
@@ -929,7 +929,7 @@ module ysyx_26010011_LSU(
     output [3:0]      arid,
     output [7:0]      arlen,
     output [2:0]      arsize,
-    output [1:0]      arbureset,
+    output [1:0]      arburst,
     // AXI4 读数据通道
     input  [31:0]     rdata,
     input  [1:0]      rresp,
@@ -998,7 +998,7 @@ module ysyx_26010011_LSU(
     assign arlen   = 8'b0;
     assign arsize  = (lsu_in_bus_perip_mask == 2'b00) ? 3'b000 :
                      (lsu_in_bus_perip_mask == 2'b01) ? 3'b001 : 3'b010;
-    assign arbureset = 2'b01;   // INCR
+    assign arburst = 2'b01;   // INCR
 
     assign awvalid = ((state == S_WAIT_AW_W)) & !reset & ~lsu_out_bus_exception[4];
     assign wvalid  = awvalid;
@@ -1960,7 +1960,7 @@ module ysyx_26010011(
 	.arid(IROM_arid),
 	.arlen(IROM_arlen),
 	.arsize(IROM_arsize),
-	.arbureset(IROM_arbureset),
+	.arburst(IROM_arburst),
 	.rdata(IROM_rdata),
 	.rresp(IROM_rresp),
 	.rvalid(IROM_rvalid),
@@ -1981,7 +1981,7 @@ module ysyx_26010011(
   wire [3:0] IROM_arid;
   wire [7:0] IROM_arlen;
   wire [2:0] IROM_arsize;
-  wire [1:0] IROM_arbureset;
+  wire [1:0] IROM_arburst;
   wire IROM_rlast;
   wire [3:0] IROM_rid;
 
@@ -2294,7 +2294,7 @@ module ysyx_26010011(
 	.arid(DRAM_arid),
 	.arlen(DRAM_arlen),
 	.arsize(DRAM_arsize),
-	.arbureset(DRAM_arbureset),
+	.arburst(DRAM_arburst),
 	.rdata(DRAM_rdata),
 	.rresp(DRAM_rresp),
 	.rvalid(DRAM_rvalid),
@@ -2310,7 +2310,7 @@ module ysyx_26010011(
   wire [3:0] DRAM_awid;  wire [7:0] DRAM_awlen;  wire [2:0] DRAM_awsize;  wire [1:0] DRAM_awburst;
   wire DRAM_wlast;
   wire [3:0] DRAM_bid;
-  wire [3:0] DRAM_arid;  wire [7:0] DRAM_arlen;  wire [2:0] DRAM_arsize;  wire [1:0] DRAM_arbureset;
+  wire [3:0] DRAM_arid;  wire [7:0] DRAM_arlen;  wire [2:0] DRAM_arsize;  wire [1:0] DRAM_arburst;
   wire DRAM_rlast;
   wire [3:0] DRAM_rid;
 
@@ -2454,7 +2454,7 @@ module ysyx_26010011(
 	// .M1_bid(),
 	//MASTER1 AR
 	.M1_araddr(IROM_araddr),  .M1_arvalid(IROM_arvalid),  .M1_arready(IROM_arready),
-	.M1_arid(IROM_arid),      .M1_arlen(IROM_arlen),      .M1_arsize(IROM_arsize),    .M1_arbureset(IROM_arbureset),
+	.M1_arid(IROM_arid),      .M1_arlen(IROM_arlen),      .M1_arsize(IROM_arsize),    .M1_arburst(IROM_arburst),
 	//MASTER1 R
 	.M1_rdata(IROM_rdata),    .M1_rresp(IROM_rresp),      .M1_rvalid(IROM_rvalid),    .M1_rready(IROM_rready),
 	.M1_rlast(IROM_rlast),    .M1_rid(IROM_rid),
@@ -2470,7 +2470,7 @@ module ysyx_26010011(
 	.M2_bid(DRAM_bid),
 	//MASTER2 AR
 	.M2_araddr(DRAM_araddr),  .M2_arvalid(DRAM_arvalid),  .M2_arready(DRAM_arready),
-	.M2_arid(DRAM_arid),      .M2_arlen(DRAM_arlen),      .M2_arsize(DRAM_arsize),    .M2_arbureset(DRAM_arbureset),
+	.M2_arid(DRAM_arid),      .M2_arlen(DRAM_arlen),      .M2_arsize(DRAM_arsize),    .M2_arburst(DRAM_arburst),
 	//MASTER2 R
 	.M2_rdata(DRAM_rdata),    .M2_rresp(DRAM_rresp),      .M2_rvalid(DRAM_rvalid),    .M2_rready(DRAM_rready),
 	.M2_rlast(DRAM_rlast),    .M2_rid(DRAM_rid),
@@ -2519,14 +2519,14 @@ module ysyx_26010011(
 
 		///////////////////////////////////////////////////////
 		//MEM
-		.MEM_araddr(io_master_araddr),   .MEM_arvalid(io_master_arvalid),  .MEM_arready(io_master_arready), .MEM_arid(io_master_arid), .MEM_arlen(io_master_arlen), .MEM_arsize(io_master_arsize), .MEM_arbureset(io_master_arbureset),
+		.MEM_araddr(io_master_araddr),   .MEM_arvalid(io_master_arvalid),  .MEM_arready(io_master_arready), .MEM_arid(io_master_arid), .MEM_arlen(io_master_arlen), .MEM_arsize(io_master_arsize), .MEM_arburst(io_master_arburst),
 		.MEM_rdata(io_master_rdata),    .MEM_rresp(io_master_rresp),    .MEM_rvalid(io_master_rvalid),   .MEM_rready(io_master_rready), .MEM_rlast(io_master_rlast), .MEM_rid(io_master_rid),
 		.MEM_awaddr(io_master_awaddr),   .MEM_awvalid(io_master_awvalid),  .MEM_awready(io_master_awready), .MEM_awid(io_master_awid), .MEM_awlen(io_master_awlen), .MEM_awsize(io_master_awsize), .MEM_awburst(io_master_awburst),
 		.MEM_wdata(io_master_wdata),    .MEM_wstrb(io_master_wstrb),    .MEM_wvalid(io_master_wvalid),   .MEM_wready(io_master_wready), .MEM_wlast(io_master_wlast),
 		.MEM_bresp(io_master_bresp),    .MEM_bvalid(io_master_bvalid),   .MEM_bready(io_master_bready), .MEM_bid(io_master_bid),
 
 		//CLINT
-		.CLINT_araddr(CLINT_araddr),   .CLINT_arvalid(CLINT_arvalid),  .CLINT_arready(CLINT_arready), .CLINT_arid(), .CLINT_arlen(), .CLINT_arsize(), .CLINT_arbureset(),
+		.CLINT_araddr(CLINT_araddr),   .CLINT_arvalid(CLINT_arvalid),  .CLINT_arready(CLINT_arready), .CLINT_arid(), .CLINT_arlen(), .CLINT_arsize(), .CLINT_arburst(),
 		.CLINT_rdata(CLINT_rdata),    .CLINT_rresp(CLINT_rresp),    .CLINT_rvalid(CLINT_rvalid),   .CLINT_rready(CLINT_rready), .CLINT_rlast(CLINT_rlast), .CLINT_rid(),
 		.CLINT_awaddr(CLINT_awaddr),   .CLINT_awvalid(CLINT_awvalid),  .CLINT_awready(CLINT_awready), .CLINT_awid(), .CLINT_awlen(), .CLINT_awsize(), .CLINT_awburst(),
 		.CLINT_wdata(CLINT_wdata),    .CLINT_wstrb(CLINT_wstrb),    .CLINT_wvalid(CLINT_wvalid),   .CLINT_wready(CLINT_wready), .CLINT_wlast(),
@@ -2696,7 +2696,7 @@ module ysyx_26010011_AXI4Arbiter(
     // output reg [3:0]  M1_bid,
     //MASTER1 AR
     input      [31:0] M1_araddr,  input             M1_arvalid, output reg        M1_arready,
-    input      [3:0]  M1_arid,    input      [7:0]  M1_arlen,   input      [2:0]  M1_arsize,  input      [1:0]  M1_arbureset,
+    input      [3:0]  M1_arid,    input      [7:0]  M1_arlen,   input      [2:0]  M1_arsize,  input      [1:0]  M1_arburst,
     //MASTER1 R
     output reg [31:0] M1_rdata,   output reg [1:0]  M1_rresp,   output reg        M1_rvalid,  input             M1_rready,
     output reg        M1_rlast,   output reg [3:0]  M1_rid,
@@ -2712,7 +2712,7 @@ module ysyx_26010011_AXI4Arbiter(
     output     [3:0]  M2_bid,
     //MASTER2 AR
     input      [31:0] M2_araddr,  input             M2_arvalid, output reg        M2_arready,
-    input      [3:0]  M2_arid,    input      [7:0]  M2_arlen,   input      [2:0]  M2_arsize,  input      [1:0]  M2_arbureset,
+    input      [3:0]  M2_arid,    input      [7:0]  M2_arlen,   input      [2:0]  M2_arsize,  input      [1:0]  M2_arburst,
     //MASTER2 R
     output reg [31:0] M2_rdata,   output reg [1:0]  M2_rresp,   output reg        M2_rvalid,  input             M2_rready,
     output reg        M2_rlast,   output reg [3:0]  M2_rid,
@@ -2728,7 +2728,7 @@ module ysyx_26010011_AXI4Arbiter(
     input      [3:0]  S_bid,
     //SLAVE AR
     output reg [31:0] S_araddr,   output reg        S_arvalid,  input             S_arready,
-    output reg [3:0]  S_arid,     output reg [7:0]  S_arlen,    output reg [2:0]  S_arsize,   output reg [1:0]  S_arbureset,
+    output reg [3:0]  S_arid,     output reg [7:0]  S_arlen,    output reg [2:0]  S_arsize,   output reg [1:0]  S_arburst,
     //SLAVE R
     input      [31:0] S_rdata,    input      [1:0]  S_rresp,    input             S_rvalid,   output reg        S_rready,
     input             S_rlast,    input      [3:0]  S_rid
@@ -2787,19 +2787,19 @@ module ysyx_26010011_AXI4Arbiter(
                     M2_arready = 0;
                     S_arvalid = 1;
                     S_araddr = M1_araddr;
-                    S_arid   = M1_arid; S_arlen = M1_arlen; S_arsize = M1_arsize; S_arbureset = M1_arbureset;
+                    S_arid   = M1_arid; S_arlen = M1_arlen; S_arsize = M1_arsize; S_arburst = M1_arburst;
                 end else if(M2_arvalid) begin
                     M1_arready = 0;
                     M2_arready = S_arready;
                     S_arvalid = 1;
                     S_araddr = M2_araddr;
-                    S_arid   = M2_arid; S_arlen = M2_arlen; S_arsize = M2_arsize; S_arbureset = M2_arbureset;
+                    S_arid   = M2_arid; S_arlen = M2_arlen; S_arsize = M2_arsize; S_arburst = M2_arburst;
                 end else begin
                     M1_arready = 0;
                     M2_arready = 0;
                     S_arvalid = 0;
                     S_araddr = 0;
-                    S_arid   = 0; S_arlen = 0; S_arsize = 0; S_arbureset = 0;
+                    S_arid   = 0; S_arlen = 0; S_arsize = 0; S_arburst = 0;
                 end
             end
             R_BUSY:begin
@@ -2810,14 +2810,14 @@ module ysyx_26010011_AXI4Arbiter(
                 S_arid   = R_master_sel?M2_arid:M1_arid;
                 S_arlen  = R_master_sel?M2_arlen:M1_arlen;
                 S_arsize = R_master_sel?M2_arsize:M1_arsize;
-                S_arbureset = R_master_sel?M2_arbureset:M1_arbureset;
+                S_arburst = R_master_sel?M2_arburst:M1_arburst;
             end
             default:begin
                 M1_arready = 0;
                 M2_arready = 0;
                 S_arvalid = 0;
                 S_araddr = 0;
-                S_arid   = 0; S_arlen = 0; S_arsize = 0; S_arbureset = 0;
+                S_arid   = 0; S_arlen = 0; S_arsize = 0; S_arburst = 0;
             end
         endcase
     end
@@ -3083,7 +3083,7 @@ module ysyx_26010011_bridge(
     input      [3:0]  MEM_bid,
     //SLAVE AR
     output reg [31:0] MEM_araddr,   output reg        MEM_arvalid,  input             MEM_arready,
-    output reg [3:0]  MEM_arid,     output reg [7:0]  MEM_arlen,    output reg [2:0]  MEM_arsize,   output reg [1:0]  MEM_arbureset,
+    output reg [3:0]  MEM_arid,     output reg [7:0]  MEM_arlen,    output reg [2:0]  MEM_arsize,   output reg [1:0]  MEM_arburst,
     //SLAVE R
     input      [31:0] MEM_rdata,    input      [1:0]  MEM_rresp,    input             MEM_rvalid,   output reg        MEM_rready,
     input             MEM_rlast,    input      [3:0]  MEM_rid,
@@ -3100,7 +3100,7 @@ module ysyx_26010011_bridge(
     input      [3:0]  CLINT_bid,
     //SLAVE AR
     output reg [31:0] CLINT_araddr,   output reg        CLINT_arvalid,  input             CLINT_arready,
-    output reg [3:0]  CLINT_arid,     output reg [7:0]  CLINT_arlen,    output reg [2:0]  CLINT_arsize,   output reg [1:0]  CLINT_arbureset,
+    output reg [3:0]  CLINT_arid,     output reg [7:0]  CLINT_arlen,    output reg [2:0]  CLINT_arsize,   output reg [1:0]  CLINT_arburst,
     //SLAVE R
     input      [31:0] CLINT_rdata,    input      [1:0]  CLINT_rresp,    input             CLINT_rvalid,   output reg        CLINT_rready,
     input             CLINT_rlast,    input      [3:0]  CLINT_rid
@@ -3176,13 +3176,13 @@ module ysyx_26010011_bridge(
     assign MEM_arid = S_arid;
     assign MEM_arlen = S_arlen;
     assign MEM_arsize = S_arsize;
-    assign MEM_arbureset = S_arburst;
+    assign MEM_arburst = S_arburst;
     assign MEM_rready = S_arready;
     assign MEM_araddr = S_araddr;
     assign CLINT_arid = S_arid;
     assign CLINT_arlen = S_arlen;
     assign CLINT_arsize = S_arsize;
-    assign CLINT_arbureset = S_arburst;
+    assign CLINT_arburst = S_arburst;
     assign CLINT_rready = S_arready;
     assign CLINT_araddr = S_araddr;
     always @(*) begin
