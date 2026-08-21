@@ -9,8 +9,8 @@ html:
 
 ### Default to create a bare-metal kernel image
 ifeq ($(MAKECMDGOALS),)
-  MAKECMDGOALS  = image
-  .DEFAULT_GOAL = image
+  MAKECMDGOALS  = insert-arg
+  .DEFAULT_GOAL = insert-arg
 endif
 
 ### Override checks when `make clean/clean-all/html`

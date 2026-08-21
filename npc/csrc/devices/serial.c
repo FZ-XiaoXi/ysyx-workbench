@@ -2,11 +2,10 @@
 #include "devices.h"
 
 static uint32_t serial_io_handler(uint32_t offset, uint32_t data, int len, bool is_write){
-  if(is_write && offset == 0){
+  if(is_write && offset == 0)
 		putchar(data);
-    // Log("!NO!NO!NO!NO!NO!NO!NO!NO!NO!NO!NO!NO!NO!NO!NO!NO!");
+    Log("!NO!NO!NO!NO!NO!NO!NO!NO!NO!NO!NO!NO!NO!NO!NO!NO!");
     fflush(stdout);
-  }
   return 0;
 }
 

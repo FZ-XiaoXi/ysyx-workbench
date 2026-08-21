@@ -1,5 +1,5 @@
 #include <am.h>
-#include "npc.h"
+#include "ysyxsoc.h"
 
 // PS/2 Set 2 普通扫描码查找表（编译期常量，放入 .rodata）
 static const int __am_key_table[256] = {

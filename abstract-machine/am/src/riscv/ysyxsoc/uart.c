@@ -1,5 +1,5 @@
 #include <am.h>
-#include "npc.h"
+#include "ysyxsoc.h"
 void __am_uart_init() {
     // LCR Configuration Register (Offset +3, DLAB=0)
   typedef union {

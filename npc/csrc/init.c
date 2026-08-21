@@ -10,6 +10,7 @@ static long load_img();
 static char *log_file = NULL;
 static char *diff_so_file = NULL;
 static char *img_file = NULL;
+static char *img_data_file = NULL;
 static char *elf_file = NULL;
 static int difftest_port = 1234;
 long img_size = 0;
@@ -17,23 +18,38 @@ char *IMAGE_NAME = NULL;
 char *ELF_NAME = NULL;
 VerilatedContext* contextp = NULL;
 VerilatedVcdC* tfp = NULL;
-Vtop* top = NULL;
+VysyxSoCFull* top = NULL;
 
 
 void init(int argc, char** argv){
 	//init PRAISE
 	parse_args(argc, argv);
+
+	
     //init log
 	extern void init_log(const char *log_file);
 	init_log(log_file);
+
+
+
 
     //init MEMORY & elf
 	img_size = load_img();
 
 	//init verilator
 	contextp = new VerilatedContext;
-	top = new Vtop{contextp};
+	top = new VysyxSoCFull{contextp};
 	contextp->commandArgs(argc, argv);
+
+
+#ifdef CONFIG_NVBOARD_ENABLE
+	void nvboard_bind_all_pins(VysyxSoCFull* top);
+	nvboard_bind_all_pins(top);
+	nvboard_init();
+	nvboard_update();
+	nvboard_update();
+	nvboard_update();
+#endif
 
 #ifdef CONFIG_WAVE_ENABLE
 	tfp = new VerilatedVcdC;
@@ -44,23 +60,73 @@ void init(int argc, char** argv){
 
 	//init reset
 
-	top->clk=0;top->rst=0;top->eval();contextp->timeInc(10);
-	top->clk=0;top->rst=1;top->eval();contextp->timeInc(10);
-	top->clk=1;top->rst=1;top->eval();contextp->timeInc(10);
-	top->clk=0;top->rst=1;top->eval();contextp->timeInc(10);
-	top->clk=0;top->rst=0;top->eval();contextp->timeInc(10);
-	// top->clk=1;top->rst=0;top->eval();contextp->timeInc(10);
-	// top->clk=0;top->rst=0;top->eval();contextp->timeInc(10);
+	top->clock=0;top->reset=0;top->eval();DUMP();contextp->timeInc(2);
+	top->clock=0;top->reset=1;top->eval();DUMP();contextp->timeInc(2);
+	top->clock=1;top->reset=1;top->eval();DUMP();contextp->timeInc(2);
+	top->clock=0;top->reset=1;top->eval();DUMP();contextp->timeInc(2);
+	top->clock=1;top->reset=1;top->eval();DUMP();contextp->timeInc(2);
+	top->clock=0;top->reset=1;top->eval();DUMP();contextp->timeInc(2);
+	top->clock=1;top->reset=1;top->eval();DUMP();contextp->timeInc(2);
+	top->clock=0;top->reset=1;top->eval();DUMP();contextp->timeInc(2);
+	top->clock=1;top->reset=1;top->eval();DUMP();contextp->timeInc(2);
+	top->clock=0;top->reset=1;top->eval();DUMP();contextp->timeInc(2);
+	top->clock=1;top->reset=1;top->eval();DUMP();contextp->timeInc(2);
+	top->clock=0;top->reset=1;top->eval();DUMP();contextp->timeInc(2);
+	top->clock=1;top->reset=1;top->eval();DUMP();contextp->timeInc(2);
+	top->clock=0;top->reset=1;top->eval();DUMP();contextp->timeInc(2);
+	top->clock=1;top->reset=1;top->eval();DUMP();contextp->timeInc(2);
+	top->clock=0;top->reset=1;top->eval();DUMP();contextp->timeInc(2);
+	top->clock=1;top->reset=1;top->eval();DUMP();contextp->timeInc(2);
+	top->clock=0;top->reset=1;top->eval();DUMP();contextp->timeInc(2);
+	top->clock=1;top->reset=1;top->eval();DUMP();contextp->timeInc(2);
+	top->clock=0;top->reset=1;top->eval();DUMP();contextp->timeInc(2);
+	top->clock=1;top->reset=1;top->eval();DUMP();contextp->timeInc(2);
+	top->clock=0;top->reset=1;top->eval();DUMP();contextp->timeInc(2);
+	top->clock=1;top->reset=1;top->eval();DUMP();contextp->timeInc(2);
+	top->clock=0;top->reset=1;top->eval();DUMP();contextp->timeInc(2);
+	top->clock=1;top->reset=1;top->eval();DUMP();contextp->timeInc(2);
+	top->clock=0;top->reset=1;top->eval();DUMP();contextp->timeInc(2);
+	top->clock=1;top->reset=1;top->eval();DUMP();contextp->timeInc(2);
+	top->clock=0;top->reset=1;top->eval();DUMP();contextp->timeInc(2);
+	top->clock=1;top->reset=1;top->eval();DUMP();contextp->timeInc(2);
+	top->clock=0;top->reset=1;top->eval();DUMP();contextp->timeInc(2);
+	top->clock=1;top->reset=1;top->eval();DUMP();contextp->timeInc(2);
+	top->clock=0;top->reset=1;top->eval();DUMP();contextp->timeInc(2);
+	top->clock=1;top->reset=1;top->eval();DUMP();contextp->timeInc(2);
+	top->clock=0;top->reset=1;top->eval();DUMP();contextp->timeInc(2);
+	top->clock=1;top->reset=1;top->eval();DUMP();contextp->timeInc(2);
+	top->clock=0;top->reset=1;top->eval();DUMP();contextp->timeInc(2);
+	top->clock=1;top->reset=1;top->eval();DUMP();contextp->timeInc(2);
+	top->clock=0;top->reset=1;top->eval();DUMP();contextp->timeInc(2);
+	top->clock=1;top->reset=1;top->eval();DUMP();contextp->timeInc(2);
+	top->clock=0;top->reset=1;top->eval();DUMP();contextp->timeInc(2);
+	top->clock=0;top->reset=0;top->eval();DUMP();contextp->timeInc(2);
+	
+	
+	// top->clock=1;top->reset=0;top->eval();contextp->timeInc(10);
+	// top->clock=0;top->reset=0;top->eval();contextp->timeInc(10);
 
     //init CPU
 	cpu.pc = RESET_VECTOR;
 	cpu.dnpc = RESET_VECTOR;
+	CPUTop->IFU_0->PC = RESET_VECTOR;
     cpu.state = NPC_STOP;
 	cpu.halt_ret = 0;
 	cpu.count = 0;
-	cpu.inst = MEM(cpu.pc);
+	cpu.inst = FLASH(cpu.pc);
 	cpu.mem_access_addr = 0;
 	//cpu.pc=
+
+	// unsigned char * ptr = (unsigned char *)(&FLASH[0]);
+	// unsigned int j=0;
+	// while(j < 0x1000){
+	// 	*ptr = j & 0xff;
+	// 	Log("FLASH[%08x] = %02x", j, *ptr);
+	// 	ptr++;
+	// 	j++;
+	// }
+
+	
 	
 	//init regex
 	extern void init_regex();
@@ -70,8 +136,8 @@ void init(int argc, char** argv){
 	init_wp_pool();
 
 	//init devices
-	init_rtc();
-	init_serial();
+	// init_rtc();
+	// init_serial();
 
 	//init itrace
 	#ifdef CONFIG_ITRACE_ENABLE
@@ -106,7 +172,8 @@ static int parse_args(int argc, char *argv[]) {
       case 1:
         filecount++;
         if(filecount==1){img_file = optarg;break;}
-        else if(filecount==2){elf_file = optarg;return 0;}
+        else if(filecount==2){img_data_file = optarg;return 0;}
+		else if(filecount==3){elf_file = optarg;return 0;}
       default:
         printf("Usage: %s [OPTION...] IMAGE [args]\n\n", argv[0]);
         printf("\t-b,--batch              run with batch mode\n");
@@ -193,27 +260,29 @@ static long load_img() {
     Log("No image is given. Use the default build-in image.");
 		//MEM[0]=0b00000000100000000000000010010011;//addi r1,r0,8
 		//MEM[1]=0b00000000010000001000010001100111;//jalr r8,4(r1)
-		MEM[ 0]=0b00000000100000000000000010010011;//addi r1,r0,8
-		MEM[ 1]=0b00000000001000001000000100010011;//addi r2,r1,2
-		MEM[ 2]=0b00000000000100010000000110110011;//add  r3,r1,r2
-		MEM[ 3]=0b00000000000000000111000110110111;//lui  r3,0x7000
-		MEM[ 4]=0b00010001000100011000001000010011;//addi r4,r3,0x111
-		MEM[ 5]=0b00000000010000000010000010000011;//lw   r1,4(r0)
-		MEM[ 6]=0b00000000001000000100000100000011;//lbu  r2,+2(r0)
-		MEM[ 7]=0b00000000001000000000000110000011;//lb   r3,+2(r0)
-		MEM[ 8]=0b00010000001100000010000000100011;//sw   r3,0x100(r0)
-		MEM[ 9]=0b00010000001100000000001100100011;//sb   r3,0x106(r0)
-		MEM[10]=0b00010000000000000010001010000011;//lw   r5,0x100(r0)
-		MEM[11]=0b00010000010000000010001100000011;//lw   r6,0x104(r0)
-		MEM[12]=0b00000000000100000000010100010011;//addi r10,r0,1
-		MEM[13]=0b00000000000100000000000001110011;//ebreak
-		MEM[14]=0b00000000010000000000010001100111;//jalr r8,4(r0)
+		// MEM[ 0]=0b00000000100000000000000010010011;//addi r1,r0,8
+		// MEM[ 1]=0b00000000001000001000000100010011;//addi r2,r1,2
+		// MEM[ 2]=0b00000000000100010000000110110011;//add  r3,r1,r2
+		// MEM[ 3]=0b00000000000000000111000110110111;//lui  r3,0x7000
+		// MEM[ 4]=0b00010001000100011000001000010011;//addi r4,r3,0x111
+		// MEM[ 5]=0b00000000010000000010000010000011;//lw   r1,4(r0)
+		// MEM[ 6]=0b00000000001000000100000100000011;//lbu  r2,+2(r0)
+		// MEM[ 7]=0b00000000001000000000000110000011;//lb   r3,+2(r0)
+		// MEM[ 8]=0b00010000001100000010000000100011;//sw   r3,0x100(r0)
+		// MEM[ 9]=0b00010000001100000000001100100011;//sb   r3,0x106(r0)
+		// MEM[10]=0b00010000000000000010001010000011;//lw   r5,0x100(r0)
+		// MEM[11]=0b00010000010000000010001100000011;//lw   r6,0x104(r0)
+		// MEM[12]=0b00000000000100000000010100010011;//addi r10,r0,1
+		// MEM[13]=0b00000000000100000000000001110011;//ebreak
+		// MEM[14]=0b00000000010000000000010001100111;//jalr r8,4(r0)
 		// MEM[ 0]=0b00000000100000000000000010010011;//addi r1,r0,8
 		// MEM[ 1]=0b00010000001100000010000000100011;//sw   r1,0x100(r0)
+		MROM[ 0] = 0b00000000000100000000000001110011;//ebreak
 
     return 4096; // built-in image size
   }
-
+////////////////////
+  
   FILE *fp = fopen(img_file, "rb");
   Assert(fp, "Can not open '%s'", img_file);
 
@@ -223,9 +292,31 @@ static long load_img() {
   Log("The image is %s, size = %ld", img_file, size);
 
   fseek(fp, 0, SEEK_SET);
-  int ret = fread((uint8_t*)MEM + RESET_VECTOR - CONFIG_MBASE, size, 1, fp);
+  int ret = fread((uint8_t*)FLASH + RESET_VECTOR - CONFIG_FLASHBASE, size, 1, fp);
+  Log("Final image size = %ld", size);
   assert(ret == 1);
   fclose(fp);
+  
+
+/////////////////////
+  {
+//   FILE *fpd = fopen(img_data_file, "rb");
+//   Assert(fpd, "Can not open '%s'", img_data_file);
+
+//   fseek(fpd, 0, SEEK_END);
+//   long size = ftell(fpd);
+
+//   Log("The image is %s, size = %ld", img_data_file, size);
+
+//   fseek(fpd, 0, SEEK_SET);
+//   int ret = fread((uint8_t*)MROM + RESET_VECTOR - CONFIG_MROMBASE, size, 1, fpd);
+//   Log("Final image data size = %ld", size);
+//   assert(ret == 1);
+//   fclose(fpd);
+  }
+
   load_elf();
+  Log("Final elf");
+
   return size;
 }
