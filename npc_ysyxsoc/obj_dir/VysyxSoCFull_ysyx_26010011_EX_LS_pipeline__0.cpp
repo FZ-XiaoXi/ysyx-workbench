@@ -9,7 +9,7 @@ void VysyxSoCFull_ysyx_26010011_EX_LS_pipeline___ico_sequent__TOP__ysyxSoCFull__
     VysyxSoCFull__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
     auto& vlSelfRef = std::ref(*vlSelf).get();
     // Body
-    vlSelfRef.__VdfgRegularize_h6e95ff9d_0_33 = ((IData)(vlSelfRef.__PVT__lsu_in_bus_isWGPR) 
+    vlSelfRef.__VdfgRegularize_h6e95ff9d_0_32 = ((IData)(vlSelfRef.__PVT__lsu_in_bus_isWGPR) 
                                                  & (IData)(vlSelfRef.lsu_in_valid));
 }
 
@@ -93,6 +93,6 @@ void VysyxSoCFull_ysyx_26010011_EX_LS_pipeline___nba_sequent__TOP__ysyxSoCFull__
         vlSelfRef.__PVT__lsu_in_bus_snpc = vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__ID_EX_inst.__PVT__exu_in_bus_snpc;
     }
     vlSelfRef.lsu_in_valid = vlSelfRef.__Vdly__lsu_in_valid;
-    vlSelfRef.__VdfgRegularize_h6e95ff9d_0_33 = ((IData)(vlSelfRef.__PVT__lsu_in_bus_isWGPR) 
+    vlSelfRef.__VdfgRegularize_h6e95ff9d_0_32 = ((IData)(vlSelfRef.__PVT__lsu_in_bus_isWGPR) 
                                                  & (IData)(vlSelfRef.lsu_in_valid));
 }

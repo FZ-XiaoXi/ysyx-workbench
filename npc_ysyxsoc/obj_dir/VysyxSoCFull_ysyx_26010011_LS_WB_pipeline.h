@@ -41,7 +41,7 @@ class alignas(VL_CACHE_LINE_BYTES) VysyxSoCFull_ysyx_26010011_LS_WB_pipeline fin
     VL_OUT8(__PVT__wbu_in_bus_isWCOMP,0,0);
     VL_OUT8(__PVT__wbu_in_bus_isBRANCH,0,0);
     VL_OUT8(__PVT__wbu_in_bus_opCSR,2,0);
-    CData/*0:0*/ __VdfgRegularize_h6e95ff9d_0_35;
+    CData/*0:0*/ __VdfgRegularize_h6e95ff9d_0_34;
     VL_IN16(__PVT__lsu_out_bus_csrrd,11,0);
     VL_OUT16(__PVT__wbu_in_bus_csrrd,11,0);
     VL_IN(__PVT__lsu_out_bus_alu_result,31,0);

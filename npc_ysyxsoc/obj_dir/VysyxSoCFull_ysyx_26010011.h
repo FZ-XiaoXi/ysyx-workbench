@@ -102,6 +102,7 @@ class alignas(VL_CACHE_LINE_BYTES) VysyxSoCFull_ysyx_26010011 final : public Ver
         CData/*0:0*/ __PVT__S_rvalid;
         CData/*0:0*/ __PVT__S_rlast;
         CData/*0:0*/ __PVT__S_arready;
+        CData/*3:0*/ __PVT__S_rid;
         CData/*1:0*/ __PVT__S_arburst;
         CData/*2:0*/ __PVT__S_arsize;
         CData/*7:0*/ __PVT__S_arlen;
@@ -162,9 +163,9 @@ class alignas(VL_CACHE_LINE_BYTES) VysyxSoCFull_ysyx_26010011 final : public Ver
         CData/*0:0*/ __PVT__IDU_0__DOT__isCSRRWI;
         CData/*0:0*/ __PVT__IDU_0__DOT__isCSRRSI;
         CData/*0:0*/ __PVT__IDU_0__DOT__isCSRRCI;
-        CData/*0:0*/ __PVT__IDU_0__DOT__isI;
     };
     struct {
+        CData/*0:0*/ __PVT__IDU_0__DOT__isI;
         CData/*0:0*/ __PVT__IDU_0__DOT__isU;
         CData/*0:0*/ IDU_0__DOT____VdfgRegularize_hd1728725_0_0;
         CData/*0:0*/ IDU_0__DOT____VdfgRegularize_hd1728725_0_2;
@@ -199,7 +200,6 @@ class alignas(VL_CACHE_LINE_BYTES) VysyxSoCFull_ysyx_26010011 final : public Ver
         CData/*3:0*/ __PVT__u_clint__DOT__rnext_state;
         CData/*0:0*/ __VdfgSynthJoin___PVT__idu_ra_isRAW_h6e95ff9d_0_28;
         CData/*0:0*/ __VdfgRegularize_h6e95ff9d_0_17;
-        CData/*0:0*/ __VdfgRegularize_h6e95ff9d_0_18;
         SData/*12:0*/ __PVT__idu_out_bus_signals;
         SData/*12:0*/ __PVT__exu_in_bus_signals;
         VL_OUT(__PVT__io_master_awaddr,31,0);
