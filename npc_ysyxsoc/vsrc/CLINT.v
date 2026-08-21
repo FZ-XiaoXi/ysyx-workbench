@@ -6,6 +6,9 @@
 // ██║      ██║      ██║ ██║╚██╗██║    ██║
 // ╚██████╗ ███████╗ ██║ ██║ ╚████║    ██║
 //  ╚═════╝ ╚══════╝ ╚═╝ ╚═╝  ╚═══╝    ╚═╝
+`ifdef USE_VERILATOR
+import "DPI-C" function void difftest_skip_ref(int reason);
+`endif
 module ysyx_26010011_CLINT(
 	input clock,
 	input reset,
@@ -103,8 +106,13 @@ module ysyx_26010011_CLINT(
 	  raddr_reg <= 32'b0;
 	end else begin
 	  rstate <= rnext_state;
-	  if (rstate == 4'b0000 && arvalid && arready)
-		raddr_reg <= araddr;
+	  if (rstate == 4'b0000 && arvalid && arready) begin
+        `ifdef USE_VERILATOR
+            difftest_arburst_ref(32'h78787878);
+        `endif
+        raddr_reg <= araddr;
+      end
+		
 	end
   end
   always @(*) begin
