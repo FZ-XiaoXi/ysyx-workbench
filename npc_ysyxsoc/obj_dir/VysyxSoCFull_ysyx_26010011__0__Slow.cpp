@@ -43,6 +43,12 @@ VL_ATTR_COLD void VysyxSoCFull_ysyx_26010011___stl_sequent__TOP__ysyxSoCFull__as
         [__Vtableidx5];
     vlSelfRef.__PVT__CLINT_rlast = VysyxSoCFull__ConstPool__TABLE_hfc7a839a_0
         [__Vtableidx5];
+    vlSelfRef.__PVT__CLINT_rdata = ((0x02000000U == vlSelfRef.__PVT__u_clint__DOT__raddr_reg)
+                                     ? vlSelfRef.__PVT__u_clint__DOT__mtime_L
+                                     : ((0x02000004U 
+                                         == vlSelfRef.__PVT__u_clint__DOT__raddr_reg)
+                                         ? vlSelfRef.__PVT__u_clint__DOT__mtime_H
+                                         : 0U));
     vlSelfRef.__PVT__WBU_0__DOT__wbu_out_bus_exception 
         = ((IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__LS_WB_inst.wbu_in_valid)
             ? (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__LS_WB_inst.__PVT__wbu_in_bus_exception)
@@ -756,6 +762,7 @@ VL_ATTR_COLD void VysyxSoCFull_ysyx_26010011___ctor_var_reset(VysyxSoCFull_ysyx_
     vlSelf->__PVT__S_arburst = VL_SCOPED_RAND_RESET_I(2, __VscopeHash, 3476913524963226392ull);
     vlSelf->__PVT__S_arsize = VL_SCOPED_RAND_RESET_I(3, __VscopeHash, 774052082752397629ull);
     vlSelf->__PVT__S_arlen = VL_SCOPED_RAND_RESET_I(8, __VscopeHash, 18115728767137224371ull);
+    vlSelf->__PVT__CLINT_rdata = VL_SCOPED_RAND_RESET_I(32, __VscopeHash, 16688158223757530203ull);
     vlSelf->__PVT__CLINT_arvalid = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 18369756256379185791ull);
     vlSelf->__PVT__CLINT_rvalid = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 9738362805277294602ull);
     vlSelf->__PVT__CLINT_bvalid = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 8745694234458599952ull);

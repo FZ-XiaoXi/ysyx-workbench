@@ -358,13 +358,7 @@ void VysyxSoCFull_ysyx_26010011___ico_comb__TOP__ysyxSoCFull__asic__cpu__cpu__2(
         if (vlSelfRef.__PVT__u_bridge__DOT__ar_sel_reg) {
             vlSelfRef.__PVT__S_rlast = vlSelfRef.__PVT__CLINT_rlast;
             vlSelfRef.__PVT__S_rvalid = vlSelfRef.__PVT__CLINT_rvalid;
-            vlSelfRef.__PVT__S_rdata = ((0x02000000U 
-                                         == vlSelfRef.__PVT__u_clint__DOT__raddr_reg)
-                                         ? vlSelfRef.__PVT__u_clint__DOT__mtime_L
-                                         : ((0x02000004U 
-                                             == vlSelfRef.__PVT__u_clint__DOT__raddr_reg)
-                                             ? vlSelfRef.__PVT__u_clint__DOT__mtime_H
-                                             : 0U));
+            vlSelfRef.__PVT__S_rdata = vlSelfRef.__PVT__CLINT_rdata;
         } else {
             vlSelfRef.__PVT__S_rlast = vlSelfRef.__PVT__io_master_rlast;
             vlSelfRef.__PVT__S_rvalid = vlSelfRef.__PVT__io_master_rvalid;
@@ -386,7 +380,7 @@ void VysyxSoCFull_ysyx_26010011___ico_comb__TOP__ysyxSoCFull__asic__cpu__cpu__2(
             vlSelfRef.__PVT__S_rvalid = vlSelfRef.__PVT__CLINT_rvalid;
             vlSelfRef.__PVT__io_master_arvalid = (1U 
                                                   & 0U);
-            vlSelfRef.__PVT__S_rdata = vlSelfRef.__PVT__CLINT_arready;
+            vlSelfRef.__PVT__S_rdata = vlSelfRef.__PVT__CLINT_rdata;
         } else {
             vlSelfRef.__PVT__S_rlast = vlSelfRef.__PVT__io_master_rlast;
             vlSelfRef.__PVT__S_rvalid = vlSelfRef.__PVT__io_master_rvalid;
@@ -690,6 +684,12 @@ void VysyxSoCFull_ysyx_26010011___nba_sequent__TOP__ysyxSoCFull__asic__cpu__cpu_
     vlSelfRef.__PVT__u_clint__DOT__mtime_L = __Vdly__u_clint__DOT__mtime_L;
     vlSelfRef.__PVT__u_clint__DOT__mtime_H = __Vdly__u_clint__DOT__mtime_H;
     vlSelfRef.tb_FINAL_npc = __Vdly__tb_FINAL_npc;
+    vlSelfRef.__PVT__CLINT_rdata = ((0x02000000U == vlSelfRef.__PVT__u_clint__DOT__raddr_reg)
+                                     ? vlSelfRef.__PVT__u_clint__DOT__mtime_L
+                                     : ((0x02000004U 
+                                         == vlSelfRef.__PVT__u_clint__DOT__raddr_reg)
+                                         ? vlSelfRef.__PVT__u_clint__DOT__mtime_H
+                                         : 0U));
     __Vtableidx3 = vlSelfRef.__PVT__u_clint__DOT__wstate;
     vlSelfRef.__PVT__CLINT_awready = VysyxSoCFull__ConstPool__TABLE_h532d5d4f_0
         [__Vtableidx3];

@@ -144,11 +144,11 @@ module ysyx_26010011_bridge(
             CLINT_arvalid = ar_sel_now?S_arvalid:0;
 
             S_arready = ar_sel_now?CLINT_arready:MEM_arready;
-            S_rdata = ar_sel_now?CLINT_rdata:MEM_rdata;
-            S_rresp = ar_sel_now?CLINT_rresp:MEM_rresp;
-            S_rvalid = ar_sel_now?CLINT_rvalid:MEM_rvalid;
-            S_rlast = ar_sel_now?CLINT_rlast:MEM_rlast;
-            S_rid = ar_sel_now?CLINT_rid:MEM_rid;
+            S_rdata = 0;
+            S_rresp = 0;
+            S_rvalid = 0;
+            S_rlast = 0;
+            S_rid = 0;
         end else if(ar_sel_reg == 1'b0) begin
             MEM_arvalid = S_arvalid;
             CLINT_arvalid = 0;

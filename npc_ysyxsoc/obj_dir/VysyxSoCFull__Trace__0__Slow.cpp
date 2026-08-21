@@ -6537,11 +6537,7 @@ VL_ATTR_COLD void VysyxSoCFull___024root__trace_full_0_sub_0(VysyxSoCFull___024r
     bufp->fullCData(oldp+890,(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__LS_WB_inst.__PVT__wbu_in_bus_opCSR),3);
     bufp->fullCData(oldp+891,(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__LS_WB_inst.__PVT__wbu_in_bus_rd),5);
     bufp->fullCData(oldp+892,(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__LS_WB_inst.__PVT__wbu_in_bus_exception),5);
-    bufp->fullIData(oldp+893,(((0x02000000U == vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu.__PVT__u_clint__DOT__raddr_reg)
-                                ? vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu.__PVT__u_clint__DOT__mtime_L
-                                : ((0x02000004U == vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu.__PVT__u_clint__DOT__raddr_reg)
-                                    ? vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu.__PVT__u_clint__DOT__mtime_H
-                                    : 0U))),32);
+    bufp->fullIData(oldp+893,(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu.__PVT__CLINT_rdata),32);
     bufp->fullBit(oldp+894,(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu.__PVT__CLINT_rvalid));
     bufp->fullBit(oldp+895,(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu.__PVT__CLINT_bvalid));
     bufp->fullBit(oldp+896,(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu.__PVT__CLINT_rlast));
