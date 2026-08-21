@@ -111,6 +111,8 @@ module ysyx_26010011_CLINT(
             difftest_skip_ref(32'h78787878);
         `endif
         raddr_reg <= araddr;
+		$display("CLINT Read from address: 0x%08x", araddr);
+
       end
 		
 	end
