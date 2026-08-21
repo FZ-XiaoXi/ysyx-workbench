@@ -2486,7 +2486,7 @@ module ysyx_26010011(
 	.S_bid(S_bid),
 	//SLAVE AR
 	.S_araddr(S_araddr),  .S_arvalid(S_arvalid),  .S_arready(S_arready),
-	.S_arid(S_arid),      .S_arlen(S_arlen),      .S_arsize(S_arsize),    .S_arbureset(S_arbureset),
+	.S_arid(S_arid),      .S_arlen(S_arlen),      .S_arsize(S_arsize),    .S_arburst(S_arburst),
 	//SLAVE R
 	.S_rdata(S_rdata),    .S_rresp(S_rresp),      .S_rvalid(S_rvalid),    .S_rready(S_rready),
 	.S_rlast(S_rlast),    .S_rid(S_rid)
@@ -2506,7 +2506,7 @@ module ysyx_26010011(
 		.clock(clock),
 		.reset(reset),
 		
-		.S_araddr(S_araddr),  .S_arvalid(S_arvalid), .S_arready(S_arready), .S_arid(S_arid), .S_arlen(S_arlen), .S_arsize(S_arsize), .S_arbureset(S_arbureset),
+		.S_araddr(S_araddr),  .S_arvalid(S_arvalid), .S_arready(S_arready), .S_arid(S_arid), .S_arlen(S_arlen), .S_arsize(S_arsize), .S_arburst(S_arburst),
 		.S_rdata(S_rdata),   .S_rresp(S_rresp),   .S_rvalid(S_rvalid),  .S_rready(S_rready), .S_rlast(S_rlast), .S_rid(S_rid),
 		.S_awaddr(S_awaddr),  .S_awvalid(S_awvalid), .S_awready(S_awready), .S_awid(S_awid), .S_awlen(S_awlen), .S_awsize(S_awsize), .S_awburst(S_awburst),
 		.S_wdata(S_wdata),   .S_wstrb(S_wstrb),   .S_wvalid(S_wvalid),  .S_wready(S_wready), .S_wlast(S_wlast),
