@@ -87,6 +87,7 @@ module ysyx_26010011_IFU(
 			PC <= 32'h80000000;
 			`else
 				`ifdef USE_VERILATOR
+				$display("Warning: Verilator simulation, setting PC to 0x30000000");
 				PC <= 32'h30000000;
 				`endif
 			`endif
