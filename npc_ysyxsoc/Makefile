@@ -50,8 +50,8 @@ all:
 concat:
 	cat vsrc/csr_defines.v vsrc/IFU.v vsrc/IDU.v vsrc/EXU.v vsrc/LSU.v vsrc/WBU.v vsrc/pipeline.v vsrc/REG.v vsrc/CPU.v vsrc/AXI4Arbiter.v vsrc/CLINT.v vsrc/BRIDGE.v > vsrc/ysyx_26010011.v
 	sed -i 's#`include#//`include#' vsrc/ysyx_26010011.v
-	
-sim: concat $(SIM_C) $(SIM_V) $(NVBOARD_ARCHIVE)
+
+sim: $(SIM_C) $(SIM_V) $(NVBOARD_ARCHIVE) concat
 	$(call git_commit, "sim RTL") # DO NOT REMOVE THIS LINE!!!
 	verilator $(VERILATOR_FLAGS) --top-module $(TOPNAME) $^ $(addprefix -CFLAGS , $(CXXFLAGS)) $(addprefix -LDFLAGS , $(LDFLAGS))
 	@echo "ARGS = $(ARGS)"
