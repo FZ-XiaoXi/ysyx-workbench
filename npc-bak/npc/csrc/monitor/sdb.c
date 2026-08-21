@@ -188,7 +188,7 @@ static struct {
 #define NR_CMD ARRLEN(cmd_table)
 
 static int cmd_help(char *args) {
-  /* extract the fireset argument */
+  /* extract the first argument */
   char *arg = strtok(NULL, " ");
   int i;
 
@@ -220,7 +220,7 @@ void sdb_mainloop() {
   for (char *str; (str = rl_gets()) != NULL; ) {
     char *str_end = str + strlen(str);
 
-    /* extract the fireset token as the command */
+    /* extract the first token as the command */
     char *cmd = strtok(str, " ");
     if (cmd == NULL) { continue; }
 

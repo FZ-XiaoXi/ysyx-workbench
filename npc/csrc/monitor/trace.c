@@ -77,7 +77,7 @@ void trace_and_difftest(){
 #endif
 #ifdef CONFIG_DIFFTEST_ENABLE
     extern void difftest_step(uint32_t pc, uint32_t npc,uint32_t mem_addr);
-    difftest_step(cpu.pc, cpu.dnpc, cpu.mem_access_addr);
+    difftest_step(cpu.tb_FINAL_pc, cpu.tb_FINAL_npc, cpu.mem_access_addr);
 #endif
 }
 
@@ -156,7 +156,7 @@ void ftracer_write_log(char *s){
   log_write("%s", s);
   if(!ftrace_log.buf){
     ftrace_log.buf=(char*)malloc(128);
-    if(!ftrace_log.buf){Log("ERROR first malloc ftracer_log_buffer!.");return;}
+    if(!ftrace_log.buf){Log("ERROR fireset malloc ftracer_log_buffer!.");return;}
     memset(ftrace_log.buf,0,128);
     ftrace_log.alloc=128;
   }

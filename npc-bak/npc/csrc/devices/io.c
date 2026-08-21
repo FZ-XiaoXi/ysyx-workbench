@@ -41,7 +41,7 @@ void add_mmio_space(const char *name, uint32_t addr, uint32_t size, io_callback_
     Assert(io_num<CONFIG_MMIO_MAX, "Cannot add device:%s (MMIO space is full)", name);
     uint32_t low = addr;
     uint32_t high = addr + size - 1;
-    Assert(!(check_sram_bound(low) || check_sram_bound(high)), "Cannot add device:%s [" FMT_WORD "-" FMT_WORD "]", name, low, high);
+    Assert(!(check_pmem_bound(low) || check_pmem_bound(high)), "Cannot add device:%s [" FMT_WORD "-" FMT_WORD "]", name, low, high);
     IOSpace s = {.name = name, .low = low, .high = high, .callback = callback};
     iospace[io_num] = s;
     io_num++;

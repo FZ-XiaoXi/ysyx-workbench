@@ -1,55 +1,65 @@
-module WBU(
-    input clk,
-    input rst,
-    input [31:0]LSU_data,
-    input [31:0]EXU_data,
-    input [31:0]CSR_data,
-    input COMP_data,
-    input [31:0]snpc,
-    input [4:0]address,
-    input isLOAD,
-    input isSTORE,
-    input [1:0]isCSR,
-    input isWRITE,
-    input isJUMP,
-    input isCOMPARE,
-    input lsu_final,
-    output gpr_WEN,
-    output reg [31:0]reg_data,
+
+
+// ██╗    ██╗ ██████╗  ██╗   ██╗
+// ██║    ██║ ██╔══██╗ ██║   ██║
+// ██║ █╗ ██║ ██████╔╝ ██║   ██║
+// ██║███╗██║ ██╔══██╗ ██║   ██║
+// ╚███╔███╔╝ ██████╔╝ ╚██████╔╝
+//  ╚══╝╚══╝  ╚═════╝   ╚═════╝
+module ysyx_26010011_WBU(
+    input clock,
+    input reset,
+    input flush_valid,
+
+    input wbu_in_valid,
+    output wbu_in_ready,
+    input [31:0]wbu_in_bus_pc,
+    input [31:0]wbu_in_bus_instruction,
+    input [31:0]wbu_in_bus_lsu_result,
+    input [31:0]wbu_in_bus_alu_result,
+    input [31:0]wbu_in_bus_csr_result,
+    input wbu_in_bus_comp_result,
+    input [31:0]wbu_in_bus_snpc,
+    input [4:0]wbu_in_bus_rd,
+    input [11:0]wbu_in_bus_csrrd,
+    input wbu_in_bus_isLOAD,
+    input wbu_in_bus_isSTORE,
+    input wbu_in_bus_isWGPR,
+    input wbu_in_bus_isJUMP,
+    input wbu_in_bus_isWCOMP,
+    input [2:0]wbu_in_bus_opCSR,
+    input [4:0]wbu_in_bus_exception,
+
+    output gpr_we,
+    output reg [31:0]gpr_wdata,
     output [4:0]gpr_address,
-    output reg wbu_final
+
+    output csr_we,
+    output [31:0]csr_wdata,
+    output [11:0]csr_address,
+    output [4:0]wbu_out_bus_exception,
+    output fencei_pass
 );  
+    assign wbu_in_ready=1;
     always @(*) begin
-        if(isLOAD) begin
-                                    reg_data = LSU_data;
-        end else if(isJUMP) begin
-                                    reg_data = snpc;
-        end else if(isWRITE) begin
-            if(isCOMPARE)           reg_data = {31'b0,COMP_data};
-            else                    reg_data = EXU_data;
-        end else if(|isCSR) begin
-            if(isCSR == 2'b01)      reg_data = CSR_data | EXU_data;//CSRRS
-            else if(isCSR == 2'b10) reg_data = CSR_data & ~EXU_data;//CSRRC
-            else                    reg_data = EXU_data;//CSRRW
+        if(wbu_in_bus_isLOAD) begin
+                                    gpr_wdata = wbu_in_bus_lsu_result;
+        end else if(wbu_in_bus_isJUMP) begin
+                                    gpr_wdata = wbu_in_bus_snpc;
+        // end else if(wbu_in_bus_isWGPR) begin
         end else begin
-                                    reg_data = 32'hf0f0f0f0;
-        end
-
-    end
-
-    assign gpr_address=address;
-    assign gpr_WEN=(isLOAD)?(lsu_final?1:0):(isWRITE| |isCSR?1:0);
-    always @(*) begin
-        if(gpr_WEN)begin
-            wbu_final = 1;
-        end else if(isLOAD | isSTORE)begin
-            if(lsu_final) begin
-                wbu_final = 1;
-            end else begin
-                wbu_final = 0;
-            end
-        end else begin
-            wbu_final = 1;
+            if(wbu_in_bus_isWCOMP)           gpr_wdata = {31'b0,wbu_in_bus_comp_result};
+            else                    gpr_wdata = wbu_in_bus_alu_result;
         end
     end
+
+    assign gpr_address=wbu_in_bus_rd;
+    assign gpr_we=(wbu_in_bus_isWGPR & wbu_in_valid & ~wbu_in_bus_exception[4])?1:0;
+    
+    assign wbu_out_bus_exception=(wbu_in_valid)?wbu_in_bus_exception:5'b0;
+    assign fencei_pass = (wbu_in_valid & ~wbu_in_bus_exception[4] & (wbu_in_bus_exception[3:0]==`ysyx_26010011_EXCEPTION_FENCEI))?1:0;
+
+    assign csr_address=wbu_in_bus_csrrd;
+    assign csr_we=((|wbu_in_bus_opCSR) & wbu_in_valid & ~wbu_in_bus_exception[4])?1:0;
+    assign csr_wdata=wbu_in_bus_csr_result;
 endmodule

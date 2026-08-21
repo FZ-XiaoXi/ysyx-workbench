@@ -11,6 +11,7 @@ import "DPI-C" function int pmem_read(input int raddr);
 import "DPI-C" function void pmem_write(input int waddr, input int wdata, input byte wmask);
 `endif
 `include "csr_defines.v"
+
 module ysyx_26010011(
   input clock,
   input reset/*verilator public*/,

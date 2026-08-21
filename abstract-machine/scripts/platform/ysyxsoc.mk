@@ -19,7 +19,7 @@ LDFLAGS   += --gc-sections -e _start
 MAINARGS_MAX_LEN = 64
 MAINARGS_PLACEHOLDER = the_insert-arg_rule_in_Makefile_will_insert_mainargs_here
 CFLAGS += -DMAINARGS_MAX_LEN=$(MAINARGS_MAX_LEN) -DMAINARGS_PLACEHOLDER=$(MAINARGS_PLACEHOLDER)
-NPC_HOME = $(AM_HOME)/../npc_ysyxsoc
+NPC_HOME = $(AM_HOME)/../npc
 NPCFLAGS += -l $(shell dirname $(IMAGE).elf)/npc-log.txt
 ifndef SDB
 NPCFLAGS += -b
@@ -35,6 +35,6 @@ image: image-dep
 
 run: insert-arg
 #   echo "TODO: add command here to run simulation"
-	$(MAKE) -C $(NPC_SOC_HOME) sim ARGS="$(NPCFLAGS)" IMG=$(IMAGE).bin ELF=$(IMAGE).elf
+	$(MAKE) -C $(NPC_HOME) sim ARGS="$(NPCFLAGS)" IMG=$(IMAGE).bin ELF=$(IMAGE).elf
 
 .PHONY: insert-arg
