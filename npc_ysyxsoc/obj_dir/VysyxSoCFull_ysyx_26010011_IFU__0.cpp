@@ -125,9 +125,7 @@ void VysyxSoCFull_ysyx_26010011_IFU___nba_sequent__TOP__ysyxSoCFull__asic__cpu__
     VysyxSoCFull__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
     auto& vlSelfRef = std::ref(*vlSelf).get();
     // Body
-    if (VL_UNLIKELY((vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu.reset))) {
-        VL_WRITEF_NX("Verilator simulation, setting PC to 0x30000000\n",0);
-        Verilated::runFlushCallbacks();
+    if (vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu.reset) {
         vlSelfRef.PC = 0x30000000U;
     } else if (vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu.flush_valid) {
         vlSelfRef.PC = ((IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu.flush_valid)
