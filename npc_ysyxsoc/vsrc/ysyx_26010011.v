@@ -43,7 +43,6 @@
 `endif
 
 
-
 // ██╗ ███████╗ ██╗   ██╗
 // ██║ ██╔════╝ ██║   ██║
 // ██║ █████╗   ██║   ██║
@@ -238,12 +237,12 @@ module ysyx_26010011_IFU_icache #(
 	output           debug_is_hit
 );
 
-`ifdef FORMAL
-	always @(*) begin
+// `ifdef FORMAL
+// 	always @(*) begin
 
-		c_assert: assert(1 == 1);
-	end
-`endif  // FORMAL
+// 		c_assert: assert(1 == 1);
+// 	end
+// `endif  // FORMAL
 
 	parameter BLOCK_W = CACHE_BLOCK_SIZE * 8;
 	parameter INDEX_W = $clog2(CACHE_SIZE);
@@ -452,6 +451,7 @@ module ysyx_26010011_IFU_icache #(
 
 
 endmodule
+
 
 // ██╗ ██████╗  ██╗   ██╗
 // ██║ ██╔══██╗ ██║   ██║
@@ -743,7 +743,6 @@ module ysyx_26010011_IDU(
 endmodule
 
 
-
 // ███████╗ ██╗  ██╗ ██╗   ██╗
 // ██╔════╝ ╚██╗██╔╝ ██║   ██║
 // █████╗    ╚███╔╝  ██║   ██║
@@ -890,7 +889,7 @@ import "DPI-C" function void difftest_mem_set(int addr);
 module ysyx_26010011_LSU(
     input             clock,
     input             reset,
-    input             flush_valid,
+    input             flush_valid,////////////////////TODO 异常冲刷还未实现！不可中断进行中的axi4
     // CPU 流水线接口
     input            lsu_in_valid,
     input      [ 4:0]lsu_in_bus_exception,/////////////////////TODO 异常冲刷还未实现！不可中断进行中的axi4
@@ -1219,6 +1218,14 @@ module ysyx_26010011_WBU(
     assign csr_we=((|wbu_in_bus_opCSR) & wbu_in_valid & ~wbu_in_bus_exception[4])?1:0;
     assign csr_wdata=wbu_in_bus_csr_result;
 endmodule
+
+
+// ██████╗  ██╗ ██████╗  ███████╗ ██╗      ██╗ ███╗   ██╗ ███████╗
+// ██╔══██╗ ██║ ██╔══██╗ ██╔════╝ ██║      ██║ ████╗  ██║ ██╔════╝
+// ██████╔╝ ██║ ██████╔╝ █████╗   ██║      ██║ ██╔██╗ ██║ █████╗
+// ██╔═══╝  ██║ ██╔═══╝  ██╔══╝   ██║      ██║ ██║╚██╗██║ ██╔══╝
+// ██║      ██║ ██║      ███████╗ ███████╗ ██║ ██║ ╚████║ ███████╗
+// ╚═╝      ╚═╝ ╚═╝      ╚══════╝ ╚══════╝ ╚═╝ ╚═╝  ╚═══╝ ╚══════╝
 //////////反压优化
 module ysyx_26010011_IF_ID_pipeline(
     input            clock,
@@ -1501,6 +1508,7 @@ module ysyx_26010011_LS_WB_pipeline(
     end
 endmodule
 
+
 //  ██████╗  ██████╗  ██████╗
 // ██╔════╝  ██╔══██╗ ██╔══██╗
 // ██║  ███╗ ██████╔╝ ██████╔╝
@@ -1532,7 +1540,7 @@ module ysyx_26010011_GPRs(
   assign gpr_out_b=(gpr_in_addrb==0)?{32{1'b0}}:GPR[gpr_in_addrb];
 
   
-  integer i;
+  // integer i;
   always @(posedge clock) begin
     if(reset) begin
       // for(i=0;i<32;i=i+1) begin
@@ -2513,7 +2521,7 @@ module ysyx_26010011(
   	wire [2:0] S_arsize,S_awsize;
   	wire [7:0] S_arlen,S_awlen;
 	wire [31:0] CLINT_araddr,CLINT_rdata,CLINT_awaddr,CLINT_wdata;
-	wire CLINT_arvalid,CLINT_rvalid,CLINT_awvalid,CLINT_wvalid,CLINT_bvalid,CLINT_rlast,CLINT_wlast;
+	wire CLINT_arvalid,CLINT_rvalid,CLINT_awvalid,CLINT_wvalid,CLINT_bvalid,CLINT_rlast;
 	wire CLINT_arready,CLINT_rready,CLINT_awready,CLINT_wready,CLINT_bready;
 
 	wire [1:0] CLINT_rresp,CLINT_bresp;
@@ -2884,6 +2892,7 @@ module ysyx_26010011_AXI4Arbiter(
     assign S_bready = M2_bready;
 endmodule
 
+
 // ██████╗  ██╗      ██╗ ███╗   ██╗ ████████╗
 // ██╔════╝ ██║      ██║ ████╗  ██║ ╚══██╔══╝
 // ██║      ██║      ██║ ██╔██╗ ██║    ██║
@@ -3036,10 +3045,7 @@ module ysyx_26010011_CLINT(
 	endcase
   end
   localparam [31:0] CLINT_BASE = 32'h02000000;
-  localparam [31:0] CLINT_END  = 32'h02010000;
-
-  wire mem_write_valid =
-	  awaddr >= CLINT_BASE && awaddr < CLINT_END;
+//   localparam [31:0] CLINT_END  = 32'h02010000;
 
   always @(posedge clock) begin
 	if(wstate == 4'b0000 && wnext_state == 4'b0001) begin
@@ -3051,9 +3057,9 @@ module ysyx_26010011_CLINT(
   assign bresp = 2'b0;
 
   always @(*) begin
-	if(raddr_reg == 32'h02000000) begin
+	if(raddr_reg == CLINT_BASE) begin
 	  rdata = mtime_L;
-	end else if(raddr_reg == 32'h02000004) begin
+	end else if(raddr_reg == CLINT_BASE + 4) begin
 	  rdata = mtime_H;
 	end else begin
 	//   $display("CLINT Read from invalid address: 0x%08x", raddr_reg);
@@ -3075,6 +3081,7 @@ module ysyx_26010011_CLINT(
 	end
 
 endmodule
+
 
 // ██████╗  ██████╗  ██╗ ██████╗   ██████╗  ███████╗
 // ██╔══██╗ ██╔══██╗ ██║ ██╔══██╗ ██╔════╝  ██╔════╝

@@ -13,7 +13,7 @@ import "DPI-C" function void difftest_mem_set(int addr);
 module ysyx_26010011_LSU(
     input             clock,
     input             reset,
-    input             flush_valid,
+    input             flush_valid,////////////////////TODO 异常冲刷还未实现！不可中断进行中的axi4
     // CPU 流水线接口
     input            lsu_in_valid,
     input      [ 4:0]lsu_in_bus_exception,/////////////////////TODO 异常冲刷还未实现！不可中断进行中的axi4

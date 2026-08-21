@@ -152,10 +152,7 @@ module ysyx_26010011_CLINT(
 	endcase
   end
   localparam [31:0] CLINT_BASE = 32'h02000000;
-  localparam [31:0] CLINT_END  = 32'h02010000;
-
-  wire mem_write_valid =
-	  awaddr >= CLINT_BASE && awaddr < CLINT_END;
+//   localparam [31:0] CLINT_END  = 32'h02010000;
 
   always @(posedge clock) begin
 	if(wstate == 4'b0000 && wnext_state == 4'b0001) begin
@@ -167,9 +164,9 @@ module ysyx_26010011_CLINT(
   assign bresp = 2'b0;
 
   always @(*) begin
-	if(raddr_reg == 32'h02000000) begin
+	if(raddr_reg == CLINT_BASE) begin
 	  rdata = mtime_L;
-	end else if(raddr_reg == 32'h02000004) begin
+	end else if(raddr_reg == CLINT_BASE + 4) begin
 	  rdata = mtime_H;
 	end else begin
 	//   $display("CLINT Read from invalid address: 0x%08x", raddr_reg);

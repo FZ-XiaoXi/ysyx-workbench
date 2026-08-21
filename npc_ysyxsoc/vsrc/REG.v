@@ -31,7 +31,7 @@ module ysyx_26010011_GPRs(
   assign gpr_out_b=(gpr_in_addrb==0)?{32{1'b0}}:GPR[gpr_in_addrb];
 
   
-  integer i;
+  // integer i;
   always @(posedge clock) begin
     if(reset) begin
       // for(i=0;i<32;i=i+1) begin
