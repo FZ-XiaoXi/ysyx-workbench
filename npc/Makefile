@@ -55,8 +55,7 @@ override ARGS ?=
 override ARGS += $(ARGS_DIFF)
 IMG ?=
 ELF ?=
-NETLIST ?= $(NPC_HOME)/../yosys-sta/result/ysyx_26010011-800MHz/ysyx_26010011.v
-CELLS ?= $(NPC_HOME)/../yosys-sta/pdk/nangate45/sim/cells.v
+
 
 
 all:
@@ -117,6 +116,9 @@ iv: concat
 verilog: concat
 
 IV_SRC = vsrc/ysyx_26010011_tb.v vsrc/ysyx_26010011_dut.v $(SIM_V_TOP)
+IV_NET_SRC = vsrc/ysyx_26010011_tb.v vsrc/ysyx_26010011_netlist_wrap.v
+NETLIST ?= $(NPC_HOME)/../yosys-sta/result/ysyx_26010011-800MHz/ysyx_26010011.v
+CELLS ?= $(NPC_HOME)/../yosys-sta/pdk/nangate45/sim/cells.v
 
 bin-to-text: $(IMG)
 	@echo "Converting binary image to text format..."
@@ -127,6 +129,11 @@ sim-iverilog: $(IMG) $(IV_SRC)
 	$(MAKE) bin-to-text
 	iverilog -Wall -g2012 -o build/myCPU_sim-iverilog -s CPUTop_tb $(IV_SRC) -DIMG_PATH=\"$(IMG).txt\"
 	vvp build/myCPU_sim-iverilog
+
+sim-iverilog-netlist: $(IMG) $(NETLIST) $(CELLS) 
+	$(MAKE) bin-to-text
+	iverilog -Wall -g2012 -o build/myCPU_sim-iverilog-netlist -s CPUTop_tb $(IV_NET_SRC) $(NETLIST) $(CELLS) -DIMG_PATH=\"$(IMG).txt\"
+	vvp build/myCPU_sim-iverilog-netlist
 
 include ~/ysyx-workbench/Makefile
 
