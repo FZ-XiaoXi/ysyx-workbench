@@ -218,14 +218,11 @@ void VysyxSoCFull_ysyx_26010011_LSU___nba_sequent__TOP__ysyxSoCFull__asic__cpu__
     VysyxSoCFull__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
     auto& vlSelfRef = std::ref(*vlSelf).get();
     // Body
-    if (vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu.reset) {
-        vlSelfRef.state = 0U;
-        vlSelfRef.__PVT__awsize_q = 0U;
-        vlSelfRef.__PVT__wstrb_q = 0U;
-    } else {
-        vlSelfRef.state = (((IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__EX_LS_inst.lsu_in_valid) 
-                            & ((IData)(vlSelfRef.__PVT__lsu_out_bus_exception) 
-                               >> 4U)) ? 0U : (IData)(vlSelfRef.__PVT__next_state));
+    vlSelfRef.state = ((IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu.reset)
+                        ? 0U : (((IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__EX_LS_inst.lsu_in_valid) 
+                                 & ((IData)(vlSelfRef.__PVT__lsu_out_bus_exception) 
+                                    >> 4U)) ? 0U : (IData)(vlSelfRef.__PVT__next_state)));
+    if ((1U & (~ (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu.reset)))) {
         if (((2U == (IData)(vlSelfRef.__PVT__next_state)) 
              | (1U == (IData)(vlSelfRef.__PVT__next_state)))) {
             vlSelfRef.__PVT__awsize_q = ((0U == (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__EX_LS_inst.__PVT__lsu_in_bus_perip_mask))
@@ -248,16 +245,12 @@ void VysyxSoCFull_ysyx_26010011_LSU___nba_sequent__TOP__ysyxSoCFull__asic__cpu__
     VysyxSoCFull__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
     auto& vlSelfRef = std::ref(*vlSelf).get();
     // Body
-    if (vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu.reset) {
-        vlSelfRef.__PVT__awaddr_q = 0U;
-        vlSelfRef.__PVT__wdata_q = 0U;
-    } else if (((2U == (IData)(vlSelfRef.__PVT__next_state)) 
-                | (1U == (IData)(vlSelfRef.__PVT__next_state)))) {
-        vlSelfRef.__PVT__awaddr_q = vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__EX_LS_inst.__PVT__lsu_in_bus_alu_result;
-        vlSelfRef.__PVT__wdata_q = VL_SHIFTL_III(32,32,32, vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__EX_LS_inst.__PVT__lsu_in_bus_lsu_val, 
-                                                 VL_SHIFTL_III(32,32,32, 
-                                                               (3U 
-                                                                & vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__EX_LS_inst.__PVT__lsu_in_bus_alu_result), 3U));
+    if ((1U & (~ (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu.reset)))) {
+        if (((2U == (IData)(vlSelfRef.__PVT__next_state)) 
+             | (1U == (IData)(vlSelfRef.__PVT__next_state)))) {
+            vlSelfRef.__PVT__wdata_q = vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__EX_LS_inst.__PVT__lsu_in_bus_lsu_val;
+            vlSelfRef.__PVT__awaddr_q = vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__EX_LS_inst.__PVT__lsu_in_bus_alu_result;
+        }
     }
 }
 
@@ -285,16 +278,7 @@ void VysyxSoCFull_ysyx_26010011_LSU___nba_sequent__TOP__ysyxSoCFull__asic__cpu__
     VL_DEBUG_IF(VL_DBG_MSGF("+              VysyxSoCFull_ysyx_26010011_LSU___nba_sequent__TOP__ysyxSoCFull__asic__cpu__cpu__LSU_0__3\n"); );
     VysyxSoCFull__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
     auto& vlSelfRef = std::ref(*vlSelf).get();
-    // Locals
-    CData/*0:0*/ __VdfgRegularize_hc456a51f_0_10;
-    __VdfgRegularize_hc456a51f_0_10 = 0;
     // Body
-    vlSelfRef.__PVT__bready = (((2U == (IData)(vlSelfRef.state)) 
-                                | (0U == (IData)(vlSelfRef.state))) 
-                               & (~ (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu.reset)));
-    vlSelfRef.__PVT__rready = (((4U == (IData)(vlSelfRef.state)) 
-                                | (0U == (IData)(vlSelfRef.state))) 
-                               & (~ (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu.reset)));
     vlSelfRef.__PVT__lsu_out_bus_exception = ((0x00000010U 
                                                & (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__EX_LS_inst.__PVT__lsu_in_bus_exception))
                                                ? (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__EX_LS_inst.__PVT__lsu_in_bus_exception)
@@ -335,9 +319,25 @@ void VysyxSoCFull_ysyx_26010011_LSU___nba_sequent__TOP__ysyxSoCFull__asic__cpu__
                                                           ? 4U
                                                           : 6U)))))
                                                    : (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__EX_LS_inst.__PVT__lsu_in_bus_exception)));
+}
+
+void VysyxSoCFull_ysyx_26010011_LSU___nba_sequent__TOP__ysyxSoCFull__asic__cpu__cpu__LSU_0__4(VysyxSoCFull_ysyx_26010011_LSU* vlSelf) {
+    VL_DEBUG_IF(VL_DBG_MSGF("+              VysyxSoCFull_ysyx_26010011_LSU___nba_sequent__TOP__ysyxSoCFull__asic__cpu__cpu__LSU_0__4\n"); );
+    VysyxSoCFull__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
+    auto& vlSelfRef = std::ref(*vlSelf).get();
+    // Locals
+    CData/*0:0*/ __VdfgRegularize_hc456a51f_0_10;
+    __VdfgRegularize_hc456a51f_0_10 = 0;
+    // Body
     __VdfgRegularize_hc456a51f_0_10 = (1U & ((~ (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu.reset)) 
                                              & (~ ((IData)(vlSelfRef.__PVT__lsu_out_bus_exception) 
                                                    >> 4U))));
+    vlSelfRef.__PVT__bready = (((2U == (IData)(vlSelfRef.state)) 
+                                | (0U == (IData)(vlSelfRef.state))) 
+                               & (~ (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu.reset)));
+    vlSelfRef.__PVT__rready = (((4U == (IData)(vlSelfRef.state)) 
+                                | (0U == (IData)(vlSelfRef.state))) 
+                               & (~ (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu.reset)));
     vlSelfRef.__PVT__awvalid = ((1U == (IData)(vlSelfRef.state)) 
                                 & (IData)(__VdfgRegularize_hc456a51f_0_10));
     vlSelfRef.__PVT__arvalid = ((((0U == (IData)(vlSelfRef.state)) 

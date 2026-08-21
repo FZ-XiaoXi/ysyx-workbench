@@ -87,7 +87,7 @@ void VysyxSoCFull_ysyx_26010011_CSRs___ico_sequent__TOP__ysyxSoCFull__asic__cpu_
                                                   (vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__IF_ID_inst.__PVT__idu_in_bus_instruction 
                                                    >> 0x00000014U))
                                                   ? vlSelfRef.CSR_MTVAL
-                                                  : 0x2b2b2b2bU))));
+                                                  : 0U))));
 }
 
 void VysyxSoCFull_ysyx_26010011_CSRs___nba_sequent__TOP__ysyxSoCFull__asic__cpu__cpu__CSR_0__0(VysyxSoCFull_ysyx_26010011_CSRs* vlSelf) {
@@ -108,8 +108,6 @@ void VysyxSoCFull_ysyx_26010011_CSRs___nba_sequent__TOP__ysyxSoCFull__asic__cpu_
         vlSelfRef.CSR_MISA = 0x40000100U;
         vlSelfRef.CSR_MTVEC = 0U;
         vlSelfRef.CSR_MSCRATCH = 0U;
-        vlSelfRef.CSR_MEPC = 0U;
-        vlSelfRef.CSR_MCAUSE = 0U;
         vlSelfRef.CSR_MSTATUS = 0x00001800U;
         vlSelfRef.CSR_MVENDORID = 0x79737978U;
         vlSelfRef.CSR_MARCHID = 0x018ce19bU;

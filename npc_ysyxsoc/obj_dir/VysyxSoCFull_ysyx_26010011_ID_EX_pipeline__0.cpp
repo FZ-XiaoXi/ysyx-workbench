@@ -20,31 +20,6 @@ void VysyxSoCFull_ysyx_26010011_ID_EX_pipeline___nba_sequent__TOP__ysyxSoCFull__
     if (((IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu.reset) 
          | (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu.flush_valid))) {
         vlSelfRef.__Vdly__exu_in_valid = 0U;
-        vlSelfRef.__PVT__exu_in_bus_rd = 0U;
-        vlSelfRef.__PVT__exu_in_bus_exception = 0U;
-        vlSelfRef.__PVT__exu_in_bus_csrrd = 0U;
-        vlSelfRef.__PVT__exu_in_bus_rs1 = 0U;
-        vlSelfRef.__PVT__exu_in_bus_rs2 = 0U;
-        vlSelfRef.__PVT__exu_in_bus_rs1_val = 0U;
-        vlSelfRef.__PVT__exu_in_bus_rs2_val = 0U;
-        vlSelfRef.__PVT__exu_in_bus_imm = 0U;
-        vlSelfRef.__PVT__exu_in_bus_instruction = 0U;
-        vlSelfRef.__PVT__exu_in_bus_isLOAD = 0U;
-        vlSelfRef.__PVT__exu_in_bus_isSTORE = 0U;
-        vlSelfRef.__PVT__exu_in_bus_isWGPR = 0U;
-        vlSelfRef.__PVT__exu_in_bus_isJUMP = 0U;
-        vlSelfRef.__PVT__exu_in_bus_isWCOMP = 0U;
-        vlSelfRef.__PVT__exu_in_bus_isBRANCH = 0U;
-        vlSelfRef.__PVT__exu_in_bus_opCSR = 0U;
-        vlSelfRef.__PVT__exu_in_bus_isUnSigned = 0U;
-        vlSelfRef.__PVT__exu_in_bus_isUsePC = 0U;
-        vlSelfRef.__PVT__exu_in_bus_alu_isUseImm = 0U;
-        vlSelfRef.__PVT__exu_in_bus_comp_isUseImm = 0U;
-        vlSelfRef.__PVT__exu_in_bus_alu_op = 0U;
-        vlSelfRef.__PVT__exu_in_bus_comp_op = 0U;
-        vlSelfRef.__PVT__exu_in_bus_perip_mask = 0U;
-        vlSelfRef.exu_in_bus_pc = 0U;
-        vlSelfRef.__PVT__exu_in_bus_snpc = 0U;
     } else if ((1U & ((IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu.__PVT__EXU_0__DOT__exu_in_ready) 
                       | (~ (IData)(vlSelfRef.exu_in_valid))))) {
         vlSelfRef.__Vdly__exu_in_valid = vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu.__PVT__IDU_0__DOT__idu_out_valid;
