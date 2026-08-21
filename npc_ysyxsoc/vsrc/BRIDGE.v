@@ -4,16 +4,16 @@ module ysyx_26010011_bridge(
     input clock,
     input reset,
     //////////////////////////////////////////////////////////
-    input      [31:0] S_awaddr,  input             S_awvalid, output            S_awready,
+    input      [31:0] S_awaddr,  input             S_awvalid, output reg        S_awready,
     input      [3:0]  S_awid,    input      [7:0]  S_awlen,   input      [2:0]  S_awsize,  input      [1:0]  S_awburst,
-    input      [31:0] S_wdata,   input      [3:0]  S_wstrb,   input             S_wvalid,  output            S_wready,
+    input      [31:0] S_wdata,   input      [3:0]  S_wstrb,   input             S_wvalid,  output reg        S_wready,
     input             S_wlast,
-    output     [1:0]  S_bresp,   output            S_bvalid,  input             S_bready,
-    output     [3:0]  S_bid,
+    output reg [1:0]  S_bresp,   output reg        S_bvalid,  input             S_bready,
+    output reg [3:0]  S_bid,
     input      [31:0] S_araddr,  input             S_arvalid, output reg        S_arready,
     input      [3:0]  S_arid,    input      [7:0]  S_arlen,   input      [2:0]  S_arsize,  input      [1:0]  S_arburst,
-    output reg [31:0] S_rdata,   output reg [1:0]  S_rresp,   output reg        S_rvalid,  input             S_rready,
-    output reg        S_rlast,   output reg [3:0]  S_rid,
+    output     [31:0] S_rdata,   output     [1:0]  S_rresp,   output reg        S_rvalid,  input             S_rready,
+    output            S_rlast,   output     [3:0]  S_rid,
     ///////////////////////////////////////////////////////
     //MEM
     //SLAVE AW
