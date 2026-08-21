@@ -863,7 +863,9 @@ class alignas(VL_CACHE_LINE_BYTES) VysyxSoCFull_ysyxSoCASIC final : public Veril
         IData/*23:0*/ __PVT__lvga__DOT__mvga__DOT__vga_data;
         IData/*18:0*/ __PVT__lvga__DOT__mvga__DOT__vmem_inst__DOT__linear_addr;
         IData/*18:0*/ __PVT__lvga__DOT__mvga__DOT__vmem_inst__DOT__linear_waddr;
+        IData/*31:0*/ __PVT__lvga__DOT__mvga__DOT__vmem_inst__DOT__unnamedblk1__DOT__i;
         IData/*23:0*/ lvga__DOT__mvga__DOT__vmem_inst__DOT____Vlvbound_heacdd1d6__0;
+        IData/*23:0*/ lvga__DOT__mvga__DOT__vmem_inst__DOT____Vlvbound_h9bb0d8ae__0;
         IData/*31:0*/ __PVT__lspi__DOT__mspi__DOT__xipmaster_prdata;
         IData/*31:0*/ __PVT__lspi__DOT__mspi__DOT__xipslv_pwdata;
         IData/*31:0*/ __PVT__lspi__DOT__mspi__DOT__xipslv_prdata;
@@ -877,10 +879,10 @@ class alignas(VL_CACHE_LINE_BYTES) VysyxSoCFull_ysyxSoCASIC final : public Veril
         IData/*23:0*/ __PVT__lpsram__DOT__mpsram__DOT__u0__DOT__MR__DOT__saddr;
         IData/*23:0*/ __PVT__lpsram__DOT__mpsram__DOT__u0__DOT__MW__DOT__saddr;
         IData/*23:0*/ __PVT__lpsram__DOT__mpsram__DOT__u0__DOT__QPI__DOT__saddr;
-        IData/*31:0*/ __PVT__lmrom__DOT___mrom_rdata;
-        IData/*31:0*/ __PVT__lmrom__DOT__nodeIn_rdata_r;
     };
     struct {
+        IData/*31:0*/ __PVT__lmrom__DOT___mrom_rdata;
+        IData/*31:0*/ __PVT__lmrom__DOT__nodeIn_rdata_r;
         IData/*31:0*/ __PVT__lsdram_axi__DOT__msdram__DOT__u_sdram_axi__DOT__u_axi__DOT__calculate_addr_next__Vstatic__mask;
         IData/*31:0*/ __PVT__lsdram_axi__DOT__msdram__DOT__u_sdram_axi__DOT__u_axi__DOT__req_addr_q;
         IData/*31:0*/ __PVT__lsdram_axi__DOT__msdram__DOT__u_sdram_axi__DOT__u_core__DOT__inport_addr_i;
@@ -943,10 +945,10 @@ class alignas(VL_CACHE_LINE_BYTES) VysyxSoCFull_ysyxSoCASIC final : public Veril
         IData/*31:0*/ __Vdly__axi4delay_delayer__DOT__inst_u2__DOT__rcnt;
         IData/*31:0*/ __Vdly__axi4delay_delayer__DOT__inst_u3__DOT__rcnt;
         IData/*31:0*/ __Vdly__axi4delay_delayer__DOT__inst_u4__DOT__rcnt;
-        IData/*31:0*/ __Vdly__axi4delay_delayer__DOT__inst_u5__DOT__rcnt;
-        IData/*31:0*/ __Vdly__axi4delay_delayer__DOT__inst_u6__DOT__rcnt;
     };
     struct {
+        IData/*31:0*/ __Vdly__axi4delay_delayer__DOT__inst_u5__DOT__rcnt;
+        IData/*31:0*/ __Vdly__axi4delay_delayer__DOT__inst_u6__DOT__rcnt;
         IData/*31:0*/ __Vdly__axi4delay_delayer__DOT__inst_u7__DOT__rcnt;
         QData/*46:0*/ __PVT__axi4buf__DOT__nodeOut_awdeq_q__DOT__ram_ext__DOT__R0_data;
         QData/*35:0*/ __PVT__axi4buf__DOT__nodeOut_wdeq_q__DOT__ram_ext__DOT__R0_data;
