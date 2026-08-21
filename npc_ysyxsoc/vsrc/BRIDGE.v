@@ -189,7 +189,18 @@ module ysyx_26010011_bridge(
 
     always @(*) begin
         //WRITE
-        if((W_state == STATE_IDLE)?aw_sel_now:aw_sel_reg == 1'b0) begin
+        if(W_state == STATE_IDLE)begin
+            MEM_awvalid = aw_sel_now?0:S_awvalid;
+            MEM_wvalid = aw_sel_now?0:S_wvalid;
+            CLINT_awvalid = aw_sel_now?S_awvalid:0;
+            CLINT_wvalid = aw_sel_now?S_wvalid:0;
+
+            S_awready = aw_sel_now?CLINT_awready:MEM_awready;
+            S_wready = aw_sel_now?CLINT_wready:MEM_wready;
+            S_bresp = 0;
+            S_bvalid = 0;
+            S_bid = 0;
+        end else if(aw_sel_reg == 1'b0) begin
             MEM_awvalid = S_awvalid;
             MEM_wvalid = S_wvalid;
             CLINT_awvalid = 0;

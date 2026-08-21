@@ -67,6 +67,5 @@ VL_ATTR_COLD void VysyxSoCFull_ysyx_26010011_ID_EX_pipeline___ctor_var_reset(Vys
     vlSelf->__PVT__exu_in_bus_perip_mask = VL_SCOPED_RAND_RESET_I(2, __VscopeHash, 10388658488905647371ull);
     vlSelf->exu_in_bus_pc = VL_SCOPED_RAND_RESET_I(32, __VscopeHash, 13152426038760962078ull);
     vlSelf->__PVT__exu_in_bus_snpc = VL_SCOPED_RAND_RESET_I(32, __VscopeHash, 12115186882859376803ull);
-    vlSelf->__VdfgRegularize_h6e95ff9d_0_33 = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 7175687821042820875ull);
     vlSelf->__Vdly__exu_in_valid = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 2812072764520721677ull);
 }

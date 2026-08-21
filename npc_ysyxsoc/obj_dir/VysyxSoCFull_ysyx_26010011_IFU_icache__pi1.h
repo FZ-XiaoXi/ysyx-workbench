@@ -32,7 +32,6 @@ class alignas(VL_CACHE_LINE_BYTES) VysyxSoCFull_ysyx_26010011_IFU_icache__pi1 fi
     VL_IN8(__PVT__out_rlast,0,0);
     VL_IN8(__PVT__out_rid,3,0);
     VL_OUT8(__PVT__debug_is_hit,0,0);
-    CData/*0:0*/ __PVT__is_hit;
     CData/*0:0*/ pc_flushed;
     CData/*2:0*/ __PVT__state;
     CData/*2:0*/ __PVT__next_state;

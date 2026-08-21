@@ -4,15 +4,6 @@
 
 #include "VysyxSoCFull__pch.h"
 
-void VysyxSoCFull_ysyx_26010011_LS_WB_pipeline___ico_sequent__TOP__ysyxSoCFull__asic__cpu__cpu__LS_WB_inst__0(VysyxSoCFull_ysyx_26010011_LS_WB_pipeline* vlSelf) {
-    VL_DEBUG_IF(VL_DBG_MSGF("+              VysyxSoCFull_ysyx_26010011_LS_WB_pipeline___ico_sequent__TOP__ysyxSoCFull__asic__cpu__cpu__LS_WB_inst__0\n"); );
-    VysyxSoCFull__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
-    auto& vlSelfRef = std::ref(*vlSelf).get();
-    // Body
-    vlSelfRef.__VdfgRegularize_h6e95ff9d_0_34 = ((~ (IData)(vlSelfRef.wbu_in_valid)) 
-                                                 & (IData)(vlSelfRef.__PVT__wbu_in_bus_isWGPR));
-}
-
 void VysyxSoCFull_ysyx_26010011_LS_WB_pipeline___nba_sequent__TOP__ysyxSoCFull__asic__cpu__cpu__LS_WB_inst__0(VysyxSoCFull_ysyx_26010011_LS_WB_pipeline* vlSelf) {
     VL_DEBUG_IF(VL_DBG_MSGF("+              VysyxSoCFull_ysyx_26010011_LS_WB_pipeline___nba_sequent__TOP__ysyxSoCFull__asic__cpu__cpu__LS_WB_inst__0\n"); );
     VysyxSoCFull__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
@@ -41,6 +32,4 @@ void VysyxSoCFull_ysyx_26010011_LS_WB_pipeline___nba_sequent__TOP__ysyxSoCFull__
         vlSelfRef.__PVT__wbu_in_bus_isBRANCH = vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__EX_LS_inst.__PVT__lsu_in_bus_isBRANCH;
         vlSelfRef.__PVT__wbu_in_bus_opCSR = vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__EX_LS_inst.__PVT__lsu_in_bus_opCSR;
     }
-    vlSelfRef.__VdfgRegularize_h6e95ff9d_0_34 = ((~ (IData)(vlSelfRef.wbu_in_valid)) 
-                                                 & (IData)(vlSelfRef.__PVT__wbu_in_bus_isWGPR));
 }
