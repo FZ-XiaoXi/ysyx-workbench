@@ -2501,9 +2501,6 @@ module ysyx_26010011(
 	wire CLINT_arvalid,CLINT_rvalid,CLINT_awvalid,CLINT_wvalid,CLINT_bvalid,CLINT_rlast,CLINT_wlast;
 	wire CLINT_arready,CLINT_rready,CLINT_awready,CLINT_wready;
 	wire [1:0] CLINT_rresp,CLINT_bresp;
-  wire [1:0] S_arburst,S_awburst;
-  wire [2:0] S_arsize,S_awsize;
-  wire [7:0] S_arlen,S_awlen;
 	wire [3:0] CLINT_wstrb;
 	wire CLINT_rlast;
 	ysyx_26010011_bridge u_bridge(
