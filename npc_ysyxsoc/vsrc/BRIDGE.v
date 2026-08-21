@@ -11,7 +11,7 @@ module ysyx_26010011_bridge(
     output     [1:0]  S_bresp,   output            S_bvalid,  input             S_bready,
     output     [3:0]  S_bid,
     input      [31:0] S_araddr,  input             S_arvalid, output reg        S_arready,
-    input      [3:0]  S_arid,    input      [7:0]  S_arlen,   input      [2:0]  S_arsize,  input      [1:0]  S_arbureset,
+    input      [3:0]  S_arid,    input      [7:0]  S_arlen,   input      [2:0]  S_arsize,  input      [1:0]  S_arburst,
     output reg [31:0] S_rdata,   output reg [1:0]  S_rresp,   output reg        S_rvalid,  input             S_rready,
     output reg        S_rlast,   output reg [3:0]  S_rid,
     ///////////////////////////////////////////////////////
@@ -120,13 +120,13 @@ module ysyx_26010011_bridge(
     assign MEM_arid = S_arid;
     assign MEM_arlen = S_arlen;
     assign MEM_arsize = S_arsize;
-    assign MEM_arbureset = S_arbureset;
+    assign MEM_arbureset = S_arburst;
     assign MEM_rready = S_arready;
     assign MEM_araddr = S_araddr;
     assign CLINT_arid = S_arid;
     assign CLINT_arlen = S_arlen;
     assign CLINT_arsize = S_arsize;
-    assign CLINT_arbureset = S_arbureset;
+    assign CLINT_arbureset = S_arburst;
     assign CLINT_rready = S_arready;
     assign CLINT_araddr = S_araddr;
     always @(*) begin
