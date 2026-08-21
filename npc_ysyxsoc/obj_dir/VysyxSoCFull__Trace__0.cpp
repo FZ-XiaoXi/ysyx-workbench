@@ -1507,7 +1507,12 @@ void VysyxSoCFull___024root__trace_chg_0_sub_0(VysyxSoCFull___024root* vlSelf, V
         bufp->chgCData(oldp+892,(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__LS_WB_inst.__PVT__wbu_in_bus_opCSR),3);
         bufp->chgCData(oldp+893,(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__LS_WB_inst.__PVT__wbu_in_bus_rd),5);
         bufp->chgCData(oldp+894,(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__LS_WB_inst.__PVT__wbu_in_bus_exception),5);
-        bufp->chgIData(oldp+895,(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu.__PVT__CLINT_rdata),32);
+        bufp->chgIData(oldp+895,(((0x02000000U == vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu.__PVT__u_clint__DOT__raddr_reg)
+                                   ? vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu.__PVT__u_clint__DOT__mtime_L
+                                   : ((0x02000004U 
+                                       == vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu.__PVT__u_clint__DOT__raddr_reg)
+                                       ? vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu.__PVT__u_clint__DOT__mtime_H
+                                       : 0U))),32);
         bufp->chgBit(oldp+896,(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu.__PVT__CLINT_rvalid));
         bufp->chgBit(oldp+897,(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu.__PVT__CLINT_bvalid));
         bufp->chgBit(oldp+898,(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu.__PVT__CLINT_rlast));

@@ -218,7 +218,6 @@ class alignas(VL_CACHE_LINE_BYTES) VysyxSoCFull_ysyx_26010011 final : public Ver
         IData/*31:0*/ tb_FINAL_inst;
         IData/*31:0*/ __PVT__S_araddr;
         IData/*31:0*/ __PVT__S_rdata;
-        IData/*31:0*/ __PVT__CLINT_rdata;
         IData/*31:0*/ __PVT__EXU_0__DOT__exu_out_bus_alu_result;
         IData/*31:0*/ __PVT__EXU_0__DOT__a;
         IData/*31:0*/ __PVT__EXU_0__DOT__b;
