@@ -22,7 +22,7 @@ void __am_uart_init() {
   lcr_config.bits.dlab=1;
   outb(SERIAL_PORT + 3, lcr_config.val);
   outb(SERIAL_PORT + 1, 0x00);
-  outb(SERIAL_PORT + 0, 0x01);
+  outb(SERIAL_PORT + 0, 0x0f);
   lcr_config.bits.dlab=0;
   outb(SERIAL_PORT + 3, lcr_config.val);
 }
