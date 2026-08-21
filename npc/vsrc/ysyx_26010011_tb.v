@@ -332,10 +332,10 @@ module axi4_memory (
     for (i = 0; i < 2097152; i = i + 1)
       Memory[i] = 32'b0;
 
-    $display("Loading image");
+    $display("Loading image from %s", `IMG_PATH);
     $readmemh(
       // "/home/seaber/ysyx-workbench/rt-thread-am/bsp/abstract-machine/build/rtthread-riscv32e-iv",
-      "/home/seaber/ysyx-workbench/am-kernels/benchmarks/microbench/build/microbench-riscv32e-iv",
+      `IMG_PATH,
       Memory
     );
   end

@@ -116,12 +116,18 @@ iv: concat
 
 verilog: concat
 
-
 IV_SRC = vsrc/ysyx_26010011_tb.v vsrc/ysyx_26010011_dut.v $(SIM_V_TOP)
+
+bin-to-text: $(IMG)
+	@echo "Converting binary image to text format..."
+	@xxd -p -c 4 $(IMG) | sed -E 's/(..)(..)(..)(..)/\4\3\2\1/' > $(IMG).txt
+	@echo "Conversion complete. Output file: $(IMG).txt"
+
 sim-iverilog: $(IMG) $(IV_SRC)
-	iverilog -Wall -g2012 -o build/myCPU_sim-iverilog -s CPUTop_tb $(IV_SRC)
+	$(MAKE) bin-to-text
+	iverilog -Wall -g2012 -o build/myCPU_sim-iverilog -s CPUTop_tb $(IV_SRC) -DIMG_PATH=\"$(IMG).txt\"
 	vvp build/myCPU_sim-iverilog
 
 include ~/ysyx-workbench/Makefile
 
-.PHONY: all sim wave perf perf-test clean iv iv-netlist concat verilog sim-iverilog
+.PHONY: all sim wave perf perf-test clean iv iv-netlist concat verilog sim-iverilog bin-to-text

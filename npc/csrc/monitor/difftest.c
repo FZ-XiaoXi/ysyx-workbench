@@ -71,7 +71,7 @@ static bool checkregs(CPUState *ref, uint32_t pc, uint32_t npc) {
 void difftest_step(uint32_t pc, uint32_t npc, uint32_t mem_addr) {;
 	CPUState ref;
 	if(is_skip_ref){
-		Log("Skipping reference CPU state update at pc:%08x. ", pc);
+		// Log("Skipping reference CPU state update at pc:%08x. ", pc);
 		ref_difftest_regcpy(cpu.gpr, &npc, DIFFTEST_TO_REF);
 		is_skip_ref = false;
 		return;
