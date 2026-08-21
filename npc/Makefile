@@ -21,7 +21,7 @@ V_INC_PATH := $(abspath $(V_INC_PATH))
 
 SIM_C := $(wildcard csrc/*.c* csrc/monitor/*.c* csrc/devices/*.c* csrc/utils/*.c*)
 # SIM_V := $(shell find vsrc/ -type f \( -name "*.v" -o -name "*.sv" \))
-SIM_V := vsrc/ysyx_26010011.v
+SIM_V := build/ysyx_26010011.v
 SIM_V += $(shell find $(NPC_HOME)/../ysyxSoC/perip/ -type f  -name "*.v" )
 SIM_V += $(NPC_HOME)/../ysyxSoC/build/ysyxSoCFull.v
 
@@ -54,18 +54,21 @@ override ARGS ?=
 override ARGS += $(ARGS_DIFF)
 IMG ?=
 ELF ?=
-NETLIST ?= $(NPC_HOME)/yosys-sta/result/ysyx_26010011-800MHz/ysyx_26010011.v
-CELLS ?= $(NPC_HOME)/yosys-sta/pdk/nangate45/sim/cells.v
+NETLIST ?= $(NPC_HOME)/../yosys-sta/result/ysyx_26010011-800MHz/ysyx_26010011.v
+CELLS ?= $(NPC_HOME)/../yosys-sta/pdk/nangate45/sim/cells.v
 
 
 all:
 
+$(SIM_V): $(SRC_V)
+	$(MAKE) concat
+
 concat: $(SRC_V)
-	cat  $(SRC_V) > vsrc/ysyx_26010011.v
-	sed -i 's#`include#//`include#' vsrc/ysyx_26010011.v
+	@mkdir -p build
+	cat  $(SRC_V) > build/ysyx_26010011.v
+	sed -i 's#`include#//`include#' build/ysyx_26010011.v
 
 sim: $(SIM_C) $(SIM_V) $(NVBOARD_ARCHIVE)
-	$(MAKE) concat
 	$(call git_commit, "sim RTL") # DO NOT REMOVE THIS LINE!!!
 	verilator $(VERILATOR_FLAGS) --top-module $(TOPNAME) $^ $(addprefix -CFLAGS , $(CXXFLAGS)) $(addprefix -LDFLAGS , $(LDFLAGS))
 	@echo "ARGS = $(ARGS)"
