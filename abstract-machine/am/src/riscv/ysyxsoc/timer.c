@@ -11,7 +11,7 @@ void __am_timer_uptime(AM_TIMER_UPTIME_T *uptime) {
   // asm volatile("csrr %0,mcycleh" : "=r"(cycleh));
   // asm volatile("csrr %0,mcycle" : "=r"(cycle));
   cycleh = inl(RTC_ADDR+4);
-  cycle = 0;
+  cycle = inl(RTC_ADDR);
   uptime->us = (uint64_t)(cycleh) << 32;
   uptime->us |= (uint64_t)(cycle);
   uptime->us = (uint64_t)(uptime->us * 1000 / 1333);
