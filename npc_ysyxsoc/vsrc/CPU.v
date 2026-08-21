@@ -845,7 +845,7 @@ module ysyx_26010011(
   );
 	wire [31:0] S_araddr,S_rdata,S_awaddr,S_wdata;
 	wire S_arvalid,S_rvalid,S_awvalid,S_wvalid,S_bvalid,S_rlast,S_wlast;
-	wire S_arready,S_rready,S_awready,S_wready;
+	wire S_arready,S_rready,S_awready,S_wready,S_bready;
 	wire [1:0] S_rresp,S_bresp;
 	wire [3:0] S_wstrb;
 	wire [31:0] CLINT_araddr,CLINT_rdata,CLINT_awaddr,CLINT_wdata;
@@ -857,26 +857,26 @@ module ysyx_26010011(
 		.clock(clock),
 		.reset(reset),
 		
-		.S_araddr(S_araddr),  .S_arvalid(S_arvalid), .S_arready(S_arready),
-		.S_rdata(S_rdata),   .S_rresp(S_rresp),   .S_rvalid(S_rvalid),  .S_rready(S_rready), .S_rlast(S_rlast),
-		.S_awaddr(S_awaddr),  .S_awvalid(S_awvalid), .S_awready(S_awready),
-		.S_wdata(S_wdata),   .S_wstrb(S_wstrb),   .S_wvalid(S_wvalid),  .S_wready(S_wready),
-		.S_bresp(S_bresp),   .S_bvalid(S_bvalid),  .S_bready(S_bready),
+		.S_araddr(S_araddr),  .S_arvalid(S_arvalid), .S_arready(S_arready), .S_arid(S_arid), .S_arlen(S_arlen), .S_arsize(S_arsize), .S_arbureset(S_arbureset),
+		.S_rdata(S_rdata),   .S_rresp(S_rresp),   .S_rvalid(S_rvalid),  .S_rready(S_rready), .S_rlast(S_rlast), .S_rid(S_rid),
+		.S_awaddr(S_awaddr),  .S_awvalid(S_awvalid), .S_awready(S_awready), .S_awid(S_awid), .S_awlen(S_awlen), .S_awsize(S_awsize), .S_awburst(S_awburst),
+		.S_wdata(S_wdata),   .S_wstrb(S_wstrb),   .S_wvalid(S_wvalid),  .S_wready(S_wready), .S_wlast(S_wlast),
+		.S_bresp(S_bresp),   .S_bvalid(S_bvalid),  .S_bready(S_bready), .S_bid(S_bid),
 
 		///////////////////////////////////////////////////////
 		//MEM
-		.MEM_araddr(io_master_araddr),   .MEM_arvalid(io_master_arvalid),  .MEM_arready(io_master_arready),
-		.MEM_rdata(io_master_rdata),    .MEM_rresp(io_master_rresp),    .MEM_rvalid(io_master_rvalid),   .MEM_rready(io_master_rready), MEM_rlast(io_master_rlast),
-		.MEM_awaddr(io_master_awaddr),   .MEM_awvalid(io_master_awvalid),  .MEM_awready(io_master_awready),
-		.MEM_wdata(io_master_wdata),    .MEM_wstrb(io_master_wstrb),    .MEM_wvalid(io_master_wvalid),   .MEM_wready(io_master_wready),
-		.MEM_bresp(io_master_bresp),    .MEM_bvalid(io_master_bvalid),   .MEM_bready(io_master_bready),
+		.MEM_araddr(io_master_araddr),   .MEM_arvalid(io_master_arvalid),  .MEM_arready(io_master_arready), .MEM_arid(io_master_arid), .MEM_arlen(io_master_arlen), .MEM_arsize(io_master_arsize), .MEM_arbureset(io_master_arbureset),
+		.MEM_rdata(io_master_rdata),    .MEM_rresp(io_master_rresp),    .MEM_rvalid(io_master_rvalid),   .MEM_rready(io_master_rready), .MEM_rlast(io_master_rlast), .MEM_rid(io_master_rid),
+		.MEM_awaddr(io_master_awaddr),   .MEM_awvalid(io_master_awvalid),  .MEM_awready(io_master_awready), .MEM_awid(io_master_awid), .MEM_awlen(io_master_awlen), .MEM_awsize(io_master_awsize), .MEM_awburst(io_master_awburst),
+		.MEM_wdata(io_master_wdata),    .MEM_wstrb(io_master_wstrb),    .MEM_wvalid(io_master_wvalid),   .MEM_wready(io_master_wready), .MEM_wlast(io_master_wlast),
+		.MEM_bresp(io_master_bresp),    .MEM_bvalid(io_master_bvalid),   .MEM_bready(io_master_bready), .MEM_bid(io_master_bid),
 
 		//CLINT
-		.CLINT_araddr(CLINT_araddr),   .CLINT_arvalid(CLINT_arvalid),  .CLINT_arready(CLINT_arready),
-		.CLINT_rdata(CLINT_rdata),    .CLINT_rresp(CLINT_rresp),    .CLINT_rvalid(CLINT_rvalid),   .CLINT_rready(CLINT_rready),
-		.CLINT_awaddr(CLINT_awaddr),   .CLINT_awvalid(CLINT_awvalid),  .CLINT_awready(CLINT_awready),
-		.CLINT_wdata(CLINT_wdata),    .CLINT_wstrb(CLINT_wstrb),    .CLINT_wvalid(CLINT_wvalid),   .CLINT_wready(CLINT_wready),
-		.CLINT_bresp(CLINT_bresp),    .CLINT_bvalid(CLINT_bvalid),   .CLINT_bready(CLINT_bready)
+		.CLINT_araddr(CLINT_araddr),   .CLINT_arvalid(CLINT_arvalid),  .CLINT_arready(CLINT_arready), .CLINT_arid(), .CLINT_arlen(), .CLINT_arsize(CLINT_arsize), .CLINT_arbureset(),
+		.CLINT_rdata(CLINT_rdata),    .CLINT_rresp(CLINT_rresp),    .CLINT_rvalid(CLINT_rvalid),   .CLINT_rready(CLINT_rready), .CLINT_rlast(), .CLINT_rid(),
+		.CLINT_awaddr(CLINT_awaddr),   .CLINT_awvalid(CLINT_awvalid),  .CLINT_awready(CLINT_awready), .CLINT_awid(), .CLINT_awlen(), .CLINT_awsize(CLINT_awsize), .CLINT_awburst(),
+		.CLINT_wdata(CLINT_wdata),    .CLINT_wstrb(CLINT_wstrb),    .CLINT_wvalid(CLINT_wvalid),   .CLINT_wready(CLINT_wready), .CLINT_wlast(),
+		.CLINT_bresp(CLINT_bresp),    .CLINT_bvalid(CLINT_bvalid),   .CLINT_bready(CLINT_bready), .CLINT_bid()
 	);	
 
 	ysyx_26010011_CLINT u_clint(
