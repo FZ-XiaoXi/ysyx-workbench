@@ -6,7 +6,7 @@ module ysyx_26010011_CLINT(
 	//AR
 	input  [31:0] araddr,
 	input         arvalid,
-	output        arready,
+	output reg    arready,
 
 	//R
 	output reg [31:0] rdata,
