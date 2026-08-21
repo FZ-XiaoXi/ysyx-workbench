@@ -849,6 +849,9 @@ module ysyx_26010011(
 	wire [1:0] S_rresp,S_bresp;
 	wire [3:0] S_wstrb;
 	wire [3:0] S_arid,S_awid,S_bid,S_bid;
+	wire [1:0] S_arburst,S_awburst;
+  	wire [2:0] S_arsize,S_awsize;
+  	wire [7:0] S_arlen,S_awlen;
 	wire [31:0] CLINT_araddr,CLINT_rdata,CLINT_awaddr,CLINT_wdata;
 	wire CLINT_arvalid,CLINT_rvalid,CLINT_awvalid,CLINT_wvalid,CLINT_bvalid,CLINT_rlast,CLINT_wlast;
 	wire CLINT_arready,CLINT_rready,CLINT_awready,CLINT_wready;
