@@ -10,9 +10,9 @@ void VysyxSoCFull_ysyx_26010011_IFU_icache__C8___ico_sequent__TOP__ysyxSoCFull__
     auto& vlSelfRef = std::ref(*vlSelf).get();
     // Body
     vlSelfRef.__PVT__r_fire = ((~ (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu.reset)) 
-                               & ((IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu.__PVT__RAM_AXI4LiteArbiter__DOT__R_state) 
-                                  & ((~ (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu.__PVT__RAM_AXI4LiteArbiter__DOT__R_master_sel)) 
-                                     & (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu.__PVT__RAM_AXI4LiteArbiter__DOT__S_rvalid))));
+                               & ((IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu.__PVT__RAM_AXI4Arbiter__DOT__R_state) 
+                                  & ((~ (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu.__PVT__RAM_AXI4Arbiter__DOT__R_master_sel)) 
+                                     & (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu.__PVT__RAM_AXI4Arbiter__DOT__S_rvalid))));
 }
 
 void VysyxSoCFull_ysyx_26010011_IFU_icache__C8___ico_sequent__TOP__ysyxSoCFull__asic__cpu__cpu__IFU_0__icache_u0__1(VysyxSoCFull_ysyx_26010011_IFU_icache__C8* vlSelf) {

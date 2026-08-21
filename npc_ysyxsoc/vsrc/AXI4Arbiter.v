@@ -1,4 +1,12 @@
-module ysyx_26010011_AXI4LiteArbiter(
+
+
+// ██████╗  ██╗  ██╗ ██╗ ██╗  ██╗
+// ██╔══██╗ ╚██╗██╔╝ ██║ ██║  ██║
+// ███████║  ╚███╔╝  ██║ ███████║
+// ██╔══██║  ██╔██╗  ██║ ╚════██║
+// ██║  ██║ ██╔╝ ██╗ ██║      ██║
+// ╚═╝  ╚═╝ ╚═╝  ╚═╝ ╚═╝      ╚═╝
+module ysyx_26010011_AXI4Arbiter(
     input     clock,
     input     reset,
 
@@ -19,14 +27,14 @@ module ysyx_26010011_AXI4LiteArbiter(
     output reg        M1_rlast,   output reg [3:0]  M1_rid,
 
     //MASTER2 AW
-    input      [31:0] M2_awaddr,  input             M2_awvalid, output reg        M2_awready,
+    input      [31:0] M2_awaddr,  input             M2_awvalid, output            M2_awready,
     input      [3:0]  M2_awid,    input      [7:0]  M2_awlen,   input      [2:0]  M2_awsize,  input      [1:0]  M2_awburst,
     //MASTER2 W
-    input      [31:0] M2_wdata,   input      [3:0]  M2_wstrb,   input             M2_wvalid,  output reg        M2_wready,
+    input      [31:0] M2_wdata,   input      [3:0]  M2_wstrb,   input             M2_wvalid,  output            M2_wready,
     input             M2_wlast,
     //MASTER2 B
-    output reg [1:0]  M2_bresp,   output reg        M2_bvalid,  input             M2_bready,
-    output reg [3:0]  M2_bid,
+    output     [1:0]  M2_bresp,   output            M2_bvalid,  input             M2_bready,
+    output     [3:0]  M2_bid,
     //MASTER2 AR
     input      [31:0] M2_araddr,  input             M2_arvalid, output reg        M2_arready,
     input      [3:0]  M2_arid,    input      [7:0]  M2_arlen,   input      [2:0]  M2_arsize,  input      [1:0]  M2_arbureset,
@@ -35,13 +43,13 @@ module ysyx_26010011_AXI4LiteArbiter(
     output reg        M2_rlast,   output reg [3:0]  M2_rid,
 
     //SLAVE AW
-    output reg [31:0] S_awaddr,   output reg        S_awvalid,  input             S_awready,
-    output reg [3:0]  S_awid,     output reg [7:0]  S_awlen,    output reg [2:0]  S_awsize,   output reg [1:0]  S_awburst,
+    output     [31:0] S_awaddr,   output            S_awvalid,  input             S_awready,
+    output     [3:0]  S_awid,     output     [7:0]  S_awlen,    output     [2:0]  S_awsize,   output     [1:0]  S_awburst,
     //SLAVE W
-    output reg [31:0] S_wdata,    output reg [3:0]  S_wstrb,    output reg        S_wvalid,   input             S_wready,
-    output reg        S_wlast,
+    output     [31:0] S_wdata,    output     [3:0]  S_wstrb,    output            S_wvalid,   input             S_wready,
+    output            S_wlast,
     //SLAVE B
-    input      [1:0]  S_bresp,    input             S_bvalid,   output reg        S_bready,
+    input      [1:0]  S_bresp,    input             S_bvalid,   output            S_bready,
     input      [3:0]  S_bid,
     //SLAVE AR
     output reg [31:0] S_araddr,   output reg        S_arvalid,  input             S_arready,
@@ -129,6 +137,13 @@ module ysyx_26010011_AXI4LiteArbiter(
                 S_arsize = R_master_sel?M2_arsize:M1_arsize;
                 S_arbureset = R_master_sel?M2_arbureset:M1_arbureset;
             end
+            default:begin
+                M1_arready = 0;
+                M2_arready = 0;
+                S_arvalid = 0;
+                S_araddr = 0;
+                S_arid   = 0; S_arlen = 0; S_arsize = 0; S_arbureset = 0;
+            end
         endcase
     end
     //R
@@ -140,46 +155,45 @@ module ysyx_26010011_AXI4LiteArbiter(
                 S_rready = 0;
             end
             R_BUSY:begin
-                M1_rdata = S_rdata;
-                M1_rresp = S_rresp;
+                M1_rdata = R_master_sel?0:S_rdata;
+                M1_rresp = R_master_sel?0:S_rresp;
                 M1_rvalid = R_master_sel?0:S_rvalid;
-                M1_rlast  = S_rlast;
-                M1_rid    = S_rid;
-                M2_rdata = S_rdata;
-                M2_rresp = S_rresp;
+                M1_rlast  = R_master_sel?0:S_rlast;
+                M1_rid    = R_master_sel?0:S_rid;
+                M2_rdata = R_master_sel?S_rdata:0;
+                M2_rresp = R_master_sel?S_rresp:0;
                 M2_rvalid = R_master_sel?S_rvalid:0;
-                M2_rlast  = S_rlast;
-                M2_rid    = S_rid;
+                M2_rlast  = R_master_sel?S_rlast:0;
+                M2_rid    = R_master_sel?S_rid:0;
                 S_rready = R_master_sel?M2_rready:M1_rready;
             end
+            default: begin
+                M1_rvalid = 0; M1_rdata = 0; M1_rresp = 0; M1_rlast = 0; M1_rid = 0;
+                M2_rvalid = 0; M2_rdata = 0; M2_rresp = 0; M2_rlast = 0; M2_rid = 0;
+                S_rready = 0;
+            end
+
         endcase
     end
     
 
 
 
-    //////
-
-    //AW
-    assign M2_awready = S_awready;
-    assign S_awvalid = M2_awvalid;
+    /////////////////////////////////////////////////////////////////////W - Arbiter
     assign S_awaddr = M2_awaddr;
-    assign S_awid   = M2_awid;
-    assign S_awlen  = M2_awlen;
+    assign S_awvalid = M2_awvalid;
+    assign S_awid = M2_awid;
+    assign S_awlen = M2_awlen;
     assign S_awsize = M2_awsize;
     assign S_awburst = M2_awburst;
-
-    //W
-    assign M2_wready = S_wready;
-    assign S_wvalid = M2_wvalid;
     assign S_wdata = M2_wdata;
     assign S_wstrb = M2_wstrb;
+    assign S_wvalid = M2_wvalid;
     assign S_wlast = M2_wlast;
-
-
-    //B
+    assign M2_awready = S_awready;
+    assign M2_wready = S_wready;
     assign M2_bresp = S_bresp;
     assign M2_bvalid = S_bvalid;
-    assign M2_bid    = S_bid;
+    assign M2_bid = S_bid;
     assign S_bready = M2_bready;
 endmodule

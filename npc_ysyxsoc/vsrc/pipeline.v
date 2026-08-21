@@ -19,11 +19,9 @@ module ysyx_26010011_IF_ID_pipeline(
     output reg [ 4:0]idu_in_bus_exception
 );
     assign ifu_out_ready = idu_in_ready | !idu_in_valid;
-    always @(posedge clock, posedge reset)begin
-        if(reset) begin
+    always @(posedge clock)begin
+        if(reset | flush_valid) begin
             idu_in_valid <= 0;
-        end else if(flush_valid)begin
-            idu_in_valid <= 0;///////////////////////
         end else if(idu_in_ready | !idu_in_valid)begin
             idu_in_valid <= ifu_out_valid;
             idu_in_bus_instruction <= ifu_out_bus_instruction;
@@ -96,10 +94,8 @@ module ysyx_26010011_ID_EX_pipeline(
     output reg [31:0]exu_in_bus_snpc
 );
     assign idu_out_ready = exu_in_ready | !exu_in_valid;
-    always @(posedge clock, posedge reset)begin
-        if(reset) begin
-            exu_in_valid<=0;
-        end else if(flush_valid) begin
+    always @(posedge clock)begin
+        if(reset | flush_valid) begin
             exu_in_valid<=0;
         end else if(exu_in_ready | !exu_in_valid) begin
             exu_in_valid<=idu_out_valid;
@@ -182,10 +178,8 @@ module ysyx_26010011_EX_LS_pipeline(
     output reg [31:0]lsu_in_bus_snpc
 );
     assign exu_out_ready = lsu_in_ready | !lsu_in_valid;
-    always @(posedge clock, posedge reset)begin
-        if(reset) begin
-            lsu_in_valid<=0;
-        end else if(flush_valid)begin
+    always @(posedge clock)begin
+        if(reset | flush_valid) begin
             lsu_in_valid<=0;
         end else if(lsu_in_ready | !lsu_in_valid)begin
             lsu_in_valid<=exu_out_valid;
@@ -260,10 +254,8 @@ module ysyx_26010011_LS_WB_pipeline(
     output reg [31:0]wbu_in_bus_snpc
 );
     assign lsu_out_ready = wbu_in_ready | !wbu_in_valid;
-    always @(posedge clock, posedge reset)begin
-        if(reset) begin
-            wbu_in_valid<=0; 
-        end else if(flush_valid)begin
+    always @(posedge clock)begin
+        if(reset | flush_valid) begin
             wbu_in_valid<=0; 
         end else if(wbu_in_ready | !wbu_in_valid)begin
             wbu_in_valid<=lsu_out_valid; 

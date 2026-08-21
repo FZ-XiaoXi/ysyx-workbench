@@ -12,3 +12,8 @@ void __am_input_keybrd(AM_INPUT_KEYBRD_T *kbd) {
   // kbd->keydown = (code!=AM_KEY_NONE)?true:false;
   // kbd->keycode = code;
 }
+
+void __am_uart_rx(AM_UART_RX_T *val)
+{
+  val->data = 0x00;
+}

@@ -1,5 +1,13 @@
+
+
+// ██╗      ███████╗ ██╗   ██╗
+// ██║      ██╔════╝ ██║   ██║
+// ██║      ███████╗ ██║   ██║
+// ██║      ╚════██║ ██║   ██║
+// ███████╗ ███████║ ╚██████╔╝
+// ╚══════╝ ╚══════╝  ╚═════╝
 //IN_SYN// import "DPI-C" function void difftest_mem_set(int addr);
-`include "ysyx_26010011_csr_defines.v"
+`include "csr_defines.v"
 module ysyx_26010011_LSU(
     input             clock,
     input             reset,
@@ -100,7 +108,7 @@ module ysyx_26010011_LSU(
         end else begin
             if(next_state == S_WAIT_BRESP || next_state == S_WAIT_AW_W) begin
                 awaddr_q <= lsu_in_bus_addr;
-                wdata_q  <= lsu_in_bus_wdata << (lsu_in_bus_addr[1:0] * 8);
+                wdata_q  <= lsu_in_bus_wdata << (lsu_in_bus_addr[1:0] << 3);
                 awsize_q <= (lsu_in_bus_perip_mask == 2'b00) ? 3'b000 :
                             (lsu_in_bus_perip_mask == 2'b01) ? 3'b001 : 3'b010;
                 wstrb_q  <= (
@@ -119,7 +127,7 @@ module ysyx_26010011_LSU(
     assign arbureset = 2'b01;   // INCR
 
     assign awvalid = ((state == S_WAIT_AW_W)) & !reset & ~lsu_out_bus_exception[4];
-    assign wvalid  = ((state == S_WAIT_AW_W)) & !reset & ~lsu_out_bus_exception[4];
+    assign wvalid  = awvalid;
     assign arvalid = ((state == S_IDLE && lsu_in_valid && lsu_in_bus_isLOAD) || (state == S_WAIT_AR)) & !reset & ~lsu_out_bus_exception[4];
 
     assign bready  = ((state == S_WAIT_BRESP) || (state == S_IDLE)) & lsu_out_ready & !reset;
@@ -249,15 +257,15 @@ module ysyx_26010011_LSU(
                         lsu_out_bus_exception = lsu_in_bus_exception;
                     end
                     2'b01: begin
-                        if(lsu_in_bus_addr[0]) lsu_out_bus_exception = {1'b1,(lsu_in_bus_isLOAD)?`EXCEPTION_MISALIGNED_LOAD:`EXCEPTION_MISALIGNED_STORE};
+                        if(lsu_in_bus_addr[0]) lsu_out_bus_exception = {1'b1,(lsu_in_bus_isLOAD)?`ysyx_26010011_EXCEPTION_MISALIGNED_LOAD:`ysyx_26010011_EXCEPTION_MISALIGNED_STORE};
                         else                   lsu_out_bus_exception = lsu_in_bus_exception;
                     end
                     2'b10: begin
-                        if(lsu_in_bus_addr[1:0]!=2'b00) lsu_out_bus_exception = {1'b1,(lsu_in_bus_isLOAD)?`EXCEPTION_MISALIGNED_LOAD:`EXCEPTION_MISALIGNED_STORE};
+                        if(lsu_in_bus_addr[1:0]!=2'b00) lsu_out_bus_exception = {1'b1,(lsu_in_bus_isLOAD)?`ysyx_26010011_EXCEPTION_MISALIGNED_LOAD:`ysyx_26010011_EXCEPTION_MISALIGNED_STORE};
                         else                           lsu_out_bus_exception = lsu_in_bus_exception;
                     end
                     default: begin
-                        lsu_out_bus_exception = {1'b1,(lsu_in_bus_isLOAD)?`EXCEPTION_MISALIGNED_LOAD:`EXCEPTION_MISALIGNED_STORE};
+                        lsu_out_bus_exception = {1'b1,(lsu_in_bus_isLOAD)?`ysyx_26010011_EXCEPTION_MISALIGNED_LOAD:`ysyx_26010011_EXCEPTION_MISALIGNED_STORE};
                     end
                 endcase
             end else begin

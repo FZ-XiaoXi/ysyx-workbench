@@ -20,7 +20,8 @@ V_INC_PATH := $(abspath $(V_INC_PATH))
 
 
 SIM_C := $(wildcard csrc/*.c* csrc/monitor/*.c* csrc/devices/*.c* csrc/utils/*.c*)
-SIM_V := $(shell find vsrc/ -type f \( -name "*.v" -o -name "*.sv" \))
+# SIM_V := $(shell find vsrc/ -type f \( -name "*.v" -o -name "*.sv" \))
+SIM_V := vsrc/ysyx_26010011.v
 SIM_V += $(shell find $(NPC_SOC_HOME)/../ysyxSoC/perip/ -type f  -name "*.v" )
 SIM_V += $(NPC_SOC_HOME)/../ysyxSoC/build/ysyxSoCFull.v
 
@@ -40,11 +41,11 @@ override ARGS ?=
 override ARGS += $(ARGS_DIFF)
 IMG ?=
 ELF ?=
-
+NETLIST ?= /home/seaber/ysyx-workbench/yosys-sta/result/ysyx_26010011-800MHz/ysyx_26010011.v
+NETLIST_CELLS ?= /home/seaber/ysyx-workbench/yosys-sta/pdk/nangate45/sim/cells.v
 
 
 all:
-#	@echo "Write this Makefile by your self."
 
 sim: $(SIM_C) $(SIM_V) $(NVBOARD_ARCHIVE)
 	$(call git_commit, "sim RTL") # DO NOT REMOVE THIS LINE!!!
@@ -80,4 +81,18 @@ perf-test:
 
 clean:
 	rm -rf obj_dir npc-waveform.vcd wave.fst
+
+concat:
+	cat vsrc/csr_defines.v vsrc/IFU.v vsrc/IDU.v vsrc/EXU.v vsrc/LSU.v vsrc/WBU.v vsrc/pipeline.v vsrc/REG.v vsrc/CPU.v vsrc/AXI4Arbiter.v > vsrc/ysyx_26010011.v
+	sed -i 's#`include#//`include#' vsrc/ysyx_26010011.v
+
+iv-netlist:
+	iverilog -Wall -g2012 -o myCPU_iv_netlist -s CPUTop_tb vsrc/ysyx_26010011_tb.v vsrc/ysyx_26010011_netlist_wrap.v $(NETLIST) $(NETLIST_CELLS)
+	vvp myCPU_iv_netlist
+
+iv:
+	iverilog -Wall -g2012 -o myCPU_iv -s CPUTop_tb vsrc/ysyx_26010011_tb.v vsrc/ysyx_26010011_dut.v vsrc/ysyx_26010011.v
+	vvp myCPU_iv
+
+
 include ~/ysyx-workbench/Makefile

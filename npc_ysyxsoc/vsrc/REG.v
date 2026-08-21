@@ -1,5 +1,13 @@
+
+
+//  ██████╗  ██████╗  ██████╗
+// ██╔════╝  ██╔══██╗ ██╔══██╗
+// ██║  ███╗ ██████╔╝ ██████╔╝
+// ██║   ██║ ██╔═══╝  ██╔══██╗
+// ╚██████╔╝ ██║      ██║  ██║
+//  ╚═════╝  ╚═╝      ╚═╝  ╚═╝
 //IN_SYN// import "DPI-C" function void difftest_skip_ref(int reason);
-`include "ysyx_26010011_csr_defines.v"
+`include "csr_defines.v"
 module ysyx_26010011_GPRs(
   input        clock,
   input        reset,
@@ -24,9 +32,9 @@ module ysyx_26010011_GPRs(
   integer i;
   always @(posedge clock) begin
     if(reset) begin
-      for(i=0;i<32;i=i+1) begin
-        GPR[i]<={32{1'b0}};
-      end
+      // for(i=0;i<32;i=i+1) begin
+      //   // GPR[i]<={32{1'b0}};
+      // end
     end else begin
       if(gpr_in_wen) begin
         GPR[gpr_in_addw]<=(gpr_in_addw==5'b00000)?{32{1'b0}}:(gpr_in_data);
@@ -38,6 +46,13 @@ module ysyx_26010011_GPRs(
 
 endmodule
 
+
+// ██████╗  ███████╗ ██████╗
+// ██╔════╝ ██╔════╝ ██╔══██╗
+// ██║      ███████╗ ██████╔╝
+// ██║      ╚════██║ ██╔══██╗
+// ╚██████╗ ███████║ ██║  ██║
+//  ╚═════╝ ╚══════╝ ╚═╝  ╚═╝
 module ysyx_26010011_CSRs(
   input            clock,
   input            reset,
@@ -71,19 +86,19 @@ module ysyx_26010011_CSRs(
 
   always @(*) begin
     case(csr_in_addr)
-      `ADD_MCYCLE:   csr_out_data = CSR_MCYCLE;
-      `ADD_MCYCLEH:   csr_out_data = CSR_MCYCLEH;
-      `ADD_MISA:   csr_out_data = CSR_MISA;
-      `ADD_MTVEC:   csr_out_data = CSR_MTVEC;
-      `ADD_MSCRATCH:   csr_out_data = CSR_MSCRATCH;
-      `ADD_MEPC:   csr_out_data = CSR_MEPC;
-      `ADD_MCAUSE:   csr_out_data = CSR_MCAUSE;
-      `ADD_MSTATUS:   csr_out_data = CSR_MSTATUS;
-      `ADD_MVENDORID:   csr_out_data = CSR_MVENDORID;
-      `ADD_MARCHID:   csr_out_data = CSR_MARCHID;
-      `ADD_MTVAL:      csr_out_data = CSR_MTVAL;
+      `ysyx_26010011_ADD_MCYCLE:   csr_out_data = CSR_MCYCLE;
+      `ysyx_26010011_ADD_MCYCLEH:   csr_out_data = CSR_MCYCLEH;
+      `ysyx_26010011_ADD_MISA:   csr_out_data = CSR_MISA;
+      `ysyx_26010011_ADD_MTVEC:   csr_out_data = CSR_MTVEC;
+      `ysyx_26010011_ADD_MSCRATCH:   csr_out_data = CSR_MSCRATCH;
+      `ysyx_26010011_ADD_MEPC:   csr_out_data = CSR_MEPC;
+      `ysyx_26010011_ADD_MCAUSE:   csr_out_data = CSR_MCAUSE;
+      `ysyx_26010011_ADD_MSTATUS:   csr_out_data = CSR_MSTATUS;
+      `ysyx_26010011_ADD_MVENDORID:   csr_out_data = CSR_MVENDORID;
+      `ysyx_26010011_ADD_MARCHID:   csr_out_data = CSR_MARCHID;
+      `ysyx_26010011_ADD_MTVAL:      csr_out_data = CSR_MTVAL;
       
-      default:      csr_out_data = 32'h2b2b2b2b;
+      default:      csr_out_data = 32'h0;
     endcase
   end
 
@@ -94,29 +109,29 @@ module ysyx_26010011_CSRs(
       CSR_MISA <= 32'h40000100;
       CSR_MTVEC <= 32'h0;
       CSR_MSCRATCH <= 0;
-      CSR_MEPC <= 0;
-      CSR_MCAUSE <= 0;
+      // CSR_MEPC <= 0;
+      // CSR_MCAUSE <= 0;
       CSR_MSTATUS <= 32'h1800;
       CSR_MVENDORID <= 32'h79737978;
       CSR_MARCHID <= 32'h018ce19b;
       CSR_MTVAL <= 32'h00;
     end else begin
       if(csr_in_bus_exception[4]) begin
-        if(csr_in_bus_exception[3:0] != `EXCEPTION_MRET) begin
+        if(csr_in_bus_exception[3:0] != `ysyx_26010011_EXCEPTION_MRET) begin
           CSR_MEPC    <= csr_pc;
           CSR_MCAUSE  <= {1'b0, 27'b0, csr_in_bus_exception[3:0]};
         end
       end else if(csr_in_wen) begin
         case (csr_in_addw)
-            `ADD_MTVEC:      CSR_MTVEC   <= csr_in_data;
-            `ADD_MSCRATCH: begin
+            `ysyx_26010011_ADD_MTVEC:      CSR_MTVEC   <= csr_in_data;
+            `ysyx_26010011_ADD_MSCRATCH: begin
                  CSR_MSCRATCH <= csr_in_data;
                  $display("Write CSR_MSCRATCH: %08x", csr_in_data);
             end
-            `ADD_MEPC:       CSR_MEPC    <= csr_in_data;
-            `ADD_MCAUSE:     CSR_MCAUSE  <= csr_in_data;
-            `ADD_MSTATUS:    CSR_MSTATUS <= csr_in_data;
-            `ADD_MTVAL:      CSR_MTVAL   <= csr_in_data;
+            `ysyx_26010011_ADD_MEPC:       CSR_MEPC    <= csr_in_data;
+            `ysyx_26010011_ADD_MCAUSE:     CSR_MCAUSE  <= csr_in_data;
+            `ysyx_26010011_ADD_MSTATUS:    CSR_MSTATUS <= csr_in_data;
+            `ysyx_26010011_ADD_MTVAL:      CSR_MTVAL   <= csr_in_data;
             default:;
         endcase
       end
@@ -130,7 +145,7 @@ module ysyx_26010011_CSRs(
 
 
   always @(*) begin
-      if (csr_in_wen & ((csr_in_addw==`ADD_MCYCLE) | (csr_in_addw==`ADD_MCYCLEH))) begin
+      if (csr_in_wen & ((csr_in_addw==`ysyx_26010011_ADD_MCYCLE) | (csr_in_addw==`ysyx_26010011_ADD_MCYCLEH))) begin
 //IN_SYN//          difftest_skip_ref(4);
       end
   end
