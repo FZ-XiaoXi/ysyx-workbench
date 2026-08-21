@@ -64,11 +64,12 @@ concat: $(SRC_V)
 	cat  $(SRC_V) > vsrc/ysyx_26010011.v
 	sed -i 's#`include#//`include#' vsrc/ysyx_26010011.v
 
-vsrc/ysyx_26010011.v:
-	$(MAKE) concat
+# vsrc/ysyx_26010011.v: FORCE
+# 	$(MAKE) concat
 
 sim: $(SIM_C) $(SIM_V) $(NVBOARD_ARCHIVE)
 	$(call git_commit, "sim RTL") # DO NOT REMOVE THIS LINE!!!
+	$(MAKE) concat
 	verilator $(VERILATOR_FLAGS) --top-module $(TOPNAME) $^ $(addprefix -CFLAGS , $(CXXFLAGS)) $(addprefix -LDFLAGS , $(LDFLAGS))
 	@echo "ARGS = $(ARGS)"
 	@echo "ARGS_DIFF = $(ARGS_DIFF)"
