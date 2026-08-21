@@ -25,6 +25,19 @@ SIM_V := vsrc/ysyx_26010011.v
 SIM_V += $(shell find $(NPC_SOC_HOME)/../ysyxSoC/perip/ -type f  -name "*.v" )
 SIM_V += $(NPC_SOC_HOME)/../ysyxSoC/build/ysyxSoCFull.v
 
+SRC_V := vsrc/vsrc/csr_defines.v
+SRC_V += vsrc/vsrc/IFU.v
+SRC_V += vsrc/vsrc/IDU.v
+SRC_V += vsrc/vsrc/EXU.v
+SRC_V += vsrc/vsrc/LSU.v
+SRC_V += vsrc/vsrc/WBU.v
+SRC_V += vsrc/vsrc/pipeline.v
+SRC_V += vsrc/vsrc/REG.v
+SRC_V += vsrc/vsrc/CPU.v
+SRC_V += vsrc/vsrc/AXI4Arbiter.v
+SRC_V += vsrc/vsrc/CLINT.v
+SRC_V += vsrc/vsrc/BRIDGE.v
+
 LIBCAPSTONE = tools/capstone/repo/libcapstone.so.5
 DIFF_REF_PATH = $(NEMU_HOME)
 DIFF_REF_SO = $(DIFF_REF_PATH)/riscv32-nemu-interpreter-so-ysyxsoc
@@ -47,8 +60,8 @@ NETLIST_CELLS ?= /home/seaber/ysyx-workbench/yosys-sta/pdk/nangate45/sim/cells.v
 
 all:
 
-concat:
-	cat vsrc/csr_defines.v vsrc/IFU.v vsrc/IDU.v vsrc/EXU.v vsrc/LSU.v vsrc/WBU.v vsrc/pipeline.v vsrc/REG.v vsrc/CPU.v vsrc/AXI4Arbiter.v vsrc/CLINT.v vsrc/BRIDGE.v > vsrc/ysyx_26010011.v
+concat: $(SRC_V)
+	cat  $(SRC_V) > vsrc/ysyx_26010011.v
 	sed -i 's#`include#//`include#' vsrc/ysyx_26010011.v
 
 vsrc/ysyx_26010011.v:
