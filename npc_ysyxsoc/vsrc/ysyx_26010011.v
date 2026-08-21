@@ -2871,6 +2871,13 @@ module ysyx_26010011_AXI4Arbiter(
     assign M2_bid = S_bid;
     assign S_bready = M2_bready;
 endmodule
+
+// ██████╗  ██╗      ██╗ ███╗   ██╗ ████████╗
+// ██╔════╝ ██║      ██║ ████╗  ██║ ╚══██╔══╝
+// ██║      ██║      ██║ ██╔██╗ ██║    ██║
+// ██║      ██║      ██║ ██║╚██╗██║    ██║
+// ╚██████╗ ███████╗ ██║ ██║ ╚████║    ██║
+//  ╚═════╝ ╚══════╝ ╚═╝ ╚═╝  ╚═══╝    ╚═╝
 module ysyx_26010011_CLINT(
 	input clock,
 	input reset,
@@ -3037,7 +3044,7 @@ module ysyx_26010011_CLINT(
 	end else if(raddr_reg == 32'h02000004) begin
 	  rdata = mtime_H;
 	end else begin
-	  $display("CLINT Read from invalid address: 0x%08x", raddr_reg);
+	//   $display("CLINT Read from invalid address: 0x%08x", raddr_reg);
 	  rdata = 32'h00000000;
 	end
   end
@@ -3057,6 +3064,12 @@ module ysyx_26010011_CLINT(
 
 endmodule
 
+// ██████╗  ██████╗  ██╗ ██████╗   ██████╗  ███████╗
+// ██╔══██╗ ██╔══██╗ ██║ ██╔══██╗ ██╔════╝  ██╔════╝
+// ██████╔╝ ██████╔╝ ██║ ██║  ██║ ██║  ███╗ █████╗
+// ██╔══██╗ ██╔══██╗ ██║ ██║  ██║ ██║   ██║ ██╔══╝
+// ██████╔╝ ██║  ██║ ██║ ██████╔╝ ╚██████╔╝ ███████╗
+// ╚═════╝  ╚═╝  ╚═╝ ╚═╝ ╚═════╝   ╚═════╝  ╚══════╝
 module ysyx_26010011_bridge(
     input clock,
     input reset,
