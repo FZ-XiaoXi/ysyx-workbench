@@ -25,18 +25,18 @@ SIM_V := vsrc/ysyx_26010011.v
 SIM_V += $(shell find $(NPC_SOC_HOME)/../ysyxSoC/perip/ -type f  -name "*.v" )
 SIM_V += $(NPC_SOC_HOME)/../ysyxSoC/build/ysyxSoCFull.v
 
-SRC_V := vsrc/vsrc/csr_defines.v
-SRC_V += vsrc/vsrc/IFU.v
-SRC_V += vsrc/vsrc/IDU.v
-SRC_V += vsrc/vsrc/EXU.v
-SRC_V += vsrc/vsrc/LSU.v
-SRC_V += vsrc/vsrc/WBU.v
-SRC_V += vsrc/vsrc/pipeline.v
-SRC_V += vsrc/vsrc/REG.v
-SRC_V += vsrc/vsrc/CPU.v
-SRC_V += vsrc/vsrc/AXI4Arbiter.v
-SRC_V += vsrc/vsrc/CLINT.v
-SRC_V += vsrc/vsrc/BRIDGE.v
+SRC_V := vsrc/csr_defines.v
+SRC_V += vsrc/IFU.v
+SRC_V += vsrc/IDU.v
+SRC_V += vsrc/EXU.v
+SRC_V += vsrc/LSU.v
+SRC_V += vsrc/WBU.v
+SRC_V += vsrc/pipeline.v
+SRC_V += vsrc/REG.v
+SRC_V += vsrc/CPU.v
+SRC_V += vsrc/AXI4Arbiter.v
+SRC_V += vsrc/CLINT.v
+SRC_V += vsrc/BRIDGE.v
 
 LIBCAPSTONE = tools/capstone/repo/libcapstone.so.5
 DIFF_REF_PATH = $(NEMU_HOME)
@@ -64,12 +64,11 @@ concat: $(SRC_V)
 	cat  $(SRC_V) > vsrc/ysyx_26010011.v
 	sed -i 's#`include#//`include#' vsrc/ysyx_26010011.v
 
-# vsrc/ysyx_26010011.v: FORCE
-# 	$(MAKE) concat
+vsrc/ysyx_26010011.v:
+	$(MAKE) concat
 
 sim: $(SIM_C) $(SIM_V) $(NVBOARD_ARCHIVE)
 	$(call git_commit, "sim RTL") # DO NOT REMOVE THIS LINE!!!
-	$(MAKE) concat
 	verilator $(VERILATOR_FLAGS) --top-module $(TOPNAME) $^ $(addprefix -CFLAGS , $(CXXFLAGS)) $(addprefix -LDFLAGS , $(LDFLAGS))
 	@echo "ARGS = $(ARGS)"
 	@echo "ARGS_DIFF = $(ARGS_DIFF)"
