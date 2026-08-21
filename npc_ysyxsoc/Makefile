@@ -98,3 +98,5 @@ iv: concat
 
 
 include ~/ysyx-workbench/Makefile
+
+.PHONY: all sim wave perf perf-test clean iv iv-netlist concat
