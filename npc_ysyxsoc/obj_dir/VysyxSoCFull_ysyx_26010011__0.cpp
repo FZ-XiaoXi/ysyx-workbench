@@ -526,8 +526,6 @@ void VysyxSoCFull_ysyx_26010011___ico_sequent__TOP__ysyxSoCFull__asic__cpu__cpu_
                                           & (IData)(vlSelfRef.__PVT__S_arvalid));
 }
 
-extern const VlUnpacked<CData/*3:0*/, 64> VysyxSoCFull__ConstPool__TABLE_hed5b2b71_0;
-
 void VysyxSoCFull_ysyx_26010011___ico_sequent__TOP__ysyxSoCFull__asic__cpu__cpu__4(VysyxSoCFull_ysyx_26010011* vlSelf) {
     VL_DEBUG_IF(VL_DBG_MSGF("+            VysyxSoCFull_ysyx_26010011___ico_sequent__TOP__ysyxSoCFull__asic__cpu__cpu__4\n"); );
     VysyxSoCFull__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
@@ -549,7 +547,7 @@ void VysyxSoCFull_ysyx_26010011___ico_sequent__TOP__ysyxSoCFull__asic__cpu__cpu_
     __Vtableidx4 = (((IData)(vlSelfRef.__PVT__io_master_rready) 
                      << 5U) | (((IData)(vlSelfRef.__PVT__CLINT_arvalid) 
                                 << 4U) | (IData)(vlSelfRef.__PVT__u_clint__DOT__rstate)));
-    vlSelfRef.__PVT__u_clint__DOT__rnext_state = VysyxSoCFull__ConstPool__TABLE_hed5b2b71_0
+    vlSelfRef.__PVT__u_clint__DOT__rnext_state = VysyxSoCFull__ConstPool__TABLE_hc136131a_0
         [__Vtableidx4];
     if (vlSelfRef.__PVT__RAM_AXI4Arbiter__DOT__R_state) {
         if (vlSelfRef.__PVT__RAM_AXI4Arbiter__DOT__R_master_sel) {
