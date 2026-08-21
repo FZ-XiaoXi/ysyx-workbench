@@ -158,6 +158,8 @@ module ysyx_26010011_LSU(
         )) begin
             if((lsu_in_bus_addr >= 32'h10000000) && (lsu_in_bus_addr <= 32'h10000005)) begin
                 difftest_skip_ref(lsu_in_bus_addr);
+            end else if((lsu_in_bus_addr >= 32'h21000000) && (lsu_in_bus_addr <= 32'h21200000)) begin
+                difftest_skip_ref(lsu_in_bus_addr);
             end
         end
     end
