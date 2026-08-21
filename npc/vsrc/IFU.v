@@ -89,6 +89,8 @@ module ysyx_26010011_IFU(
 				`ifdef USE_VERILATOR
 				// $display("Verilator simulation, setting PC to 0x30000000");
 				PC <= 32'h30000000;
+				`else
+				PC <= 32'h80000000;
 				`endif
 			`endif
 			
@@ -125,7 +127,11 @@ module ysyx_26010011_IFU(
 `ifdef __ICARUS__
 	ysyx_26010011_IFU_icache #(.CACHE_BLOCK_SIZE(4), .CACHE_SIZE(16)) icache_u0(
 `else
-	ysyx_26010011_IFU_icache #(.CACHE_BLOCK_SIZE(16), .CACHE_SIZE(4)) icache_u0(
+	`ifdef YOSYS
+		ysyx_26010011_IFU_icache #(.CACHE_BLOCK_SIZE(4), .CACHE_SIZE(16)) icache_u0(
+	`else
+		ysyx_26010011_IFU_icache #(.CACHE_BLOCK_SIZE(16), .CACHE_SIZE(4)) icache_u0(
+	`endif
 `endif
 	
 		.clock(clock),
