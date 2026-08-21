@@ -1,7 +1,7 @@
 #include <am.h>
 #include <klib-macros.h>
 #include <klib.h>
-#include "npc.h"
+#include "ysyxsoc.h"
 extern char _heap_start;
 extern char _heap_end;
 extern char _stack_top;

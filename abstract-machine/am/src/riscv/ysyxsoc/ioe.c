@@ -1,6 +1,6 @@
 #include <am.h>
 #include <klib-macros.h>
-#include "npc.h"
+#include "ysyxsoc.h"
 void __am_uart_init();
 void __am_gpu_init();
 

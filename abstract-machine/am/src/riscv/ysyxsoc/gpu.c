@@ -1,6 +1,6 @@
 #include <am.h>
 #include <klib.h>
-#include "npc.h"
+#include "ysyxsoc.h"
 // #define SYNC_ADDR (VGACTL_ADDR + 4)
 
 static int gpu_w,gpu_h;
