@@ -64,10 +64,8 @@ concat: $(SRC_V)
 	cat  $(SRC_V) > vsrc/ysyx_26010011.v
 	sed -i 's#`include#//`include#' vsrc/ysyx_26010011.v
 
-vsrc/ysyx_26010011.v:
-	$(MAKE) concat
-
 sim: $(SIM_C) $(SIM_V) $(NVBOARD_ARCHIVE)
+	$(MAKE) concat
 	$(call git_commit, "sim RTL") # DO NOT REMOVE THIS LINE!!!
 	verilator $(VERILATOR_FLAGS) --top-module $(TOPNAME) $^ $(addprefix -CFLAGS , $(CXXFLAGS)) $(addprefix -LDFLAGS , $(LDFLAGS))
 	@echo "ARGS = $(ARGS)"
