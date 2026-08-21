@@ -27,17 +27,17 @@ VL_ATTR_COLD void VysyxSoCFull_ysyxSoCASIC___eval_initial__TOP__ysyxSoCFull__asi
     vlSelfRef.__PVT__axi4delay_delayer__DOT__out_rresp_w[5U] = 0U;
     vlSelfRef.__PVT__axi4delay_delayer__DOT__out_rresp_w[6U] = 0U;
     vlSelfRef.__PVT__axi4delay_delayer__DOT__out_rresp_w[7U] = 0U;
-    vlSelfRef.__PVT__lvga__DOT__mvga__DOT__vmem_inst__DOT__unnamedblk1__DOT__i = 0U;
-    while (VL_GTS_III(32, 0x0004b000U, vlSelfRef.__PVT__lvga__DOT__mvga__DOT__vmem_inst__DOT__unnamedblk1__DOT__i)) {
-        vlSelfRef.lvga__DOT__mvga__DOT__vmem_inst__DOT____Vlvbound_h9bb0d8ae__0 = 0U;
+    vlSelfRef.__PVT__lvga__DOT__mvga__DOT__vmem_inst__DOT__i = 0U;
+    while (VL_GTS_III(32, 0x0004b000U, vlSelfRef.__PVT__lvga__DOT__mvga__DOT__vmem_inst__DOT__i)) {
+        vlSelfRef.lvga__DOT__mvga__DOT__vmem_inst__DOT____Vlvbound_hb9cada1c__0 = 0U;
         if (VL_LIKELY(((0x0004afffU >= (0x0007ffffU 
-                                        & vlSelfRef.__PVT__lvga__DOT__mvga__DOT__vmem_inst__DOT__unnamedblk1__DOT__i))))) {
+                                        & vlSelfRef.__PVT__lvga__DOT__mvga__DOT__vmem_inst__DOT__i))))) {
             vlSelfRef.__PVT__lvga__DOT__mvga__DOT__vmem_inst__DOT__ram[(0x0007ffffU 
-                                                                        & vlSelfRef.__PVT__lvga__DOT__mvga__DOT__vmem_inst__DOT__unnamedblk1__DOT__i)] 
-                = vlSelfRef.lvga__DOT__mvga__DOT__vmem_inst__DOT____Vlvbound_h9bb0d8ae__0;
+                                                                        & vlSelfRef.__PVT__lvga__DOT__mvga__DOT__vmem_inst__DOT__i)] 
+                = vlSelfRef.lvga__DOT__mvga__DOT__vmem_inst__DOT____Vlvbound_hb9cada1c__0;
         }
-        vlSelfRef.__PVT__lvga__DOT__mvga__DOT__vmem_inst__DOT__unnamedblk1__DOT__i 
-            = ((IData)(1U) + vlSelfRef.__PVT__lvga__DOT__mvga__DOT__vmem_inst__DOT__unnamedblk1__DOT__i);
+        vlSelfRef.__PVT__lvga__DOT__mvga__DOT__vmem_inst__DOT__i 
+            = ((IData)(1U) + vlSelfRef.__PVT__lvga__DOT__mvga__DOT__vmem_inst__DOT__i);
     }
 }
 
@@ -2871,9 +2871,9 @@ VL_ATTR_COLD void VysyxSoCFull_ysyxSoCASIC___ctor_var_reset(VysyxSoCFull_ysyxSoC
     }
     vlSelf->__PVT__lvga__DOT__mvga__DOT__vmem_inst__DOT__linear_addr = VL_SCOPED_RAND_RESET_I(19, __VscopeHash, 2557798870371193149ull);
     vlSelf->__PVT__lvga__DOT__mvga__DOT__vmem_inst__DOT__linear_waddr = VL_SCOPED_RAND_RESET_I(19, __VscopeHash, 3453386451593313220ull);
-    vlSelf->__PVT__lvga__DOT__mvga__DOT__vmem_inst__DOT__unnamedblk1__DOT__i = VL_SCOPED_RAND_RESET_I(32, __VscopeHash, 1350112313887573895ull);
+    vlSelf->__PVT__lvga__DOT__mvga__DOT__vmem_inst__DOT__i = VL_SCOPED_RAND_RESET_I(32, __VscopeHash, 7006691505649056664ull);
     vlSelf->lvga__DOT__mvga__DOT__vmem_inst__DOT____Vlvbound_heacdd1d6__0 = VL_SCOPED_RAND_RESET_I(24, __VscopeHash, 13554535694831031685ull);
-    vlSelf->lvga__DOT__mvga__DOT__vmem_inst__DOT____Vlvbound_h9bb0d8ae__0 = VL_SCOPED_RAND_RESET_I(24, __VscopeHash, 865906636906881103ull);
+    vlSelf->lvga__DOT__mvga__DOT__vmem_inst__DOT____Vlvbound_hb9cada1c__0 = VL_SCOPED_RAND_RESET_I(24, __VscopeHash, 17251112730163472649ull);
     vlSelf->__PVT__lspi__DOT__mspi__DOT__in_psel = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 14947606545221717669ull);
     vlSelf->__PVT__lspi__DOT__mspi__DOT__spi_ss = VL_SCOPED_RAND_RESET_I(8, __VscopeHash, 6020510856435459155ull);
     vlSelf->__PVT__lspi__DOT__mspi__DOT__spi_irq_out = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 13430036266177605201ull);

@@ -863,9 +863,9 @@ class alignas(VL_CACHE_LINE_BYTES) VysyxSoCFull_ysyxSoCASIC final : public Veril
         IData/*23:0*/ __PVT__lvga__DOT__mvga__DOT__vga_data;
         IData/*18:0*/ __PVT__lvga__DOT__mvga__DOT__vmem_inst__DOT__linear_addr;
         IData/*18:0*/ __PVT__lvga__DOT__mvga__DOT__vmem_inst__DOT__linear_waddr;
-        IData/*31:0*/ __PVT__lvga__DOT__mvga__DOT__vmem_inst__DOT__unnamedblk1__DOT__i;
+        IData/*31:0*/ __PVT__lvga__DOT__mvga__DOT__vmem_inst__DOT__i;
         IData/*23:0*/ lvga__DOT__mvga__DOT__vmem_inst__DOT____Vlvbound_heacdd1d6__0;
-        IData/*23:0*/ lvga__DOT__mvga__DOT__vmem_inst__DOT____Vlvbound_h9bb0d8ae__0;
+        IData/*23:0*/ lvga__DOT__mvga__DOT__vmem_inst__DOT____Vlvbound_hb9cada1c__0;
         IData/*31:0*/ __PVT__lspi__DOT__mspi__DOT__xipmaster_prdata;
         IData/*31:0*/ __PVT__lspi__DOT__mspi__DOT__xipslv_pwdata;
         IData/*31:0*/ __PVT__lspi__DOT__mspi__DOT__xipslv_prdata;
