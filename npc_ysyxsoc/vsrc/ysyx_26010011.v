@@ -2866,3 +2866,382 @@ module ysyx_26010011_AXI4Arbiter(
     assign M2_bid = S_bid;
     assign S_bready = M2_bready;
 endmodule
+
+module ysyx_26010011_CLINT(
+	input clock,
+	input reset,
+
+	//AR
+	input  [31:0] araddr,
+	input         arvalid,
+	output        arready,
+
+	//R
+	output [31:0] rdata,
+	output [1:0]  rresp,
+	output        rvalid,
+	output        rlast,
+	input         rready,
+
+	//AW
+	input  [31:0] awaddr,
+	input         awvalid,
+	output        awready,
+
+	//W
+	input  [31:0] wdata,
+	input  [3:0]  wstrb,
+	input         wvalid,
+	output        wready,
+	
+	//B
+	output [1:0]  bresp,
+	output        bvalid,
+	input         bready
+);
+
+	reg [3:0] wstate,wnext_state;
+
+  always @(posedge clock) begin
+	if(reset) begin
+	  wstate <= 4'b0;
+	end else begin
+	  wstate <= wnext_state;
+	end
+  end
+  always @(*) begin
+	wnext_state = wstate;
+	case(wstate)
+	  4'b0000: begin
+		if(awvalid) wnext_state = 4'b0001;
+	  end
+	  4'b0001: begin
+		wnext_state = 4'b0010;
+	  end
+	  4'b0010: begin
+		if(bready)  wnext_state = 4'b0000;
+		else wnext_state = 4'b0010;
+	  end
+	  default: begin
+		wnext_state = 4'b0000;
+	  end
+	endcase
+  end
+  always @(*) begin
+	awready = 0;
+	wready = 0;
+	bvalid = 0;
+	case(wstate)
+	  4'b0000: begin
+		awready = 1;
+		wready = 1;
+		bvalid = 0;
+	  end
+	  4'b0001: begin
+		awready = 0;
+		wready = 0;
+		bvalid = 0;
+	  end
+	  4'b0010: begin
+		awready = 0;
+		wready = 0;
+		bvalid = 1;
+	  end
+	  default: begin
+		awready = 0;
+		wready = 0;
+		bvalid = 0;
+	  end
+	endcase
+  end
+//////////////////////////////
+  reg [3:0] rstate,rnext_state;
+  reg [31:0] raddr_reg;
+
+  always @(posedge clock) begin
+	if(reset) begin
+	  rstate   <= 4'b0;
+	  raddr_reg <= 32'b0;
+	end else begin
+	  rstate <= rnext_state;
+	  if (rstate == 4'b0000 && arvalid && arready)
+		raddr_reg <= araddr;
+	end
+  end
+  always @(*) begin
+	rnext_state = rstate;
+	case(rstate)
+	  4'b0000: begin
+		if(arvalid) rnext_state = 4'b0001;
+	  end
+	  4'b0001: begin
+		rnext_state = 4'b0010;
+	  end
+	  4'b0010: begin
+		if(rready)  rnext_state = 4'b0000;
+		else rnext_state = 4'b0010;
+	  end
+	endcase
+  end
+  always @(*) begin
+	arready = 0;
+	rvalid = 0;
+	rlast = 0;
+	case(rstate)
+	  4'b0000: begin
+		arready = 1;
+		rvalid = 0;
+		rlast = 0;
+	  end
+	  4'b0001: begin
+		arready = 0;
+		rvalid = 0;
+		rlast = 0;
+	  end
+	  4'b0010: begin
+		arready = 0;
+		rvalid = 1;
+		rlast = 1;
+	  end
+	  default: begin
+		arready = 0;
+		rvalid = 0;
+		rlast = 0;
+	  end
+	endcase
+  end
+  localparam [31:0] CLINT_BASE = 32'h02000000;
+  localparam [31:0] CLINT_END  = 32'h02010000;
+
+  wire mem_write_valid =
+	  awaddr >= CLINT_BASE && awaddr < CLINT_END;
+
+  always @(posedge clock) begin
+	if(wstate == 4'b0000 && wnext_state == 4'b0001) begin
+		$display("CLINT ONLY READ!");
+	end
+  end
+
+  assign rresp = 2'b0;
+  assign bresp = 2'b0;
+  wire [31:0] tmp_r;
+  assign tmp_r = Memory[(raddr_reg - CLINT_BASE) >> 2];
+  always @(*) begin
+	if(raddr_reg == 32'h02000000) begin
+	  rdata = mtime_L;
+	end else if(raddr_reg == 32'h02000004) begin
+	  rdata = mtime_H;
+	end else begin
+	  $display("CLINT Read from invalid address: 0x%08x", raddr_reg);
+	  rdata = 32'h00000000;
+	end
+  end
+
+
+	
+	reg [31:0]mtime_L,mtime_H;
+	always @(posedge clk) begin
+		if(rst) begin
+			mtime_L <= 32'd0;
+			mtime_H <= 32'd0;
+		end
+		else begin
+			{mtime_H,mtime_L} <= {mtime_H,mtime_L} + 1;
+		end
+	end
+
+endmodule
+
+module ysyx_26010011_bridge(
+    input clock,
+    input reset,
+    //////////////////////////////////////////////////////////
+    input      [31:0] S_awaddr,  input             S_awvalid, output            S_awready,
+    input      [3:0]  S_awid,    input      [7:0]  S_awlen,   input      [2:0]  S_awsize,  input      [1:0]  S_awburst,
+    input      [31:0] S_wdata,   input      [3:0]  S_wstrb,   input             S_wvalid,  output            S_wready,
+    input             S_wlast,
+    output     [1:0]  S_bresp,   output            S_bvalid,  input             S_bready,
+    output     [3:0]  S_bid,
+    input      [31:0] S_araddr,  input             S_arvalid, output reg        S_arready,
+    input      [3:0]  S_arid,    input      [7:0]  S_arlen,   input      [2:0]  S_arsize,  input      [1:0]  S_arbureset,
+    output reg [31:0] S_rdata,   output reg [1:0]  S_rresp,   output reg        S_rvalid,  input             S_rready,
+    output reg        S_rlast,   output reg [3:0]  S_rid,
+    ///////////////////////////////////////////////////////
+    //MEM
+    //SLAVE AW
+    output     [31:0] MEM_awaddr,   output            MEM_awvalid,  input             MEM_awready,
+    output     [3:0]  MEM_awid,     output     [7:0]  MEM_awlen,    output     [2:0]  MEM_awsize,   output     [1:0]  MEM_awburst,
+    //SLAVE W
+    output     [31:0] MEM_wdata,    output     [3:0]  MEM_wstrb,    output            MEM_wvalid,   input             MEM_wready,
+    output            MEM_wlast,
+    //SLAVE B
+    input      [1:0]  MEM_bresp,    input             MEM_bvalid,   output            MEM_bready,
+    input      [3:0]  MEM_bid,
+    //SLAVE AR
+    output reg [31:0] MEM_araddr,   output reg        MEM_arvalid,  input             MEM_arready,
+    output reg [3:0]  MEM_arid,     output reg [7:0]  MEM_arlen,    output reg [2:0]  MEM_arsize,   output reg [1:0]  MEM_arbureset,
+    //SLAVE R
+    input      [31:0] MEM_rdata,    input      [1:0]  MEM_rresp,    input             MEM_rvalid,   output reg        MEM_rready,
+    input             MEM_rlast,    input      [3:0]  MEM_rid
+
+    //CLINT
+    //SLAVE AW
+    output     [31:0] CLINT_awaddr,   output            CLINT_awvalid,  input             CLINT_awready,
+    output     [3:0]  CLINT_awid,     output     [7:0]  CLINT_awlen,    output     [2:0]  CLINT_awsize,   output     [1:0]  CLINT_awburst,
+    //SLAVE W
+    output     [31:0] CLINT_wdata,    output     [3:0]  CLINT_wstrb,    output            CLINT_wvalid,   input             CLINT_wready,
+    output            CLINT_wlast,
+    //SLAVE B
+    input      [1:0]  CLINT_bresp,    input             CLINT_bvalid,   output            CLINT_bready,
+    input      [3:0]  CLINT_bid,
+    //SLAVE AR
+    output reg [31:0] CLINT_araddr,   output reg        CLINT_arvalid,  input             CLINT_arready,
+    output reg [3:0]  CLINT_arid,     output reg [7:0]  CLINT_arlen,    output reg [2:0]  CLINT_arsize,   output reg [1:0]  CLINT_arbureset,
+    //SLAVE R
+    input      [31:0] CLINT_rdata,    input      [1:0]  CLINT_rresp,    input             CLINT_rvalid,   output reg        CLINT_rready,
+    input             CLINT_rlast,    input      [3:0]  CLINT_rid
+
+);
+
+    parameter STATE_IDLE   = 0;
+    parameter STATE_BUSY   = 1;
+    // parameter ADDR_MEM_BASE  = 32'h80000000;
+    // parameter ADDR_MEM_SIZE  = 32'h08000000;
+    parameter ADDR_CLINT_BASE = 32'h02000000;
+    parameter ADDR_CLINT_SIZE = 32'h00000008;
+
+    reg aw_sel_reg, ar_sel_reg;
+    reg R_state, R_next_state, W_state, W_next_state;
+    reg aw_fire, ar_fire;
+
+    always @(*) begin
+        ar_fire = S_arvalid && S_arready;
+        aw_fire = S_awvalid && S_awready;
+    end
+
+    always @(posedge clock) begin
+        if(reset) begin
+            R_state <= STATE_IDLE;
+            W_state <= STATE_IDLE;
+        end else begin
+            R_state <= R_next_state;
+            W_state <= W_next_state;
+        end
+    end
+    always @(*) begin
+        R_next_state = R_state;
+        W_next_state = W_state;
+        case(R_state)
+            STATE_IDLE: begin
+                if(S_arvalid) R_next_state = STATE_BUSY;
+            end
+            STATE_BUSY: begin
+                if(S_rready && S_rvalid && S_rlast) R_next_state = STATE_IDLE;
+            end
+        endcase
+
+        case(W_state)
+            STATE_IDLE: begin
+                if(S_awvalid && S_wvalid) W_next_state = STATE_BUSY;
+            end
+            STATE_BUSY: begin
+                if(S_bready && S_bvalid) W_next_state = STATE_IDLE;
+            end
+        endcase
+    end
+
+    always @(posedge clock) begin
+        if(reset) begin
+            aw_sel_reg <= 1'b0;
+            ar_sel_reg <= 1'b0;
+        end else begin
+            // 握手时寄存设备选择
+            if(aw_fire) begin
+                if(S_awaddr >= ADDR_CLINT_BASE && S_awaddr < ADDR_CLINT_BASE + ADDR_CLINT_SIZE) begin aw_sel_reg <= 1'b1; end
+                else aw_sel_reg <= 1'b0;
+            end
+            if(ar_fire) begin
+                if(S_araddr >= ADDR_CLINT_BASE && S_araddr < ADDR_CLINT_BASE + ADDR_CLINT_SIZE) begin ar_sel_reg <= 1'b1; end
+                else ar_sel_reg <= 1'b0;
+            end
+            if(R_next_state == STATE_IDLE) ar_sel_reg <= 1'b0;
+            if(W_next_state == STATE_IDLE) aw_sel_reg <= 1'b0;
+        end
+    end
+
+    assign MEM_arid = S_arid;
+    assign MEM_arlen = S_arlen;
+    assign MEM_arsize = S_arsize;
+    assign MEM_arbureset = S_arbureset;
+    assign MEM_rready = S_arready;
+    assign MEM_araddr = S_araddr;
+    assign CLINT_arid = S_arid;
+    assign CLINT_arlen = S_arlen;
+    assign CLINT_arsize = S_arsize;
+    assign CLINT_arbureset = S_arbureset;
+    assign CLINT_rready = S_arready;
+    assign CLINT_araddr = S_araddr;
+    always @(*) begin
+        //READ
+        if(ar_sel_reg == 1'b0) begin
+            MEM_arvalid = S_arvalid;
+            CLINT_arvalid = 0;
+
+            S_arready = MEM_arready;
+            S_rdata = MEM_rdata; S_rresp = MEM_rresp; S_rvalid = MEM_rvalid;
+            S_rlast = MEM_rlast; S_rid = MEM_rid;
+        end
+        else begin
+            CLINT_arvalid = S_arvalid;
+            MEM_arvalid = 0;
+
+            S_arready = CLINT_arready;
+            S_rdata = CLINT_rdata; S_rresp = CLINT_rresp; S_rvalid = CLINT_rvalid;
+            S_rlast = CLINT_rlast; S_rid = CLINT_rid;
+        end
+    end
+
+
+    assign MEM_awaddr = S_awaddr;
+    assign MEM_awid = S_awid;
+    assign MEM_awlen = S_awlen;
+    assign MEM_awsize = S_awsize;
+    assign MEM_awburst = S_awburst;
+    assign MEM_wdata = S_wdata;
+    assign MEM_wstrb = S_wstrb;
+    assign MEM_wlast = S_wlast;
+    assign MEM_bready = S_bready;
+    assign CLINT_awaddr = S_awaddr;
+    assign CLINT_awid = S_awid;
+    assign CLINT_awlen = S_awlen;
+    assign CLINT_awsize = S_awsize;
+    assign CLINT_awburst = S_awburst;
+    assign CLINT_wdata = S_wdata;
+    assign CLINT_wstrb = S_wstrb;
+    assign CLINT_wlast = S_wlast;
+    assign CLINT_bready = S_bready;
+
+    always @(*) begin
+        //WRITE
+        if(aw_sel_reg == 1'b0) begin
+            MEM_awvalid = S_awvalid;
+            MEM_wvalid = S_wvalid;
+            CLINT_awvalid = 0;
+            CLINT_wvalid = 0;
+
+            S_awready = MEM_awready; S_wready = MEM_wready;
+            S_bresp = MEM_bresp; S_bvalid = MEM_bvalid;
+            S_bid = MEM_bid;
+        end else begin
+            MEM_awvalid = 0;
+            MEM_wvalid = 0;
+            CLINT_awvalid = S_awvalid;
+            CLINT_wvalid = S_wvalid;
+
+            S_awready = CLINT_awready; S_wready = CLINT_wready;
+            S_bresp = CLINT_bresp; S_bvalid = CLINT_bvalid;
+            S_bid = CLINT_bid;
+        end
+    end
+
+endmodule
