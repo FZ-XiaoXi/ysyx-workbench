@@ -47,6 +47,10 @@ NETLIST_CELLS ?= /home/seaber/ysyx-workbench/yosys-sta/pdk/nangate45/sim/cells.v
 
 all:
 
+concat:
+	cat vsrc/csr_defines.v vsrc/IFU.v vsrc/IDU.v vsrc/EXU.v vsrc/LSU.v vsrc/WBU.v vsrc/pipeline.v vsrc/REG.v vsrc/CPU.v vsrc/AXI4Arbiter.v vsrc/CLINT.v vsrc/BRIDGE.v > vsrc/ysyx_26010011.v
+	sed -i 's#`include#//`include#' vsrc/ysyx_26010011.v
+	
 sim: concat $(SIM_C) $(SIM_V) $(NVBOARD_ARCHIVE)
 	$(call git_commit, "sim RTL") # DO NOT REMOVE THIS LINE!!!
 	verilator $(VERILATOR_FLAGS) --top-module $(TOPNAME) $^ $(addprefix -CFLAGS , $(CXXFLAGS)) $(addprefix -LDFLAGS , $(LDFLAGS))
@@ -82,9 +86,7 @@ perf-test:
 clean:
 	rm -rf obj_dir npc-waveform.vcd wave.fst
 
-concat:
-	cat vsrc/csr_defines.v vsrc/IFU.v vsrc/IDU.v vsrc/EXU.v vsrc/LSU.v vsrc/WBU.v vsrc/pipeline.v vsrc/REG.v vsrc/CPU.v vsrc/AXI4Arbiter.v vsrc/CLINT.v vsrc/BRIDGE.v > vsrc/ysyx_26010011.v
-	sed -i 's#`include#//`include#' vsrc/ysyx_26010011.v
+
 
 iv-netlist: concat
 	iverilog -Wall -g2012 -o myCPU_iv_netlist -s CPUTop_tb vsrc/ysyx_26010011_tb.v vsrc/ysyx_26010011_netlist_wrap.v $(NETLIST) $(NETLIST_CELLS)
