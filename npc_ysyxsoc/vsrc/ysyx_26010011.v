@@ -3148,6 +3148,7 @@ module ysyx_26010011_bridge(
     parameter ADDR_CLINT_SIZE = 32'h00000008;
 
     reg aw_sel_reg, ar_sel_reg;
+    wire aw_sel_now, ar_sel_now;
     reg R_state, R_next_state, W_state, W_next_state;
     reg aw_fire, ar_fire;
 
@@ -3186,7 +3187,8 @@ module ysyx_26010011_bridge(
             end
         endcase
     end
-
+    assign aw_sel_now = (S_awaddr >= ADDR_CLINT_BASE && S_awaddr < ADDR_CLINT_BASE + ADDR_CLINT_SIZE);
+    assign ar_sel_now = (S_araddr >= ADDR_CLINT_BASE && S_araddr < ADDR_CLINT_BASE + ADDR_CLINT_SIZE);
     always @(posedge clock) begin
         if(reset) begin
             aw_sel_reg <= 1'b0;
@@ -3220,7 +3222,7 @@ module ysyx_26010011_bridge(
     assign CLINT_araddr = S_araddr;
     always @(*) begin
         //READ
-        if(ar_sel_reg == 1'b0) begin
+        if((R_state == STATE_IDLE)?ar_sel_now:ar_sel_reg == 1'b0) begin
             MEM_arvalid = S_arvalid;
             CLINT_arvalid = 0;
 
@@ -3260,7 +3262,7 @@ module ysyx_26010011_bridge(
 
     always @(*) begin
         //WRITE
-        if(aw_sel_reg == 1'b0) begin
+        if((W_state == STATE_IDLE)?aw_sel_now:aw_sel_reg == 1'b0) begin
             MEM_awvalid = S_awvalid;
             MEM_wvalid = S_wvalid;
             CLINT_awvalid = 0;
