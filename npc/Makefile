@@ -21,7 +21,8 @@ V_INC_PATH := $(abspath $(V_INC_PATH))
 
 SIM_C := $(wildcard csrc/*.c* csrc/monitor/*.c* csrc/devices/*.c* csrc/utils/*.c*)
 # SIM_V := $(shell find vsrc/ -type f \( -name "*.v" -o -name "*.sv" \))
-SIM_V := build/ysyx_26010011.v
+SIM_V_TOP := build/ysyx_26010011.v
+SIM_V := $(SIM_V_TOP)
 SIM_V += $(shell find $(NPC_HOME)/../ysyxSoC/perip/ -type f  -name "*.v" )
 SIM_V += $(NPC_HOME)/../ysyxSoC/build/ysyxSoCFull.v
 
@@ -60,8 +61,8 @@ CELLS ?= $(NPC_HOME)/../yosys-sta/pdk/nangate45/sim/cells.v
 
 all:
 
-$(SIM_V): $(SRC_V)
-	$(MAKE) concat
+$(SIM_V_TOP): concat
+# 	$(MAKE) concat
 
 concat: $(SRC_V)
 	@mkdir -p build
@@ -101,7 +102,7 @@ perf-test:
 	@echo "soc git commit: $(shell cd $(NPC_HOME)/../ysyxSoC && git log -1 --format="%H")"
 
 clean:
-	rm -rf obj_dir npc-waveform.vcd wave.fst
+	rm -rf obj_dir npc-waveform.vcd wave.fst build
 
 
 
