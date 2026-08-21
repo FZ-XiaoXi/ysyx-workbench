@@ -2496,7 +2496,7 @@ module ysyx_26010011(
 	wire S_arready,S_rready,S_awready,S_wready,S_bready;
 	wire [1:0] S_rresp,S_bresp;
 	wire [3:0] S_wstrb;
-	wire [3:0] S_arid,S_awid,S_bid,S_bid,S_rid;
+	wire [3:0] S_arid,S_awid,S_bid,S_rid;
 	wire [1:0] S_arburst,S_awburst;
   	wire [2:0] S_arsize,S_awsize;
   	wire [7:0] S_arlen,S_awlen;
@@ -2506,7 +2506,6 @@ module ysyx_26010011(
 
 	wire [1:0] CLINT_rresp,CLINT_bresp;
 	wire [3:0] CLINT_wstrb;
-	wire CLINT_rlast;
 	ysyx_26010011_bridge u_bridge(
 		.clock(clock),
 		.reset(reset),
