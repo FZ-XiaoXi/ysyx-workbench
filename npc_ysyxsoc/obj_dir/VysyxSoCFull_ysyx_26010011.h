@@ -208,6 +208,8 @@ class alignas(VL_CACHE_LINE_BYTES) VysyxSoCFull_ysyx_26010011 final : public Ver
         CData/*3:0*/ __PVT__u_clint__DOT__wnext_state;
         CData/*3:0*/ __PVT__u_clint__DOT__rstate;
         CData/*3:0*/ __PVT__u_clint__DOT__rnext_state;
+        CData/*3:0*/ __Vtableidx4;
+        CData/*3:0*/ __Vtableidx6;
         SData/*12:0*/ __PVT__idu_out_bus_signals;
         SData/*12:0*/ __PVT__exu_in_bus_signals;
         VL_OUT(__PVT__io_master_awaddr,31,0);
@@ -227,10 +229,10 @@ class alignas(VL_CACHE_LINE_BYTES) VysyxSoCFull_ysyx_26010011 final : public Ver
         IData/*31:0*/ tb_FINAL_inst;
         IData/*31:0*/ __PVT__S_araddr;
         IData/*31:0*/ __PVT__S_rdata;
-        IData/*31:0*/ __PVT__EXU_0__DOT__exu_out_bus_alu_result;
-        IData/*31:0*/ __PVT__EXU_0__DOT__a;
     };
     struct {
+        IData/*31:0*/ __PVT__EXU_0__DOT__exu_out_bus_alu_result;
+        IData/*31:0*/ __PVT__EXU_0__DOT__a;
         IData/*31:0*/ __PVT__EXU_0__DOT__b;
         IData/*31:0*/ __PVT__EXU_0__DOT__comp_b;
         IData/*31:0*/ __PVT__EXU_0__DOT__op_or;

@@ -31,10 +31,6 @@ VL_ATTR_COLD void VysyxSoCFull_ysyx_26010011___stl_sequent__TOP__ysyxSoCFull__as
     IDU_0__DOT____VdfgRegularize_hd1728725_0_33 = 0;
     CData/*0:0*/ EXU_0__DOT____VdfgExtracted_hbeeeed61__0;
     EXU_0__DOT____VdfgExtracted_hbeeeed61__0 = 0;
-    CData/*3:0*/ __Vtableidx4;
-    __Vtableidx4 = 0;
-    CData/*3:0*/ __Vtableidx6;
-    __Vtableidx6 = 0;
     CData/*5:0*/ __Vtableidx7;
     __Vtableidx7 = 0;
     // Body
@@ -212,23 +208,23 @@ VL_ATTR_COLD void VysyxSoCFull_ysyx_26010011___stl_sequent__TOP__ysyxSoCFull__as
                                                            == 
                                                            (0x0000707fU 
                                                             & vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__IF_ID_inst.__PVT__idu_in_bus_instruction)));
-    __Vtableidx4 = vlSelfRef.__PVT__u_clint__DOT__wstate;
+    vlSelfRef.__Vtableidx4 = vlSelfRef.__PVT__u_clint__DOT__wstate;
     vlSelfRef.__PVT__CLINT_awready = VysyxSoCFull__ConstPool__TABLE_h532d5d4f_0
-        [__Vtableidx4];
+        [vlSelfRef.__Vtableidx4];
     vlSelfRef.__PVT__CLINT_wready = VysyxSoCFull__ConstPool__TABLE_h532d5d4f_0
-        [__Vtableidx4];
+        [vlSelfRef.__Vtableidx4];
     vlSelfRef.__PVT__CLINT_bvalid = VysyxSoCFull__ConstPool__TABLE_hfc7a839a_0
-        [__Vtableidx4];
+        [vlSelfRef.__Vtableidx4];
     vlSelfRef.__PVT__EXU_0__DOT__comp_b = ((IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__ID_EX_inst.__PVT__exu_in_bus_comp_isUseImm)
                                             ? vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__ID_EX_inst.__PVT__exu_in_bus_imm
                                             : vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__ID_EX_inst.__PVT__exu_in_bus_rs2_val);
-    __Vtableidx6 = vlSelfRef.__PVT__u_clint__DOT__rstate;
+    vlSelfRef.__Vtableidx6 = vlSelfRef.__PVT__u_clint__DOT__rstate;
     vlSelfRef.__PVT__CLINT_arready = VysyxSoCFull__ConstPool__TABLE_h532d5d4f_0
-        [__Vtableidx6];
+        [vlSelfRef.__Vtableidx6];
     vlSelfRef.__PVT__CLINT_rvalid = VysyxSoCFull__ConstPool__TABLE_hfc7a839a_0
-        [__Vtableidx6];
+        [vlSelfRef.__Vtableidx6];
     vlSelfRef.__PVT__CLINT_rlast = VysyxSoCFull__ConstPool__TABLE_hfc7a839a_0
-        [__Vtableidx6];
+        [vlSelfRef.__Vtableidx6];
     if (vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__ID_EX_inst.__PVT__exu_in_bus_alu_isUseImm) {
         vlSelfRef.__PVT__EXU_0__DOT__b = vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__ID_EX_inst.__PVT__exu_in_bus_imm;
         vlSelfRef.__PVT__EXU_0__DOT__a = ((IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__ID_EX_inst.__PVT__exu_in_bus_isUsePC)
@@ -1204,4 +1200,6 @@ VL_ATTR_COLD void VysyxSoCFull_ysyx_26010011___ctor_var_reset(VysyxSoCFull_ysyx_
     vlSelf->__PVT__u_clint__DOT__raddr_reg = VL_SCOPED_RAND_RESET_I(32, __VscopeHash, 6239630701339536848ull);
     vlSelf->__PVT__u_clint__DOT__mtime_L = VL_SCOPED_RAND_RESET_I(32, __VscopeHash, 2852945115331758710ull);
     vlSelf->__PVT__u_clint__DOT__mtime_H = VL_SCOPED_RAND_RESET_I(32, __VscopeHash, 11716648817237412802ull);
+    vlSelf->__Vtableidx4 = 0;
+    vlSelf->__Vtableidx6 = 0;
 }
