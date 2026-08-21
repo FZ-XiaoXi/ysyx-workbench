@@ -24,9 +24,9 @@ extern "C" {
     extern void flash_read(int addr, int* data);
     // DPI import at /home/seaber/ysyx-workbench/npc_ysyxsoc/../ysyxSoC/build/ysyxSoCFull.v:7143:30
     extern void mrom_read(int raddr, int* rdata);
-    // DPI import at vsrc/ysyx_26010011.v:1665:29
+    // DPI import at vsrc/ysyx_26010011.v:1666:29
     extern int pmem_read(int raddr);
-    // DPI import at vsrc/ysyx_26010011.v:1666:30
+    // DPI import at vsrc/ysyx_26010011.v:1667:30
     extern void pmem_write(int waddr, int wdata, char wmask);
     // DPI import at /home/seaber/ysyx-workbench/npc_ysyxsoc/../ysyxSoC/perip/psram/psram.v:220:30
     extern void psram_read(int raddr, int count, int* rdata);
