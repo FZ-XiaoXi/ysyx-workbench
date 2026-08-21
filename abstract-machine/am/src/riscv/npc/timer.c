@@ -4,9 +4,16 @@ void __am_timer_init() {
 }
 
 void __am_timer_uptime(AM_TIMER_UPTIME_T *uptime) {
-  uptime->us = (uint64_t)(uint32_t)inl(RTC_ADDR+4) << 32;
-  uptime->us |= (uint64_t)(uint32_t)inl(RTC_ADDR);
-  uptime->us = (uint64_t)(uptime->us*1000 / 3521);
+  // uptime->us = (uint64_t)(uint32_t)inl(RTC_ADDR+4) << 32;
+  // uptime->us |= (uint64_t)(uint32_t)inl(RTC_ADDR);
+  // uptime->us = (uint64_t)(uptime->us*1000 / 3521);
+
+  uint32_t cycle,cycleh;
+  cycleh = inl(RTC_ADDR+4);
+  cycle = inl(RTC_ADDR);
+  uptime->us = (uint64_t)(cycleh) << 32;
+  uptime->us |= (uint64_t)(cycle);
+  uptime->us = (uint64_t)(uptime->us * 1000 / 1333);
 }
 
 void __am_timer_rtc(AM_TIMER_RTC_T *rtc) {
