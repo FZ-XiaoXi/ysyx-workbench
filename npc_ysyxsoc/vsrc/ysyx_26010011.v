@@ -2872,7 +2872,6 @@ module ysyx_26010011_AXI4Arbiter(
     assign M2_bid = S_bid;
     assign S_bready = M2_bready;
 endmodule
-
 module ysyx_26010011_CLINT(
 	input clock,
 	input reset,
@@ -3030,8 +3029,7 @@ module ysyx_26010011_CLINT(
 
   assign rresp = 2'b0;
   assign bresp = 2'b0;
-  wire [31:0] tmp_r;
-  assign tmp_r = Memory[(raddr_reg - CLINT_BASE) >> 2];
+
   always @(*) begin
 	if(raddr_reg == 32'h02000000) begin
 	  rdata = mtime_L;
