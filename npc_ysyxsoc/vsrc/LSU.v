@@ -110,7 +110,7 @@ module ysyx_26010011_LSU(
         end else begin
             if(next_state == S_WAIT_BRESP || next_state == S_WAIT_AW_W) begin
                 awaddr_q <= lsu_in_bus_addr;
-                wdata_q  <= lsu_in_bus_wdata << (lsu_in_bus_addr[1:0] << 3);
+                wdata_q  <= lsu_in_bus_wdata << (lsu_in_bus_addr[1:0] * 8);
                 awsize_q <= (lsu_in_bus_perip_mask == 2'b00) ? 3'b000 :
                             (lsu_in_bus_perip_mask == 2'b01) ? 3'b001 : 3'b010;
                 wstrb_q  <= (
