@@ -130,7 +130,10 @@ module ysyx_26010011_IFU(
 			`ifdef __ICARUS__
 			PC <= 32'h80000000;
 			`else
-			PC <= 32'h80000000;
+				`ifdef USE_VERILATOR
+				$display("Warning: Verilator simulation, setting PC to 0x30000000");
+				PC <= 32'h30000000;
+				`endif
 			`endif
 			
 		end else if(flush_valid) begin
