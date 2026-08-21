@@ -393,6 +393,11 @@ extern const VlUnpacked<CData/*0:0*/, 128> VysyxSoCFull__ConstPool__TABLE_h49d29
     1U, 0U, 1U, 0U, 0U, 0U, 0U, 0U
 }};
 
+extern const VlUnpacked<CData/*0:0*/, 16> VysyxSoCFull__ConstPool__TABLE_h532d5d4f_0 = {{
+    1U, 0U, 0U, 0U, 0U, 0U, 0U, 0U,
+    0U, 0U, 0U, 0U, 0U, 0U, 0U, 0U
+}};
+
 extern const VlUnpacked<CData/*7:0*/, 256> VysyxSoCFull__ConstPool__TABLE_h688915ee_0 = {{
     0x5fU, 0x6fU, 0x7fU, 0x8fU, 0x67U, 0x7fU, 0x8fU, 0x9fU,
     0x6fU, 0x7fU, 0x8fU, 0x9fU, 0x77U, 0x8fU, 0x9fU, 0xafU,
@@ -805,6 +810,17 @@ extern const VlUnpacked<CData/*0:0*/, 512> VysyxSoCFull__ConstPool__TABLE_hb96f6
     0U, 0U, 0U, 0U, 0U, 0U, 0U, 0U
 }};
 
+extern const VlUnpacked<CData/*3:0*/, 64> VysyxSoCFull__ConstPool__TABLE_hc136131a_0 = {{
+    0U, 2U, 2U, 0U, 0U, 0U, 0U, 0U,
+    0U, 0U, 0U, 0U, 0U, 0U, 0U, 0U,
+    1U, 2U, 2U, 0U, 0U, 0U, 0U, 0U,
+    0U, 0U, 0U, 0U, 0U, 0U, 0U, 0U,
+    0U, 2U, 0U, 0U, 0U, 0U, 0U, 0U,
+    0U, 0U, 0U, 0U, 0U, 0U, 0U, 0U,
+    1U, 2U, 0U, 0U, 0U, 0U, 0U, 0U,
+    0U, 0U, 0U, 0U, 0U, 0U, 0U, 0U
+}};
+
 extern const VlUnpacked<CData/*0:0*/, 256> VysyxSoCFull__ConstPool__TABLE_hc2a9f976_0 = {{
     0U, 0U, 1U, 1U, 0U, 0U, 1U, 1U,
     0U, 0U, 1U, 1U, 0U, 0U, 1U, 1U,
@@ -868,6 +884,17 @@ extern const VlUnpacked<CData/*3:0*/, 64> VysyxSoCFull__ConstPool__TABLE_he6c51f
     0U, 0U, 0U, 0U, 0U, 0U, 0U, 0U,
     0U, 0U, 0U, 0U, 0U, 0U, 0U, 0U,
     0U, 0U, 0U, 0U, 0U, 0U, 0U, 0U
+}};
+
+extern const VlUnpacked<CData/*3:0*/, 64> VysyxSoCFull__ConstPool__TABLE_hed5b2b71_0 = {{
+    0U, 2U, 2U, 3U, 4U, 5U, 6U, 7U,
+    8U, 9U, 0x0aU, 0x0bU, 0x0cU, 0x0dU, 0x0eU, 0x0fU,
+    1U, 2U, 2U, 3U, 4U, 5U, 6U, 7U,
+    8U, 9U, 0x0aU, 0x0bU, 0x0cU, 0x0dU, 0x0eU, 0x0fU,
+    0U, 2U, 0U, 3U, 4U, 5U, 6U, 7U,
+    8U, 9U, 0x0aU, 0x0bU, 0x0cU, 0x0dU, 0x0eU, 0x0fU,
+    1U, 2U, 0U, 3U, 4U, 5U, 6U, 7U,
+    8U, 9U, 0x0aU, 0x0bU, 0x0cU, 0x0dU, 0x0eU, 0x0fU
 }};
 
 extern const VlUnpacked<CData/*5:0*/, 1024> VysyxSoCFull__ConstPool__TABLE_hef6775a3_0 = {{
@@ -999,4 +1026,9 @@ extern const VlUnpacked<CData/*5:0*/, 1024> VysyxSoCFull__ConstPool__TABLE_hef67
     0x3fU, 0x3fU, 0x3fU, 0x3fU, 0x3fU, 0x3fU, 0x3fU, 0x3fU,
     0x3fU, 0x3fU, 0x3fU, 0x3fU, 0x3fU, 0x3fU, 0x3fU, 0x3fU,
     0x3fU, 0x3fU, 0x3fU, 0x3fU, 0x3fU, 0x3fU, 0x3fU, 0x3fU
+}};
+
+extern const VlUnpacked<CData/*0:0*/, 16> VysyxSoCFull__ConstPool__TABLE_hfc7a839a_0 = {{
+    0U, 0U, 1U, 0U, 0U, 0U, 0U, 0U,
+    0U, 0U, 0U, 0U, 0U, 0U, 0U, 0U
 }};

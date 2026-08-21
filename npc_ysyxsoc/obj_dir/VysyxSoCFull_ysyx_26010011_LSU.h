@@ -56,6 +56,7 @@ class alignas(VL_CACHE_LINE_BYTES) VysyxSoCFull_ysyx_26010011_LSU final : public
         VL_IN8(__PVT__rid,3,0);
         CData/*2:0*/ state;
         CData/*2:0*/ __PVT__next_state;
+        CData/*0:0*/ __PVT__aw_fire;
         CData/*0:0*/ b_fire;
         CData/*0:0*/ __PVT__ar_fire;
         CData/*0:0*/ r_fire;
@@ -79,9 +80,9 @@ class alignas(VL_CACHE_LINE_BYTES) VysyxSoCFull_ysyx_26010011_LSU final : public
         IData/*31:0*/ __PVT__wdata_q;
         IData/*31:0*/ __PVT__val1;
         IData/*31:0*/ __PVT__val2;
-        IData/*31:0*/ __PVT__val;
     };
     struct {
+        IData/*31:0*/ __PVT__val;
         IData/*31:0*/ __PVT__lsu_rdata1;
     };
 

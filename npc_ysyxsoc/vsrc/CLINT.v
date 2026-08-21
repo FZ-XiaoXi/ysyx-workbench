@@ -113,6 +113,8 @@ module ysyx_26010011_CLINT(
 		if(rready)  rnext_state = 4'b0000;
 		else rnext_state = 4'b0010;
 	  end
+      default:
+        rnext_state = 4'b0000;
 	endcase
   end
   always @(*) begin
