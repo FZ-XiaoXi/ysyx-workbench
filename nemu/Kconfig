@@ -158,6 +158,64 @@ config ITRACE_COND
   string "Only trace instructions when the condition is true"
   default "true"
 
+config ITRACE_RING
+  depends on ITRACE
+  bool "Enable instruction tracing ring buffer"
+  default y
+
+config ITRACE_RING_MAX
+  depends on ITRACE_RING
+  int "Maximum number of instructions in the tracing ring buffer"
+  default 20
+
+config MTRACE
+  depends on TRACE && TARGET_NATIVE_ELF && ENGINE_INTERPRETER
+  bool "Enable memory tracing"
+  default y
+
+config MTRACE_RANGE
+  depends on MTRACE
+  bool "Enable address-range filtering for memory tracing"
+  default y
+
+config MTRACE_RANGE_START
+  depends on MTRACE_RANGE
+  hex "Start address of the memory tracing range"
+  default 0x80000000
+
+config MTRACE_RANGE_END
+  depends on MTRACE_RANGE
+  hex "End address of the memory tracing range"
+  default 0x8a000000
+
+config FTRACE
+  depends on TRACE && TARGET_NATIVE_ELF && ENGINE_INTERPRETER
+  bool "Enable function tracer"
+  default n
+
+config DTRACE
+  depends on TRACE && TARGET_NATIVE_ELF && ENGINE_INTERPRETER
+  bool "Enable device tracing"
+  default y
+
+config DTRACE_COND
+  depends on DTRACE
+  string "Only trace device when the condition is true"
+  default "true"
+# config DTRACE_RANGE
+#   depends on DTRACE
+#   bool "Enable address-range filtering for memory tracing"
+#   default y
+
+# config DTRACE_RANGE_START
+#   depends on MTRACE_RANGE
+#   hex "Start address of the memory tracing range"
+#   default 0x80000000
+
+# config DTRACE_RANGE_END
+#   depends on MTRACE_RANGE
+#   hex "End address of the memory tracing range"
+#   default 0x8a000000
 
 config DIFFTEST
   depends on TARGET_NATIVE_ELF
@@ -166,6 +224,8 @@ config DIFFTEST
   help
     Enable differential testing with a reference design.
     Note that this will significantly reduce the performance of NEMU.
+
+
 
 choice
   prompt "Reference design"

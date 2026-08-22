@@ -115,7 +115,8 @@ static int cmd_x(char *args) {
     }
     printf("%x\n",val);
     for(int i=0;i<num;i++){
-      printf("%.4d\t0x%.8x\t0x%.8x\t%d\n",i,val+i*4,vaddr_read((vaddr_t)val+i*4,4),vaddr_read((vaddr_t)val+i*4,4));
+      uint32_t data=vaddr_read((vaddr_t)val+i*4,4);
+      printf("%.4d\t0x%.8x\t0x%.8x\t%d\n",i,val+i*4,data,data);
     }
     
     return 0;
@@ -170,7 +171,7 @@ static int cmd_d(char *args) {
       }
     }else printf("Unknown argumenet '%s'\n", args);
   }else{
-    printf("Unknown argumenet '%s'\n", args);
+    printf("NULL argumenet\n");
   }
   return 0;
 }
