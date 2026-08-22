@@ -1,4 +1,4 @@
-import "DPI-C" function void difftest_mem_set(int addr);
+// import "DPI-C" function void difftest_mem_set(int addr);
 
 module LSU(
     input             clk,

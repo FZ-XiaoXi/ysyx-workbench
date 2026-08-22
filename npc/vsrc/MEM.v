@@ -30,6 +30,7 @@ module MEM(
     input         bready
 );
 
+    (* keep *) reg [31:0]REGFILE [511:0]; // 2KB 内存，地址范围 0x0000_0000 ~ 0x0000_07FF
     // AR / R
     localparam R_IDLE = 2'd0, R_WAIT_MEM = 2'd1, R_HOLD_DATA = 2'd2;
     reg [1:0] r_state, r_next;
@@ -82,7 +83,7 @@ module MEM(
         .out(r_mem_ready)
     );
 
-    wire [31:0] current_mem_rdata = pmem_read(raddr_reg);
+    wire [31:0] current_mem_rdata = REGFILE[raddr_reg[10:2]];
 
     always @(posedge clk) begin
         if (r_state == R_WAIT_MEM && r_mem_ready && !rready) begin
@@ -132,8 +133,13 @@ module MEM(
 
     always @(posedge clk) begin
         if(w_req_fire) begin
-            difftest_mem_set(awaddr);
-            pmem_write(awaddr, wdata, {4'h0, wstrb});
+            // difftest_mem_set(awaddr);
+            // pmem_write(awaddr, wdata, {4'h0, wstrb});
+            for (int i = 0; i < 4; i++) begin
+                if (wstrb[i]) begin
+                    REGFILE[awaddr[10:2]][i*8 +: 8] <= wdata[i*8 +: 8];
+                end
+            end
         end
     end
 

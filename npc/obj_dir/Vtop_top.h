@@ -125,8 +125,9 @@ class alignas(VL_CACHE_LINE_BYTES) Vtop_top final : public VerilatedModule {
         IData/*31:0*/ __PVT__RAM__DOT__raddr_reg;
         IData/*31:0*/ __PVT__RAM__DOT__rdata_hold;
         IData/*31:0*/ __PVT__RAM__DOT__current_mem_rdata;
-        IData/*31:0*/ __Vfunc_pmem_read__1__Vfuncout;
+        IData/*31:0*/ __PVT__RAM__DOT__unnamedblk1__DOT__i;
         QData/*32:0*/ __PVT__EXU_0__DOT__ADDER_0__DOT__inB;
+        VlUnpacked<IData/*31:0*/, 512> __PVT__RAM__DOT__REGFILE;
     };
 
     // INTERNAL VARIABLES
