@@ -1,7 +1,7 @@
 From 850b132a95c5c6baea6ed69c2d1b914633d96d8a Mon Sep 17 00:00:00 2001
 From: FZ_XiaoXi <FZXiaoxi@outlook.com>
 Date: Sat, 22 Aug 2026 17:44:27 +0800
-Subject: [PATCH] CI-Submit
+Subject: [PATCH 1/2] CI-Submit
 
 ---
  .gitignore                                   |   2 +
