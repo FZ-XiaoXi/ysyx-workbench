@@ -52,10 +52,21 @@ module ysyx_26010011_IFU(
 
 
 ////////////////////////////////
-	assign ifu_out_bus_fetching = PC;
 	reg ifu_out_valid_r;
 	reg [31:0]ifu_out_bus_instruction_r;
 	reg [31:0]ifu_out_bus_pc_r;
+	reg [31:0] PC/*verilator public*/;
+
+	reg in_reqValid;
+	wire in_respValid;
+	wire [31:0]in_rdata;
+
+	wire debug_IFU_is_hit/*verilator public*/;
+	wire debug_IFU_is_hit_inst/*verilator public*/;
+	wire debug_IFU_get_inst/*verilator public*/;
+	assign debug_IFU_is_hit_inst = ifu_out_valid & ifu_out_ready & debug_IFU_is_hit;
+	assign debug_IFU_get_inst = ifu_out_valid & ifu_out_ready;
+
 	always @(posedge clock) begin
 		if(reset) begin
 			ifu_out_valid_r <= 0;
@@ -75,12 +86,14 @@ module ysyx_26010011_IFU(
 		end
 	
 	end
+
+	assign ifu_out_bus_fetching = PC;
 	assign ifu_out_valid = (((in_reqValid & in_respValid)?1:ifu_out_valid_r) | ifu_out_bus_exception[4]);
 	assign ifu_out_bus_instruction = (ifu_out_bus_exception[4])?(`ysyx_26010011_INST_NOP):((in_reqValid & in_respValid)?in_rdata:ifu_out_bus_instruction_r);
 	assign ifu_out_bus_snpc = ifu_out_bus_pc + 4;
 	assign ifu_out_bus_pc = (in_reqValid & (in_respValid | ifu_out_bus_exception[4]))?PC:ifu_out_bus_pc_r;
 
-	reg [31:0] PC/*verilator public*/;
+	
 	always @(posedge clock) begin
 		if(reset) begin
 			`ifdef __ICARUS__
@@ -103,9 +116,7 @@ module ysyx_26010011_IFU(
 			end
 		end
 	end
-	reg in_reqValid;
-	wire in_respValid;
-	wire [31:0]in_rdata;
+	
 	always @(posedge clock) begin
 		if(reset) begin
 			in_reqValid <= 1'b0;
@@ -123,18 +134,7 @@ module ysyx_26010011_IFU(
 			end
 		end
 	end;
-	wire debug_IFU_is_hit/*verilator public*/;
-	wire debug_IFU_is_hit_inst/*verilator public*/ = ifu_out_valid & ifu_out_ready & debug_IFU_is_hit;
-	wire debug_IFU_get_inst/*verilator public*/ = ifu_out_valid & ifu_out_ready;
-// `ifdef __ICARUS__
-// 	ysyx_26010011_IFU_icache #(.CACHE_BLOCK_SIZE(4), .CACHE_SIZE(16)) icache_u0(
-// `else
-// 	`ifdef YOSYS
-// 		ysyx_26010011_IFU_icache #(.CACHE_BLOCK_SIZE(8), .CACHE_SIZE(8)) icache_u0(
-// 	`else
-// 		ysyx_26010011_IFU_icache #(.CACHE_BLOCK_SIZE(8), .CACHE_SIZE(8)) icache_u0(
-// 	`endif
-// `endif
+
 	ysyx_26010011_IFU_icache #(.CACHE_BLOCK_SIZE(4), .CACHE_SIZE(4)) icache_u0(
 		.clock(clock),
 		.reset(reset),
@@ -215,17 +215,34 @@ module ysyx_26010011_IFU_icache #(
 	localparam BURST_W = (|($clog2(BURST_LEN)))?($clog2(BURST_LEN)):1;
 	localparam [BURST_W-1:0] BURST_LAST = BURST_W'(BURST_LEN - 1);
 
-	wire [INDEX_W-1:0] now_index = {in_addr[INDEX_W-1+OFFSET_W:0 + OFFSET_W]} ;
-	wire [TAG_W-1:0]   now_tag   = {in_addr[INDEX_W + TAG_W - 1 + OFFSET_W: INDEX_W + OFFSET_W]};
-	wire [OFFSET_W:0]now_offset = {1'b0, in_addr[OFFSET_W-1:0]};
-	wire is_hit = in_reqValid & cache_valid[now_index] && (cache_tag[now_index] == now_tag);
-	assign debug_is_hit = is_hit;
+	localparam S_IDLE       = 3'd0;
+	localparam S_WAIT_READY = 3'd1; // 等待地址通道接受地址
+	localparam S_WAIT_DATA  = 3'd2; // 等待数据返回
+	localparam S_WAIT_READY_FLUSH = 3'd3;
+	localparam S_WAIT_DATA_FLUSH  = 3'd4;
+	
+	wire [INDEX_W-1:0] now_index;
+	wire [TAG_W-1:0]   now_tag;
+	wire [OFFSET_W:0]now_offset;
+	wire is_hit;
 	reg [BLOCK_W-1:0] cache_mem   [0:CACHE_SIZE-1];
 	reg               cache_valid [0:CACHE_SIZE-1];
 	reg [TAG_W-1:0]   cache_tag   [0:CACHE_SIZE-1];
-	//IDLE -> 
-	// reg 
 	reg pc_flushed/*verilator public*/;
+
+	reg [2:0] state, next_state;
+	wire ar_fire;
+	wire r_fire;
+
+	reg [BURST_W-1:0] burst_cnt;
+
+	assign now_index = {in_addr[INDEX_W-1+OFFSET_W:0 + OFFSET_W]} ;
+	assign now_tag   = {in_addr[INDEX_W + TAG_W - 1 + OFFSET_W: INDEX_W + OFFSET_W]};
+	assign now_offset = {1'b0, in_addr[OFFSET_W-1:0]};
+	assign is_hit = in_reqValid & cache_valid[now_index] && (cache_tag[now_index] == now_tag);
+	
+	assign debug_is_hit = is_hit;
+
 	always @(posedge clock) begin
 		if (reset | flush) begin
 			integer i;
@@ -245,17 +262,9 @@ module ysyx_26010011_IFU_icache #(
 		end
 	end
 
-	localparam S_IDLE       = 3'd0;
-	localparam S_WAIT_READY = 3'd1; // 等待地址通道接受地址
-	localparam S_WAIT_DATA  = 3'd2; // 等待数据返回
-	localparam S_WAIT_READY_FLUSH = 3'd3;
-	localparam S_WAIT_DATA_FLUSH  = 3'd4;
-
-	reg [2:0] state, next_state;
-
 	// 握手成功标志
-	wire ar_fire = out_arvalid && out_arready;
-	wire r_fire  = out_rvalid && out_rready;
+	assign ar_fire = out_arvalid && out_arready;
+	assign r_fire  = out_rvalid && out_rready;
 
 	assign out_araddr  = in_addr & {{(32-OFFSET_W){1'b1}}, {OFFSET_W{1'b0}}};
 	assign out_arid    = 4'b0;
@@ -264,8 +273,6 @@ module ysyx_26010011_IFU_icache #(
 	assign out_arburst = 2'b01;
 	assign out_arvalid = ((!is_hit & ((state == S_IDLE) && in_reqValid)) || ((state == S_WAIT_READY) || (state == S_WAIT_READY_FLUSH)))&!reset;
 	assign out_rready  = !reset;
-
-	reg [BURST_W-1:0] burst_cnt;
 
 	always @(posedge clock) begin
 		if(reset) begin

@@ -159,10 +159,15 @@ module ysyx_26010011_CLINT(
 			end
 		endcase
 	end
+
 	localparam [31:0] CLINT_BASE = 32'h02000000;
+	reg [31:0]mtime_L,mtime_H;
+
 	always @(posedge clock) begin
 		if(wstate == 4'b0000 && wnext_state == 4'b0001) begin
+			`ifndef YOSYS
 			$display("CLINT ONLY READ!");
+			`endif
 		end
 	end
 
@@ -180,8 +185,6 @@ module ysyx_26010011_CLINT(
 		end
 	end
 
-
-	reg [31:0]mtime_L,mtime_H;
 	always @(posedge clock) begin
 		if(reset) begin
 			mtime_L <= 32'd0;

@@ -21,16 +21,11 @@ module ysyx_26010011_GPRs(
 	input  [31:0]gpr_in_data,
 	input        gpr_in_wen
 ); 
-  
-
  	reg [31:0]GPR[31:0]/* verilator public */;
-
-  
 
 	assign gpr_out_a=(gpr_in_addra==0)?{32{1'b0}}:GPR[gpr_in_addra];
 	assign gpr_out_b=(gpr_in_addrb==0)?{32{1'b0}}:GPR[gpr_in_addrb];
 
-  
 	integer i;
 	always @(posedge clock) begin
 		if(reset) begin
@@ -43,9 +38,6 @@ module ysyx_26010011_GPRs(
 		end
 		end
 	end
-
-
-
 endmodule
 
 
@@ -128,7 +120,9 @@ module ysyx_26010011_CSRs(
 				`ysyx_26010011_ADD_MTVEC:      CSR_MTVEC   <= csr_in_data;
 				`ysyx_26010011_ADD_MSCRATCH: begin
 					CSR_MSCRATCH <= csr_in_data;
+					`ifndef YOSYS
 					$display("Write CSR_MSCRATCH: %08x", csr_in_data);
+					`endif
 				end
 				`ysyx_26010011_ADD_MEPC:       CSR_MEPC    <= csr_in_data;
 				`ysyx_26010011_ADD_MCAUSE:     CSR_MCAUSE  <= csr_in_data;
