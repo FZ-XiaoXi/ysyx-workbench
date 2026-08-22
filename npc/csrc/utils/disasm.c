@@ -14,7 +14,7 @@
 ***************************************************************************************/
 
 #include <dlfcn.h>
-#include "capstone.h"
+#include "capstone/capstone.h"
 #include "common.h"
 #include "trace.h"
 
