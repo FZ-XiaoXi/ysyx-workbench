@@ -88,7 +88,7 @@ extern FILE* log_fp;
 // #define CONFIG_WAVE_ENABLE
 
 
-#define CONFIG_TRACE_ENABLE
+// #define CONFIG_TRACE_ENABLE
 #ifdef CONFIG_TRACE_ENABLE
 
     #define CONFIG_ITRACE_ENABLE
