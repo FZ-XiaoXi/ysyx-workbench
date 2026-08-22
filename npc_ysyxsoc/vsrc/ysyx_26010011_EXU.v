@@ -32,7 +32,7 @@ module ysyx_26010011_EXU(
 	output reg       exu_out_bus_dnpc_valid
 );
 	wire [31:0] a,b,comp_a,comp_b;
-	assign a=(exu_in_bus_alu_isUseImm)?(exu_in_bus_isUsePC?exu_in_bus_pc:exu_in_bus_a):exu_in_bus_a;
+	assign a=(exu_in_bus_alu_isUseImm & exu_in_bus_isUsePC)?exu_in_bus_pc:exu_in_bus_a;
 	assign b=(exu_in_bus_alu_isUseImm)?exu_in_bus_imm:exu_in_bus_b;
 	assign comp_a=exu_in_bus_a;
 	assign comp_b=(exu_in_bus_comp_isUseImm)?exu_in_bus_imm:exu_in_bus_b;
@@ -47,9 +47,6 @@ module ysyx_26010011_EXU(
 	wire [31:0]op_lr;
 	wire [31:0]op_ll;
 
-
-	
-	
 	assign op_xor=a^b;
 	assign op_or=a|b;
 	assign op_and=a&b;
@@ -57,11 +54,9 @@ module ysyx_26010011_EXU(
 	assign op_lr=a >> (b & 32'h1f);
 	assign op_ll=a << (b & 32'h1f);
 
-	wire [31:0]op_adder;
-	assign op_adder = (exu_in_bus_alu_op[8])?(a-b):(a+b);
-	
 	always @(*) begin
-		if(exu_in_bus_alu_op[9] | exu_in_bus_alu_op[8]) exu_out_bus_alu_result=op_adder;
+		if(exu_in_bus_alu_op[9]) exu_out_bus_alu_result=a+b;
+		else if(exu_in_bus_alu_op[8]) exu_out_bus_alu_result=a-b;
 		else if(exu_in_bus_alu_op[5]) exu_out_bus_alu_result=op_ll;
 		else if(exu_in_bus_alu_op[4]) exu_out_bus_alu_result=op_lr;
 		else if(exu_in_bus_alu_op[3]) exu_out_bus_alu_result=op_ar;
@@ -70,6 +65,7 @@ module ysyx_26010011_EXU(
 		else if(exu_in_bus_alu_op[0]) exu_out_bus_alu_result=op_xor;
 		else                          exu_out_bus_alu_result=b;
 	end
+
 	always @(*) begin
 		if     ( exu_in_bus_opCSR[1]&~exu_in_bus_opCSR[0]) exu_out_bus_csr_result=op_and;
 		else if(~exu_in_bus_opCSR[1]& exu_in_bus_opCSR[0]) exu_out_bus_csr_result=op_or;
@@ -77,7 +73,7 @@ module ysyx_26010011_EXU(
 	end
 	wire comp_isEQUAL,comp_isGREATER,comp_suber_carry;
 	wire [31:0]comp_suber_out;
-	assign {comp_suber_carry,comp_suber_out} = {1'b0,comp_a} + (~{1'b0,comp_b}) + 1;
+	assign {comp_suber_carry,comp_suber_out} = {1'b0,comp_a} - {1'b0,comp_b};
 	assign comp_isEQUAL = &(comp_a ~^ comp_b);
 	assign comp_isGREATER = (exu_in_bus_isUnSigned)?((|comp_suber_out) & ~comp_suber_carry):((~comp_a[31] & comp_b[31]) | ((comp_a[31] ~^ comp_b[31])  & ~comp_suber_out[31]));
 	always @(*) begin
@@ -111,15 +107,4 @@ module ysyx_26010011_EXU(
 			exu_out_bus_exception = exu_in_bus_exception;
 		end
 	end
-endmodule
-
-
-module ysyx_26010011_M_ADDER(
-	input [32:0] inA,
-	input [32:0] inB,
-	input cin,
-	output [31:0] out,
-	output carry
-);
-	assign {carry,out} = inA + inB + {32'b0,cin};
 endmodule
