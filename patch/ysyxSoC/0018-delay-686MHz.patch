@@ -1,0 +1,54 @@
+From 3d1b6d9852a282efbe6613a0e80db023271f3b22 Mon Sep 17 00:00:00 2001
+From: FZ_XiaoXi <FZXiaoxi@outlook.com>
+Date: Wed, 19 Aug 2026 01:20:31 +0800
+Subject: [PATCH 18/19] delay 686MHz
+
+---
+ perip/amba/apb_delayer.v  | 4 ++--
+ perip/amba/axi4_delayer.v | 8 ++++----
+ 2 files changed, 6 insertions(+), 6 deletions(-)
+
+diff --git a/perip/amba/apb_delayer.v b/perip/amba/apb_delayer.v
+index 55757dfc..0901ae7e 100644
+--- a/perip/amba/apb_delayer.v
++++ b/perip/amba/apb_delayer.v
+@@ -50,8 +50,8 @@ module apb_delayer(
+   // wire [31:0]s = 32'd2;
+   // wire [31:0]k = 32'd3;
+   // wire [31:0]sk = (k - 32'd1) * s;
+-  wire [31:0]s = 32'd1;
+-  wire [31:0]sk = 32'd6;
++  wire [31:0]s = 32'd50;
++  wire [31:0]sk = 32'd293;
+ 
+ 
+   always @(posedge clock or posedge reset) begin
+diff --git a/perip/amba/axi4_delayer.v b/perip/amba/axi4_delayer.v
+index c7346a54..3daf5549 100644
+--- a/perip/amba/axi4_delayer.v
++++ b/perip/amba/axi4_delayer.v
+@@ -66,8 +66,8 @@ module axi4_delayer(
+   parameter S_WAIT  = 2'b01;
+   parameter S_DELAY = 2'b10;
+   parameter S_DONE = 2'b11;
+-  parameter [31:0]s = 32'd1;
+-  parameter [31:0]sk = 32'd6;
++  parameter [31:0]s = 32'd50;
++  parameter [31:0]sk = 32'd293;
+   //RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR
+ 
+ 
+@@ -361,8 +361,8 @@ module axi_read_delayer_single(
+   parameter S_WAIT  = 2'b01;
+   parameter S_DELAY = 2'b10;
+   parameter S_DONE  = 2'b11;
+-  parameter [31:0]s = 32'd1;
+-  parameter [31:0]sk = 32'd6;
++  parameter [31:0]s = 32'd50;
++  parameter [31:0]sk = 32'd293;
+   // assign in_rvalid = out_rvalid;
+   // assign in_rid = out_rid;
+   // assign in_rdata = out_rdata;
+-- 
+2.43.0
+

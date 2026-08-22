@@ -1,0 +1,73 @@
+From db37090d2e61d7138ef22a282f9a3f5b9550fcc7 Mon Sep 17 00:00:00 2001
+From: FZ_XiaoXi <FZXiaoxi@outlook.com>
+Date: Sat, 22 Aug 2026 10:22:57 +0800
+Subject: [PATCH 19/19] ready CI
+
+---
+ perip/amba/apb_delayer.v      |  4 ++--
+ perip/amba/axi4_delayer.v     | 10 ++++++----
+ perip/vga/image_rom_640x480.v |  6 +++++-
+ 3 files changed, 13 insertions(+), 7 deletions(-)
+
+diff --git a/perip/amba/apb_delayer.v b/perip/amba/apb_delayer.v
+index 0901ae7e..accb8f4f 100644
+--- a/perip/amba/apb_delayer.v
++++ b/perip/amba/apb_delayer.v
+@@ -50,8 +50,8 @@ module apb_delayer(
+   // wire [31:0]s = 32'd2;
+   // wire [31:0]k = 32'd3;
+   // wire [31:0]sk = (k - 32'd1) * s;
+-  wire [31:0]s = 32'd50;
+-  wire [31:0]sk = 32'd293;
++  wire [31:0]s = 32'd1;
++  wire [31:0]sk = 32'd1;
+ 
+ 
+   always @(posedge clock or posedge reset) begin
+diff --git a/perip/amba/axi4_delayer.v b/perip/amba/axi4_delayer.v
+index 3daf5549..11f60bc5 100644
+--- a/perip/amba/axi4_delayer.v
++++ b/perip/amba/axi4_delayer.v
+@@ -66,8 +66,10 @@ module axi4_delayer(
+   parameter S_WAIT  = 2'b01;
+   parameter S_DELAY = 2'b10;
+   parameter S_DONE = 2'b11;
+-  parameter [31:0]s = 32'd50;
+-  parameter [31:0]sk = 32'd293;
++  // parameter [31:0]s = 32'd50;
++  // parameter [31:0]sk = 32'd293;
++  parameter [31:0]s = 32'd1;
++  parameter [31:0]sk = 32'd1;
+   //RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR
+ 
+ 
+@@ -361,8 +363,8 @@ module axi_read_delayer_single(
+   parameter S_WAIT  = 2'b01;
+   parameter S_DELAY = 2'b10;
+   parameter S_DONE  = 2'b11;
+-  parameter [31:0]s = 32'd50;
+-  parameter [31:0]sk = 32'd293;
++  parameter [31:0]s = 32'd1;
++  parameter [31:0]sk = 32'd1;
+   // assign in_rvalid = out_rvalid;
+   // assign in_rid = out_rid;
+   // assign in_rdata = out_rdata;
+diff --git a/perip/vga/image_rom_640x480.v b/perip/vga/image_rom_640x480.v
+index 75e3059c..1e97893a 100644
+--- a/perip/vga/image_rom_640x480.v
++++ b/perip/vga/image_rom_640x480.v
+@@ -46,6 +46,10 @@ always @(posedge clk or posedge reset) begin
+ end
+ 
+ initial begin
+-    $readmemh("/home/seaber/ysyx-workbench/ysyxSoC/perip/vga/image_data.mif", ram);
++    // $readmemh("/home/seaber/ysyx-workbench/ysyxSoC/perip/vga/image_data.mif", ram);
++    integer i;
++    for (i = 0; i < TOTAL_PIXELS; i = i + 1) begin
++        ram[i] = 24'h000000; // Initialize to black
++    end
+ end
+ endmodule
+-- 
+2.43.0
+

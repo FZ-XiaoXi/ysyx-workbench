@@ -1,0 +1,48 @@
+From 65a9099e41ca273329f2d65914da4bc2fe89bf12 Mon Sep 17 00:00:00 2001
+From: FZ_XiaoXi <FZXiaoxi@outlook.com>
+Date: Tue, 18 Aug 2026 17:41:08 +0800
+Subject: [PATCH 17/19] 700MHz
+
+---
+ perip/amba/apb_delayer.v  | 2 +-
+ perip/amba/axi4_delayer.v | 4 ++--
+ 2 files changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/perip/amba/apb_delayer.v b/perip/amba/apb_delayer.v
+index 3d2f8f8c..55757dfc 100644
+--- a/perip/amba/apb_delayer.v
++++ b/perip/amba/apb_delayer.v
+@@ -51,7 +51,7 @@ module apb_delayer(
+   // wire [31:0]k = 32'd3;
+   // wire [31:0]sk = (k - 32'd1) * s;
+   wire [31:0]s = 32'd1;
+-  wire [31:0]sk = 32'd9;
++  wire [31:0]sk = 32'd6;
+ 
+ 
+   always @(posedge clock or posedge reset) begin
+diff --git a/perip/amba/axi4_delayer.v b/perip/amba/axi4_delayer.v
+index ff1378a7..c7346a54 100644
+--- a/perip/amba/axi4_delayer.v
++++ b/perip/amba/axi4_delayer.v
+@@ -67,7 +67,7 @@ module axi4_delayer(
+   parameter S_DELAY = 2'b10;
+   parameter S_DONE = 2'b11;
+   parameter [31:0]s = 32'd1;
+-  parameter [31:0]sk = 32'd9;
++  parameter [31:0]sk = 32'd6;
+   //RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR
+ 
+ 
+@@ -362,7 +362,7 @@ module axi_read_delayer_single(
+   parameter S_DELAY = 2'b10;
+   parameter S_DONE  = 2'b11;
+   parameter [31:0]s = 32'd1;
+-  parameter [31:0]sk = 32'd9;
++  parameter [31:0]sk = 32'd6;
+   // assign in_rvalid = out_rvalid;
+   // assign in_rid = out_rid;
+   // assign in_rdata = out_rdata;
+-- 
+2.43.0
+

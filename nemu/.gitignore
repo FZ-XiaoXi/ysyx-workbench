@@ -10,3 +10,5 @@
 !Kconfig
 include/config
 include/generated
+!riscv32-nemu-interpreter-so
+!riscv32-nemu-interpreter-so-ysyxsoc

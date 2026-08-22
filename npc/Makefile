@@ -128,13 +128,13 @@ bin-to-text: $(IMG)
 sim-iverilog: $(IMG) $(IV_SRC)
 	$(MAKE) bin-to-text
 	mkdir -p build
-	iverilog -g2012 -o build/myCPU_sim-iverilog -s CPUTop_tb $(IV_SRC) -DIMG_PATH=\"$(IMG).txt\"
+	iverilog -g2012 -Wall -o build/myCPU_sim-iverilog -s CPUTop_tb $(IV_SRC) -DIMG_PATH=\"$(IMG).txt\"
 	vvp build/myCPU_sim-iverilog
 
 sim-iverilog-netlist: $(IMG) $(NETLIST) $(CELLS) 
 	$(MAKE) bin-to-text
 	mkdir -p build
-	iverilog -g2012 -o build/myCPU_sim-iverilog-netlist -s CPUTop_tb $(IV_NET_SRC) $(NETLIST) $(CELLS) -DIMG_PATH=\"$(IMG).txt\"
+	iverilog -g2012 -Wall -o build/myCPU_sim-iverilog-netlist -s CPUTop_tb $(IV_NET_SRC) $(NETLIST) $(CELLS) -DIMG_PATH=\"$(IMG).txt\"
 	vvp build/myCPU_sim-iverilog-netlist
 
 include ~/ysyx-workbench/Makefile
