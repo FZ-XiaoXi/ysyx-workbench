@@ -78,7 +78,7 @@ extern FILE* log_fp;
     // #define CONFIG_DIFFTEST_MEM_ENABLE
 #endif
 
-// #define CONFIG_WATCHPOINT_ENABLE
+#define CONFIG_WATCHPOINT_ENABLE
 // #define CONFIG_WAVE_ENABLE
 
 

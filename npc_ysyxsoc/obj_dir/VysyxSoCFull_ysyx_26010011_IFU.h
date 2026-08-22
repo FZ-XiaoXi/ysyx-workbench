@@ -43,10 +43,10 @@ class alignas(VL_CACHE_LINE_BYTES) VysyxSoCFull_ysyx_26010011_IFU final : public
     CData/*1:0*/ __PVT__icache_u0__DOT__state;
     CData/*1:0*/ __PVT__icache_u0__DOT__next_state;
     CData/*0:0*/ __PVT__icache_u0__DOT__r_fire;
-    CData/*1:0*/ __PVT__icache_u0__DOT__burst_cnt;
-    CData/*6:0*/ __VdlyLsb__icache_u0__DOT__cache_mem__v0;
-    CData/*2:0*/ __VdlyDim0__icache_u0__DOT__cache_mem__v0;
+    CData/*2:0*/ __PVT__icache_u0__DOT__burst_cnt;
+    CData/*7:0*/ __VdlyLsb__icache_u0__DOT__cache_mem__v0;
     CData/*0:0*/ __VdlySet__icache_u0__DOT__cache_mem__v0;
+    SData/*8:0*/ __VdlyDim0__icache_u0__DOT__cache_mem__v0;
     VL_OUT(PC,31,0);
     VL_IN(__PVT__dnpc,31,0);
     VL_OUT(__PVT__snpc,31,0);
@@ -56,9 +56,10 @@ class alignas(VL_CACHE_LINE_BYTES) VysyxSoCFull_ysyx_26010011_IFU final : public
     IData/*31:0*/ __PVT__icache_u0__DOT__unnamedblk1__DOT__i;
     IData/*31:0*/ __Vdly__PC;
     IData/*31:0*/ __VdlyVal__icache_u0__DOT__cache_mem__v0;
-    VlUnpacked<VlWide<4>/*127:0*/, 8> __PVT__icache_u0__DOT__cache_mem;
-    VlUnpacked<CData/*0:0*/, 8> __PVT__icache_u0__DOT__cache_valid;
-    VlUnpacked<IData/*24:0*/, 8> __PVT__icache_u0__DOT__cache_tag;
+    VlUnpacked<VlWide<8>/*255:0*/, 512> __PVT__icache_u0__DOT__cache_mem;
+    VlUnpacked<CData/*0:0*/, 512> __PVT__icache_u0__DOT__cache_valid;
+    VlUnpacked<IData/*17:0*/, 512> __PVT__icache_u0__DOT__cache_tag;
+    VlNBACommitQueue<VlUnpacked<CData/*0:0*/, 512>, false, CData/*0:0*/, 1> __VdlyCommitQueueicache_u0__DOT__cache_valid;
 
     // INTERNAL VARIABLES
     VysyxSoCFull__Syms* const vlSymsp;

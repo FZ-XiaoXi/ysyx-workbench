@@ -30,7 +30,7 @@ module ysyx_26010011_IFU(
     input             rlast,
     input  [3:0]      rid
 );
-    ysyx_26010011_IFU_icache #(.CACHE_BLOCK_SIZE(16), .CACHE_SIZE(8)) icache_u0(
+    ysyx_26010011_IFU_icache #(.CACHE_BLOCK_SIZE(32), .CACHE_SIZE(512)) icache_u0(
         .clock(clock),
         .reset(reset),
 

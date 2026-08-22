@@ -31,6 +31,16 @@ _bootloader_bss_loop:
   j _bootloader_bss_loop
 
 _bootloader_bss_loop_end:
+  la t0, _trm_init
+  li t1, 0x00008067
+  li t2, 0x00000013
+  sw t2, 0(t0)
+  sw t2, 4(t0)
+  sw t2, 8(t0)
+  sw t2, 12(t0)
+  sw t1, 16(t0)
+  jalr x1, 0(t0)
+  fence.i
   la a0, _text_lma_start
   la a1, _text_vma_start
   la a2, _text_lma_size
