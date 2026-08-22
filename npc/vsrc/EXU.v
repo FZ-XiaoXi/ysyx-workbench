@@ -29,14 +29,12 @@ module ysyx_26010011_EXU(
 	input            exu_in_bus_alu_isUseImm,//imm
 	input            exu_in_bus_comp_isUseImm,//imm
 
-
 	output           exu_out_valid,
 	output reg [ 4:0]exu_out_bus_exception,
 	input            exu_out_ready,
 	output reg [31:0]exu_out_bus_alu_result,
 	output reg [31:0]exu_out_bus_csr_result,
 	output reg       exu_out_bus_comp_result,
-
 	output reg       exu_out_bus_dnpc_valid
 );
 	wire [31:0] a,b,comp_a,comp_b;
@@ -44,7 +42,6 @@ module ysyx_26010011_EXU(
 	assign b=(exu_in_bus_alu_isUseImm)?exu_in_bus_imm:exu_in_bus_b;
 	assign comp_a=exu_in_bus_a;
 	assign comp_b=(exu_in_bus_comp_isUseImm)?exu_in_bus_imm:exu_in_bus_b;
-
 
 	assign exu_in_ready = exu_out_ready;
 	assign exu_out_valid = exu_in_valid;
@@ -55,9 +52,6 @@ module ysyx_26010011_EXU(
 	wire [31:0]op_lr;
 	wire [31:0]op_ll;
 
-
-	
-	
 	assign op_xor=a^b;
 	assign op_or=a|b;
 	assign op_and=a&b;
@@ -120,7 +114,6 @@ module ysyx_26010011_EXU(
 		end
 	end
 endmodule
-
 
 // module ysyx_26010011_M_ADDER(
 // 	input [32:0] inA,

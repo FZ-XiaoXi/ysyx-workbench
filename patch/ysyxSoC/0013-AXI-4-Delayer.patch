@@ -1,0 +1,461 @@
+From e9adde1c091a7f34dc85132aa448e27677222a88 Mon Sep 17 00:00:00 2001
+From: FZ_XiaoXi <FZXiaoxi@outlook.com>
+Date: Sat, 15 Aug 2026 11:56:18 +0800
+Subject: [PATCH 13/19] AXI-4 Delayer
+
+---
+ perip/amba/axi4_delayer.v | 417 +++++++++++++++++++++++++++++++++++++-
+ 1 file changed, 406 insertions(+), 11 deletions(-)
+
+diff --git a/perip/amba/axi4_delayer.v b/perip/amba/axi4_delayer.v
+index f692803b..63d0a01a 100644
+--- a/perip/amba/axi4_delayer.v
++++ b/perip/amba/axi4_delayer.v
+@@ -28,9 +28,9 @@ module axi4_delayer(
+   input  [3:0]  in_wstrb,
+   input         in_wlast,
+                 in_bready,
+-  output        in_bvalid,
+-  output [3:0]  in_bid,
+-  output [1:0]  in_bresp,
++  output reg        in_bvalid,
++  output reg [3:0]  in_bid,
++  output reg [1:0]  in_bresp,
+ 
+   input         out_arready,
+   output        out_arvalid,
+@@ -62,6 +62,14 @@ module axi4_delayer(
+   input  [3:0]  out_bid,
+   input  [1:0]  out_bresp
+ );
++  parameter S_IDLE  = 2'b00;
++  parameter S_WAIT  = 2'b01;
++  parameter S_DELAY = 2'b10;
++  parameter S_DONE = 2'b11;
++  parameter [31:0]s = 32'd20;
++  parameter [31:0]sk = 32'd49;
++  //RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR
++
+ 
+   assign in_arready = out_arready;
+   assign out_arvalid = in_arvalid;
+@@ -71,11 +79,139 @@ module axi4_delayer(
+   assign out_arsize = in_arsize;
+   assign out_arburst = in_arburst;
+   assign out_rready = in_rready;
+-  assign in_rvalid = out_rvalid;
+-  assign in_rid = out_rid;
+-  assign in_rdata = out_rdata;
+-  assign in_rresp = out_rresp;
+-  assign in_rlast = out_rlast;
++
++
++  wire        out_rvalid_w[0:7],in_rvalid_w[0:7],in_rready_w[0:7];
++  wire [ 3:0] out_rid_w[0:7]  ,in_rid_w[0:7];
++  wire [31:0] out_rdata_w[0:7],in_rdata_w[0:7];
++  wire [ 1:0] out_rresp_w[0:7],in_rresp_w[0:7];
++  wire        out_rlast_w[0:7],in_rlast_w[0:7];
++
++  axi_read_delayer_single inst_u0(
++    .clock(clock), .reset(reset | (in_rready & in_rvalid & in_rlast)), .in_arvalid(in_arvalid), .in_rready(in_rready_w[0]),
++    .in_rvalid(in_rvalid_w[0]),    .in_rid(in_rid_w[0]),    .in_rdata(in_rdata_w[0]),    .in_rresp(in_rresp_w[0]),    .in_rlast(in_rlast_w[0]),
++    .out_rvalid(out_rvalid_w[0]),  .out_rid(out_rid_w[0]),  .out_rdata(out_rdata_w[0]),  .out_rresp(out_rresp_w[0]),  .out_rlast(out_rlast_w[0])
++  );
++  axi_read_delayer_single inst_u1(
++    .clock(clock), .reset(reset | (in_rready & in_rvalid & in_rlast)), .in_arvalid(in_arvalid), .in_rready(in_rready_w[1]),
++    .in_rvalid(in_rvalid_w[1]),    .in_rid(in_rid_w[1]),    .in_rdata(in_rdata_w[1]),    .in_rresp(in_rresp_w[1]),    .in_rlast(in_rlast_w[1]),
++    .out_rvalid(out_rvalid_w[1]),  .out_rid(out_rid_w[1]),  .out_rdata(out_rdata_w[1]),  .out_rresp(out_rresp_w[1]),  .out_rlast(out_rlast_w[1])
++  );
++  axi_read_delayer_single inst_u2(
++    .clock(clock), .reset(reset | (in_rready & in_rvalid & in_rlast)), .in_arvalid(in_arvalid), .in_rready(in_rready_w[2]),
++    .in_rvalid(in_rvalid_w[2]),    .in_rid(in_rid_w[2]),    .in_rdata(in_rdata_w[2]),    .in_rresp(in_rresp_w[2]),    .in_rlast(in_rlast_w[2]),
++    .out_rvalid(out_rvalid_w[2]),  .out_rid(out_rid_w[2]),  .out_rdata(out_rdata_w[2]),  .out_rresp(out_rresp_w[2]),  .out_rlast(out_rlast_w[2])
++  );
++  axi_read_delayer_single inst_u3(
++    .clock(clock), .reset(reset | (in_rready & in_rvalid & in_rlast)), .in_arvalid(in_arvalid), .in_rready(in_rready_w[3]),
++    .in_rvalid(in_rvalid_w[3]),    .in_rid(in_rid_w[3]),    .in_rdata(in_rdata_w[3]),    .in_rresp(in_rresp_w[3]),    .in_rlast(in_rlast_w[3]),
++    .out_rvalid(out_rvalid_w[3]),  .out_rid(out_rid_w[3]),  .out_rdata(out_rdata_w[3]),  .out_rresp(out_rresp_w[3]),  .out_rlast(out_rlast_w[3])
++  );
++  axi_read_delayer_single inst_u4(
++    .clock(clock), .reset(reset | (in_rready & in_rvalid & in_rlast)), .in_arvalid(in_arvalid), .in_rready(in_rready_w[4]),
++    .in_rvalid(in_rvalid_w[4]),    .in_rid(in_rid_w[4]),    .in_rdata(in_rdata_w[4]),    .in_rresp(in_rresp_w[4]),    .in_rlast(in_rlast_w[4]),
++    .out_rvalid(out_rvalid_w[4]),  .out_rid(out_rid_w[4]),  .out_rdata(out_rdata_w[4]),  .out_rresp(out_rresp_w[4]),  .out_rlast(out_rlast_w[4])
++  );
++  axi_read_delayer_single inst_u5(
++    .clock(clock), .reset(reset | (in_rready & in_rvalid & in_rlast)), .in_arvalid(in_arvalid), .in_rready(in_rready_w[5]),
++    .in_rvalid(in_rvalid_w[5]),    .in_rid(in_rid_w[5]),    .in_rdata(in_rdata_w[5]),    .in_rresp(in_rresp_w[5]),    .in_rlast(in_rlast_w[5]),
++    .out_rvalid(out_rvalid_w[5]),  .out_rid(out_rid_w[5]),  .out_rdata(out_rdata_w[5]),  .out_rresp(out_rresp_w[5]),  .out_rlast(out_rlast_w[5])
++  );
++  axi_read_delayer_single inst_u6(
++    .clock(clock), .reset(reset | (in_rready & in_rvalid & in_rlast)), .in_arvalid(in_arvalid), .in_rready(in_rready_w[6]),
++    .in_rvalid(in_rvalid_w[6]),    .in_rid(in_rid_w[6]),    .in_rdata(in_rdata_w[6]),    .in_rresp(in_rresp_w[6]),    .in_rlast(in_rlast_w[6]),
++    .out_rvalid(out_rvalid_w[6]),  .out_rid(out_rid_w[6]),  .out_rdata(out_rdata_w[6]),  .out_rresp(out_rresp_w[6]),  .out_rlast(out_rlast_w[6])
++  );
++  axi_read_delayer_single inst_u7(
++    .clock(clock), .reset(reset | (in_rready & in_rvalid & in_rlast)), .in_arvalid(in_arvalid), .in_rready(in_rready_w[7]),
++    .in_rvalid(in_rvalid_w[7]),    .in_rid(in_rid_w[7]),    .in_rdata(in_rdata_w[7]),    .in_rresp(in_rresp_w[7]),    .in_rlast(in_rlast_w[7]),
++    .out_rvalid(out_rvalid_w[7]),  .out_rid(out_rid_w[7]),  .out_rdata(out_rdata_w[7]),  .out_rresp(out_rresp_w[7]),  .out_rlast(out_rlast_w[7])
++  );
++
++  reg [2:0] rcnt;
++  always @(posedge clock or posedge reset) begin
++    if (reset) begin
++      rcnt <= 3'b0;
++    end else begin
++      if(out_rvalid) begin
++        rcnt <= rcnt + 3'd1;
++      end else if(in_rready & in_rvalid & in_rlast) begin
++        rcnt <= 3'b0;
++      end else begin
++        rcnt <= rcnt;
++      end
++    end
++  end
++  reg [2:0] rrcnt;
++  always @(posedge clock or posedge reset) begin
++    if (reset) begin
++      rrcnt <= 3'd0;
++    end else begin
++      if(in_rready & in_rvalid & in_rlast) begin
++        rrcnt <= 3'd0;
++      end else if(in_rready & in_rvalid) begin
++        rrcnt <= rrcnt + 3'd1;
++      end else begin
++        rrcnt <= rrcnt;
++      end
++    end
++  end
++  assign out_rvalid_w[0] = (rcnt == 3'd0) ? out_rvalid : 1'b0;
++  assign out_rvalid_w[1] = (rcnt == 3'd1) ? out_rvalid : 1'b0;
++  assign out_rvalid_w[2] = (rcnt == 3'd2) ? out_rvalid : 1'b0;
++  assign out_rvalid_w[3] = (rcnt == 3'd3) ? out_rvalid : 1'b0;
++  assign out_rvalid_w[4] = (rcnt == 3'd4) ? out_rvalid : 1'b0;
++  assign out_rvalid_w[5] = (rcnt == 3'd5) ? out_rvalid : 1'b0;
++  assign out_rvalid_w[6] = (rcnt == 3'd6) ? out_rvalid : 1'b0;
++  assign out_rvalid_w[7] = (rcnt == 3'd7) ? out_rvalid : 1'b0;
++  assign out_rid_w[0] = (rcnt == 3'd0) ? out_rid : 4'b0;
++  assign out_rid_w[1] = (rcnt == 3'd1) ? out_rid : 4'b0;
++  assign out_rid_w[2] = (rcnt == 3'd2) ? out_rid : 4'b0;
++  assign out_rid_w[3] = (rcnt == 3'd3) ? out_rid : 4'b0;
++  assign out_rid_w[4] = (rcnt == 3'd4) ? out_rid : 4'b0;
++  assign out_rid_w[5] = (rcnt == 3'd5) ? out_rid : 4'b0;
++  assign out_rid_w[6] = (rcnt == 3'd6) ? out_rid : 4'b0;
++  assign out_rid_w[7] = (rcnt == 3'd7) ? out_rid : 4'b0;
++  assign out_rdata_w[0] = (rcnt == 3'd0) ? out_rdata : 32'b0;
++  assign out_rdata_w[1] = (rcnt == 3'd1) ? out_rdata : 32'b0;
++  assign out_rdata_w[2] = (rcnt == 3'd2) ? out_rdata : 32'b0;
++  assign out_rdata_w[3] = (rcnt == 3'd3) ? out_rdata : 32'b0;
++  assign out_rdata_w[4] = (rcnt == 3'd4) ? out_rdata : 32'b0;
++  assign out_rdata_w[5] = (rcnt == 3'd5) ? out_rdata : 32'b0;
++  assign out_rdata_w[6] = (rcnt == 3'd6) ? out_rdata : 32'b0;
++  assign out_rdata_w[7] = (rcnt == 3'd7) ? out_rdata : 32'b0;
++  assign	out_rresp_w[0] = (rcnt ==	3'd0) ?	out_rresp :	2'b0;
++  assign	out_rresp_w[1] = (rcnt ==	3'd1) ?	out_rresp :	2'b0;
++  assign	out_rresp_w[2] = (rcnt ==	3'd2) ?	out_rresp :	2'b0;
++  assign	out_rresp_w[3] = (rcnt ==	3'd3) ?	out_rresp :	2'b0;
++  assign	out_rresp_w[4] = (rcnt ==	3'd4) ?	out_rresp :	2'b0;
++  assign	out_rresp_w[5] = (rcnt ==	3'd5) ?	out_rresp :	2'b0;
++  assign	out_rresp_w[6] = (rcnt ==	3'd6) ?	out_rresp :	2'b0;
++  assign	out_rresp_w[7] = (rcnt ==	3'd7) ?	out_rresp :	2'b0;
++  assign out_rlast_w[0] = (rcnt == 3'd0) ? out_rlast : 1'b0;
++  assign out_rlast_w[1] = (rcnt == 3'd1) ? out_rlast : 1'b0;
++  assign out_rlast_w[2] = (rcnt == 3'd2) ? out_rlast : 1'b0;
++  assign out_rlast_w[3] = (rcnt == 3'd3) ? out_rlast : 1'b0;
++  assign out_rlast_w[4] = (rcnt == 3'd4) ? out_rlast : 1'b0;
++  assign out_rlast_w[5] = (rcnt == 3'd5) ? out_rlast : 1'b0;
++  assign out_rlast_w[6] = (rcnt == 3'd6) ? out_rlast : 1'b0;
++  assign out_rlast_w[7] = (rcnt == 3'd7) ? out_rlast : 1'b0;
++
++  assign in_rready_w[2]  = (rrcnt == 3'd2) ? in_rready : 1'b0;
++  assign in_rready_w[3]  = (rrcnt == 3'd3) ? in_rready : 1'b0;
++  assign in_rready_w[4]  = (rrcnt == 3'd4) ? in_rready : 1'b0;
++  assign in_rready_w[5]  = (rrcnt == 3'd5) ? in_rready : 1'b0;
++  assign in_rready_w[6]  = (rrcnt == 3'd6) ? in_rready : 1'b0;
++  assign in_rready_w[7]  = (rrcnt == 3'd7) ? in_rready : 1'b0;
++  assign in_rvalid = in_rvalid_w[rrcnt];
++  assign in_rid    = in_rid_w[rrcnt];
++  assign in_rdata  = in_rdata_w[rrcnt];
++  assign in_rresp  = in_rresp_w[rrcnt];
++  assign in_rlast  = in_rlast_w[rrcnt];
++
++
++//WWWWWWWWWWWWWWWWWWWWWWWWWWWW
++  
+   assign in_awready = out_awready;
+   assign out_awvalid = in_awvalid;
+   assign out_awid = in_awid;
+@@ -89,8 +225,267 @@ module axi4_delayer(
+   assign out_wstrb = in_wstrb;
+   assign out_wlast = in_wlast;
+   assign out_bready = in_bready;
+-  assign in_bvalid = out_bvalid;
+-  assign in_bid = out_bid;
+-  assign in_bresp = out_bresp;
+ 
++
++
++  reg [1:0] wstate,wnext_state;
++  reg [31:0] wcnt;
++  always @(posedge clock or posedge reset) begin
++    if (reset) begin
++      wstate <= S_IDLE;
++    end else begin
++      wstate <= wnext_state;
++    end
++  end
++
++  always @(posedge clock or posedge reset) begin
++    if (reset) begin
++      wcnt <= 32'b0;
++    end else begin
++      if(wstate == S_IDLE && wnext_state == S_WAIT) begin
++        wcnt <= sk;
++      end else if(wstate == S_WAIT && wnext_state == S_WAIT) begin
++        wcnt <= wcnt + sk;
++      // end else if(wstate == S_WAIT && wnext_state == S_DELAY) begin
++      //   wcnt <= 32'd5 - 32'd1;
++      end else if(wstate == S_DELAY || wnext_state == S_DELAY) begin
++        wcnt <= wcnt - s;
++      end else begin
++        wcnt <= 32'd0;
++      end
++    end
++  end
++
++  always @(*) begin
++    case (wstate)
++      S_IDLE: begin
++       if(in_awvalid || in_wvalid) begin
++          wnext_state = S_WAIT;
++        end else begin
++          wnext_state = S_IDLE;
++        end
++      end
++      S_WAIT: begin
++        if(out_bvalid) begin
++          wnext_state = S_DELAY;
++        end else begin
++          wnext_state = S_WAIT;
++        end
++      end
++      S_DELAY: begin
++        if(wcnt < s) begin
++          if(in_bready) begin
++            wnext_state = S_IDLE;
++          end else begin
++            wnext_state = S_DONE;
++          end
++        end else begin
++          wnext_state = S_DELAY;
++        end
++      end
++      S_DONE: begin
++        if(in_bready) begin
++          wnext_state = S_IDLE;
++        end else begin
++          wnext_state = S_DONE;
++        end
++      end
++      default: begin
++        wnext_state = S_IDLE;
++      end
++    endcase
++  end
++
++  always @(*) begin
++    in_bvalid = bvalid_reg;
++    in_bid = bid_reg;
++    in_bresp = bresp_reg;
++  end
++
++  reg       bvalid_reg;
++  reg [3:0] bid_reg;
++  reg [1:0] bresp_reg;
++
++  always @(posedge clock or posedge reset) begin
++    if (reset) begin
++      bvalid_reg <= 1'b0;
++      bid_reg <= 4'b0;
++      bresp_reg <= 2'b0;
++    end else begin
++      if(wstate == S_WAIT && wnext_state == S_DELAY) begin
++        // bvalid_reg <= out_bvalid;
++        bid_reg <= out_bid;
++        bresp_reg <= out_bresp;
++      end else if((wstate == S_DELAY && wnext_state == S_IDLE)||(wstate==S_DONE && wnext_state == S_IDLE)) begin
++        // bvalid_reg <= 1'b0;
++        bid_reg <= 4'b0;
++        bresp_reg <= 2'b0;
++      end else begin
++        // bvalid_reg <= bvalid_reg;
++        bid_reg <= bid_reg;
++        bresp_reg <= bresp_reg;
++      end
++      if((wstate == S_DELAY && wnext_state == S_IDLE)||(wstate==S_DONE && wnext_state == S_IDLE)) begin
++        bvalid_reg <= 1'b0;
++      end else if(wstate==S_DELAY && wcnt < 2*s) begin
++        bvalid_reg <= 1'b1;
++      end else begin
++        bvalid_reg <= bvalid_reg;
++      end
++      
++    end
++  end
+ endmodule
++
++
++module axi_read_delayer_single(
++  input         clock,
++  input         reset,
++
++  input         in_arvalid,
++  input         in_rready,
++
++  output reg        in_rvalid,
++  output reg [3:0]  in_rid,
++  output reg [31:0] in_rdata,
++  output reg [1:0]  in_rresp,
++  output reg        in_rlast,
++
++  input         out_rvalid,
++  input  [3:0]  out_rid,
++  input  [31:0] out_rdata,
++  input  [1:0]  out_rresp,
++  input         out_rlast
++);
++  parameter S_IDLE  = 2'b00;
++  parameter S_WAIT  = 2'b01;
++  parameter S_DELAY = 2'b10;
++  parameter S_DONE  = 2'b11;
++  parameter [31:0]s = 32'd20;
++  parameter [31:0]sk = 32'd49;
++  // assign in_rvalid = out_rvalid;
++  // assign in_rid = out_rid;
++  // assign in_rdata = out_rdata;
++  // assign in_rresp = out_rresp;
++  // assign in_rlast = out_rlast;
++  reg [1:0] rstate,rnext_state;
++  reg [31:0] rcnt;
++  always @(posedge clock or posedge reset) begin
++    if (reset) begin
++      rstate <= S_IDLE;
++    end else begin
++      rstate <= rnext_state;
++    end
++  end
++
++  always @(posedge clock or posedge reset) begin
++    if (reset) begin
++      rcnt <= 32'b0;
++    end else begin
++      if(rstate == S_IDLE && rnext_state == S_WAIT) begin
++        rcnt <= sk;
++      end else if(rstate == S_WAIT && rnext_state == S_WAIT) begin
++        rcnt <= rcnt + sk;
++      // end else if(rstate == S_WAIT && rnext_state == S_DELAY) begin
++      //   rcnt <= 32'd5 - 32'd1;
++      end else if(rstate == S_DELAY || rnext_state == S_DELAY) begin
++        rcnt <= rcnt - s;
++      end else begin
++        rcnt <= 32'd0;
++      end
++    end
++  end
++
++  always @(*) begin
++    case (rstate)
++      S_IDLE: begin
++        if(in_arvalid) begin
++          rnext_state = S_WAIT;
++        end else begin
++          rnext_state = S_IDLE;
++        end
++      end
++      S_WAIT: begin
++        if(out_rvalid) begin
++          rnext_state = S_DELAY;
++        end else begin
++          rnext_state = S_WAIT;
++        end
++      end
++      S_DELAY: begin
++        if(rcnt < s) begin
++          if(in_rready) begin
++            rnext_state = S_IDLE;
++          end else begin
++            rnext_state = S_DONE;
++          end
++        end else begin
++          rnext_state = S_DELAY;
++        end
++      end
++      S_DONE: begin
++        if(in_rready) begin
++          rnext_state = S_IDLE;
++        end else begin
++          rnext_state = S_DONE;
++        end
++      end
++      default: begin
++        rnext_state = S_IDLE;
++      end
++    endcase
++  end
++
++  always @(*) begin
++    in_rvalid = rvalid_reg;
++    in_rid = rid_reg;
++    in_rdata = rdata_reg;
++    in_rresp = rresp_reg;
++    in_rlast = rlast_reg;
++  end
++
++  reg       rvalid_reg;
++  reg [3:0] rid_reg;
++  reg [31:0]rdata_reg;
++  reg [1:0] rresp_reg;
++  reg       rlast_reg;
++
++  always @(posedge clock) begin
++    if (reset) begin
++      rvalid_reg <= 1'b0;
++      rid_reg <= 4'b0;
++      rdata_reg <= 32'b0;
++      rresp_reg <= 2'b0;
++      rlast_reg <= 1'b0;
++    end else begin
++      if(rstate == S_WAIT && rnext_state == S_DELAY) begin
++        // rvalid_reg <= 1'b1;
++        rid_reg <= out_rid;
++        rdata_reg <= out_rdata;
++        rresp_reg <= out_rresp;
++        rlast_reg <= out_rlast;
++      end else if((rstate == S_DELAY && rnext_state == S_IDLE)||(rstate==S_DONE && rnext_state == S_IDLE)) begin
++        // rvalid_reg <= 1'b0;
++        rid_reg <= 4'b0;
++        rdata_reg <= 32'b0;
++        rresp_reg <= 2'b0;
++        rlast_reg <= 1'b0;
++      end else begin
++        // rvalid_reg <= rvalid_reg;
++        rid_reg <= rid_reg;
++        rdata_reg <= rdata_reg;
++        rresp_reg <= rresp_reg;
++        rlast_reg <= rlast_reg;
++      end
++      if((rstate == S_DELAY && rnext_state == S_IDLE)||(rstate==S_DONE && rnext_state == S_IDLE)) begin
++        rvalid_reg <= 1'b0;
++      end else if(rstate==S_DELAY && rcnt < 2*s) begin
++        rvalid_reg <= 1'b1;
++      end else begin
++        rvalid_reg <= rvalid_reg;
++      end
++    end
++
++  end
++
++endmodule
+\ No newline at end of file
+-- 
+2.43.0
+

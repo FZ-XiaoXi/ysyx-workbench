@@ -1,0 +1,433 @@
+From 8843f1e645c8be13398a9dcce6158a43c2cc35a8 Mon Sep 17 00:00:00 2001
+From: FZ_XiaoXi <FZXiaoxi@outlook.com>
+Date: Tue, 11 Aug 2026 19:45:10 +0800
+Subject: [PATCH 02/19] =?UTF-8?q?=E5=B0=86SDRAM=E6=8E=A7=E5=88=B6=E5=99=A8?=
+ =?UTF-8?q?=E7=9A=84=E6=95=B0=E6=8D=AE=E4=BD=8D=E5=AE=BD=E6=89=A9=E5=B1=95?=
+ =?UTF-8?q?=E5=88=B032=E4=BD=8D?=
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+---
+ Makefile                                     | 14 +++-
+ perip/sdram/core_sdram_axi4/sdram_axi.v      |  6 +-
+ perip/sdram/core_sdram_axi4/sdram_axi_core.v | 78 +++++++-------------
+ perip/sdram/sdram.v                          | 67 ++++++++++++++---
+ perip/sdram/sdram_top_apb.v                  |  8 +-
+ perip/sdram/sdram_top_axi.v                  |  4 +-
+ 6 files changed, 102 insertions(+), 75 deletions(-)
+
+diff --git a/Makefile b/Makefile
+index c30262ea..cb63fd5b 100644
+--- a/Makefile
++++ b/Makefile
+@@ -15,8 +15,18 @@ $(V_FILE_FINAL): $(SCALA_FILES)
+ 	mv $(V_FILE_GEN) $@
+ 	sed -i -e 's/_\(aw\|ar\|w\|r\|b\)_\(\|bits_\)/_\1/g' $@
+ 	sed -i '/firrtl_black_box_resource_files.f/, $$d' $@
++	
++verilog: verilog_fix
++	sed -i 's/wire \[15:0\] _dq_wire/wire [31:0] _dq_wire/' build/ysyxSoCFull.v
++	sed -i 's/inout  \[15:0\] sdram_dq/inout  [31:0] sdram_dq/' build/ysyxSoCFull.v
++	sed -i 's/inout  \[15:0\] sdram_bundle_dq/inout  [31:0] sdram_bundle_dq/' build/ysyxSoCFull.v
++	sed -i 's/inout  \[ 1:0\] _asic_sdram_dqm/inout  [ 3:0] _asic_sdram_dqm/' build/ysyxSoCFull.v
++	sed -i 's/              sdram_bundle_dqm/output [3:0]  sdram_bundle_dqm/' build/ysyxSoCFull.v
++	sed -i 's/              sdram_dqm/output [3:0]  sdram_dqm/' build/ysyxSoCFull.v
++	sed -i 's/wire \[1:0\]  _asic_sdram_dqm/wire [3:0]  _asic_sdram_dqm/' build/ysyxSoCFull.v
++	echo "aaa"
+ 
+-verilog: $(V_FILE_FINAL)
++verilog_fix: $(V_FILE_FINAL)
+ 
+ clean:
+ 	-rm -rf build/
+@@ -25,4 +35,4 @@ dev-init:
+ 	git submodule update --init --recursive
+ 	cd rocket-chip && git apply ../patch/rocket-chip.patch
+ 
+-.PHONY: verilog clean dev-init
++.PHONY: verilog clean dev-init 
+diff --git a/perip/sdram/core_sdram_axi4/sdram_axi.v b/perip/sdram/core_sdram_axi4/sdram_axi.v
+index 64641f58..e743eb16 100644
+--- a/perip/sdram/core_sdram_axi4/sdram_axi.v
++++ b/perip/sdram/core_sdram_axi4/sdram_axi.v
+@@ -53,7 +53,7 @@ module sdram_axi
+     ,input  [  7:0]  inport_arlen_i
+     ,input  [  1:0]  inport_arburst_i
+     ,input           inport_rready_i
+-    ,input  [ 15:0]  sdram_data_input_i
++    ,input  [ 31:0]  sdram_data_input_i
+ 
+     // Outputs
+     ,output          inport_awready_o
+@@ -73,10 +73,10 @@ module sdram_axi
+     ,output          sdram_ras_o
+     ,output          sdram_cas_o
+     ,output          sdram_we_o
+-    ,output [  1:0]  sdram_dqm_o
++    ,output [  3:0]  sdram_dqm_o
+     ,output [ 12:0]  sdram_addr_o
+     ,output [  1:0]  sdram_ba_o
+-    ,output [ 15:0]  sdram_data_output_o
++    ,output [ 31:0]  sdram_data_output_o
+     ,output          sdram_data_out_en_o
+ );
+ 
+diff --git a/perip/sdram/core_sdram_axi4/sdram_axi_core.v b/perip/sdram/core_sdram_axi4/sdram_axi_core.v
+index cedbf77b..2d2691a0 100644
+--- a/perip/sdram/core_sdram_axi4/sdram_axi_core.v
++++ b/perip/sdram/core_sdram_axi4/sdram_axi_core.v
+@@ -42,7 +42,7 @@ module sdram_axi_core
+     ,input  [  7:0]  inport_len_i
+     ,input  [ 31:0]  inport_addr_i
+     ,input  [ 31:0]  inport_write_data_i
+-    ,input  [ 15:0]  sdram_data_input_i
++    ,input  [ 31:0]  sdram_data_input_i
+ 
+     // Outputs
+     ,output          inport_accept_o
+@@ -55,10 +55,10 @@ module sdram_axi_core
+     ,output          sdram_ras_o
+     ,output          sdram_cas_o
+     ,output          sdram_we_o
+-    ,output [  1:0]  sdram_dqm_o
++    ,output [  3:0]  sdram_dqm_o
+     ,output [ 12:0]  sdram_addr_o
+     ,output [  1:0]  sdram_ba_o
+-    ,output [ 15:0]  sdram_data_output_o
++    ,output [ 31:0]  sdram_data_output_o
+     ,output          sdram_data_out_en_o
+ );
+ 
+@@ -70,13 +70,13 @@ module sdram_axi_core
+ parameter SDRAM_MHZ              = 50;
+ parameter SDRAM_ADDR_W           = 24;
+ parameter SDRAM_COL_W            = 9;
+-parameter SDRAM_READ_LATENCY     = 2;
++parameter SDRAM_READ_LATENCY     = 1;
+ 
+ //-----------------------------------------------------------------
+ // Defines / Local params
+ //-----------------------------------------------------------------
+ localparam SDRAM_BANK_W          = 2;
+-localparam SDRAM_DQM_W           = 2;
++localparam SDRAM_DQM_W           = 4;
+ localparam SDRAM_BANKS           = 2 ** SDRAM_BANK_W;
+ localparam SDRAM_ROW_W           = SDRAM_ADDR_W - SDRAM_COL_W - SDRAM_BANK_W;
+ localparam SDRAM_REFRESH_CNT     = 2 ** SDRAM_ROW_W;
+@@ -94,7 +94,7 @@ localparam CMD_REFRESH       = 4'b0001;
+ localparam CMD_LOAD_MODE     = 4'b0000;
+ 
+ // Mode: Burst Length = 4 bytes, CAS=2
+-localparam MODE_REG          = {3'b000,1'b0,2'b00,3'b010,1'b0,3'b001};
++localparam MODE_REG          = {3'b000,1'b0,2'b00,3'b010,1'b0,3'b000};
+ 
+ // SM states
+ localparam STATE_W           = 4;
+@@ -105,14 +105,13 @@ localparam STATE_ACTIVATE    = 4'd3;
+ localparam STATE_READ        = 4'd4;
+ localparam STATE_READ_WAIT   = 4'd5;
+ localparam STATE_WRITE0      = 4'd6;
+-localparam STATE_WRITE1      = 4'd7;
+ localparam STATE_PRECHARGE   = 4'd8;
+ localparam STATE_REFRESH     = 4'd9;
+ 
+ localparam AUTO_PRECHARGE    = 10;
+ localparam ALL_BANKS         = 10;
+ 
+-localparam SDRAM_DATA_W      = 16;
++localparam SDRAM_DATA_W      = 32;
+ 
+ localparam CYCLE_TIME_NS     = 1000 / SDRAM_MHZ;
+ 
+@@ -283,23 +282,16 @@ begin
+     // STATE_WRITE0
+     //-----------------------------------------
+     STATE_WRITE0 :
+-    begin
+-        next_state_r = STATE_WRITE1;
+-    end
+-    //-----------------------------------------
+-    // STATE_WRITE1
+-    //-----------------------------------------
+-    STATE_WRITE1 :
+     begin
+         next_state_r = STATE_IDLE;
+ 
+         // Another pending write request (with no refresh pending)
+-        if (!refresh_q && ram_req_w && (ram_wr_w != 4'b0))
+-        begin
+-            // Open row hit
+-            if (row_open_q[addr_bank_w] && addr_row_w == active_row_q[addr_bank_w])
+-                next_state_r = STATE_WRITE0;
+-        end
++        // if (!refresh_q && ram_req_w && (ram_wr_w != 4'b0))
++        // begin
++        //     // Open row hit
++        //     if (row_open_q[addr_bank_w] && addr_row_w == active_row_q[addr_bank_w])
++        //         next_state_r = STATE_WRITE0;
++        // end
+     end
+     //-----------------------------------------
+     // STATE_PRECHARGE
+@@ -483,7 +475,7 @@ always @ (posedge clk_i or posedge rst_i)
+ if (rst_i)
+ begin
+     command_q       <= CMD_NOP;
+-    data_q          <= 16'b0;
++    data_q          <= 32'b0;
+     addr_q          <= {SDRAM_ROW_W{1'b0}};
+     bank_q          <= {SDRAM_BANK_W{1'b0}};
+     cke_q           <= 1'b0;
+@@ -616,46 +608,29 @@ begin
+         command_q       <= CMD_WRITE;
+         addr_q          <= addr_col_w;
+         bank_q          <= addr_bank_w;
+-        data_q          <= ram_write_data_w[15:0];
++        data_q          <= ram_write_data_w;
+ 
+         // Disable auto precharge (auto close of row)
+         addr_q[AUTO_PRECHARGE]  <= 1'b0;
+ 
+         // Write mask
+-        dqm_q           <= ~ram_wr_w[1:0];
+-        dqm_buffer_q    <= ~ram_wr_w[3:2];
++        dqm_q           <= ~ram_wr_w[3:0];
+ 
+         data_rd_en_q    <= 1'b0;
+     end
+-    //-----------------------------------------
+-    // STATE_WRITE1
+-    //-----------------------------------------
+-    STATE_WRITE1 :
+-    begin
+-        // Burst continuation
+-        command_q   <= CMD_NOP;
+-
+-        data_q      <= data_buffer_q;
+-
+-        // Disable auto precharge (auto close of row)
+-        addr_q[AUTO_PRECHARGE]  <= 1'b0;
+-
+-        // Write mask
+-        dqm_q       <= dqm_buffer_q;
+-    end
+     endcase
+ end
+ 
+ //-----------------------------------------------------------------
+ // Record read events
+ //-----------------------------------------------------------------
+-reg [SDRAM_READ_LATENCY+1:0]  rd_q;
++reg [SDRAM_READ_LATENCY:0]  rd_q;
+ 
+ always @ (posedge clk_i or posedge rst_i)
+ if (rst_i)
+-    rd_q    <= {(SDRAM_READ_LATENCY+2){1'b0}};
++    rd_q    <= {(SDRAM_READ_LATENCY+1){1'b0}};
+ else
+-    rd_q    <= {rd_q[SDRAM_READ_LATENCY:0], (state_q == STATE_READ)};
++    rd_q    <= {rd_q[SDRAM_READ_LATENCY-1:0], (state_q == STATE_READ)};
+ 
+ //-----------------------------------------------------------------
+ // Data Buffer
+@@ -665,14 +640,14 @@ else
+ // in WRITE0. Also buffer lower 16-bits of read data.
+ always @ (posedge clk_i or posedge rst_i)
+ if (rst_i)
+-    data_buffer_q <= 16'b0;
++    data_buffer_q <= 32'b0;
+ else if (state_q == STATE_WRITE0)
+-    data_buffer_q <= ram_write_data_w[31:16];
+-else if (rd_q[SDRAM_READ_LATENCY+1])
++    data_buffer_q <= ram_write_data_w[31:0];
++else if (rd_q[SDRAM_READ_LATENCY])
+     data_buffer_q <= sample_data_q;
+ 
+ // Read data output
+-assign ram_read_data_w = {sample_data_q, data_buffer_q};
++assign ram_read_data_w = {sample_data_q};
+ 
+ //-----------------------------------------------------------------
+ // ACK
+@@ -684,9 +659,9 @@ if (rst_i)
+     ack_q   <= 1'b0;
+ else
+ begin
+-    if (state_q == STATE_WRITE1)
++    if (state_q == STATE_WRITE0)
+         ack_q <= 1'b1;
+-    else if (rd_q[SDRAM_READ_LATENCY+1])
++    else if (rd_q[SDRAM_READ_LATENCY])
+         ack_q <= 1'b1;
+     else
+         ack_q <= 1'b0;
+@@ -694,7 +669,7 @@ end
+ 
+ assign ram_ack_w = ack_q;
+ 
+-// Accept command in READ or WRITE0 states
++// Accept command in READ or WRITE0-1 states
+ assign ram_accept_w = (state_q == STATE_READ || state_q == STATE_WRITE0);
+ 
+ //-----------------------------------------------------------------
+@@ -730,7 +705,6 @@ begin
+     STATE_READ        : dbg_state = "READ";
+     STATE_READ_WAIT   : dbg_state = "READ_WAIT";
+     STATE_WRITE0      : dbg_state = "WRITE0";
+-    STATE_WRITE1      : dbg_state = "WRITE1";
+     STATE_PRECHARGE   : dbg_state = "PRECHARGE";
+     STATE_REFRESH     : dbg_state = "REFRESH";
+     default           : dbg_state = "UNKNOWN";
+diff --git a/perip/sdram/sdram.v b/perip/sdram/sdram.v
+index 1532577e..6c304bfb 100644
+--- a/perip/sdram/sdram.v
++++ b/perip/sdram/sdram.v
+@@ -1,6 +1,52 @@
+-import "DPI-C" function void sdram_write(input int waddr, input int count, input int wdata);
+-import "DPI-C" function void sdram_read (input int raddr, input int count, output int rdata);
++import "DPI-C" function void sdram_write(input int waddr, input int count, input int wdata , input sel);
++import "DPI-C" function void sdram_read (input int raddr, input int count, output int rdata , input sel);
++
+ module sdram(
++  input        clk,
++  input        cke,
++  input        cs,
++  input        ras,
++  input        cas,
++  input        we,
++  input [12:0] a,
++  input [ 1:0] ba,
++  input [ 3:0] dqm,
++  inout [31:0] dq
++);
++
++
++
++  sdram_16 u_sdram_16_L(
++    .clk(clk),
++    .cke(cke),
++    .cs(cs),
++    .ras(ras),
++    .cas(cas),
++    .we(we),
++    .a(a),
++    .ba(ba),
++    .dqm(dqm[1:0]),
++    .dq(dq[15:0]),
++    .sel(1'b0)
++  );
++  sdram_16 u_sdram_16_H(
++    .clk(clk),
++    .cke(cke),
++    .cs(cs),
++    .ras(ras),
++    .cas(cas),
++    .we(we),
++    .a(a),
++    .ba(ba),
++    .dqm(dqm[3:2]),
++    .dq(dq[31:16]),
++    .sel(1'b1)
++  );
++
++endmodule
++
++
++module sdram_16(
+   input        clk,
+   input        cke,
+   input        cs,
+@@ -10,7 +56,8 @@ module sdram(
+   input [12:0] a,
+   input [ 1:0] ba,
+   input [ 1:0] dqm,
+-  inout [15:0] dq
++  inout [15:0] dq,
++  input        sel
+ );
+ 
+   reg  [12:0] reg_active_row[0:3];
+@@ -108,7 +155,7 @@ module sdram(
+           next_state = S_READ;
+         end
+         S_READ: begin
+-          if(count == ((mode_BL==1)?4'd1:(mode_BL==2)?4'd3:(mode_BL==3)?4'd7:4'd1))begin
++          if(count == ((mode_BL==1)?4'd0:(mode_BL==1)?4'd1:(mode_BL==2)?4'd3:(mode_BL==3)?4'd7:4'd1))begin
+             next_state = S_IDLE;
+           end else begin
+             next_state = S_READ;
+@@ -116,11 +163,7 @@ module sdram(
+         end
+         S_RCAS: begin
+           if(count == (mode_CAS-1))begin
+-            if(mode_BL==3'b000) begin
+-              next_state = S_IDLE;
+-            end else begin
+-              next_state = S_READ;
+-            end
++            next_state = S_READ;
+           end else begin
+             next_state = S_RCAS;
+           end
+@@ -164,9 +207,9 @@ module sdram(
+       end
+ 
+       if(state==S_IDLE && wire_command==M_WRITE) begin
+-        sdram_write(wire_addr, {28'b0,count}, {~dqm,14'b0,dq});
++        sdram_write(wire_addr, {28'b0,count}, {~dqm,14'b0,dq},sel);
+       end else if(state==S_WRITE) begin
+-        sdram_write(reg_active_addr, {28'b0,count}, {~dqm,14'b0,dq});
++        sdram_write(reg_active_addr, {28'b0,count}, {~dqm,14'b0,dq},sel);
+       end
+ 
+       // if(state==S_RCAS && next_state!=S_RCAS) begin
+@@ -180,7 +223,7 @@ module sdram(
+   reg [31:0] sdram_rdata;
+   assign wire_dq_out = sdram_rdata[15:0];
+   always@(*)begin
+-    sdram_read(reg_active_addr,{28'b0,count},sdram_rdata);
++    sdram_read(reg_active_addr,{28'b0,count},sdram_rdata,sel);
+   end
+ 
+   always @(*) begin
+diff --git a/perip/sdram/sdram_top_apb.v b/perip/sdram/sdram_top_apb.v
+index 3bc5b93b..f127d714 100644
+--- a/perip/sdram/sdram_top_apb.v
++++ b/perip/sdram/sdram_top_apb.v
+@@ -20,13 +20,13 @@ module sdram_top_apb (
+   output        sdram_we,
+   output [12:0] sdram_a,
+   output [ 1:0] sdram_ba,
+-  output [ 1:0] sdram_dqm,
+-  inout  [15:0] sdram_dq
++  output [ 3:0] sdram_dqm,
++  inout  [31:0] sdram_dq
+ );
+ 
+   wire sdram_dout_en;
+-  wire [15:0] sdram_dout;
+-  assign sdram_dq = sdram_dout_en ? sdram_dout : 16'bz;
++  wire [31:0] sdram_dout;
++  assign sdram_dq = sdram_dout_en ? sdram_dout : 32'bz;
+ 
+   typedef enum [1:0] { ST_IDLE, ST_WAIT_ACCEPT, ST_WAIT_ACK } state_t;
+   reg [1:0] state;
+diff --git a/perip/sdram/sdram_top_axi.v b/perip/sdram/sdram_top_axi.v
+index f0fd6fdb..351fc4a6 100644
+--- a/perip/sdram/sdram_top_axi.v
++++ b/perip/sdram/sdram_top_axi.v
+@@ -39,8 +39,8 @@ module sdram_top_axi(
+   output        sdram_we,
+   output [12:0] sdram_a,
+   output [ 1:0] sdram_ba,
+-  output [ 1:0] sdram_dqm,
+-  inout  [15:0] sdram_dq
++  output [ 3:0] sdram_dqm,
++  inout  [31:0] sdram_dq
+ );
+ 
+   wire sdram_dout_en;
+-- 
+2.43.0
+

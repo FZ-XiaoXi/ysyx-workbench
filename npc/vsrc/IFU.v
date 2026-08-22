@@ -123,17 +123,19 @@ module ysyx_26010011_IFU(
 			end
 		end
 	end;
-
-`ifdef __ICARUS__
-	ysyx_26010011_IFU_icache #(.CACHE_BLOCK_SIZE(4), .CACHE_SIZE(16)) icache_u0(
-`else
-	`ifdef YOSYS
-		ysyx_26010011_IFU_icache #(.CACHE_BLOCK_SIZE(4), .CACHE_SIZE(8)) icache_u0(
-	`else
-		ysyx_26010011_IFU_icache #(.CACHE_BLOCK_SIZE(8), .CACHE_SIZE(8)) icache_u0(
-	`endif
-`endif
-	
+	wire debug_IFU_is_hit/*verilator public*/;
+	wire debug_IFU_is_hit_inst/*verilator public*/ = ifu_out_valid & ifu_out_ready & debug_IFU_is_hit;
+	wire debug_IFU_get_inst/*verilator public*/ = ifu_out_valid & ifu_out_ready;
+// `ifdef __ICARUS__
+// 	ysyx_26010011_IFU_icache #(.CACHE_BLOCK_SIZE(4), .CACHE_SIZE(16)) icache_u0(
+// `else
+// 	`ifdef YOSYS
+// 		ysyx_26010011_IFU_icache #(.CACHE_BLOCK_SIZE(8), .CACHE_SIZE(8)) icache_u0(
+// 	`else
+// 		ysyx_26010011_IFU_icache #(.CACHE_BLOCK_SIZE(8), .CACHE_SIZE(8)) icache_u0(
+// 	`endif
+// `endif
+	ysyx_26010011_IFU_icache #(.CACHE_BLOCK_SIZE(8), .CACHE_SIZE(8)) icache_u0(
 		.clock(clock),
 		.reset(reset),
 
@@ -161,9 +163,7 @@ module ysyx_26010011_IFU(
 
 		.debug_is_hit(debug_IFU_is_hit)
 	);
-	wire debug_IFU_is_hit/*verilator public*/;
-	wire debug_IFU_is_hit_inst/*verilator public*/ = ifu_out_valid & ifu_out_ready & debug_IFU_is_hit;
-	wire debug_IFU_get_inst/*verilator public*/ = ifu_out_valid & ifu_out_ready;
+	
 
 	always @(*) begin
 		if(|PC[1:0]) begin
@@ -207,15 +207,13 @@ module ysyx_26010011_IFU_icache #(
 // 	end
 // `endif  // FORMAL
 
-	parameter BLOCK_W = CACHE_BLOCK_SIZE * 8;
-	parameter INDEX_W = $clog2(CACHE_SIZE);
-	parameter OFFSET_W = $clog2(CACHE_BLOCK_SIZE);
-	parameter TAG_W   = 32 - OFFSET_W - INDEX_W;
-	parameter BURST_LEN = CACHE_BLOCK_SIZE>>2;
-	parameter BURST_W = (|($clog2(BURST_LEN)))?($clog2(BURST_LEN)):1;
+	localparam BLOCK_W = CACHE_BLOCK_SIZE * 8;
+	localparam INDEX_W = $clog2(CACHE_SIZE);
+	localparam OFFSET_W = $clog2(CACHE_BLOCK_SIZE);
+	localparam TAG_W   = 32 - OFFSET_W - INDEX_W;
+	localparam BURST_LEN = CACHE_BLOCK_SIZE>>2;
+	localparam BURST_W = (|($clog2(BURST_LEN)))?($clog2(BURST_LEN)):1;
 	localparam [BURST_W-1:0] BURST_LAST = BURST_W'(BURST_LEN - 1);
-
-
 
 	wire [INDEX_W-1:0] now_index = {in_addr[INDEX_W-1+OFFSET_W:0 + OFFSET_W]} ;
 	wire [TAG_W-1:0]   now_tag   = {in_addr[INDEX_W + TAG_W - 1 + OFFSET_W: INDEX_W + OFFSET_W]};
@@ -233,8 +231,8 @@ module ysyx_26010011_IFU_icache #(
 			integer i;
 			for (i = 0; i < CACHE_SIZE; i = i + 1) begin
 				cache_valid[i] <= 1'b0;
-				// cache_tag[i]   <= 0;
-				// cache_mem[i]   <= 0;
+				cache_tag[i]   <= 0;
+				cache_mem[i]   <= 0;
 			end
 		end else begin
 			if((r_fire & (state == S_WAIT_DATA) & ~pc_flush)) begin
@@ -339,9 +337,6 @@ module ysyx_26010011_IFU_icache #(
 		end else begin
 			in_respValid = 0;
 		end
-
-
-		
 	end
 
 	always @(*) begin
@@ -411,6 +406,5 @@ module ysyx_26010011_IFU_icache #(
 		if (reset) state <= S_IDLE;
 		else       state <= next_state;
 	end
-
 
 endmodule

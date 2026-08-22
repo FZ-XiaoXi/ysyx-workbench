@@ -1,0 +1,133 @@
+From b8b247f6535d3bce1f1952629e270be8f091b1b6 Mon Sep 17 00:00:00 2001
+From: FZ_XiaoXi <FZXiaoxi@outlook.com>
+Date: Sun, 16 Aug 2026 18:24:53 +0800
+Subject: [PATCH 15/19] =?UTF-8?q?=E6=B5=81=E6=B0=B4=E7=BA=BF:wq?=
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+---
+ perip/amba/apb_delayer.v      |  2 +-
+ perip/amba/axi4_delayer.v     |  4 +-
+ perip/vga/image_rom_640x480.v | 72 +++++++++++++++++------------------
+ 3 files changed, 39 insertions(+), 39 deletions(-)
+
+diff --git a/perip/amba/apb_delayer.v b/perip/amba/apb_delayer.v
+index 4485ce14..3d2f8f8c 100644
+--- a/perip/amba/apb_delayer.v
++++ b/perip/amba/apb_delayer.v
+@@ -51,7 +51,7 @@ module apb_delayer(
+   // wire [31:0]k = 32'd3;
+   // wire [31:0]sk = (k - 32'd1) * s;
+   wire [31:0]s = 32'd1;
+-  wire [31:0]sk = 32'd7;
++  wire [31:0]sk = 32'd9;
+ 
+ 
+   always @(posedge clock or posedge reset) begin
+diff --git a/perip/amba/axi4_delayer.v b/perip/amba/axi4_delayer.v
+index 6542c837..ff1378a7 100644
+--- a/perip/amba/axi4_delayer.v
++++ b/perip/amba/axi4_delayer.v
+@@ -67,7 +67,7 @@ module axi4_delayer(
+   parameter S_DELAY = 2'b10;
+   parameter S_DONE = 2'b11;
+   parameter [31:0]s = 32'd1;
+-  parameter [31:0]sk = 32'd7;
++  parameter [31:0]sk = 32'd9;
+   //RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR
+ 
+ 
+@@ -362,7 +362,7 @@ module axi_read_delayer_single(
+   parameter S_DELAY = 2'b10;
+   parameter S_DONE  = 2'b11;
+   parameter [31:0]s = 32'd1;
+-  parameter [31:0]sk = 32'd7;
++  parameter [31:0]sk = 32'd9;
+   // assign in_rvalid = out_rvalid;
+   // assign in_rid = out_rid;
+   // assign in_rdata = out_rdata;
+diff --git a/perip/vga/image_rom_640x480.v b/perip/vga/image_rom_640x480.v
+index 3e6e3f75..75e3059c 100644
+--- a/perip/vga/image_rom_640x480.v
++++ b/perip/vga/image_rom_640x480.v
+@@ -12,40 +12,40 @@ module image_rom_640x480 (
+ 
+ );
+ 
+-// localparam WIDTH = 640;
+-// localparam HEIGHT = 480;
+-// localparam TOTAL_PIXELS = WIDTH * HEIGHT;
+-
+-// reg [23:0] ram [0:TOTAL_PIXELS-1];
+-
+-// wire [18:0] linear_addr; 
+-// wire [18:0] linear_waddr; 
+-
+-// assign linear_addr = v_addr * 10'd640 + {9'd0, h_addr};
+-// assign linear_waddr = v_waddr * 10'd640 + {9'd0, h_waddr};
+-
+-// always @(*)begin
+-//     if (v_addr < HEIGHT && h_addr < WIDTH) begin
+-//         vga_data = ram[linear_addr];
+-//     end else begin
+-//         vga_data = 24'h000000;
+-//     end
+-// end
+-
+-// always @(posedge clk or posedge reset) begin
+-//     if (reset) begin
+-//         // integer i;
+-//         // for (i = 0; i < TOTAL_PIXELS; i = i + 1) begin
+-//         //     ram[i] <= 24'h000000; // Initialize to black
+-//         // end
+-//     end else begin
+-//         if (v_waddr < HEIGHT && h_waddr < WIDTH && vga_wen) begin
+-//             ram[linear_waddr] <= vga_wdata;
+-//         end
+-//     end
+-// end
+-
+-// initial begin
+-//     $readmemh("/home/seaber/ysyx-workbench/ysyxSoC/perip/vga/image_data.mif", ram);
+-// end
++localparam WIDTH = 640;
++localparam HEIGHT = 480;
++localparam TOTAL_PIXELS = WIDTH * HEIGHT;
++
++reg [23:0] ram [0:TOTAL_PIXELS-1];
++
++wire [18:0] linear_addr; 
++wire [18:0] linear_waddr; 
++
++assign linear_addr = v_addr * 10'd640 + {9'd0, h_addr};
++assign linear_waddr = v_waddr * 10'd640 + {9'd0, h_waddr};
++
++always @(*)begin
++    if (v_addr < HEIGHT && h_addr < WIDTH) begin
++        vga_data = ram[linear_addr];
++    end else begin
++        vga_data = 24'h000000;
++    end
++end
++
++always @(posedge clk or posedge reset) begin
++    if (reset) begin
++        // integer i;
++        // for (i = 0; i < TOTAL_PIXELS; i = i + 1) begin
++        //     ram[i] <= 24'h000000; // Initialize to black
++        // end
++    end else begin
++        if (v_waddr < HEIGHT && h_waddr < WIDTH && vga_wen) begin
++            ram[linear_waddr] <= vga_wdata;
++        end
++    end
++end
++
++initial begin
++    $readmemh("/home/seaber/ysyx-workbench/ysyxSoC/perip/vga/image_data.mif", ram);
++end
+ endmodule
+-- 
+2.43.0
+

@@ -1,0 +1,265 @@
+From 85be347ae8ae4e9419c8d7a14fec1680f6cba3d4 Mon Sep 17 00:00:00 2001
+From: FZ_XiaoXi <FZXiaoxi@outlook.com>
+Date: Thu, 13 Aug 2026 17:32:12 +0800
+Subject: [PATCH 10/19] Yosys + Delayer
+
+---
+ perip/amba/apb_delayer.v             | 112 +++++++++++++++++++++++++--
+ perip/flash/flash.v                  |  17 ++--
+ perip/psram/efabless/EF_PSRAM_CTRL.v |   3 +-
+ perip/psram/psram.v                  |   2 +-
+ perip/sdram/sdram.v                  |   2 +-
+ perip/sdram/sdram_top_apb.v          |   4 +-
+ src/Top.scala                        |   6 +-
+ 7 files changed, 129 insertions(+), 17 deletions(-)
+
+diff --git a/perip/amba/apb_delayer.v b/perip/amba/apb_delayer.v
+index c0d20764..326ec967 100644
+--- a/perip/amba/apb_delayer.v
++++ b/perip/amba/apb_delayer.v
+@@ -8,9 +8,9 @@ module apb_delayer(
+   input         in_pwrite,
+   input  [31:0] in_pwdata,
+   input  [3:0]  in_pstrb,
+-  output        in_pready,
+-  output [31:0] in_prdata,
+-  output        in_pslverr,
++  output reg       in_pready,
++  output reg[31:0] in_prdata,
++  output reg       in_pslverr,
+ 
+   output [31:0] out_paddr,
+   output        out_psel,
+@@ -31,8 +31,108 @@ module apb_delayer(
+   assign out_pwrite  = in_pwrite;
+   assign out_pwdata  = in_pwdata;
+   assign out_pstrb   = in_pstrb;
+-  assign in_pready   = out_pready;
+-  assign in_prdata   = out_prdata;
+-  assign in_pslverr  = out_pslverr;
+ 
++  reg [1:0] state,next_state;
++  reg [31:0] cnt;
++  parameter S_IDLE  = 2'b00;
++  parameter S_WAIT  = 2'b01;
++  parameter S_DELAY = 2'b10;
++
++  always @(posedge clock or posedge reset) begin
++    if (reset) begin
++      state <= S_IDLE;
++    end else begin
++      state <= next_state;
++    end
++  end
++
++
++  // wire [31:0]s = 32'd2;
++  // wire [31:0]k = 32'd3;
++  // wire [31:0]sk = (k - 32'd1) * s;
++  wire [31:0]s = 32'd1;
++  wire [31:0]sk = 32'd1;
++
++
++  always @(posedge clock or posedge reset) begin
++    if (reset) begin
++      cnt <= 32'b0;
++    end else begin
++      if(state == S_IDLE && next_state == S_WAIT) begin
++        cnt <= sk;
++      end else if(state == S_WAIT && next_state == S_WAIT) begin
++        cnt <= cnt + sk;
++      // end else if(state == S_WAIT && next_state == S_DELAY) begin
++      //   cnt <= 32'd5 - 32'd1;
++      end else if(state == S_DELAY || next_state == S_DELAY) begin
++        cnt <= cnt - s;
++      end else begin
++        cnt <= 32'd0;
++      end
++    end
++  end
++
++  always @(*) begin
++    case (state)
++      S_IDLE: begin
++       if(in_psel && ~in_penable) begin
++          next_state = S_WAIT;
++        end else begin
++          next_state = S_IDLE;
++        end
++      end
++      S_WAIT: begin
++        if(out_pready) begin
++          next_state = S_DELAY;
++        end else begin
++          next_state = S_WAIT;
++        end
++      end
++      S_DELAY: begin
++        if(cnt == 32'd0) begin
++          next_state = S_IDLE;
++        end else begin
++          next_state = S_DELAY;
++        end
++      end
++      default: begin
++        next_state = S_IDLE;
++      end
++    endcase
++  end
++
++
++  always @(*) begin
++    if(state == S_DELAY && next_state == S_IDLE) begin
++      in_pready  = pready_reg;
++      in_prdata  = prdata_reg;
++      in_pslverr = pslverr_reg;
++    end else begin
++      in_pready  = 1'b0;
++      in_prdata  = 32'hdeaddead;
++      in_pslverr = 1'b0;
++    end
++  end
++
++  reg [31:0] prdata_reg;
++  reg        pslverr_reg;
++  reg        pready_reg;
++
++  always @(posedge clock or posedge reset) begin
++    if (reset) begin
++      prdata_reg  <= 32'b0;
++      pslverr_reg <= 1'b0;
++      pready_reg  <= 1'b0;
++    end else begin
++      if(state == S_WAIT && next_state == S_DELAY) begin
++        prdata_reg  <= out_prdata;
++        pslverr_reg <= out_pslverr;
++        pready_reg  <= out_pready;
++      end else begin
++        prdata_reg  <= prdata_reg;
++        pslverr_reg <= pslverr_reg;
++        pready_reg  <= pready_reg;
++      end
++    end
++  end
+ endmodule
+diff --git a/perip/flash/flash.v b/perip/flash/flash.v
+index 480d7092..407d19fd 100644
+--- a/perip/flash/flash.v
++++ b/perip/flash/flash.v
+@@ -11,7 +11,10 @@ module flash (
+ );
+   wire reset = ss;
+ 
+-  typedef enum [2:0] { cmd_t, addr_t, data_t, err_t } state_t;
++  parameter cmd_t  = 3'd0;
++  parameter addr_t = 3'd1;
++  parameter data_t = 3'd2;
++  parameter err_t = 3'd3;
+   reg [2:0]  state;
+   reg [7:0]  counter;
+   reg [7:0]  cmd;
+@@ -73,11 +76,11 @@ module flash (
+   always@(posedge sck or posedge reset) begin
+     if (reset) data <= 32'd0;
+     else if (state == data_t) begin
+-      data <= { {counter == 8'd0 ? data_bswap : data}[30:0], 1'b0 };
++      data <= { (counter == 8'd0 ? data_bswap[30:0] : data[30:0]), 1'b0 };
+     end
+   end
+ 
+-  assign miso = ss ? 1'b1 : ({(state == data_t && counter == 8'd0) ? data_bswap : data}[31]);
++  assign miso = ss ? 1'b1 : ({(state == data_t && counter == 8'd0) ? data_bswap[31] : data[31]});
+ 
+ endmodule
+ 
+@@ -91,11 +94,13 @@ module flash_cmd(
+   output reg [31:0] data
+ );
+   always@(posedge clock) begin
+-    if (valid)
+-      if (cmd == 8'h03) flash_read(addr, data);
+-      else begin
++    if (valid) begin
++      if (cmd == 8'h03) begin
++        flash_read(addr, data);
++      end else begin
+         $fwrite(32'h80000002, "Assertion failed: Unsupport command `%xh`, only support `03h` read command\n", cmd);
+         $fatal;
+       end
++    end
+   end
+ endmodule
+diff --git a/perip/psram/efabless/EF_PSRAM_CTRL.v b/perip/psram/efabless/EF_PSRAM_CTRL.v
+index bfaa13a3..7790dcce 100644
+--- a/perip/psram/efabless/EF_PSRAM_CTRL.v
++++ b/perip/psram/efabless/EF_PSRAM_CTRL.v
+@@ -114,7 +114,8 @@ module PSRAM_READER (
+             saddr <= {addr[23:0]};
+ 
+     // Sample with the negedge of sck
+-    wire[1:0] byte_index = {counter[7:1] - ((is_use_qpi)?8'd3:8'd10)}[1:0];
++    wire[7:0] byte_index_tmp = {counter[7:1] - ((is_use_qpi)?8'd3:8'd10)};
++    wire[1:0] byte_index = byte_index_tmp[1:0];
+     always @ (posedge clk)
+         if(counter >= ((is_use_qpi)?14:20) && counter <= FINAL_COUNT)
+             if(sck)
+diff --git a/perip/psram/psram.v b/perip/psram/psram.v
+index edb5fd35..879e6df7 100644
+--- a/perip/psram/psram.v
++++ b/perip/psram/psram.v
+@@ -252,7 +252,7 @@ always @(*) begin
+   end
+ end
+ 
+-always @(posedge sck or posedge ce_n) begin
++always @(posedge sck) begin
+   if(state == S_SET_CMD && next_state == S_IDLE && ce_n) begin
+     is_QPI <= 1;
+   end else begin
+diff --git a/perip/sdram/sdram.v b/perip/sdram/sdram.v
+index 269b27eb..fb787848 100644
+--- a/perip/sdram/sdram.v
++++ b/perip/sdram/sdram.v
+@@ -273,7 +273,7 @@ module sdram_16(
+       if(state==S_IDLE && wire_command==M_ACTIVE) begin
+         reg_active_row[ba] <= a;
+       end else begin
+-        reg_active_row <= reg_active_row;
++        // reg_active_row <= reg_active_row;
+       end
+ 
+       if(state==S_IDLE && (wire_command==M_WRITE || wire_command==M_READ)) begin
+diff --git a/perip/sdram/sdram_top_apb.v b/perip/sdram/sdram_top_apb.v
+index a3d82665..792938e7 100644
+--- a/perip/sdram/sdram_top_apb.v
++++ b/perip/sdram/sdram_top_apb.v
+@@ -28,7 +28,9 @@ module sdram_top_apb (
+   wire [31:0] sdram_dout;
+   assign sdram_dq = sdram_dout_en ? sdram_dout : 32'bz;
+ 
+-  typedef enum [1:0] { ST_IDLE, ST_WAIT_ACCEPT, ST_WAIT_ACK } state_t;
++  parameter ST_IDLE = 2'b00;
++  parameter ST_WAIT_ACCEPT = 2'b01;
++  parameter ST_WAIT_ACK = 2'b10;
+   reg [1:0] state;
+   wire req_accept;
+ 
+diff --git a/src/Top.scala b/src/Top.scala
+index c00378a6..c3bcd72b 100644
+--- a/src/Top.scala
++++ b/src/Top.scala
+@@ -21,6 +21,10 @@ class ysyxSoCTop extends Module {
+ }
+ 
+ object Elaborate extends App {
+-  val firtoolOptions = Array("--disable-annotation-unknown")
++  val firtoolOptions = Array(
++    "--disable-annotation-unknown",
++    // Verilog-2005 style output: no SystemVerilog-only constructs
++    "--lowering-options=disallowLocalVariables,disallowPackedArrays,disallowExpressionInliningInPorts,locationInfoStyle=plain"
++  )
+   circt.stage.ChiselStage.emitSystemVerilogFile(new ysyxSoCTop, args, firtoolOptions)
+ }
+-- 
+2.43.0
+

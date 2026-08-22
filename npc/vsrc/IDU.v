@@ -8,283 +8,283 @@
 // ╚═╝ ╚═════╝   ╚═════╝
 `include "csr_defines.v"
 module ysyx_26010011_IDU(
-    input clock,
-    input reset,
-    input flush_valid,
-    input fencei_pass,
-    output fencei_flush,
-    input idu_isRAW,
-    //IFU->IDU
-    input        [31:0]idu_in_bus_instruction,
-    input        [31:0]idu_in_bus_pc,
-    input        [ 4:0]idu_in_bus_exception,
-    input              idu_in_valid,
-    output             idu_in_ready,
-    //IDU->EXU
-    output             idu_out_valid,
-    input              idu_out_ready,
-    output       [ 4:0]idu_out_bus_rd,
-    output reg   [ 4:0]idu_out_bus_exception,
-    output       [11:0]idu_out_bus_csrrd,
-    output       [ 4:0]idu_out_bus_rs1,
-    output       [ 4:0]idu_out_bus_rs2,
-    output logic [31:0]idu_out_bus_imm,
-    output             idu_out_bus_isLOAD,
-    output             idu_out_bus_isSTORE,
-    output             idu_out_bus_isWGPR,
-    output             idu_out_bus_isJUMP,
-    output             idu_out_bus_isWCOMP,
-    output             idu_out_bus_isBRANCH,
-    output logic [ 2:0]idu_out_bus_opCSR,
-    output             idu_out_bus_isUnSigned,
-    output             idu_out_bus_isUsePC,
-    output             idu_out_bus_alu_isUseImm,
-    output             idu_out_bus_comp_isUseImm,
-    output logic [ 9:0]idu_out_bus_alu_op,
-    output logic [ 1:0]idu_out_bus_comp_op,
-    output       [ 1:0]idu_out_bus_perip_mask
+	input clock,
+	input reset,
+	input flush_valid,
+	input fencei_pass,
+	output fencei_flush,
+	input idu_isRAW,
+	//IFU->IDU
+	input        [31:0]idu_in_bus_instruction,
+	input        [31:0]idu_in_bus_pc,
+	input        [ 4:0]idu_in_bus_exception,
+	input              idu_in_valid,
+	output             idu_in_ready,
+	//IDU->EXU
+	output             idu_out_valid,
+	input              idu_out_ready,
+	output       [ 4:0]idu_out_bus_rd,
+	output reg   [ 4:0]idu_out_bus_exception,
+	output       [11:0]idu_out_bus_csrrd,
+	output       [ 4:0]idu_out_bus_rs1,
+	output       [ 4:0]idu_out_bus_rs2,
+	output logic [31:0]idu_out_bus_imm,
+	output             idu_out_bus_isLOAD,
+	output             idu_out_bus_isSTORE,
+	output             idu_out_bus_isWGPR,
+	output             idu_out_bus_isJUMP,
+	output             idu_out_bus_isWCOMP,
+	output             idu_out_bus_isBRANCH,
+	output logic [ 2:0]idu_out_bus_opCSR,
+	output             idu_out_bus_isUnSigned,
+	output             idu_out_bus_isUsePC,
+	output             idu_out_bus_alu_isUseImm,
+	output             idu_out_bus_comp_isUseImm,
+	output logic [ 9:0]idu_out_bus_alu_op,
+	output logic [ 1:0]idu_out_bus_comp_op,
+	output       [ 1:0]idu_out_bus_perip_mask
 
-    // output [31:0] w_pc,
-    // output [31:0] w_tar,
-    // output w_valid,
-    // output w_type
+	// output [31:0] w_pc,
+	// output [31:0] w_tar,
+	// output w_valid,
+	// output w_type
 
 );
 
-    reg state, next_state;
-    parameter S_WORKING = 1'b0, S_WAITING = 1'b1;
-    always @(posedge clock) begin
-        if(reset | flush_valid) state <= S_WORKING;
-        else      state <= next_state;
-    end
+	reg state, next_state;
+	parameter S_WORKING = 1'b0, S_WAITING = 1'b1;
+	always @(posedge clock) begin
+		if(reset | flush_valid) state <= S_WORKING;
+		else      state <= next_state;
+	end
 
-    always @(*) begin
-        if(state == S_WORKING) begin
-            if(idu_in_valid && isFENCEI) begin
-                next_state = S_WAITING;
-            end else begin
-                next_state = S_WORKING;
-            end
-        end else if(state == S_WAITING) begin
-            if(fencei_pass) begin
-                next_state = S_WORKING;
-            end else begin
-                next_state = S_WAITING;
-            end
-        end else begin
-            next_state = S_WORKING;
-        end
-    end
+	always @(*) begin
+		if(state == S_WORKING) begin
+			if(idu_in_valid && isFENCEI) begin
+				next_state = S_WAITING;
+			end else begin
+				next_state = S_WORKING;
+			end
+		end else if(state == S_WAITING) begin
+			if(fencei_pass) begin
+				next_state = S_WORKING;
+			end else begin
+				next_state = S_WAITING;
+			end
+		end else begin
+			next_state = S_WORKING;
+		end
+	end
 
-    assign idu_in_ready = idu_out_ready & (~idu_isRAW | idu_out_bus_exception[4]) & (state == S_WORKING && next_state == S_WORKING);
-    assign idu_out_valid = idu_in_valid & (~idu_isRAW | idu_out_bus_exception[4]) & (state == S_WORKING);
-    assign fencei_flush = idu_in_valid & isFENCEI & (state == S_WORKING) & ~idu_out_bus_exception[4];
+	assign idu_in_ready = idu_out_ready & (~idu_isRAW | idu_out_bus_exception[4]) & (state == S_WORKING && next_state == S_WORKING);
+	assign idu_out_valid = idu_in_valid & (~idu_isRAW | idu_out_bus_exception[4]) & (state == S_WORKING);
+	assign fencei_flush = idu_in_valid & isFENCEI & (state == S_WORKING) & ~idu_out_bus_exception[4];
 
-    logic [ 6: 0]opcode;
-    logic [11: 0]immI;
-    logic [11: 0]immS;
-    logic [12: 1]immB;
-    logic [31:12]immU;
-    logic [20: 1]immJ;
-    logic [ 2: 0]funct3;
-    logic [ 6: 0]funct7;
+	logic [ 6: 0]opcode;
+	logic [11: 0]immI;
+	logic [11: 0]immS;
+	logic [12: 1]immB;
+	logic [31:12]immU;
+	logic [20: 1]immJ;
+	logic [ 2: 0]funct3;
+	logic [ 6: 0]funct7;
 
-    logic isECALL, isEBREAK, isMRET,isFENCEI;
-    logic isLUI, isAUIPC, isJAL, isJALR, isBEQ, isBNE, isBLT, isBGE, isBLTU, isBGEU;
-    logic isLB, isLH, isLW, isLBU, isLHU, isSB, isSH, isSW, isADDI, isSLTI, isSLTIU;
-    logic isXORI, isORI, isANDI, isSLLI, isSRLI, isSRAI, isADD, isSUB, isSLL, isSLT;
-    logic isSLTU, isXOR, isSRL, isSRA, isOR, isAND;
-    // logic isMULHU, isDIV, isDIVU, isREM, isREMU;
+	logic isECALL, isEBREAK, isMRET,isFENCEI;
+	logic isLUI, isAUIPC, isJAL, isJALR, isBEQ, isBNE, isBLT, isBGE, isBLTU, isBGEU;
+	logic isLB, isLH, isLW, isLBU, isLHU, isSB, isSH, isSW, isADDI, isSLTI, isSLTIU;
+	logic isXORI, isORI, isANDI, isSLLI, isSRLI, isSRAI, isADD, isSUB, isSLL, isSLT;
+	logic isSLTU, isXOR, isSRL, isSRA, isOR, isAND;
+	// logic isMULHU, isDIV, isDIVU, isREM, isREMU;
 
-    logic isCSRRW,isCSRRS,isCSRRC,isCSRRWI,isCSRRSI,isCSRRCI;
+	logic isCSRRW,isCSRRS,isCSRRC,isCSRRWI,isCSRRSI,isCSRRCI;
 
-    logic isR,isI,isS,isB,isU,isJ;
+	logic isR,isI,isS,isB,isU,isJ;
 
-    wire all_inst;
-    assign all_inst = (isLUI|isAUIPC|isJAL|isJALR|isBEQ|isBNE|isBLT|isBGE|isBLTU|isBGEU
-                    |isLB|isLH|isLW|isLBU|isLHU|isSB|isSH|isSW
-                    |isADDI|isSLTI|isSLTIU|isXORI|isORI|isANDI
-                    |isSLLI|isSRLI|isSRAI
-                    |isADD|isSUB|isSLL|isSLT|isSLTU
-                    |isXOR|isSRL|isSRA|isOR|isAND
-                    |(|idu_out_bus_opCSR)
-                    |isECALL|isEBREAK|isMRET|isFENCEI);//////////////////////////
+	wire all_inst;
+	assign all_inst = (isLUI|isAUIPC|isJAL|isJALR|isBEQ|isBNE|isBLT|isBGE|isBLTU|isBGEU
+					|isLB|isLH|isLW|isLBU|isLHU|isSB|isSH|isSW
+					|isADDI|isSLTI|isSLTIU|isXORI|isORI|isANDI
+					|isSLLI|isSRLI|isSRAI
+					|isADD|isSUB|isSLL|isSLT|isSLTU
+					|isXOR|isSRL|isSRA|isOR|isAND
+					|(|idu_out_bus_opCSR)
+					|isECALL|isEBREAK|isMRET|isFENCEI);//////////////////////////
 
-    assign opcode=  idu_in_bus_instruction[ 6: 0];
-    assign idu_out_bus_rd=      idu_in_bus_instruction[11: 7];
-    assign idu_out_bus_csrrd=   idu_in_bus_instruction[31:20];
-    assign idu_out_bus_rs1=     idu_in_bus_instruction[19:15];
-    assign idu_out_bus_rs2=     idu_in_bus_instruction[24:20];
-    assign funct3=  idu_in_bus_instruction[14:12];
-    assign funct7=  idu_in_bus_instruction[31:25];
-    
-    assign immI = {idu_in_bus_instruction[31:20]                                             };
-    assign immS = {idu_in_bus_instruction[31:25],idu_in_bus_instruction[11: 7]                              };
-    assign immB = {idu_in_bus_instruction[31:31],idu_in_bus_instruction[ 7: 7],idu_in_bus_instruction[30:25],idu_in_bus_instruction[11: 8]};
-    assign immU = {idu_in_bus_instruction[31:12]                                             };
-    assign immJ = {idu_in_bus_instruction[31:31],idu_in_bus_instruction[19:12],idu_in_bus_instruction[20:20],idu_in_bus_instruction[30:21]};
-    assign idu_out_bus_alu_isUseImm = (isI|isS|isB|isU|isJ)?1:0;
-    assign idu_out_bus_comp_isUseImm = (isSLTI|isSLTIU)?1:0;
+	assign opcode=  idu_in_bus_instruction[ 6: 0];
+	assign idu_out_bus_rd=      idu_in_bus_instruction[11: 7];
+	assign idu_out_bus_csrrd=   idu_in_bus_instruction[31:20];
+	assign idu_out_bus_rs1=     idu_in_bus_instruction[19:15];
+	assign idu_out_bus_rs2=     idu_in_bus_instruction[24:20];
+	assign funct3=  idu_in_bus_instruction[14:12];
+	assign funct7=  idu_in_bus_instruction[31:25];
+	
+	assign immI = {idu_in_bus_instruction[31:20]                                             };
+	assign immS = {idu_in_bus_instruction[31:25],idu_in_bus_instruction[11: 7]                              };
+	assign immB = {idu_in_bus_instruction[31:31],idu_in_bus_instruction[ 7: 7],idu_in_bus_instruction[30:25],idu_in_bus_instruction[11: 8]};
+	assign immU = {idu_in_bus_instruction[31:12]                                             };
+	assign immJ = {idu_in_bus_instruction[31:31],idu_in_bus_instruction[19:12],idu_in_bus_instruction[20:20],idu_in_bus_instruction[30:21]};
+	assign idu_out_bus_alu_isUseImm = (isI|isS|isB|isU|isJ)?1:0;
+	assign idu_out_bus_comp_isUseImm = (isSLTI|isSLTIU)?1:0;
 /////////////////////////
-    assign isLUI    = (opcode == 7'b0110111                                             ) ? 1 : 0;
-    assign isAUIPC  = (opcode == 7'b0010111                                             ) ? 1 : 0;
-    assign isJAL    = (opcode == 7'b1101111                                             ) ? 1 : 0;
-    assign isJALR   = (opcode == 7'b1100111 && funct3 == 3'b000                         ) ? 1 : 0;
-    assign isBEQ    = (opcode == 7'b1100011 && funct3 == 3'b000                         ) ? 1 : 0;
-    assign isBNE    = (opcode == 7'b1100011 && funct3 == 3'b001                         ) ? 1 : 0;
-    assign isBLT    = (opcode == 7'b1100011 && funct3 == 3'b100                         ) ? 1 : 0;
-    assign isBGE    = (opcode == 7'b1100011 && funct3 == 3'b101                         ) ? 1 : 0;
-    assign isBLTU   = (opcode == 7'b1100011 && funct3 == 3'b110                         ) ? 1 : 0;
-    assign isBGEU   = (opcode == 7'b1100011 && funct3 == 3'b111                         ) ? 1 : 0;
-    assign isLB     = (opcode == 7'b0000011 && funct3 == 3'b000                         ) ? 1 : 0;
-    assign isLH     = (opcode == 7'b0000011 && funct3 == 3'b001                         ) ? 1 : 0;
-    assign isLW     = (opcode == 7'b0000011 && funct3 == 3'b010                         ) ? 1 : 0;
-    assign isLBU    = (opcode == 7'b0000011 && funct3 == 3'b100                         ) ? 1 : 0;
-    assign isLHU    = (opcode == 7'b0000011 && funct3 == 3'b101                         ) ? 1 : 0;
-    assign isSB     = (opcode == 7'b0100011 && funct3 == 3'b000                         ) ? 1 : 0;
-    assign isSH     = (opcode == 7'b0100011 && funct3 == 3'b001                         ) ? 1 : 0;
-    assign isSW     = (opcode == 7'b0100011 && funct3 == 3'b010                         ) ? 1 : 0;
-    assign isADDI   = (opcode == 7'b0010011 && funct3 == 3'b000                         ) ? 1 : 0;
-    assign isSLTI   = (opcode == 7'b0010011 && funct3 == 3'b010                         ) ? 1 : 0;
-    assign isSLTIU  = (opcode == 7'b0010011 && funct3 == 3'b011                         ) ? 1 : 0;
-    assign isXORI   = (opcode == 7'b0010011 && funct3 == 3'b100                         ) ? 1 : 0;
-    assign isORI    = (opcode == 7'b0010011 && funct3 == 3'b110                         ) ? 1 : 0;
-    assign isANDI   = (opcode == 7'b0010011 && funct3 == 3'b111                         ) ? 1 : 0;
-    assign isSLLI   = (opcode == 7'b0010011 && funct3 == 3'b001 && funct7 == 7'b0000000 ) ? 1 : 0;
-    assign isSRLI   = (opcode == 7'b0010011 && funct3 == 3'b101 && funct7 == 7'b0000000 ) ? 1 : 0;
-    assign isSRAI   = (opcode == 7'b0010011 && funct3 == 3'b101 && funct7 == 7'b0100000 ) ? 1 : 0;
-    assign isADD    = (opcode == 7'b0110011 && funct3 == 3'b000 && funct7 == 7'b0000000 ) ? 1 : 0;
-    assign isSUB    = (opcode == 7'b0110011 && funct3 == 3'b000 && funct7 == 7'b0100000 ) ? 1 : 0;
-    assign isSLL    = (opcode == 7'b0110011 && funct3 == 3'b001 && funct7 == 7'b0000000 ) ? 1 : 0;
-    assign isSLT    = (opcode == 7'b0110011 && funct3 == 3'b010 && funct7 == 7'b0000000 ) ? 1 : 0;
-    assign isSLTU   = (opcode == 7'b0110011 && funct3 == 3'b011 && funct7 == 7'b0000000 ) ? 1 : 0;
-    assign isXOR    = (opcode == 7'b0110011 && funct3 == 3'b100 && funct7 == 7'b0000000 ) ? 1 : 0;
-    assign isSRL    = (opcode == 7'b0110011 && funct3 == 3'b101 && funct7 == 7'b0000000 ) ? 1 : 0;
-    assign isSRA    = (opcode == 7'b0110011 && funct3 == 3'b101 && funct7 == 7'b0100000 ) ? 1 : 0;
-    assign isOR     = (opcode == 7'b0110011 && funct3 == 3'b110 && funct7 == 7'b0000000 ) ? 1 : 0;
-    assign isAND    = (opcode == 7'b0110011 && funct3 == 3'b111 && funct7 == 7'b0000000 ) ? 1 : 0;
+	assign isLUI    = (opcode == 7'b0110111                                             ) ? 1 : 0;
+	assign isAUIPC  = (opcode == 7'b0010111                                             ) ? 1 : 0;
+	assign isJAL    = (opcode == 7'b1101111                                             ) ? 1 : 0;
+	assign isJALR   = (opcode == 7'b1100111 && funct3 == 3'b000                         ) ? 1 : 0;
+	assign isBEQ    = (opcode == 7'b1100011 && funct3 == 3'b000                         ) ? 1 : 0;
+	assign isBNE    = (opcode == 7'b1100011 && funct3 == 3'b001                         ) ? 1 : 0;
+	assign isBLT    = (opcode == 7'b1100011 && funct3 == 3'b100                         ) ? 1 : 0;
+	assign isBGE    = (opcode == 7'b1100011 && funct3 == 3'b101                         ) ? 1 : 0;
+	assign isBLTU   = (opcode == 7'b1100011 && funct3 == 3'b110                         ) ? 1 : 0;
+	assign isBGEU   = (opcode == 7'b1100011 && funct3 == 3'b111                         ) ? 1 : 0;
+	assign isLB     = (opcode == 7'b0000011 && funct3 == 3'b000                         ) ? 1 : 0;
+	assign isLH     = (opcode == 7'b0000011 && funct3 == 3'b001                         ) ? 1 : 0;
+	assign isLW     = (opcode == 7'b0000011 && funct3 == 3'b010                         ) ? 1 : 0;
+	assign isLBU    = (opcode == 7'b0000011 && funct3 == 3'b100                         ) ? 1 : 0;
+	assign isLHU    = (opcode == 7'b0000011 && funct3 == 3'b101                         ) ? 1 : 0;
+	assign isSB     = (opcode == 7'b0100011 && funct3 == 3'b000                         ) ? 1 : 0;
+	assign isSH     = (opcode == 7'b0100011 && funct3 == 3'b001                         ) ? 1 : 0;
+	assign isSW     = (opcode == 7'b0100011 && funct3 == 3'b010                         ) ? 1 : 0;
+	assign isADDI   = (opcode == 7'b0010011 && funct3 == 3'b000                         ) ? 1 : 0;
+	assign isSLTI   = (opcode == 7'b0010011 && funct3 == 3'b010                         ) ? 1 : 0;
+	assign isSLTIU  = (opcode == 7'b0010011 && funct3 == 3'b011                         ) ? 1 : 0;
+	assign isXORI   = (opcode == 7'b0010011 && funct3 == 3'b100                         ) ? 1 : 0;
+	assign isORI    = (opcode == 7'b0010011 && funct3 == 3'b110                         ) ? 1 : 0;
+	assign isANDI   = (opcode == 7'b0010011 && funct3 == 3'b111                         ) ? 1 : 0;
+	assign isSLLI   = (opcode == 7'b0010011 && funct3 == 3'b001 && funct7 == 7'b0000000 ) ? 1 : 0;
+	assign isSRLI   = (opcode == 7'b0010011 && funct3 == 3'b101 && funct7 == 7'b0000000 ) ? 1 : 0;
+	assign isSRAI   = (opcode == 7'b0010011 && funct3 == 3'b101 && funct7 == 7'b0100000 ) ? 1 : 0;
+	assign isADD    = (opcode == 7'b0110011 && funct3 == 3'b000 && funct7 == 7'b0000000 ) ? 1 : 0;
+	assign isSUB    = (opcode == 7'b0110011 && funct3 == 3'b000 && funct7 == 7'b0100000 ) ? 1 : 0;
+	assign isSLL    = (opcode == 7'b0110011 && funct3 == 3'b001 && funct7 == 7'b0000000 ) ? 1 : 0;
+	assign isSLT    = (opcode == 7'b0110011 && funct3 == 3'b010 && funct7 == 7'b0000000 ) ? 1 : 0;
+	assign isSLTU   = (opcode == 7'b0110011 && funct3 == 3'b011 && funct7 == 7'b0000000 ) ? 1 : 0;
+	assign isXOR    = (opcode == 7'b0110011 && funct3 == 3'b100 && funct7 == 7'b0000000 ) ? 1 : 0;
+	assign isSRL    = (opcode == 7'b0110011 && funct3 == 3'b101 && funct7 == 7'b0000000 ) ? 1 : 0;
+	assign isSRA    = (opcode == 7'b0110011 && funct3 == 3'b101 && funct7 == 7'b0100000 ) ? 1 : 0;
+	assign isOR     = (opcode == 7'b0110011 && funct3 == 3'b110 && funct7 == 7'b0000000 ) ? 1 : 0;
+	assign isAND    = (opcode == 7'b0110011 && funct3 == 3'b111 && funct7 == 7'b0000000 ) ? 1 : 0;
 
-    assign isCSRRC  = (opcode == 7'b1110011 && funct3 == 3'b011                         ) ? 1 : 0;
-    assign isCSRRCI = (opcode == 7'b1110011 && funct3 == 3'b111                         ) ? 1 : 0;
-    assign isCSRRS  = (opcode == 7'b1110011 && funct3 == 3'b010                         ) ? 1 : 0;
-    assign isCSRRSI = (opcode == 7'b1110011 && funct3 == 3'b110                         ) ? 1 : 0;
-    assign isCSRRW  = (opcode == 7'b1110011 && funct3 == 3'b001                         ) ? 1 : 0;
-    assign isCSRRWI = (opcode == 7'b1110011 && funct3 == 3'b101                         ) ? 1 : 0;
+	assign isCSRRC  = (opcode == 7'b1110011 && funct3 == 3'b011                         ) ? 1 : 0;
+	assign isCSRRCI = (opcode == 7'b1110011 && funct3 == 3'b111                         ) ? 1 : 0;
+	assign isCSRRS  = (opcode == 7'b1110011 && funct3 == 3'b010                         ) ? 1 : 0;
+	assign isCSRRSI = (opcode == 7'b1110011 && funct3 == 3'b110                         ) ? 1 : 0;
+	assign isCSRRW  = (opcode == 7'b1110011 && funct3 == 3'b001                         ) ? 1 : 0;
+	assign isCSRRWI = (opcode == 7'b1110011 && funct3 == 3'b101                         ) ? 1 : 0;
 
-    assign isECALL  = (idu_in_bus_instruction==32'b00000000000000000000000001110011                    ) ? 1 : 0;
-    assign isEBREAK = (idu_in_bus_instruction==32'b00000000000100000000000001110011                    ) ? 1 : 0;
-    assign isMRET   = (idu_in_bus_instruction==32'b00110000001000000000000001110011                    ) ? 1 : 0;
-    assign isFENCEI = (idu_in_bus_instruction==32'b00000000000000000001000000001111                    ) ? 1 : 0;
+	assign isECALL  = (idu_in_bus_instruction==32'b00000000000000000000000001110011                    ) ? 1 : 0;
+	assign isEBREAK = (idu_in_bus_instruction==32'b00000000000100000000000001110011                    ) ? 1 : 0;
+	assign isMRET   = (idu_in_bus_instruction==32'b00110000001000000000000001110011                    ) ? 1 : 0;
+	assign isFENCEI = (idu_in_bus_instruction==32'b00000000000000000001000000001111                    ) ? 1 : 0;
 
-    // //M-ext R-ty
-    // assign isMUL    = (opcode == 7'b0110011 && funct3 == 3'b000 && funct7 == 7'b0000001 ) ? 1 : 0;
-    // assign isMULH   = (opcode == 7'b0110011 && funct3 == 3'b001 && funct7 == 7'b0000001 ) ? 1 : 0;
-    // assign isMULHSU = (opcode == 7'b0110011 && funct3 == 3'b010 && funct7 == 7'b0000001 ) ? 1 : 0;
-    // assign isMULHU  = (opcode == 7'b0110011 && funct3 == 3'b011 && funct7 == 7'b0000001 ) ? 1 : 0;
-    // assign isDIV    = (opcode == 7'b0110011 && funct3 == 3'b100 && funct7 == 7'b0000001 ) ? 1 : 0;
-    // assign isDIVU   = (opcode == 7'b0110011 && funct3 == 3'b101 && funct7 == 7'b0000001 ) ? 1 : 0;
-    // assign isREM    = (opcode == 7'b0110011 && funct3 == 3'b110 && funct7 == 7'b0000001 ) ? 1 : 0;
-    // assign isREMU   = (opcode == 7'b0110011 && funct3 == 3'b111 && funct7 == 7'b0000001 ) ? 1 : 0;
+	// //M-ext R-ty
+	// assign isMUL    = (opcode == 7'b0110011 && funct3 == 3'b000 && funct7 == 7'b0000001 ) ? 1 : 0;
+	// assign isMULH   = (opcode == 7'b0110011 && funct3 == 3'b001 && funct7 == 7'b0000001 ) ? 1 : 0;
+	// assign isMULHSU = (opcode == 7'b0110011 && funct3 == 3'b010 && funct7 == 7'b0000001 ) ? 1 : 0;
+	// assign isMULHU  = (opcode == 7'b0110011 && funct3 == 3'b011 && funct7 == 7'b0000001 ) ? 1 : 0;
+	// assign isDIV    = (opcode == 7'b0110011 && funct3 == 3'b100 && funct7 == 7'b0000001 ) ? 1 : 0;
+	// assign isDIVU   = (opcode == 7'b0110011 && funct3 == 3'b101 && funct7 == 7'b0000001 ) ? 1 : 0;
+	// assign isREM    = (opcode == 7'b0110011 && funct3 == 3'b110 && funct7 == 7'b0000001 ) ? 1 : 0;
+	// assign isREMU   = (opcode == 7'b0110011 && funct3 == 3'b111 && funct7 == 7'b0000001 ) ? 1 : 0;
 
 
 /////////////////////////
 
-    assign idu_out_bus_isLOAD = (isLW|isLBU|isLB|isLH|isLHU)?1:0;
-    assign idu_out_bus_isSTORE= (isSW|isSB|isSH)?1:0;
-    assign idu_out_bus_isWGPR = (isLUI|isAUIPC|isJAL|isJALR|isADDI|isSLTI|isSLTIU|isXORI|isORI|isANDI|isSLLI|isSRLI|isSRAI|isADD|isSUB|isSLL|isSLT|isSLTU|isXOR|isSRL|isSRA|isOR|isAND|idu_out_bus_isLOAD|(|idu_out_bus_opCSR))?1:0;
-    assign idu_out_bus_isJUMP= (isJAL|isJALR)?1:0;
-    assign idu_out_bus_isUsePC = (isAUIPC|isJAL|isBEQ|isBNE|isBLT|isBGE|isBLTU|isBGEU)?1:0;
-    assign idu_out_bus_isWCOMP=(isSLTI|isSLTIU|isSLT|isSLTU)?1:0;
+	assign idu_out_bus_isLOAD = (isLW|isLBU|isLB|isLH|isLHU)?1:0;
+	assign idu_out_bus_isSTORE= (isSW|isSB|isSH)?1:0;
+	assign idu_out_bus_isWGPR = (isLUI|isAUIPC|isJAL|isJALR|isADDI|isSLTI|isSLTIU|isXORI|isORI|isANDI|isSLLI|isSRLI|isSRAI|isADD|isSUB|isSLL|isSLT|isSLTU|isXOR|isSRL|isSRA|isOR|isAND|idu_out_bus_isLOAD|(|idu_out_bus_opCSR))?1:0;
+	assign idu_out_bus_isJUMP= (isJAL|isJALR)?1:0;
+	assign idu_out_bus_isUsePC = (isAUIPC|isJAL|isBEQ|isBNE|isBLT|isBGE|isBLTU|isBGEU)?1:0;
+	assign idu_out_bus_isWCOMP=(isSLTI|isSLTIU|isSLT|isSLTU)?1:0;
 /////////////////////////
-    assign isI=(isADDI|isSLTI|isSLTIU|isXORI|isORI|isANDI|isSLLI|isSRLI|isSRAI|isJALR|isLW|isLBU|isLB|isLH|isLHU|(|idu_out_bus_opCSR))?1:0;
-    assign isR=(isADD|isSUB|isSLL|isSLT|isSLTU|isXOR|isSRL|isSRA|isOR|isAND)?1:0;
-    assign isS=(isSW|isSB|isSH)?1:0;
-    assign isB=(isBEQ|isBNE|isBLT|isBGE|isBLTU|isBGEU)?1:0;
-    assign isU=(isLUI|isAUIPC)?1:0;
-    assign isJ=(isJAL)?1:0;
-    always @(*) begin
-        if(isCSRRS)       idu_out_bus_opCSR=3'b001;
-        else if(isCSRRSI) idu_out_bus_opCSR=3'b101;
-        else if(isCSRRC)  idu_out_bus_opCSR=3'b010;
-        else if(isCSRRCI) idu_out_bus_opCSR=3'b110;
-        else if(isCSRRW)  idu_out_bus_opCSR=3'b011;
-        else if(isCSRRWI) idu_out_bus_opCSR=3'b111;
-        else              idu_out_bus_opCSR=3'b000;
-    end
+	assign isI=(isADDI|isSLTI|isSLTIU|isXORI|isORI|isANDI|isSLLI|isSRLI|isSRAI|isJALR|isLW|isLBU|isLB|isLH|isLHU|(|idu_out_bus_opCSR))?1:0;
+	assign isR=(isADD|isSUB|isSLL|isSLT|isSLTU|isXOR|isSRL|isSRA|isOR|isAND)?1:0;
+	assign isS=(isSW|isSB|isSH)?1:0;
+	assign isB=(isBEQ|isBNE|isBLT|isBGE|isBLTU|isBGEU)?1:0;
+	assign isU=(isLUI|isAUIPC)?1:0;
+	assign isJ=(isJAL)?1:0;
+	always @(*) begin
+		if(isCSRRS)       idu_out_bus_opCSR=3'b001;
+		else if(isCSRRSI) idu_out_bus_opCSR=3'b101;
+		else if(isCSRRC)  idu_out_bus_opCSR=3'b010;
+		else if(isCSRRCI) idu_out_bus_opCSR=3'b110;
+		else if(isCSRRW)  idu_out_bus_opCSR=3'b011;
+		else if(isCSRRWI) idu_out_bus_opCSR=3'b111;
+		else              idu_out_bus_opCSR=3'b000;
+	end
 
-    always @(*) begin
-        if     (isI)    idu_out_bus_imm={{20{immI[11:11]}},immI[11:0]};
-        else if(isJ)    idu_out_bus_imm={{11{immJ[20:20]}},immJ[20:1],1'b0};
-        else if(isS)    idu_out_bus_imm={{20{immS[11:11]}},immS[11:0]};
-        else if(isU)    idu_out_bus_imm={   {immU[31:12]} ,{12{1'b0}}};
-        else if(isB)    idu_out_bus_imm={{19{immB[12:12]}},immB[12:1],1'b0};
-        else            idu_out_bus_imm=0;
-    end
-    //9-add sub xxx xxx LL LR AR AND OR XOR-0
-    /////////////////////////
-    // always @(*)begin
-    //     if(isMUL)
-    //         idu_out_bus_alu_op[12:10] = 3'b111;
-    //     else if(isMULH)
-    //         idu_out_bus_alu_op[12:10] = 3'b001;
-    //     else if(isMULHSU)
-    //         idu_out_bus_alu_op[12:10] = 3'b010;
-    //     else if(isMULHU)
-    //         idu_out_bus_alu_op[12:10] = 3'b011;
-    //     else if(isDIV | isDIVU)
-    //         idu_out_bus_alu_op[12:10] = 3'b100;
-    //     else if(isREM | isREMU)
-    //         idu_out_bus_alu_op[12:10] = 3'b101;
-    //     else
-    //         idu_out_bus_alu_op[12:10] = 3'b000;
-    // end
-    assign idu_out_bus_alu_op[9]=(isAUIPC|isJAL|isJALR|isADD|isLW|isLBU|isLB|isLH|isSW|isSH|isSB|isADDI|isLHU|isBEQ|isBNE|isBLT|isBGE|isBLTU|isBGEU)?1:0;
-    assign idu_out_bus_alu_op[8]=(isSUB)?1:0;
-    // Zbc: alu_op[7]=1, comp_op encodes: 00=clmul, 01=clmulh, 10=clmulr
-    assign idu_out_bus_alu_op[7]=0;
-    assign idu_out_bus_alu_op[6]=0;
-    assign idu_out_bus_alu_op[5]=(isSLLI|isSLL)?1:0;
-    assign idu_out_bus_alu_op[4]=(isSRLI|isSRL)?1:0;
-    assign idu_out_bus_alu_op[3]=(isSRAI|isSRA)?1:0;
-    assign idu_out_bus_alu_op[2]=(isANDI|isAND)?1:0;
-    assign idu_out_bus_alu_op[1]=(isORI|isOR)?1:0;
-    assign idu_out_bus_alu_op[0]=(isXORI|isXOR)?1:0;
+	always @(*) begin
+		if     (isI)    idu_out_bus_imm={{20{immI[11:11]}},immI[11:0]};
+		else if(isJ)    idu_out_bus_imm={{11{immJ[20:20]}},immJ[20:1],1'b0};
+		else if(isS)    idu_out_bus_imm={{20{immS[11:11]}},immS[11:0]};
+		else if(isU)    idu_out_bus_imm={   {immU[31:12]} ,{12{1'b0}}};
+		else if(isB)    idu_out_bus_imm={{19{immB[12:12]}},immB[12:1],1'b0};
+		else            idu_out_bus_imm=0;
+	end
+	//9-add sub xxx xxx LL LR AR AND OR XOR-0
+	/////////////////////////
+	// always @(*)begin
+	//     if(isMUL)
+	//         idu_out_bus_alu_op[12:10] = 3'b111;
+	//     else if(isMULH)
+	//         idu_out_bus_alu_op[12:10] = 3'b001;
+	//     else if(isMULHSU)
+	//         idu_out_bus_alu_op[12:10] = 3'b010;
+	//     else if(isMULHU)
+	//         idu_out_bus_alu_op[12:10] = 3'b011;
+	//     else if(isDIV | isDIVU)
+	//         idu_out_bus_alu_op[12:10] = 3'b100;
+	//     else if(isREM | isREMU)
+	//         idu_out_bus_alu_op[12:10] = 3'b101;
+	//     else
+	//         idu_out_bus_alu_op[12:10] = 3'b000;
+	// end
+	assign idu_out_bus_alu_op[9]=(isAUIPC|isJAL|isJALR|isADD|isLW|isLBU|isLB|isLH|isSW|isSH|isSB|isADDI|isLHU|isBEQ|isBNE|isBLT|isBGE|isBLTU|isBGEU)?1:0;
+	assign idu_out_bus_alu_op[8]=(isSUB)?1:0;
+	// Zbc: alu_op[7]=1, comp_op encodes: 00=clmul, 01=clmulh, 10=clmulr
+	assign idu_out_bus_alu_op[7]=0;
+	assign idu_out_bus_alu_op[6]=0;
+	assign idu_out_bus_alu_op[5]=(isSLLI|isSLL)?1:0;
+	assign idu_out_bus_alu_op[4]=(isSRLI|isSRL)?1:0;
+	assign idu_out_bus_alu_op[3]=(isSRAI|isSRA)?1:0;
+	assign idu_out_bus_alu_op[2]=(isANDI|isAND)?1:0;
+	assign idu_out_bus_alu_op[1]=(isORI|isOR)?1:0;
+	assign idu_out_bus_alu_op[0]=(isXORI|isXOR)?1:0;
 
-    always @(*) begin
-        if     (isBGE|isBGEU)                               idu_out_bus_comp_op=2'b00;
-        else if(isBLTU|isBLT|isSLT|isSLTI|isSLTIU|isSLTU)   idu_out_bus_comp_op=2'b01;
-        else if(isBNE)                                      idu_out_bus_comp_op=2'b10;
-        else if(isBEQ)                                      idu_out_bus_comp_op=2'b11;
-        else                                                idu_out_bus_comp_op=0;
-    end
+	always @(*) begin
+		if     (isBGE|isBGEU)                               idu_out_bus_comp_op=2'b00;
+		else if(isBLTU|isBLT|isSLT|isSLTI|isSLTIU|isSLTU)   idu_out_bus_comp_op=2'b01;
+		else if(isBNE)                                      idu_out_bus_comp_op=2'b10;
+		else if(isBEQ)                                      idu_out_bus_comp_op=2'b11;
+		else                                                idu_out_bus_comp_op=0;
+	end
 
-    /////////////////////////
-    assign idu_out_bus_perip_mask=(isLW|isSW)?2'b10:((isLBU|isLB|isSB)?2'b00:((isLH|isLHU|isSH)?2'b01:2'b11));
-    /////////////////////////
-    assign idu_out_bus_isUnSigned=(isLBU|isLHU|isBLTU|isBGEU|isSLTIU|isSLTU)?1:0;
+	/////////////////////////
+	assign idu_out_bus_perip_mask=(isLW|isSW)?2'b10:((isLBU|isLB|isSB)?2'b00:((isLH|isLHU|isSH)?2'b01:2'b11));
+	/////////////////////////
+	assign idu_out_bus_isUnSigned=(isLBU|isLHU|isBLTU|isBGEU|isSLTIU|isSLTU)?1:0;
 
 
-    //BRANCH
-    assign idu_out_bus_isBRANCH = (isBEQ | isBNE | isBLT | isBGE | isBLTU | isBGEU)?1:0;
+	//BRANCH
+	assign idu_out_bus_isBRANCH = (isBEQ | isBNE | isBLT | isBGE | isBLTU | isBGEU)?1:0;
 
-    always @(*) begin
-        if(idu_in_bus_exception[4]) begin
-            idu_out_bus_exception = idu_in_bus_exception;
-        end else begin
-            if(~all_inst) begin
-                idu_out_bus_exception = {1'b1,`ysyx_26010011_EXCEPTION_ILLEGAL_INSTRUCTION};
-            end else if(isEBREAK)begin
-                idu_out_bus_exception = {1'b1,`ysyx_26010011_EXCEPTION_BREAKPOINT};
-            end else if(isECALL)begin
-                idu_out_bus_exception = {1'b1,`ysyx_26010011_EXCEPTION_ECALL_MMODE};
-            end else if(isMRET)begin
-                idu_out_bus_exception = {1'b1,`ysyx_26010011_EXCEPTION_MRET};
-            end else if(isFENCEI)begin
-                idu_out_bus_exception = {1'b0,`ysyx_26010011_EXCEPTION_FENCEI};
-            end else begin
-                idu_out_bus_exception = idu_in_bus_exception;
-            end
-        end
+	always @(*) begin
+		if(idu_in_bus_exception[4]) begin
+			idu_out_bus_exception = idu_in_bus_exception;
+		end else begin
+			if(~all_inst) begin
+				idu_out_bus_exception = {1'b1,`ysyx_26010011_EXCEPTION_ILLEGAL_INSTRUCTION};
+			end else if(isEBREAK)begin
+				idu_out_bus_exception = {1'b1,`ysyx_26010011_EXCEPTION_BREAKPOINT};
+			end else if(isECALL)begin
+				idu_out_bus_exception = {1'b1,`ysyx_26010011_EXCEPTION_ECALL_MMODE};
+			end else if(isMRET)begin
+				idu_out_bus_exception = {1'b1,`ysyx_26010011_EXCEPTION_MRET};
+			end else if(isFENCEI)begin
+				idu_out_bus_exception = {1'b0,`ysyx_26010011_EXCEPTION_FENCEI};
+			end else begin
+				idu_out_bus_exception = idu_in_bus_exception;
+			end
+		end
 
-    end
+	end
 endmodule

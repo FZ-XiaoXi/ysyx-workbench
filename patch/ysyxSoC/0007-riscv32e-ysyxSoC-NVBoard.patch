@@ -1,0 +1,168 @@
+From 866af59cc671fdfaddd225d1255bfb5e846c478f Mon Sep 17 00:00:00 2001
+From: FZ_XiaoXi <FZXiaoxi@outlook.com>
+Date: Wed, 12 Aug 2026 19:23:09 +0800
+Subject: [PATCH 07/19] =?UTF-8?q?=E8=AE=A9riscv32e-ysyxSoC=E4=BB=8ENVBoard?=
+ =?UTF-8?q?=E8=AF=BB=E5=8F=96=E9=94=AE=E7=9B=98=E6=8C=89=E9=94=AE?=
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+---
+ perip/ps2/ps2_top_apb.v | 143 ++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 143 insertions(+)
+
+diff --git a/perip/ps2/ps2_top_apb.v b/perip/ps2/ps2_top_apb.v
+index 080d38fa..c842438e 100644
+--- a/perip/ps2/ps2_top_apb.v
++++ b/perip/ps2/ps2_top_apb.v
+@@ -16,4 +16,147 @@ module ps2_top_apb(
+   input         ps2_data
+ );
+ 
++  reg [1:0] state,next_state;
++  parameter S_IDLE  = 2'b00;
++  parameter S_READ = 2'b01;
++  
++
++  assign in_prdata = {24'b0,(ps2_data_fifo_empty)?8'b0:ps2_data_fifo[ps2_data_fifo_read[2:0]][7:0]};
++  assign in_pslverr = 1'b0;
++
++  always @(posedge clock) begin
++    if(reset) state <= 2'b00;
++    else state <= next_state;
++  end
++
++  always @(*) begin
++    case (state)
++      S_IDLE: begin
++        if(in_psel && ~in_penable && ~in_pwrite)
++          next_state = S_READ;
++        else
++          next_state = S_IDLE;
++      end
++      S_READ: begin
++        if(pop_enable)
++          next_state = S_IDLE;
++        else
++          next_state = S_READ;
++      end
++      default: begin
++          next_state = S_IDLE;
++      end
++    endcase
++  end
++
++  assign in_pready = (state==S_READ && pop_enable)?1'b1:1'b0;
++
++  /////////////////////////////////////////////////
++  reg [8:0] ps2_data_fifo [0:7]; //8 * 9bit fifo
++  reg [3:0] ps2_data_fifo_read=4'd0,ps2_data_fifo_write=4'd0;
++  wire ps2_data_fifo_empty; assign ps2_data_fifo_empty = (ps2_data_fifo_write==ps2_data_fifo_read);
++  wire ps2_data_fifo_full;  assign ps2_data_fifo_full = (ps2_data_fifo_write==4'd8);
++  wire pop_enable;          assign pop_enable = (state==S_READ && ~ps2_clk_fall);
++  reg [2:0] ps2_clk_record = 3'b111;
++  wire ps2_clk_fall = (ps2_clk_record[2:1]==2'b10);
++
++  always @(posedge clock) begin
++    if(reset) begin
++      ps2_clk_record <= 3'b111;
++    end else begin
++      ps2_clk_record <= {ps2_clk_record[1:0],ps2_clk};
++    end
++  end
++  always @(posedge clock) begin
++    if(reset) begin
++      ps2_data_fifo_read <= 4'd0;
++      ps2_data_fifo_write <= 4'd0;
++      ps2_data_fifo[0] <= 9'b0;
++      ps2_data_fifo[1] <= 9'b0;
++      ps2_data_fifo[2] <= 9'b0;
++      ps2_data_fifo[3] <= 9'b0;
++      ps2_data_fifo[4] <= 9'b0;
++      ps2_data_fifo[5] <= 9'b0;
++      ps2_data_fifo[6] <= 9'b0;
++      ps2_data_fifo[7] <= 9'b0;
++    end else begin
++      if(ps2_clk_fall && (cnt == 4'd10)) begin
++          if(ps2_data_fifo_full) begin
++            ps2_data_fifo[0] <= ps2_data_fifo[1];
++            ps2_data_fifo[1] <= ps2_data_fifo[2];
++            ps2_data_fifo[2] <= ps2_data_fifo[3];
++            ps2_data_fifo[3] <= ps2_data_fifo[4];
++            ps2_data_fifo[4] <= ps2_data_fifo[5];
++            ps2_data_fifo[5] <= ps2_data_fifo[6];
++            ps2_data_fifo[6] <= ps2_data_fifo[7];
++            ps2_data_fifo[7] <= ps2_data_reg;
++          end else begin
++            ps2_data_fifo[ps2_data_fifo_write[2:0]] <= ps2_data_reg;
++            ps2_data_fifo_write <= ps2_data_fifo_write + 1'b1;
++          end
++      end else begin
++        if(pop_enable) begin
++          if(ps2_data_fifo_empty) begin
++
++          end else begin
++            ps2_data_fifo_read <= ps2_data_fifo_read + 1'b1;
++          end
++        end else begin
++          if(ps2_data_fifo_read != 0) begin
++            ps2_data_fifo_read <= ps2_data_fifo_read - 1'b1;
++            ps2_data_fifo_write <= ps2_data_fifo_write - 1'b1;
++            ps2_data_fifo[0] <= ps2_data_fifo[1];
++            ps2_data_fifo[1] <= ps2_data_fifo[2];
++            ps2_data_fifo[2] <= ps2_data_fifo[3];
++            ps2_data_fifo[3] <= ps2_data_fifo[4];
++            ps2_data_fifo[4] <= ps2_data_fifo[5];
++            ps2_data_fifo[5] <= ps2_data_fifo[6];
++            ps2_data_fifo[6] <= ps2_data_fifo[7];
++            ps2_data_fifo[7] <= 9'b0;
++          end
++        end
++      end
++    end
++  end
++
++
++
++
++  reg [3:0] cnt,next_cnt;
++  reg [8:0] ps2_data_reg;
++
++
++  always @(negedge ps2_clk or posedge reset) begin
++    if(reset) begin
++      ps2_data_reg <= 9'b0;
++      cnt <= 4'b0;
++    end else begin
++      if(cnt == 4'd0) begin
++        if(ps2_data == 1'b0) begin
++          cnt <= 4'b1;
++          ps2_data_reg <= 9'b0;
++        end else begin
++          cnt <= 4'b0;
++          ps2_data_reg <= ps2_data_reg;
++        end
++      end else if(cnt == 4'd9) begin
++        if(^{ps2_data,ps2_data_reg[8:1]}) begin
++          ps2_data_reg <= {ps2_data,ps2_data_reg[8:1]};
++          cnt <= cnt + 1'b1;
++        end else begin
++          ps2_data_reg <= 9'b0;
++          cnt <= 4'b0;
++        end
++      end else if(cnt == 4'd10) begin
++        ps2_data_reg <= ps2_data_reg;
++        cnt <= 4'b0;
++      end else begin
++        ps2_data_reg <= {ps2_data,ps2_data_reg[8:1]};
++        cnt <= cnt + 1'b1;
++      end
++    end
++  end
++
++
++
+ endmodule
+-- 
+2.43.0
+
