@@ -117,7 +117,7 @@ iv: concat
 verilog: concat
 
 IV_SRC = vsrc/ysyx_26010011_tb.v vsrc/ysyx_26010011_dut.v $(SIM_V_TOP)
-IV_NET_SRC = vsrc/ysyx_26010011_tb.v vsrc/ysyx_26010011_netlist_wrap.v
+IV_NET_SRC = vsrc/ysyx_26010011_tb.v vsrc/ysyx_26010011_dut.v
 NETLIST ?= $(NPC_HOME)/../yosys-sta/result/ysyx_26010011-800MHz/ysyx_26010011.v
 CELLS ?= $(NPC_HOME)/../yosys-sta/pdk/nangate45/sim/cells.v
 

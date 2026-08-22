@@ -23,7 +23,7 @@ module ysyx_26010011_IF_ID_pipeline(
 	input            idu_in_ready,
 	output reg [31:0]idu_in_bus_instruction,
 	output reg [31:0]idu_in_bus_pc/*verilator public*/,
-	output reg [31:0]idu_in_bus_snpc,
+	// output reg [31:0]idu_in_bus_snpc,
 	output reg [ 4:0]idu_in_bus_exception
 );
 	assign ifu_out_ready = idu_in_ready | !idu_in_valid;
@@ -34,7 +34,7 @@ module ysyx_26010011_IF_ID_pipeline(
 			idu_in_valid <= ifu_out_valid;
 			idu_in_bus_instruction <= ifu_out_bus_instruction;
 			idu_in_bus_pc <= ifu_out_bus_pc;
-			idu_in_bus_snpc <= ifu_out_bus_snpc;
+			// idu_in_bus_snpc <= ifu_out_bus_snpc;
 			idu_in_bus_exception <= ifu_out_bus_exception;
 		end
 	end
@@ -71,7 +71,7 @@ module ysyx_26010011_ID_EX_pipeline(
 	input      [ 1:0]idu_out_bus_comp_op,
 	input      [ 1:0]idu_out_bus_perip_mask,
 	input      [31:0]idu_out_bus_pc,
-	input      [31:0]idu_out_bus_snpc,
+	// input      [31:0]idu_out_bus_snpc,
 
 	output reg       exu_in_valid/*verilator public*/,
 	input            exu_in_ready,
@@ -98,8 +98,8 @@ module ysyx_26010011_ID_EX_pipeline(
 	output reg [ 9:0]exu_in_bus_alu_op,
 	output reg [ 1:0]exu_in_bus_comp_op,
 	output reg [ 1:0]exu_in_bus_perip_mask,
-	output reg [31:0]exu_in_bus_pc/*verilator public*/,
-	output reg [31:0]exu_in_bus_snpc
+	output reg [31:0]exu_in_bus_pc/*verilator public*/
+	// output reg [31:0]exu_in_bus_snpc
 );
 	assign idu_out_ready = exu_in_ready | !exu_in_valid;
 	always @(posedge clock)begin
@@ -131,7 +131,7 @@ module ysyx_26010011_ID_EX_pipeline(
 			exu_in_bus_comp_op<=idu_out_bus_comp_op;
 			exu_in_bus_perip_mask<=idu_out_bus_perip_mask;
 			exu_in_bus_pc<=idu_out_bus_pc;
-			exu_in_bus_snpc<=idu_out_bus_snpc;
+			// exu_in_bus_snpc<=idu_out_bus_snpc;
 		end
 	end
 endmodule
@@ -161,7 +161,7 @@ module ysyx_26010011_EX_LS_pipeline(
 	input            exu_out_bus_isUnSigned,
 	input      [ 1:0]exu_out_bus_perip_mask,
 	input      [31:0]exu_out_bus_pc,
-	input      [31:0]exu_out_bus_snpc,
+	// input      [31:0]exu_out_bus_snpc,
 
 	output reg       lsu_in_valid/*verilator public*/,
 	input            lsu_in_ready,
@@ -182,8 +182,8 @@ module ysyx_26010011_EX_LS_pipeline(
 	output reg [ 2:0]lsu_in_bus_opCSR,
 	output reg       lsu_in_bus_isUnSigned,
 	output reg [ 1:0]lsu_in_bus_perip_mask,
-	output reg [31:0]lsu_in_bus_pc/*verilator public*/,
-	output reg [31:0]lsu_in_bus_snpc
+	output reg [31:0]lsu_in_bus_pc/*verilator public*/
+	// output reg [31:0]lsu_in_bus_snpc
 );
 	assign exu_out_ready = lsu_in_ready | !lsu_in_valid;
 	always @(posedge clock)begin
@@ -209,7 +209,7 @@ module ysyx_26010011_EX_LS_pipeline(
 			lsu_in_bus_isUnSigned<=exu_out_bus_isUnSigned;
 			lsu_in_bus_perip_mask<=exu_out_bus_perip_mask;
 			lsu_in_bus_pc<=exu_out_bus_pc;
-			lsu_in_bus_snpc<=exu_out_bus_snpc;
+			// lsu_in_bus_snpc<=exu_out_bus_snpc;
 		end
 	end
 endmodule
@@ -238,7 +238,7 @@ module ysyx_26010011_LS_WB_pipeline(
 	input            lsu_out_bus_isBRANCH,
 	input      [ 2:0]lsu_out_bus_opCSR,
 	input      [31:0]lsu_out_bus_pc,
-	input      [31:0]lsu_out_bus_snpc,
+	// input      [31:0]lsu_out_bus_snpc,
 
 
 	output reg       wbu_in_valid/*verilator public*/,
@@ -258,8 +258,8 @@ module ysyx_26010011_LS_WB_pipeline(
 	output reg       wbu_in_bus_isWCOMP,
 	output reg       wbu_in_bus_isBRANCH,
 	output reg [ 2:0]wbu_in_bus_opCSR,
-	output reg [31:0]wbu_in_bus_pc/*verilator public*/,
-	output reg [31:0]wbu_in_bus_snpc
+	output reg [31:0]wbu_in_bus_pc/*verilator public*/
+	// output reg [31:0]wbu_in_bus_snpc
 );
 	assign lsu_out_ready = wbu_in_ready | !wbu_in_valid;
 	always @(posedge clock)begin
@@ -273,7 +273,7 @@ module ysyx_26010011_LS_WB_pipeline(
 			wbu_in_bus_alu_result<=lsu_out_bus_alu_result;
 			wbu_in_bus_csr_result<=lsu_out_bus_csr_result;
 			wbu_in_bus_comp_result<=lsu_out_bus_comp_result;
-			wbu_in_bus_snpc<=lsu_out_bus_snpc;
+			// wbu_in_bus_snpc<=lsu_out_bus_snpc;
 			wbu_in_bus_rd<=lsu_out_bus_rd;
 			wbu_in_bus_exception<=lsu_out_bus_exception;
 			wbu_in_bus_csrrd<=lsu_out_bus_csrrd;

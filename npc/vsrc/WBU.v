@@ -19,7 +19,7 @@ module ysyx_26010011_WBU(
 	input [31:0]wbu_in_bus_alu_result,
 	input [31:0]wbu_in_bus_csr_result,
 	input wbu_in_bus_comp_result,
-	input [31:0]wbu_in_bus_snpc,
+	// input [31:0]wbu_in_bus_snpc,
 	input [4:0]wbu_in_bus_rd,
 	input [11:0]wbu_in_bus_csrrd,
 	input wbu_in_bus_isLOAD,
@@ -40,6 +40,8 @@ module ysyx_26010011_WBU(
 	output [4:0]wbu_out_bus_exception,
 	output fencei_pass
 );  
+	wire [31:0] wbu_in_bus_snpc;
+	assign wbu_in_bus_snpc = wbu_in_bus_pc + 4;
 	assign wbu_in_ready=1;
 	always @(*) begin
 		if(wbu_in_bus_isLOAD) begin
