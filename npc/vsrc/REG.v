@@ -21,7 +21,7 @@ module ysyx_26010011_GPRs(
 	input  [31:0]gpr_in_data,
 	input        gpr_in_wen
 ); 
- 	reg [31:0]GPR[31:0]/* verilator public */;
+ 	reg [31:0]GPR[15:0]/* verilator public */;
 
 	assign gpr_out_a=(gpr_in_addra==0)?{32{1'b0}}:GPR[gpr_in_addra];
 	assign gpr_out_b=(gpr_in_addrb==0)?{32{1'b0}}:GPR[gpr_in_addrb];
@@ -29,7 +29,7 @@ module ysyx_26010011_GPRs(
 	integer i;
 	always @(posedge clock) begin
 		if(reset) begin
-			for(i=0;i<32;i=i+1) begin
+			for(i=0;i<16;i=i+1) begin
 			GPR[i]<={32{1'b0}};
 			end
 		end else begin
