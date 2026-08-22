@@ -62,8 +62,10 @@ module ysyx_26010011_IFU(
 	wire [31:0]in_rdata;
 
 	wire debug_IFU_is_hit/*verilator public*/;
-	wire debug_IFU_is_hit_inst/*verilator public*/ = ifu_out_valid & ifu_out_ready & debug_IFU_is_hit;
-	wire debug_IFU_get_inst/*verilator public*/ = ifu_out_valid & ifu_out_ready;
+	wire debug_IFU_is_hit_inst/*verilator public*/;
+	wire ebug_IFU_get_inst/*verilator public*/;
+	assign debug_IFU_is_hit_inst = ifu_out_valid & ifu_out_ready & debug_IFU_is_hit;
+	assign debug_IFU_get_inst = ifu_out_valid & ifu_out_ready;
 
 	always @(posedge clock) begin
 		if(reset) begin

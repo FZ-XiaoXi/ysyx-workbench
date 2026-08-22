@@ -105,9 +105,9 @@ module ysyx_26010011_LSU(
 
 	assign aw_fire = awvalid && awready;
 	assign w_fire  = wvalid && wready;
-	assign b_fire/*verilator public*/  = bvalid && bready;
+	assign b_fire = bvalid && bready;
 	assign ar_fire = arvalid && arready;
-	assign r_fire/*verilator public*/  = rvalid && rready;
+	assign r_fire = rvalid && rready;
 
 	assign awaddr  = {awaddr_q};
 	assign awid    = 4'b0;
