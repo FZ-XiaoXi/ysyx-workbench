@@ -81,7 +81,8 @@ static void trace_and_difftest(Decode *_this, vaddr_t dnpc) {
       uint32_t nval=expr(wp->expr,&success);
       printf("watchpoint[%d]\t%u\t->\t%u\t%s\n",i,wp->val,nval,wp->expr);
       wp->val=nval;
-      nemu_state.state=NEMU_STOP;
+      if(nemu_state.state==NEMU_RUNNING)
+        nemu_state.state=NEMU_STOP;
     }
   }
 #endif
