@@ -39,7 +39,7 @@ SRC_V += vsrc/AXI4Arbiter.v
 SRC_V += vsrc/CLINT.v
 SRC_V += vsrc/BRIDGE.v
 
-LIBCAPSTONE = tools/capstone/repo/libcapstone.so.5
+LIBCAPSTONE = tools/capstone/libcapstone.so.5
 DIFF_REF_PATH = $(NEMU_HOME)
 DIFF_REF_SO = $(DIFF_REF_PATH)/riscv32-nemu-interpreter-so-ysyxsoc
 ARGS_DIFF = --diff=$(DIFF_REF_SO)
@@ -79,8 +79,8 @@ wave:
 	gtkwave wave.vcd
 
 csrc/utils/disasm.c: $(LIBCAPSTONE)
-$(LIBCAPSTONE):
-	$(MAKE) -C tools/capstone
+# $(LIBCAPSTONE):
+# 	$(MAKE) -C tools/capstone
 
 perf:
 	@echo "[perf] start: $$(date '+%F %T')"; \
