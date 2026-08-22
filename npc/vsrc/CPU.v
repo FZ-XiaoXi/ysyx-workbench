@@ -231,43 +231,11 @@ module ysyx_26010011(
 					idu_ra_bypass = 32'b0;
 				end
 			end else if((gpr_raddra==lsu_in_bus_rd)&lsu_in_valid&lsu_in_bus_isWGPR)begin
-				if(lsu_out_valid & ~lsu_in_bus_isLOAD) begin
-					if(lsu_in_bus_isWCOMP) begin
-						idu_ra_isRAW = 0;
-						idu_ra_bypass = {31'b0,lsu_out_bus_comp_result};
-					end else if(lsu_in_bus_isJUMP) begin
-						idu_ra_isRAW = 0;
-						idu_ra_bypass = lsu_in_bus_snpc;
-					end else begin
-						idu_ra_isRAW = 0;
-						idu_ra_bypass = lsu_out_bus_alu_result;
-					end
-				end else if(lsu_out_valid & lsu_in_bus_isLOAD)begin
-					idu_ra_isRAW = 0;
-					idu_ra_bypass = lsu_out_bus_lsu_result;
-				end else begin
-					idu_ra_isRAW = 1;
-					idu_ra_bypass = 32'b0;
-				end
+				idu_ra_isRAW = 1;
+				idu_ra_bypass = 32'b0;
 			end else if((gpr_raddra==wbu_in_bus_rd)&wbu_in_valid&wbu_in_bus_isWGPR)begin
-				if(wbu_in_valid & ~wbu_in_bus_isLOAD) begin
-					if(wbu_in_bus_isWCOMP) begin
-						idu_ra_isRAW = 0;
-						idu_ra_bypass = {31'b0,wbu_in_bus_comp_result};
-					end else if(wbu_in_bus_isJUMP) begin
-						idu_ra_isRAW = 0;
-						idu_ra_bypass = wbu_in_bus_snpc;
-					end else begin
-						idu_ra_isRAW = 0;
-						idu_ra_bypass = wbu_in_bus_alu_result;
-					end
-				end else if(wbu_in_valid & wbu_in_bus_isLOAD)begin
-					idu_ra_isRAW = 0;
-					idu_ra_bypass = wbu_in_bus_lsu_result;
-				end else begin
-					idu_ra_isRAW = 1;
-					idu_ra_bypass = 32'b0;
-				end
+				idu_ra_isRAW = 1;
+				idu_ra_bypass = 32'b0;
 			end else begin
 				idu_ra_isRAW = 0;
 				idu_ra_bypass = gpr_rdataa;
@@ -295,43 +263,11 @@ module ysyx_26010011(
 					idu_rb_bypass = 32'b0;
 				end
 			end else if((gpr_raddrb==lsu_in_bus_rd)&lsu_in_valid&lsu_in_bus_isWGPR)begin
-				if(lsu_out_valid & ~lsu_in_bus_isLOAD) begin
-					if(lsu_in_bus_isWCOMP) begin
-						idu_rb_isRAW = 0;
-						idu_rb_bypass = {31'b0,lsu_out_bus_comp_result};
-					end else if(lsu_in_bus_isJUMP) begin
-						idu_rb_isRAW = 0;
-						idu_rb_bypass = lsu_in_bus_snpc;
-					end else begin
-						idu_rb_isRAW = 0;
-						idu_rb_bypass = lsu_out_bus_alu_result;
-					end
-				end else if(lsu_out_valid & lsu_in_bus_isLOAD)begin
-					idu_rb_isRAW = 0;
-					idu_rb_bypass = lsu_out_bus_lsu_result;
-				end else begin
-					idu_rb_isRAW = 1;
-					idu_rb_bypass = 32'b0;
-				end
+				idu_rb_isRAW = 1;
+				idu_rb_bypass = 32'b0;
 			end else if((gpr_raddrb==wbu_in_bus_rd)&wbu_in_valid&wbu_in_bus_isWGPR)begin
-				if(wbu_in_valid & ~wbu_in_bus_isLOAD) begin
-					if(wbu_in_bus_isWCOMP) begin
-						idu_rb_isRAW = 0;
-						idu_rb_bypass = {31'b0,wbu_in_bus_comp_result};
-					end else if(wbu_in_bus_isJUMP) begin
-						idu_rb_isRAW = 0;
-						idu_rb_bypass = wbu_in_bus_snpc;
-					end else begin
-						idu_rb_isRAW = 0;
-						idu_rb_bypass = wbu_in_bus_alu_result;
-					end
-				end else if(wbu_in_valid & wbu_in_bus_isLOAD)begin
-					idu_rb_isRAW = 0;
-					idu_rb_bypass = wbu_in_bus_lsu_result;
-				end else begin
-					idu_rb_isRAW = 1;
-					idu_rb_bypass = 32'b0;
-				end
+				idu_rb_isRAW = 1;
+				idu_rb_bypass = 32'b0;
 			end else begin
 				idu_rb_isRAW = 0;
 				idu_rb_bypass = gpr_rdatab;
