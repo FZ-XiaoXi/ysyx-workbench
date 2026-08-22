@@ -93,14 +93,12 @@ class alignas(VL_CACHE_LINE_BYTES) VysyxSoCFull_ysyx_26010011 final : public Ver
         CData/*2:0*/ __PVT__idu_out_bus_opCSR;
         CData/*0:0*/ __PVT__exu_out_bus_dnpc_valid;
         CData/*4:0*/ __PVT__exu_out_bus_exception;
-        CData/*0:0*/ __PVT__DRAM_awready;
-        CData/*0:0*/ __PVT__DRAM_wready;
         CData/*0:0*/ __PVT__DRAM_arready;
         CData/*0:0*/ tb_isFINAL;
-    };
-    struct {
         CData/*0:0*/ tb_dnpc_valid;
         CData/*0:0*/ tb_isMEM;
+    };
+    struct {
         CData/*0:0*/ __VdfgRegularize_he0d61652_0_2;
         CData/*0:0*/ __PVT__IDU_0__DOT__flush_valid;
         CData/*0:0*/ __PVT__IDU_0__DOT__idu_in_ready;
@@ -163,10 +161,10 @@ class alignas(VL_CACHE_LINE_BYTES) VysyxSoCFull_ysyx_26010011 final : public Ver
         CData/*0:0*/ __PVT__IDU_0__DOT__isCSRRCI;
         CData/*0:0*/ __PVT__IDU_0__DOT__isI;
         CData/*0:0*/ __PVT__IDU_0__DOT__isU;
-    };
-    struct {
         CData/*0:0*/ IDU_0__DOT____VdfgRegularize_hd1728725_0_3;
         CData/*0:0*/ IDU_0__DOT____VdfgRegularize_hd1728725_0_4;
+    };
+    struct {
         CData/*0:0*/ IDU_0__DOT____VdfgRegularize_hd1728725_0_24;
         CData/*0:0*/ IDU_0__DOT____VdfgRegularize_hd1728725_0_25;
         CData/*0:0*/ IDU_0__DOT____VdfgRegularize_hd1728725_0_27;
@@ -178,21 +176,15 @@ class alignas(VL_CACHE_LINE_BYTES) VysyxSoCFull_ysyx_26010011 final : public Ver
         CData/*0:0*/ __PVT__EXU_0__DOT__exu_out_bus_comp_result;
         CData/*0:0*/ __PVT__EXU_0__DOT__comp_isEQUAL;
         CData/*0:0*/ WBU_0__DOT____VdfgRegularize_h03859d6a_0_0;
-        CData/*0:0*/ __PVT__RAM_AXI4LiteArbiter__DOT__M1_awready;
-        CData/*0:0*/ __PVT__RAM_AXI4LiteArbiter__DOT__M1_wready;
         CData/*0:0*/ __PVT__RAM_AXI4LiteArbiter__DOT__M2_awvalid;
+        CData/*0:0*/ __PVT__RAM_AXI4LiteArbiter__DOT__M2_awready;
+        CData/*0:0*/ __PVT__RAM_AXI4LiteArbiter__DOT__M2_bvalid;
         CData/*0:0*/ __PVT__RAM_AXI4LiteArbiter__DOT__M2_bready;
+        CData/*3:0*/ __PVT__RAM_AXI4LiteArbiter__DOT__M2_bid;
         CData/*0:0*/ __PVT__RAM_AXI4LiteArbiter__DOT__M2_arvalid;
         CData/*2:0*/ __PVT__RAM_AXI4LiteArbiter__DOT__M2_arsize;
         CData/*0:0*/ __PVT__RAM_AXI4LiteArbiter__DOT__M2_rready;
-        CData/*0:0*/ __PVT__RAM_AXI4LiteArbiter__DOT__S_awready;
-        CData/*0:0*/ __PVT__RAM_AXI4LiteArbiter__DOT__S_wready;
-        CData/*1:0*/ __PVT__RAM_AXI4LiteArbiter__DOT__S_bresp;
-        CData/*0:0*/ __PVT__RAM_AXI4LiteArbiter__DOT__S_bvalid;
-        CData/*0:0*/ __PVT__RAM_AXI4LiteArbiter__DOT__S_bready;
-        CData/*3:0*/ __PVT__RAM_AXI4LiteArbiter__DOT__S_bid;
         CData/*0:0*/ __PVT__RAM_AXI4LiteArbiter__DOT__S_arready;
-        CData/*1:0*/ __PVT__RAM_AXI4LiteArbiter__DOT__S_rresp;
         CData/*0:0*/ __PVT__RAM_AXI4LiteArbiter__DOT__S_rvalid;
         CData/*0:0*/ __PVT__RAM_AXI4LiteArbiter__DOT__S_rready;
         CData/*0:0*/ __PVT__RAM_AXI4LiteArbiter__DOT__S_rlast;
@@ -201,10 +193,6 @@ class alignas(VL_CACHE_LINE_BYTES) VysyxSoCFull_ysyx_26010011 final : public Ver
         CData/*0:0*/ __PVT__RAM_AXI4LiteArbiter__DOT__R_next_state;
         CData/*0:0*/ __PVT__RAM_AXI4LiteArbiter__DOT__R_master_sel;
         CData/*0:0*/ __PVT__RAM_AXI4LiteArbiter__DOT__R_master_sel_next;
-        CData/*0:0*/ __PVT__RAM_AXI4LiteArbiter__DOT__W_state;
-        CData/*0:0*/ __PVT__RAM_AXI4LiteArbiter__DOT__W_next_state;
-        CData/*0:0*/ __PVT__RAM_AXI4LiteArbiter__DOT__W_master_sel;
-        CData/*0:0*/ __PVT__RAM_AXI4LiteArbiter__DOT__W_master_sel_next;
         SData/*12:0*/ __PVT__idu_out_bus_signals;
         SData/*12:0*/ __PVT__exu_in_bus_signals;
         VL_OUT(__PVT__io_master_awaddr,31,0);
@@ -229,14 +217,9 @@ class alignas(VL_CACHE_LINE_BYTES) VysyxSoCFull_ysyx_26010011 final : public Ver
         IData/*31:0*/ __PVT__EXU_0__DOT__b;
         IData/*31:0*/ __PVT__EXU_0__DOT__comp_b;
         IData/*31:0*/ __PVT__EXU_0__DOT__op_or;
-    };
-    struct {
         IData/*31:0*/ __PVT__EXU_0__DOT__op_and;
         IData/*31:0*/ __PVT__EXU_0__DOT__comp_suber_out;
-        IData/*31:0*/ __PVT__RAM_AXI4LiteArbiter__DOT__M2_rdata;
-        IData/*31:0*/ __PVT__RAM_AXI4LiteArbiter__DOT__S_rdata;
         IData/*31:0*/ __PVT__bcache_u0__DOT__unnamedblk1__DOT__i;
-        QData/*32:0*/ __PVT__EXU_0__DOT__ADDER_0__DOT__inB;
         VlUnpacked<IData/*31:0*/, 8> __PVT__bcache_u0__DOT__cache_mem;
         VlUnpacked<CData/*0:0*/, 8> __PVT__bcache_u0__DOT__cache_valid;
         VlUnpacked<IData/*26:0*/, 8> __PVT__bcache_u0__DOT__cache_tag;

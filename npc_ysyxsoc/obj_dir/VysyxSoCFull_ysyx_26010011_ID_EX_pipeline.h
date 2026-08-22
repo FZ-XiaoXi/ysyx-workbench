@@ -55,6 +55,7 @@ class alignas(VL_CACHE_LINE_BYTES) VysyxSoCFull_ysyx_26010011_ID_EX_pipeline fin
     VL_OUT8(__PVT__exu_in_bus_comp_isUseImm,0,0);
     VL_OUT8(__PVT__exu_in_bus_comp_op,1,0);
     VL_OUT8(__PVT__exu_in_bus_perip_mask,1,0);
+    CData/*0:0*/ __Vdly__exu_in_valid;
     VL_IN16(__PVT__idu_out_bus_csrrd,11,0);
     VL_IN16(__PVT__idu_out_bus_alu_op,9,0);
     VL_OUT16(__PVT__exu_in_bus_csrrd,11,0);

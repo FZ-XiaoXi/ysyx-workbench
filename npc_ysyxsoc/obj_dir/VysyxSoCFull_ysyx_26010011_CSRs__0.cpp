@@ -120,13 +120,14 @@ void VysyxSoCFull_ysyx_26010011_CSRs___nba_sequent__TOP__ysyxSoCFull__asic__cpu_
         vlSelfRef.CSR_MARCHID = 0x018ce19bU;
         vlSelfRef.CSR_MTVAL = 0U;
     } else {
+        vlSelfRef.__Vdly__CSR_MCYCLEH = (IData)(((1ULL 
+                                                  + 
+                                                  (((QData)((IData)(vlSelfRef.CSR_MCYCLEH)) 
+                                                    << 0x00000020U) 
+                                                   | (QData)((IData)(vlSelfRef.CSR_MCYCLE)))) 
+                                                 >> 0x00000020U));
         vlSelfRef.__Vdly__CSR_MCYCLE = ((IData)(1U) 
                                         + vlSelfRef.CSR_MCYCLE);
-        vlSelfRef.__Vdly__CSR_MCYCLEH = ((0xffffffffU 
-                                          == vlSelfRef.CSR_MCYCLE)
-                                          ? ((IData)(1U) 
-                                             + vlSelfRef.CSR_MCYCLEH)
-                                          : vlSelfRef.CSR_MCYCLEH);
         if ((0x00000010U & (IData)(vlSelfRef.__PVT__csr_in_bus_exception))) {
             if ((0x0eU != (0x0000000fU & (IData)(vlSelfRef.__PVT__csr_in_bus_exception)))) {
                 vlSelfRef.CSR_MEPC = vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__LS_WB_inst.wbu_in_bus_pc;
@@ -155,6 +156,16 @@ void VysyxSoCFull_ysyx_26010011_CSRs___nba_sequent__TOP__ysyxSoCFull__asic__cpu_
     }
     vlSelfRef.CSR_MCYCLE = vlSelfRef.__Vdly__CSR_MCYCLE;
     vlSelfRef.CSR_MCYCLEH = vlSelfRef.__Vdly__CSR_MCYCLEH;
+}
+
+void VysyxSoCFull_ysyx_26010011_CSRs___nba_sequent__TOP__ysyxSoCFull__asic__cpu__cpu__CSR_0__2(VysyxSoCFull_ysyx_26010011_CSRs* vlSelf) {
+    VL_DEBUG_IF(VL_DBG_MSGF("+              VysyxSoCFull_ysyx_26010011_CSRs___nba_sequent__TOP__ysyxSoCFull__asic__cpu__cpu__CSR_0__2\n"); );
+    VysyxSoCFull__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
+    auto& vlSelfRef = std::ref(*vlSelf).get();
+    // Body
+    vlSelfRef.__PVT__csr_in_bus_exception = ((IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__LS_WB_inst.wbu_in_valid)
+                                              ? (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__LS_WB_inst.__PVT__wbu_in_bus_exception)
+                                              : 0U);
 }
 
 void VysyxSoCFull_ysyx_26010011_CSRs___nba_comb__TOP__ysyxSoCFull__asic__cpu__cpu__CSR_0__0(VysyxSoCFull_ysyx_26010011_CSRs* vlSelf) {
@@ -241,14 +252,4 @@ void VysyxSoCFull_ysyx_26010011_CSRs___nba_comb__TOP__ysyxSoCFull__asic__cpu__cp
                                                    >> 0x00000014U))
                                                   ? vlSelfRef.CSR_MTVAL
                                                   : 0x2b2b2b2bU))));
-}
-
-void VysyxSoCFull_ysyx_26010011_CSRs___nba_sequent__TOP__ysyxSoCFull__asic__cpu__cpu__CSR_0__2(VysyxSoCFull_ysyx_26010011_CSRs* vlSelf) {
-    VL_DEBUG_IF(VL_DBG_MSGF("+              VysyxSoCFull_ysyx_26010011_CSRs___nba_sequent__TOP__ysyxSoCFull__asic__cpu__cpu__CSR_0__2\n"); );
-    VysyxSoCFull__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
-    auto& vlSelfRef = std::ref(*vlSelf).get();
-    // Body
-    vlSelfRef.__PVT__csr_in_bus_exception = ((IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__LS_WB_inst.wbu_in_valid)
-                                              ? (IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__LS_WB_inst.__PVT__wbu_in_bus_exception)
-                                              : 0U);
 }
