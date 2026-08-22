@@ -7,7 +7,8 @@ LD_PRELOAD += $(gcc -print-file-name=libasan.so)
 C_INC_PATH ?=
 C_INC_PATH += csrc/
 C_INC_PATH += csrc/include
-C_INC_PATH += tools/capstone/repo/include
+# C_INC_PATH += tools/capstone/repo/include
+C_INC_PATH += tools/capstone/
 C_INC_PATH := $(abspath $(C_INC_PATH))
 C_INC_PATH += $(NVBOARD_USR_INC)
 
