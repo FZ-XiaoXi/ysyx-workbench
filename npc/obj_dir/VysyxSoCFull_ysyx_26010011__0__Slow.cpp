@@ -415,8 +415,7 @@ VL_ATTR_COLD void VysyxSoCFull_ysyx_26010011___stl_sequent__TOP__ysyxSoCFull__as
                                       : (IData)(vlSelfRef.__PVT__io_master_rvalid)));
     vlSelfRef.__PVT__S_rid = ((IData)(vlSelfRef.__PVT__u_bridge__DOT__R_state)
                                ? ((IData)(vlSelfRef.__PVT__u_bridge__DOT__ar_sel_reg)
-                                   ? (IData)(vlSelfRef.__PVT__u_bridge__DOT__CLINT_rid)
-                                   : (IData)(vlSelfRef.__PVT__io_master_rid))
+                                   ? 0U : (IData)(vlSelfRef.__PVT__io_master_rid))
                                : 0U);
     vlSelfRef.__PVT__S_rlast = ((IData)(vlSelfRef.__PVT__u_bridge__DOT__R_state) 
                                 && ((IData)(vlSelfRef.__PVT__u_bridge__DOT__ar_sel_reg)
@@ -428,8 +427,7 @@ VL_ATTR_COLD void VysyxSoCFull_ysyx_26010011___stl_sequent__TOP__ysyxSoCFull__as
                                       : (IData)(vlSelfRef.__PVT__io_master_bvalid)));
     vlSelfRef.__PVT__S_bid = ((IData)(vlSelfRef.__PVT__u_bridge__DOT__W_state)
                                ? ((IData)(vlSelfRef.__PVT__u_bridge__DOT__aw_sel_reg)
-                                   ? (IData)(vlSelfRef.__PVT__u_bridge__DOT__CLINT_bid)
-                                   : (IData)(vlSelfRef.__PVT__io_master_bid))
+                                   ? 0U : (IData)(vlSelfRef.__PVT__io_master_bid))
                                : 0U);
     vlSelfRef.IDU_0__DOT____VdfgRegularize_hd1728725_0_3 
         = ((IData)(vlSelfRef.IDU_0__DOT____VdfgRegularize_hd1728725_0_2) 
@@ -1183,8 +1181,6 @@ VL_ATTR_COLD void VysyxSoCFull_ysyx_26010011___ctor_var_reset(VysyxSoCFull_ysyx_
     vlSelf->__PVT__RAM_AXI4Arbiter__DOT__R_next_state = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 11101650068390281325ull);
     vlSelf->__PVT__RAM_AXI4Arbiter__DOT__R_master_sel = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 4693431511555116030ull);
     vlSelf->__PVT__RAM_AXI4Arbiter__DOT__R_master_sel_next = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 17927734390465701358ull);
-    vlSelf->__PVT__u_bridge__DOT__CLINT_bid = VL_SCOPED_RAND_RESET_I(4, __VscopeHash, 15252974112170685867ull);
-    vlSelf->__PVT__u_bridge__DOT__CLINT_rid = VL_SCOPED_RAND_RESET_I(4, __VscopeHash, 11989763900120530470ull);
     vlSelf->__PVT__u_bridge__DOT__aw_sel_reg = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 2216584772265930645ull);
     vlSelf->__PVT__u_bridge__DOT__ar_sel_reg = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 8784515397783432852ull);
     vlSelf->__PVT__u_bridge__DOT__aw_sel_now = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 13271771386913532612ull);

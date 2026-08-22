@@ -317,7 +317,7 @@ module axi4_memory (
 		always @(posedge clock) begin
 			if (!reset && ar_fire && !mem_read_valid &&
 				(raddr_reg != 32'h10000048) && (raddr_reg != 32'h1000004c)) begin
-				$display("AXI4 Read from invalid address: 0x%08x", raddr_reg);
+				// $display("AXI4 Read from invalid address: 0x%08x", raddr_reg);
 			end
 		end
 	integer i;

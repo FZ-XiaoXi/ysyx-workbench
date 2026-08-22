@@ -499,18 +499,18 @@ void VysyxSoCFull_ysyx_26010011___ico_sequent__TOP__ysyxSoCFull__asic__cpu__cpu_
             vlSelfRef.__PVT__S_arvalid = vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__LSU_0.__PVT__arvalid;
             vlSelfRef.__PVT__S_araddr = vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__EX_LS_inst.__PVT__lsu_in_bus_alu_result;
         } else {
-            vlSelfRef.__PVT__S_arlen = 3U;
+            vlSelfRef.__PVT__S_arlen = 1U;
             vlSelfRef.__PVT__S_arsize = 2U;
             vlSelfRef.__PVT__S_arvalid = vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__IFU_0.__PVT__arvalid;
-            vlSelfRef.__PVT__S_araddr = (0xfffffff0U 
+            vlSelfRef.__PVT__S_araddr = (0xfffffff8U 
                                          & vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__IFU_0.PC);
         }
     } else {
         if (vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__IFU_0.__PVT__arvalid) {
             vlSelfRef.__PVT__S_arburst = 1U;
-            vlSelfRef.__PVT__S_arlen = 3U;
+            vlSelfRef.__PVT__S_arlen = 1U;
             vlSelfRef.__PVT__S_arsize = 2U;
-            vlSelfRef.__PVT__S_araddr = (0xfffffff0U 
+            vlSelfRef.__PVT__S_araddr = (0xfffffff8U 
                                          & vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__IFU_0.PC);
         } else {
             if (vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__LSU_0.__PVT__arvalid) {
@@ -1405,7 +1405,7 @@ void VysyxSoCFull_ysyx_26010011___nba_comb__TOP__ysyxSoCFull__asic__cpu__cpu__0(
                                              == vlSelfRef.__PVT__u_clint__DOT__raddr_reg)
                                              ? vlSelfRef.__PVT__u_clint__DOT__mtime_H
                                              : 0U));
-            vlSelfRef.__PVT__S_rid = vlSelfRef.__PVT__u_bridge__DOT__CLINT_rid;
+            vlSelfRef.__PVT__S_rid = 0U;
         } else {
             vlSelfRef.__PVT__S_rdata = (((IData)(vlSymsp->TOP__ysyxSoCFull__asic.__PVT__axi4xbar__DOT__muxState_2_0)
                                           ? (((IData)(vlSymsp->TOP__ysyxSoCFull__asic.__PVT__axi4xbar_1__DOT__muxState_3_0)
@@ -1470,8 +1470,7 @@ void VysyxSoCFull_ysyx_26010011___nba_comb__TOP__ysyxSoCFull__asic__cpu__cpu__0(
     if (vlSelfRef.__PVT__u_bridge__DOT__W_state) {
         vlSelfRef.__PVT__u_bridge__DOT__W_next_state = 1U;
         vlSelfRef.__PVT__S_bid = ((IData)(vlSelfRef.__PVT__u_bridge__DOT__aw_sel_reg)
-                                   ? (IData)(vlSelfRef.__PVT__u_bridge__DOT__CLINT_bid)
-                                   : (IData)(vlSelfRef.__PVT__io_master_bid));
+                                   ? 0U : (IData)(vlSelfRef.__PVT__io_master_bid));
         if (((IData)(vlSymsp->TOP__ysyxSoCFull__asic__cpu__cpu__LSU_0.__PVT__bready) 
              & (IData)(vlSelfRef.__PVT__S_bvalid))) {
             vlSelfRef.__PVT__u_bridge__DOT__W_next_state = 0U;

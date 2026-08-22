@@ -17,5 +17,5 @@
 /oss-cad-suite
 /npc-exercise
 /yosys-sta
-/npc/obj_dir/*
+/npc/obj_dir/**
 /rt-thread-am/*

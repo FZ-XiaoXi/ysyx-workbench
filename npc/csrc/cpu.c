@@ -128,7 +128,7 @@ void cpu_exec(uint64_t n){
 			}
 			
 			static int cnt=0;
-			if(cnt++ >= 10000 || (cpu.state != NPC_RUNNING)){
+			if(cnt++ >= 100000 || (cpu.state != NPC_RUNNING)){
 				Log("\n[cyc=%ld][inst=%lu][AvgIPC=%.2f][Raw%ld][flush=%ld][PC=0x%08X]\n[GetI=%lu AvgCyc=%.2f Hit=%.2f HC=%.2f Miss=%.2f MC=%.2f]\n[MemI=%lu Avg=%.2f|LI=%lu Avg=%.2f|SI=%lu Avg=%.2f]",
 					cpu.counter_cycle,cpu.counter_inst,(float)((float)cpu.counter_inst/(float)cpu.counter_cycle),cpu.counter_raw,cpu.counter_flush,cpu.tb_FINAL_pc,
 

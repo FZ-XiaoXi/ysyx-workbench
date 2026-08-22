@@ -194,8 +194,6 @@ class alignas(VL_CACHE_LINE_BYTES) VysyxSoCFull_ysyx_26010011 final : public Ver
         CData/*0:0*/ __PVT__RAM_AXI4Arbiter__DOT__R_next_state;
         CData/*0:0*/ __PVT__RAM_AXI4Arbiter__DOT__R_master_sel;
         CData/*0:0*/ __PVT__RAM_AXI4Arbiter__DOT__R_master_sel_next;
-        CData/*3:0*/ __PVT__u_bridge__DOT__CLINT_bid;
-        CData/*3:0*/ __PVT__u_bridge__DOT__CLINT_rid;
         CData/*0:0*/ __PVT__u_bridge__DOT__aw_sel_reg;
         CData/*0:0*/ __PVT__u_bridge__DOT__ar_sel_reg;
         CData/*0:0*/ __PVT__u_bridge__DOT__aw_sel_now;
@@ -229,10 +227,10 @@ class alignas(VL_CACHE_LINE_BYTES) VysyxSoCFull_ysyx_26010011 final : public Ver
         IData/*31:0*/ tb_FINAL_inst;
         IData/*31:0*/ __PVT__S_araddr;
         IData/*31:0*/ __PVT__S_rdata;
-    };
-    struct {
         IData/*31:0*/ __PVT__EXU_0__DOT__exu_out_bus_alu_result;
         IData/*31:0*/ __PVT__EXU_0__DOT__a;
+    };
+    struct {
         IData/*31:0*/ __PVT__EXU_0__DOT__b;
         IData/*31:0*/ __PVT__EXU_0__DOT__comp_b;
         IData/*31:0*/ __PVT__EXU_0__DOT__op_or;
