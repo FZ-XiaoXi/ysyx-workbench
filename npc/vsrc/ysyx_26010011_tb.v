@@ -1,5 +1,4 @@
 module CPUTop_tb;
-`ifdef __ICARUS__
 	reg clock;
 	reg reset;
 	wire io_interrupt;
@@ -233,22 +232,22 @@ module axi4_memory (
 	end
 //////////////////////////////
 	localparam [1:0] R_IDLE  = 2'b00;
-		localparam [1:0] R_DELAY = 2'b01;
-		localparam [1:0] R_DATA  = 2'b10;
-		reg [1:0] rstate, rnext_state;
-		reg [31:0] raddr_reg;
-		reg [3:0] rlen_reg, rcount;
-		reg [3:0] rid_reg;
-		wire ar_fire = arvalid && arready;
-		wire r_fire  = rvalid && rready;
-		wire read_word = (arsize[1:0] == 2'b10);
-		wire [3:0] arlen_clean = {
-			(arlen[3] === 1'b1),
-			(arlen[2] === 1'b1),
-			(arlen[1] === 1'b1),
-			(arlen[0] === 1'b1)
-		};
-		assign rid = rid_reg;
+	localparam [1:0] R_DELAY = 2'b01;
+	localparam [1:0] R_DATA  = 2'b10;
+	reg [1:0] rstate, rnext_state;
+	reg [31:0] raddr_reg;
+	reg [3:0] rlen_reg, rcount;
+	reg [3:0] rid_reg;
+	wire ar_fire = arvalid && arready;
+	wire r_fire  = rvalid && rready;
+	wire read_word = (arsize[1:0] == 2'b10);
+	wire [3:0] arlen_clean = {
+		(arlen[3] === 1'b1),
+		(arlen[2] === 1'b1),
+		(arlen[1] === 1'b1),
+		(arlen[0] === 1'b1)
+	};
+	assign rid = rid_reg;
 	always @(posedge clock) begin
 		if(reset) begin
 			rstate    <= R_IDLE;
@@ -277,13 +276,13 @@ module axi4_memory (
 				R_DATA: if (r_fire && (rcount == rlen_reg)) rnext_state = R_IDLE;
 				default: rnext_state = R_IDLE;
 			endcase
-		end
-		always @(*) begin
-			arready = (rstate == R_IDLE);
-			rvalid  = (rstate == R_DATA);
-			rlast   = rvalid && (rcount == rlen_reg);
-		end
-		localparam [31:0] MEM_BASE = 32'h80000000;
+	end
+	always @(*) begin
+		arready = (rstate == R_IDLE);
+		rvalid  = (rstate == R_DATA);
+		rlast   = rvalid && (rcount == rlen_reg);
+	end
+	localparam [31:0] MEM_BASE = 32'h80000000;
 	localparam [31:0] MEM_END  = 32'h80800000; // 8 MiB
 
 	reg [31:0] Memory [0:2097151]; // 2^21 words = 8 MiB
@@ -309,17 +308,17 @@ module axi4_memory (
 		
 	end
 
-		assign rresp = 2'b0;
-		assign bresp = 2'b0;
-		wire mem_read_valid = (raddr_reg >= MEM_BASE) && (raddr_reg < MEM_END);
-		assign rdata = mem_read_valid ? Memory[(raddr_reg - MEM_BASE) >> 2] : 32'h00000000;
+	assign rresp = 2'b0;
+	assign bresp = 2'b0;
+	wire mem_read_valid = (raddr_reg >= MEM_BASE) && (raddr_reg < MEM_END);
+	assign rdata = mem_read_valid ? Memory[(raddr_reg - MEM_BASE) >> 2] : 32'h00000000;
 
-		always @(posedge clock) begin
-			if (!reset && ar_fire && !mem_read_valid &&
-				(raddr_reg != 32'h10000048) && (raddr_reg != 32'h1000004c)) begin
-				// $display("AXI4 Read from invalid address: 0x%08x", raddr_reg);
-			end
+	always @(posedge clock) begin
+		if (!reset && ar_fire && !mem_read_valid &&
+			(raddr_reg != 32'h10000048) && (raddr_reg != 32'h1000004c)) begin
+			// $display("AXI4 Read from invalid address: 0x%08x", raddr_reg);
 		end
+	end
 	integer i;
 	initial begin
 		for (i = 0; i < 2097152; i = i + 1)
@@ -337,5 +336,4 @@ module axi4_memory (
 	// 	$dumpfile("test.vcd");
 	// 	$dumpvars(0,CPUTop_tb);
 	// end
-`endif
 endmodule

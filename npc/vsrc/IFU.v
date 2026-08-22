@@ -135,7 +135,7 @@ module ysyx_26010011_IFU(
 // 		ysyx_26010011_IFU_icache #(.CACHE_BLOCK_SIZE(8), .CACHE_SIZE(8)) icache_u0(
 // 	`endif
 // `endif
-	ysyx_26010011_IFU_icache #(.CACHE_BLOCK_SIZE(8), .CACHE_SIZE(8)) icache_u0(
+	ysyx_26010011_IFU_icache #(.CACHE_BLOCK_SIZE(4), .CACHE_SIZE(4)) icache_u0(
 		.clock(clock),
 		.reset(reset),
 

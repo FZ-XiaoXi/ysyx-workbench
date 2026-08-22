@@ -298,22 +298,7 @@ static long load_img() {
   fclose(fp);
   
 
-/////////////////////
-  {
-//   FILE *fpd = fopen(img_data_file, "rb");
-//   Assert(fpd, "Can not open '%s'", img_data_file);
-
-//   fseek(fpd, 0, SEEK_END);
-//   long size = ftell(fpd);
-
-//   Log("The image is %s, size = %ld", img_data_file, size);
-
-//   fseek(fpd, 0, SEEK_SET);
-//   int ret = fread((uint8_t*)MROM + RESET_VECTOR - CONFIG_MROMBASE, size, 1, fpd);
-//   Log("Final image data size = %ld", size);
-//   assert(ret == 1);
-//   fclose(fpd);
-  }
+////////////////////
 
   load_elf();
   Log("Final elf");
