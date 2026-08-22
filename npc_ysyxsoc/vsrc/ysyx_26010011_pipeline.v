@@ -30,6 +30,12 @@ module ysyx_26010011_IF_ID_pipeline(
             idu_in_bus_pc <= ifu_out_bus_pc;
             idu_in_bus_snpc <= ifu_out_bus_snpc;
             idu_in_bus_exception <= ifu_out_bus_exception;
+        end else begin
+            idu_in_valid <= idu_in_valid;
+            idu_in_bus_instruction <= idu_in_bus_instruction;
+            idu_in_bus_pc <= idu_in_bus_pc;
+            idu_in_bus_snpc <= idu_in_bus_snpc;
+            idu_in_bus_exception <= idu_in_bus_exception;
         end
     end
 endmodule
@@ -128,6 +134,33 @@ module ysyx_26010011_ID_EX_pipeline(
             exu_in_bus_perip_mask<=idu_out_bus_perip_mask;
             exu_in_bus_pc<=idu_out_bus_pc;
             exu_in_bus_snpc<=idu_out_bus_snpc;
+        end else begin
+            exu_in_valid<=exu_in_valid;
+            exu_in_bus_rd<=exu_in_bus_rd;
+            exu_in_bus_exception<=exu_in_bus_exception;
+            exu_in_bus_csrrd<=exu_in_bus_csrrd;
+            exu_in_bus_rs1<=exu_in_bus_rs1;
+            exu_in_bus_rs2<=exu_in_bus_rs2;
+            exu_in_bus_rs1_val<=exu_in_bus_rs1_val;
+            exu_in_bus_rs2_val<=exu_in_bus_rs2_val;
+            exu_in_bus_imm<=exu_in_bus_imm;
+            exu_in_bus_instruction<=exu_in_bus_instruction;
+            exu_in_bus_isLOAD<=exu_in_bus_isLOAD;
+            exu_in_bus_isSTORE<=exu_in_bus_isSTORE;
+            exu_in_bus_isWGPR<=exu_in_bus_isWGPR;
+            exu_in_bus_isJUMP<=exu_in_bus_isJUMP;
+            exu_in_bus_isWCOMP<=exu_in_bus_isWCOMP;
+            exu_in_bus_isBRANCH<=exu_in_bus_isBRANCH;
+            exu_in_bus_opCSR<=exu_in_bus_opCSR;
+            exu_in_bus_isUnSigned<=exu_in_bus_isUnSigned;
+            exu_in_bus_isUsePC<=exu_in_bus_isUsePC;
+            exu_in_bus_alu_isUseImm<=exu_in_bus_alu_isUseImm;
+            exu_in_bus_comp_isUseImm<=exu_in_bus_comp_isUseImm;
+            exu_in_bus_alu_op<=exu_in_bus_alu_op;
+            exu_in_bus_comp_op<=exu_in_bus_comp_op;
+            exu_in_bus_perip_mask<=exu_in_bus_perip_mask;
+            exu_in_bus_pc<=exu_in_bus_pc;
+            exu_in_bus_snpc<=exu_in_bus_snpc;
         end
     end
 endmodule
@@ -208,6 +241,27 @@ module ysyx_26010011_EX_LS_pipeline(
             lsu_in_bus_perip_mask<=exu_out_bus_perip_mask;
             lsu_in_bus_pc<=exu_out_bus_pc;
             lsu_in_bus_snpc<=exu_out_bus_snpc;
+        end else begin
+            lsu_in_valid<=lsu_in_valid;
+            lsu_in_bus_alu_result<=lsu_in_bus_alu_result;
+            lsu_in_bus_csr_result<=lsu_in_bus_csr_result;
+            lsu_in_bus_comp_result<=lsu_in_bus_comp_result;
+            lsu_in_bus_lsu_val<=lsu_in_bus_lsu_val;
+            lsu_in_bus_rd<=lsu_in_bus_rd;
+            lsu_in_bus_exception<=lsu_in_bus_exception;
+            lsu_in_bus_csrrd<=lsu_in_bus_csrrd;
+            lsu_in_bus_instruction<=lsu_in_bus_instruction;
+            lsu_in_bus_isLOAD<=lsu_in_bus_isLOAD;
+            lsu_in_bus_isSTORE<=lsu_in_bus_isSTORE;
+            lsu_in_bus_isWGPR<=lsu_in_bus_isWGPR;
+            lsu_in_bus_isJUMP<=lsu_in_bus_isJUMP;
+            lsu_in_bus_isWCOMP<=lsu_in_bus_isWCOMP;
+            lsu_in_bus_isBRANCH<=lsu_in_bus_isBRANCH;
+            lsu_in_bus_opCSR<=lsu_in_bus_opCSR;
+            lsu_in_bus_isUnSigned<=lsu_in_bus_isUnSigned;
+            lsu_in_bus_perip_mask<=lsu_in_bus_perip_mask;
+            lsu_in_bus_pc<=lsu_in_bus_pc;
+            lsu_in_bus_snpc<=lsu_in_bus_snpc;
         end
     end
 endmodule
@@ -284,6 +338,25 @@ module ysyx_26010011_LS_WB_pipeline(
             wbu_in_bus_isWCOMP<=lsu_out_bus_isWCOMP;
             wbu_in_bus_isBRANCH<=lsu_out_bus_isBRANCH;
             wbu_in_bus_opCSR<=lsu_out_bus_opCSR;
+        end else begin
+            wbu_in_valid<=wbu_in_valid; 
+            wbu_in_bus_pc<=wbu_in_bus_pc;
+            wbu_in_bus_instruction<=wbu_in_bus_instruction;
+            wbu_in_bus_lsu_result<=wbu_in_bus_lsu_result;
+            wbu_in_bus_alu_result<=wbu_in_bus_alu_result;
+            wbu_in_bus_csr_result<=wbu_in_bus_csr_result;
+            wbu_in_bus_comp_result<=wbu_in_bus_comp_result;
+            wbu_in_bus_snpc<=wbu_in_bus_snpc;
+            wbu_in_bus_rd<=wbu_in_bus_rd;
+            wbu_in_bus_exception<=wbu_in_bus_exception;
+            wbu_in_bus_csrrd<=wbu_in_bus_csrrd;
+            wbu_in_bus_isLOAD<=wbu_in_bus_isLOAD;
+            wbu_in_bus_isSTORE<=wbu_in_bus_isSTORE;
+            wbu_in_bus_isWGPR<=wbu_in_bus_isWGPR;
+            wbu_in_bus_isJUMP<=wbu_in_bus_isJUMP;
+            wbu_in_bus_isWCOMP<=wbu_in_bus_isWCOMP;
+            wbu_in_bus_isBRANCH<=wbu_in_bus_isBRANCH;
+            wbu_in_bus_opCSR<=wbu_in_bus_opCSR;
         end
     end
 endmodule

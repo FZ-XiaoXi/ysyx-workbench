@@ -100,7 +100,7 @@ module ysyx_26010011_CSRs(
       CSR_MVENDORID <= 32'h79737978;
       CSR_MARCHID <= 32'h018ce19b;
       CSR_MTVAL <= 32'h00;
-    end else begin
+    end else if(1) begin
       if(csr_in_bus_exception[4]) begin
         if(csr_in_bus_exception[3:0] != `EXCEPTION_MRET) begin
           CSR_MEPC    <= csr_pc;
@@ -120,7 +120,9 @@ module ysyx_26010011_CSRs(
             default:;
         endcase
       end
-      {CSR_MCYCLEH, CSR_MCYCLE} <= {CSR_MCYCLEH, CSR_MCYCLE} + 1;
+
+      CSR_MCYCLE <= CSR_MCYCLE + 1;
+      CSR_MCYCLEH <= (&CSR_MCYCLE)?(CSR_MCYCLEH + 1):CSR_MCYCLEH;
     end
   end
 

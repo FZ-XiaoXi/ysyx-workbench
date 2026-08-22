@@ -48,25 +48,36 @@ module ysyx_26010011_IFU(
 	reg ifu_out_valid_r;
 	reg [31:0]ifu_out_bus_instruction_r;
 	reg [31:0]ifu_out_bus_pc_r;
+	reg [31:0]ifu_out_bus_snpc_r;
 	always @(posedge clock) begin
 		if(reset) begin
 			ifu_out_valid_r <= 0;
+			ifu_out_bus_instruction_r <= 0;
+			ifu_out_bus_pc_r <= 0;
+			ifu_out_bus_snpc_r <= 0;
 		end else begin
 			if(flush_valid) begin
 				ifu_out_valid_r <= 0;
+				ifu_out_bus_instruction_r <= 0;
+				ifu_out_bus_pc_r <= 0;
+				ifu_out_bus_snpc_r <= 0;
 			end else if(in_reqValid & in_respValid & ~ifu_out_ready) begin
 				ifu_out_valid_r <= 1;
 				ifu_out_bus_instruction_r <= in_rdata;
 				ifu_out_bus_pc_r <= PC;
+				ifu_out_bus_snpc_r <= PC + 4;
 			end else if(ifu_out_valid & ifu_out_ready)begin
 				ifu_out_valid_r <= 0;
+				ifu_out_bus_instruction_r <= 0;
+				ifu_out_bus_pc_r <= 0;
+				ifu_out_bus_snpc_r <= 0;
 			end
 		end
 	
 	end
 	assign ifu_out_valid = (((in_reqValid & in_respValid)?1:ifu_out_valid_r) | ifu_out_bus_exception[4]);
 	assign ifu_out_bus_instruction = (ifu_out_bus_exception[4])?(`INST_NOP):((in_reqValid & in_respValid)?in_rdata:ifu_out_bus_instruction_r);
-	assign ifu_out_bus_snpc = ifu_out_bus_pc + 4;
+	assign ifu_out_bus_snpc = (in_reqValid & (in_respValid | ifu_out_bus_exception[4]))?(PC + 4):ifu_out_bus_snpc_r;
 	assign ifu_out_bus_pc = (in_reqValid & (in_respValid | ifu_out_bus_exception[4]))?PC:ifu_out_bus_pc_r;
 
 	reg [31:0] PC/*verilator public*/;
@@ -102,7 +113,7 @@ module ysyx_26010011_IFU(
 		end
 	end;
 
-	ysyx_26010011_IFU_icache #(.CACHE_BLOCK_SIZE(16), .CACHE_SIZE(4)) icache_u0(
+	ysyx_26010011_IFU_icache #(.CACHE_BLOCK_SIZE(8), .CACHE_SIZE(4)) icache_u0(
 		.clock(clock),
 		.reset(reset),
 
@@ -210,9 +221,12 @@ module ysyx_26010011_IFU_icache #(
 				cache_mem[now_index][burst_cnt*32 +: 32]   <= out_rdata;
 			end else if((r_fire & (state == S_WAIT_DATA) & pc_flush)) begin
 				cache_valid[now_index] <= 0;
+				cache_tag[now_index]   <= now_tag;
+				cache_mem[now_index][burst_cnt*32 +: 32]   <= out_rdata;
 			end
 		end
 	end
+
 
 	localparam S_IDLE       = 3'd0;
 	localparam S_WAIT_READY = 3'd1; // 等待地址通道接受地址
@@ -236,6 +250,7 @@ module ysyx_26010011_IFU_icache #(
 
 	reg [BURST_W-1:0] burst_cnt=0;
 
+
 	always @(posedge clock) begin
 		if(reset) begin
 			pc_flushed <= 0;
@@ -245,7 +260,6 @@ module ysyx_26010011_IFU_icache #(
 			pc_flushed <= 0;
 		end
 	end
-
 	always @(posedge clock) begin
 		if (reset) begin
 			burst_cnt <= 0;
@@ -273,7 +287,6 @@ module ysyx_26010011_IFU_icache #(
 			in_rdata = cache_mem[now_index][now_offset*8 +: 32];
 		end
 	end
-
 	always @(*) begin
 		if(in_reqValid) begin
 			case (state) 

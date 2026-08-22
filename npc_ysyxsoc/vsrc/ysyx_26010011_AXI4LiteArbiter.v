@@ -2,15 +2,15 @@ module ysyx_26010011_AXI4LiteArbiter(
     input     clock,
     input     reset,
 
-    // //MASTER1 AW
-    // input      [31:0] M1_awaddr,  input             M1_awvalid, output reg        M1_awready,
-    // input      [3:0]  M1_awid,    input      [7:0]  M1_awlen,   input      [2:0]  M1_awsize,  input      [1:0]  M1_awburst,
-    // //MASTER1 W
-    // input      [31:0] M1_wdata,   input      [3:0]  M1_wstrb,   input             M1_wvalid,  output reg        M1_wready,
-    // input             M1_wlast,
-    // //MASTER1 B
-    // output reg [1:0]  M1_bresp,   output reg        M1_bvalid,  input             M1_bready,
-    // output reg [3:0]  M1_bid,
+    //MASTER1 AW
+    input      [31:0] M1_awaddr,  input             M1_awvalid, output reg        M1_awready,
+    input      [3:0]  M1_awid,    input      [7:0]  M1_awlen,   input      [2:0]  M1_awsize,  input      [1:0]  M1_awburst,
+    //MASTER1 W
+    input      [31:0] M1_wdata,   input      [3:0]  M1_wstrb,   input             M1_wvalid,  output reg        M1_wready,
+    input             M1_wlast,
+    //MASTER1 B
+    output reg [1:0]  M1_bresp,   output reg        M1_bvalid,  input             M1_bready,
+    output reg [3:0]  M1_bid,
     //MASTER1 AR
     input      [31:0] M1_araddr,  input             M1_arvalid, output reg        M1_arready,
     input      [3:0]  M1_arid,    input      [7:0]  M1_arlen,   input      [2:0]  M1_arsize,  input      [1:0]  M1_arbureset,
@@ -140,16 +140,16 @@ module ysyx_26010011_AXI4LiteArbiter(
                 S_rready = 0;
             end
             R_BUSY:begin
-                M1_rdata = S_rdata;
-                M1_rresp = S_rresp;
+                M1_rdata = R_master_sel?0:S_rdata;
+                M1_rresp = R_master_sel?0:S_rresp;
                 M1_rvalid = R_master_sel?0:S_rvalid;
-                M1_rlast  = S_rlast;
-                M1_rid    = S_rid;
-                M2_rdata = S_rdata;
-                M2_rresp = S_rresp;
+                M1_rlast  = R_master_sel?0:S_rlast;
+                M1_rid    = R_master_sel?0:S_rid;
+                M2_rdata = R_master_sel?S_rdata:0;
+                M2_rresp = R_master_sel?S_rresp:0;
                 M2_rvalid = R_master_sel?S_rvalid:0;
-                M2_rlast  = S_rlast;
-                M2_rid    = S_rid;
+                M2_rlast  = R_master_sel?S_rlast:0;
+                M2_rid    = R_master_sel?S_rid:0;
                 S_rready = R_master_sel?M2_rready:M1_rready;
             end
         endcase
@@ -158,28 +158,147 @@ module ysyx_26010011_AXI4LiteArbiter(
 
 
 
-    //////
+    /////////////////////////////////////////////////////////////////////W - Arbiter
+    parameter W_IDLE = 1'b0, W_BUSY = 1'b1;
+    reg W_state, W_next_state;
+    reg W_master_sel, W_master_sel_next; // 0: M1, 1: M2
+    always @(posedge clock) begin
+        if(reset) begin
+            W_state<=W_IDLE;
+            W_master_sel<=0;
+        end else    begin
+            W_state<=W_next_state;
+            W_master_sel<=W_master_sel_next;
+        end
+    end
+
+    always @(*)begin
+        W_next_state=W_state;
+        W_master_sel_next=W_master_sel;
+        case(W_state)
+            W_IDLE:begin
+                if(M1_awvalid) begin
+                    W_next_state = W_BUSY;
+                    W_master_sel_next = 0;
+                end else if(M2_awvalid) begin
+                    W_next_state = W_BUSY;
+                    W_master_sel_next = 1;
+                end else begin
+                    W_next_state = W_IDLE;
+                    W_master_sel_next = W_master_sel;
+                end
+            end
+            W_BUSY:begin
+                case(W_master_sel)
+                    1'b0:begin
+                        if(S_bvalid & M1_bready) W_next_state=W_IDLE;
+                    end
+                    1'b1:begin
+                        if(S_bvalid & M2_bready) W_next_state=W_IDLE;
+                    end
+                endcase
+            end
+            default:
+                W_next_state=W_IDLE;
+        endcase
+    end
 
     //AW
-    assign M2_awready = S_awready;
-    assign S_awvalid = M2_awvalid;
-    assign S_awaddr = M2_awaddr;
-    assign S_awid   = M2_awid;
-    assign S_awlen  = M2_awlen;
-    assign S_awsize = M2_awsize;
-    assign S_awburst = M2_awburst;
+    always @(*)begin
+        case(W_state)
+            W_IDLE:begin
+                if(M1_awvalid) begin
+                    M1_awready = S_awready;
+                    M2_awready = 0;
+                    S_awvalid = 1;
+                    S_awaddr = M1_awaddr;
+                    S_awid   = M1_awid; S_awlen = M1_awlen; S_awsize = M1_awsize; S_awburst = M1_awburst;
+                end else if(M2_awvalid) begin
+                    M1_awready = 0;
+                    M2_awready = S_awready;
+                    S_awvalid = 1;
+                    S_awaddr = M2_awaddr;
+                    S_awid   = M2_awid; S_awlen = M2_awlen; S_awsize = M2_awsize; S_awburst = M2_awburst;
+                end else begin
+                    M1_awready = 0;
+                    M2_awready = 0;
+                    S_awvalid = 0;
+                    S_awaddr = 0;
+                    S_awid   = 0; S_awlen = 0; S_awsize = 0; S_awburst = 0;
+                end
+            end
+            W_BUSY:begin
+                M1_awready = W_master_sel?0:S_awready;
+                M2_awready = W_master_sel?S_awready:0;
+                S_awvalid = W_master_sel?M2_awvalid:M1_awvalid;
+                S_awaddr = W_master_sel?M2_awaddr:M1_awaddr;
+                S_awid   = W_master_sel?M2_awid:M1_awid;
+                S_awlen  = W_master_sel?M2_awlen:M1_awlen;
+                S_awsize = W_master_sel?M2_awsize:M1_awsize;
+                S_awburst = W_master_sel?M2_awburst:M1_awburst;
+            end
+        endcase
+    end
 
     //W
-    assign M2_wready = S_wready;
-    assign S_wvalid = M2_wvalid;
-    assign S_wdata = M2_wdata;
-    assign S_wstrb = M2_wstrb;
-    assign S_wlast = M2_wlast;
+    always @(*)begin
+        case(W_state)
+            W_IDLE:begin
+
+
+                if(M1_wvalid) begin
+                    S_wvalid = 1;
+                    S_wdata = M1_wdata;
+                    S_wstrb = M1_wstrb;
+                    S_wlast = M1_wlast;
+                    M1_wready = S_wready;
+                    M2_wready = 0;
+                end else if(M2_wvalid) begin
+                    S_wvalid = 1;
+                    S_wdata = M2_wdata;
+                    S_wstrb = M2_wstrb;
+                    S_wlast = M2_wlast;
+                    M1_wready = 0;
+                    M2_wready = S_wready;
+                end else begin
+                    S_wvalid = 0;
+                    S_wdata = 0;
+                    S_wstrb = 0;
+                    S_wlast = 0;
+                    M1_wready = 0;
+                    M2_wready = 0;
+                end
+            end
+            W_BUSY:begin
+                M1_wready = W_master_sel?0:S_wready;
+                M2_wready = W_master_sel?S_wready:0;
+                S_wvalid = W_master_sel?M2_wvalid:M1_wvalid;
+                S_wdata = W_master_sel?M2_wdata:M1_wdata;
+                S_wstrb = W_master_sel?M2_wstrb:M1_wstrb;
+                S_wlast = W_master_sel?M2_wlast:M1_wlast;
+            end
+        endcase
+    end
 
 
     //B
-    assign M2_bresp = S_bresp;
-    assign M2_bvalid = S_bvalid;
-    assign M2_bid    = S_bid;
-    assign S_bready = M2_bready;
+    always @(*)begin
+        case(W_state)
+            W_IDLE:begin
+                M1_bresp = 0; M1_bvalid = 0; M1_bid = 0;
+                M2_bresp = 0; M2_bvalid = 0; M2_bid = 0;
+                S_bready = 0;
+            end
+            W_BUSY:begin
+                M1_bresp = W_master_sel?0:S_bresp;
+                M1_bvalid = W_master_sel?0:S_bvalid;
+                M1_bid    = W_master_sel?0:S_bid;
+                M2_bresp = W_master_sel?S_bresp:0;
+                M2_bvalid = W_master_sel?S_bvalid:0;
+                M2_bid    = W_master_sel?S_bid:0;
+                S_bready = W_master_sel?M2_bready:M1_bready;
+            end
+        endcase
+    end
+
 endmodule

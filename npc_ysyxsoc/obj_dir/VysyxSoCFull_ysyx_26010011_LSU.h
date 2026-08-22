@@ -83,7 +83,6 @@ class alignas(VL_CACHE_LINE_BYTES) VysyxSoCFull_ysyx_26010011_LSU final : public
     };
     struct {
         IData/*31:0*/ __PVT__val;
-        IData/*31:0*/ __PVT__lsu_rdata1;
     };
 
     // INTERNAL VARIABLES

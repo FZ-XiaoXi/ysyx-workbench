@@ -48,7 +48,7 @@ module ysyx_26010011_EXU(
 	wire [31:0]op_ll;
 
 
-	
+	wire [31:0]op_adder;
 	
 	assign op_xor=a^b;
 	assign op_or=a|b;
@@ -57,9 +57,7 @@ module ysyx_26010011_EXU(
 	assign op_lr=a >> (b & 32'h1f);
 	assign op_ll=a << (b & 32'h1f);
 
-	wire [31:0]op_adder;
-	assign op_adder = (exu_in_bus_alu_op[8])?(a-b):(a+b);
-	
+	ysyx_26010011_M_ADDER ADDER_0 (.inA({1'b0,a}),.inB((exu_in_bus_alu_op[8])?~{1'b0,b}:{1'b0,b}),.cin((exu_in_bus_alu_op[8])?1:0),.out(op_adder),.carry());
 	always @(*) begin
 		if(exu_in_bus_alu_op[9] | exu_in_bus_alu_op[8]) exu_out_bus_alu_result=op_adder;
 		else if(exu_in_bus_alu_op[5]) exu_out_bus_alu_result=op_ll;
@@ -75,11 +73,13 @@ module ysyx_26010011_EXU(
 		else if(~exu_in_bus_opCSR[1]& exu_in_bus_opCSR[0]) exu_out_bus_csr_result=op_or;
 		else                                               exu_out_bus_csr_result=exu_in_bus_a;
 	end
-	wire comp_isEQUAL,comp_isGREATER,comp_suber_carry;
+	wire comp_isEQUAL,comp_isSGREATER,comp_isUGREATER,comp_isGREATER,comp_suber_carry;
 	wire [31:0]comp_suber_out;
-	assign {comp_suber_carry,comp_suber_out} = {1'b0,comp_a} + (~{1'b0,comp_b}) + 1;
+	ysyx_26010011_M_ADDER COMP_SUBER_0 (.inA({1'b0,comp_a}),.inB(~{1'b0,comp_b}),.cin(1),.out(comp_suber_out),.carry(comp_suber_carry));
 	assign comp_isEQUAL = &(comp_a ~^ comp_b);
-	assign comp_isGREATER = (exu_in_bus_isUnSigned)?((|comp_suber_out) & ~comp_suber_carry):((~comp_a[31] & comp_b[31]) | ((comp_a[31] ~^ comp_b[31])  & ~comp_suber_out[31]));
+	assign comp_isUGREATER = (|comp_suber_out) & ~comp_suber_carry;
+	assign comp_isSGREATER = (~comp_a[31] & comp_b[31]) | ((comp_a[31] ~^ comp_b[31])  & ~comp_suber_out[31]);
+	assign comp_isGREATER = (exu_in_bus_isUnSigned)?comp_isUGREATER:comp_isSGREATER;
 	always @(*) begin
 		case (exu_in_bus_comp_op)
 			2'b00: exu_out_bus_comp_result=comp_isEQUAL | comp_isGREATER;

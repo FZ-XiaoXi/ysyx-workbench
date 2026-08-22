@@ -787,15 +787,15 @@ module ysyx_26010011(
 	.clock(clock),
 	.reset(reset),
 
-	// //MASTER1 AW
-	// .M1_awaddr(0),            .M1_awvalid(0),             .M1_awready(),
-	// .M1_awid(0),              .M1_awlen(0),               .M1_awsize(0),             .M1_awburst(0),
-	// //MASTER1 W
-	// .M1_wdata(0),             .M1_wstrb(0),               .M1_wvalid(0),              .M1_wready(),
-	// .M1_wlast(0),
-	// //MASTER1 B
-	// .M1_bresp(),              .M1_bvalid(),               .M1_bready(0),
-	// .M1_bid(),
+	//MASTER1 AW
+	.M1_awaddr(0),            .M1_awvalid(0),             .M1_awready(),
+	.M1_awid(0),              .M1_awlen(0),               .M1_awsize(0),             .M1_awburst(0),
+	//MASTER1 W
+	.M1_wdata(0),             .M1_wstrb(0),               .M1_wvalid(0),              .M1_wready(),
+	.M1_wlast(0),
+	//MASTER1 B
+	.M1_bresp(),              .M1_bvalid(),               .M1_bready(0),
+	.M1_bid(),
 	//MASTER1 AR
 	.M1_araddr(IROM_araddr),  .M1_arvalid(IROM_arvalid),  .M1_arready(IROM_arready),
 	.M1_arid(IROM_arid),      .M1_arlen(IROM_arlen),      .M1_arsize(IROM_arsize),    .M1_arbureset(IROM_arbureset),

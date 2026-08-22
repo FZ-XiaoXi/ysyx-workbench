@@ -56,6 +56,7 @@ class alignas(VL_CACHE_LINE_BYTES) VysyxSoCFull_ysyx_26010011_IFU final : public
     VL_IN(__PVT__r_tar,31,0);
     IData/*31:0*/ __PVT__ifu_out_bus_instruction_r;
     IData/*31:0*/ __PVT__ifu_out_bus_pc_r;
+    IData/*31:0*/ __PVT__ifu_out_bus_snpc_r;
     IData/*31:0*/ PC;
 
     // INTERNAL VARIABLES
