@@ -137,6 +137,6 @@ sim-iverilog-netlist: $(IMG) $(NETLIST) $(CELLS)
 	iverilog -g2012 -Wall -o build/myCPU_sim-iverilog-netlist -s CPUTop_tb $(IV_NET_SRC) $(NETLIST) $(CELLS) -DIMG_PATH=\"$(IMG).txt\"
 	vvp build/myCPU_sim-iverilog-netlist
 
-include ~/ysyx-workbench/Makefile
+include $(NPC_HOME)/../Makefile
 
 .PHONY: all sim wave perf perf-test clean iv iv-netlist concat verilog sim-iverilog bin-to-text sim-iverilog-netlist
