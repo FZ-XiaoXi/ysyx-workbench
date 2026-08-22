@@ -23,8 +23,8 @@ module ysyx_26010011_GPRs(
 ); 
  	reg [31:0]GPR[15:0]/* verilator public */;
 
-	assign gpr_out_a=(gpr_in_addra==0)?{32{1'b0}}:GPR[gpr_in_addra];
-	assign gpr_out_b=(gpr_in_addrb==0)?{32{1'b0}}:GPR[gpr_in_addrb];
+	assign gpr_out_a=(gpr_in_addra==0)?{32{1'b0}}:GPR[gpr_in_addra[3:0]];
+	assign gpr_out_b=(gpr_in_addrb==0)?{32{1'b0}}:GPR[gpr_in_addrb[3:0]];
 
 	integer i;
 	always @(posedge clock) begin
