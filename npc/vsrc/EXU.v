@@ -38,6 +38,14 @@ module ysyx_26010011_EXU(
 	output reg       exu_out_bus_dnpc_valid
 );
 	wire [31:0] a,b,comp_a,comp_b;
+	wire [31:0]op_xor;
+	wire [31:0]op_or;
+	wire [31:0]op_and;
+	wire [31:0]op_ar;
+	wire [31:0]op_lr;
+	wire [31:0]op_ll;
+	wire [31:0]op_adder;
+
 	assign a=(exu_in_bus_alu_isUseImm)?(exu_in_bus_isUsePC?exu_in_bus_pc:exu_in_bus_a):exu_in_bus_a;
 	assign b=(exu_in_bus_alu_isUseImm)?exu_in_bus_imm:exu_in_bus_b;
 	assign comp_a=exu_in_bus_a;
@@ -45,22 +53,17 @@ module ysyx_26010011_EXU(
 
 	assign exu_in_ready = exu_out_ready;
 	assign exu_out_valid = exu_in_valid;
-	wire [31:0]op_xor;
-	wire [31:0]op_or;
-	wire [31:0]op_and;
-	wire [31:0]op_ar;
-	wire [31:0]op_lr;
-	wire [31:0]op_ll;
-
+	
 	assign op_xor=a^b;
 	assign op_or=a|b;
 	assign op_and=a&b;
 	assign op_ar=$signed(a) >>> (b & 32'h1f);
 	assign op_lr=a >> (b & 32'h1f);
 	assign op_ll=a << (b & 32'h1f);
-
-	wire [31:0]op_adder;
 	assign op_adder = (exu_in_bus_alu_op[8])?(a-b):(a+b);
+
+	wire comp_isEQUAL,comp_isGREATER,comp_suber_carry;
+	wire [31:0]comp_suber_out;
 	
 	always @(*) begin
 		if(exu_in_bus_alu_op[9] | exu_in_bus_alu_op[8]) exu_out_bus_alu_result=op_adder;
@@ -77,8 +80,7 @@ module ysyx_26010011_EXU(
 		else if(~exu_in_bus_opCSR[1]& exu_in_bus_opCSR[0]) exu_out_bus_csr_result=op_or;
 		else                                               exu_out_bus_csr_result=exu_in_bus_a;
 	end
-	wire comp_isEQUAL,comp_isGREATER,comp_suber_carry;
-	wire [31:0]comp_suber_out;
+	
 	assign {comp_suber_carry,comp_suber_out} = {1'b0,comp_a} + (~{1'b0,comp_b}) + 1;
 	assign comp_isEQUAL = &(comp_a ~^ comp_b);
 	assign comp_isGREATER = (exu_in_bus_isUnSigned)?((|comp_suber_out) & ~comp_suber_carry):((~comp_a[31] & comp_b[31]) | ((comp_a[31] ~^ comp_b[31])  & ~comp_suber_out[31]));

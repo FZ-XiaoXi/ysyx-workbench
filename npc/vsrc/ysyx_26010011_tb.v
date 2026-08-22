@@ -230,23 +230,37 @@ module axi4_memory (
 			end
 		endcase
 	end
+
 //////////////////////////////
 	localparam [1:0] R_IDLE  = 2'b00;
 	localparam [1:0] R_DELAY = 2'b01;
 	localparam [1:0] R_DATA  = 2'b10;
+	localparam [31:0] MEM_BASE = 32'h80000000;
+	localparam [31:0] MEM_END  = 32'h80800000; // 8 MiB
+	wire ar_fire;
+	wire r_fire;
+	wire read_word;
+	wire [3:0] arlen_clean;
+	reg [31:0] Memory [0:2097151]; // 2^21 words = 8 MiB
+	wire mem_write_valid;
+	wire mem_read_valid;
 	reg [1:0] rstate, rnext_state;
 	reg [31:0] raddr_reg;
 	reg [3:0] rlen_reg, rcount;
 	reg [3:0] rid_reg;
-	wire ar_fire = arvalid && arready;
-	wire r_fire  = rvalid && rready;
-	wire read_word = (arsize[1:0] == 2'b10);
-	wire [3:0] arlen_clean = {
+
+	assign ar_fire = arvalid && arready;
+	assign r_fire  = rvalid && rready;
+	assign read_word = (arsize[1:0] == 2'b10);
+
+	assign arlen_clean = {
 		(arlen[3] === 1'b1),
 		(arlen[2] === 1'b1),
 		(arlen[1] === 1'b1),
 		(arlen[0] === 1'b1)
 	};
+
+
 	assign rid = rid_reg;
 	always @(posedge clock) begin
 		if(reset) begin
@@ -282,14 +296,10 @@ module axi4_memory (
 		rvalid  = (rstate == R_DATA);
 		rlast   = rvalid && (rcount == rlen_reg);
 	end
-	localparam [31:0] MEM_BASE = 32'h80000000;
-	localparam [31:0] MEM_END  = 32'h80800000; // 8 MiB
-
-	reg [31:0] Memory [0:2097151]; // 2^21 words = 8 MiB
-
-	wire mem_write_valid =
+	
+	assign mem_write_valid =
 			awaddr >= MEM_BASE && awaddr < MEM_END;
-
+	
 	always @(posedge clock) begin
 		if(wstate == 4'b0000 && wnext_state == 4'b0001) begin
 			if (mem_write_valid) begin
@@ -310,7 +320,8 @@ module axi4_memory (
 
 	assign rresp = 2'b0;
 	assign bresp = 2'b0;
-	wire mem_read_valid = (raddr_reg >= MEM_BASE) && (raddr_reg < MEM_END);
+	
+	assign mem_read_valid = (raddr_reg >= MEM_BASE) && (raddr_reg < MEM_END);
 	assign rdata = mem_read_valid ? Memory[(raddr_reg - MEM_BASE) >> 2] : 32'h00000000;
 
 	always @(posedge clock) begin
@@ -323,7 +334,6 @@ module axi4_memory (
 	initial begin
 		for (i = 0; i < 2097152; i = i + 1)
 			Memory[i] = 32'b0;
-
 		$display("Loading image from %s", `IMG_PATH);
 		$readmemh(
 			// "/home/seaber/ysyx-workbench/rt-thread-am/bsp/abstract-machine/build/rtthread-riscv32e-iv",

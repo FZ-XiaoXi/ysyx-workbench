@@ -76,13 +76,38 @@ module ysyx_26010011_LSU(
 	localparam S_WAIT_RDATA  = 3'd4; // 等待读数据返回(R通道)
 
 	reg [2:0] state/*verilator public*/, next_state;
+	reg [31:0]  awaddr_q;
+	reg [31:0]  wdata_q;
+	reg [2:0]   awsize_q;
+	reg [3:0]   wstrb_q;
 
 	// 握手信号
-	wire aw_fire = awvalid && awready;
-	wire w_fire  = wvalid && wready;
-	wire b_fire/*verilator public*/  = bvalid && bready;
-	wire ar_fire = arvalid && arready;
-	wire r_fire/*verilator public*/  = rvalid && rready;
+	wire aw_fire;
+	wire w_fire;
+	wire b_fire/*verilator public*/;
+	wire ar_fire;
+	wire r_fire/*verilator public*/;
+
+	wire [31:0] val0;
+	wire [31:0] val1;
+	wire [31:0] val2;
+	wire [31:0] val3;
+	reg[31:0]val;
+
+	wire [31:0] lsu_rdata1;
+	wire [31:0] lsu_rdata2;
+	wire [31:0] lsu_rdata4;
+
+	wire debug_LSU_LOADING/*verilator public*/;
+	wire debug_LSU_WRITING/*verilator public*/;
+	wire debug_LSU_WRITE_FINAL/*verilator public*/;
+	wire debug_LSU_LOAD_FINAL/*verilator public*/;
+
+	assign aw_fire = awvalid && awready;
+	assign w_fire  = wvalid && wready;
+	assign b_fire/*verilator public*/  = bvalid && bready;
+	assign ar_fire = arvalid && arready;
+	assign r_fire/*verilator public*/  = rvalid && rready;
 
 	assign awaddr  = {awaddr_q};
 	assign awid    = 4'b0;
@@ -97,10 +122,7 @@ module ysyx_26010011_LSU(
 	assign wstrb   = wstrb_q;
 	assign wlast   = 1'b1;    // single beat
 
-	reg [31:0]  awaddr_q;
-	reg [31:0]  wdata_q;
-	reg [2:0]   awsize_q;
-	reg [3:0]   wstrb_q;
+	
 	always @(posedge clock) begin
 		if(reset) begin
 			// awaddr_q <= 32'b0;
@@ -218,12 +240,13 @@ module ysyx_26010011_LSU(
 							 (state == S_WAIT_BRESP && b_fire) || !(lsu_in_bus_isLOAD || lsu_in_bus_isSTORE) || lsu_out_bus_exception[4]);
 	assign lsu_in_ready = (lsu_in_valid & (lsu_in_bus_isLOAD | lsu_in_bus_isSTORE)) ? ((lsu_out_ready & (r_fire | b_fire)) | lsu_out_bus_exception[4]):(1);
 
-	wire [31:0] val0 = rdata; 
-	wire [31:0] val1 = {{8{val0[31]}}, val0[31:8]};
-	wire [31:0] val2 = {{8{val1[31]}}, val1[31:8]};
-	wire [31:0] val3 = {{8{val2[31]}}, val2[31:8]};
-	
-	reg[31:0]val;
+
+
+	assign val0 = rdata; 
+	assign val1 = {{8{val0[31]}}, val0[31:8]};
+	assign val2 = {{8{val1[31]}}, val1[31:8]};
+	assign val3 = {{8{val2[31]}}, val2[31:8]};
+
 	// assign val = val0;
 	always @(*) begin
 		case(lsu_in_bus_addr[1:0])
@@ -235,9 +258,9 @@ module ysyx_26010011_LSU(
 		endcase
 	end
 
-	wire [31:0] lsu_rdata1 = (!lsu_in_bus_isUnSigned) ? {{24{val[7]}},  val[7:0]}  : {{24{1'b0}}, val[7:0]};
-	wire [31:0] lsu_rdata2 = (!lsu_in_bus_isUnSigned) ? {{16{val[15]}}, val[15:0]} : {{16{1'b0}}, val[15:0]};
-	wire [31:0] lsu_rdata4 = val[31:0];
+	assign lsu_rdata1 = (!lsu_in_bus_isUnSigned) ? {{24{val[7]}},  val[7:0]}  : {{24{1'b0}}, val[7:0]};
+	assign lsu_rdata2 = (!lsu_in_bus_isUnSigned) ? {{16{val[15]}}, val[15:0]} : {{16{1'b0}}, val[15:0]};
+	assign lsu_rdata4 = val[31:0];
 	
 	always @(*) begin
 		case(lsu_in_bus_perip_mask)
@@ -248,10 +271,13 @@ module ysyx_26010011_LSU(
 			// default: lsu_out_bus_rdata = 32'hffffffff;
 		endcase
 	end
-	wire debug_LSU_LOADING/*verilator public*/ = (state!=S_IDLE)&lsu_in_bus_isLOAD&lsu_in_valid;
-	wire debug_LSU_WRITING/*verilator public*/ = (state!=S_IDLE)&lsu_in_bus_isSTORE&lsu_in_valid;
-	wire debug_LSU_WRITE_FINAL/*verilator public*/ = lsu_out_ready&lsu_out_valid&lsu_in_bus_isSTORE&lsu_in_valid;
-	wire debug_LSU_LOAD_FINAL/*verilator public*/ = lsu_out_ready&lsu_out_valid&lsu_in_bus_isLOAD&lsu_in_valid;
+	
+
+
+	assign debug_LSU_LOADING = (state!=S_IDLE)&lsu_in_bus_isLOAD&lsu_in_valid;
+	assign debug_LSU_WRITING = (state!=S_IDLE)&lsu_in_bus_isSTORE&lsu_in_valid;
+	assign debug_LSU_WRITE_FINAL = lsu_out_ready&lsu_out_valid&lsu_in_bus_isSTORE&lsu_in_valid;
+	assign debug_LSU_LOAD_FINAL = lsu_out_ready&lsu_out_valid&lsu_in_bus_isLOAD&lsu_in_valid;
 
 	always @(*) begin
 		if(lsu_in_bus_exception[4]) begin

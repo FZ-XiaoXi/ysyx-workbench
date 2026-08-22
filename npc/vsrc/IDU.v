@@ -53,6 +53,30 @@ module ysyx_26010011_IDU(
 
 	reg state, next_state;
 	parameter S_WORKING = 1'b0, S_WAITING = 1'b1;
+
+	logic [ 6: 0]opcode;
+	logic [11: 0]immI;
+	logic [11: 0]immS;
+	logic [12: 1]immB;
+	logic [31:12]immU;
+	logic [20: 1]immJ;
+	logic [ 2: 0]funct3;
+	logic [ 6: 0]funct7;
+
+	logic isECALL, isEBREAK, isMRET,isFENCEI;
+	logic isLUI, isAUIPC, isJAL, isJALR, isBEQ, isBNE, isBLT, isBGE, isBLTU, isBGEU;
+	logic isLB, isLH, isLW, isLBU, isLHU, isSB, isSH, isSW, isADDI, isSLTI, isSLTIU;
+	logic isXORI, isORI, isANDI, isSLLI, isSRLI, isSRAI, isADD, isSUB, isSLL, isSLT;
+	logic isSLTU, isXOR, isSRL, isSRA, isOR, isAND;
+	// logic isMULHU, isDIV, isDIVU, isREM, isREMU;
+
+	logic isCSRRW,isCSRRS,isCSRRC,isCSRRWI,isCSRRSI,isCSRRCI;
+
+	logic isR,isI,isS,isB,isU,isJ;
+
+	wire all_inst;
+
+
 	always @(posedge clock) begin
 		if(reset | flush_valid) state <= S_WORKING;
 		else      state <= next_state;
@@ -80,27 +104,6 @@ module ysyx_26010011_IDU(
 	assign idu_out_valid = idu_in_valid & (~idu_isRAW | idu_out_bus_exception[4]) & (state == S_WORKING);
 	assign fencei_flush = idu_in_valid & isFENCEI & (state == S_WORKING) & ~idu_out_bus_exception[4];
 
-	logic [ 6: 0]opcode;
-	logic [11: 0]immI;
-	logic [11: 0]immS;
-	logic [12: 1]immB;
-	logic [31:12]immU;
-	logic [20: 1]immJ;
-	logic [ 2: 0]funct3;
-	logic [ 6: 0]funct7;
-
-	logic isECALL, isEBREAK, isMRET,isFENCEI;
-	logic isLUI, isAUIPC, isJAL, isJALR, isBEQ, isBNE, isBLT, isBGE, isBLTU, isBGEU;
-	logic isLB, isLH, isLW, isLBU, isLHU, isSB, isSH, isSW, isADDI, isSLTI, isSLTIU;
-	logic isXORI, isORI, isANDI, isSLLI, isSRLI, isSRAI, isADD, isSUB, isSLL, isSLT;
-	logic isSLTU, isXOR, isSRL, isSRA, isOR, isAND;
-	// logic isMULHU, isDIV, isDIVU, isREM, isREMU;
-
-	logic isCSRRW,isCSRRS,isCSRRC,isCSRRWI,isCSRRSI,isCSRRCI;
-
-	logic isR,isI,isS,isB,isU,isJ;
-
-	wire all_inst;
 	assign all_inst = (isLUI|isAUIPC|isJAL|isJALR|isBEQ|isBNE|isBLT|isBGE|isBLTU|isBGEU
 					|isLB|isLH|isLW|isLBU|isLHU|isSB|isSH|isSW
 					|isADDI|isSLTI|isSLTIU|isXORI|isORI|isANDI
