@@ -121,6 +121,7 @@ static int decode_exec(Decode *s) {
   INSTPAT("0000000 00001 00000 000 00000 11100 11", ebreak , N, NEMUTRAP(s->pc, R(10))); // R(10) is $a0
   INSTPAT("0011000 00010 00000 000 00000 11100 11", mret   , N, s->dnpc = csr(CSR_MEPC));
   
+  //zicsr
   INSTPAT("??????? ????? ????? 001 ????? 11100 11", csrrw  , CR, R(rd) = csr(rcsr); if(rcsr==0xb00||rcsr==0xb80){difftest_skip_ref();}; /*Log("csrrw csr[%x]=%x reg[%x]=%x", rcsr, src1, rd, csr(rcsr));*/ if(rcsr!=0xb00&&rcsr!=0xb80&&rcsr!=0xf11&&rcsr!=0xf12){csr(rcsr) = src1;};);
   INSTPAT("??????? ????? ????? 101 ????? 11100 11", csrrwi ,CRI, R(rd) = csr(rcsr); if(rcsr==0xb00||rcsr==0xb80){difftest_skip_ref();}; /*Log("csrrwi csr[%x]=%x reg[%x]=%x", rcsr, imm, rd, csr(rcsr));*/ if(rcsr!=0xb00&&rcsr!=0xb80&&rcsr!=0xf11&&rcsr!=0xf12){csr(rcsr) = imm;};);
   INSTPAT("??????? ????? ????? 010 ????? 11100 11", csrrs  , CR, R(rd) = csr(rcsr); if(rcsr==0xb00||rcsr==0xb80){difftest_skip_ref();}; /*Log("csrrs csr[%x]=%x reg[%x]=%x", rcsr, (csr(rcsr) | src1), rd, csr(rcsr));*/ if(rcsr!=0xb00&&rcsr!=0xb80&&rcsr!=0xf11&&rcsr!=0xf12){csr(rcsr) = csr(rcsr) | src1;};);
@@ -128,8 +129,41 @@ static int decode_exec(Decode *s) {
   INSTPAT("??????? ????? ????? 011 ????? 11100 11", csrrc  , CR, R(rd) = csr(rcsr); if(rcsr==0xb00||rcsr==0xb80){difftest_skip_ref();}; /*Log("csrrc csr[%x]=%x reg[%x]=%x", rcsr, (csr(rcsr) & ~src1), rd, csr(rcsr));*/ if(rcsr!=0xb00&&rcsr!=0xb80&&rcsr!=0xf11&&rcsr!=0xf12){csr(rcsr) = csr(rcsr) & ~src1;};);
   INSTPAT("??????? ????? ????? 111 ????? 11100 11", csrrci ,CRI, R(rd) = csr(rcsr); if(rcsr==0xb00||rcsr==0xb80){difftest_skip_ref();}; /*Log("csrrci csr[%x]=%x reg[%x]=%x", rcsr, (csr(rcsr) & ~imm), rd, csr(rcsr));*/ if(rcsr!=0xb00&&rcsr!=0xb80&&rcsr!=0xf11&&rcsr!=0xf12){csr(rcsr) = csr(rcsr) & ~imm;};);
 
+  // zbb: bit-manipulation (Zbkb basic)
+  // Boolean ops (funct7=0100000)
+  INSTPAT("0100000 ????? ????? 111 ????? 01100 11", andn  , R, R(rd) = src1 & ~src2);
+  INSTPAT("0100000 ????? ????? 110 ????? 01100 11", orn   , R, R(rd) = src1 | ~src2);
+  INSTPAT("0100000 ????? ????? 100 ????? 01100 11", xnor  , R, R(rd) = ~(src1 ^ src2));
 
-  
+  // Min/max (funct7=0000101)
+  INSTPAT("0000101 ????? ????? 110 ????? 01100 11", max   , R, R(rd) = ((sword_t)src1 > (sword_t)src2) ? src1 : src2);
+  INSTPAT("0000101 ????? ????? 111 ????? 01100 11", maxu  , R, R(rd) = ((word_t)src1 > (word_t)src2) ? src1 : src2);
+  INSTPAT("0000101 ????? ????? 100 ????? 01100 11", min   , R, R(rd) = ((sword_t)src1 < (sword_t)src2) ? src1 : src2);
+  INSTPAT("0000101 ????? ????? 101 ????? 01100 11", minu  , R, R(rd) = ((word_t)src1 < (word_t)src2) ? src1 : src2);
+
+  // Rotation (funct7=0110000)
+  INSTPAT("0110000 ????? ????? 001 ????? 01100 11", rol   , R, {int sh=src2&0x1f; R(rd)=sh?((uint32_t)src1<<sh)|((uint32_t)src1>>(32-sh)):src1;});
+  INSTPAT("0110000 ????? ????? 101 ????? 01100 11", ror   , R, {int sh=src2&0x1f; R(rd)=sh?((uint32_t)src1>>sh)|((uint32_t)src1<<(32-sh)):src1;});
+  INSTPAT("0110000 ????? ????? 101 ????? 00100 11", rori  , I, {int sh=imm&0x1f; R(rd)=sh?((uint32_t)src1>>sh)|((uint32_t)src1<<(32-sh)):src1;});
+
+  // Zero extension
+  INSTPAT("000010000000 ????? 100 ????? 01100 11", zext_h, R, R(rd) = src1 & 0xffff);
+
+  // Count / sign-extend (funct7=0110000, funct3=001, OP-IMM)
+  INSTPAT("011000000000 ????? 001 ????? 00100 11", clz   , I, R(rd) = src1 ? __builtin_clz(src1) : 32);
+  INSTPAT("011000000001 ????? 001 ????? 00100 11", ctz   , I, R(rd) = src1 ? __builtin_ctz(src1) : 32);
+  INSTPAT("011000000010 ????? 001 ????? 00100 11", cpop  , I, R(rd) = __builtin_popcount(src1));
+  INSTPAT("011000000100 ????? 001 ????? 00100 11", sext_b, I, R(rd) = SEXT(src1, 8));
+  INSTPAT("011000000101 ????? 001 ????? 00100 11", sext_h, I, R(rd) = SEXT(src1, 16));
+
+  // orc.b and rev8 (funct7 via GREVI/GORCI encoding, funct3=101, OP-IMM)
+  INSTPAT("001010000111 ????? 101 ????? 00100 11", orc_b , I, R(rd) = (src1&0xff?0xff:0)|(src1&0xff00?0xff00:0)|(src1&0xff0000?0xff0000:0)|(src1&0xff000000?0xff000000:0));
+  INSTPAT("011010011000 ????? 101 ????? 00100 11", rev8  , I, R(rd) = ((src1&0xff)<<24)|((src1&0xff00)<<8)|((src1>>8)&0xff00)|((src1>>24)&0xff));
+
+  // zbkx: crossbar permutation
+  INSTPAT("0010100 ????? ????? 010 ????? 01100 11", xperm4, R, {word_t r=0; for(int i=0;i<8;i++){int idx=(src2>>(i*4))&0xf; if(idx<8) r|=((src1>>(idx*4))&0xf)<<(i*4);} R(rd)=r;});
+  INSTPAT("0010100 ????? ????? 100 ????? 01100 11", xperm8, R, {word_t r=0; for(int i=0;i<4;i++){int idx=(src2>>(i*8))&0xff; if(idx<4) r|=((src1>>(idx*8))&0xff)<<(i*8);} R(rd)=r;});
+
   INSTPAT("??????? ????? ????? ??? ????? ????? ??", inv    , N, INV(s->pc));
   INSTPAT_END();
   //printf("NEMU=%08x\n",csr(CSR_MCYCLE));

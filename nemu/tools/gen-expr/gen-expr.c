@@ -133,7 +133,7 @@ int main(int argc, char *argv[]) {
     }
     int result;
     ret = fscanf(fp, "%d", &result);
-    fprintf(stderr,"%d=",ret);
+    fprintf(stderr,"ret(%d) ",ret);
     if(ret<=0){
       fprintf(stderr,"XXXXX\n");
       i--;
