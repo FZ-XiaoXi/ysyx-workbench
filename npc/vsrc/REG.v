@@ -34,7 +34,7 @@ module ysyx_26010011_GPRs(
 			end
 		end else begin
 		if(gpr_in_wen) begin
-			GPR[gpr_in_addw]<=(gpr_in_addw==5'b00000)?{32{1'b0}}:(gpr_in_data);
+			GPR[gpr_in_addw[3;0]]<=(gpr_in_addw==5'b00000)?{32{1'b0}}:(gpr_in_data);
 		end
 		end
 	end
