@@ -12,7 +12,8 @@
 module ysyx_26010011_CLINT(
 	input clock,
 	input reset,
-
+	input [31:0]mcycle,
+	input [31:0]mcycleh,
 	//AR
 	input  [31:0] araddr,
 	input         arvalid,
@@ -46,27 +47,27 @@ module ysyx_26010011_CLINT(
 
 	always @(posedge clock) begin
 		if(reset) begin
-		wstate <= 4'b0;
+			wstate <= 4'b0;
 		end else begin
-		wstate <= wnext_state;
+			wstate <= wnext_state;
 		end
 	end
 	always @(*) begin
 		wnext_state = wstate;
 		case(wstate)
-		4'b0000: begin
-			if(awvalid) wnext_state = 4'b0001;
-		end
-		4'b0001: begin
-			wnext_state = 4'b0010;
-		end
-		4'b0010: begin
-			if(bready)  wnext_state = 4'b0000;
-			else wnext_state = 4'b0010;
-		end
-		default: begin
-			wnext_state = 4'b0000;
-		end
+			4'b0000: begin
+				if(awvalid) wnext_state = 4'b0001;
+			end
+			4'b0001: begin
+				wnext_state = 4'b0010;
+			end
+			4'b0010: begin
+				if(bready)  wnext_state = 4'b0000;
+				else wnext_state = 4'b0010;
+			end
+			default: begin
+				wnext_state = 4'b0000;
+			end
 		endcase
 	end
 	always @(*) begin
@@ -161,38 +162,38 @@ module ysyx_26010011_CLINT(
 	end
 
 	localparam [31:0] CLINT_BASE = 32'h02000000;
-	reg [31:0]mtime_L,mtime_H;
+	// reg [31:0]mtime_L,mtime_H;
 
+`ifndef YOSYS
 	always @(posedge clock) begin
 		if(wstate == 4'b0000 && wnext_state == 4'b0001) begin
-			`ifndef YOSYS
 			$display("CLINT ONLY READ!");
-			`endif
 		end
 	end
+`endif
 
 	assign rresp = 2'b0;
 	assign bresp = 2'b0;
 
 	always @(*) begin
 		if(raddr_reg == CLINT_BASE) begin
-		rdata = mtime_L;
+		rdata = mcycle;
 		end else if(raddr_reg == CLINT_BASE + 4) begin
-		rdata = mtime_H;
+		rdata = mcycleh;
 		end else begin
 		//   $display("CLINT Read from invalid address: 0x%08x", raddr_reg);
 		rdata = 32'h00000000;
 		end
 	end
 
-	always @(posedge clock) begin
-		if(reset) begin
-			mtime_L <= 32'd0;
-			mtime_H <= 32'd0;
-		end
-		else begin
-			{mtime_H,mtime_L} <= {mtime_H,mtime_L} + 1;
-		end
-	end
+	// always @(posedge clock) begin
+	// 	if(reset) begin
+	// 		mtime_L <= 32'd0;
+	// 		mtime_H <= 32'd0;
+	// 	end
+	// 	else begin
+	// 		{mtime_H,mtime_L} <= {mtime_H,mtime_L} + 1;
+	// 	end
+	// end
 
 endmodule

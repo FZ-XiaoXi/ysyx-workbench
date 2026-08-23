@@ -161,7 +161,8 @@ module ysyx_26010011(
 	wire flush_valid/*verilator public*/,ifu_flush_valid,idu_flush_valid,exu_flush_valid,lsu_flush_valid,wbu_flush_valid;
 	wire flush_exception_valid/*verilator public*/;
 
-
+	wire [31:0] r_pc,r_tar,w_pc,w_tar;
+	wire r_valid,w_valid,w_type,r_type;
 
 	
 
@@ -214,12 +215,24 @@ module ysyx_26010011(
 	wire [3:0] DRAM_arid;  wire [7:0] DRAM_arlen;  wire [2:0] DRAM_arsize;  wire [1:0] DRAM_arburst;
 	wire DRAM_rlast;
 	wire [3:0] DRAM_rid;
-	assign exu_in_bus_snpc = exu_in_bus_pc + 4;
+
+	reg [31:0] mcycle,mcycleh;
+	always @(posedge clock) begin
+		if(reset) begin
+			mcycle <= 32'b0;
+			mcycleh <= 32'b0;
+		end else begin
+			{mcycleh,mcycle} <= {mcycleh,mcycle} + 1;
+		end
+	end
+
+
+	assign exu_in_bus_snpc = exu_in_bus_pc + 32'd4;
 	assign dnpc=(wbu_out_bus_exception[4])?
 				(
-				(wbu_out_bus_exception[3:0]==`ysyx_26010011_EXCEPTION_MRET)?(csr_mepc):(csr_mtvec)
+					(wbu_out_bus_exception[3:0]==`ysyx_26010011_EXCEPTION_MRET)?(csr_mepc):(csr_mtvec)
 				):(
-				(exu_in_bus_isBRANCH & ~exu_out_bus_dnpc_valid)?(exu_in_bus_snpc):(exu_out_bus_alu_result)
+					(exu_in_bus_isBRANCH & ~exu_out_bus_dnpc_valid)?(exu_in_bus_snpc):(exu_out_bus_alu_result)
 				);
 
 	assign csr_pc = wbu_in_bus_pc;
@@ -233,14 +246,14 @@ module ysyx_26010011(
 					idu_ra_bypass = exu_out_bus_gpr_wdata;
 				end else begin
 					idu_ra_isRAW = 1;
-					idu_ra_bypass = 32'b0;
+					idu_ra_bypass = gpr_rdataa;
 				end
 			end else if((gpr_raddra==lsu_in_bus_rd)&lsu_in_valid&lsu_in_bus_isWGPR)begin
 				idu_ra_isRAW = 1;
-				idu_ra_bypass = 32'b0;
+				idu_ra_bypass = gpr_rdataa;
 			end else if((gpr_raddra==wbu_in_bus_rd)&wbu_in_valid&wbu_in_bus_isWGPR)begin
 				idu_ra_isRAW = 1;
-				idu_ra_bypass = 32'b0;
+				idu_ra_bypass = gpr_rdataa;
 			end else begin
 				idu_ra_isRAW = 0;
 				idu_ra_bypass = gpr_rdataa;
@@ -257,14 +270,14 @@ module ysyx_26010011(
 					idu_rb_bypass = exu_out_bus_gpr_wdata;
 				end else begin
 					idu_rb_isRAW = 1;
-					idu_rb_bypass = 32'b0;
+					idu_rb_bypass = gpr_rdatab;
 				end
 			end else if((gpr_raddrb==lsu_in_bus_rd)&lsu_in_valid&lsu_in_bus_isWGPR)begin
 				idu_rb_isRAW = 1;
-				idu_rb_bypass = 32'b0;
+				idu_rb_bypass = gpr_rdatab;
 			end else if((gpr_raddrb==wbu_in_bus_rd)&wbu_in_valid&wbu_in_bus_isWGPR)begin
 				idu_rb_isRAW = 1;
-				idu_rb_bypass = 32'b0;
+				idu_rb_bypass = gpr_rdatab;
 			end else begin
 				idu_rb_isRAW = 0;
 				idu_rb_bypass = gpr_rdatab;
@@ -798,8 +811,8 @@ module ysyx_26010011(
 		end else if(wbu_in_valid) begin
 		tb_isFINAL<=1;
 		tb_FINAL_pc<=wbu_in_bus_pc;
-		// tb_FINAL_npc<=(wbu_in_bus_isJUMP | (wbu_in_bus_isBRANCH&wbu_in_bus_comp_result)) ? wbu_in_bus_alu_result : ((wbu_in_bus_exception[4])?csr_mtvec:wbu_in_bus_pc + 4);//TODO MTVEC
-		tb_FINAL_npc<=(wbu_in_bus_exception[4])?((wbu_out_bus_exception[3:0]==`ysyx_26010011_EXCEPTION_MRET)?csr_mepc:csr_mtvec):((wbu_in_bus_isJUMP | (wbu_in_bus_isBRANCH&wbu_in_bus_comp_result)) ? wbu_in_bus_alu_result : wbu_in_bus_pc + 4);//TODO MTVEC
+		// tb_FINAL_npc<=(wbu_in_bus_isJUMP | (wbu_in_bus_isBRANCH&wbu_in_bus_comp_result)) ? wbu_in_bus_alu_result : ((wbu_in_bus_exception[4])?csr_mtvec:wbu_in_bus_pc + 32'd4);//TODO MTVEC
+		tb_FINAL_npc<=(wbu_in_bus_exception[4])?((wbu_out_bus_exception[3:0]==`ysyx_26010011_EXCEPTION_MRET)?csr_mepc:csr_mtvec):((wbu_in_bus_isJUMP | (wbu_in_bus_isBRANCH&wbu_in_bus_comp_result)) ? wbu_in_bus_alu_result : wbu_in_bus_pc + 32'd4);//TODO MTVEC
 		tb_dnpc_valid<=(wbu_in_bus_isJUMP | (wbu_in_bus_isBRANCH&wbu_in_bus_comp_result) | (wbu_in_bus_exception[4]));
 		tb_isMEM<=(wbu_in_bus_isLOAD | wbu_in_bus_isSTORE)&wbu_in_valid;
 		tb_FINAL_inst<=wbu_in_bus_instruction;
@@ -898,7 +911,8 @@ module ysyx_26010011(
 	ysyx_26010011_CLINT u_clint(
 		.clock(clock),
 		.reset(reset),
-
+		.mcycle(mcycle),
+		.mcycleh(mcycleh),
 		//AR
 		.araddr(CLINT_araddr),
 		.arvalid(CLINT_arvalid),
@@ -947,6 +961,8 @@ module ysyx_26010011(
 		.reset(reset),
 		.csr_in_addr(idu_out_bus_csrrd),
 		.csr_out_data(csr_rdata),
+		.mcycle(mcycle),
+		.mcycleh(mcycleh),
 
 		.csr_in_data(csr_wdata),
 		.csr_in_wen(csr_we),
@@ -971,8 +987,7 @@ module ysyx_26010011(
 // 	.w_type(w_type)
 //   );
 
-//   wire [31:0] r_pc,r_tar,w_pc,w_tar;
-//   wire r_valid,w_valid,w_type,r_type;
+
 endmodule
 
 // module ysyx_26010011_BCache #(

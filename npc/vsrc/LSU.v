@@ -98,11 +98,6 @@ module ysyx_26010011_LSU(
 	wire [31:0] lsu_rdata2;
 	wire [31:0] lsu_rdata4;
 
-	wire debug_LSU_LOADING/*verilator public*/;
-	wire debug_LSU_WRITING/*verilator public*/;
-	wire debug_LSU_WRITE_FINAL/*verilator public*/;
-	wire debug_LSU_LOAD_FINAL/*verilator public*/;
-
 	assign aw_fire = awvalid && awready;
 	assign w_fire  = wvalid && wready;
 	assign b_fire = bvalid && bready;
@@ -273,12 +268,16 @@ module ysyx_26010011_LSU(
 	end
 	
 
-
+`ifdef USE_VERILATOR
+	wire debug_LSU_LOADING/*verilator public*/;
+	wire debug_LSU_WRITING/*verilator public*/;
+	wire debug_LSU_WRITE_FINAL/*verilator public*/;
+	wire debug_LSU_LOAD_FINAL/*verilator public*/;
 	assign debug_LSU_LOADING = (state!=S_IDLE)&lsu_in_bus_isLOAD&lsu_in_valid;
 	assign debug_LSU_WRITING = (state!=S_IDLE)&lsu_in_bus_isSTORE&lsu_in_valid;
 	assign debug_LSU_WRITE_FINAL = lsu_out_ready&lsu_out_valid&lsu_in_bus_isSTORE&lsu_in_valid;
 	assign debug_LSU_LOAD_FINAL = lsu_out_ready&lsu_out_valid&lsu_in_bus_isLOAD&lsu_in_valid;
-
+`endif
 	always @(*) begin
 		if(lsu_in_bus_exception[4]) begin
 			lsu_out_bus_exception = lsu_in_bus_exception;

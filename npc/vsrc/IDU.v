@@ -42,14 +42,21 @@ module ysyx_26010011_IDU(
 	output             idu_out_bus_comp_isUseImm,
 	output logic [ 9:0]idu_out_bus_alu_op,
 	output logic [ 1:0]idu_out_bus_comp_op,
-	output       [ 1:0]idu_out_bus_perip_mask
+
 
 	// output [31:0] w_pc,
 	// output [31:0] w_tar,
 	// output w_valid,
-	// output w_type
+	// output w_type,
+
+	output       [ 1:0]idu_out_bus_perip_mask
 
 );
+
+	// assign w_pc = idu_in_bus_pc;
+    // assign w_tar = idu_out_bus_imm + idu_in_bus_pc;
+    // assign w_valid = idu_in_valid & idu_out_valid & ~idu_out_bus_exception[4] & (idu_out_bus_isBRANCH|isJAL);
+    // assign w_type = isJAL;
 
 	reg state, next_state;
 	parameter S_WORKING = 1'b0, S_WAITING = 1'b1;

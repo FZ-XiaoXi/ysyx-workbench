@@ -47,7 +47,7 @@ module ysyx_26010011_WBU(
 	output fencei_pass
 );  
 	// wire [31:0] wbu_in_bus_snpc;
-	// assign wbu_in_bus_snpc = wbu_in_bus_pc + 4;
+	// assign wbu_in_bus_snpc = wbu_in_bus_pc + 32'd4;
 	assign wbu_in_ready=1;
 	// always @(*) begin
 	// 	if(wbu_in_bus_isLOAD) begin
