@@ -101,24 +101,25 @@ module ysyx_26010011(
 	wire [4:0]idu_out_bus_rd,idu_out_bus_exception;
 
 	wire exu_in_valid,exu_in_ready,exu_in_bus_isLOAD,exu_in_bus_isSTORE,exu_in_bus_isWGPR,exu_in_bus_isJUMP,exu_in_bus_isWCOMP,exu_in_bus_isBRANCH,exu_in_bus_isUnSigned,exu_in_bus_isUsePC,exu_in_bus_alu_isUseImm,exu_in_bus_comp_isUseImm;
-	wire [4:0]exu_in_bus_rd,exu_in_bus_rs1,exu_in_bus_rs2;
+	wire [4:0]exu_in_bus_rd,exu_out_bus_rd,exu_in_bus_rs1,exu_in_bus_rs2;
 	wire [4:0]exu_in_bus_exception;
 	wire [31:0]exu_in_bus_rs1_val,exu_in_bus_rs2_val,exu_in_bus_imm,exu_in_bus_instruction,exu_in_bus_pc ,exu_in_bus_snpc;
 	wire [9:0]exu_in_bus_alu_op;
 	wire [1:0]exu_in_bus_comp_op,exu_in_bus_perip_mask;
 	wire [2:0]exu_in_bus_opCSR;
 	wire [12:0]exu_in_bus_signals;
-	wire [11:0]exu_in_bus_csrrd;
+	wire [11:0]exu_in_bus_csrrd,exu_out_bus_csrrd;
 
 	wire exu_out_valid,exu_out_ready,exu_out_bus_comp_result,exu_out_bus_dnpc_valid;
 	wire [4:0]exu_out_bus_exception;
 	wire [31:0]exu_out_bus_alu_result,exu_out_bus_csr_result;
+	
 
 	wire wbu_in_valid,wbu_in_ready,wbu_in_bus_isWGPR;
 	wire [31:0]wbu_in_bus_csr_result,wbu_in_bus_pc;
-	wire [11:0]wbu_in_bus_csrrd;
+	wire [11:0]wbu_in_bus_csrrd,wbu_out_bus_csrrd;
 	wire [2:0]wbu_in_bus_opCSR;
-	wire [4:0]wbu_in_bus_rd;
+	wire [4:0]wbu_in_bus_rd,wbu_out_bus_rd;
 	wire [4:0]wbu_in_bus_exception;
 `ifdef USE_VERILATOR
 	wire [31:0]/*wbu_in_bus_snpc,*/wbu_in_bus_instruction;
@@ -129,9 +130,9 @@ module ysyx_26010011(
 	wire lsu_in_valid,lsu_in_ready,lsu_in_bus_isWGPR,lsu_in_bus_isUnSigned;
 	wire [31:0]lsu_in_bus_wdata,lsu_in_bus_pc,/*lsu_in_bus_snpc,*/lsu_in_bus_csr_result;
 	wire [1:0]lsu_in_bus_perip_mask;
-	wire [4:0]lsu_in_bus_rd;
+	wire [4:0]lsu_in_bus_rd,lsu_out_bus_rd;
 	wire [4:0]lsu_in_bus_exception;
-	wire [11:0]lsu_in_bus_csrrd;
+	wire [11:0]lsu_in_bus_csrrd,lsu_out_bus_csrrd;
 	wire [2:0]lsu_in_bus_opCSR;
 	wire lsu_in_bus_isLOAD,lsu_in_bus_isSTORE;
 	wire lsu_out_valid,lsu_out_ready;
@@ -164,7 +165,10 @@ module ysyx_26010011(
 	wire [31:0] r_pc,r_tar,w_pc,w_tar;
 	wire r_valid,w_valid,w_type,r_type;
 
-	
+	reg [31:0] exu_out_bus_gpr_wdata;
+	wire [31:0] lsu_in_bus_gpr_wdata;
+	reg [31:0] lsu_out_bus_gpr_wdata;
+	wire [31:0] wbu_in_bus_gpr_wdata;
 
 	wire ifu_out_valid,ifu_out_ready;
 	wire [31:0]ifu_out_bus_instruction,ifu_out_bus_pc,ifu_out_bus_snpc,ifu_out_bus_fetching;
@@ -177,7 +181,6 @@ module ysyx_26010011(
 
 	reg idu_ra_isRAW,idu_rb_isRAW,idu_csr_isRAW;
 	reg [31:0] idu_ra_bypass,idu_rb_bypass;
-	wire idu_isRAW/*verilator public*/;
 
 	wire [31:0] S_araddr,S_rdata,S_awaddr,S_wdata;
 	wire S_arvalid,S_rvalid,S_awvalid,S_wvalid,S_bvalid,S_rlast,S_wlast;
@@ -216,6 +219,9 @@ module ysyx_26010011(
 	wire DRAM_rlast;
 	wire [3:0] DRAM_rid;
 
+	wire exu_out_bus_rd_valid,exu_out_bus_bypass_valid,exu_out_bus_csr_valid,exu_out_bus_csr_bypass_valid;
+	wire lsu_out_bus_rd_valid,lsu_out_bus_bypass_valid,lsu_out_bus_csr_valid,lsu_out_bus_csr_bypass_valid;
+	wire wbu_out_bus_rd_valid,wbu_out_bus_bypass_valid,wbu_out_bus_csr_valid,wbu_out_bus_csr_bypass_valid;
 	reg [31:0] mcycle,mcycleh;
 	always @(posedge clock) begin
 		if(reset) begin
@@ -236,73 +242,7 @@ module ysyx_26010011(
 				);
 
 	assign csr_pc = wbu_in_bus_pc;
-	assign idu_isRAW=(idu_ra_isRAW | idu_rb_isRAW | idu_csr_isRAW);
-
-	always @(*) begin
-		if(|gpr_raddra)begin
-			if((gpr_raddra==exu_in_bus_rd)&exu_in_valid&exu_in_bus_isWGPR)begin
-				if(exu_out_valid & ~exu_in_bus_isLOAD) begin
-					idu_ra_isRAW = 0;
-					idu_ra_bypass = exu_out_bus_gpr_wdata;
-				end else begin
-					idu_ra_isRAW = 1;
-					idu_ra_bypass = gpr_rdataa;
-				end
-			end else if((gpr_raddra==lsu_in_bus_rd)&lsu_in_valid&lsu_in_bus_isWGPR)begin
-				idu_ra_isRAW = 1;
-				idu_ra_bypass = gpr_rdataa;
-			end else if((gpr_raddra==wbu_in_bus_rd)&wbu_in_valid&wbu_in_bus_isWGPR)begin
-				idu_ra_isRAW = 1;
-				idu_ra_bypass = gpr_rdataa;
-			end else begin
-				idu_ra_isRAW = 0;
-				idu_ra_bypass = gpr_rdataa;
-			end
-		end else begin
-			idu_ra_isRAW = 0;
-			idu_ra_bypass= gpr_rdataa;
-		end
-
-		if(|gpr_raddrb)begin
-			if((gpr_raddrb==exu_in_bus_rd)&exu_in_valid&exu_in_bus_isWGPR)begin
-				if(exu_out_valid & ~exu_in_bus_isLOAD) begin
-					idu_rb_isRAW = 0;
-					idu_rb_bypass = exu_out_bus_gpr_wdata;
-				end else begin
-					idu_rb_isRAW = 1;
-					idu_rb_bypass = gpr_rdatab;
-				end
-			end else if((gpr_raddrb==lsu_in_bus_rd)&lsu_in_valid&lsu_in_bus_isWGPR)begin
-				idu_rb_isRAW = 1;
-				idu_rb_bypass = gpr_rdatab;
-			end else if((gpr_raddrb==wbu_in_bus_rd)&wbu_in_valid&wbu_in_bus_isWGPR)begin
-				idu_rb_isRAW = 1;
-				idu_rb_bypass = gpr_rdatab;
-			end else begin
-				idu_rb_isRAW = 0;
-				idu_rb_bypass = gpr_rdatab;
-			end
-		end else begin
-			idu_rb_isRAW = 0;
-			idu_rb_bypass=gpr_rdatab;
-		end
-
-		if((|idu_out_bus_csrrd) & (|idu_out_bus_opCSR) )begin
-			if(idu_out_bus_csrrd == `ysyx_26010011_ADD_MCYCLE) begin		//TODO 偷懒了 MCYCLE应该在提交时写回/读取
-				idu_csr_isRAW = 0;
-			end else if((idu_out_bus_csrrd==exu_in_bus_csrrd)&exu_in_valid&(|exu_in_bus_opCSR))begin
-				idu_csr_isRAW = 1;
-			end else if((idu_out_bus_csrrd==lsu_in_bus_csrrd)&lsu_in_valid&(|lsu_in_bus_opCSR))begin
-				idu_csr_isRAW = 1;
-			end else if((idu_out_bus_csrrd==wbu_in_bus_csrrd)&wbu_in_valid&(|wbu_in_bus_opCSR))begin
-				idu_csr_isRAW = 1;
-			end else begin
-				idu_csr_isRAW = 0;
-			end
-		end else begin
-			idu_csr_isRAW=0;
-		end
-	end
+	
 
 	
 
@@ -412,7 +352,6 @@ module ysyx_26010011(
 		.reset(reset),
 		.fencei_pass(fencei_pass),
 		.flush_valid(idu_flush_valid),
-		.idu_isRAW(idu_isRAW),
 		.idu_in_bus_instruction(idu_in_bus_instruction),
 		.idu_in_bus_pc(idu_in_bus_pc),
 		.idu_in_bus_exception(idu_in_bus_exception),
@@ -442,6 +381,27 @@ module ysyx_26010011(
 		.idu_out_bus_alu_op(idu_out_bus_alu_op),
 		.idu_out_bus_comp_op(idu_out_bus_comp_op),
 		.idu_out_bus_perip_mask(idu_out_bus_perip_mask),
+
+		.exu_out_bus_rd_valid(exu_out_bus_rd_valid),
+		.exu_out_bus_bypass_valid(exu_out_bus_bypass_valid),
+		.exu_out_bus_csr_valid(exu_out_bus_csr_valid),
+		.exu_out_bus_csr_bypass_valid(exu_out_bus_csr_bypass_valid),
+		.exu_out_bus_rd(exu_out_bus_rd),
+		.exu_out_bus_csrrd(exu_out_bus_csrrd),
+
+		.lsu_out_bus_rd_valid(lsu_out_bus_rd_valid),
+		.lsu_out_bus_bypass_valid(lsu_out_bus_bypass_valid),
+		.lsu_out_bus_csr_valid(lsu_out_bus_csr_valid),
+		.lsu_out_bus_csr_bypass_valid(lsu_out_bus_csr_bypass_valid),
+		.lsu_out_bus_rd(lsu_out_bus_rd),
+		.lsu_out_bus_csrrd(lsu_out_bus_csrrd),
+
+		.wbu_out_bus_rd_valid(wbu_out_bus_rd_valid),
+		.wbu_out_bus_bypass_valid(wbu_out_bus_bypass_valid),
+		.wbu_out_bus_csr_valid(wbu_out_bus_csr_valid),
+		.wbu_out_bus_csr_bypass_valid(wbu_out_bus_csr_bypass_valid),
+		.wbu_out_bus_rd(wbu_out_bus_rd),
+		.wbu_out_bus_csrrd(wbu_out_bus_csrrd),
 
 		// .w_pc(w_pc),
 		// .w_tar(w_tar),
@@ -553,6 +513,13 @@ module ysyx_26010011(
 		.exu_in_bus_isUsePC(exu_in_bus_isUsePC),//PC+imm
 		.exu_in_bus_alu_isUseImm(exu_in_bus_alu_isUseImm),//imm
 		.exu_in_bus_comp_isUseImm(exu_in_bus_comp_isUseImm),//imm
+		.exu_in_bus_isWGPR(exu_in_bus_isWGPR),
+		.exu_in_bus_isLOAD(exu_in_bus_isLOAD),
+		
+		.exu_out_bus_rd_valid(exu_out_bus_rd_valid),
+		.exu_out_bus_bypass_valid(exu_out_bus_bypass_valid),
+		.exu_out_bus_csr_valid(exu_out_bus_csr_valid),
+		.exu_out_bus_csr_bypass_valid(exu_out_bus_csr_bypass_valid),
 
 		.exu_out_valid(exu_out_valid),
 		.exu_out_bus_exception(exu_out_bus_exception),
@@ -562,8 +529,9 @@ module ysyx_26010011(
 		.exu_out_bus_comp_result(exu_out_bus_comp_result),       //暂存CSR目的地址
 		.exu_out_bus_dnpc_valid(exu_out_bus_dnpc_valid)
 	);/*verilator public_module*/
-	reg [31:0] exu_out_bus_gpr_wdata;
-	wire [31:0] lsu_in_bus_gpr_wdata;
+	assign exu_out_bus_rd = exu_in_bus_rd;
+	assign exu_out_bus_csrrd = exu_in_bus_csrrd;
+
 	always @(*) begin
 		if(exu_in_bus_isJUMP) begin
 			exu_out_bus_gpr_wdata = exu_in_bus_snpc;
@@ -586,9 +554,9 @@ module ysyx_26010011(
 		.exu_out_bus_csr_result(exu_out_bus_csr_result),
 		
 		.exu_out_bus_lsu_val(exu_in_bus_rs2_val),
-		.exu_out_bus_rd(exu_in_bus_rd),
+		.exu_out_bus_rd(exu_out_bus_rd),
 		.exu_out_bus_exception(exu_out_bus_exception),
-		.exu_out_bus_csrrd(exu_in_bus_csrrd),
+		.exu_out_bus_csrrd(exu_out_bus_csrrd),
 		
 		.exu_out_bus_isLOAD(exu_in_bus_isLOAD),
 		.exu_out_bus_isSTORE(exu_in_bus_isSTORE),
@@ -651,11 +619,20 @@ module ysyx_26010011(
 		.lsu_in_bus_isUnSigned(lsu_in_bus_isUnSigned),
 		.lsu_in_bus_isLOAD(lsu_in_bus_isLOAD),
 		.lsu_in_bus_isSTORE(lsu_in_bus_isSTORE),
+		.lsu_in_bus_isWGPR(lsu_in_bus_isWGPR),
+		.lsu_in_bus_opCSR(lsu_in_bus_opCSR),
+
+		.lsu_out_bus_rd_valid(lsu_out_bus_rd_valid),
+		.lsu_out_bus_bypass_valid(lsu_out_bus_bypass_valid),
+		.lsu_out_bus_csr_valid(lsu_out_bus_csr_valid),
+		.lsu_out_bus_csr_bypass_valid(lsu_out_bus_csr_bypass_valid),
 
 		.lsu_out_valid(lsu_out_valid),
 		.lsu_out_bus_exception(lsu_out_bus_exception),
 		.lsu_out_ready(lsu_out_ready),
 		.lsu_out_bus_rdata(lsu_out_bus_lsu_result),
+		.lsu_out_bus_rd(lsu_out_bus_rd),
+		.lsu_out_bus_csrrd(lsu_out_bus_csrrd),
 
 		.awaddr(DRAM_awaddr),
 		.awvalid(DRAM_awvalid),
@@ -688,8 +665,8 @@ module ysyx_26010011(
 		.rlast(DRAM_rlast),
 		.rid(DRAM_rid)
 	);/*verilator public_module*/
-	reg [31:0] lsu_out_bus_gpr_wdata;
-	wire [31:0] wbu_in_bus_gpr_wdata;
+	assign lsu_out_bus_rd = lsu_in_bus_rd;
+	assign lsu_out_bus_csrrd = lsu_in_bus_csrrd;
 	always @(*) begin
 		if(lsu_in_bus_isLOAD) begin
 			lsu_out_bus_gpr_wdata = lsu_out_bus_lsu_result;
@@ -779,6 +756,13 @@ module ysyx_26010011(
 		.wbu_in_ready(wbu_in_ready),
 		.wbu_in_bus_csr_result(wbu_in_bus_csr_result),
 		.wbu_in_bus_gpr_wdata(wbu_in_bus_gpr_wdata),
+
+		.wbu_out_bus_rd_valid(wbu_out_bus_rd_valid),
+		.wbu_out_bus_bypass_valid(wbu_out_bus_bypass_valid),
+		.wbu_out_bus_csr_valid(wbu_out_bus_csr_valid),
+		.wbu_out_bus_csr_bypass_valid(wbu_out_bus_csr_bypass_valid),
+		.wbu_out_bus_rd(wbu_out_bus_rd),
+		.wbu_out_bus_csrrd(wbu_out_bus_csrrd),
 		
 		.wbu_in_bus_rd(wbu_in_bus_rd),
 		.wbu_in_bus_csrrd(wbu_in_bus_csrrd),

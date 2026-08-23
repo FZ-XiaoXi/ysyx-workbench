@@ -13,7 +13,30 @@ module ysyx_26010011_IDU(
 	input flush_valid,
 	input fencei_pass,
 	output fencei_flush,
-	input idu_isRAW,
+
+	input exu_out_bus_rd_valid,
+	input exu_out_bus_bypass_valid,
+	input exu_out_bus_csr_valid,
+	input exu_out_bus_csr_bypass_valid,
+	input [4:0]exu_out_bus_rd,
+	input [11:0]exu_out_bus_csrrd,
+
+	input lsu_out_bus_rd_valid,
+	input lsu_out_bus_bypass_valid,
+	input lsu_out_bus_csr_valid,
+	input lsu_out_bus_csr_bypass_valid,
+	input [4:0]lsu_out_bus_rd,
+	input [11:0]lsu_out_bus_csrrd,
+
+	input wbu_out_bus_rd_valid,
+	input wbu_out_bus_bypass_valid,
+	input wbu_out_bus_csr_valid,
+	input wbu_out_bus_csr_bypass_valid,
+	input [4:0]wbu_out_bus_rd,
+	input [11:0]wbu_out_bus_csrrd,
+
+
+
 	//IFU->IDU
 	input        [31:0]idu_in_bus_instruction,
 	input        [31:0]idu_in_bus_pc,
@@ -81,7 +104,7 @@ module ysyx_26010011_IDU(
 
 	logic isR,isI,isS,isB,isU,isJ;
 
-	wire all_inst;
+	wire all_inst,idu_isRAW/*verilator_public*/;
 
 
 	always @(posedge clock) begin
@@ -295,6 +318,37 @@ module ysyx_26010011_IDU(
 				idu_out_bus_exception = idu_in_bus_exception;
 			end
 		end
-
 	end
+	ysyx_26010011_RAW u_RAW(
+		.rs1(idu_out_bus_rs1),
+		.rs2(idu_out_bus_rs2),
+		.csr(idu_out_bus_csrrd),
+		.rs2_valid(idu_out_bus_alu_isUseImm | idu_out_bus_comp_isUseImm),
+
+		.exu_rd_valid(exu_out_bus_rd_valid),
+		.lsu_rd_valid(lsu_out_bus_rd_valid),
+		.wbu_rd_valid(wbu_out_bus_rd_valid),
+
+		.exu_csr_valid(exu_out_bus_csr_valid),
+		.lsu_csr_valid(lsu_out_bus_csr_valid),
+		.wbu_csr_valid(wbu_out_bus_csr_valid),
+
+		.exu_bypass_valid(exu_out_bus_bypass_valid),
+		.lsu_bypass_valid(lsu_out_bus_bypass_valid),
+		.wbu_bypass_valid(wbu_out_bus_bypass_valid),
+
+		.exu_csr_bypass_valid(exu_out_bus_csr_bypass_valid),
+		.lsu_csr_bypass_valid(lsu_out_bus_csr_bypass_valid),
+		.wbu_csr_bypass_valid(wbu_out_bus_csr_bypass_valid),
+
+		.exu_in_bus_rd(exu_out_bus_rd),
+		.lsu_in_bus_rd(lsu_out_bus_rd),
+		.wbu_in_bus_rd(wbu_out_bus_rd),
+
+		.exu_in_bus_csr_rd(exu_out_bus_csrrd),
+		.lsu_in_bus_csr_rd(lsu_out_bus_csrrd),
+		.wbu_in_bus_csr_rd(wbu_out_bus_csrrd),
+
+		.is_RAW(idu_isRAW)
+	);
 endmodule

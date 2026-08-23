@@ -35,6 +35,12 @@ module ysyx_26010011_WBU(
 // 	input wbu_in_bus_isJUMP,
 // 	input wbu_in_bus_isWCOMP,
 // `endif
+	output wbu_out_bus_rd_valid,
+	output wbu_out_bus_bypass_valid,
+	output wbu_out_bus_csr_valid,
+	output wbu_out_bus_csr_bypass_valid,
+	output [4:0]wbu_out_bus_rd,
+	output [11:0]wbu_out_bus_csrrd,
 
 	output gpr_we,
 	output [31:0]gpr_wdata,
@@ -46,6 +52,7 @@ module ysyx_26010011_WBU(
 	output [4:0]wbu_out_bus_exception,
 	output fencei_pass
 );  
+	
 	// wire [31:0] wbu_in_bus_snpc;
 	// assign wbu_in_bus_snpc = wbu_in_bus_pc + 32'd4;
 	assign wbu_in_ready=1;
@@ -60,6 +67,14 @@ module ysyx_26010011_WBU(
 	// 		else                    gpr_wdata = wbu_in_bus_alu_result;
 	// 	end
 	// end
+
+	assign wbu_out_bus_rd_valid = wbu_in_valid & ~wbu_out_bus_exception[4] & wbu_in_bus_isWGPR;
+	assign wbu_out_bus_bypass_valid = wbu_in_valid & ~wbu_out_bus_exception[4] & wbu_in_bus_isWGPR ;
+	assign wbu_out_bus_csr_valid = wbu_in_valid & ~wbu_out_bus_exception[4] & |wbu_in_bus_opCSR;
+	assign wbu_out_bus_csr_bypass_valid = wbu_in_valid & ~wbu_out_bus_exception[4] & |wbu_in_bus_opCSR;
+	assign wbu_out_bus_rd = wbu_in_bus_rd;
+	assign wbu_out_bus_csrrd = wbu_in_bus_csrrd;
+
 	assign gpr_wdata = wbu_in_bus_gpr_wdata;
 
 	assign gpr_address=wbu_in_bus_rd;

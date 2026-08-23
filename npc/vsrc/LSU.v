@@ -24,11 +24,23 @@ module ysyx_26010011_LSU(
 	input            lsu_in_bus_isUnSigned,
 	input            lsu_in_bus_isLOAD,
 	input            lsu_in_bus_isSTORE,
+	input			 lsu_in_bus_isWGPR,
+	input		[2:0]lsu_in_bus_opCSR,
+
 
 	output           lsu_out_valid/*verilator public*/,
 	output reg [ 4:0]lsu_out_bus_exception,
 	input            lsu_out_ready,
 	output reg [31:0]lsu_out_bus_rdata,
+	
+	output		   lsu_out_bus_rd_valid,
+	output		   lsu_out_bus_bypass_valid,
+	output		   lsu_out_bus_csr_valid,
+	output		   lsu_out_bus_csr_bypass_valid,
+	output   [4:0] lsu_out_bus_rd,
+	output  [11:0] lsu_out_bus_csrrd,
+
+	
 	
 	// AXI4 写地址通道
 	output [31:0]     awaddr,
@@ -97,6 +109,12 @@ module ysyx_26010011_LSU(
 	wire [31:0] lsu_rdata1;
 	wire [31:0] lsu_rdata2;
 	wire [31:0] lsu_rdata4;
+
+	assign lsu_out_bus_rd_valid = lsu_in_valid & ~lsu_out_bus_exception[4] & lsu_in_bus_isWGPR;
+	assign lsu_out_bus_bypass_valid = lsu_out_valid & ~lsu_out_bus_exception[4] & lsu_in_bus_isWGPR ;
+	assign lsu_out_bus_csr_valid = lsu_in_valid & ~lsu_out_bus_exception[4] & |lsu_in_bus_opCSR;
+	assign lsu_out_bus_csr_bypass_valid = lsu_out_valid & ~lsu_out_bus_exception[4] & |lsu_in_bus_opCSR;
+
 
 	assign aw_fire = awvalid && awready;
 	assign w_fire  = wvalid && wready;

@@ -36,6 +36,7 @@ SRC_V += vsrc/WBU.v
 SRC_V += vsrc/pipeline.v
 SRC_V += vsrc/REG.v
 SRC_V += vsrc/CPU.v
+SRC_V += vsrc/RAW.v
 SRC_V += vsrc/AXI4Arbiter.v
 SRC_V += vsrc/CLINT.v
 SRC_V += vsrc/BRIDGE.v

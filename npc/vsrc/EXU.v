@@ -28,6 +28,8 @@ module ysyx_26010011_EXU(
 	input            exu_in_bus_isUsePC,//PC+imm
 	input            exu_in_bus_alu_isUseImm,//imm
 	input            exu_in_bus_comp_isUseImm,//imm
+	input 		  	 exu_in_bus_isWGPR,
+	input 		  	 exu_in_bus_isLOAD,
 
 	output           exu_out_valid,
 	output reg [ 4:0]exu_out_bus_exception,
@@ -35,7 +37,11 @@ module ysyx_26010011_EXU(
 	output reg [31:0]exu_out_bus_alu_result,
 	output reg [31:0]exu_out_bus_csr_result,
 	output reg       exu_out_bus_comp_result,
-	output reg       exu_out_bus_dnpc_valid
+	output reg       exu_out_bus_dnpc_valid,
+	output           exu_out_bus_rd_valid,
+	output           exu_out_bus_bypass_valid,
+	output           exu_out_bus_csr_valid,
+	output           exu_out_bus_csr_bypass_valid
 );
 	wire [31:0] a,b,comp_a,comp_b;
 	wire [31:0]op_xor;
@@ -45,6 +51,8 @@ module ysyx_26010011_EXU(
 	wire [31:0]op_lr;
 	wire [31:0]op_ll;
 	wire [31:0]op_adder;
+	wire comp_isEQUAL,comp_isGREATER,comp_suber_carry;
+	wire [31:0]comp_suber_out;
 
 	assign a=(exu_in_bus_alu_isUseImm)?(exu_in_bus_isUsePC?exu_in_bus_pc:exu_in_bus_a):exu_in_bus_a;
 	assign b=(exu_in_bus_alu_isUseImm)?exu_in_bus_imm:exu_in_bus_b;
@@ -62,9 +70,11 @@ module ysyx_26010011_EXU(
 	assign op_ll=a << (b & 32'h1f);
 	assign op_adder = (exu_in_bus_alu_op[8])?(a-b):(a+b);
 
-	wire comp_isEQUAL,comp_isGREATER,comp_suber_carry;
-	wire [31:0]comp_suber_out;
-	
+	assign exu_out_bus_rd_valid = exu_in_valid & ~exu_out_bus_exception[4] & exu_in_bus_isWGPR;
+	assign exu_out_bus_bypass_valid = exu_out_valid & ~exu_out_bus_exception[4] & exu_in_bus_isWGPR & exu_in_bus_isLOAD;
+	assign exu_out_bus_csr_valid = exu_in_valid & ~exu_out_bus_exception[4] & |exu_in_bus_opCSR;
+	assign exu_out_bus_csr_bypass_valid = exu_out_valid & ~exu_out_bus_exception[4] & |exu_in_bus_opCSR;
+
 	always @(*) begin
 		if(exu_in_bus_alu_op[9] | exu_in_bus_alu_op[8]) exu_out_bus_alu_result=op_adder;
 		else if(exu_in_bus_alu_op[5]) exu_out_bus_alu_result=op_ll;
