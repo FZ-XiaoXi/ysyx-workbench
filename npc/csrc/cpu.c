@@ -32,7 +32,6 @@ static void cpu_get_state(){
 	cpu.tb_FINAL_npc = CPUTop->tb_FINAL_npc;
 	cpu.tb_dnpc_valid = CPUTop->tb_dnpc_valid;
 	cpu.tb_isMEM = CPUTop->tb_isMEM;
-	cpu.tb_FINAL_pc = CPUTop->tb_FINAL_pc;
 	cpu.tb_FINAL_inst = CPUTop->tb_FINAL_inst;
 
 	// cpu.pc = cpu.dnpc;
