@@ -114,7 +114,7 @@ module ysyx_26010011_ID_EX_pipeline(
 			exu_in_bus_rs2_val<=idu_out_bus_rs2_val;
 			exu_in_bus_imm<=idu_out_bus_imm;
 `ifdef USE_VERILATOR
-			exu_in_bus_instruction<=idu_out_bus_instruction;\
+			exu_in_bus_instruction<=idu_out_bus_instruction;
 `endif
 			exu_in_bus_isLOAD<=idu_out_bus_isLOAD;
 			exu_in_bus_isSTORE<=idu_out_bus_isSTORE;
