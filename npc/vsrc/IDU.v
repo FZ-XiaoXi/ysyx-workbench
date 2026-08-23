@@ -54,11 +54,11 @@ module ysyx_26010011_IDU(
 	//IDU->EXU
 	output             idu_out_valid,
 	input              idu_out_ready,
-	output       [ 4:0]idu_out_bus_rd,
+	output       [ 3:0]idu_out_bus_rd,
 	output reg   [ 4:0]idu_out_bus_exception,
 	output       [11:0]idu_out_bus_csrrd,
-	output       [ 4:0]idu_out_bus_rs1,
-	output       [ 4:0]idu_out_bus_rs2,
+	output       [ 3:0]idu_out_bus_rs1,
+	output       [ 3:0]idu_out_bus_rs2,
 	output reg   [31:0]idu_out_bus_imm,
 	output             idu_out_bus_isLOAD,
 	output             idu_out_bus_isSTORE,
@@ -155,10 +155,10 @@ module ysyx_26010011_IDU(
 					|isECALL|isEBREAK|isMRET|isFENCEI);//////////////////////////
 
 	assign opcode=  idu_in_bus_instruction[ 6: 0];
-	assign idu_out_bus_rd=      idu_in_bus_instruction[11: 7];
+	assign idu_out_bus_rd=      idu_in_bus_instruction[10: 7];//4bit
 	assign idu_out_bus_csrrd=   idu_in_bus_instruction[31:20];
-	assign idu_out_bus_rs1=     idu_in_bus_instruction[19:15];
-	assign idu_out_bus_rs2=     idu_in_bus_instruction[24:20];
+	assign idu_out_bus_rs1=     idu_in_bus_instruction[18:15];//4bit
+	assign idu_out_bus_rs2=     idu_in_bus_instruction[23:20];//4bit
 	assign funct3=  idu_in_bus_instruction[14:12];
 	assign funct7=  idu_in_bus_instruction[31:25];
 	
