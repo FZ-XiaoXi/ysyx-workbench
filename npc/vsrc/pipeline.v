@@ -265,7 +265,7 @@ module ysyx_26010011_LS_WB_pipeline(
 	output reg       wbu_in_bus_isJUMP,
 	output reg       wbu_in_bus_isWCOMP,
 	output reg       wbu_in_bus_isBRANCH,
-	output reg [31:0]wbu_in_bus_pc,/*verilator public*/
+	output reg [31:0]wbu_in_bus_pc/*verilator public*/,
 	// output reg [31:0]wbu_in_bus_snpc,
 `endif
 	output reg [ 2:0]wbu_in_bus_opCSR
