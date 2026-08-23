@@ -341,9 +341,9 @@ module axi4_memory (
 			Memory
 		);
 	end
-	initial
-	begin
-		$dumpfile("test.vcd");
-		$dumpvars(0,CPUTop_tb);
-	end
+	// initial
+	// begin
+	// 	$dumpfile("test.vcd");
+	// 	$dumpvars(0,CPUTop_tb);
+	// end
 endmodule
