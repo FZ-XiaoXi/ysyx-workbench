@@ -339,12 +339,12 @@ module ysyx_26010011_IDU(
 						)
 						:(
 							(idu_out_bus_opCSR[1]&~idu_out_bus_opCSR[0])?
-								(~idu_ra_bypass)
-								:idu_ra_bypass
+								(~gpr_rdataa)
+								:gpr_rdataa
 						)
 					)
 				)
-				:idu_ra_bypass
+				:gpr_rdataa
 		);
 	assign idu_out_bus_rs2_val = gpr_rdatab;
 	ysyx_26010011_RAW u_RAW(
