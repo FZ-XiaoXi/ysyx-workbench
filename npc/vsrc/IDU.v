@@ -321,13 +321,13 @@ module ysyx_26010011_IDU(
 			3'b000:
 				idu_out_bus_rs1_val = rs1_val_bypass;
 			3'b110:
-				idu_out_bus_rs1_val = ~{{27{1'b0}},idu_out_bus_rs1};
+				idu_out_bus_rs1_val = ~{{28{1'b0}},idu_out_bus_rs1};
 			3'b100:
-				idu_out_bus_rs1_val = {{27{1'b0}},idu_out_bus_rs1};
+				idu_out_bus_rs1_val = {{28{1'b0}},idu_out_bus_rs1};
 			3'b101:
-				idu_out_bus_rs1_val = {{27{1'b0}},idu_out_bus_rs1};
+				idu_out_bus_rs1_val = {{28{1'b0}},idu_out_bus_rs1};
 			3'b111:
-				idu_out_bus_rs1_val = {{27{1'b0}},idu_out_bus_rs1};
+				idu_out_bus_rs1_val = {{28{1'b0}},idu_out_bus_rs1};
 			3'b010:
 				idu_out_bus_rs1_val = ~rs1_val_bypass;
 			3'b001:
