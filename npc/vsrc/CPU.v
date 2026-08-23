@@ -528,10 +528,10 @@ module ysyx_26010011(
 		.exu_out_valid(exu_out_valid),
 		.exu_out_bus_exception(exu_out_bus_exception),
 		.exu_out_ready(exu_out_ready),
-// `ifdef USE_VERILATOR
+`ifdef USE_VERILATOR
 		.exu_out_bus_alu_result(exu_out_bus_alu_result),
 		.exu_out_bus_comp_result(exu_out_bus_comp_result),       //暂存CSR目的地址
-// `endif
+`endif
 		.exu_out_bus_csr_result(exu_out_bus_csr_result),
 		.exu_out_bus_gpr_wdata(exu_out_bus_gpr_wdata),
 		.exu_out_bus_dnpc_valid(exu_out_bus_dnpc_valid)
