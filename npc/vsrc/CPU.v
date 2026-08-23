@@ -504,6 +504,7 @@ module ysyx_26010011(
 		.exu_in_bus_comp_isUseImm(exu_in_bus_comp_isUseImm),//imm
 		.exu_in_bus_isWGPR(exu_in_bus_isWGPR),
 		.exu_in_bus_isLOAD(exu_in_bus_isLOAD),
+		.exu_in_bus_isWCOMP(exu_in_bus_isWCOMP),
 		
 		.exu_out_bus_rd_valid(exu_out_bus_rd_valid),
 		.exu_out_bus_bypass_valid(exu_out_bus_bypass_valid),
@@ -524,15 +525,6 @@ module ysyx_26010011(
 	assign exu_out_bus_rd = exu_in_bus_rd;
 	assign exu_out_bus_csrrd = exu_in_bus_csrrd;
 
-	always @(*) begin
-		if(exu_in_bus_isJUMP) begin
-			exu_out_bus_gpr_wdata = exu_in_bus_snpc;
-		end else if(exu_in_bus_isWCOMP) begin
-			exu_out_bus_gpr_wdata = {31'b0,exu_out_bus_comp_result};
-		end else begin
-			exu_out_bus_gpr_wdata = exu_out_bus_alu_result;
-		end
-	end
 
 	ysyx_26010011_EX_LS_pipeline EX_LS_inst(
 		.clock(clock),

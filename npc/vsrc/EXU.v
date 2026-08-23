@@ -30,10 +30,12 @@ module ysyx_26010011_EXU(
 	input            exu_in_bus_comp_isUseImm,//imm
 	input 		  	 exu_in_bus_isWGPR,
 	input 		  	 exu_in_bus_isLOAD,
+	input 		  	 exu_in_bus_isWCOMP,
 
 	output           exu_out_valid,
 	output reg [ 4:0]exu_out_bus_exception,
 	input            exu_out_ready,
+	output reg [31:0]exu_out_bus_gpr_wdata,
 	output reg [31:0]exu_out_bus_alu_result,
 	output reg [31:0]exu_out_bus_csr_result,
 	output reg       exu_out_bus_comp_result,
@@ -43,6 +45,7 @@ module ysyx_26010011_EXU(
 	output           exu_out_bus_csr_valid,
 	output           exu_out_bus_csr_bypass_valid
 );
+	
 	wire [31:0] a,b,comp_a,comp_b;
 	wire [31:0]op_xor;
 	wire [31:0]op_or;
@@ -123,6 +126,16 @@ module ysyx_26010011_EXU(
 		end else begin
 			exu_out_bus_dnpc_valid = 0;
 			exu_out_bus_exception = exu_in_bus_exception;
+		end
+	end
+
+	always @(*) begin
+		if(exu_in_bus_isJUMP) begin
+			exu_out_bus_gpr_wdata = exu_in_bus_snpc;
+		end else if(exu_in_bus_isWCOMP) begin
+			exu_out_bus_gpr_wdata = {31'b0,exu_out_bus_comp_result};
+		end else begin
+			exu_out_bus_gpr_wdata = exu_out_bus_alu_result;
 		end
 	end
 endmodule

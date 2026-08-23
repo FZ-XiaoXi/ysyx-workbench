@@ -371,7 +371,7 @@ module ysyx_26010011_IDU(
 		// end else if(idu_out_bus_rs2 == wbu_out_bus_rd && wbu_out_bus_rd_valid && wbu_out_bus_bypass_valid) begin
 		// 	idu_out_bus_rs2_val = wbu_out_bus_gpr_wdata;
 		end else begin
-			idu_out_bus_rs2_val = gpr_rdataa;
+			idu_out_bus_rs2_val = gpr_rdatab;
 		end
 	end
 	ysyx_26010011_RAW u_RAW(
