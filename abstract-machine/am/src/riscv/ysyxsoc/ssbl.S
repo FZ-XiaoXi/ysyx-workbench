@@ -68,7 +68,3 @@ _bootloader_rodata_loop_end:
 .section .text
 .align 2
 .weak mtvec_handler
-mtvec_handler:
-  j .      # default weak handler: spin forever
-
-.size mtvec_handler, . - mtvec_handler
