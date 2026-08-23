@@ -350,7 +350,7 @@ module ysyx_26010011_IDU(
 				:gpr_rdataa
 		);
 
-	assign @(*) begin
+	always @(*) begin
 		if(idu_out_bus_rs1 == exu_out_bus_rd && exu_out_bus_rd_valid && exu_out_bus_bypass_valid) begin
 			idu_out_bus_rs1_val = exu_out_bus_gpr_wdata;
 		end else if(idu_out_bus_rs1 == lsu_out_bus_rd && lsu_out_bus_rd_valid && lsu_out_bus_bypass_valid) begin
@@ -361,7 +361,7 @@ module ysyx_26010011_IDU(
 			idu_out_bus_rs1_val = gpr_rdataa;
 		end
 	end
-	assign @(*) begin
+	always @(*) begin
 		if(idu_out_bus_rs2 == exu_out_bus_rd && exu_out_bus_rd_valid && exu_out_bus_bypass_valid) begin
 			idu_out_bus_rs2_val = exu_out_bus_gpr_wdata;
 		end else if(idu_out_bus_rs2 == lsu_out_bus_rd && lsu_out_bus_rd_valid && lsu_out_bus_bypass_valid) begin
