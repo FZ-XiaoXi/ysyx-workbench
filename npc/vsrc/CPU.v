@@ -414,8 +414,8 @@ module ysyx_26010011(
 		.idu_out_ready(idu_out_ready),
 		.idu_out_bus_rd(idu_out_bus_rd),
 		.idu_out_bus_csrrd(idu_out_bus_csrrd),  //CSR地址
-		.idu_out_bus_rs1(gpr_raddra),
-		.idu_out_bus_rs2(gpr_raddrb),
+		// .idu_out_bus_rs1(gpr_raddra),
+		// .idu_out_bus_rs2(gpr_raddrb),
 		.idu_out_bus_rs1_val(idu_out_bus_rs1_val), //[~]zimm or rs1_val
 		.idu_out_bus_rs2_val(idu_out_bus_rs2_val),
 		.idu_out_bus_imm(idu_out_bus_imm),     //CSR值
