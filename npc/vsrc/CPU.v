@@ -135,7 +135,7 @@ module ysyx_26010011(
 	wire lsu_in_valid,lsu_in_ready,lsu_in_bus_isWGPR,lsu_in_bus_isUnSigned;
 	wire [31:0]lsu_in_bus_wdata,lsu_in_bus_pc,/*lsu_in_bus_snpc,*/lsu_in_bus_csr_result;
 	wire [1:0]lsu_in_bus_perip_mask;
-	wire [4:0]lsu_in_bus_rd,lsu_out_bus_rd;
+	wire [3:0]lsu_in_bus_rd,lsu_out_bus_rd;
 	wire [4:0]lsu_in_bus_exception;
 	wire [11:0]lsu_in_bus_csrrd,lsu_out_bus_csrrd;
 	wire [2:0]lsu_in_bus_opCSR;

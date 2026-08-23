@@ -41,7 +41,7 @@ module ysyx_26010011_LSU(
 	output		   lsu_out_bus_bypass_valid,
 	output		   lsu_out_bus_csr_valid,
 	output		   lsu_out_bus_csr_bypass_valid,
-	output   [4:0] lsu_out_bus_rd,
+	output   [3:0] lsu_out_bus_rd,
 	output  [11:0] lsu_out_bus_csrrd,
 	output	[31:0] lsu_out_bus_csr_result,
 	
