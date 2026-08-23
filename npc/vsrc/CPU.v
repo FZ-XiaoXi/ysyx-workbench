@@ -683,9 +683,9 @@ module ysyx_26010011(
 		.lsu_out_bus_csrrd(lsu_in_bus_csrrd),
 		.lsu_out_bus_isWGPR(lsu_in_bus_isWGPR),
 		.lsu_out_bus_gpr_wdata(lsu_out_bus_gpr_wdata),
+		.lsu_out_bus_csr_result(lsu_in_bus_csr_result),
 `ifdef USE_VERILATOR
 		.lsu_out_bus_alu_result(lsu_out_bus_alu_result),
-		.lsu_out_bus_csr_result(lsu_in_bus_csr_result),
 		.lsu_out_bus_comp_result(lsu_in_bus_comp_result),
 		.lsu_out_bus_lsu_result(lsu_out_bus_lsu_result),
 		.lsu_out_bus_instruction(lsu_in_bus_instruction),

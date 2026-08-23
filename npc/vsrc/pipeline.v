@@ -226,9 +226,9 @@ module ysyx_26010011_LS_WB_pipeline(
 	input      [ 4:0]lsu_out_bus_exception,
 	input      [11:0]lsu_out_bus_csrrd,
 	input	   [31:0]lsu_out_bus_gpr_wdata,
+	input      [31:0]lsu_out_bus_csr_result,
 `ifdef USE_VERILATOR
 	input      [31:0]lsu_out_bus_alu_result,
-	input      [31:0]lsu_out_bus_csr_result,
 	input            lsu_out_bus_comp_result,
 	input      [31:0]lsu_out_bus_lsu_result,
 	input      [31:0]lsu_out_bus_instruction,
