@@ -339,22 +339,22 @@ module ysyx_26010011_IDU(
 		endcase
 	end
 	always @(*) begin
-		if(idu_out_bus_rs1 == exu_out_bus_rd && exu_out_bus_rd_valid && exu_out_bus_bypass_valid && idu_out_bus_rs1 != 5'd0) begin
+		if(idu_out_bus_rs1 == exu_out_bus_rd && exu_out_bus_rd_valid && exu_out_bus_bypass_valid && idu_out_bus_rs1 != 4'd0) begin
 			rs1_val_bypass = exu_out_bus_gpr_wdata;
-		end else if(idu_out_bus_rs1 == lsu_out_bus_rd && lsu_out_bus_rd_valid && lsu_out_bus_bypass_valid && idu_out_bus_rs1 != 5'd0) begin
+		end else if(idu_out_bus_rs1 == lsu_out_bus_rd && lsu_out_bus_rd_valid && lsu_out_bus_bypass_valid && idu_out_bus_rs1 != 4'd0) begin
 			rs1_val_bypass = lsu_out_bus_gpr_wdata;
-		end else if(idu_out_bus_rs1 == wbu_out_bus_rd && wbu_out_bus_rd_valid && wbu_out_bus_bypass_valid && idu_out_bus_rs1 != 5'd0) begin
+		end else if(idu_out_bus_rs1 == wbu_out_bus_rd && wbu_out_bus_rd_valid && wbu_out_bus_bypass_valid && idu_out_bus_rs1 != 4'd0) begin
 			rs1_val_bypass = wbu_out_bus_gpr_wdata;
 		end else begin
 			rs1_val_bypass = gpr_rdataa;
 		end
 	end
 	always @(*) begin
-		if(idu_out_bus_rs2 == exu_out_bus_rd && exu_out_bus_rd_valid && exu_out_bus_bypass_valid && idu_out_bus_rs2 != 5'd0) begin
+		if(idu_out_bus_rs2 == exu_out_bus_rd && exu_out_bus_rd_valid && exu_out_bus_bypass_valid && idu_out_bus_rs2 != 4'd0) begin
 			idu_out_bus_rs2_val = exu_out_bus_gpr_wdata;
-		end else if(idu_out_bus_rs2 == lsu_out_bus_rd && lsu_out_bus_rd_valid && lsu_out_bus_bypass_valid && idu_out_bus_rs2 != 5'd0) begin
+		end else if(idu_out_bus_rs2 == lsu_out_bus_rd && lsu_out_bus_rd_valid && lsu_out_bus_bypass_valid && idu_out_bus_rs2 != 4'd0) begin
 			idu_out_bus_rs2_val = lsu_out_bus_gpr_wdata;
-		end else if(idu_out_bus_rs2 == wbu_out_bus_rd && wbu_out_bus_rd_valid && wbu_out_bus_bypass_valid && idu_out_bus_rs2 != 5'd0) begin
+		end else if(idu_out_bus_rs2 == wbu_out_bus_rd && wbu_out_bus_rd_valid && wbu_out_bus_bypass_valid && idu_out_bus_rs2 != 4'd0) begin
 			idu_out_bus_rs2_val = wbu_out_bus_gpr_wdata;
 		end else begin
 			idu_out_bus_rs2_val = gpr_rdatab;
