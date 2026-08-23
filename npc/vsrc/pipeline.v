@@ -143,45 +143,55 @@ module ysyx_26010011_EX_LS_pipeline(
 
 	input            exu_out_valid,
 	output           exu_out_ready,
-	input      [31:0]exu_out_bus_alu_result,
 	input      [31:0]exu_out_bus_csr_result,
-	input            exu_out_bus_comp_result,
+
 	input      [31:0]exu_out_bus_lsu_val,
+	input      [31:0]exu_out_bus_gpr_wdata,
 	input      [ 4:0]exu_out_bus_rd,
 	input      [ 4:0]exu_out_bus_exception,
 	input      [11:0]exu_out_bus_csrrd,
-	input      [31:0]exu_out_bus_instruction,
 	input            exu_out_bus_isLOAD,
 	input            exu_out_bus_isSTORE,
 	input            exu_out_bus_isWGPR,
-	input            exu_out_bus_isJUMP,
-	input            exu_out_bus_isWCOMP,
-	input            exu_out_bus_isBRANCH,
 	input      [ 2:0]exu_out_bus_opCSR,
 	input            exu_out_bus_isUnSigned,
 	input      [ 1:0]exu_out_bus_perip_mask,
 	input      [31:0]exu_out_bus_pc,
+`ifdef USE_VERILATOR
+	input            exu_out_bus_comp_result,
+	input      [31:0]exu_out_bus_alu_result,
+	input      [31:0]exu_out_bus_instruction,
+	input            exu_out_bus_isJUMP,
+	input            exu_out_bus_isWCOMP,
+	input            exu_out_bus_isBRANCH,
+`endif
 	// input      [31:0]exu_out_bus_snpc,
-
 	output reg       lsu_in_valid/*verilator public*/,
 	input            lsu_in_ready,
-	output reg [31:0]lsu_in_bus_alu_result,
+
 	output reg [31:0]lsu_in_bus_csr_result,
-	output reg       lsu_in_bus_comp_result,
+
 	output reg [31:0]lsu_in_bus_lsu_val,
+	output reg [31:0]lsu_in_bus_gpr_wdata,
 	output reg [ 4:0]lsu_in_bus_rd,
 	output reg [ 4:0]lsu_in_bus_exception,
 	output reg [11:0]lsu_in_bus_csrrd,
-	output reg [31:0]lsu_in_bus_instruction,
+	
 	output reg       lsu_in_bus_isLOAD,
 	output reg       lsu_in_bus_isSTORE,
 	output reg       lsu_in_bus_isWGPR,
-	output reg       lsu_in_bus_isJUMP,
-	output reg       lsu_in_bus_isWCOMP,
-	output reg       lsu_in_bus_isBRANCH,
+
 	output reg [ 2:0]lsu_in_bus_opCSR,
 	output reg       lsu_in_bus_isUnSigned,
 	output reg [ 1:0]lsu_in_bus_perip_mask,
+`ifdef USE_VERILATOR
+	output reg [31:0]lsu_in_bus_alu_result,
+	output reg       lsu_in_bus_comp_result,
+	output reg [31:0]lsu_in_bus_instruction,
+	output reg       lsu_in_bus_isJUMP,
+	output reg       lsu_in_bus_isWCOMP,
+	output reg       lsu_in_bus_isBRANCH,
+`endif
 	output reg [31:0]lsu_in_bus_pc/*verilator public*/
 	// output reg [31:0]lsu_in_bus_snpc
 );
@@ -191,24 +201,30 @@ module ysyx_26010011_EX_LS_pipeline(
 			lsu_in_valid<=0;
 		end else if(lsu_in_ready | !lsu_in_valid)begin
 			lsu_in_valid<=exu_out_valid;
-			lsu_in_bus_alu_result<=exu_out_bus_alu_result;
 			lsu_in_bus_csr_result<=exu_out_bus_csr_result;
-			lsu_in_bus_comp_result<=exu_out_bus_comp_result;
+			
 			lsu_in_bus_lsu_val<=exu_out_bus_lsu_val;
 			lsu_in_bus_rd<=exu_out_bus_rd;
 			lsu_in_bus_exception<=exu_out_bus_exception;
 			lsu_in_bus_csrrd<=exu_out_bus_csrrd;
-			lsu_in_bus_instruction<=exu_out_bus_instruction;
+			
 			lsu_in_bus_isLOAD<=exu_out_bus_isLOAD;
 			lsu_in_bus_isSTORE<=exu_out_bus_isSTORE;
 			lsu_in_bus_isWGPR<=exu_out_bus_isWGPR;
-			lsu_in_bus_isJUMP<=exu_out_bus_isJUMP;
-			lsu_in_bus_isWCOMP<=exu_out_bus_isWCOMP;
-			lsu_in_bus_isBRANCH<=exu_out_bus_isBRANCH;
+			
 			lsu_in_bus_opCSR<=exu_out_bus_opCSR;
 			lsu_in_bus_isUnSigned<=exu_out_bus_isUnSigned;
 			lsu_in_bus_perip_mask<=exu_out_bus_perip_mask;
 			lsu_in_bus_pc<=exu_out_bus_pc;
+			lsu_in_bus_gpr_wdata<=exu_out_bus_gpr_wdata;
+`ifdef USE_VERILATOR
+			lsu_in_bus_alu_result<=exu_out_bus_alu_result;
+			lsu_in_bus_comp_result<=exu_out_bus_comp_result;
+			lsu_in_bus_instruction<=exu_out_bus_instruction;
+			lsu_in_bus_isJUMP<=exu_out_bus_isJUMP;
+			lsu_in_bus_isWCOMP<=exu_out_bus_isWCOMP;
+			lsu_in_bus_isBRANCH<=exu_out_bus_isBRANCH;
+`endif
 			// lsu_in_bus_snpc<=exu_out_bus_snpc;
 		end
 	end
@@ -237,8 +253,8 @@ module ysyx_26010011_LS_WB_pipeline(
 	input            lsu_out_bus_isJUMP,
 	input            lsu_out_bus_isWCOMP,
 	input            lsu_out_bus_isBRANCH,
-	input      [31:0]lsu_out_bus_pc,
 `endif
+	input      [31:0]lsu_out_bus_pc,
 	input            lsu_out_bus_isWGPR,
 	input      [ 2:0]lsu_out_bus_opCSR,
 	
@@ -264,9 +280,9 @@ module ysyx_26010011_LS_WB_pipeline(
 	output reg       wbu_in_bus_isJUMP,
 	output reg       wbu_in_bus_isWCOMP,
 	output reg       wbu_in_bus_isBRANCH,
-	output reg [31:0]wbu_in_bus_pc/*verilator public*/,
 	// output reg [31:0]wbu_in_bus_snpc,
 `endif
+	output reg [31:0]wbu_in_bus_pc/*verilator public*/,
 	output reg [ 2:0]wbu_in_bus_opCSR
 
 );
@@ -281,9 +297,9 @@ module ysyx_26010011_LS_WB_pipeline(
 			wbu_in_bus_rd<=lsu_out_bus_rd;
 			wbu_in_bus_exception<=lsu_out_bus_exception;
 			wbu_in_bus_csrrd<=lsu_out_bus_csrrd;
-
-`ifdef USE_VERILATOR
 			wbu_in_bus_pc<=lsu_out_bus_pc;
+`ifdef USE_VERILATOR
+			
 			wbu_in_bus_instruction<=lsu_out_bus_instruction;
 			wbu_in_bus_lsu_result<=lsu_out_bus_lsu_result;
 			wbu_in_bus_alu_result<=lsu_out_bus_alu_result;
@@ -295,9 +311,7 @@ module ysyx_26010011_LS_WB_pipeline(
 			wbu_in_bus_isWCOMP<=lsu_out_bus_isWCOMP;
 			wbu_in_bus_isBRANCH<=lsu_out_bus_isBRANCH;
 `endif
-
 			wbu_in_bus_isWGPR<=lsu_out_bus_isWGPR;
-
 			wbu_in_bus_opCSR<=lsu_out_bus_opCSR;
 		end
 	end
