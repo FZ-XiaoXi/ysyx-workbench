@@ -301,7 +301,7 @@ module ysyx_26010011_LS_WB_pipeline(
 `ifdef USE_VERILATOR
 			
 			wbu_in_bus_instruction<=lsu_out_bus_instruction;
-			wbu_in_bus_lsu_result<=lsu_out_bus_lsu_result;
+			// wbu_in_bus_lsu_result<=lsu_out_bus_lsu_result;
 			wbu_in_bus_alu_result<=lsu_out_bus_alu_result;
 			wbu_in_bus_comp_result<=lsu_out_bus_comp_result;
 			// wbu_in_bus_snpc<=lsu_out_bus_snpc;
