@@ -107,13 +107,8 @@ module ysyx_26010011_IFU(
 				`endif
 			`endif
 			
-		end else if(flush_valid) begin
+		end else if(flush_valid | (ifu_out_ready & ifu_out_valid)) begin
 			PC <= (dnpc_valid)?{dnpc[31:1],1'b0}:{ifu_out_bus_snpc[31:1],1'b0};
-		end else begin
-			if(ifu_out_ready & ifu_out_valid) begin
-				// PC <= (dnpc_valid)?({dnpc[31:1],1'b0}):((pre_branch)?({r_tar[31:1],1'b0}):({ifu_out_bus_snpc[31:1],1'b0}));
-				PC <= (dnpc_valid)?({dnpc[31:1],1'b0}):(({ifu_out_bus_snpc[31:1],1'b0}));
-			end
 		end
 	end
 	
@@ -124,10 +119,10 @@ module ysyx_26010011_IFU(
 			in_reqValid <= 1'b1;
 		end else begin
 			if(ifu_out_valid) begin
-				if(~ifu_out_ready) begin
-					in_reqValid <= 1'b0;
-				end else begin
+				if(ifu_out_ready) begin
 					in_reqValid <= 1'b1;
+				end else begin
+					in_reqValid <= 1'b0;
 				end
 			end else begin
 				in_reqValid <= 1'b1;
@@ -142,7 +137,7 @@ module ysyx_26010011_IFU(
 		.flush(fencei_flush),
 		.pc_flush(flush_valid),
 
-		.in_addr({PC[31:1],1'b0}),
+		.in_addr(PC),
 		.in_reqValid(in_reqValid & ~flush_valid & ~ifu_out_bus_exception[4]),
 		.in_respValid(in_respValid),
 		.in_rdata(in_rdata),
@@ -395,7 +390,7 @@ module ysyx_26010011_IFU_icache #(
 	input	flush,
 	input	pc_flush/*verilator public*/,
 
-	input	[31:0] 		in_addr,
+	input	   [31:0] 	in_addr,
 	input				in_reqValid,
 	output reg			in_respValid,
 	output reg [31:0] 	in_rdata,
@@ -409,36 +404,28 @@ module ysyx_26010011_IFU_icache #(
 
 	output           debug_is_hit
 );
-
-// `ifdef FORMAL
-// 	always @(*) begin
-
-// 		c_assert: assert(1 == 1);
-// 	end
-// `endif  // FORMAL
-
-	localparam BLOCK_W = CACHE_BLOCK_SIZE * 8;
-	localparam INDEX_W = $clog2(CACHE_SIZE);
-	localparam OFFSET_W = $clog2(CACHE_BLOCK_SIZE);
-	localparam TAG_W   = 32 - OFFSET_W - INDEX_W;
-	localparam BURST_LEN = CACHE_BLOCK_SIZE>>2;
-	localparam BURST_W = (|($clog2(BURST_LEN)))?($clog2(BURST_LEN)):1;
+	localparam BLOCK_W 		= CACHE_BLOCK_SIZE * 8;
+	localparam INDEX_W 		= $clog2(CACHE_SIZE);
+	localparam OFFSET_W 	= $clog2(CACHE_BLOCK_SIZE);
+	localparam TAG_W   		= 32 - OFFSET_W - INDEX_W;
+	localparam BURST_LEN 	= CACHE_BLOCK_SIZE>>2;
+	localparam BURST_W 		= (|($clog2(BURST_LEN)))?($clog2(BURST_LEN)):1;
 	localparam [BURST_W-1:0] BURST_LAST = BURST_W'(BURST_LEN - 1);
 
-	localparam S_IDLE       = 3'd0;
-	localparam S_WAIT_READY = 3'd1; // 等待地址通道接受地址
-	localparam S_WAIT_DATA  = 3'd2; // 等待数据返回
-	localparam S_WAIT_READY_FLUSH = 3'd3;
-	localparam S_WAIT_DATA_FLUSH  = 3'd4;
+	localparam S_IDLE       		= 3'd0;
+	localparam S_WAIT_READY 		= 3'd1; // 等待地址通道接受地址
+	localparam S_WAIT_DATA  		= 3'd2; // 等待数据返回
+	localparam S_WAIT_READY_FLUSH 	= 3'd3;
+	localparam S_WAIT_DATA_FLUSH  	= 3'd4;
 	
-	wire [INDEX_W-1:0] now_index;
-	wire [TAG_W-1:0]   now_tag;
-	wire [OFFSET_W:0]now_offset;
-	wire is_hit;
-	reg [BLOCK_W-1:0] cache_mem   [0:CACHE_SIZE-1];
-	reg               cache_valid [0:CACHE_SIZE-1];
-	reg [TAG_W-1:0]   cache_tag   [0:CACHE_SIZE-1];
-	reg pc_flushed/*verilator public*/;
+	wire [INDEX_W-1:0]	now_index;
+	wire [TAG_W-1:0]	now_tag;
+	wire [OFFSET_W:0]	now_offset;
+	wire 				is_hit;
+	reg  [BLOCK_W-1:0]	cache_mem	[0:CACHE_SIZE-1];
+	reg               	cache_valid	[0:CACHE_SIZE-1];
+	reg  [TAG_W-1:0]	cache_tag	[0:CACHE_SIZE-1];
+	reg  				pc_flushed/*verilator public*/;
 
 	reg [2:0] state, next_state;
 	wire ar_fire;
