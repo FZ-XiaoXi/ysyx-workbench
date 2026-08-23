@@ -229,16 +229,8 @@ module ysyx_26010011(
 		if(|gpr_raddra)begin
 			if((gpr_raddra==exu_in_bus_rd)&exu_in_valid&exu_in_bus_isWGPR)begin
 				if(exu_out_valid & ~exu_in_bus_isLOAD) begin
-					if(exu_in_bus_isWCOMP) begin
-						idu_ra_isRAW = 0;
-						idu_ra_bypass = {31'b0,exu_out_bus_comp_result};
-					end else if(exu_in_bus_isJUMP) begin
-						idu_ra_isRAW = 0;
-						idu_ra_bypass = exu_in_bus_snpc;
-					end else begin
-						idu_ra_isRAW = 0;
-						idu_ra_bypass = exu_out_bus_alu_result;
-					end
+					idu_ra_isRAW = 0;
+					idu_ra_bypass = exu_out_bus_gpr_wdata;
 				end else begin
 					idu_ra_isRAW = 1;
 					idu_ra_bypass = 32'b0;
@@ -261,16 +253,8 @@ module ysyx_26010011(
 		if(|gpr_raddrb)begin
 			if((gpr_raddrb==exu_in_bus_rd)&exu_in_valid&exu_in_bus_isWGPR)begin
 				if(exu_out_valid & ~exu_in_bus_isLOAD) begin
-					if(exu_in_bus_isWCOMP) begin
-						idu_rb_isRAW = 0;
-						idu_rb_bypass = {31'b0,exu_out_bus_comp_result};
-					end else if(exu_in_bus_isJUMP) begin
-						idu_rb_isRAW = 0;
-						idu_rb_bypass = exu_in_bus_snpc;
-					end else begin
-						idu_rb_isRAW = 0;
-						idu_rb_bypass = exu_out_bus_alu_result;
-					end
+					idu_rb_isRAW = 0;
+					idu_rb_bypass = exu_out_bus_gpr_wdata;
 				end else begin
 					idu_rb_isRAW = 1;
 					idu_rb_bypass = 32'b0;
@@ -569,7 +553,7 @@ module ysyx_26010011(
 	wire [31:0] lsu_in_bus_gpr_wdata;
 	always @(*) begin
 		if(exu_in_bus_isJUMP) begin
-			exu_out_bus_gpr_wdata = exu_in_bus_pc + 4;
+			exu_out_bus_gpr_wdata = exu_in_bus_snpc;
 		end else if(exu_in_bus_isWCOMP) begin
 			exu_out_bus_gpr_wdata = {31'b0,exu_out_bus_comp_result};
 		end else begin
