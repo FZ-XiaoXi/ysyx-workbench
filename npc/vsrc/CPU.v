@@ -125,6 +125,7 @@ module ysyx_26010011(
 	wire [2:0]wbu_in_bus_opCSR;
 	wire [4:0]wbu_in_bus_rd,wbu_out_bus_rd;
 	wire [4:0]wbu_in_bus_exception;
+	wire [31:0]wbu_out_bus_gpr_wdata;
 `ifdef USE_VERILATOR
 	wire [31:0]/*wbu_in_bus_snpc,*/wbu_in_bus_instruction;
 	wire [31:0]wbu_in_bus_lsu_result,wbu_in_bus_alu_result;
@@ -423,6 +424,7 @@ module ysyx_26010011(
 		.wbu_out_bus_csr_bypass_valid(wbu_out_bus_csr_bypass_valid),
 		.wbu_out_bus_rd(wbu_out_bus_rd),
 		.wbu_out_bus_csrrd(wbu_out_bus_csrrd),
+		.wbu_out_bus_gpr_wdata(wbu_out_bus_gpr_wdata),
 
 		// .w_pc(w_pc),
 		// .w_tar(w_tar),
@@ -619,6 +621,9 @@ module ysyx_26010011(
 		.lsu_in_bus_isSTORE(lsu_in_bus_isSTORE),
 		.lsu_in_bus_isWGPR(lsu_in_bus_isWGPR),
 		.lsu_in_bus_opCSR(lsu_in_bus_opCSR),
+		.lsu_in_bus_rd(lsu_in_bus_rd),
+		.lsu_in_bus_csrrd(lsu_in_bus_csrrd),
+		.lsu_in_bus_csr_result(lsu_in_bus_csr_result),
 
 		.lsu_out_bus_rd_valid(lsu_out_bus_rd_valid),
 		.lsu_out_bus_bypass_valid(lsu_out_bus_bypass_valid),
@@ -629,9 +634,9 @@ module ysyx_26010011(
 		.lsu_out_bus_exception(lsu_out_bus_exception),
 		.lsu_out_ready(lsu_out_ready),
 		.lsu_out_bus_gpr_wdata(lsu_out_bus_gpr_wdata),
-		// .lsu_out_bus_rd(lsu_out_bus_rd),
-		// .lsu_out_bus_csrrd(lsu_out_bus_csrrd),
-
+		.lsu_out_bus_rd(lsu_out_bus_rd),
+		.lsu_out_bus_csrrd(lsu_out_bus_csrrd),
+		.lsu_out_bus_csr_result(lsu_out_bus_csr_result),
 		.awaddr(DRAM_awaddr),
 		.awvalid(DRAM_awvalid),
 		.awready(DRAM_awready),
@@ -663,9 +668,6 @@ module ysyx_26010011(
 		.rlast(DRAM_rlast),
 		.rid(DRAM_rid)
 	);/*verilator public_module*/
-	assign lsu_out_bus_rd = lsu_in_bus_rd;
-	assign lsu_out_bus_csrrd = lsu_in_bus_csrrd;
-	assign lsu_out_bus_csr_result = lsu_in_bus_csr_result;
 	ysyx_26010011_LS_WB_pipeline LS_WB_inst(
 		.clock(clock),
 		.reset(reset),
@@ -755,6 +757,7 @@ module ysyx_26010011(
 		.wbu_out_bus_csr_bypass_valid(wbu_out_bus_csr_bypass_valid),
 		.wbu_out_bus_rd(wbu_out_bus_rd),
 		.wbu_out_bus_csrrd(wbu_out_bus_csrrd),
+		.wbu_out_bus_gpr_wdata(wbu_out_bus_gpr_wdata),
 		
 		.wbu_in_bus_rd(wbu_in_bus_rd),
 		.wbu_in_bus_csrrd(wbu_in_bus_csrrd),

@@ -41,6 +41,7 @@ module ysyx_26010011_WBU(
 	output wbu_out_bus_csr_bypass_valid,
 	output [4:0]wbu_out_bus_rd,
 	output [11:0]wbu_out_bus_csrrd,
+	output reg [31:0]wbu_out_bus_gpr_wdata,
 
 	output gpr_we,
 	output [31:0]gpr_wdata,
@@ -52,7 +53,7 @@ module ysyx_26010011_WBU(
 	output [4:0]wbu_out_bus_exception,
 	output fencei_pass
 );  
-	
+	assign wbu_out_bus_gpr_wdata  = wbu_in_bus_gpr_wdata;
 	// wire [31:0] wbu_in_bus_snpc;
 	// assign wbu_in_bus_snpc = wbu_in_bus_pc + 32'd4;
 	assign wbu_in_ready=1;

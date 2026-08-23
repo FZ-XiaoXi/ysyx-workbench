@@ -26,6 +26,10 @@ module ysyx_26010011_LSU(
 	input            lsu_in_bus_isSTORE,
 	input			 lsu_in_bus_isWGPR,
 	input		[2:0]lsu_in_bus_opCSR,
+	input		[4:0]lsu_in_bus_rd,
+	input	[11:0]lsu_in_bus_csrrd,
+	input	[31:0]lsu_in_bus_csr_result,
+
 
 
 	output           lsu_out_valid/*verilator public*/,
@@ -37,9 +41,9 @@ module ysyx_26010011_LSU(
 	output		   lsu_out_bus_bypass_valid,
 	output		   lsu_out_bus_csr_valid,
 	output		   lsu_out_bus_csr_bypass_valid,
-	// output   [4:0] lsu_out_bus_rd,
-	// output  [11:0] lsu_out_bus_csrrd,
-
+	output   [4:0] lsu_out_bus_rd,
+	output  [11:0] lsu_out_bus_csrrd,
+	output	[31:0] lsu_out_bus_csr_result,
 	
 	
 	// AXI4 写地址通道
@@ -101,6 +105,11 @@ module ysyx_26010011_LSU(
 	wire r_fire/*verilator public*/;
 
 	reg[31:0]val;
+
+	assign lsu_out_bus_rd = lsu_in_bus_rd;
+	assign lsu_out_bus_csrrd = lsu_in_bus_csrrd;
+	assign lsu_out_bus_csr_result = lsu_in_bus_csr_result;
+
 
 	assign lsu_out_bus_rd_valid = lsu_in_valid & ~lsu_out_bus_exception[4] & lsu_in_bus_isWGPR;
 	assign lsu_out_bus_bypass_valid = lsu_out_valid & ~lsu_out_bus_exception[4] & lsu_in_bus_isWGPR ;

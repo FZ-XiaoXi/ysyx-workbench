@@ -53,8 +53,8 @@ module ysyx_26010011_RAW(
         if(lsu_csr_valid && (csr == lsu_in_bus_csr_rd)) begin
             is_RAW = 0?1'b0:1'b1;
         end
-        if(wbu_rd_valid && wbu_in_bus_rd != 5'b0 && ((rs1 == wbu_in_bus_rd) || ((rs2 == wbu_in_bus_rd) && rs2_valid))) begin
-            is_RAW = 0?1'b0:1'b1;
+        if(wbu_rd_valid && wbu_in_bus_rd != 5'b0 && ((rs1 == wbu_in_bus_rd) || ((rs2 == wbu_in_bus_rd) && rs2_valid)) && !wbu_bypass_valid) begin
+            is_RAW = 1'b1;
         end
         if(wbu_csr_valid && (csr == wbu_in_bus_csr_rd)) begin
             is_RAW = 0?1'b0:1'b1;
