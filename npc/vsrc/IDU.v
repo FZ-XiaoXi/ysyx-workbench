@@ -329,6 +329,7 @@ module ysyx_26010011_IDU(
 		end
 	end
 
+	reg [31:0] rs1_val_bypass;
 	assign idu_out_bus_rs1_val = 
 		(
 			(|idu_out_bus_opCSR)?
@@ -342,23 +343,24 @@ module ysyx_26010011_IDU(
 						)
 						:(
 							(idu_out_bus_opCSR[1]&~idu_out_bus_opCSR[0])?
-								(~gpr_rdataa)
-								:gpr_rdataa
+								(~rs1_val_bypass)
+								:rs1_val_bypass
 						)
 					)
 				)
-				:gpr_rdataa
+				:rs1_val_bypass
 		);
+	
 
 	always @(*) begin
 		if(idu_out_bus_rs1 == exu_out_bus_rd && exu_out_bus_rd_valid && exu_out_bus_bypass_valid) begin
-			idu_out_bus_rs1_val = exu_out_bus_gpr_wdata;
+			rs1_val_bypass = exu_out_bus_gpr_wdata;
 		// end else if(idu_out_bus_rs1 == lsu_out_bus_rd && lsu_out_bus_rd_valid && lsu_out_bus_bypass_valid) begin
-		// 	idu_out_bus_rs1_val = lsu_out_bus_gpr_wdata;
+		// 	rs1_val_bypass = lsu_out_bus_gpr_wdata;
 		// end else if(idu_out_bus_rs1 == wbu_out_bus_rd && wbu_out_bus_rd_valid && wbu_out_bus_bypass_valid) begin
-		// 	idu_out_bus_rs1_val = wbu_out_bus_gpr_wdata;
+		// 	rs1_val_bypass = wbu_out_bus_gpr_wdata;
 		end else begin
-			idu_out_bus_rs1_val = gpr_rdataa;
+			rs1_val_bypass = gpr_rdataa;
 		end
 	end
 	always @(*) begin
