@@ -631,8 +631,8 @@ module ysyx_26010011(
 		.lsu_out_bus_exception(lsu_out_bus_exception),
 		.lsu_out_ready(lsu_out_ready),
 		.lsu_out_bus_rdata(lsu_out_bus_lsu_result),
-		.lsu_out_bus_rd(lsu_out_bus_rd),
-		.lsu_out_bus_csrrd(lsu_out_bus_csrrd),
+		// .lsu_out_bus_rd(lsu_out_bus_rd),
+		// .lsu_out_bus_csrrd(lsu_out_bus_csrrd),
 
 		.awaddr(DRAM_awaddr),
 		.awvalid(DRAM_awvalid),
