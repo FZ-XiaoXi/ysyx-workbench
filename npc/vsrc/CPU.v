@@ -614,7 +614,7 @@ module ysyx_26010011(
 		.lsu_out_valid(lsu_out_valid),
 		.lsu_out_bus_exception(lsu_out_bus_exception),
 		.lsu_out_ready(lsu_out_ready),
-		.lsu_out_bus_rdata(lsu_out_bus_lsu_result),
+		.lsu_out_bus_gpr_wdata(lsu_out_bus_gpr_wdata),
 		// .lsu_out_bus_rd(lsu_out_bus_rd),
 		// .lsu_out_bus_csrrd(lsu_out_bus_csrrd),
 
@@ -651,13 +651,7 @@ module ysyx_26010011(
 	);/*verilator public_module*/
 	assign lsu_out_bus_rd = lsu_in_bus_rd;
 	assign lsu_out_bus_csrrd = lsu_in_bus_csrrd;
-	always @(*) begin
-		if(lsu_in_bus_isLOAD) begin
-			lsu_out_bus_gpr_wdata = lsu_out_bus_lsu_result;
-		end else begin
-			lsu_out_bus_gpr_wdata = lsu_in_bus_gpr_wdata;
-		end
-	end
+	
 	ysyx_26010011_LS_WB_pipeline LS_WB_inst(
 		.clock(clock),
 		.reset(reset),

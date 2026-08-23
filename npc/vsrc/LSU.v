@@ -31,7 +31,7 @@ module ysyx_26010011_LSU(
 	output           lsu_out_valid/*verilator public*/,
 	output reg [ 4:0]lsu_out_bus_exception,
 	input            lsu_out_ready,
-	output reg [31:0]lsu_out_bus_rdata,
+	output reg [31:0]lsu_out_bus_gpr_wdata,
 	
 	output		   lsu_out_bus_rd_valid,
 	output		   lsu_out_bus_bypass_valid,
@@ -86,7 +86,7 @@ module ysyx_26010011_LSU(
 	localparam S_WAIT_BRESP  = 3'd2; // 等待写响应(B通道)
 	localparam S_WAIT_AR     = 3'd3; // 等待读地址握手
 	localparam S_WAIT_RDATA  = 3'd4; // 等待读数据返回(R通道)
-
+	reg [31:0] lsu_out_bus_rdata;
 	reg [2:0] state/*verilator public*/, next_state;
 	reg [31:0]  awaddr_q;
 	reg [31:0]  wdata_q;
@@ -323,4 +323,11 @@ module ysyx_26010011_LSU(
 		end
 	end
 
+	always @(*) begin
+		if(lsu_in_bus_isLOAD) begin
+			lsu_out_bus_gpr_wdata = lsu_out_bus_rdata;
+		end else begin
+			lsu_out_bus_gpr_wdata = lsu_in_bus_addr;
+		end
+	end
 endmodule
