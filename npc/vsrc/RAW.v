@@ -113,4 +113,3 @@ always @(*) begin
         
     end
 */
-| LS_WB_inst.wbu_in_bus_pc_$_DFFE_PN__Q_19:D | core_clock               | min        | 0.079f     | 0.002         | 0.000 | 0.078  | NA        |
