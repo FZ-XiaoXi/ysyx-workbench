@@ -131,7 +131,7 @@ module ysyx_26010011_EXU(
 
 	always @(*) begin
 		if(exu_in_bus_isJUMP) begin
-			exu_out_bus_gpr_wdata = exu_in_bus_snpc;
+			exu_out_bus_gpr_wdata = exu_in_bus_pc + 4;
 		end else if(exu_in_bus_isWCOMP) begin
 			exu_out_bus_gpr_wdata = {31'b0,exu_out_bus_comp_result};
 		end else begin
