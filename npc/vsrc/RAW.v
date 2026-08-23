@@ -44,7 +44,7 @@ module ysyx_26010011_RAW(
 
         if(exu_rd_valid && exu_in_bus_rd != 5'b0) begin
             if(((rs1 == exu_in_bus_rd) || ((rs2 == exu_in_bus_rd) && rs2_valid))) begin
-                is_RAW = 0?1'b0:1'b1;
+                is_RAW = exu_bypass_valid?1'b0:1'b1;
             end
         end
         if(exu_csr_valid) begin
