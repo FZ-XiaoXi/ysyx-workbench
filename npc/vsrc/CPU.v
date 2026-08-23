@@ -665,9 +665,9 @@ module ysyx_26010011(
 		end else if(wbu_in_bus_isJUMP) begin
 			lsu_out_bus_gpr_wdata = lsu_in_bus_pc + 4;
 		end else if(wbu_in_bus_isWCOMP) begin
-			lsu_out_bus_gpr_wdata = {31'b0,lsu_in_bus_comp_result};
+			lsu_out_bus_gpr_wdata = {31'b0,lsu_out_bus_comp_result};
 		end else begin
-			lsu_out_bus_gpr_wdata = lsu_in_bus_alu_result;
+			lsu_out_bus_gpr_wdata = lsu_out_bus_alu_result;
 		end
 	end
 	ysyx_26010011_LS_WB_pipeline LS_WB_inst(
@@ -684,6 +684,7 @@ module ysyx_26010011(
 		.lsu_out_bus_isWGPR(lsu_in_bus_isWGPR),
 		.lsu_out_bus_gpr_wdata(lsu_out_bus_gpr_wdata),
 		.lsu_out_bus_csr_result(lsu_in_bus_csr_result),
+
 `ifdef USE_VERILATOR
 		.lsu_out_bus_alu_result(lsu_out_bus_alu_result),
 		.lsu_out_bus_comp_result(lsu_in_bus_comp_result),
@@ -696,6 +697,7 @@ module ysyx_26010011(
 		.lsu_out_bus_isBRANCH(lsu_in_bus_isBRANCH),
 		.lsu_out_bus_pc(lsu_in_bus_pc),
 `endif
+
 		.lsu_out_bus_opCSR(lsu_in_bus_opCSR),
 		
 		// .lsu_out_bus_snpc(lsu_in_bus_snpc),
