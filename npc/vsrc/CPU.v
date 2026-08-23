@@ -179,9 +179,7 @@ module ysyx_26010011(
 	wire ifu_out_valid,ifu_out_ready;
 	wire [31:0]ifu_out_bus_pc,ifu_out_bus_snpc,ifu_out_bus_fetching;
 	wire [4:0]ifu_out_bus_exception;
-`ifdef USE_VERILATOR
 	wire [31:0]ifu_out_bus_instruction,idu_in_bus_instruction;
-`endif
 
 	wire idu_in_valid,idu_in_ready;
 	wire [31:0]idu_in_bus_pc/*,idu_in_bus_snpc*/;
@@ -280,9 +278,7 @@ module ysyx_26010011(
 
 		.ifu_out_valid(ifu_out_valid),
 		.ifu_out_ready(ifu_out_ready),
-`ifdef USE_VERILATOR
 		.ifu_out_bus_instruction(ifu_out_bus_instruction),
-`endif
 		.ifu_out_bus_fetching(ifu_out_bus_fetching),
 		.ifu_out_bus_pc(ifu_out_bus_pc),
 		.ifu_out_bus_snpc(ifu_out_bus_snpc),
@@ -313,18 +309,14 @@ module ysyx_26010011(
 
 		.ifu_out_valid(ifu_out_valid),
 		.ifu_out_ready(ifu_out_ready),
-`ifdef USE_VERILATOR
 		.ifu_out_bus_instruction(ifu_out_bus_instruction),
-`endif
 		.ifu_out_bus_pc(ifu_out_bus_pc),
 		// .ifu_out_bus_snpc(ifu_out_bus_snpc),
 		.ifu_out_bus_exception(ifu_out_bus_exception),
 
 		.idu_in_valid(idu_in_valid),
 		.idu_in_ready(idu_in_ready),
-`ifdef USE_VERILATOR
 		.idu_in_bus_instruction(idu_in_bus_instruction),
-`endif
 		.idu_in_bus_exception(idu_in_bus_exception),
 		.idu_in_bus_pc(idu_in_bus_pc)
 		// .idu_in_bus_snpc(idu_in_bus_snpc)
@@ -335,9 +327,7 @@ module ysyx_26010011(
 		.reset(reset),
 		.fencei_pass(fencei_pass),
 		.flush_valid(idu_flush_valid),
-`ifdef USE_VERILATOR
 		.idu_in_bus_instruction(idu_in_bus_instruction),
-`endif
 		.idu_in_bus_pc(idu_in_bus_pc),
 		.idu_in_bus_exception(idu_in_bus_exception),
 		.idu_in_valid(idu_in_valid),
