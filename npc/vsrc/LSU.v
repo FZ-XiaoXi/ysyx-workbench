@@ -100,15 +100,7 @@ module ysyx_26010011_LSU(
 	wire ar_fire;
 	wire r_fire/*verilator public*/;
 
-	wire [31:0] val0;
-	wire [31:0] val1;
-	wire [31:0] val2;
-	wire [31:0] val3;
 	reg[31:0]val;
-
-	wire [31:0] lsu_rdata1;
-	wire [31:0] lsu_rdata2;
-	wire [31:0] lsu_rdata4;
 
 	assign lsu_out_bus_rd_valid = lsu_in_valid & ~lsu_out_bus_exception[4] & lsu_in_bus_isWGPR;
 	assign lsu_out_bus_bypass_valid = lsu_out_valid & ~lsu_out_bus_exception[4] & lsu_in_bus_isWGPR ;
@@ -253,35 +245,23 @@ module ysyx_26010011_LSU(
 							 (state == S_WAIT_BRESP && b_fire) || !(lsu_in_bus_isLOAD || lsu_in_bus_isSTORE) || lsu_out_bus_exception[4]);
 	assign lsu_in_ready = (lsu_in_valid & (lsu_in_bus_isLOAD | lsu_in_bus_isSTORE)) ? ((lsu_out_ready & (r_fire | b_fire)) | lsu_out_bus_exception[4]):(1);
 
-
-
-	assign val0 = rdata; 
-	assign val1 = {{8{val0[31]}}, val0[31:8]};
-	assign val2 = {{8{val1[31]}}, val1[31:8]};
-	assign val3 = {{8{val2[31]}}, val2[31:8]};
-
-	// assign val = val0;
 	always @(*) begin
 		case(lsu_in_bus_addr[1:0])
-			2'b00: val = val0;
-			2'b01: val = val1;
-			2'b10: val = val2;
-			2'b11: val = val3;
-			default: val = val0;
+			2'b00: val = rdata;
+			2'b01: val = {{8{val0[31]}}, val0[31:8]};
+			2'b10: val = {{8{val1[31]}}, val1[31:8]};
+			2'b11: val = {{8{val2[31]}}, val2[31:8]};
+			default: val = rdata;
 		endcase
 	end
 
-	assign lsu_rdata1 = (!lsu_in_bus_isUnSigned) ? {{24{val[7]}},  val[7:0]}  : {{24{1'b0}}, val[7:0]};
-	assign lsu_rdata2 = (!lsu_in_bus_isUnSigned) ? {{16{val[15]}}, val[15:0]} : {{16{1'b0}}, val[15:0]};
-	assign lsu_rdata4 = val[31:0];
 	
 	always @(*) begin
 		case(lsu_in_bus_perip_mask)
-			2'b00: lsu_out_bus_rdata = lsu_rdata1;
-			2'b01: lsu_out_bus_rdata = lsu_rdata2;
-			2'b10: lsu_out_bus_rdata = lsu_rdata4;
-			default: lsu_out_bus_rdata = lsu_rdata1;
-			// default: lsu_out_bus_rdata = 32'hffffffff;
+			2'b00: lsu_out_bus_rdata = (!lsu_in_bus_isUnSigned) ? {{24{val[7]}},  val[7:0]}  : {{24{1'b0}}, val[7:0]};
+			2'b01: lsu_out_bus_rdata = (!lsu_in_bus_isUnSigned) ? {{16{val[15]}}, val[15:0]} : {{16{1'b0}}, val[15:0]};
+			2'b10: lsu_out_bus_rdata = val[31:0];
+			default: lsu_out_bus_rdata = val[31:0];
 		endcase
 	end
 	
