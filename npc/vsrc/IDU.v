@@ -69,7 +69,7 @@ module ysyx_26010011_IDU(
 	output logic [ 1:0]idu_out_bus_comp_op,
 
 	output [31:0] idu_out_bus_rs1_val,
-	output [31:0] idu_out_bus_rs2_val
+	output [31:0] idu_out_bus_rs2_val,
 
 
 	// output [31:0] w_pc,
