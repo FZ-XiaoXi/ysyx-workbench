@@ -246,7 +246,7 @@ module ysyx_26010011_LS_WB_pipeline(
 `ifdef USE_VERILATOR
 	input      [31:0]lsu_out_bus_alu_result,
 	input            lsu_out_bus_comp_result,
-	input      [31:0]lsu_out_bus_lsu_result,
+	// input      [31:0]lsu_out_bus_lsu_result,
 	input      [31:0]lsu_out_bus_instruction,
 	input            lsu_out_bus_isLOAD,
 	input            lsu_out_bus_isSTORE,
