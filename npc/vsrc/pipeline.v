@@ -254,7 +254,6 @@ module ysyx_26010011_LS_WB_pipeline(
 	output reg [ 4:0]wbu_in_bus_exception,
 	output reg [11:0]wbu_in_bus_csrrd,
 	output reg       wbu_in_bus_isWGPR,
-	output reg [31:0]wbu_in_bus_gpr_wdata,
 `ifdef USE_VERILATOR
 	output reg [31:0]wbu_in_bus_lsu_result,
 	output reg [31:0]wbu_in_bus_alu_result,
