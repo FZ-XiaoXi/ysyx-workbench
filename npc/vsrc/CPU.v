@@ -113,12 +113,13 @@ module ysyx_26010011(
 	wire exu_out_valid,exu_out_ready,exu_out_bus_comp_result,exu_out_bus_dnpc_valid;
 	wire [4:0]exu_out_bus_exception;
 	wire [31:0]exu_out_bus_alu_result,exu_out_bus_csr_result;
-
-	wire wbu_in_valid,wbu_in_ready,wbu_in_bus_isLOAD,wbu_in_bus_isSTORE,wbu_in_bus_isWGPR,wbu_in_bus_isJUMP,wbu_in_bus_isWCOMP,wbu_in_bus_isBRANCH;
+`ifdef USE_VERILATOR
+	wire wbu_in_valid,wbu_in_ready,wbu_in_bus_isWGPR;
 	wire [31:0]wbu_in_bus_pc,/*wbu_in_bus_snpc,*/wbu_in_bus_instruction;
-	wire [31:0]wbu_in_bus_lsu_result,wbu_in_bus_alu_result,wbu_in_bus_csr_result;
-	wire wbu_in_bus_comp_result;
-	
+	wire [31:0]wbu_in_bus_lsu_result,wbu_in_bus_alu_result,;
+	wire wbu_in_bus_comp_result,wbu_in_bus_isLOAD,wbu_in_bus_isSTORE,wbu_in_bus_isJUMP,wbu_in_bus_isWCOMP,wbu_in_bus_isBRANCH;
+`endif
+	wire [31:0]wbu_in_bus_csr_result;
 	wire [11:0]wbu_in_bus_csrrd;
 	wire [2:0]wbu_in_bus_opCSR;
 	wire [4:0]wbu_in_bus_rd;
