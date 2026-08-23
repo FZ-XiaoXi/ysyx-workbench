@@ -357,8 +357,8 @@ module ysyx_26010011_IDU(
 	always @(*) begin
 		if(idu_out_bus_rs1 == exu_out_bus_rd && exu_out_bus_rd_valid && exu_out_bus_bypass_valid) begin
 			rs1_val_bypass = exu_out_bus_gpr_wdata;
-		end else if(idu_out_bus_rs1 == lsu_out_bus_rd && lsu_out_bus_rd_valid && lsu_out_bus_bypass_valid) begin
-			rs1_val_bypass = lsu_out_bus_gpr_wdata;
+		// end else if(idu_out_bus_rs1 == lsu_out_bus_rd && lsu_out_bus_rd_valid && lsu_out_bus_bypass_valid) begin
+		// 	rs1_val_bypass = lsu_out_bus_gpr_wdata;
 		// end else if(idu_out_bus_rs1 == wbu_out_bus_rd && wbu_out_bus_rd_valid && wbu_out_bus_bypass_valid) begin
 		// 	rs1_val_bypass = wbu_out_bus_gpr_wdata;
 		end else begin
