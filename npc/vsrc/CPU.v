@@ -95,7 +95,7 @@ module ysyx_26010011(
 	wire [31:0]idu_out_bus_imm,idu_out_bus_csr,idu_out_bus_rs1_val,idu_out_bus_rs2_val;   //idu_out_bus_imm 可作CSR地址
 	wire [12:0]idu_out_bus_signals;
 	wire idu_out_bus_isLOAD,idu_out_bus_isSTORE,idu_out_bus_isWGPR,idu_out_bus_isJUMP,idu_out_bus_isWCOMP,idu_out_bus_isBRANCH,idu_out_bus_isUnSigned,idu_out_bus_isUsePC,idu_out_bus_alu_isUseImm,idu_out_bus_comp_isUseImm;
-	wire [ 9:0]idu_out_bus_alu_op;
+	wire [ 3:0]idu_out_bus_alu_op;
 	wire [ 1:0]idu_out_bus_comp_op,idu_out_bus_perip_mask;
 	wire [ 2:0]idu_out_bus_opCSR;
 	wire [4:0]idu_out_bus_rd,idu_out_bus_exception;
@@ -104,7 +104,7 @@ module ysyx_26010011(
 	wire [4:0]exu_in_bus_rd,exu_out_bus_rd,exu_in_bus_rs1,exu_in_bus_rs2;
 	wire [4:0]exu_in_bus_exception;
 	wire [31:0]exu_in_bus_rs1_val,exu_in_bus_rs2_val,exu_in_bus_imm,exu_in_bus_instruction,exu_in_bus_pc ,exu_in_bus_snpc;
-	wire [9:0]exu_in_bus_alu_op;
+	wire [3:0]exu_in_bus_alu_op;
 	wire [1:0]exu_in_bus_comp_op,exu_in_bus_perip_mask;
 	wire [2:0]exu_in_bus_opCSR;
 	wire [12:0]exu_in_bus_signals;

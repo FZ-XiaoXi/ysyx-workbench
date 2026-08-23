@@ -19,7 +19,7 @@ module ysyx_26010011_EXU(
 	input      [31:0]exu_in_bus_b,
 	input      [31:0]exu_in_bus_pc,
 	input      [31:0]exu_in_bus_imm,
-	input      [ 9:0]exu_in_bus_alu_op,
+	input      [ 3:0]exu_in_bus_alu_op,
 	input      [ 1:0]exu_in_bus_comp_op,
 	input            exu_in_bus_isJUMP,
 	input            exu_in_bus_isBRANCH,
@@ -50,13 +50,13 @@ module ysyx_26010011_EXU(
 );
 	
 	wire [31:0] a,b,comp_a,comp_b;
-	wire [31:0]op_xor;
-	wire [31:0]op_or;
-	wire [31:0]op_and;
-	wire [31:0]op_ar;
-	wire [31:0]op_lr;
-	wire [31:0]op_ll;
-	wire [31:0]op_adder;
+	// wire [31:0]op_xor;
+	// wire [31:0]op_or;
+	// wire [31:0]op_and;
+	// wire [31:0]op_ar;
+	// wire [31:0]op_lr;
+	// wire [31:0]op_ll;
+	// wire [31:0]op_adder;
 	wire comp_isEQUAL,comp_isGREATER,comp_suber_carry;
 	wire [31:0]comp_suber_out;
 
@@ -68,33 +68,37 @@ module ysyx_26010011_EXU(
 	assign exu_in_ready = exu_out_ready;
 	assign exu_out_valid = exu_in_valid;
 	
-	assign op_xor=a^b;
-	assign op_or=a|b;
-	assign op_and=a&b;
-	assign op_ar=$signed(a) >>> (b & 32'h1f);
-	assign op_lr=a >> (b & 32'h1f);
-	assign op_ll=a << (b & 32'h1f);
-	assign op_adder = (exu_in_bus_alu_op[8])?(a-b):(a+b);
+	// assign op_xor=a^b;
+	// assign op_or=a|b;
+	// assign op_and=a&b;
+	// assign op_ar=$signed(a) >>> (b & 32'h1f);
+	// assign op_lr=a >> (b & 32'h1f);
+	// assign op_ll=a << (b & 32'h1f);
+	// assign op_adder = (exu_in_bus_alu_op[8])?(a-b):(a+b);
 
 	assign exu_out_bus_rd_valid = exu_in_valid & ~exu_out_bus_exception[4] & exu_in_bus_isWGPR;
 	assign exu_out_bus_bypass_valid = exu_out_valid & ~exu_out_bus_exception[4] & exu_in_bus_isWGPR & ~exu_in_bus_isLOAD;
 	assign exu_out_bus_csr_valid = exu_in_valid & ~exu_out_bus_exception[4] & |exu_in_bus_opCSR;
 	assign exu_out_bus_csr_bypass_valid = exu_out_valid & ~exu_out_bus_exception[4] & |exu_in_bus_opCSR;
 
+	
 	always @(*) begin
-		if(exu_in_bus_alu_op[9] | exu_in_bus_alu_op[8]) exu_out_bus_alu_result=op_adder;
-		else if(exu_in_bus_alu_op[5]) exu_out_bus_alu_result=op_ll;
-		else if(exu_in_bus_alu_op[4]) exu_out_bus_alu_result=op_lr;
-		else if(exu_in_bus_alu_op[3]) exu_out_bus_alu_result=op_ar;
-		else if(exu_in_bus_alu_op[2]) exu_out_bus_alu_result=op_and;
-		else if(exu_in_bus_alu_op[1]) exu_out_bus_alu_result=op_or;
-		else if(exu_in_bus_alu_op[0]) exu_out_bus_alu_result=op_xor;
-		else                          exu_out_bus_alu_result=b;
+		case (exu_in_bus_alu_op)
+			4'd1: exu_out_bus_alu_result=(a+b);
+			4'd2: exu_out_bus_alu_result=(a-b);
+			4'd3: exu_out_bus_alu_result=a << (b & 32'h1f);
+			4'd4: exu_out_bus_alu_result=a >> (b & 32'h1f);
+			4'd5: exu_out_bus_alu_result=($signed(a) >>> (b & 32'h1f));
+			4'd6: exu_out_bus_alu_result=a&b;
+			4'd7: exu_out_bus_alu_result=a|b;
+			4'd8: exu_out_bus_alu_result=a^b;
+			default: exu_out_bus_alu_result=b;
+		endcase
 	end
 	always @(*) begin
-		if     ( exu_in_bus_opCSR[1]&~exu_in_bus_opCSR[0]) exu_out_bus_csr_result=op_and;
-		else if(~exu_in_bus_opCSR[1]& exu_in_bus_opCSR[0]) exu_out_bus_csr_result=op_or;
-		else                                               exu_out_bus_csr_result=exu_in_bus_a;
+		if     (exu_in_bus_opCSR == 2'b10) exu_out_bus_csr_result=op_and;
+		else if(exu_in_bus_opCSR == 2'b01) exu_out_bus_csr_result=op_or;
+		else                               exu_out_bus_csr_result=exu_in_bus_a;
 	end
 	
 	assign {comp_suber_carry,comp_suber_out} = {1'b0,comp_a} + (~{1'b0,comp_b}) + 1;

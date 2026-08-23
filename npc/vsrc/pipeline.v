@@ -67,7 +67,7 @@ module ysyx_26010011_ID_EX_pipeline(
 	input            idu_out_bus_isUsePC,
 	input            idu_out_bus_alu_isUseImm,
 	input            idu_out_bus_comp_isUseImm,
-	input      [ 9:0]idu_out_bus_alu_op,
+	input      [ 3:0]idu_out_bus_alu_op,
 	input      [ 1:0]idu_out_bus_comp_op,
 	input      [ 1:0]idu_out_bus_perip_mask,
 	input      [31:0]idu_out_bus_pc,
@@ -95,7 +95,7 @@ module ysyx_26010011_ID_EX_pipeline(
 	output reg       exu_in_bus_isUsePC,
 	output reg       exu_in_bus_alu_isUseImm,
 	output reg       exu_in_bus_comp_isUseImm,
-	output reg [ 9:0]exu_in_bus_alu_op,
+	output reg [ 3:0]exu_in_bus_alu_op,
 	output reg [ 1:0]exu_in_bus_comp_op,
 	output reg [ 1:0]exu_in_bus_perip_mask,
 	output reg [31:0]exu_in_bus_pc/*verilator public*/
