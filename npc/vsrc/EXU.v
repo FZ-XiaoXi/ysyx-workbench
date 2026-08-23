@@ -39,8 +39,8 @@ module ysyx_26010011_EXU(
 	output     [31:0]exu_out_bus_dnpc,
 	output reg [31:0]exu_out_bus_csr_result,
 
-	reg [31:0] exu_out_bus_alu_result,
-	reg        exu_out_bus_comp_result,
+	output reg [31:0] exu_out_bus_alu_result,
+	output reg        exu_out_bus_comp_result,
 
 	output reg       exu_out_bus_dnpc_valid,
 	output           exu_out_bus_rd_valid,
