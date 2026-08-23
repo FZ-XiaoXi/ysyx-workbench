@@ -252,7 +252,7 @@ module ysyx_26010011_IDU(
 		else if(isB)    idu_out_bus_imm={{19{immB[12:12]}},immB[12:1],1'b0};
 		else            idu_out_bus_imm=0;
 	end
-	
+
 	always @(*) begin
 		if(isAUIPC|isJAL|isJALR|isADD|isLW|isLBU|isLB|isLH|isSW|isSH|isSB|isADDI|isLHU|isBEQ|isBNE|isBLT|isBGE|isBLTU|isBGEU) begin
 			idu_out_bus_alu_op = 4'd1;
@@ -275,11 +275,10 @@ module ysyx_26010011_IDU(
 	end
 
 	always @(*) begin
-		if     (isBGE|isBGEU)                               idu_out_bus_comp_op=2'b00;
-		else if(isBLTU|isBLT|isSLT|isSLTI|isSLTIU|isSLTU)   idu_out_bus_comp_op=2'b01;
+		if(isBLTU|isBLT|isSLT|isSLTI|isSLTIU|isSLTU)   idu_out_bus_comp_op=2'b01;
 		else if(isBNE)                                      idu_out_bus_comp_op=2'b10;
 		else if(isBEQ)                                      idu_out_bus_comp_op=2'b11;
-		else                                                idu_out_bus_comp_op=0;
+		else                                                idu_out_bus_comp_op=2'b00;//BGE BGEU
 	end
 
 	/////////////////////////
