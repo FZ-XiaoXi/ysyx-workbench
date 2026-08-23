@@ -45,7 +45,7 @@ module ysyx_26010011_WBU(
 
 	output gpr_we,
 	output [31:0]gpr_wdata,
-	output [4:0]gpr_address,
+	output [3:0]gpr_address,
 
 	output csr_we,
 	output [31:0]csr_wdata,
