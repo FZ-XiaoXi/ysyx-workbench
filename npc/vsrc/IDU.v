@@ -334,8 +334,8 @@ module ysyx_26010011_IDU(
 					((idu_out_bus_opCSR[2])?
 						(
 							((idu_out_bus_opCSR[1]&~idu_out_bus_opCSR[0])?
-								(~{{27{1'b0}},gpr_rdataa})
-								:{{27{1'b0}},gpr_rdataa}
+								(~{{27{1'b0}},idu_out_bus_rs1})
+								:{{27{1'b0}},idu_out_bus_rs1}
 							)
 						)
 						:(
