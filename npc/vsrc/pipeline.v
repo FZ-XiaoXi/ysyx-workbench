@@ -16,7 +16,7 @@ module ysyx_26010011_IF_ID_pipeline(
 	output           ifu_out_ready,
 	input      [31:0]ifu_out_bus_instruction,
 	input      [31:0]ifu_out_bus_pc,
-	input      [31:0]ifu_out_bus_snpc,
+	// input      [31:0]ifu_out_bus_snpc,
 	input      [ 4:0]ifu_out_bus_exception,
 
 	output reg       idu_in_valid/*verilator public*/,
@@ -53,7 +53,9 @@ module ysyx_26010011_ID_EX_pipeline(
 	input      [31:0]idu_out_bus_rs1_val,
 	input      [31:0]idu_out_bus_rs2_val,
 	input      [31:0]idu_out_bus_imm,
+`ifdef USE_VERILATOR
 	input      [31:0]idu_out_bus_instruction,
+`endif
 	input            idu_out_bus_isLOAD,
 	input            idu_out_bus_isSTORE,
 	input            idu_out_bus_isWGPR,
@@ -79,7 +81,9 @@ module ysyx_26010011_ID_EX_pipeline(
 	output reg [31:0]exu_in_bus_rs1_val,
 	output reg [31:0]exu_in_bus_rs2_val,
 	output reg [31:0]exu_in_bus_imm,
+`ifdef USE_VERILATOR
 	output reg [31:0]exu_in_bus_instruction,
+`endif
 	output reg       exu_in_bus_isLOAD,
 	output reg       exu_in_bus_isSTORE,
 	output reg       exu_in_bus_isWGPR,
@@ -109,7 +113,9 @@ module ysyx_26010011_ID_EX_pipeline(
 			exu_in_bus_rs1_val<=idu_out_bus_rs1_val;
 			exu_in_bus_rs2_val<=idu_out_bus_rs2_val;
 			exu_in_bus_imm<=idu_out_bus_imm;
-			exu_in_bus_instruction<=idu_out_bus_instruction;
+`ifdef USE_VERILATOR
+			exu_in_bus_instruction<=idu_out_bus_instruction;\
+`endif
 			exu_in_bus_isLOAD<=idu_out_bus_isLOAD;
 			exu_in_bus_isSTORE<=idu_out_bus_isSTORE;
 			exu_in_bus_isWGPR<=idu_out_bus_isWGPR;
