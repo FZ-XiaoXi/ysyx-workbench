@@ -39,7 +39,7 @@ module ysyx_26010011_WBU(
 	output wbu_out_bus_bypass_valid,
 	output wbu_out_bus_csr_valid,
 	output wbu_out_bus_csr_bypass_valid,
-	output [4:0]wbu_out_bus_rd,
+	output [3:0]wbu_out_bus_rd,
 	output [11:0]wbu_out_bus_csrrd,
 	output reg [31:0]wbu_out_bus_gpr_wdata,
 
