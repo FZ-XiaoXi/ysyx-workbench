@@ -15,27 +15,70 @@ module ysyx_26010011_GPRs(
 	input        reset,
 	input  [ 4:0]gpr_in_addra,
 	input  [ 4:0]gpr_in_addrb,
-	output [31:0]gpr_out_a,
-	output [31:0]gpr_out_b,
+	output reg [31:0]gpr_out_a,
+	output reg [31:0]gpr_out_b,
 	input  [ 4:0]gpr_in_addw,
 	input  [31:0]gpr_in_data,
 	input        gpr_in_wen
 ); 
  	reg [31:0]GPR[15:0]/* verilator public */;
 
-	assign gpr_out_a=(gpr_in_addra==0)?{32{1'b0}}:GPR[gpr_in_addra[3:0]];
-	assign gpr_out_b=(gpr_in_addrb==0)?{32{1'b0}}:GPR[gpr_in_addrb[3:0]];
+	// assign gpr_out_a=GPR[gpr_in_addra[3:0]];
+	// assign gpr_out_b=GPR[gpr_in_addrb[3:0]];
+	always @(*) begin
+		case (gpr_in_addra[3:0])
+			4'h0: gpr_out_a = 32'b0;
+			4'h1: gpr_out_a = GPR[1];
+			4'h2: gpr_out_a = GPR[2];
+			4'h3: gpr_out_a = GPR[3];
+			4'h4: gpr_out_a = GPR[4];
+			4'h5: gpr_out_a = GPR[5];
+			4'h6: gpr_out_a = GPR[6];
+			4'h7: gpr_out_a = GPR[7];
+			4'h8: gpr_out_a = GPR[8];
+			4'h9: gpr_out_a = GPR[9];
+			4'ha: gpr_out_a = GPR[10];
+			4'hb: gpr_out_a = GPR[11];
+			4'hc: gpr_out_a = GPR[12];
+			4'hd: gpr_out_a = GPR[13];
+			4'he: gpr_out_a = GPR[14];
+			4'hf: gpr_out_a = GPR[15];
+			default: gpr_out_a = 32'b0;
+		endcase
+	end
+	always @(*) begin
+		case (gpr_in_addrb[3:0])
+			4'h0: gpr_out_b = 32'b0;
+			4'h1: gpr_out_b = GPR[1];
+			4'h2: gpr_out_b = GPR[2];
+			4'h3: gpr_out_b = GPR[3];
+			4'h4: gpr_out_b = GPR[4];
+			4'h5: gpr_out_b = GPR[5];
+			4'h6: gpr_out_b = GPR[6];
+			4'h7: gpr_out_b = GPR[7];
+			4'h8: gpr_out_b = GPR[8];
+			4'h9: gpr_out_b = GPR[9];
+			4'ha: gpr_out_b = GPR[10];
+			4'hb: gpr_out_b = GPR[11];
+			4'hc: gpr_out_b = GPR[12];
+			4'hd: gpr_out_b = GPR[13];
+			4'he: gpr_out_b = GPR[14];
+			4'hf: gpr_out_b = GPR[15];
+			default: gpr_out_b = 32'b0;
+		endcase
+	end
 
 	integer i;
 	always @(posedge clock) begin
 		if(reset) begin
-			for(i=0;i<16;i=i+1) begin
-			GPR[i]<={32{1'b0}};
-			end
+			GPR[0]<={32{1'b0}};
+			// for(i=0;i<16;i=i+1) begin
+			// 	GPR[i]<={32{1'b0}};
+			// end
 		end else begin
-		if(gpr_in_wen) begin
-			GPR[gpr_in_addw[3:0]]<=(gpr_in_addw==5'b00000)?{32{1'b0}}:(gpr_in_data);
-		end
+			if(gpr_in_wen) begin
+				GPR[gpr_in_addw[3:0]]<=(gpr_in_addw==5'b00000)?{32{1'b0}}:(gpr_in_data);
+			end
 		end
 	end
 endmodule
@@ -108,7 +151,7 @@ module ysyx_26010011_CSRs(
 		CSR_MTVEC <= 32'h0;
 		// CSR_MSCRATCH <= 0;
 		CSR_MEPC <= 0;
-		CSR_MCAUSE <= 0;
+		// CSR_MCAUSE <= 0;
 		// CSR_MSTATUS <= 32'h1800;
 		// CSR_MVENDORID <= 32'h79737978;
 		// CSR_MARCHID <= 32'h018ce19b;
@@ -116,8 +159,8 @@ module ysyx_26010011_CSRs(
 		end else begin
 		if(csr_in_bus_exception[4]) begin
 			if(csr_in_bus_exception[3:0] != `ysyx_26010011_EXCEPTION_MRET) begin
-			CSR_MEPC    <= csr_pc;
-			CSR_MCAUSE  <= {1'b0, 27'b0, csr_in_bus_exception[3:0]};
+				CSR_MEPC    <= csr_pc;
+				CSR_MCAUSE  <= {1'b0, 27'b0, csr_in_bus_exception[3:0]};
 			end
 		end else if(csr_in_wen) begin
 			case (csr_in_addw)

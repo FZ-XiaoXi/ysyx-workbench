@@ -86,7 +86,7 @@ module ysyx_26010011_IDU(
 	output       [ 1:0]idu_out_bus_perip_mask
 
 );
-
+	reg [31:0]csr_rdata_bypass;
 	// assign w_pc = idu_in_bus_pc;
     // assign w_tar = idu_out_bus_imm + idu_in_bus_pc;
     // assign w_valid = idu_in_valid & idu_out_valid & ~idu_out_bus_exception[4] & (idu_out_bus_isBRANCH|isJAL);
@@ -245,14 +245,17 @@ module ysyx_26010011_IDU(
 	end
 
 	always @(*) begin
-		if     (isI)    idu_out_bus_imm={{20{immI[11:11]}},immI[11:0]};
-		else if(isJ)    idu_out_bus_imm={{11{immJ[20:20]}},immJ[20:1],1'b0};
-		else if(isS)    idu_out_bus_imm={{20{immS[11:11]}},immS[11:0]};
-		else if(isU)    idu_out_bus_imm={   {immU[31:12]} ,{12{1'b0}}};
-		else if(isB)    idu_out_bus_imm={{19{immB[12:12]}},immB[12:1],1'b0};
-		else            idu_out_bus_imm=0;
+		if((|idu_out_bus_opCSR)) begin
+			idu_out_bus_imm=csr_rdata_bypass;
+		end else begin
+			if     (isI)    idu_out_bus_imm={{20{immI[11:11]}},immI[11:0]};
+			else if(isJ)    idu_out_bus_imm={{11{immJ[20:20]}},immJ[20:1],1'b0};
+			else if(isS)    idu_out_bus_imm={{20{immS[11:11]}},immS[11:0]};
+			else if(isU)    idu_out_bus_imm={   {immU[31:12]} ,{12{1'b0}}};
+			else if(isB)    idu_out_bus_imm={{19{immB[12:12]}},immB[12:1],1'b0};
+			else            idu_out_bus_imm=0;
+		end
 	end
-
 	always @(*) begin
 		if(isAUIPC|isJAL|isJALR|isADD|isLW|isLBU|isLB|isLH|isSW|isSH|isSB|isADDI|isLHU|isBEQ|isBNE|isBLT|isBGE|isBLTU|isBGEU) begin
 			idu_out_bus_alu_op = 4'd1;
@@ -354,6 +357,19 @@ module ysyx_26010011_IDU(
 			idu_out_bus_rs2_val = wbu_out_bus_gpr_wdata;
 		end else begin
 			idu_out_bus_rs2_val = gpr_rdatab;
+		end
+	end
+	always @(*) begin
+		if(idu_out_bus_csrrd == exu_out_bus_csrrd && exu_out_bus_csr_valid && exu_out_bus_csr_bypass_valid) begin
+			csr_rdata_bypass = exu_out_bus_csr_result;
+		end else if(idu_out_bus_csrrd == lsu_out_bus_csrrd && lsu_out_bus_csr_valid && lsu_out_bus_csr_bypass_valid) begin
+			csr_rdata_bypass = lsu_out_bus_csr_result;
+		// end else if(idu_out_bus_csrrd == wbu_out_bus_csrrd && wbu_out_bus_csr_valid && wbu_out_bus_csr_bypass_valid) begin
+		// 	csr_rdata_bypass = wbu_out_bus_csr_result;
+		// if(idu_out_bus_csrrd == exu_out_bus_csrrd && exu_out_bus_csr_valid && exu_out_bus_csr_bypass_valid) begin
+		// 	csr_rdata_bypass = exu_out_bus_csr_result;
+		end else begin
+			csr_rdata_bypass = csr_rdata;
 		end
 	end
 	ysyx_26010011_RAW u_RAW(

@@ -458,8 +458,8 @@ module ysyx_26010011_IFU_icache #(
 			integer i;
 			for (i = 0; i < CACHE_SIZE; i = i + 1) begin
 				cache_valid[i] <= 1'b0;
-				cache_tag[i]   <= 0;
-				cache_mem[i]   <= 0;
+				// cache_tag[i]   <= 0;
+				// cache_mem[i]   <= 0;
 			end
 		end else begin
 			if((r_fire & (state == S_WAIT_DATA) & ~pc_flush)) begin

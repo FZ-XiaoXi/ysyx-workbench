@@ -98,7 +98,7 @@ module ysyx_26010011_EXU(
 	always @(*) begin
 		if     (exu_in_bus_opCSR[1:0] == 2'b10) exu_out_bus_csr_result=a&b;
 		else if(exu_in_bus_opCSR[1:0] == 2'b01) exu_out_bus_csr_result=a|b;
-		else                                               exu_out_bus_csr_result=exu_in_bus_a;
+		else                                    exu_out_bus_csr_result=exu_in_bus_a;
 	end
 	
 	assign {comp_suber_carry,comp_suber_out} = {1'b0,comp_a} + (~{1'b0,comp_b}) + 1;
