@@ -352,7 +352,7 @@ module ysyx_26010011_IDU(
 		.rs1(idu_out_bus_rs1),
 		.rs2(idu_out_bus_rs2),
 		.csr(idu_out_bus_csrrd),
-		.rs2_valid(~(idu_out_bus_alu_isUseImm | idu_out_bus_comp_isUseImm)),
+		.rs2_valid(1),
 
 		.exu_rd_valid(exu_out_bus_rd_valid),
 		.lsu_rd_valid(lsu_out_bus_rd_valid),
