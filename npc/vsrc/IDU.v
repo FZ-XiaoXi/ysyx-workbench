@@ -32,6 +32,8 @@ module ysyx_26010011_IDU(
 	input lsu_out_bus_csr_bypass_valid,
 	input [4:0]lsu_out_bus_rd,
 	input [11:0]lsu_out_bus_csrrd,
+	input [31:0]lsu_out_bus_gpr_wdata,
+	input [31:0]lsu_out_bus_csr_result,
 
 	input wbu_out_bus_rd_valid,
 	input wbu_out_bus_bypass_valid,
@@ -355,8 +357,8 @@ module ysyx_26010011_IDU(
 	always @(*) begin
 		if(idu_out_bus_rs1 == exu_out_bus_rd && exu_out_bus_rd_valid && exu_out_bus_bypass_valid) begin
 			rs1_val_bypass = exu_out_bus_gpr_wdata;
-		// end else if(idu_out_bus_rs1 == lsu_out_bus_rd && lsu_out_bus_rd_valid && lsu_out_bus_bypass_valid) begin
-		// 	rs1_val_bypass = lsu_out_bus_gpr_wdata;
+		end else if(idu_out_bus_rs1 == lsu_out_bus_rd && lsu_out_bus_rd_valid && lsu_out_bus_bypass_valid) begin
+			rs1_val_bypass = lsu_out_bus_gpr_wdata;
 		// end else if(idu_out_bus_rs1 == wbu_out_bus_rd && wbu_out_bus_rd_valid && wbu_out_bus_bypass_valid) begin
 		// 	rs1_val_bypass = wbu_out_bus_gpr_wdata;
 		end else begin
@@ -366,8 +368,8 @@ module ysyx_26010011_IDU(
 	always @(*) begin
 		if(idu_out_bus_rs2 == exu_out_bus_rd && exu_out_bus_rd_valid && exu_out_bus_bypass_valid) begin
 			idu_out_bus_rs2_val = exu_out_bus_gpr_wdata;
-		// end else if(idu_out_bus_rs2 == lsu_out_bus_rd && lsu_out_bus_rd_valid && lsu_out_bus_bypass_valid) begin
-		// 	idu_out_bus_rs2_val = lsu_out_bus_gpr_wdata;
+		end else if(idu_out_bus_rs2 == lsu_out_bus_rd && lsu_out_bus_rd_valid && lsu_out_bus_bypass_valid) begin
+			idu_out_bus_rs2_val = lsu_out_bus_gpr_wdata;
 		// end else if(idu_out_bus_rs2 == wbu_out_bus_rd && wbu_out_bus_rd_valid && wbu_out_bus_bypass_valid) begin
 		// 	idu_out_bus_rs2_val = wbu_out_bus_gpr_wdata;
 		end else begin

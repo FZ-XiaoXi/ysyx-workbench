@@ -116,7 +116,7 @@ module ysyx_26010011(
 // 	wire [31:0]exu_out_bus_alu_result;
 // 	wire exu_out_bus_comp_result;
 // `endif
-	wire [31:0]exu_out_bus_csr_result;
+	wire [31:0]exu_out_bus_csr_result,exu_out_bus_dnpc;
 	
 
 	wire wbu_in_valid,wbu_in_ready,wbu_in_bus_isWGPR;
@@ -141,7 +141,7 @@ module ysyx_26010011(
 	wire lsu_in_bus_isLOAD,lsu_in_bus_isSTORE;
 	wire lsu_out_valid,lsu_out_ready;
 	wire [4:0]lsu_out_bus_exception;
-	wire [31:0]lsu_out_bus_lsu_result;
+	wire [31:0]lsu_out_bus_csr_result;
 
 `ifdef USE_VERILATOR
 	wire [31:0] lsu_in_bus_alu_result,lsu_in_bus_instruction;
@@ -237,12 +237,18 @@ module ysyx_26010011(
 
 
 	assign exu_in_bus_snpc = exu_in_bus_pc + 32'd4;
+	// assign dnpc=(wbu_out_bus_exception[4])?
+	// 			(
+	// 				(wbu_out_bus_exception[3:0]==`ysyx_26010011_EXCEPTION_MRET)?(csr_mepc):(csr_mtvec)
+	// 			):(
+	// 				(exu_in_bus_isBRANCH & ~exu_out_bus_dnpc_valid)?(exu_in_bus_snpc):(exu_out_bus_dnpc)
+	// 			);
 	assign dnpc=(wbu_out_bus_exception[4])?
-				(
-					(wbu_out_bus_exception[3:0]==`ysyx_26010011_EXCEPTION_MRET)?(csr_mepc):(csr_mtvec)
-				):(
-					(exu_in_bus_isBRANCH & ~exu_out_bus_dnpc_valid)?(exu_in_bus_snpc):(exu_out_bus_gpr_wdata)
-				);
+			(
+				(wbu_out_bus_exception[3:0]==`ysyx_26010011_EXCEPTION_MRET)?(csr_mepc):(csr_mtvec)
+			):(
+				exu_out_bus_dnpc
+			);
 
 	assign csr_pc = wbu_in_bus_pc;
 	
@@ -253,29 +259,30 @@ module ysyx_26010011(
 		if(flush_exception_valid) begin
 			dnpc_valid = 1;
 		end else begin
-			if(exu_in_bus_isJUMP & exu_out_valid & exu_out_ready) begin
-				if(idu_out_valid) begin
-					dnpc_valid = (idu_in_bus_pc != exu_out_bus_gpr_wdata);
-				end else begin
-					dnpc_valid = 1;
-				end
-			end else if(exu_in_bus_isBRANCH & exu_out_valid & exu_out_ready) begin
-				if(exu_out_bus_dnpc_valid) begin
-					if(idu_out_valid) begin
-						dnpc_valid = (idu_in_bus_pc != exu_out_bus_gpr_wdata);
-					end else begin
-						dnpc_valid = 1;
-					end
-				end else begin
-					if(idu_out_valid) begin
-						dnpc_valid = (idu_in_bus_pc != exu_in_bus_snpc);
-					end else begin
-						dnpc_valid = 1;
-					end
-				end
-			end else begin
-				dnpc_valid = 0;
-			end
+			// if(exu_in_bus_isJUMP & exu_out_valid & exu_out_ready) begin
+			// 	if(idu_out_valid) begin
+			// 		dnpc_valid = (idu_in_bus_pc != exu_out_bus_dnpc);
+			// 	end else begin
+			// 		dnpc_valid = 1;
+			// 	end
+			// end else if(exu_in_bus_isBRANCH & exu_out_valid & exu_out_ready) begin
+			// 	if(exu_out_bus_dnpc_valid) begin
+			// 		if(idu_out_valid) begin
+			// 			dnpc_valid = (idu_in_bus_pc != exu_out_bus_dnpc);
+			// 		end else begin
+			// 			dnpc_valid = 1;
+			// 		end
+			// 	end else begin
+			// 		if(idu_out_valid) begin
+			// 			dnpc_valid = (idu_in_bus_pc != exu_in_bus_snpc);
+			// 		end else begin
+			// 			dnpc_valid = 1;
+			// 		end
+			// 	end
+			// end else begin
+			// 	dnpc_valid = 0;
+			// end
+			dnpc_valid = exu_out_bus_dnpc_valid;
 		end
 	end
 	
@@ -407,6 +414,8 @@ module ysyx_26010011(
 		.lsu_out_bus_csr_bypass_valid(lsu_out_bus_csr_bypass_valid),
 		.lsu_out_bus_rd(lsu_out_bus_rd),
 		.lsu_out_bus_csrrd(lsu_out_bus_csrrd),
+		.lsu_out_bus_gpr_wdata(lsu_out_bus_gpr_wdata),
+		.lsu_out_bus_csr_result(lsu_out_bus_csr_result),
 
 		.wbu_out_bus_rd_valid(wbu_out_bus_rd_valid),
 		.wbu_out_bus_bypass_valid(wbu_out_bus_bypass_valid),
@@ -509,6 +518,7 @@ module ysyx_26010011(
 		.exu_in_bus_isWGPR(exu_in_bus_isWGPR),
 		.exu_in_bus_isLOAD(exu_in_bus_isLOAD),
 		.exu_in_bus_isWCOMP(exu_in_bus_isWCOMP),
+		.exu_out_bus_dnpc(exu_out_bus_dnpc),
 		
 		.exu_out_bus_rd_valid(exu_out_bus_rd_valid),
 		.exu_out_bus_bypass_valid(exu_out_bus_bypass_valid),
@@ -655,7 +665,7 @@ module ysyx_26010011(
 	);/*verilator public_module*/
 	assign lsu_out_bus_rd = lsu_in_bus_rd;
 	assign lsu_out_bus_csrrd = lsu_in_bus_csrrd;
-	
+	assign lsu_out_bus_csr_result = lsu_in_bus_csr_result;
 	ysyx_26010011_LS_WB_pipeline LS_WB_inst(
 		.clock(clock),
 		.reset(reset),
@@ -668,12 +678,12 @@ module ysyx_26010011(
 		.lsu_out_bus_csrrd(lsu_in_bus_csrrd),
 		.lsu_out_bus_isWGPR(lsu_in_bus_isWGPR),
 		.lsu_out_bus_gpr_wdata(lsu_out_bus_gpr_wdata),
-		.lsu_out_bus_csr_result(lsu_in_bus_csr_result),
+		.lsu_out_bus_csr_result(lsu_out_bus_csr_result),
 
 `ifdef USE_VERILATOR
 		.lsu_out_bus_alu_result(lsu_out_bus_alu_result),
 		.lsu_out_bus_comp_result(lsu_in_bus_comp_result),
-		.lsu_out_bus_lsu_result(lsu_out_bus_lsu_result),
+		// .lsu_out_bus_lsu_result(lsu_out_bus_lsu_result),
 		.lsu_out_bus_instruction(lsu_in_bus_instruction),
 		.lsu_out_bus_isLOAD(lsu_in_bus_isLOAD),
 		.lsu_out_bus_isSTORE(lsu_in_bus_isSTORE),
