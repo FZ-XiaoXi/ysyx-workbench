@@ -657,7 +657,7 @@ module ysyx_26010011(
 		.rlast(DRAM_rlast),
 		.rid(DRAM_rid)
 	);/*verilator public_module*/
-	wire [31:0] lsu_out_bus_gpr_wdata;
+	reg [31:0] lsu_out_bus_gpr_wdata;
 	always @(*) begin
 		if(lsu_in_bus_isLOAD) begin
 			lsu_out_bus_gpr_wdata = lsu_out_bus_lsu_result;
