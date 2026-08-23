@@ -158,8 +158,8 @@ module ysyx_26010011_EX_LS_pipeline(
 	input      [ 1:0]exu_out_bus_perip_mask,
 	input      [31:0]exu_out_bus_pc,
 `ifdef USE_VERILATOR
-	input            exu_out_bus_comp_result,
-	input      [31:0]exu_out_bus_alu_result,
+	// input            exu_out_bus_comp_result,
+	// input      [31:0]exu_out_bus_alu_result,
 	input      [31:0]exu_out_bus_instruction,
 	input            exu_out_bus_isJUMP,
 	input            exu_out_bus_isWCOMP,
