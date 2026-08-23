@@ -15,6 +15,7 @@ module ysyx_26010011_IDU(
 	output fencei_flush,
 	input        [31:0]gpr_rdataa,
 	input        [31:0]gpr_rdatab,
+	input        [31:0]csr_rdata,
 
 	input exu_out_bus_rd_valid,
 	input exu_out_bus_bypass_valid,

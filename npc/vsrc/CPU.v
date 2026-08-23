@@ -359,6 +359,7 @@ module ysyx_26010011(
 
 		.gpr_rdataa(gpr_rdataa),
 		.gpr_rdatab(gpr_rdatab),
+		.csr_rdata(csr_rdata),
 
 		.idu_out_valid(idu_out_valid),
 		.idu_out_ready(idu_out_ready),
