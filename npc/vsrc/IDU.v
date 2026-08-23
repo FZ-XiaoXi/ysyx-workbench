@@ -23,6 +23,8 @@ module ysyx_26010011_IDU(
 	input exu_out_bus_csr_bypass_valid,
 	input [4:0]exu_out_bus_rd,
 	input [11:0]exu_out_bus_csrrd,
+	input [31:0]exu_out_bus_gpr_wdata,
+	input [31:0]exu_out_bus_csr_result,
 
 	input lsu_out_bus_rd_valid,
 	input lsu_out_bus_bypass_valid,
@@ -69,8 +71,8 @@ module ysyx_26010011_IDU(
 	output logic [ 9:0]idu_out_bus_alu_op,
 	output logic [ 1:0]idu_out_bus_comp_op,
 
-	output [31:0] idu_out_bus_rs1_val,
-	output [31:0] idu_out_bus_rs2_val,
+	output reg [31:0] idu_out_bus_rs1_val,
+	output reg [31:0] idu_out_bus_rs2_val,
 
 
 	// output [31:0] w_pc,
@@ -347,7 +349,29 @@ module ysyx_26010011_IDU(
 				)
 				:gpr_rdataa
 		);
-	assign idu_out_bus_rs2_val = gpr_rdatab;
+
+	assign @(*) begin
+		if(idu_out_bus_rs1 == exu_out_bus_rd && exu_out_bus_rd_valid && exu_out_bus_bypass_valid) begin
+			idu_out_bus_rs1_val = exu_out_bus_gpr_wdata;
+		end else if(idu_out_bus_rs1 == lsu_out_bus_rd && lsu_out_bus_rd_valid && lsu_out_bus_bypass_valid) begin
+			idu_out_bus_rs1_val = lsu_out_bus_gpr_wdata;
+		end else if(idu_out_bus_rs1 == wbu_out_bus_rd && wbu_out_bus_rd_valid && wbu_out_bus_bypass_valid) begin
+			idu_out_bus_rs1_val = wbu_out_bus_gpr_wdata;
+		end else begin
+			idu_out_bus_rs1_val = gpr_rdataa;
+		end
+	end
+	assign @(*) begin
+		if(idu_out_bus_rs2 == exu_out_bus_rd && exu_out_bus_rd_valid && exu_out_bus_bypass_valid) begin
+			idu_out_bus_rs2_val = exu_out_bus_gpr_wdata;
+		end else if(idu_out_bus_rs2 == lsu_out_bus_rd && lsu_out_bus_rd_valid && lsu_out_bus_bypass_valid) begin
+			idu_out_bus_rs2_val = lsu_out_bus_gpr_wdata;
+		end else if(idu_out_bus_rs2 == wbu_out_bus_rd && wbu_out_bus_rd_valid && wbu_out_bus_bypass_valid) begin
+			idu_out_bus_rs2_val = wbu_out_bus_gpr_wdata;
+		end else begin
+			idu_out_bus_rs2_val = gpr_rdataa;
+		end
+	end
 	ysyx_26010011_RAW u_RAW(
 		.rs1(idu_out_bus_rs1),
 		.rs2(idu_out_bus_rs2),
@@ -377,6 +401,9 @@ module ysyx_26010011_IDU(
 		.exu_in_bus_csr_rd(exu_out_bus_csrrd),
 		.lsu_in_bus_csr_rd(lsu_out_bus_csrrd),
 		.wbu_in_bus_csr_rd(wbu_out_bus_csrrd),
+
+		// .exu_in_bus_gpr_wdata(exu_out_bus_gpr_wdata),
+		// .exu_in_bus_csr_result(exu_out_bus_csr_result),
 
 		.is_RAW(idu_isRAW)
 	);
