@@ -683,7 +683,7 @@ module ysyx_26010011(
 `ifdef USE_VERILATOR
 		.lsu_out_bus_alu_result(lsu_out_bus_alu_result),
 		.lsu_out_bus_comp_result(lsu_in_bus_comp_result),
-		// .lsu_out_bus_lsu_result(lsu_out_bus_lsu_result),
+		.lsu_out_bus_lsu_result(lsu_out_bus_lsu_result),
 		.lsu_out_bus_instruction(lsu_in_bus_instruction),
 		.lsu_out_bus_isLOAD(lsu_in_bus_isLOAD),
 		.lsu_out_bus_isSTORE(lsu_in_bus_isSTORE),
