@@ -13,8 +13,8 @@ import "DPI-C" function void difftest_skip_ref(int reason);
 module ysyx_26010011_GPRs(
 	input        clock,
 	input        reset,
-	input  [ 4:0]gpr_in_addra,
-	input  [ 4:0]gpr_in_addrb,
+	input  [ 3:0]gpr_in_addra,
+	input  [ 3:0]gpr_in_addrb,
 	output reg [31:0]gpr_out_a,
 	output reg [31:0]gpr_out_b,
 	input  [ 4:0]gpr_in_addw,
