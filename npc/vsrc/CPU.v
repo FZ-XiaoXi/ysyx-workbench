@@ -708,7 +708,7 @@ module ysyx_26010011(
 		.wbu_in_bus_instruction(wbu_in_bus_instruction),
 		.wbu_in_bus_isLOAD(wbu_in_bus_isLOAD),
 		.wbu_in_bus_isSTORE(wbu_in_bus_isSTORE),
-		.wbu_in_bus_pc(wbu_in_bus_pc)
+		.wbu_in_bus_pc(wbu_in_bus_pc),
 		// .wbu_in_bus_snpc(wbu_in_bus_snpc)
 		.wbu_in_bus_isJUMP(wbu_in_bus_isJUMP),
 		.wbu_in_bus_isWCOMP(wbu_in_bus_isWCOMP),
