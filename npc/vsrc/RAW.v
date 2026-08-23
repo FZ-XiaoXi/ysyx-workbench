@@ -41,38 +41,24 @@ module ysyx_26010011_RAW(
 );
 	always @(*) begin
         is_RAW = 1'b0;
-
-        if(exu_rd_valid && exu_in_bus_rd != 5'b0) begin
-            if(((rs1 == exu_in_bus_rd) || ((rs2 == exu_in_bus_rd) && rs2_valid))) begin
-                is_RAW = exu_bypass_valid?1'b0:1'b1;
-            end
+        if(exu_rd_valid && exu_in_bus_rd != 5'b0 && ((rs1 == exu_in_bus_rd) || ((rs2 == exu_in_bus_rd) && rs2_valid))) begin
+            is_RAW = exu_bypass_valid?1'b0:1'b1;
         end
-        else if(exu_csr_valid) begin
-            if(csr == exu_in_bus_csr_rd) begin
-                is_RAW = 0?1'b0:1'b1;
-            end
+        else if(exu_csr_valid && (csr == exu_in_bus_csr_rd)) begin
+            is_RAW = 0?1'b0:1'b1;
         end
-        else if(lsu_rd_valid && lsu_in_bus_rd != 5'b0) begin
-            if(((rs1 == lsu_in_bus_rd) || ((rs2 == lsu_in_bus_rd) && rs2_valid))) begin
-                is_RAW = lsu_bypass_valid?1'b0:1'b1;
-            end
+        else if(lsu_rd_valid && lsu_in_bus_rd != 5'b0 && ((rs1 == lsu_in_bus_rd) || ((rs2 == lsu_in_bus_rd) && rs2_valid))) begin
+            is_RAW = lsu_bypass_valid?1'b0:1'b1;
         end
-        else if(lsu_csr_valid) begin
-            if(csr == lsu_in_bus_csr_rd) begin
-                is_RAW = 0?1'b0:1'b1;
-            end
+        else if(lsu_csr_valid && (csr == lsu_in_bus_csr_rd)) begin
+            is_RAW = 0?1'b0:1'b1;
         end
-        else if(wbu_rd_valid && wbu_in_bus_rd != 5'b0) begin
-            if(((rs1 == wbu_in_bus_rd) || ((rs2 == wbu_in_bus_rd) && rs2_valid))) begin
-                is_RAW = 0?1'b0:1'b1;
-            end
+        else if(wbu_rd_valid && wbu_in_bus_rd != 5'b0 && ((rs1 == wbu_in_bus_rd) || ((rs2 == wbu_in_bus_rd) && rs2_valid))) begin
+            is_RAW = 0?1'b0:1'b1;
         end
-        else if(wbu_csr_valid) begin
-            if(csr == wbu_in_bus_csr_rd) begin
-                is_RAW = 0?1'b0:1'b1;
-            end
+        else if(wbu_csr_valid && (csr == wbu_in_bus_csr_rd)) begin
+            is_RAW = 0?1'b0:1'b1;
         end
-        
     end
 endmodule
 
