@@ -281,7 +281,7 @@ module ysyx_26010011(
 		.ifu_out_bus_instruction(ifu_out_bus_instruction),
 		.ifu_out_bus_fetching(ifu_out_bus_fetching),
 		.ifu_out_bus_pc(ifu_out_bus_pc),
-		.ifu_out_bus_snpc(ifu_out_bus_snpc),
+		// .ifu_out_bus_snpc(ifu_out_bus_snpc),
 		.ifu_out_bus_exception(ifu_out_bus_exception),
 
 		.araddr(IROM_araddr),

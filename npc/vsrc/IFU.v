@@ -22,7 +22,7 @@ module ysyx_26010011_IFU(
 	output     [31:0]   ifu_out_bus_instruction,
 	output     [31:0]   ifu_out_bus_pc/*verilator public*/,
 	output     [31:0]   ifu_out_bus_fetching/*verilator public*/,
-	output     [31:0]   ifu_out_bus_snpc,
+	// output     [31:0]   ifu_out_bus_snpc,
 	output reg [ 4:0]   ifu_out_bus_exception,
 
 
@@ -52,6 +52,7 @@ module ysyx_26010011_IFU(
 
 
 ////////////////////////////////
+	wire [31:0] ifu_out_bus_snpc;
 	reg ifu_out_valid_r;
 	reg [31:0]ifu_out_bus_instruction_r;
 	reg [31:0]ifu_out_bus_pc_r;
