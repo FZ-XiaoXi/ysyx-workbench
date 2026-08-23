@@ -98,10 +98,11 @@ module ysyx_26010011(
 	wire [ 3:0]idu_out_bus_alu_op;
 	wire [ 1:0]idu_out_bus_comp_op,idu_out_bus_perip_mask;
 	wire [ 2:0]idu_out_bus_opCSR;
-	wire [4:0]idu_out_bus_rd,idu_out_bus_exception;
+	wire [ 4:0]idu_out_bus_exception;
+	wire [ 3:0]idu_out_bus_rd;
 
 	wire exu_in_valid,exu_in_ready,exu_in_bus_isLOAD,exu_in_bus_isSTORE,exu_in_bus_isWGPR,exu_in_bus_isJUMP,exu_in_bus_isWCOMP,exu_in_bus_isBRANCH,exu_in_bus_isUnSigned,exu_in_bus_isUsePC,exu_in_bus_alu_isUseImm,exu_in_bus_comp_isUseImm;
-	wire [4:0]exu_in_bus_rd,exu_out_bus_rd;
+	wire [e:0]exu_in_bus_rd,exu_out_bus_rd;
 	wire [4:0]exu_in_bus_exception;
 	wire [31:0]exu_in_bus_rs1_val,exu_in_bus_rs2_val,exu_in_bus_imm,exu_in_bus_pc ,exu_in_bus_snpc;
 	wire [3:0]exu_in_bus_alu_op;
