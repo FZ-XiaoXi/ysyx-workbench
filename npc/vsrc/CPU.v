@@ -564,8 +564,8 @@ module ysyx_26010011(
 		.exu_out_bus_isUnSigned(exu_in_bus_isUnSigned),
 		.exu_out_bus_perip_mask(exu_in_bus_perip_mask),
 `ifdef USE_VERILATOR
-		// .exu_out_bus_alu_result(exu_out_bus_alu_result),
-		// .exu_out_bus_comp_result(exu_out_bus_comp_result),
+		.exu_out_bus_alu_result(exu_out_bus_alu_result),
+		.exu_out_bus_comp_result(exu_out_bus_comp_result),
 		.exu_out_bus_instruction(exu_in_bus_instruction),
 		.exu_out_bus_isJUMP(exu_in_bus_isJUMP),
 		.exu_out_bus_isWCOMP(exu_in_bus_isWCOMP),
