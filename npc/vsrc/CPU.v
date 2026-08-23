@@ -124,7 +124,7 @@ module ysyx_26010011(
 	wire [31:0]wbu_in_bus_csr_result,wbu_in_bus_pc;
 	wire [11:0]wbu_in_bus_csrrd,wbu_out_bus_csrrd;
 	wire [2:0]wbu_in_bus_opCSR;
-	wire [4:0]wbu_in_bus_rd,wbu_out_bus_rd;
+	wire [3:0]wbu_in_bus_rd,wbu_out_bus_rd;
 	wire [4:0]wbu_in_bus_exception;
 	wire [31:0]wbu_out_bus_gpr_wdata;
 `ifdef USE_VERILATOR
