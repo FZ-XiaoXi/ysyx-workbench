@@ -47,11 +47,9 @@ module ysyx_26010011_ID_EX_pipeline(
 
 	input            idu_out_valid,
 	output           idu_out_ready,
-	input      [ 4:0]idu_out_bus_rd,
+	input      [ 3:0]idu_out_bus_rd,
 	input      [ 4:0]idu_out_bus_exception,
 	input      [11:0]idu_out_bus_csrrd,
-	input      [ 4:0]idu_out_bus_rs1,
-	input      [ 4:0]idu_out_bus_rs2,
 	input      [31:0]idu_out_bus_rs1_val,
 	input      [31:0]idu_out_bus_rs2_val,
 	input      [31:0]idu_out_bus_imm,
@@ -75,11 +73,9 @@ module ysyx_26010011_ID_EX_pipeline(
 
 	output reg       exu_in_valid/*verilator public*/,
 	input            exu_in_ready,
-	output reg [ 4:0]exu_in_bus_rd,
+	output reg [ 3:0]exu_in_bus_rd,
 	output reg [ 4:0]exu_in_bus_exception,
 	output reg [11:0]exu_in_bus_csrrd,
-	output reg [ 4:0]exu_in_bus_rs1,
-	output reg [ 4:0]exu_in_bus_rs2,
 	output reg [31:0]exu_in_bus_rs1_val,
 	output reg [31:0]exu_in_bus_rs2_val,
 	output reg [31:0]exu_in_bus_imm,
@@ -110,8 +106,6 @@ module ysyx_26010011_ID_EX_pipeline(
 			exu_in_bus_rd<=idu_out_bus_rd;
 			exu_in_bus_exception<=idu_out_bus_exception;
 			exu_in_bus_csrrd<=idu_out_bus_csrrd;
-			exu_in_bus_rs1<=idu_out_bus_rs1;
-			exu_in_bus_rs2<=idu_out_bus_rs2;
 			exu_in_bus_rs1_val<=idu_out_bus_rs1_val;
 			exu_in_bus_rs2_val<=idu_out_bus_rs2_val;
 			exu_in_bus_imm<=idu_out_bus_imm;
@@ -147,7 +141,7 @@ module ysyx_26010011_EX_LS_pipeline(
 
 	input      [31:0]exu_out_bus_lsu_val,
 	input      [31:0]exu_out_bus_gpr_wdata,
-	input      [ 4:0]exu_out_bus_rd,
+	input      [ 3:0]exu_out_bus_rd,
 	input      [ 4:0]exu_out_bus_exception,
 	input      [11:0]exu_out_bus_csrrd,
 	input            exu_out_bus_isLOAD,
@@ -173,7 +167,7 @@ module ysyx_26010011_EX_LS_pipeline(
 
 	output reg [31:0]lsu_in_bus_lsu_val,
 	output reg [31:0]lsu_in_bus_gpr_wdata,
-	output reg [ 4:0]lsu_in_bus_rd,
+	output reg [ 3:0]lsu_in_bus_rd,
 	output reg [ 4:0]lsu_in_bus_exception,
 	output reg [11:0]lsu_in_bus_csrrd,
 	
@@ -238,7 +232,7 @@ module ysyx_26010011_LS_WB_pipeline(
 	input            lsu_out_valid,
 	output           lsu_out_ready,
 
-	input      [ 4:0]lsu_out_bus_rd,
+	input      [ 3:0]lsu_out_bus_rd,
 	input      [ 4:0]lsu_out_bus_exception,
 	input      [11:0]lsu_out_bus_csrrd,
 	input	   [31:0]lsu_out_bus_gpr_wdata,
@@ -266,7 +260,7 @@ module ysyx_26010011_LS_WB_pipeline(
 
 	output reg [31:0]wbu_in_bus_csr_result,
 	output reg [31:0]wbu_in_bus_gpr_wdata,
-	output reg [ 4:0]wbu_in_bus_rd,
+	output reg [ 3:0]wbu_in_bus_rd,
 	output reg [ 4:0]wbu_in_bus_exception,
 	output reg [11:0]wbu_in_bus_csrrd,
 	output reg       wbu_in_bus_isWGPR,

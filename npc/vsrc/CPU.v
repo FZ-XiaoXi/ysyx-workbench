@@ -101,9 +101,9 @@ module ysyx_26010011(
 	wire [4:0]idu_out_bus_rd,idu_out_bus_exception;
 
 	wire exu_in_valid,exu_in_ready,exu_in_bus_isLOAD,exu_in_bus_isSTORE,exu_in_bus_isWGPR,exu_in_bus_isJUMP,exu_in_bus_isWCOMP,exu_in_bus_isBRANCH,exu_in_bus_isUnSigned,exu_in_bus_isUsePC,exu_in_bus_alu_isUseImm,exu_in_bus_comp_isUseImm;
-	wire [4:0]exu_in_bus_rd,exu_out_bus_rd,exu_in_bus_rs1,exu_in_bus_rs2;
+	wire [4:0]exu_in_bus_rd,exu_out_bus_rd;
 	wire [4:0]exu_in_bus_exception;
-	wire [31:0]exu_in_bus_rs1_val,exu_in_bus_rs2_val,exu_in_bus_imm,exu_in_bus_instruction,exu_in_bus_pc ,exu_in_bus_snpc;
+	wire [31:0]exu_in_bus_rs1_val,exu_in_bus_rs2_val,exu_in_bus_imm,exu_in_bus_pc ,exu_in_bus_snpc;
 	wire [3:0]exu_in_bus_alu_op;
 	wire [1:0]exu_in_bus_comp_op,exu_in_bus_perip_mask;
 	wire [2:0]exu_in_bus_opCSR;
@@ -127,7 +127,7 @@ module ysyx_26010011(
 	wire [4:0]wbu_in_bus_exception;
 	wire [31:0]wbu_out_bus_gpr_wdata;
 `ifdef USE_VERILATOR
-	wire [31:0]/*wbu_in_bus_snpc,*/wbu_in_bus_instruction;
+	wire [31:0]/*wbu_in_bus_snpc,*/wbu_in_bus_instruction,exu_in_bus_instruction;
 	wire [31:0]wbu_in_bus_lsu_result,wbu_in_bus_alu_result;
 	wire wbu_in_bus_comp_result,wbu_in_bus_isLOAD,wbu_in_bus_isSTORE,wbu_in_bus_isJUMP,wbu_in_bus_isWCOMP,wbu_in_bus_isBRANCH;
 `endif
@@ -176,11 +176,14 @@ module ysyx_26010011(
 	wire [31:0] wbu_in_bus_gpr_wdata;
 
 	wire ifu_out_valid,ifu_out_ready;
-	wire [31:0]ifu_out_bus_instruction,ifu_out_bus_pc,ifu_out_bus_snpc,ifu_out_bus_fetching;
+	wire [31:0]ifu_out_bus_pc,ifu_out_bus_snpc,ifu_out_bus_fetching;
 	wire [4:0]ifu_out_bus_exception;
+`ifdef USE_VERILATOR
+	wire [31:0]ifu_out_bus_instruction,idu_in_bus_instruction;
+`endif
 
 	wire idu_in_valid,idu_in_ready;
-	wire [31:0]idu_in_bus_instruction,idu_in_bus_pc/*,idu_in_bus_snpc*/;
+	wire [31:0]idu_in_bus_pc/*,idu_in_bus_snpc*/;
 	wire [4:0]idu_in_bus_exception;
 
 
@@ -276,8 +279,9 @@ module ysyx_26010011(
 
 		.ifu_out_valid(ifu_out_valid),
 		.ifu_out_ready(ifu_out_ready),
-		
+`ifdef
 		.ifu_out_bus_instruction(ifu_out_bus_instruction),
+`endif
 		.ifu_out_bus_fetching(ifu_out_bus_fetching),
 		.ifu_out_bus_pc(ifu_out_bus_pc),
 		.ifu_out_bus_snpc(ifu_out_bus_snpc),
@@ -308,14 +312,18 @@ module ysyx_26010011(
 
 		.ifu_out_valid(ifu_out_valid),
 		.ifu_out_ready(ifu_out_ready),
+`ifdef USE_VERILATOR
 		.ifu_out_bus_instruction(ifu_out_bus_instruction),
+`endif
 		.ifu_out_bus_pc(ifu_out_bus_pc),
-		.ifu_out_bus_snpc(ifu_out_bus_snpc),
+		// .ifu_out_bus_snpc(ifu_out_bus_snpc),
 		.ifu_out_bus_exception(ifu_out_bus_exception),
 
 		.idu_in_valid(idu_in_valid),
 		.idu_in_ready(idu_in_ready),
+`ifdef USE_VERILATOR
 		.idu_in_bus_instruction(idu_in_bus_instruction),
+`endif
 		.idu_in_bus_exception(idu_in_bus_exception),
 		.idu_in_bus_pc(idu_in_bus_pc)
 		// .idu_in_bus_snpc(idu_in_bus_snpc)
@@ -326,7 +334,9 @@ module ysyx_26010011(
 		.reset(reset),
 		.fencei_pass(fencei_pass),
 		.flush_valid(idu_flush_valid),
+`ifdef USE_VERILATOR
 		.idu_in_bus_instruction(idu_in_bus_instruction),
+`endif
 		.idu_in_bus_pc(idu_in_bus_pc),
 		.idu_in_bus_exception(idu_in_bus_exception),
 		.idu_in_valid(idu_in_valid),
@@ -341,8 +351,6 @@ module ysyx_26010011(
 		.idu_out_bus_rd(idu_out_bus_rd),
 		.idu_out_bus_exception(idu_out_bus_exception),
 		.idu_out_bus_csrrd(idu_out_bus_csrrd),  //CSR地址
-		.idu_out_bus_rs1(gpr_raddra),
-		.idu_out_bus_rs2(gpr_raddrb),
 		// .idu_out_bus_rcsr(idu_out_bus_rcsr),
 		.idu_out_bus_imm(idu_out_bus_imm),
 		.idu_out_bus_isLOAD(idu_out_bus_isLOAD),
@@ -411,7 +419,9 @@ module ysyx_26010011(
 		.idu_out_bus_rs1_val(idu_out_bus_rs1_val), //[~]zimm or rs1_val
 		.idu_out_bus_rs2_val(idu_out_bus_rs2_val),
 		.idu_out_bus_imm(idu_out_bus_imm),     //CSR值
+`ifdef USE_VERILATOR
 		.idu_out_bus_instruction(idu_in_bus_instruction),
+`endif
 		.idu_out_bus_isLOAD(idu_out_bus_isLOAD),
 		.idu_out_bus_isSTORE(idu_out_bus_isSTORE),
 		.idu_out_bus_isWGPR(idu_out_bus_isWGPR),
@@ -434,13 +444,12 @@ module ysyx_26010011(
 		.exu_in_ready(exu_in_ready),
 		.exu_in_bus_rd(exu_in_bus_rd),
 		.exu_in_bus_csrrd(exu_in_bus_csrrd),
-		.exu_in_bus_rs1(exu_in_bus_rs1),
-		.exu_in_bus_rs2(exu_in_bus_rs2),
 		.exu_in_bus_rs1_val(exu_in_bus_rs1_val),
 		.exu_in_bus_rs2_val(exu_in_bus_rs2_val),
-		// .exu_in_bus_rcsr(),
 		.exu_in_bus_imm(exu_in_bus_imm),
+`ifdef USE_VERILATOR
 		.exu_in_bus_instruction(exu_in_bus_instruction),
+`endif
 		.exu_in_bus_isLOAD(exu_in_bus_isLOAD),
 		.exu_in_bus_isSTORE(exu_in_bus_isSTORE),
 		.exu_in_bus_isWGPR(exu_in_bus_isWGPR),
