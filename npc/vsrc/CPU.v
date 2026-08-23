@@ -620,8 +620,10 @@ module ysyx_26010011(
 		// .lsu_in_bus_snpc(lsu_in_bus_snpc)
 	);/*verilator public_module*/
 
-	// assign lsu_out_bus_alu_result=lsu_in_bus_alu_result;
-	// assign lsu_out_bus_comp_result=lsu_in_bus_comp_result;
+`ifdef USE_VERILATOR
+	assign lsu_out_bus_alu_result=lsu_in_bus_alu_result;
+	assign lsu_out_bus_comp_result=lsu_in_bus_comp_result;
+`endif
 
 	ysyx_26010011_LSU LSU_0(
 		.clock(clock),
