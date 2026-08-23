@@ -17,7 +17,7 @@ module ysyx_26010011_GPRs(
 	input  [ 3:0]gpr_in_addrb,
 	output reg [31:0]gpr_out_a,
 	output reg [31:0]gpr_out_b,
-	input  [ 4:0]gpr_in_addw,
+	input  [ 3:0]gpr_in_addw,
 	input  [31:0]gpr_in_data,
 	input        gpr_in_wen
 ); 
