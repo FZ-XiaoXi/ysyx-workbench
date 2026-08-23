@@ -333,27 +333,6 @@ module ysyx_26010011_IDU(
 	end
 
 	reg [31:0] rs1_val_bypass;
-	assign idu_out_bus_rs1_val = 
-		(
-			(|idu_out_bus_opCSR)?
-				(
-					((idu_out_bus_opCSR[2])?
-						(
-							((idu_out_bus_opCSR[1]&~idu_out_bus_opCSR[0])?
-								()
-								:
-							)
-						)
-						:(
-							(idu_out_bus_opCSR[1]&~idu_out_bus_opCSR[0])?
-								(~rs1_val_bypass)
-								:rs1_val_bypass
-						)
-					)
-				)
-				:
-		);
-	
 	always @(*) begin
 		case(idu_out_bus_opCSR)
 			3'b000:
