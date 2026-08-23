@@ -279,7 +279,7 @@ module ysyx_26010011(
 
 		.ifu_out_valid(ifu_out_valid),
 		.ifu_out_ready(ifu_out_ready),
-`ifdef
+`ifdef USE_VERILATOR
 		.ifu_out_bus_instruction(ifu_out_bus_instruction),
 `endif
 		.ifu_out_bus_fetching(ifu_out_bus_fetching),
