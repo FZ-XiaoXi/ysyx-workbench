@@ -96,8 +96,8 @@ module ysyx_26010011_EXU(
 		endcase
 	end
 	always @(*) begin
-		if     (exu_in_bus_opCSR[1:0] == 2'b10) exu_out_bus_csr_result=op_and;
-		else if(exu_in_bus_opCSR[1:0] == 2'b01) exu_out_bus_csr_result=op_or;
+		if     (exu_in_bus_opCSR[1:0] == 2'b10) exu_out_bus_csr_result=a&b;
+		else if(exu_in_bus_opCSR[1:0] == 2'b01) exu_out_bus_csr_result=a|b;
 		else                                               exu_out_bus_csr_result=exu_in_bus_a;
 	end
 	
