@@ -13,6 +13,8 @@ module ysyx_26010011_IDU(
 	input flush_valid,
 	input fencei_pass,
 	output fencei_flush,
+	input        [31:0]gpr_rdataa,
+	input        [31:0]gpr_rdatab,
 
 	input exu_out_bus_rd_valid,
 	input exu_out_bus_bypass_valid,
@@ -66,6 +68,9 @@ module ysyx_26010011_IDU(
 	output logic [ 9:0]idu_out_bus_alu_op,
 	output logic [ 1:0]idu_out_bus_comp_op,
 
+	output [31:0] idu_out_bus_rs1_val,
+	output [31:0] idu_out_bus_rs2_val
+
 
 	// output [31:0] w_pc,
 	// output [31:0] w_tar,
@@ -105,6 +110,7 @@ module ysyx_26010011_IDU(
 	logic isR,isI,isS,isB,isU,isJ;
 
 	wire all_inst,idu_isRAW/*verilator public*/;
+
 
 
 	always @(posedge clock) begin
@@ -319,6 +325,28 @@ module ysyx_26010011_IDU(
 			end
 		end
 	end
+
+	assign idu_out_bus_rs1_val = 
+		(
+			(|idu_out_bus_opCSR)?
+				(
+					((idu_out_bus_opCSR[2])?
+						(
+							((idu_out_bus_opCSR[1]&~idu_out_bus_opCSR[0])?
+								(~{{27{1'b0}},gpr_raddra})
+								:{{27{1'b0}},gpr_raddra}
+							)
+						)
+						:(
+							(idu_out_bus_opCSR[1]&~idu_out_bus_opCSR[0])?
+								(~idu_ra_bypass)
+								:idu_ra_bypass
+						)
+					)
+				)
+				:idu_ra_bypass
+		);
+	assign idu_out_bus_rs2_val = gpr_rdatab;
 	ysyx_26010011_RAW u_RAW(
 		.rs1(idu_out_bus_rs1),
 		.rs2(idu_out_bus_rs2),

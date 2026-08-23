@@ -92,7 +92,7 @@ module ysyx_26010011(
 
 	wire idu_out_valid,idu_out_ready,fencei_flush;
 	wire [11:0]idu_out_bus_csrrd;
-	wire [31:0]idu_out_bus_imm,idu_out_bus_csr;   //idu_out_bus_imm 可作CSR地址
+	wire [31:0]idu_out_bus_imm,idu_out_bus_csr,idu_out_bus_rs1_val,idu_out_bus_rs2_val;   //idu_out_bus_imm 可作CSR地址
 	wire [12:0]idu_out_bus_signals;
 	wire idu_out_bus_isLOAD,idu_out_bus_isSTORE,idu_out_bus_isWGPR,idu_out_bus_isJUMP,idu_out_bus_isWCOMP,idu_out_bus_isBRANCH,idu_out_bus_isUnSigned,idu_out_bus_isUsePC,idu_out_bus_alu_isUseImm,idu_out_bus_comp_isUseImm;
 	wire [ 9:0]idu_out_bus_alu_op;
@@ -180,7 +180,6 @@ module ysyx_26010011(
 
 
 	reg idu_ra_isRAW,idu_rb_isRAW,idu_csr_isRAW;
-	reg [31:0] idu_ra_bypass,idu_rb_bypass;
 
 	wire [31:0] S_araddr,S_rdata,S_awaddr,S_wdata;
 	wire S_arvalid,S_rvalid,S_awvalid,S_wvalid,S_bvalid,S_rlast,S_wlast;
@@ -358,6 +357,9 @@ module ysyx_26010011(
 		.idu_in_valid(idu_in_valid),
 		.idu_in_ready(idu_in_ready),
 
+		.gpr_rdataa(gpr_rdataa),
+		.gpr_rdatab(gpr_rdatab),
+
 		.idu_out_valid(idu_out_valid),
 		.idu_out_ready(idu_out_ready),
 		.idu_out_bus_rd(idu_out_bus_rd),
@@ -381,6 +383,9 @@ module ysyx_26010011(
 		.idu_out_bus_alu_op(idu_out_bus_alu_op),
 		.idu_out_bus_comp_op(idu_out_bus_comp_op),
 		.idu_out_bus_perip_mask(idu_out_bus_perip_mask),
+		.idu_out_bus_rs1_val(idu_out_bus_rs1_val),
+		.idu_out_bus_rs2_val(idu_out_bus_rs2_val),
+		
 
 		.exu_out_bus_rd_valid(exu_out_bus_rd_valid),
 		.exu_out_bus_bypass_valid(exu_out_bus_bypass_valid),
@@ -422,27 +427,8 @@ module ysyx_26010011(
 		.idu_out_bus_csrrd(idu_out_bus_csrrd),  //CSR地址
 		.idu_out_bus_rs1(gpr_raddra),
 		.idu_out_bus_rs2(gpr_raddrb),
-		.idu_out_bus_rs1_val(
-		((|idu_out_bus_opCSR)?
-			(
-			((idu_out_bus_opCSR[2])?
-				(
-				((idu_out_bus_opCSR[1]&~idu_out_bus_opCSR[0])?
-					(~{{27{1'b0}},gpr_raddra})
-					:{{27{1'b0}},gpr_raddra}
-				)
-				)
-				:(
-				(idu_out_bus_opCSR[1]&~idu_out_bus_opCSR[0])?
-				(~gpr_raddra)
-				:gpr_raddra
-				)
-			)
-			)
-			:gpr_raddra
-		)
-		), //[~]zimm or rs1_val
-		.idu_out_bus_rs2_val(gpr_raddrb),
+		.idu_out_bus_rs1_val(idu_out_bus_rs1_val), //[~]zimm or rs1_val
+		.idu_out_bus_rs2_val(idu_out_bus_rs2_val),
 		.idu_out_bus_imm((|idu_out_bus_opCSR)?csr_rdata:idu_out_bus_imm),     //CSR值
 		.idu_out_bus_instruction(idu_in_bus_instruction),
 		.idu_out_bus_isLOAD(idu_out_bus_isLOAD),
