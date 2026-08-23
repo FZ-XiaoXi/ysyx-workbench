@@ -272,6 +272,7 @@ module ysyx_26010011_IDU(
 			idu_out_bus_alu_op = 4'd8;
 		end else begin
 			idu_out_bus_alu_op = 4'd0;
+		end
 	end
 
 	always @(*) begin
