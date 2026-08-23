@@ -68,14 +68,17 @@ module ysyx_26010011_CSRs(
 
 	reg [31:0]CSR_MCYCLE/* verilator public */;
 	reg [31:0]CSR_MCYCLEH/* verilator public */;
-	reg [31:0]CSR_MISA/* verilator public */;
+	// reg [31:0]CSR_MISA/* verilator public */;
+	localparam  [31:0]CSR_MISA=32'h40000100;
 	reg [31:0]CSR_MTVEC/* verilator public */;
 	reg [31:0]CSR_MSCRATCH/* verilator public */;
 	reg [31:0]CSR_MEPC/* verilator public */;
 	reg [31:0]CSR_MCAUSE/* verilator public */;
 	reg [31:0]CSR_MSTATUS/* verilator public */;
-	reg [31:0]CSR_MVENDORID/* verilator public */;
-	reg [31:0]CSR_MARCHID/* verilator public */;
+	// reg [31:0]CSR_MVENDORID/* verilator public */;
+	// reg [31:0]CSR_MARCHID/* verilator public */;
+	localparam [31:0]CSR_MVENDORID=32'h79737978;
+	localparam [31:0]CSR_MARCHID=32'h018ce19b;
 	reg [31:0]CSR_MTVAL/* verilator public */;
 
 	always @(*) begin
@@ -100,14 +103,14 @@ module ysyx_26010011_CSRs(
 		if(reset) begin
 		CSR_MCYCLE <= 0;
 		CSR_MCYCLEH <= 0;
-		CSR_MISA <= 32'h40000100;
+		// CSR_MISA <= 32'h40000100;
 		CSR_MTVEC <= 32'h0;
 		CSR_MSCRATCH <= 0;
 		CSR_MEPC <= 0;
 		CSR_MCAUSE <= 0;
 		CSR_MSTATUS <= 32'h1800;
-		CSR_MVENDORID <= 32'h79737978;
-		CSR_MARCHID <= 32'h018ce19b;
+		// CSR_MVENDORID <= 32'h79737978;
+		// CSR_MARCHID <= 32'h018ce19b;
 		CSR_MTVAL <= 32'h00;
 		end else begin
 		if(csr_in_bus_exception[4]) begin

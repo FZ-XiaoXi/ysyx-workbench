@@ -13,22 +13,28 @@ module ysyx_26010011_WBU(
 
 	input wbu_in_valid,
 	output wbu_in_ready,
-	input [31:0]wbu_in_bus_pc,
-	input [31:0]wbu_in_bus_instruction,
-	input [31:0]wbu_in_bus_lsu_result,
-	input [31:0]wbu_in_bus_alu_result,
+	
 	input [31:0]wbu_in_bus_csr_result,
-	input wbu_in_bus_comp_result,
-	// input [31:0]wbu_in_bus_snpc,
+	output [31:0]wbu_in_bus_gpr_wdata,
+	
 	input [4:0]wbu_in_bus_rd,
 	input [11:0]wbu_in_bus_csrrd,
-	input wbu_in_bus_isLOAD,
-	input wbu_in_bus_isSTORE,
 	input wbu_in_bus_isWGPR,
-	input wbu_in_bus_isJUMP,
-	input wbu_in_bus_isWCOMP,
 	input [2:0]wbu_in_bus_opCSR,
 	input [4:0]wbu_in_bus_exception,
+
+// `ifdef USE_VERILATOR
+// 	input [31:0]wbu_in_bus_pc,
+// 	input [31:0]wbu_in_bus_instruction,
+// 	input [31:0]wbu_in_bus_lsu_result,
+// 	input [31:0]wbu_in_bus_alu_result,
+// 	input wbu_in_bus_comp_result,
+// 	input [31:0]wbu_in_bus_snpc,
+// 	input wbu_in_bus_isLOAD,
+// 	input wbu_in_bus_isSTORE,
+// 	input wbu_in_bus_isJUMP,
+// 	input wbu_in_bus_isWCOMP,
+// `endif
 
 	output gpr_we,
 	output reg [31:0]gpr_wdata,
@@ -40,20 +46,20 @@ module ysyx_26010011_WBU(
 	output [4:0]wbu_out_bus_exception,
 	output fencei_pass
 );  
-	wire [31:0] wbu_in_bus_snpc;
-	assign wbu_in_bus_snpc = wbu_in_bus_pc + 4;
+	// wire [31:0] wbu_in_bus_snpc;
+	// assign wbu_in_bus_snpc = wbu_in_bus_pc + 4;
 	assign wbu_in_ready=1;
-	always @(*) begin
-		if(wbu_in_bus_isLOAD) begin
-									gpr_wdata = wbu_in_bus_lsu_result;
-		end else if(wbu_in_bus_isJUMP) begin
-									gpr_wdata = wbu_in_bus_snpc;
-		// end else if(wbu_in_bus_isWGPR) begin
-		end else begin
-			if(wbu_in_bus_isWCOMP)           gpr_wdata = {31'b0,wbu_in_bus_comp_result};
-			else                    gpr_wdata = wbu_in_bus_alu_result;
-		end
-	end
+	// always @(*) begin
+	// 	if(wbu_in_bus_isLOAD) begin
+	// 								gpr_wdata = wbu_in_bus_lsu_result;
+	// 	end else if(wbu_in_bus_isJUMP) begin
+	// 								gpr_wdata = wbu_in_bus_snpc;
+	// 	// end else if(wbu_in_bus_isWGPR) begin
+	// 	end else begin
+	// 		if(wbu_in_bus_isWCOMP)           gpr_wdata = {31'b0,wbu_in_bus_comp_result};
+	// 		else                    gpr_wdata = wbu_in_bus_alu_result;
+	// 	end
+	// end
 
 	assign gpr_address=wbu_in_bus_rd;
 	assign gpr_we=(wbu_in_bus_isWGPR & wbu_in_valid & ~wbu_in_bus_exception[4])?1:0;
