@@ -37,7 +37,7 @@ module ysyx_26010011_WBU(
 // `endif
 
 	output gpr_we,
-	output reg [31:0]gpr_wdata,
+	output [31:0]gpr_wdata,
 	output [4:0]gpr_address,
 
 	output csr_we,
@@ -60,6 +60,7 @@ module ysyx_26010011_WBU(
 	// 		else                    gpr_wdata = wbu_in_bus_alu_result;
 	// 	end
 	// end
+	assign gpr_wdata = wbu_in_bus_gpr_wdata;
 
 	assign gpr_address=wbu_in_bus_rd;
 	assign gpr_we=(wbu_in_bus_isWGPR & wbu_in_valid & ~wbu_in_bus_exception[4])?1:0;
