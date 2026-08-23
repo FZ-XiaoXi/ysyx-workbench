@@ -434,15 +434,15 @@ module ysyx_26010011(
 				)
 				:(
 				(idu_out_bus_opCSR[1]&~idu_out_bus_opCSR[0])?
-				(~idu_ra_bypass)
-				:idu_ra_bypass
+				(~gpr_raddra)
+				:gpr_raddra
 				)
 			)
 			)
-			:idu_ra_bypass
+			:gpr_raddra
 		)
 		), //[~]zimm or rs1_val
-		.idu_out_bus_rs2_val(idu_rb_bypass),
+		.idu_out_bus_rs2_val(gpr_raddrb),
 		.idu_out_bus_imm((|idu_out_bus_opCSR)?csr_rdata:idu_out_bus_imm),     //CSR值
 		.idu_out_bus_instruction(idu_in_bus_instruction),
 		.idu_out_bus_isLOAD(idu_out_bus_isLOAD),
