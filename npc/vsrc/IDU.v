@@ -104,7 +104,7 @@ module ysyx_26010011_IDU(
 
 	logic isR,isI,isS,isB,isU,isJ;
 
-	wire all_inst,idu_isRAW/*verilator_public*/;
+	wire all_inst,idu_isRAW/*verilator public*/;
 
 
 	always @(posedge clock) begin
