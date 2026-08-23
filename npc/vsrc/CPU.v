@@ -154,7 +154,7 @@ module ysyx_26010011(
 	wire [31:0]dnpc;
 	reg dnpc_valid;
 
-	wire [4:0] gpr_raddra,gpr_raddrb,gpr_waddr;
+	wire [3:0] gpr_raddra,gpr_raddrb,gpr_waddr;
 	wire [31:0]gpr_rdataa,gpr_rdatab,gpr_wdata,csr_mtvec,csr_mepc,csr_pc;
 	wire gpr_we;
 	wire [11:0]csr_waddr;
