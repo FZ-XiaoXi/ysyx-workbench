@@ -118,6 +118,7 @@ module ysyx_26010011(
 	wire [31:0]wbu_in_bus_pc,/*wbu_in_bus_snpc,*/wbu_in_bus_instruction;
 	wire [31:0]wbu_in_bus_lsu_result,wbu_in_bus_alu_result,wbu_in_bus_csr_result;
 	wire wbu_in_bus_comp_result;
+	
 	wire [11:0]wbu_in_bus_csrrd;
 	wire [2:0]wbu_in_bus_opCSR;
 	wire [4:0]wbu_in_bus_rd;
