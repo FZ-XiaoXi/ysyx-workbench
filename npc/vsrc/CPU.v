@@ -788,7 +788,7 @@ module ysyx_26010011(
 		tb_isFINAL<=1;
 		tb_FINAL_pc<=wbu_in_bus_pc;
 		// tb_FINAL_npc<=(wbu_in_bus_isJUMP | (wbu_in_bus_isBRANCH&wbu_in_bus_comp_result)) ? wbu_in_bus_alu_result : ((wbu_in_bus_exception[4])?csr_mtvec:wbu_in_bus_pc + 32'd4);//TODO MTVEC
-		tb_FINAL_npc<=(wbu_in_bus_exception[4])?((wbu_out_bus_exception[3:0]==`ysyx_26010011_EXCEPTION_MRET)?csr_mepc:csr_mtvec):((wbu_in_bus_isJUMP | (wbu_in_bus_isBRANCH&wbu_in_bus_comp_result)) ? wbu_in_bus_alu_result : wbu_in_bus_pc + 32'd4);//TODO MTVEC
+		tb_FINAL_npc<=(wbu_in_bus_exception[4])?((wbu_out_bus_exception[3:0]==`ysyx_26010011_EXCEPTION_MRET)?csr_mepc:csr_mtvec):((wbu_in_bus_isJUMP | (wbu_in_bus_isBRANCH&wbu_in_bus_comp_result)) ? wbu_in_bus_gpr_wdata : wbu_in_bus_pc + 32'd4);//TODO MTVEC
 		tb_dnpc_valid<=(wbu_in_bus_isJUMP | (wbu_in_bus_isBRANCH&wbu_in_bus_comp_result) | (wbu_in_bus_exception[4]));
 		tb_isMEM<=(wbu_in_bus_isLOAD | wbu_in_bus_isSTORE)&wbu_in_valid;
 		tb_FINAL_inst<=wbu_in_bus_instruction;
