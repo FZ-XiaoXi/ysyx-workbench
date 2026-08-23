@@ -7,8 +7,8 @@
 // ██║  ██║ ██║  ██║ ╚███╔███╔╝
 // ╚═╝  ╚═╝ ╚═╝  ╚═╝  ╚══╝╚══╝
 module ysyx_26010011_RAW(
-    input [ 4:0] rs1,
-    input [ 4:0] rs2,
+    input [ 3:0] rs1,
+    input [ 3:0] rs2,
     input [11:0] csr,
     
     input rs2_valid,
@@ -29,9 +29,9 @@ module ysyx_26010011_RAW(
     input lsu_csr_bypass_valid,
     input wbu_csr_bypass_valid,
 
-    input [ 4:0] exu_in_bus_rd,
-    input [ 4:0] lsu_in_bus_rd,
-    input [ 4:0] wbu_in_bus_rd,
+    input [ 3:0] exu_in_bus_rd,
+    input [ 3:0] lsu_in_bus_rd,
+    input [ 3:0] wbu_in_bus_rd,
 
     input [11:0] exu_in_bus_csr_rd,
     input [11:0] lsu_in_bus_csr_rd,
