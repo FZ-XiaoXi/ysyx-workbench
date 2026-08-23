@@ -56,7 +56,7 @@ module ysyx_26010011_EXU(
 	// wire [31:0]op_ar;
 	// wire [31:0]op_lr;
 	// wire [31:0]op_ll;
-	wire [31:0]op_adder;
+	// wire [31:0]op_adder;
 	wire comp_isEQUAL,comp_isGREATER,comp_suber_carry;
 	wire [31:0]comp_suber_out;
 
@@ -74,18 +74,7 @@ module ysyx_26010011_EXU(
 	// assign op_ar=$signed(a) >>> (b & 32'h1f);
 	// assign op_lr=a >> (b & 32'h1f);
 	// assign op_ll=a << (b & 32'h1f);
-
-
-	wire [31:0] b_temp;
-	wire isSub = (exu_in_bus_alu_op==4'd2);
-	assign b_temp = isSub?(~b):(b);
-	ysyx_26010011_M_ADDER u_adder(
-		.inA({1'b0,a}),
-		.inB({1'b0,b_temp}),
-		.cin(isSub),
-		.out(op_adder),
-		.carry()
-	);
+	// assign op_adder = (exu_in_bus_alu_op[8])?(a-b):(a+b);
 
 	assign exu_out_bus_rd_valid = exu_in_valid & ~exu_out_bus_exception[4] & exu_in_bus_isWGPR;
 	assign exu_out_bus_bypass_valid = exu_out_valid & ~exu_out_bus_exception[4] & exu_in_bus_isWGPR & ~exu_in_bus_isLOAD;
@@ -95,8 +84,8 @@ module ysyx_26010011_EXU(
 	
 	always @(*) begin
 		case (exu_in_bus_alu_op)
-			4'd1: exu_out_bus_alu_result=op_adder;
-			4'd2: exu_out_bus_alu_result=op_adder;
+			4'd1: exu_out_bus_alu_result=(a+b);
+			4'd2: exu_out_bus_alu_result=(a-b);
 			4'd3: exu_out_bus_alu_result=a << (b & 32'h1f);
 			4'd4: exu_out_bus_alu_result=a >> (b & 32'h1f);
 			4'd5: exu_out_bus_alu_result=($signed(a) >>> (b & 32'h1f));
@@ -159,12 +148,12 @@ module ysyx_26010011_EXU(
 	assign exu_out_bus_dnpc = exu_out_bus_alu_result;
 endmodule
 
-module ysyx_26010011_M_ADDER(
-	input [32:0] inA,
-	input [32:0] inB,
-	input cin,
-	output [31:0] out,
-	output carry
-);
-	assign {carry,out} = inA + inB + {32'b0,cin};
-endmodule
+// module ysyx_26010011_M_ADDER(
+// 	input [32:0] inA,
+// 	input [32:0] inB,
+// 	input cin,
+// 	output [31:0] out,
+// 	output carry
+// );
+// 	assign {carry,out} = inA + inB + {32'b0,cin};
+// endmodule
