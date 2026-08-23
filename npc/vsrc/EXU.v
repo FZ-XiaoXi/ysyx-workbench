@@ -74,7 +74,7 @@ module ysyx_26010011_EXU(
 	assign op_adder = (exu_in_bus_alu_op[8])?(a-b):(a+b);
 
 	assign exu_out_bus_rd_valid = exu_in_valid & ~exu_out_bus_exception[4] & exu_in_bus_isWGPR;
-	assign exu_out_bus_bypass_valid = exu_out_valid & ~exu_out_bus_exception[4] & exu_in_bus_isWGPR & exu_in_bus_isLOAD;
+	assign exu_out_bus_bypass_valid = exu_out_valid & ~exu_out_bus_exception[4] & exu_in_bus_isWGPR & ~exu_in_bus_isLOAD;
 	assign exu_out_bus_csr_valid = exu_in_valid & ~exu_out_bus_exception[4] & |exu_in_bus_opCSR;
 	assign exu_out_bus_csr_bypass_valid = exu_out_valid & ~exu_out_bus_exception[4] & |exu_in_bus_opCSR;
 
