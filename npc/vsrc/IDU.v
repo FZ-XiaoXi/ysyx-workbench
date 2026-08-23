@@ -340,8 +340,8 @@ module ysyx_26010011_IDU(
 					((idu_out_bus_opCSR[2])?
 						(
 							((idu_out_bus_opCSR[1]&~idu_out_bus_opCSR[0])?
-								(~{{27{1'b0}},idu_out_bus_rs1})
-								:{{27{1'b0}},idu_out_bus_rs1}
+								()
+								:
 							)
 						)
 						:(
@@ -351,10 +351,28 @@ module ysyx_26010011_IDU(
 						)
 					)
 				)
-				:rs1_val_bypass
+				:
 		);
 	
-
+	always @(*) begin
+		case(idu_out_bus_opCSR)
+			3'b000:
+				idu_out_bus_rs1_val = rs1_val_bypass;
+			3'b110:
+				idu_out_bus_rs1_val = ~{{27{1'b0}},idu_out_bus_rs1};
+			3'b100:
+			3'b101:
+			3'b111:
+				idu_out_bus_rs1_val = {{27{1'b0}},idu_out_bus_rs1};
+			3'b010:
+				idu_out_bus_rs1_val = ~rs1_val_bypass;
+			3'b001:
+			3'b011:
+				idu_out_bus_rs1_val = rs1_val_bypass;
+			default:
+				idu_out_bus_rs1_val = rs1_val_bypass;
+		endcase
+	end
 	always @(*) begin
 		if(idu_out_bus_rs1 == exu_out_bus_rd && exu_out_bus_rd_valid && exu_out_bus_bypass_valid && idu_out_bus_rs1 != 5'd0) begin
 			rs1_val_bypass = exu_out_bus_gpr_wdata;
