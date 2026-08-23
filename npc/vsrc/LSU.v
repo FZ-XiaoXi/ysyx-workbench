@@ -26,7 +26,7 @@ module ysyx_26010011_LSU(
 	input            lsu_in_bus_isSTORE,
 	input			 lsu_in_bus_isWGPR,
 	input		[2:0]lsu_in_bus_opCSR,
-	input		[4:0]lsu_in_bus_rd,
+	input		[3:0]lsu_in_bus_rd,
 	input	[11:0]lsu_in_bus_csrrd,
 	input	[31:0]lsu_in_bus_csr_result,
 
