@@ -158,8 +158,8 @@ module ysyx_26010011_EX_LS_pipeline(
 	input      [ 1:0]exu_out_bus_perip_mask,
 	input      [31:0]exu_out_bus_pc,
 `ifdef USE_VERILATOR
-	// input            exu_out_bus_comp_result,
-	// input      [31:0]exu_out_bus_alu_result,
+	input            exu_out_bus_comp_result,
+	input      [31:0]exu_out_bus_alu_result,
 	input      [31:0]exu_out_bus_instruction,
 	input            exu_out_bus_isJUMP,
 	input            exu_out_bus_isWCOMP,
@@ -218,8 +218,8 @@ module ysyx_26010011_EX_LS_pipeline(
 			lsu_in_bus_pc<=exu_out_bus_pc;
 			lsu_in_bus_gpr_wdata<=exu_out_bus_gpr_wdata;
 `ifdef USE_VERILATOR
-			// lsu_in_bus_alu_result<=exu_out_bus_alu_result;
-			// lsu_in_bus_comp_result<=exu_out_bus_comp_result;
+			lsu_in_bus_alu_result<=exu_out_bus_alu_result;
+			lsu_in_bus_comp_result<=exu_out_bus_comp_result;
 			lsu_in_bus_instruction<=exu_out_bus_instruction;
 			lsu_in_bus_isJUMP<=exu_out_bus_isJUMP;
 			lsu_in_bus_isWCOMP<=exu_out_bus_isWCOMP;
