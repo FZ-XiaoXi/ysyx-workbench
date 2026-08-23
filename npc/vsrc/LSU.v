@@ -245,15 +245,17 @@ module ysyx_26010011_LSU(
 							 (state == S_WAIT_BRESP && b_fire) || !(lsu_in_bus_isLOAD || lsu_in_bus_isSTORE) || lsu_out_bus_exception[4]);
 	assign lsu_in_ready = (lsu_in_valid & (lsu_in_bus_isLOAD | lsu_in_bus_isSTORE)) ? ((lsu_out_ready & (r_fire | b_fire)) | lsu_out_bus_exception[4]):(1);
 
+	// assign val = val0;
 	always @(*) begin
 		case(lsu_in_bus_addr[1:0])
 			2'b00: val = rdata;
-			2'b01: val = {{8{val0[31]}}, val0[31:8]};
-			2'b10: val = {{8{val1[31]}}, val1[31:8]};
-			2'b11: val = {{8{val2[31]}}, val2[31:8]};
+			2'b01: val = {{8{rdata[31]}}, rdata[31:8]};
+			2'b10: val = {{16{rdata[31]}}, rdata[31:16]};
+			2'b11: val = {{24{rdata[31]}}, rdata[31:24]};
 			default: val = rdata;
 		endcase
 	end
+
 
 	
 	always @(*) begin
