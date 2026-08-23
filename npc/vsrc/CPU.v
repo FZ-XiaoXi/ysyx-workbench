@@ -113,8 +113,8 @@ module ysyx_26010011(
 	wire exu_out_valid,exu_out_ready,exu_out_bus_dnpc_valid;
 	wire [4:0]exu_out_bus_exception;
 // `ifdef USE_VERILATOR
-// 	wire [31:0]exu_out_bus_alu_result;
-// 	wire exu_out_bus_comp_result;
+	wire [31:0]exu_out_bus_alu_result;
+	wire exu_out_bus_comp_result;
 // `endif
 	wire [31:0]exu_out_bus_csr_result,exu_out_bus_dnpc;
 	
@@ -529,8 +529,8 @@ module ysyx_26010011(
 		.exu_out_bus_exception(exu_out_bus_exception),
 		.exu_out_ready(exu_out_ready),
 // `ifdef USE_VERILATOR
-// 		.exu_out_bus_alu_result(exu_out_bus_alu_result),
-// 		.exu_out_bus_comp_result(exu_out_bus_comp_result),       //暂存CSR目的地址
+		.exu_out_bus_alu_result(exu_out_bus_alu_result),
+		.exu_out_bus_comp_result(exu_out_bus_comp_result),       //暂存CSR目的地址
 // `endif
 		.exu_out_bus_csr_result(exu_out_bus_csr_result),
 		.exu_out_bus_gpr_wdata(exu_out_bus_gpr_wdata),
