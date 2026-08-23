@@ -659,7 +659,7 @@ module ysyx_26010011(
 	);/*verilator public_module*/
 	wire [31:0] lsu_out_bus_gpr_wdata;
 	always @(*) begin
-		if(lsu_out_bus_isLOAD) begin
+		if(lsu_in_bus_isLOAD) begin
 			lsu_out_bus_gpr_wdata = lsu_out_bus_lsu_result;
 		end else if(wbu_in_bus_isJUMP) begin
 			lsu_out_bus_gpr_wdata = lsu_in_bus_pc + 4;

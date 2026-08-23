@@ -15,7 +15,7 @@ module ysyx_26010011_WBU(
 	output wbu_in_ready,
 	
 	input [31:0]wbu_in_bus_csr_result,
-	output [31:0]wbu_in_bus_gpr_wdata,
+	input [31:0]wbu_in_bus_gpr_wdata,
 	
 	input [4:0]wbu_in_bus_rd,
 	input [11:0]wbu_in_bus_csrrd,
