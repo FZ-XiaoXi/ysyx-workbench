@@ -662,9 +662,9 @@ module ysyx_26010011(
 	always @(*) begin
 		if(lsu_in_bus_isLOAD) begin
 			lsu_out_bus_gpr_wdata = lsu_out_bus_lsu_result;
-		end else if(wbu_in_bus_isJUMP) begin
+		end else if(lsu_in_bus_isJUMP) begin
 			lsu_out_bus_gpr_wdata = lsu_in_bus_pc + 4;
-		end else if(wbu_in_bus_isWCOMP) begin
+		end else if(lsu_in_bus_isWCOMP) begin
 			lsu_out_bus_gpr_wdata = {31'b0,lsu_out_bus_comp_result};
 		end else begin
 			lsu_out_bus_gpr_wdata = lsu_out_bus_alu_result;
