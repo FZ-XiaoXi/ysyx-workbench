@@ -134,17 +134,10 @@ sim-iverilog: $(IMG) $(IV_SRC)
 	vvp build/myCPU_sim-iverilog
 
 sim-iverilog-netlist: $(IMG) $(NETLIST) $(CELLS) 
-	echo 11111111111111111111
-# 	cat $(NETLIST)
-	echo 22222222222222222222
 	$(MAKE) bin-to-text
-# 	echo 2
 	mkdir -p build
-# 	echo 3
 	iverilog -g2012 -Wall -o build/myCPU_sim-iverilog-netlist -s CPUTop_tb $(IV_NET_SRC) $(NETLIST) $(CELLS) -DIMG_PATH=\"$(IMG).txt\"
-# 	echo 和溢位在本地能跑CI跑不了
 	vvp build/myCPU_sim-iverilog-netlist
-# 	echo 4
 
 include $(NPC_HOME)/../Makefile
 
