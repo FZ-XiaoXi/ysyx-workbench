@@ -80,7 +80,7 @@ extern FILE* log_fp;
     #include "nvboard.h"
 #endif
 
-#define CONFIG_DIFFTEST_ENABLE
+// #define CONFIG_DIFFTEST_ENABLE
 #ifdef CONFIG_DIFFTEST_ENABLE
     #define CONFIG_DIFFTEST_MEM_ENABLE
 #endif
@@ -92,9 +92,9 @@ extern FILE* log_fp;
 #define CONFIG_TRACE_ENABLE
 #ifdef CONFIG_TRACE_ENABLE
 
-    // #define CONFIG_ITRACE_ENABLE
+    #define CONFIG_ITRACE_ENABLE
     #ifdef CONFIG_ITRACE_ENABLE
-        #define CONFIG_ITRACE_PRINT
+        // #define CONFIG_ITRACE_PRINT
     #endif
     
     // #define CONFIG_MTRACE_ENABLE
