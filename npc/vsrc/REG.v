@@ -71,10 +71,10 @@ module ysyx_26010011_GPRs(
 	integer i;
 	always @(posedge clock) begin
 		if(reset) begin
-			GPR[0]<={32{1'b0}};
-			// for(i=0;i<16;i=i+1) begin
-			// 	GPR[i]<={32{1'b0}};
-			// end
+			// GPR[0]<={32{1'b0}};
+			for(i=0;i<16;i=i+1) begin
+				GPR[i]<={32{1'b0}};
+			end
 		end else begin
 			if(gpr_in_wen) begin
 				GPR[gpr_in_addw[3:0]]<=(gpr_in_addw==4'b0000)?{32{1'b0}}:(gpr_in_data);

@@ -40,7 +40,7 @@ module ysyx_26010011_WBU(
 	output [4:0]wbu_out_bus_exception,
 	output fencei_pass
 );  
-	assign wbu_out_bus_gpr_wdata  = wbu_in_bus_gpr_wdata;
+	assign wbu_out_bus_gpr_wdata = wbu_in_bus_gpr_wdata;
 	assign wbu_in_ready=1;
 
 	assign wbu_out_bus_rd_valid = wbu_in_valid & ~wbu_out_bus_exception[4] & wbu_in_bus_isWGPR;
