@@ -51,7 +51,7 @@ CXXFLAGS += $(C_INCFLAGS) -DTOP_NAME="\"V$(TOPNAME)\"" -g
 LDFLAGS += -lreadline
 
 V_INCFLAGS=$(addprefix -I, $(V_INC_PATH))
-VERILATOR_FLAGS=--cc --Mdir build --autoflush --exe --build -O3 --trace --timescale "1ns/1ns" --no-timing $(V_INCFLAGS) --top-module $(TOPNAME) +define+USE_VERILATOR=1
+VERILATOR_FLAGS=--cc --Mdir build --autoflush --exe --build -O3 --trace-fst --timescale "1ns/1ns" --no-timing $(V_INCFLAGS) --top-module $(TOPNAME) +define+USE_VERILATOR=1
 
 override ARGS ?=
 override ARGS += $(ARGS_DIFF)
@@ -72,7 +72,7 @@ concat: $(SRC_V)
 
 sim: $(SIM_C) $(SIM_V) $(NVBOARD_ARCHIVE)
 	$(call git_commit, "sim RTL") # DO NOT REMOVE THIS LINE!!!
-	verilator $(VERILATOR_FLAGS) --trace-fst --top-module $(TOPNAME) $^ $(addprefix -CFLAGS , $(CXXFLAGS)) $(addprefix -LDFLAGS , $(LDFLAGS))
+	verilator $(VERILATOR_FLAGS) --top-module $(TOPNAME) $^ $(addprefix -CFLAGS , $(CXXFLAGS)) $(addprefix -LDFLAGS , $(LDFLAGS))
 	@echo "ARGS = $(ARGS)"
 	@echo "ARGS_DIFF = $(ARGS_DIFF)"
 	env ASAN_OPTIONS=new_delete_type_mismatch=0:detect_leaks=0 LD_PRELOAD="$(shell gcc -print-file-name=libasan.so)" ./build/V$(TOPNAME) $(ARGS) $(IMG) $(ELF)
