@@ -142,9 +142,9 @@ sim-iverilog-netlist: $(IMG) $(NETLIST) $(CELLS)
 	mkdir -p build
 	echo 3
 	iverilog -g2012 -Wall -o build/myCPU_sim-iverilog-netlist -s CPUTop_tb $(IV_NET_SRC) $(NETLIST) $(CELLS) -DIMG_PATH=\"$(IMG).txt\"
-	echo 和溢位在本地能跑CI跑不了
+# 	echo 和溢位在本地能跑CI跑不了
 	vvp build/myCPU_sim-iverilog-netlist
-	echo 4
+# 	echo 4
 
 include $(NPC_HOME)/../Makefile
 
