@@ -21,7 +21,7 @@ module ysyx_26010011_GPRs(
 	input  [31:0]gpr_in_data,
 	input        gpr_in_wen
 ); 
- 	reg [31:0]GPR[15:1]/* verilator public */;
+ 	reg [31:0]GPR[1:15]/* verilator public */;
 
 	// assign gpr_out_a=GPR[gpr_in_addra[3:0]];
 	// assign gpr_out_b=GPR[gpr_in_addrb[3:0]];
