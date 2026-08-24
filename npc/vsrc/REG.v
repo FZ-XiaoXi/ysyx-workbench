@@ -155,10 +155,7 @@ module ysyx_26010011_CSRs(
 `ifdef USE_VERILATOR
 	always @(*) begin
 		if (csr_in_wen & ((csr_in_addw==`ysyx_26010011_ADD_MCYCLE) | (csr_in_addw==`ysyx_26010011_ADD_MCYCLEH))) begin
-			difftest_skip_ref(4);
-		end
-		if(csr_in_wen & (csr_in_addw==`ysyx_26010011_ADD_MEPC)) begin
-			difftest_skip_ref(5);
+			difftest_skip_ref(32'h89898989);
 		end
 	end
 `endif

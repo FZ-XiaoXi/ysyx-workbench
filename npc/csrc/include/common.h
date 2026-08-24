@@ -92,7 +92,7 @@ extern FILE* log_fp;
 #define CONFIG_TRACE_ENABLE
 #ifdef CONFIG_TRACE_ENABLE
 
-    #define CONFIG_ITRACE_ENABLE
+    // #define CONFIG_ITRACE_ENABLE
     #ifdef CONFIG_ITRACE_ENABLE
         // #define CONFIG_ITRACE_PRINT
     #endif
