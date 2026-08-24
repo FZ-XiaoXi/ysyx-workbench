@@ -40,7 +40,7 @@ void dtrace(int addr, bool isWrite, int data){
 
 void itrace(){
     char *p = cpu.logbuf;
-    p += snprintf(p, sizeof(cpu.logbuf), "[%08ld]" FMT_WORD ":", counter_inst, cpu.tb_FINAL_pc);
+    p += snprintf(p, sizeof(cpu.logbuf), "[%08ld]" FMT_WORD ":", cpu.counter_inst, cpu.tb_FINAL_pc);
     uint32_t inst_t = pmem_read(cpu.pc);
     uint8_t *inst = (uint8_t *)&inst_t;
     for (int i = CONFIG_INST_LEN - 1; i >= 0; i --) {
