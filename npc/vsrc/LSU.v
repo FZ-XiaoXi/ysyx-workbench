@@ -88,10 +88,6 @@ module ysyx_26010011_LSU(
 	localparam S_WAIT_RDATA  = 3'd4; // 等待读数据返回(R通道)
 	reg [31:0] lsu_out_bus_rdata;
 	reg [2:0] state/*verilator public*/, next_state;
-	reg [31:0]  awaddr_q;
-	reg [31:0]  wdata_q;
-	reg [2:0]   awsize_q;
-	reg [3:0]   wstrb_q;
 
 	// 握手信号 lsu_
 	wire aw_fire;

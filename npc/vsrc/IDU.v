@@ -286,7 +286,7 @@ module ysyx_26010011_IDU(
 			end else if(isFENCEI)begin
 				idu_out_bus_exception = {1'b0,`ysyx_26010011_EXCEPTION_FENCEI};
 			end else begin
-				idu_out_bus_exception = idu_in_bus_exception;
+				idu_out_bus_exception = 5'b0;
 			end
 		end
 	end

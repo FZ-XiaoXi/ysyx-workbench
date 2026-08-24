@@ -77,7 +77,7 @@ module ysyx_26010011_EXU(
 
 	assign exu_out_bus_rd_valid = exu_in_valid & exu_in_bus_isWGPR;
 	assign exu_out_bus_bypass_valid = exu_out_valid & exu_in_bus_isWGPR & ~exu_in_bus_isLOAD;
-	assign exu_out_bus_csr_valid = exu_in_valid & |exu_in_bus_opCSR;
+	assign exu_out_bus_csr_valid = exu_in_valid & |exu_out_bus_opCSR;
 
 	
 	always @(*) begin
@@ -101,12 +101,12 @@ module ysyx_26010011_EXU(
 	
 	assign {comp_suber_carry,comp_suber_out} = {1'b0,comp_a} + (~{1'b0,comp_b}) + 1;
 	assign comp_isEQUAL = ~(|comp_suber_out);
-	assign comp_isGREATER = (exu_in_bus_isUnSigned)?((|comp_suber_out) & ~comp_suber_carry):((~comp_a[31] & comp_b[31]) | ((comp_a[31] ~^ comp_b[31])  & ~comp_suber_out[31]));
+	assign comp_isGREATER = (exu_in_bus_isUnSigned)?((!comp_isEQUAL) & ~comp_suber_carry):((~comp_a[31] & comp_b[31]) | ((comp_a[31] ~^ comp_b[31])  & ~comp_suber_out[31]));
 	always @(*) begin
 		case (exu_in_bus_comp_op)
 			2'b00: exu_out_bus_comp_result=comp_isEQUAL | comp_isGREATER;
-			2'b01: exu_out_bus_comp_result=~(comp_isEQUAL | comp_isGREATER);
-			2'b10: exu_out_bus_comp_result=~comp_isEQUAL;
+			2'b01: exu_out_bus_comp_result=!(comp_isEQUAL | comp_isGREATER);
+			2'b10: exu_out_bus_comp_result=!comp_isEQUAL;
 			2'b11: exu_out_bus_comp_result=comp_isEQUAL;
 		endcase
 	end

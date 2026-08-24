@@ -232,7 +232,7 @@ module ysyx_26010011_IFU_icache #(
 	assign ar_fire = out_arvalid && out_arready;
 	assign r_fire  = out_rvalid && out_rready;
 
-	assign out_araddr  = in_addr & {{(32-OFFSET_W){1'b1}}, {OFFSET_W{1'b0}}};
+	assign out_araddr  = {in_addr[31:OFFSET_W], {OFFSET_W{1'b0}}};
 	assign out_arid    = 4'b0;
 	assign out_arlen   = BURST_LEN - 1;
 	assign out_arsize  = 3'b010;

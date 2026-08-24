@@ -103,7 +103,11 @@ module ysyx_26010011_CLINT(
 			mtime_H <= 16'd0;
 		end
 		else begin
-			{mtime_H,mtime_L} <= {mtime_H,mtime_L} + 1;
+			mtime_L <= mtime_L + 1;
+			if(mtime_L == 32'hffffffff) begin
+				mtime_H <= mtime_H + 1;
+			end
+			// {mtime_H,mtime_L} <= {mtime_H,mtime_L} + 1;
 		end
 	end
 	assign mcycle = mtime_L;
