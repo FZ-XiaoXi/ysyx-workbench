@@ -101,10 +101,6 @@ void init(int argc, char** argv){
 	top->clock=1;top->reset=1;top->eval();DUMP();contextp->timeInc(2);
 	top->clock=0;top->reset=1;top->eval();DUMP();contextp->timeInc(2);
 	top->clock=0;top->reset=0;top->eval();DUMP();contextp->timeInc(2);
-	
-	
-	// top->clock=1;top->reset=0;top->eval();contextp->timeInc(10);
-	// top->clock=0;top->reset=0;top->eval();contextp->timeInc(10);
 
     //init CPU
 	cpu.pc = RESET_VECTOR;
@@ -115,19 +111,7 @@ void init(int argc, char** argv){
 	cpu.count = 0;
 	cpu.inst = FLASH(cpu.pc);
 	cpu.mem_access_addr = 0;
-	//cpu.pc=
 
-	// unsigned char * ptr = (unsigned char *)(&FLASH[0]);
-	// unsigned int j=0;
-	// while(j < 0x1000){
-	// 	*ptr = j & 0xff;
-	// 	Log("FLASH[%08x] = %02x", j, *ptr);
-	// 	ptr++;
-	// 	j++;
-	// }
-
-	
-	
 	//init regex
 	extern void init_regex();
 	init_regex();
@@ -172,8 +156,7 @@ static int parse_args(int argc, char *argv[]) {
       case 1:
         filecount++;
         if(filecount==1){img_file = optarg;break;}
-        else if(filecount==2){img_data_file = optarg;return 0;}
-		else if(filecount==3){elf_file = optarg;return 0;}
+		else if(filecount==2){elf_file = optarg;return 0;}
       default:
         printf("Usage: %s [OPTION...] IMAGE [args]\n\n", argv[0]);
         printf("\t-b,--batch              run with batch mode\n");
