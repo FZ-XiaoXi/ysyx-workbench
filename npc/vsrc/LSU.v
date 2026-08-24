@@ -121,39 +121,43 @@ module ysyx_26010011_LSU(
 	assign ar_fire = arvalid && arready;
 	assign r_fire = rvalid && rready;
 
-	assign awaddr  = {awaddr_q};
+	assign awaddr  = {lsu_in_bus_addr};
 	assign awid    = 4'b0;
 	assign awlen   = 8'b0;
 	
-	assign awsize  = awsize_q;
+	assign awsize  = (lsu_in_bus_perip_mask == 2'b00) ? 3'b000 :
+							(lsu_in_bus_perip_mask == 2'b01) ? 3'b001 : 3'b010;
 	assign awburst = 2'b01;   // INCR
 	// 对于 awsize=0(byte), wdata 只取 [7:0]，靠 wstrb 选 lane
 	// 对于 awsize=1(half), wdata 只取 [15:0]
 	// Fragmenter 对齐地址后 UART APB 用 paddr[1:0] 选字节，故数据必须放在对应 lane
-	assign wdata   = wdata_q;
-	assign wstrb   = wstrb_q;
-	assign wlast   = 1'b1;    // single beat
-
-	
-	always @(posedge clock) begin
-		if(reset) begin
-			// awaddr_q <= 32'b0;
-			// wdata_q  <= 32'b0;
-			// awsize_q <= 3'b0;
-			// wstrb_q  <= 4'b0;
-		end else begin
-			if(next_state == S_WAIT_BRESP || next_state == S_WAIT_AW_W) begin
-				awaddr_q <= lsu_in_bus_addr;
-				wdata_q  <= lsu_in_bus_wdata << (lsu_in_bus_addr[1:0] * 8);
-				awsize_q <= (lsu_in_bus_perip_mask == 2'b00) ? 3'b000 :
-							(lsu_in_bus_perip_mask == 2'b01) ? 3'b001 : 3'b010;
-				wstrb_q  <= (
+	assign wdata   = lsu_in_bus_wdata << (lsu_in_bus_addr[1:0] * 8);
+	assign wstrb   = (
 							(lsu_in_bus_perip_mask == 2'b00) ? 4'b0001 :
 							(lsu_in_bus_perip_mask == 2'b01) ? 4'b0011 : 
 															   4'b1111 ) << lsu_in_bus_addr[1:0];
-			end
-		end
-	end
+	assign wlast   = 1'b1;    // single beat
+
+	
+	// always @(posedge clock) begin
+	// 	if(reset) begin
+	// 		// awaddr_q <= 32'b0;
+	// 		// wdata_q  <= 32'b0;
+	// 		// awsize_q <= 3'b0;
+	// 		// wstrb_q  <= 4'b0;
+	// 	end else begin
+	// 		if(next_state == S_WAIT_BRESP || next_state == S_WAIT_AW_W) begin
+	// 			awaddr_q <= lsu_in_bus_addr;
+	// 			wdata_q  <= lsu_in_bus_wdata << (lsu_in_bus_addr[1:0] * 8);
+	// 			awsize_q <= (lsu_in_bus_perip_mask == 2'b00) ? 3'b000 :
+	// 						(lsu_in_bus_perip_mask == 2'b01) ? 3'b001 : 3'b010;
+	// 			wstrb_q  <= (
+	// 						(lsu_in_bus_perip_mask == 2'b00) ? 4'b0001 :
+	// 						(lsu_in_bus_perip_mask == 2'b01) ? 4'b0011 : 
+	// 														   4'b1111 ) << lsu_in_bus_addr[1:0];
+	// 		end
+	// 	end
+	// end
 
 	assign araddr  = lsu_in_bus_addr;
 	assign arid    = 4'b0;
