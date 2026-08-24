@@ -103,7 +103,7 @@ extern FILE* log_fp;
         #define CONFIG_MTRACE_RANGE_RIGHT 0x80008fcf
     #endif
 
-    #define CONFIG_FTRACE_ENABLE
+    // #define CONFIG_FTRACE_ENABLE
 
     // #define CONFIG_DTRACE_ENABLE
 
