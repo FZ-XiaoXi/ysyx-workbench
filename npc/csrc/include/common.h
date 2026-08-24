@@ -39,7 +39,7 @@
 
 
 extern VerilatedContext* contextp;
-extern VerilatedVcdC* tfp;
+extern VerilatedFstC* tfp;
 
 extern VysyxSoCFull* top;
 extern FILE* log_fp;
