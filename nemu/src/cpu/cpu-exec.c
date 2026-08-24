@@ -91,7 +91,7 @@ void write_btrace_log(uint32_t pc,uint32_t tar,uint32_t is_jump){
 static void trace_and_difftest(Decode *_this, vaddr_t dnpc) {
 #ifdef CONFIG_ITRACE_COND
   if (ITRACE_COND) {
-    // log_write("%s\n", _this->logbuf);
+    log_write("%s\n", _this->logbuf);
     IFDEF(CONFIG_TRACE_FILE_LOG, do{if(!itrace_log_init) init_itrace_log();fwrite(&_this->pc, sizeof(_this->pc), 1, itrace_log_fp);}while(0));
     // 写入字节 _this->pc
   }
