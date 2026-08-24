@@ -23,7 +23,7 @@ module ysyx_26010011_RAW(
 
     input exu_bypass_valid,
     input lsu_bypass_valid,
-    // input wbu_bypass_valid,
+    input wbu_bypass_valid,
 
     input [ 3:0] exu_in_bus_rd,
     input [ 3:0] lsu_in_bus_rd,
@@ -49,7 +49,7 @@ module ysyx_26010011_RAW(
         if(lsu_csr_valid && (csr == lsu_in_bus_csr_rd)) begin
             is_RAW = 1'b1;
         end
-        if(wbu_rd_valid && ((rs1 == wbu_in_bus_rd) || ((rs2 == wbu_in_bus_rd) && rs2_valid))) begin
+        if(wbu_rd_valid && ((rs1 == wbu_in_bus_rd) || ((rs2 == wbu_in_bus_rd) && rs2_valid)) && !wbu_bypass_valid) begin
             is_RAW = 1'b1;
         end
         if(wbu_csr_valid && (csr == wbu_in_bus_csr_rd)) begin
