@@ -55,7 +55,7 @@ module ysyx_26010011_EXU(
 	wire [31:0]op_ar;
 	wire [31:0]op_lr;
 	wire [31:0]op_ll;
-	// wire [31:0]op_adder;
+	wire [31:0]op_adder;
 	wire comp_isEQUAL,comp_isGREATER,comp_suber_carry;
 	wire [31:0]comp_suber_out;
 
