@@ -71,7 +71,7 @@ void trace_and_difftest(){
     }
 #endif
 #ifdef CONFIG_FTRACE_ENABLE
-    if(((cpu.inst & 0x7f) == 0x6f) || (((cpu.inst & 0x7f) == 0x67) && (((cpu.inst >> 12) & 0x07) == 0b000))){
+    if(((pmem_read(cpu.tb_FINAL_pc) & 0x7f) == 0x6f) || (((pmem_read(cpu.tb_FINAL_pc) & 0x7f) == 0x67) && (((pmem_read(cpu.tb_FINAL_pc) >> 12) & 0x07) == 0b000))){
         //jal or jalr
         func_trace(&cpu);
     }
