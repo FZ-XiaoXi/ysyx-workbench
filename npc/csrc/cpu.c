@@ -76,7 +76,6 @@ void cpu_exec(uint64_t n){
 	// int this_cnt = 0;
 	// static uint64_t cyc_cnt = 0;
 	while(n > 0){
-		n--;
 		cpu_exec_once();
 		#ifdef CONFIG_NVBOARD_ENABLE
 			nvboard_update();
@@ -119,7 +118,7 @@ void cpu_exec(uint64_t n){
 		if(cpu.tb_isFINAL){
 			// this_cnt = 0;
 			// Log("PC=" FMT_WORD , cpu.pc);
-			// n--;
+			n--;
 			cpu.counter_inst++;
 			if(cpu.tb_FINAL_inst==_EBREAK && cpu.tb_isFINAL){
 				ebreak();
