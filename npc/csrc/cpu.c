@@ -160,9 +160,9 @@ void cpu_exec(uint64_t n){
 	{
 		case NPC_ABORT:
 		case NPC_END: {
-			DUMP();contextp->timeInc(1);
-			DUMP();contextp->timeInc(1);
-			DUMP();contextp->timeInc(1);
+			contextp->timeInc(1);DUMP();
+			contextp->timeInc(1);DUMP();
+			contextp->timeInc(1);DUMP();
 			bool success = true;
 			cpu.halt_ret = reg_str2val("$a0", &success);
 			Assert(success, "Cannot to get the value of '$a0'");
