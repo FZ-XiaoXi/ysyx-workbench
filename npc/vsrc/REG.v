@@ -97,7 +97,7 @@ module ysyx_26010011_CSRs(
 	input      [11:0]csr_in_addr,
 	output reg [31:0]csr_out_data,
 	input [31:0]mcycle,
-	input [16:0]mcycleh,
+	input [15:0]mcycleh,
 	input      [31:0]csr_pc,
 	input      [31:0]csr_in_data,
 	input            csr_in_wen,
