@@ -13,7 +13,7 @@ module ysyx_26010011_CLINT(
 	input clock,
 	input reset,
 	output [31:0]mcycle,
-	output [31:0]mcycleh,
+	output [15:0]mcycleh,
 	//AR
 	input  [31:0] araddr,
 	input         arvalid,
@@ -95,7 +95,7 @@ module ysyx_26010011_CLINT(
 	assign rresp = 2'b0;
 	// assign bresp = 2'b0;
 
-	assign rdata = (raddr_reg) ? mcycleh : mcycle;
+	assign rdata = (raddr_reg) ? {16'b0,mcycleh} : mcycle;
 
 	always @(posedge clock) begin
 		if(reset) begin
@@ -107,5 +107,5 @@ module ysyx_26010011_CLINT(
 		end
 	end
 	assign mcycle = mtime_L;
-	assign mcycleh = {16'b0,mtime_H};
+	assign mcycleh = mcycleh;
 endmodule

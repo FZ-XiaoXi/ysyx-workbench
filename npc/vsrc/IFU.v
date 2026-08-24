@@ -14,7 +14,6 @@ module ysyx_26010011_IFU(
 	// input flush_icache,
 	input [31:0]    dnpc,
 	input           flush_valid,
-	input           dnpc_valid,
 
 	output reg          ifu_out_valid/*verilator public*/,
 	input               ifu_out_ready/*verilator public*/,
@@ -71,7 +70,7 @@ module ysyx_26010011_IFU(
 
 	assign ifu_out_bus_fetching = PC;
 	assign ifu_out_valid = (((in_reqValid & in_respValid)?1:ifu_out_valid_r) | ifu_out_bus_exception[4]);
-	assign ifu_out_bus_instruction = (ifu_out_bus_exception[4])?(`ysyx_26010011_INST_NOP):((in_reqValid & in_respValid)?in_rdata:ifu_out_bus_instruction_r);
+	assign ifu_out_bus_instruction = ((in_reqValid & in_respValid)?in_rdata:ifu_out_bus_instruction_r);
 	assign ifu_out_bus_snpc = ifu_out_bus_pc + 32'd4;
 	assign ifu_out_bus_pc = (in_reqValid & (in_respValid | ifu_out_bus_exception[4]))?PC:ifu_out_bus_pc_r;
 
@@ -88,7 +87,7 @@ module ysyx_26010011_IFU(
 				`endif
 			`endif
 		end else if(flush_valid | (ifu_out_ready & ifu_out_valid)) begin
-			PC <= (dnpc_valid)?{dnpc[31:1],1'b0}:{ifu_out_bus_snpc[31:1],1'b0};
+			PC <= (flush_valid)?{dnpc[31:1],1'b0}:{ifu_out_bus_snpc[31:1],1'b0};
 		end
 	end
 	
@@ -97,7 +96,7 @@ module ysyx_26010011_IFU(
 			in_reqValid <= 1'b0;
 		end else if(fencei_flush) begin
 			in_reqValid <= 1'b1;
-		end else if(flush_valid | dnpc_valid) begin
+		end else if(flush_valid) begin
 			in_reqValid <= 1'b1;
 		end else begin
 			if(ifu_out_valid) begin

@@ -104,7 +104,7 @@ module ysyx_26010011(
 	wire exu_in_valid,exu_in_ready,exu_in_bus_isLOAD,exu_in_bus_isSTORE,exu_in_bus_isWGPR,exu_in_bus_isJUMP,exu_in_bus_isWCOMP,exu_in_bus_isBRANCH,exu_in_bus_isUnSigned,exu_in_bus_isUsePC,exu_in_bus_alu_isUseImm,exu_in_bus_comp_isUseImm;
 	wire [3:0]exu_in_bus_rd,exu_out_bus_rd;
 	wire [4:0]exu_in_bus_exception;
-	wire [31:0]exu_in_bus_rs1_val,exu_in_bus_rs2_val,exu_in_bus_imm,exu_in_bus_pc ,exu_in_bus_snpc;
+	wire [31:0]exu_in_bus_rs1_val,exu_in_bus_rs2_val,exu_in_bus_imm,exu_in_bus_pc;
 	wire [3:0]exu_in_bus_alu_op;
 	wire [1:0]exu_in_bus_comp_op,exu_in_bus_perip_mask;
 	wire [2:0]exu_in_bus_opCSR;
@@ -114,6 +114,7 @@ module ysyx_26010011(
 	wire exu_out_valid,exu_out_ready,exu_out_bus_dnpc_valid;
 	wire [4:0]exu_out_bus_exception;
 	wire [31:0]exu_out_bus_alu_result;
+	wire exu_out_bus_opCSR;
 // `ifdef USE_VERILATOR
 	
 	wire exu_out_bus_comp_result;
@@ -124,7 +125,7 @@ module ysyx_26010011(
 	wire wbu_in_valid,wbu_in_ready,wbu_in_bus_isWGPR;
 	wire [31:0]wbu_in_bus_csr_result,wbu_in_bus_pc;
 	wire [11:0]wbu_in_bus_csrrd,wbu_out_bus_csrrd;
-	wire [2:0]wbu_in_bus_opCSR;
+	wire       wbu_in_bus_opCSR;
 	wire [3:0]wbu_in_bus_rd,wbu_out_bus_rd;
 	wire [4:0]wbu_in_bus_exception;
 	wire [31:0]wbu_out_bus_gpr_wdata;
@@ -140,7 +141,7 @@ module ysyx_26010011(
 	wire [3:0]lsu_in_bus_rd,lsu_out_bus_rd;
 	wire [4:0]lsu_in_bus_exception;
 	wire [11:0]lsu_in_bus_csrrd,lsu_out_bus_csrrd;
-	wire [2:0]lsu_in_bus_opCSR;
+	wire lsu_in_bus_opCSR;
 	wire lsu_in_bus_isLOAD,lsu_in_bus_isSTORE;
 	wire lsu_out_valid,lsu_out_ready;
 	wire [4:0]lsu_out_bus_exception;
@@ -154,7 +155,7 @@ module ysyx_26010011(
 
 	//dnpc
 	wire [31:0]dnpc;
-	reg dnpc_valid;
+	wire dnpc_valid;
 
 	wire [3:0] gpr_raddra,gpr_raddrb,gpr_waddr;
 	wire [31:0]gpr_rdataa,gpr_rdatab,gpr_wdata,csr_mtvec,csr_mepc,csr_pc;
@@ -166,7 +167,7 @@ module ysyx_26010011(
 	wire fencei_pass;
 	wire [4:0]wbu_out_bus_exception;
 
-	wire flush_valid/*verilator public*/,ifu_flush_valid,idu_flush_valid,exu_flush_valid,lsu_flush_valid,wbu_flush_valid;
+	wire flush_valid/*verilator public*/;
 	wire flush_exception_valid/*verilator public*/;
 
 	wire [31:0] r_pc,r_tar,w_pc,w_tar;
@@ -228,9 +229,9 @@ module ysyx_26010011(
 	wire exu_out_bus_rd_valid,exu_out_bus_bypass_valid,exu_out_bus_csr_valid;
 	wire lsu_out_bus_rd_valid,lsu_out_bus_bypass_valid,lsu_out_bus_csr_valid;
 	wire wbu_out_bus_rd_valid,wbu_out_bus_bypass_valid,wbu_out_bus_csr_valid;
-	wire [31:0] mcycle,mcycleh;
+	wire [31:0] mcycle;
+	wire [15:0] mcycleh;
 
-	assign exu_in_bus_snpc = exu_in_bus_pc + 32'd4;
 	assign dnpc=(wbu_out_bus_exception[4])?
 			(
 				(wbu_out_bus_exception[3:0]==`ysyx_26010011_EXCEPTION_MRET)?(csr_mepc):(csr_mtvec)
@@ -239,23 +240,11 @@ module ysyx_26010011(
 			);
 
 	assign csr_pc = wbu_in_bus_pc;
-
-	always @(*) begin
-		if(flush_exception_valid) begin
-			dnpc_valid = 1;
-		end else begin
-			dnpc_valid = exu_out_bus_dnpc_valid;
-		end
-	end
+	assign dnpc_valid = flush_exception_valid ? 1'b0 : exu_out_bus_dnpc_valid;
 	
 	assign flush_exception_valid= wbu_out_bus_exception[4];
 	assign flush_valid=dnpc_valid;
 
-	assign ifu_flush_valid=flush_valid;
-	assign idu_flush_valid=flush_valid | fencei_pass;
-	assign exu_flush_valid=flush_valid;
-	assign lsu_flush_valid=flush_exception_valid;
-	assign wbu_flush_valid=flush_exception_valid;
 
 
 	ysyx_26010011_IFU IFU_0(
@@ -264,8 +253,7 @@ module ysyx_26010011(
 		
 		// input flush_icache,
 		.dnpc(dnpc),
-		.flush_valid(ifu_flush_valid),
-		.dnpc_valid(dnpc_valid),
+		.flush_valid(flush_valid),
 
 		.ifu_out_valid(ifu_out_valid),
 		.ifu_out_ready(ifu_out_ready),
@@ -294,7 +282,7 @@ module ysyx_26010011(
 	ysyx_26010011_IF_ID_pipeline IF_ID_inst(
 		.clock(clock),
 		.reset(reset),
-		.flush_valid(idu_flush_valid),
+		.flush_valid(flush_valid | fencei_pass),
 
 		.ifu_out_valid(ifu_out_valid),
 		.ifu_out_ready(ifu_out_ready),
@@ -314,7 +302,7 @@ module ysyx_26010011(
 		.clock(clock),
 		.reset(reset),
 		.fencei_pass(fencei_pass),
-		.flush_valid(idu_flush_valid),
+		.flush_valid(flush_valid | fencei_pass),
 		.idu_in_bus_instruction(idu_in_bus_instruction),
 		.idu_in_bus_pc(idu_in_bus_pc),
 		.idu_in_bus_exception(idu_in_bus_exception),
@@ -378,7 +366,7 @@ module ysyx_26010011(
 	ysyx_26010011_ID_EX_pipeline ID_EX_inst(
 		.clock(clock),
 		.reset(reset),
-		.flush_valid(exu_flush_valid),
+		.flush_valid(flush_valid),
 		.idu_out_bus_exception(idu_out_bus_exception),
 		.idu_out_valid(idu_out_valid),
 		.idu_out_ready(idu_out_ready),
@@ -437,7 +425,7 @@ module ysyx_26010011(
 	ysyx_26010011_EXU EXU_0(
 		.clock(clock),
 		.reset(reset),
-		.flush_valid(exu_flush_valid),
+		.flush_valid(flush_valid),
 
 		.exu_in_valid(exu_in_valid),
 		.exu_in_ready(exu_in_ready),
@@ -458,8 +446,7 @@ module ysyx_26010011(
 		.exu_in_bus_isWGPR(exu_in_bus_isWGPR),
 		.exu_in_bus_isLOAD(exu_in_bus_isLOAD),
 		.exu_in_bus_isWCOMP(exu_in_bus_isWCOMP),
-		.exu_out_bus_alu_result(exu_out_bus_alu_result),
-		
+				
 		.exu_out_bus_rd_valid(exu_out_bus_rd_valid),
 		.exu_out_bus_bypass_valid(exu_out_bus_bypass_valid),
 		.exu_out_bus_csr_valid(exu_out_bus_csr_valid),
@@ -467,6 +454,8 @@ module ysyx_26010011(
 		.exu_out_valid(exu_out_valid),
 		.exu_out_bus_exception(exu_out_bus_exception),
 		.exu_out_ready(exu_out_ready),
+		.exu_out_bus_alu_result(exu_out_bus_alu_result),
+		.exu_out_bus_opCSR(exu_out_bus_opCSR),
 `ifdef USE_VERILATOR
 		.exu_out_bus_comp_result(exu_out_bus_comp_result),       //暂存CSR目的地址
 `endif
@@ -480,7 +469,7 @@ module ysyx_26010011(
 	ysyx_26010011_EX_LS_pipeline EX_LS_inst(
 		.clock(clock),
 		.reset(reset),
-		.flush_valid(lsu_flush_valid),
+		.flush_valid(flush_exception_valid),
 
 		.exu_out_valid(exu_out_valid),
 		.exu_out_ready(exu_out_ready),
@@ -497,7 +486,7 @@ module ysyx_26010011(
 		.exu_out_bus_isSTORE(exu_in_bus_isSTORE),
 		.exu_out_bus_isWGPR(exu_in_bus_isWGPR),
 		
-		.exu_out_bus_opCSR(exu_in_bus_opCSR),
+		.exu_out_bus_opCSR(exu_out_bus_opCSR),
 		.exu_out_bus_isUnSigned(exu_in_bus_isUnSigned),
 		.exu_out_bus_perip_mask(exu_in_bus_perip_mask),
 `ifdef USE_VERILATOR
@@ -509,7 +498,6 @@ module ysyx_26010011(
 		.exu_out_bus_isBRANCH(exu_in_bus_isBRANCH),
 `endif
 		.exu_out_bus_pc(exu_in_bus_pc),
-		// .exu_out_bus_snpc(exu_in_bus_snpc),
 		.lsu_in_valid(lsu_in_valid),
 		.lsu_in_bus_exception(lsu_in_bus_exception),
 		.lsu_in_ready(lsu_in_ready),
@@ -543,7 +531,7 @@ module ysyx_26010011(
 	ysyx_26010011_LSU LSU_0(
 		.clock(clock),
 		.reset(reset),
-		.flush_valid(lsu_flush_valid),
+		.flush_valid(flush_exception_valid),
 		.lsu_in_valid(lsu_in_valid),
 		.lsu_in_ready(lsu_in_ready),
 		.lsu_in_bus_exception(lsu_in_bus_exception),
@@ -604,7 +592,7 @@ module ysyx_26010011(
 	ysyx_26010011_LS_WB_pipeline LS_WB_inst(
 		.clock(clock),
 		.reset(reset),
-		.flush_valid(wbu_flush_valid),
+		.flush_valid(flush_exception_valid),
 
 		.lsu_out_valid(lsu_out_valid),
 		.lsu_out_ready(lsu_out_ready),
@@ -662,7 +650,7 @@ module ysyx_26010011(
 	ysyx_26010011_WBU WBU_0(
 		.clock(clock),
 		.reset(reset),
-		.flush_valid(wbu_flush_valid),
+		.flush_valid(flush_exception_valid),
 
 		.wbu_in_valid(wbu_in_valid),
 		.wbu_in_ready(wbu_in_ready),

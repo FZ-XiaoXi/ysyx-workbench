@@ -20,7 +20,7 @@ module ysyx_26010011_WBU(
 	input [3:0]wbu_in_bus_rd,
 	input [11:0]wbu_in_bus_csrrd,
 	input wbu_in_bus_isWGPR,
-	input [2:0]wbu_in_bus_opCSR,
+	input wbu_in_bus_opCSR,
 	input [4:0]wbu_in_bus_exception,
 
 	output wbu_out_bus_rd_valid,
@@ -43,9 +43,9 @@ module ysyx_26010011_WBU(
 	assign wbu_out_bus_gpr_wdata = wbu_in_bus_gpr_wdata;
 	assign wbu_in_ready=1;
 
-	assign wbu_out_bus_rd_valid = wbu_in_valid & ~wbu_out_bus_exception[4] & wbu_in_bus_isWGPR;
-	assign wbu_out_bus_bypass_valid = wbu_in_valid & ~wbu_out_bus_exception[4] & wbu_in_bus_isWGPR ;
-	assign wbu_out_bus_csr_valid = wbu_in_valid & ~wbu_out_bus_exception[4] & |wbu_in_bus_opCSR;
+	assign wbu_out_bus_rd_valid = wbu_in_valid & wbu_in_bus_isWGPR;
+	assign wbu_out_bus_bypass_valid = wbu_in_valid & wbu_in_bus_isWGPR ;
+	assign wbu_out_bus_csr_valid = wbu_in_valid & wbu_in_bus_opCSR;
 	assign wbu_out_bus_rd = wbu_in_bus_rd;
 	assign wbu_out_bus_csrrd = wbu_in_bus_csrrd;
 
@@ -58,6 +58,6 @@ module ysyx_26010011_WBU(
 	assign fencei_pass = (wbu_in_valid & ~wbu_in_bus_exception[4] & (wbu_in_bus_exception[3:0]==`ysyx_26010011_EXCEPTION_FENCEI))?1:0;
 
 	assign csr_address=wbu_in_bus_csrrd;
-	assign csr_we=((|wbu_in_bus_opCSR) & wbu_in_valid & ~wbu_in_bus_exception[4])?1:0;
+	assign csr_we=(wbu_in_bus_opCSR & wbu_in_valid & ~wbu_in_bus_exception[4])?1:0;
 	assign csr_wdata=wbu_in_bus_csr_result;
 endmodule

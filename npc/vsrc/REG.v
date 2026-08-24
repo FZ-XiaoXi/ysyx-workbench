@@ -97,7 +97,7 @@ module ysyx_26010011_CSRs(
 	input      [11:0]csr_in_addr,
 	output reg [31:0]csr_out_data,
 	input [31:0]mcycle,
-	input [31:0]mcycleh,
+	input [15:0]mcycleh,
 	input      [31:0]csr_pc,
 	input      [31:0]csr_in_data,
 	input            csr_in_wen,
@@ -118,7 +118,7 @@ module ysyx_26010011_CSRs(
 	always @(*) begin
 		case(csr_in_addr)
 			`ysyx_26010011_ADD_MCYCLE:   	csr_out_data = mcycle;
-			`ysyx_26010011_ADD_MCYCLEH:   	csr_out_data = mcycleh;
+			`ysyx_26010011_ADD_MCYCLEH:   	csr_out_data = {16'b0,mcycleh};
 			`ysyx_26010011_ADD_MTVEC:   	csr_out_data = CSR_MTVEC;
 			`ysyx_26010011_ADD_MEPC:   		csr_out_data = CSR_MEPC;
 			`ysyx_26010011_ADD_MCAUSE:   	csr_out_data = CSR_MCAUSE;
