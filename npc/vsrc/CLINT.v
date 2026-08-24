@@ -107,5 +107,5 @@ module ysyx_26010011_CLINT(
 		end
 	end
 	assign mcycle = mtime_L;
-	assign mcycleh = mcycleh;
+	assign mcycleh = mtime_H;
 endmodule
