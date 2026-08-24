@@ -360,6 +360,8 @@ module ysyx_26010011(
 		.idu_out_bus_perip_mask(idu_out_bus_perip_mask),
 		.idu_out_bus_rs1_val(idu_out_bus_rs1_val),
 		.idu_out_bus_rs2_val(idu_out_bus_rs2_val),
+		.idu_out_bus_rs1(gpr_raddra),
+		.idu_out_bus_rs2(gpr_raddrb),
 		
 
 		.exu_out_bus_rd_valid(exu_out_bus_rd_valid),

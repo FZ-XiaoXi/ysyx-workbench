@@ -57,7 +57,8 @@ module ysyx_26010011_IDU(
 	output       [ 3:0]idu_out_bus_rd,
 	output reg   [ 4:0]idu_out_bus_exception,
 	output       [11:0]idu_out_bus_csrrd,
-
+	output       [ 3:0]idu_out_bus_rs1,
+	output       [ 3:0]idu_out_bus_rs2,
 	output reg   [31:0]idu_out_bus_imm,
 	output             idu_out_bus_isLOAD,
 	output             idu_out_bus_isSTORE,
@@ -85,8 +86,7 @@ module ysyx_26010011_IDU(
 	output       [ 1:0]idu_out_bus_perip_mask
 
 );
-	wire       [ 3:0]idu_out_bus_rs1;
-	wire       [ 3:0]idu_out_bus_rs2;
+	
 	reg [31:0]csr_rdata_bypass;
 	// assign w_pc = idu_in_bus_pc;
     // assign w_tar = idu_out_bus_imm + idu_in_bus_pc;
