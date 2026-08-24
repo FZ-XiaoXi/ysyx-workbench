@@ -367,7 +367,7 @@ module ysyx_26010011_IDU(
 
 		.exu_bypass_valid(exu_out_bus_bypass_valid),
 		.lsu_bypass_valid(lsu_out_bus_bypass_valid),
-		.wbu_bypass_valid(wbu_out_bus_bypass_valid),
+		// .wbu_bypass_valid(wbu_out_bus_bypass_valid),
 
 		.exu_in_bus_rd(exu_out_bus_rd),
 		.lsu_in_bus_rd(lsu_out_bus_rd),
