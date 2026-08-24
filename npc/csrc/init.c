@@ -52,10 +52,10 @@ void init(int argc, char** argv){
 #endif
 
 #ifdef CONFIG_WAVE_ENABLE
-	tfp = new VerilatedVcdC;
+	tfp = new VerilatedFstC;
 	contextp->traceEverOn(true);
 	top->trace(tfp, 0);
-	tfp->open("npc-waveform.vcd");
+	tfp->open("npc-waveform.fst");
 #endif
 
 	//init reset
