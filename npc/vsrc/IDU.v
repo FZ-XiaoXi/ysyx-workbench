@@ -127,7 +127,7 @@ module ysyx_26010011_IDU(
 
 	assign idu_in_ready = idu_out_ready && (!idu_isRAW || idu_out_bus_exception[4]) && (state == S_WORKING && next_state == S_WORKING);
 	assign idu_out_valid = idu_in_valid && (!idu_isRAW || idu_out_bus_exception[4]) && (state == S_WORKING);
-	assign fencei_flush = idu_in_valid && isFENCEI && (state == S_WORKING) && !idu_out_bus_exception[4];
+	assign fencei_flush = idu_in_valid && isFENCEI && !idu_out_bus_exception[4];
 
 	assign all_inst = (isLUI|isAUIPC|isJAL|isJALR|isBEQ|isBNE|isBLT|isBGE|isBLTU|isBGEU
 					|isLB|isLH|isLW|isLBU|isLHU|isSB|isSH|isSW

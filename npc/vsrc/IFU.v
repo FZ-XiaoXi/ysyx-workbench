@@ -69,11 +69,11 @@ module ysyx_26010011_IFU(
 	assign debug_IFU_get_inst = ifu_out_valid & ifu_out_ready;
 
 	always @(posedge clock) begin
-		if(reset | flush_valid) begin
+		if(reset | flush_valid | fencei_flush) begin
 			ifu_out_valid_r <= 0;
 			// ifu_out_bus_pc_r <= 32'h80000000;
 			// ifu_out_bus_instruction_r <= 0;
-		end else if(in_reqValid & in_respValid & ~ifu_out_ready) begin
+		end else if(in_reqValid & in_respValid & ~ifu_out_ready & ~fencei_flush) begin
 			ifu_out_valid_r <= 1;
 			ifu_out_bus_instruction_r <= in_rdata;
 			ifu_out_bus_pc_r <= PC;
@@ -110,6 +110,8 @@ module ysyx_26010011_IFU(
 	always @(posedge clock) begin
 		if(reset) begin
 			in_reqValid <= 1'b0;
+		end else if(fencei_flush) begin
+			in_reqValid <= 1'b1;
 		end else if(flush_valid | dnpc_valid) begin
 			in_reqValid <= 1'b1;
 		end else begin
