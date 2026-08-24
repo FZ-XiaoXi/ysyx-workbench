@@ -33,7 +33,7 @@
 #include "VysyxSoCFull_ysyx_26010011_IFU.h"
 #include "VysyxSoCFull_ysyx_26010011_IDU.h"
 #include "VysyxSoCFull_ysyx_26010011_LSU.h"
-#include "verilated_vcd_c.h"
+#include "verilated_fst_c.h"
 
 
 
