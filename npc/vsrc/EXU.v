@@ -36,10 +36,10 @@ module ysyx_26010011_EXU(
 	output reg [ 4:0]exu_out_bus_exception,
 	input            exu_out_ready,
 	output reg [31:0]exu_out_bus_gpr_wdata,
-	output     [31:0]exu_out_bus_dnpc,
+	output reg [31:0]exu_out_bus_alu_result,
 	output reg [31:0]exu_out_bus_csr_result,
 
-	output reg [31:0] exu_out_bus_alu_result,
+	
 	output reg        exu_out_bus_comp_result,
 
 	output reg       exu_out_bus_dnpc_valid,
@@ -47,7 +47,6 @@ module ysyx_26010011_EXU(
 	output           exu_out_bus_bypass_valid,
 	output           exu_out_bus_csr_valid
 );
-	
 	wire [31:0] a,b,comp_a,comp_b;
 	// wire [31:0]op_xor;
 	// wire [31:0]op_or;
@@ -143,5 +142,4 @@ module ysyx_26010011_EXU(
 			exu_out_bus_gpr_wdata = exu_out_bus_alu_result;
 		end
 	end
-	assign exu_out_bus_dnpc = exu_out_bus_alu_result;
 endmodule

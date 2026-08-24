@@ -113,11 +113,12 @@ module ysyx_26010011(
 
 	wire exu_out_valid,exu_out_ready,exu_out_bus_dnpc_valid;
 	wire [4:0]exu_out_bus_exception;
-// `ifdef USE_VERILATOR
 	wire [31:0]exu_out_bus_alu_result;
+// `ifdef USE_VERILATOR
+	
 	wire exu_out_bus_comp_result;
 // `endif
-	wire [31:0]exu_out_bus_csr_result,exu_out_bus_dnpc;
+	wire [31:0]exu_out_bus_csr_result;
 	
 
 	wire wbu_in_valid,wbu_in_ready,wbu_in_bus_isWGPR;
@@ -234,7 +235,7 @@ module ysyx_26010011(
 			(
 				(wbu_out_bus_exception[3:0]==`ysyx_26010011_EXCEPTION_MRET)?(csr_mepc):(csr_mtvec)
 			):(
-				exu_out_bus_dnpc
+				exu_out_bus_alu_result
 			);
 
 	assign csr_pc = wbu_in_bus_pc;
@@ -457,7 +458,7 @@ module ysyx_26010011(
 		.exu_in_bus_isWGPR(exu_in_bus_isWGPR),
 		.exu_in_bus_isLOAD(exu_in_bus_isLOAD),
 		.exu_in_bus_isWCOMP(exu_in_bus_isWCOMP),
-		.exu_out_bus_dnpc(exu_out_bus_dnpc),
+		.exu_out_bus_alu_result(exu_out_bus_alu_result),
 		
 		.exu_out_bus_rd_valid(exu_out_bus_rd_valid),
 		.exu_out_bus_bypass_valid(exu_out_bus_bypass_valid),
@@ -467,7 +468,6 @@ module ysyx_26010011(
 		.exu_out_bus_exception(exu_out_bus_exception),
 		.exu_out_ready(exu_out_ready),
 `ifdef USE_VERILATOR
-		.exu_out_bus_alu_result(exu_out_bus_alu_result),
 		.exu_out_bus_comp_result(exu_out_bus_comp_result),       //暂存CSR目的地址
 `endif
 		.exu_out_bus_csr_result(exu_out_bus_csr_result),
