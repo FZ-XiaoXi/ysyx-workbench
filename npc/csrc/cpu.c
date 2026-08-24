@@ -117,7 +117,7 @@ void cpu_exec(uint64_t n){
 		}
 		if(cpu.tb_isFINAL){
 			// this_cnt = 0;
-			Log("PC=" FMT_WORD "INST=" FMT_WORD, cpu.pc, cpu.tb_FINAL_inst);
+			Log("PC=" FMT_WORD "INST=" FMT_WORD, cpu.tb_FINAL_pc, cpu.tb_FINAL_inst);
 			n--;
 			// cpu.FINAL_inst = cpu.tb_FINAL_inst;
 			cpu.counter_inst++;
