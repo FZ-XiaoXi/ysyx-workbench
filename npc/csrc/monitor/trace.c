@@ -95,7 +95,7 @@ void func_trace(CPUState *s){
       // Log("Push STACK (pc=%x)(func=%s) depth=%d",stack_frame.dst_pc,stack_frame.dst_func->name,ftracer_stack.depth+1);
       ftracer_push(stack_frame);
       char S[256]={0};
-      sprintf(S+strlen(S),"0x%08x:FUNTRACER: ", s->tb_FINAL_pc);
+      sprintf(S+strlen(S),"[%010lu]0x%08x:FUNTRACER: ", s->counter_inst, s->tb_FINAL_pc);
       for(int i=1;i<ftracer_stack.depth;i++)  sprintf(S+strlen(S),"| ");
       sprintf(S+strlen(S),"call [%s@0x%08x]\n",stack_frame.dst_func->name,stack_frame.dst_func->start_add);
       ftracer_write_log(S);
@@ -119,7 +119,7 @@ void func_trace(CPUState *s){
 
       for(int n=0;n<ret_depth;n++){ //POP COUNT
         char S[256]={0};
-        sprintf(S+strlen(S),"0x%08x:FUNTRACER: ", s->tb_FINAL_pc);
+        sprintf(S+strlen(S),"[%010lu]0x%08x:FUNTRACER: ", s->counter_inst,s->tb_FINAL_pc);
         for(int k=1;k<ftracer_stack.depth;k++)  sprintf(S+strlen(S),"| ");
         sprintf(S+strlen(S),"ret [%s<-%s]\n",ftracer_stack.stack[ftracer_stack.depth-2].dst_func->name,this_name);
         ftracer_write_log(S);
