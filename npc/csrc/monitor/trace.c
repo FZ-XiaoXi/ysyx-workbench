@@ -92,7 +92,7 @@ void func_trace(CPUState *s){
   for(int i=0;i<ftracer_stack.symtab_size;i++){
     if(s->tb_FINAL_npc == funsymtab[i].start_add){
       ftracer_t stack_frame = {.src_pc = s->tb_FINAL_pc, .dst_pc = s->tb_FINAL_npc, .dst_func = funsymtab + i,};
-      Log("Push STACK (pc=%x)(func=%s) depth=%d",stack_frame.dst_pc,stack_frame.dst_func->name,ftracer_stack.depth+1);
+      // Log("Push STACK (pc=%x)(func=%s) depth=%d",stack_frame.dst_pc,stack_frame.dst_func->name,ftracer_stack.depth+1);
       ftracer_push(stack_frame);
       char S[256]={0};
       sprintf(S+strlen(S),"0x%08x:FUNTRACER: ", s->tb_FINAL_pc);
