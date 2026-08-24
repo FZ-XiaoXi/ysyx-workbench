@@ -37,23 +37,23 @@ module ysyx_26010011_RAW(
 );
 	always @(*) begin
         is_RAW = 1'b0;
-        if(exu_rd_valid && exu_in_bus_rd != 4'b0 && ((rs1 == exu_in_bus_rd) || ((rs2 == exu_in_bus_rd) && rs2_valid)) && !exu_bypass_valid) begin
+        if(exu_rd_valid && ((rs1 == exu_in_bus_rd) || ((rs2 == exu_in_bus_rd) && rs2_valid)) && !exu_bypass_valid) begin
             is_RAW = 1'b1;
         end
         if(exu_csr_valid && (csr == exu_in_bus_csr_rd)) begin
             is_RAW = 1'b1;
         end
-        if(lsu_rd_valid && lsu_in_bus_rd != 4'b0 && ((rs1 == lsu_in_bus_rd) || ((rs2 == lsu_in_bus_rd) && rs2_valid)) && !lsu_bypass_valid) begin
+        if(lsu_rd_valid && ((rs1 == lsu_in_bus_rd) || ((rs2 == lsu_in_bus_rd) && rs2_valid)) && !lsu_bypass_valid) begin
             is_RAW = 1'b1;
         end
         if(lsu_csr_valid && (csr == lsu_in_bus_csr_rd)) begin
             is_RAW = 1'b1;
         end
-        if(wbu_rd_valid && wbu_in_bus_rd != 4'b0 && ((rs1 == wbu_in_bus_rd) || ((rs2 == wbu_in_bus_rd) && rs2_valid)) && !wbu_bypass_valid) begin
+        if(wbu_rd_valid && ((rs1 == wbu_in_bus_rd) || ((rs2 == wbu_in_bus_rd) && rs2_valid)) && !wbu_bypass_valid) begin
             is_RAW = 1'b1;
         end
         if(wbu_csr_valid && (csr == wbu_in_bus_csr_rd)) begin
-            is_RAW = 0?1'b0:1'b1;
+            is_RAW = 1'b1;
         end
     end
 endmodule

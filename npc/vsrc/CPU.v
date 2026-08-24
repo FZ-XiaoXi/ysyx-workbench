@@ -197,11 +197,10 @@ module ysyx_26010011(
 	wire [1:0] S_arburst,S_awburst;
 	wire [2:0] S_arsize,S_awsize;
 	wire [7:0] S_arlen,S_awlen;
-	wire [31:0] CLINT_araddr,CLINT_rdata,CLINT_awaddr,CLINT_wdata;
-	wire CLINT_arvalid,CLINT_rvalid,CLINT_awvalid,CLINT_wvalid,CLINT_bvalid,CLINT_rlast;
-	wire CLINT_arready,CLINT_rready,CLINT_awready,CLINT_wready,CLINT_bready;
-	wire [1:0] CLINT_rresp,CLINT_bresp;
-	wire [3:0] CLINT_wstrb;
+	wire [31:0] CLINT_araddr,CLINT_rdata;
+	wire CLINT_arvalid,CLINT_rvalid,CLINT_rlast;
+	wire CLINT_arready,CLINT_rready;
+	wire [1:0] CLINT_rresp;
 
 	wire [31:0] IROM_araddr,IROM_rdata;
 	wire IROM_arvalid,IROM_arready,IROM_rvalid,IROM_rready;
@@ -228,16 +227,7 @@ module ysyx_26010011(
 	wire exu_out_bus_rd_valid,exu_out_bus_bypass_valid,exu_out_bus_csr_valid;
 	wire lsu_out_bus_rd_valid,lsu_out_bus_bypass_valid,lsu_out_bus_csr_valid;
 	wire wbu_out_bus_rd_valid,wbu_out_bus_bypass_valid,wbu_out_bus_csr_valid;
-	reg [31:0] mcycle,mcycleh;
-	always @(posedge clock) begin
-		if(reset) begin
-			mcycle <= 32'b0;
-			mcycleh <= 32'b0;
-		end else begin
-			{mcycleh,mcycle} <= {mcycleh,mcycle} + 1;
-		end
-	end
-
+	wire [31:0] mcycle,mcycleh;
 
 	assign exu_in_bus_snpc = exu_in_bus_pc + 32'd4;
 	assign dnpc=(wbu_out_bus_exception[4])?
@@ -829,10 +819,10 @@ module ysyx_26010011(
 
 		//CLINT
 		.CLINT_araddr(CLINT_araddr),   .CLINT_arvalid(CLINT_arvalid),  .CLINT_arready(CLINT_arready), .CLINT_arid(), .CLINT_arlen(), .CLINT_arsize(), .CLINT_arburst(),
-		.CLINT_rdata(CLINT_rdata),    .CLINT_rresp(CLINT_rresp),    .CLINT_rvalid(CLINT_rvalid),   .CLINT_rready(CLINT_rready), .CLINT_rlast(CLINT_rlast), .CLINT_rid(4'b0),
-		.CLINT_awaddr(CLINT_awaddr),   .CLINT_awvalid(CLINT_awvalid),  .CLINT_awready(CLINT_awready), .CLINT_awid(), .CLINT_awlen(), .CLINT_awsize(), .CLINT_awburst(),
-		.CLINT_wdata(CLINT_wdata),    .CLINT_wstrb(CLINT_wstrb),    .CLINT_wvalid(CLINT_wvalid),   .CLINT_wready(CLINT_wready), .CLINT_wlast(),
-		.CLINT_bresp(CLINT_bresp),    .CLINT_bvalid(CLINT_bvalid),   .CLINT_bready(CLINT_bready), .CLINT_bid(4'b0)
+		.CLINT_rdata(CLINT_rdata),    .CLINT_rresp(CLINT_rresp),    .CLINT_rvalid(CLINT_rvalid),   .CLINT_rready(CLINT_rready), .CLINT_rlast(CLINT_rlast), .CLINT_rid(4'b0)
+		// .CLINT_awaddr(CLINT_awaddr),   .CLINT_awvalid(CLINT_awvalid),  .CLINT_awready(CLINT_awready), .CLINT_awid(), .CLINT_awlen(), .CLINT_awsize(), .CLINT_awburst(),
+		// .CLINT_wdata(CLINT_wdata),    .CLINT_wstrb(CLINT_wstrb),    .CLINT_wvalid(CLINT_wvalid),   .CLINT_wready(CLINT_wready), .CLINT_wlast(),
+		// .CLINT_bresp(CLINT_bresp),    .CLINT_bvalid(CLINT_bvalid),   .CLINT_bready(CLINT_bready), .CLINT_bid(4'b0)
 	);	
 
 	ysyx_26010011_CLINT u_clint(
@@ -850,23 +840,23 @@ module ysyx_26010011(
 		.rresp(CLINT_rresp),
 		.rvalid(CLINT_rvalid),
 		.rlast(CLINT_rlast),
-		.rready(CLINT_rready),
+		.rready(CLINT_rready)
 
-		//AW
-		.awaddr(CLINT_awaddr),
-		.awvalid(CLINT_awvalid),
-		.awready(CLINT_awready),
+		// //AW
+		// .awaddr(CLINT_awaddr),
+		// .awvalid(CLINT_awvalid),
+		// .awready(CLINT_awready),
 
-		//W
-		.wdata(CLINT_wdata),
-		.wstrb(CLINT_wstrb),
-		.wvalid(CLINT_wvalid),
-		.wready(CLINT_wready),
+		// //W
+		// .wdata(CLINT_wdata),
+		// .wstrb(CLINT_wstrb),
+		// .wvalid(CLINT_wvalid),
+		// .wready(CLINT_wready),
 
-		//B
-		.bresp(CLINT_bresp),
-		.bvalid(CLINT_bvalid),
-		.bready(CLINT_bready)
+		// //B
+		// .bresp(CLINT_bresp),
+		// .bvalid(CLINT_bvalid),
+		// .bready(CLINT_bready)
 	);
 
 

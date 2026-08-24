@@ -100,7 +100,7 @@ module ysyx_26010011_EXU(
 	end
 	
 	assign {comp_suber_carry,comp_suber_out} = {1'b0,comp_a} + (~{1'b0,comp_b}) + 1;
-	assign comp_isEQUAL = &(comp_a ~^ comp_b);
+	assign comp_isEQUAL = ~(|comp_suber_out);
 	assign comp_isGREATER = (exu_in_bus_isUnSigned)?((|comp_suber_out) & ~comp_suber_carry):((~comp_a[31] & comp_b[31]) | ((comp_a[31] ~^ comp_b[31])  & ~comp_suber_out[31]));
 	always @(*) begin
 		case (exu_in_bus_comp_op)
@@ -145,13 +145,3 @@ module ysyx_26010011_EXU(
 	end
 	assign exu_out_bus_dnpc = exu_out_bus_alu_result;
 endmodule
-
-// module ysyx_26010011_M_ADDER(
-// 	input [32:0] inA,
-// 	input [32:0] inB,
-// 	input cin,
-// 	output [31:0] out,
-// 	output carry
-// );
-// 	assign {carry,out} = inA + inB + {32'b0,cin};
-// endmodule

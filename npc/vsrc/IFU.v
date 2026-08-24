@@ -69,23 +69,17 @@ module ysyx_26010011_IFU(
 	assign debug_IFU_get_inst = ifu_out_valid & ifu_out_ready;
 
 	always @(posedge clock) begin
-		if(reset) begin
+		if(reset | flush_valid) begin
 			ifu_out_valid_r <= 0;
 			// ifu_out_bus_pc_r <= 32'h80000000;
 			// ifu_out_bus_instruction_r <= 0;
-		end else begin
-			if(flush_valid) begin
-				ifu_out_valid_r <= 0;
-				// ifu_out_bus_pc_r <= 0;
-			end else if(in_reqValid & in_respValid & ~ifu_out_ready) begin
-				ifu_out_valid_r <= 1;
-				ifu_out_bus_instruction_r <= in_rdata;
-				ifu_out_bus_pc_r <= PC;
-			end else if(ifu_out_valid & ifu_out_ready)begin
-				ifu_out_valid_r <= 0;
-			end
+		end else if(in_reqValid & in_respValid & ~ifu_out_ready) begin
+			ifu_out_valid_r <= 1;
+			ifu_out_bus_instruction_r <= in_rdata;
+			ifu_out_bus_pc_r <= PC;
+		end else if(ifu_out_valid & ifu_out_ready)begin
+			ifu_out_valid_r <= 0;
 		end
-	
 	end
 
 	assign ifu_out_bus_fetching = PC;
@@ -131,7 +125,7 @@ module ysyx_26010011_IFU(
 		end
 	end;
 
-	ysyx_26010011_IFU_icache #(.CACHE_BLOCK_SIZE(16), .CACHE_SIZE(4)) icache_u0(
+	ysyx_26010011_IFU_icache #(.CACHE_BLOCK_SIZE(8), .CACHE_SIZE(4)) icache_u0(
 		.clock(clock),
 		.reset(reset),
 
