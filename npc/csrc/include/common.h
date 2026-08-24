@@ -86,7 +86,7 @@ extern FILE* log_fp;
 #endif
 
 // #define CONFIG_WATCHPOINT_ENABLE
-#define CONFIG_WAVE_ENABLE
+// #define CONFIG_WAVE_ENABLE
 
 
 #define CONFIG_TRACE_ENABLE
@@ -94,7 +94,7 @@ extern FILE* log_fp;
 
     #define CONFIG_ITRACE_ENABLE
     #ifdef CONFIG_ITRACE_ENABLE
-        #define CONFIG_ITRACE_PRINT
+        // #define CONFIG_ITRACE_PRINT
     #endif
     
     // #define CONFIG_MTRACE_ENABLE
