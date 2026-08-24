@@ -17,7 +17,7 @@ long img_size = 0;
 char *IMAGE_NAME = NULL;
 char *ELF_NAME = NULL;
 VerilatedContext* contextp = NULL;
-VerilatedVcdC* tfp = NULL;
+VerilatedFstC* tfp = NULL;
 VysyxSoCFull* top = NULL;
 
 
