@@ -13,6 +13,7 @@
 !tools/capstone/libcapstone.so.5
 !.gitignore
 !README.md
+!*.ron
 build/
 obj_dir/**
 obj_dir
