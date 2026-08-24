@@ -45,22 +45,9 @@ void halt(int code) {
 }
 
 void _trm_init() {
-  // memcpy((void*)&_rodata_vma_start, (void*)&_rodata_lma_start, (uintptr_t)&_rodata_vma_end - (uintptr_t)&_rodata_vma_start);
-  
-  // memcpy((void*)&_data_vma_start, (void*)&_data_lma_start, (uintptr_t)&_data_vma_end - (uintptr_t)&_data_vma_start);
-  // memcpy((void*)&_bss_vma_start, (void*)&_bss_lma_start, (uintptr_t)&_bss_vma_end - (uintptr_t)&_bss_vma_start);
-
   uint32_t ysyx_name,ysyx_id;
   asm volatile("csrr %0,mvendorid" : "=r"(ysyx_name));
   asm volatile("csrr %0,marchid" : "=r"(ysyx_id));
-  // char start_buf_[50];
-  // strcpy(start_buf_, "===YSYX:    \n===ID:        \n\0");
-  // start_buf_[8] = (char)((ysyx_name>>24)&0xff);
-  // start_buf_[9] = (char)((ysyx_name>>16)&0xff);
-  // start_buf_[10] = (char)((ysyx_name>>8)&0xff);
-  // start_buf_[11] = (char)((ysyx_name)&0xff);
-  // start_buf_[19] = (char)((ysyx_id / 10000000) + '0');
-  // putstr(start_buf_);
   ioe_init();
   
   printf("data:[0x%08x-0x%08x) -> [0x%08x-0x%08x)\n",(uint32_t)(void*)(&_data_lma_start),(uint32_t)(void*)(&_data_lma_end),(uint32_t)(void*)(&_data_vma_start),(uint32_t)(void*)(&_data_vma_end));

@@ -16,14 +16,11 @@ module ysyx_26010011_IF_ID_pipeline(
 	output           ifu_out_ready,
 	input      [31:0]ifu_out_bus_instruction,
 	input      [31:0]ifu_out_bus_pc,
-	// input      [31:0]ifu_out_bus_snpc,
 	input      [ 4:0]ifu_out_bus_exception,
-
 	output reg       idu_in_valid/*verilator public*/,
 	input            idu_in_ready,
 	output reg [31:0]idu_in_bus_instruction,
 	output reg [31:0]idu_in_bus_pc/*verilator public*/,
-	// output reg [31:0]idu_in_bus_snpc,
 	output reg [ 4:0]idu_in_bus_exception
 );
 	assign ifu_out_ready = idu_in_ready | !idu_in_valid;
@@ -34,7 +31,6 @@ module ysyx_26010011_IF_ID_pipeline(
 			idu_in_valid <= ifu_out_valid;
 			idu_in_bus_instruction <= ifu_out_bus_instruction;
 			idu_in_bus_pc <= ifu_out_bus_pc;
-			// idu_in_bus_snpc <= ifu_out_bus_snpc;
 			idu_in_bus_exception <= ifu_out_bus_exception;
 		end
 	end
@@ -131,7 +127,6 @@ module ysyx_26010011_ID_EX_pipeline(
 			exu_in_bus_comp_op<=idu_out_bus_comp_op;
 			exu_in_bus_perip_mask<=idu_out_bus_perip_mask;
 			exu_in_bus_pc<=idu_out_bus_pc;
-			// exu_in_bus_snpc<=idu_out_bus_snpc;
 		end
 	end
 endmodule
@@ -165,7 +160,6 @@ module ysyx_26010011_EX_LS_pipeline(
 	input            exu_out_bus_isWCOMP,
 	input            exu_out_bus_isBRANCH,
 `endif
-	// input      [31:0]exu_out_bus_snpc,
 	output reg       lsu_in_valid/*verilator public*/,
 	input            lsu_in_ready,
 
@@ -193,7 +187,6 @@ module ysyx_26010011_EX_LS_pipeline(
 	output reg       lsu_in_bus_isBRANCH,
 `endif
 	output reg [31:0]lsu_in_bus_pc/*verilator public*/
-	// output reg [31:0]lsu_in_bus_snpc
 );
 	assign exu_out_ready = lsu_in_ready | !lsu_in_valid;
 	always @(posedge clock)begin
@@ -225,7 +218,6 @@ module ysyx_26010011_EX_LS_pipeline(
 			lsu_in_bus_isWCOMP<=exu_out_bus_isWCOMP;
 			lsu_in_bus_isBRANCH<=exu_out_bus_isBRANCH;
 `endif
-			// lsu_in_bus_snpc<=exu_out_bus_snpc;
 		end
 	end
 endmodule
@@ -304,7 +296,6 @@ module ysyx_26010011_LS_WB_pipeline(
 			wbu_in_bus_lsu_result<=lsu_out_bus_lsu_result;
 			wbu_in_bus_alu_result<=lsu_out_bus_alu_result;
 			wbu_in_bus_comp_result<=lsu_out_bus_comp_result;
-			// wbu_in_bus_snpc<=lsu_out_bus_snpc;
 			wbu_in_bus_isLOAD<=lsu_out_bus_isLOAD;
 			wbu_in_bus_isSTORE<=lsu_out_bus_isSTORE;
 			wbu_in_bus_isJUMP<=lsu_out_bus_isJUMP;

@@ -38,15 +38,12 @@ module ysyx_26010011_IDU(
 	input [11:0]wbu_out_bus_csrrd,
 	input [31:0]wbu_out_bus_gpr_wdata,
 
-
-
-	//IFU->IDU
 	input        [31:0]idu_in_bus_instruction,
 	input        [31:0]idu_in_bus_pc,
 	input        [ 4:0]idu_in_bus_exception,
 	input              idu_in_valid,
 	output             idu_in_ready,
-	//IDU->EXU
+
 	output             idu_out_valid,
 	input              idu_out_ready,
 	output       [ 3:0]idu_out_bus_rd,
@@ -73,7 +70,6 @@ module ysyx_26010011_IDU(
 	output reg [31:0] idu_out_bus_rs2_val,
 
 	output       [ 1:0]idu_out_bus_perip_mask
-
 );
 
 	reg state, next_state;
@@ -93,14 +89,12 @@ module ysyx_26010011_IDU(
 	logic isLB, isLH, isLW, isLBU, isLHU, isSB, isSH, isSW, isADDI, isSLTI, isSLTIU;
 	logic isXORI, isORI, isANDI, isSLLI, isSRLI, isSRAI, isADD, isSUB, isSLL, isSLT;
 	logic isSLTU, isXOR, isSRL, isSRA, isOR, isAND;
-
 	logic isCSRRW,isCSRRS,isCSRRC,isCSRRWI,isCSRRSI,isCSRRCI;
-
 	logic isR,isI,isS,isB,isU,isJ;
-
+	
+	reg [31:0] rs1_val_bypass;
+	reg [1:0]rs1_bypass_sel,rs2_bypass_sel;
 	wire all_inst,idu_isRAW/*verilator public*/;
-
-
 
 	always @(posedge clock) begin
 		if(reset | flush_valid) state <= S_WORKING;
@@ -127,7 +121,7 @@ module ysyx_26010011_IDU(
 
 	assign idu_in_ready = idu_out_ready && (!idu_isRAW || idu_out_bus_exception[4]) && (state == S_WORKING && next_state == S_WORKING);
 	assign idu_out_valid = idu_in_valid && (!idu_isRAW || idu_out_bus_exception[4]) && (state == S_WORKING);
-	assign fencei_flush = idu_in_valid && isFENCEI && (state == S_WORKING) && !idu_out_bus_exception[4];
+	assign fencei_flush = idu_in_valid && isFENCEI && !idu_out_bus_exception[4];
 
 	assign all_inst = (isLUI|isAUIPC|isJAL|isJALR|isBEQ|isBNE|isBLT|isBGE|isBLTU|isBGEU
 					|isLB|isLH|isLW|isLBU|isLHU|isSB|isSH|isSW
@@ -297,7 +291,7 @@ module ysyx_26010011_IDU(
 		end
 	end
 
-	reg [31:0] rs1_val_bypass;
+	
 	always @(*) begin
 		case(idu_out_bus_opCSR)
 			3'b110:
@@ -320,7 +314,7 @@ module ysyx_26010011_IDU(
 				idu_out_bus_rs1_val = rs1_val_bypass;
 		endcase
 	end
-	reg [1:0]rs1_bypass_sel,rs2_bypass_sel;
+	
 	always @(*) begin
 		if(idu_out_bus_rs1 == exu_out_bus_rd && exu_out_bus_rd_valid && exu_out_bus_bypass_valid && idu_out_bus_rs1 != 4'd0) begin
 			rs1_bypass_sel = 2'd1;

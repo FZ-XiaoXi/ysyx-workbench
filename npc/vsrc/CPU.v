@@ -271,7 +271,6 @@ module ysyx_26010011(
 		.ifu_out_bus_instruction(ifu_out_bus_instruction),
 		.ifu_out_bus_fetching(ifu_out_bus_fetching),
 		.ifu_out_bus_pc(ifu_out_bus_pc),
-		// .ifu_out_bus_snpc(ifu_out_bus_snpc),
 		.ifu_out_bus_exception(ifu_out_bus_exception),
 
 		.araddr(IROM_araddr),
@@ -288,7 +287,6 @@ module ysyx_26010011(
 		.rlast(IROM_rlast),
 		.rid(IROM_rid),
 		.fencei_flush(fencei_pass)
-		
 	);/*verilator public_module*/
 
 
@@ -309,7 +307,6 @@ module ysyx_26010011(
 		.idu_in_bus_instruction(idu_in_bus_instruction),
 		.idu_in_bus_exception(idu_in_bus_exception),
 		.idu_in_bus_pc(idu_in_bus_pc)
-		// .idu_in_bus_snpc(idu_in_bus_snpc)
 	);/*verilator public_module*/
 
 	ysyx_26010011_IDU IDU_0(
@@ -332,7 +329,6 @@ module ysyx_26010011(
 		.idu_out_bus_rd(idu_out_bus_rd),
 		.idu_out_bus_exception(idu_out_bus_exception),
 		.idu_out_bus_csrrd(idu_out_bus_csrrd),  //CSR地址
-		// .idu_out_bus_rcsr(idu_out_bus_rcsr),
 		.idu_out_bus_imm(idu_out_bus_imm),
 		.idu_out_bus_isLOAD(idu_out_bus_isLOAD),
 		.idu_out_bus_isSTORE(idu_out_bus_isSTORE),
@@ -375,11 +371,6 @@ module ysyx_26010011(
 		.wbu_out_bus_csrrd(wbu_out_bus_csrrd),
 		.wbu_out_bus_gpr_wdata(wbu_out_bus_gpr_wdata),
 
-		// .w_pc(w_pc),
-		// .w_tar(w_tar),
-		// .w_valid(w_valid),
-		// .w_type(w_type),
-		// .fencei_pass(fencei_pass),
 		.fencei_flush(fencei_flush)
 	);/*verilator public_module*/
 
@@ -392,8 +383,6 @@ module ysyx_26010011(
 		.idu_out_ready(idu_out_ready),
 		.idu_out_bus_rd(idu_out_bus_rd),
 		.idu_out_bus_csrrd(idu_out_bus_csrrd),  //CSR地址
-		// .idu_out_bus_rs1(gpr_raddra),
-		// .idu_out_bus_rs2(gpr_raddrb),
 		.idu_out_bus_rs1_val(idu_out_bus_rs1_val), //[~]zimm or rs1_val
 		.idu_out_bus_rs2_val(idu_out_bus_rs2_val),
 		.idu_out_bus_imm(idu_out_bus_imm),     //CSR值
@@ -415,7 +404,6 @@ module ysyx_26010011(
 		.idu_out_bus_comp_op(idu_out_bus_comp_op),
 		.idu_out_bus_perip_mask(idu_out_bus_perip_mask),
 		.idu_out_bus_pc(idu_in_bus_pc),
-		// .idu_out_bus_snpc(idu_in_bus_snpc),
 
 		.exu_in_valid(exu_in_valid),
 		.exu_in_bus_exception(exu_in_bus_exception),
@@ -443,7 +431,6 @@ module ysyx_26010011(
 		.exu_in_bus_comp_op(exu_in_bus_comp_op),
 		.exu_in_bus_perip_mask(exu_in_bus_perip_mask),
 		.exu_in_bus_pc(exu_in_bus_pc)
-		// .exu_in_bus_snpc(exu_in_bus_snpc)
 	);/*verilator public_module*/
 
 	ysyx_26010011_EXU EXU_0(
@@ -489,7 +476,6 @@ module ysyx_26010011(
 	);/*verilator public_module*/
 	assign exu_out_bus_rd = exu_in_bus_rd;
 	assign exu_out_bus_csrrd = exu_in_bus_csrrd;
-
 
 	ysyx_26010011_EX_LS_pipeline EX_LS_inst(
 		.clock(clock),
@@ -547,7 +533,6 @@ module ysyx_26010011(
 		.lsu_in_bus_isBRANCH(lsu_in_bus_isBRANCH),
 `endif
 		.lsu_in_bus_pc(lsu_in_bus_pc)
-		// .lsu_in_bus_snpc(lsu_in_bus_snpc)
 	);/*verilator public_module*/
 
 `ifdef USE_VERILATOR
@@ -643,9 +628,6 @@ module ysyx_26010011(
 `endif
 		.lsu_out_bus_pc(lsu_in_bus_pc),
 		.lsu_out_bus_opCSR(lsu_in_bus_opCSR),
-		
-		// .lsu_out_bus_snpc(lsu_in_bus_snpc),
-
 
 		.wbu_in_valid(wbu_in_valid),
 		.wbu_in_ready(wbu_in_ready),
@@ -656,7 +638,6 @@ module ysyx_26010011(
 		.wbu_in_bus_isLOAD(wbu_in_bus_isLOAD),
 		.wbu_in_bus_isSTORE(wbu_in_bus_isSTORE),
 		
-		// .wbu_in_bus_snpc(wbu_in_bus_snpc)
 		.wbu_in_bus_isJUMP(wbu_in_bus_isJUMP),
 		.wbu_in_bus_isWCOMP(wbu_in_bus_isWCOMP),
 		.wbu_in_bus_isBRANCH(wbu_in_bus_isBRANCH),
@@ -682,17 +663,6 @@ module ysyx_26010011(
 		.clock(clock),
 		.reset(reset),
 		.flush_valid(wbu_flush_valid),
-
-		// .wbu_in_bus_pc(wbu_in_bus_pc),
-		// .wbu_in_bus_instruction(wbu_in_bus_instruction),
-		// .wbu_in_bus_lsu_result(wbu_in_bus_lsu_result),
-		// .wbu_in_bus_alu_result(wbu_in_bus_alu_result),
-		// .wbu_in_bus_comp_result(wbu_in_bus_comp_result),
-		// .wbu_in_bus_snpc(wbu_in_bus_snpc),
-		// .wbu_in_bus_isLOAD(wbu_in_bus_isLOAD),
-		// .wbu_in_bus_isSTORE(wbu_in_bus_isSTORE),
-		// .wbu_in_bus_isJUMP(wbu_in_bus_isJUMP),
-		// .wbu_in_bus_isWCOMP(wbu_in_bus_isWCOMP),
 
 		.wbu_in_valid(wbu_in_valid),
 		.wbu_in_ready(wbu_in_ready),
@@ -820,9 +790,6 @@ module ysyx_26010011(
 		//CLINT
 		.CLINT_araddr(CLINT_araddr),   .CLINT_arvalid(CLINT_arvalid),  .CLINT_arready(CLINT_arready), .CLINT_arid(), .CLINT_arlen(), .CLINT_arsize(), .CLINT_arburst(),
 		.CLINT_rdata(CLINT_rdata),    .CLINT_rresp(CLINT_rresp),    .CLINT_rvalid(CLINT_rvalid),   .CLINT_rready(CLINT_rready), .CLINT_rlast(CLINT_rlast), .CLINT_rid(4'b0)
-		// .CLINT_awaddr(CLINT_awaddr),   .CLINT_awvalid(CLINT_awvalid),  .CLINT_awready(CLINT_awready), .CLINT_awid(), .CLINT_awlen(), .CLINT_awsize(), .CLINT_awburst(),
-		// .CLINT_wdata(CLINT_wdata),    .CLINT_wstrb(CLINT_wstrb),    .CLINT_wvalid(CLINT_wvalid),   .CLINT_wready(CLINT_wready), .CLINT_wlast(),
-		// .CLINT_bresp(CLINT_bresp),    .CLINT_bvalid(CLINT_bvalid),   .CLINT_bready(CLINT_bready), .CLINT_bid(4'b0)
 	);	
 
 	ysyx_26010011_CLINT u_clint(
@@ -841,22 +808,6 @@ module ysyx_26010011(
 		.rvalid(CLINT_rvalid),
 		.rlast(CLINT_rlast),
 		.rready(CLINT_rready)
-
-		// //AW
-		// .awaddr(CLINT_awaddr),
-		// .awvalid(CLINT_awvalid),
-		// .awready(CLINT_awready),
-
-		// //W
-		// .wdata(CLINT_wdata),
-		// .wstrb(CLINT_wstrb),
-		// .wvalid(CLINT_wvalid),
-		// .wready(CLINT_wready),
-
-		// //B
-		// .bresp(CLINT_bresp),
-		// .bvalid(CLINT_bvalid),
-		// .bready(CLINT_bready)
 	);
 
 

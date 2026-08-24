@@ -23,18 +23,6 @@ module ysyx_26010011_WBU(
 	input [2:0]wbu_in_bus_opCSR,
 	input [4:0]wbu_in_bus_exception,
 
-// `ifdef USE_VERILATOR
-// 	input [31:0]wbu_in_bus_pc,
-// 	input [31:0]wbu_in_bus_instruction,
-// 	input [31:0]wbu_in_bus_lsu_result,
-// 	input [31:0]wbu_in_bus_alu_result,
-// 	input wbu_in_bus_comp_result,
-// 	input [31:0]wbu_in_bus_snpc,
-// 	input wbu_in_bus_isLOAD,
-// 	input wbu_in_bus_isSTORE,
-// 	input wbu_in_bus_isJUMP,
-// 	input wbu_in_bus_isWCOMP,
-// `endif
 	output wbu_out_bus_rd_valid,
 	output wbu_out_bus_bypass_valid,
 	output wbu_out_bus_csr_valid,
@@ -53,20 +41,7 @@ module ysyx_26010011_WBU(
 	output fencei_pass
 );  
 	assign wbu_out_bus_gpr_wdata  = wbu_in_bus_gpr_wdata;
-	// wire [31:0] wbu_in_bus_snpc;
-	// assign wbu_in_bus_snpc = wbu_in_bus_pc + 32'd4;
 	assign wbu_in_ready=1;
-	// always @(*) begin
-	// 	if(wbu_in_bus_isLOAD) begin
-	// 								gpr_wdata = wbu_in_bus_lsu_result;
-	// 	end else if(wbu_in_bus_isJUMP) begin
-	// 								gpr_wdata = wbu_in_bus_snpc;
-	// 	// end else if(wbu_in_bus_isWGPR) begin
-	// 	end else begin
-	// 		if(wbu_in_bus_isWCOMP)           gpr_wdata = {31'b0,wbu_in_bus_comp_result};
-	// 		else                    gpr_wdata = wbu_in_bus_alu_result;
-	// 	end
-	// end
 
 	assign wbu_out_bus_rd_valid = wbu_in_valid & ~wbu_out_bus_exception[4] & wbu_in_bus_isWGPR;
 	assign wbu_out_bus_bypass_valid = wbu_in_valid & ~wbu_out_bus_exception[4] & wbu_in_bus_isWGPR ;
