@@ -240,7 +240,7 @@ module ysyx_26010011(
 			);
 
 	assign csr_pc = wbu_in_bus_pc;
-	assign dnpc_valid = flush_exception_valid ? 1'b0 : exu_out_bus_dnpc_valid;
+	assign dnpc_valid = flush_exception_valid | exu_out_bus_dnpc_valid;
 	
 	assign flush_exception_valid= wbu_out_bus_exception[4];
 	assign flush_valid=dnpc_valid;
