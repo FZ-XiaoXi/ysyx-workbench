@@ -55,7 +55,7 @@ module ysyx_26010011_EXU(
 	wire [31:0]op_ar;
 	wire [31:0]op_lr;
 	wire [31:0]op_ll;
-	wire [31:0]op_adder;
+	// wire [31:0]op_adder;
 	wire comp_isEQUAL,comp_isGREATER,comp_suber_carry;
 	wire [31:0]comp_suber_out;
 
@@ -77,7 +77,7 @@ module ysyx_26010011_EXU(
 
 	assign exu_out_bus_rd_valid = exu_in_valid & exu_in_bus_isWGPR;
 	assign exu_out_bus_bypass_valid = exu_out_valid & exu_in_bus_isWGPR & ~exu_in_bus_isLOAD;
-	assign exu_out_bus_csr_valid = exu_in_valid & exu_out_bus_opCSR;
+	assign exu_out_bus_csr_valid = exu_in_valid & |exu_out_bus_opCSR;
 
 	
 	always @(*) begin
