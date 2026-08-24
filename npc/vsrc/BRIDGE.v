@@ -39,15 +39,6 @@ module ysyx_26010011_bridge(
 	input             MEM_rlast,    input      [3:0]  MEM_rid,
 
 	//CLINT
-	// //SLAVE AW
-	// output     [31:0] CLINT_awaddr,   output reg        CLINT_awvalid,  input             CLINT_awready,
-	// output     [3:0]  CLINT_awid,     output     [7:0]  CLINT_awlen,    output     [2:0]  CLINT_awsize,   output     [1:0]  CLINT_awburst,
-	// //SLAVE W
-	// output     [31:0] CLINT_wdata,    output     [3:0]  CLINT_wstrb,    output reg        CLINT_wvalid,   input             CLINT_wready,
-	// output            CLINT_wlast,
-	// //SLAVE B
-	// input      [1:0]  CLINT_bresp,    input             CLINT_bvalid,   output            CLINT_bready,
-	// input      [3:0]  CLINT_bid,
 	//SLAVE AR
 	output reg [31:0] CLINT_araddr,   output reg        CLINT_arvalid,  input             CLINT_arready,
 	output reg [3:0]  CLINT_arid,     output reg [7:0]  CLINT_arlen,    output reg [2:0]  CLINT_arsize,   output reg [1:0]  CLINT_arburst,
@@ -59,37 +50,28 @@ module ysyx_26010011_bridge(
 
 	parameter STATE_IDLE   = 0;
 	parameter STATE_BUSY   = 1;
-	// parameter ADDR_MEM_BASE  = 32'h80000000;
-	// parameter ADDR_MEM_SIZE  = 32'h08000000;
 	parameter ADDR_CLINT_BASE = 32'h02000000;
 	parameter ADDR_CLINT_SIZE = 32'h00000008;
 
-	// reg aw_sel_reg, ar_sel_reg;
-	// wire aw_sel_now, ar_sel_now;
 	reg ar_sel_reg;
 	wire ar_sel_now;
 	reg R_state, R_next_state;
-	// reg R_state, R_next_state, W_state, W_next_state;
-	// reg aw_fire, ar_fire;
+
 	reg ar_fire;
 
 	always @(*) begin
 		ar_fire = S_arvalid && S_arready;
-		// aw_fire = S_awvalid && S_awready;
 	end
 
 	always @(posedge clock) begin
 		if(reset) begin
 			R_state <= STATE_IDLE;
-			// W_state <= STATE_IDLE;
 		end else begin
 			R_state <= R_next_state;
-			// W_state <= W_next_state;
 		end
 	end
 	always @(*) begin
 		R_next_state = R_state;
-		// W_next_state = W_state;
 		case(R_state)
 			STATE_IDLE: begin
 				if(S_arvalid) R_next_state = STATE_BUSY;
@@ -99,31 +81,17 @@ module ysyx_26010011_bridge(
 			end
 		endcase
 
-		// case(W_state)
-		// 	STATE_IDLE: begin
-		// 		if(S_awvalid && S_wvalid) W_next_state = STATE_BUSY;
-		// 	end
-		// 	STATE_BUSY: begin
-		// 		if(S_bready && S_bvalid) W_next_state = STATE_IDLE;
-		// 	end
-		// endcase
 	end
-	// assign aw_sel_now = (S_awaddr >= ADDR_CLINT_BASE && S_awaddr < ADDR_CLINT_BASE + ADDR_CLINT_SIZE);
 	assign ar_sel_now = (S_araddr >= ADDR_CLINT_BASE && S_araddr < ADDR_CLINT_BASE + ADDR_CLINT_SIZE);
 	always @(posedge clock) begin
 		if(reset) begin
-			// aw_sel_reg <= 1'b0;
 			ar_sel_reg <= 1'b0;
 		end else begin
 			// 握手时寄存设备选择
-			// if(aw_fire) begin
-			// 	aw_sel_reg <= aw_sel_now;
-			// end
 			if(ar_fire) begin
 				ar_sel_reg <= ar_sel_now;
 			end
 			if(R_next_state == STATE_IDLE) ar_sel_reg <= 1'b0;
-			// if(W_next_state == STATE_IDLE) aw_sel_reg <= 1'b0;
 		end
 	end
 
@@ -179,15 +147,6 @@ module ysyx_26010011_bridge(
 	assign MEM_wstrb = S_wstrb;
 	assign MEM_wlast = S_wlast;
 	assign MEM_bready = S_bready;
-	// assign CLINT_awaddr = S_awaddr;
-	// assign CLINT_awid = S_awid;
-	// assign CLINT_awlen = S_awlen;
-	// assign CLINT_awsize = S_awsize;
-	// assign CLINT_awburst = S_awburst;
-	// assign CLINT_wdata = S_wdata;
-	// assign CLINT_wstrb = S_wstrb;
-	// assign CLINT_wlast = S_wlast;
-	// assign CLINT_bready = S_bready;
 
 	assign MEM_awvalid = S_awvalid;
 	assign MEM_wvalid = S_wvalid;
@@ -196,38 +155,5 @@ module ysyx_26010011_bridge(
 	assign S_bresp = MEM_bresp;
 	assign S_bvalid = MEM_bvalid;
 	assign S_bid = MEM_bid;
-	// always @(*) begin
-	// 	// //WRITE
-	// 	// if(W_state == STATE_IDLE)begin
-	// 	// 	MEM_awvalid = aw_sel_now?0:S_awvalid;
-	// 	// 	MEM_wvalid = aw_sel_now?0:S_wvalid;
-	// 	// 	// CLINT_awvalid = aw_sel_now?S_awvalid:0;
-	// 	// 	// CLINT_wvalid = aw_sel_now?S_wvalid:0;
-
-	// 	// 	S_awready = aw_sel_now?CLINT_awready:MEM_awready;
-	// 	// 	S_wready = aw_sel_now?CLINT_wready:MEM_wready;
-	// 	// 	S_bresp = 0;
-	// 	// 	S_bvalid = 0;
-	// 	// 	S_bid = 0;
-	// 	// end else if(aw_sel_reg == 1'b0) begin
-	// 	// 	MEM_awvalid = S_awvalid;
-	// 	// 	MEM_wvalid = S_wvalid;
-	// 	// 	CLINT_awvalid = 0;
-	// 	// 	CLINT_wvalid = 0;
-
-	// 	// 	S_awready = MEM_awready; S_wready = MEM_wready;
-	// 	// 	S_bresp = MEM_bresp; S_bvalid = MEM_bvalid;
-	// 	// 	S_bid = MEM_bid;
-	// 	// end else begin
-	// 	// 	MEM_awvalid = 0;
-	// 	// 	MEM_wvalid = 0;
-	// 	// 	CLINT_awvalid = S_awvalid;
-	// 	// 	CLINT_wvalid = S_wvalid;
-
-	// 	// 	S_awready = CLINT_awready; S_wready = CLINT_wready;
-	// 	// 	S_bresp = CLINT_bresp; S_bvalid = CLINT_bvalid;
-	// 	// 	S_bid = CLINT_bid;
-	// 	// end
-	// end
 
 endmodule

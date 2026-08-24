@@ -10,15 +10,6 @@ module ysyx_26010011_AXI4Arbiter(
 	input     clock,
 	input     reset,
 
-	// //MASTER1 AW
-	// input      [31:0] M1_awaddr,  input             M1_awvalid, output reg        M1_awready,
-	// input      [3:0]  M1_awid,    input      [7:0]  M1_awlen,   input      [2:0]  M1_awsize,  input      [1:0]  M1_awburst,
-	// //MASTER1 W
-	// input      [31:0] M1_wdata,   input      [3:0]  M1_wstrb,   input             M1_wvalid,  output reg        M1_wready,
-	// input             M1_wlast,
-	// //MASTER1 B
-	// output reg [1:0]  M1_bresp,   output reg        M1_bvalid,  input             M1_bready,
-	// output reg [3:0]  M1_bid,
 	//MASTER1 AR
 	input      [31:0] M1_araddr,  input             M1_arvalid, output reg        M1_arready,
 	input      [3:0]  M1_arid,    input      [7:0]  M1_arlen,   input      [2:0]  M1_arsize,  input      [1:0]  M1_arburst,

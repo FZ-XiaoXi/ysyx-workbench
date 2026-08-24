@@ -11,9 +11,9 @@ import "DPI-C" function void difftest_mem_set(int addr);
 `endif
 `include "csr_defines.v"
 module ysyx_26010011_LSU(
-	input             clock,
-	input             reset,
-	input             flush_valid,////////////////////TODO 异常冲刷还未实现！不可中断进行中的axi4
+	input            clock,
+	input            reset,
+	input            flush_valid,////////////////////TODO 异常冲刷还未实现！不可中断进行中的axi4
 	// CPU 流水线接口
 	input            lsu_in_valid,
 	input      [ 4:0]lsu_in_bus_exception,/////////////////////TODO 异常冲刷还未实现！不可中断进行中的axi4
@@ -81,9 +81,6 @@ module ysyx_26010011_LSU(
 	input             rlast,
 	input  [3:0]      rid
 );
-
-	// assign lsu_access_fault = (rvalid && (rresp==2'b10 || rresp==2'b11)) || (bvalid && (bresp==2'b10 || bresp==2'b11));
-
 	localparam S_IDLE        = 3'd0;
 	localparam S_WAIT_AW_W   = 3'd1; // 等待写地址与写数据握手
 	localparam S_WAIT_BRESP  = 3'd2; // 等待写响应(B通道)
@@ -128,36 +125,13 @@ module ysyx_26010011_LSU(
 	assign awsize  = (lsu_in_bus_perip_mask == 2'b00) ? 3'b000 :
 							(lsu_in_bus_perip_mask == 2'b01) ? 3'b001 : 3'b010;
 	assign awburst = 2'b01;   // INCR
-	// 对于 awsize=0(byte), wdata 只取 [7:0]，靠 wstrb 选 lane
-	// 对于 awsize=1(half), wdata 只取 [15:0]
-	// Fragmenter 对齐地址后 UART APB 用 paddr[1:0] 选字节，故数据必须放在对应 lane
+
 	assign wdata   = lsu_in_bus_wdata << (lsu_in_bus_addr[1:0] * 8);
 	assign wstrb   = (
 							(lsu_in_bus_perip_mask == 2'b00) ? 4'b0001 :
 							(lsu_in_bus_perip_mask == 2'b01) ? 4'b0011 : 
 															   4'b1111 ) << lsu_in_bus_addr[1:0];
 	assign wlast   = 1'b1;    // single beat
-
-	
-	// always @(posedge clock) begin
-	// 	if(reset) begin
-	// 		// awaddr_q <= 32'b0;
-	// 		// wdata_q  <= 32'b0;
-	// 		// awsize_q <= 3'b0;
-	// 		// wstrb_q  <= 4'b0;
-	// 	end else begin
-	// 		if(next_state == S_WAIT_BRESP || next_state == S_WAIT_AW_W) begin
-	// 			awaddr_q <= lsu_in_bus_addr;
-	// 			wdata_q  <= lsu_in_bus_wdata << (lsu_in_bus_addr[1:0] * 8);
-	// 			awsize_q <= (lsu_in_bus_perip_mask == 2'b00) ? 3'b000 :
-	// 						(lsu_in_bus_perip_mask == 2'b01) ? 3'b001 : 3'b010;
-	// 			wstrb_q  <= (
-	// 						(lsu_in_bus_perip_mask == 2'b00) ? 4'b0001 :
-	// 						(lsu_in_bus_perip_mask == 2'b01) ? 4'b0011 : 
-	// 														   4'b1111 ) << lsu_in_bus_addr[1:0];
-	// 		end
-	// 	end
-	// end
 
 	assign araddr  = lsu_in_bus_addr;
 	assign arid    = 4'b0;
