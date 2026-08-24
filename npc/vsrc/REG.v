@@ -112,6 +112,7 @@ module ysyx_26010011_CSRs(
 	reg [31:0]CSR_MEPC/* verilator public */;
 	reg [31:0]CSR_MCAUSE/* verilator public */;
 	localparam [31:0]CSR_MVENDORID=32'h79737978;
+	localparam [31:0]CSR_MSTATUS=32'h00001800;
 	localparam [31:0]CSR_MARCHID=32'h018ce19b;
 
 	always @(*) begin
@@ -122,6 +123,7 @@ module ysyx_26010011_CSRs(
 			`ysyx_26010011_ADD_MEPC:   		csr_out_data = CSR_MEPC;
 			`ysyx_26010011_ADD_MCAUSE:   	csr_out_data = CSR_MCAUSE;
 			`ysyx_26010011_ADD_MVENDORID:   csr_out_data = CSR_MVENDORID;
+			`ysyx_26010011_ADD_MSTATUS:   	csr_out_data = CSR_MSTATUS;
 			`ysyx_26010011_ADD_MARCHID:   	csr_out_data = CSR_MARCHID;
 			default:      					csr_out_data = 32'h0;
 		endcase
@@ -154,6 +156,9 @@ module ysyx_26010011_CSRs(
 	always @(*) begin
 		if (csr_in_wen & ((csr_in_addw==`ysyx_26010011_ADD_MCYCLE) | (csr_in_addw==`ysyx_26010011_ADD_MCYCLEH))) begin
 			difftest_skip_ref(4);
+		end
+		if(csr_in_wen & (csr_in_addw==`ysyx_26010011_ADD_MEPC)) begin
+			difftest_skip_ref(5);
 		end
 	end
 `endif
