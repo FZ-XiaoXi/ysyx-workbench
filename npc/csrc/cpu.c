@@ -116,6 +116,7 @@ void cpu_exec(uint64_t n){
 
 		}
 		if(cpu.tb_isFINAL){
+			extern void (*ref_difftest_memcpy)(uint32_t addr, void *buf, size_t n, bool direction);
 			uint32_t ref_mem,dut_mem;
 			ref_difftest_memcpy((mem_addr&~0x03), (void *)&ref_mem, 4, DIFFTEST_TO_DUT);
 			dut_mem = pmem_read(mem_addr);
