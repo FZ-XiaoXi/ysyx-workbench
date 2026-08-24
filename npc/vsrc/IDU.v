@@ -320,8 +320,8 @@ module ysyx_26010011_IDU(
 			rs1_bypass_sel = 2'd1;
 		end else if(idu_out_bus_rs1 == lsu_out_bus_rd && lsu_out_bus_rd_valid && lsu_out_bus_bypass_valid && idu_out_bus_rs1 != 4'd0) begin
 			rs1_bypass_sel = 2'd2;
-		// end else if(idu_out_bus_rs1 == wbu_out_bus_rd && wbu_out_bus_rd_valid && wbu_out_bus_bypass_valid && idu_out_bus_rs1 != 4'd0) begin
-		// 	rs1_bypass_sel = 2'd3;
+		end else if(idu_out_bus_rs1 == wbu_out_bus_rd && wbu_out_bus_rd_valid && wbu_out_bus_bypass_valid && idu_out_bus_rs1 != 4'd0) begin
+			rs1_bypass_sel = 2'd3;
 		end else begin
 			rs1_bypass_sel = 2'd0;
 		end
@@ -331,8 +331,8 @@ module ysyx_26010011_IDU(
 			rs2_bypass_sel = 2'd1;
 		end else if(idu_out_bus_rs2 == lsu_out_bus_rd && lsu_out_bus_rd_valid && lsu_out_bus_bypass_valid && idu_out_bus_rs2 != 4'd0) begin
 			rs2_bypass_sel = 2'd2;
-		// end else if(idu_out_bus_rs2 == wbu_out_bus_rd && wbu_out_bus_rd_valid && wbu_out_bus_bypass_valid && idu_out_bus_rs2 != 4'd0) begin
-		// 	rs2_bypass_sel = 2'd3;
+		end else if(idu_out_bus_rs2 == wbu_out_bus_rd && wbu_out_bus_rd_valid && wbu_out_bus_bypass_valid && idu_out_bus_rs2 != 4'd0) begin
+			rs2_bypass_sel = 2'd3;
 		end else begin
 			rs2_bypass_sel = 2'd0;
 		end
@@ -341,13 +341,13 @@ module ysyx_26010011_IDU(
 		case (rs1_bypass_sel)
 			2'd1:rs1_val_bypass = exu_out_bus_gpr_wdata;
 			2'd2:rs1_val_bypass = lsu_out_bus_gpr_wdata;
-			// 2'd3:rs1_val_bypass = wbu_out_bus_gpr_wdata;
+			2'd3:rs1_val_bypass = wbu_out_bus_gpr_wdata;
 			default:rs1_val_bypass = gpr_rdataa;
 		endcase
 		case (rs2_bypass_sel)
 			2'd1:idu_out_bus_rs2_val = exu_out_bus_gpr_wdata;
 			2'd2:idu_out_bus_rs2_val = lsu_out_bus_gpr_wdata;
-			// 2'd3:idu_out_bus_rs2_val = wbu_out_bus_gpr_wdata;
+			2'd3:idu_out_bus_rs2_val = wbu_out_bus_gpr_wdata;
 			default:idu_out_bus_rs2_val = gpr_rdatab;
 		endcase
 	end
