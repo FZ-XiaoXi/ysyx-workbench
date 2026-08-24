@@ -341,13 +341,13 @@ module ysyx_26010011_IDU(
 		case (rs1_bypass_sel)
 			2'd1:rs1_val_bypass = exu_out_bus_gpr_wdata;
 			2'd2:rs1_val_bypass = lsu_out_bus_gpr_wdata;
-			2'd3:rs1_val_bypass = wbu_out_bus_gpr_wdata;
+			// 2'd3:rs1_val_bypass = wbu_out_bus_gpr_wdata;
 			default:rs1_val_bypass = gpr_rdataa;
 		endcase
 		case (rs2_bypass_sel)
 			2'd1:idu_out_bus_rs2_val = exu_out_bus_gpr_wdata;
 			2'd2:idu_out_bus_rs2_val = lsu_out_bus_gpr_wdata;
-			2'd3:idu_out_bus_rs2_val = wbu_out_bus_gpr_wdata;
+			// 2'd3:idu_out_bus_rs2_val = wbu_out_bus_gpr_wdata;
 			default:idu_out_bus_rs2_val = gpr_rdatab;
 		endcase
 	end
