@@ -116,6 +116,7 @@ void cpu_exec(uint64_t n){
 
 		}
 		if(cpu.tb_isFINAL){
+			Log("MEM[0xa005f9a4]=" FMT_WORD , pmem_read(0xa005f9a4));
 			// this_cnt = 0;
 			// Log("PC=" FMT_WORD , cpu.pc);
 			// n--;
