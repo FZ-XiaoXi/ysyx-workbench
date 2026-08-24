@@ -148,7 +148,7 @@ module ysyx_26010011_EX_LS_pipeline(
 	input            exu_out_bus_isLOAD,
 	input            exu_out_bus_isSTORE,
 	input            exu_out_bus_isWGPR,
-	input      [ 2:0]exu_out_bus_opCSR,
+	input            exu_out_bus_opCSR,
 	input            exu_out_bus_isUnSigned,
 	input      [ 1:0]exu_out_bus_perip_mask,
 	input      [31:0]exu_out_bus_pc,
@@ -175,7 +175,7 @@ module ysyx_26010011_EX_LS_pipeline(
 	output reg       lsu_in_bus_isSTORE,
 	output reg       lsu_in_bus_isWGPR,
 
-	output reg [ 2:0]lsu_in_bus_opCSR,
+	output reg       lsu_in_bus_opCSR,
 	output reg       lsu_in_bus_isUnSigned,
 	output reg [ 1:0]lsu_in_bus_perip_mask,
 `ifdef USE_VERILATOR
@@ -248,7 +248,7 @@ module ysyx_26010011_LS_WB_pipeline(
 `endif
 	input      [31:0]lsu_out_bus_pc,
 	input            lsu_out_bus_isWGPR,
-	input      [ 2:0]lsu_out_bus_opCSR,
+	input            lsu_out_bus_opCSR,
 	
 	// input      [31:0]lsu_out_bus_snpc,
 
@@ -275,7 +275,7 @@ module ysyx_26010011_LS_WB_pipeline(
 	// output reg [31:0]wbu_in_bus_snpc,
 `endif
 	output reg [31:0]wbu_in_bus_pc/*verilator public*/,
-	output reg [ 2:0]wbu_in_bus_opCSR
+	output reg 		 wbu_in_bus_opCSR
 
 );
 	assign lsu_out_ready = wbu_in_ready | !wbu_in_valid;

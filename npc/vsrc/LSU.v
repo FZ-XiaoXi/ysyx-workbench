@@ -25,7 +25,7 @@ module ysyx_26010011_LSU(
 	input            lsu_in_bus_isLOAD,
 	input            lsu_in_bus_isSTORE,
 	input			 lsu_in_bus_isWGPR,
-	input		[2:0]lsu_in_bus_opCSR,
+	input		     lsu_in_bus_opCSR,
 	input		[3:0]lsu_in_bus_rd,
 	input	[11:0]lsu_in_bus_csrrd,
 	input	[31:0]lsu_in_bus_csr_result,
@@ -88,12 +88,8 @@ module ysyx_26010011_LSU(
 	localparam S_WAIT_RDATA  = 3'd4; // 等待读数据返回(R通道)
 	reg [31:0] lsu_out_bus_rdata;
 	reg [2:0] state/*verilator public*/, next_state;
-	reg [31:0]  awaddr_q;
-	reg [31:0]  wdata_q;
-	reg [2:0]   awsize_q;
-	reg [3:0]   wstrb_q;
 
-	// 握手信号
+	// 握手信号 lsu_
 	wire aw_fire;
 	wire w_fire;
 	wire b_fire/*verilator public*/;
@@ -107,9 +103,9 @@ module ysyx_26010011_LSU(
 	assign lsu_out_bus_csr_result = lsu_in_bus_csr_result;
 
 
-	assign lsu_out_bus_rd_valid = lsu_in_valid & ~lsu_out_bus_exception[4] & lsu_in_bus_isWGPR;
-	assign lsu_out_bus_bypass_valid = lsu_out_valid & ~lsu_out_bus_exception[4] & lsu_in_bus_isWGPR ;
-	assign lsu_out_bus_csr_valid = lsu_in_valid & ~lsu_out_bus_exception[4] & |lsu_in_bus_opCSR;
+	assign lsu_out_bus_rd_valid = lsu_in_valid & lsu_in_bus_isWGPR;
+	assign lsu_out_bus_bypass_valid = lsu_out_valid & lsu_in_bus_isWGPR ;
+	assign lsu_out_bus_csr_valid = lsu_in_valid & lsu_in_bus_opCSR;
 
 
 	assign aw_fire = awvalid && awready;

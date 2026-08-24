@@ -117,8 +117,9 @@ void cpu_exec(uint64_t n){
 		}
 		if(cpu.tb_isFINAL){
 			// this_cnt = 0;
-			// Log("PC=" FMT_WORD , cpu.pc);
+			// Log("PC=" FMT_WORD "INST=" FMT_WORD, cpu.tb_FINAL_pc, cpu.tb_FINAL_inst);
 			n--;
+			// cpu.FINAL_inst = cpu.tb_FINAL_inst;
 			cpu.counter_inst++;
 			if(cpu.tb_FINAL_inst==_EBREAK && cpu.tb_isFINAL){
 				ebreak();
@@ -160,6 +161,9 @@ void cpu_exec(uint64_t n){
 	{
 		case NPC_ABORT:
 		case NPC_END: {
+			contextp->timeInc(1);DUMP();
+			contextp->timeInc(1);DUMP();
+			contextp->timeInc(1);DUMP();
 			bool success = true;
 			cpu.halt_ret = reg_str2val("$a0", &success);
 			Assert(success, "Cannot to get the value of '$a0'");

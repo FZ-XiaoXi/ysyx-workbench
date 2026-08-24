@@ -33,13 +33,13 @@
 #include "VysyxSoCFull_ysyx_26010011_IFU.h"
 #include "VysyxSoCFull_ysyx_26010011_IDU.h"
 #include "VysyxSoCFull_ysyx_26010011_LSU.h"
-#include "verilated_vcd_c.h"
+#include "verilated_fst_c.h"
 
 
 
 
 extern VerilatedContext* contextp;
-extern VerilatedVcdC* tfp;
+extern VerilatedFstC* tfp;
 
 extern VysyxSoCFull* top;
 extern FILE* log_fp;
@@ -82,7 +82,7 @@ extern FILE* log_fp;
 
 // #define CONFIG_DIFFTEST_ENABLE
 #ifdef CONFIG_DIFFTEST_ENABLE
-    #define CONFIG_DIFFTEST_MEM_ENABLE
+    // #define CONFIG_DIFFTEST_MEM_ENABLE
 #endif
 
 // #define CONFIG_WATCHPOINT_ENABLE
@@ -94,7 +94,7 @@ extern FILE* log_fp;
 
     // #define CONFIG_ITRACE_ENABLE
     #ifdef CONFIG_ITRACE_ENABLE
-        #define CONFIG_ITRACE_PRINT
+        // #define CONFIG_ITRACE_PRINT
     #endif
     
     // #define CONFIG_MTRACE_ENABLE

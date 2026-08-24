@@ -51,7 +51,7 @@ CXXFLAGS += $(C_INCFLAGS) -DTOP_NAME="\"V$(TOPNAME)\"" -g
 LDFLAGS += -lreadline
 
 V_INCFLAGS=$(addprefix -I, $(V_INC_PATH))
-VERILATOR_FLAGS=--cc --Mdir build --autoflush --exe --build -O3 --trace --timescale "1ns/1ns" --no-timing $(V_INCFLAGS) --top-module $(TOPNAME) +define+USE_VERILATOR=1
+VERILATOR_FLAGS=--cc --Mdir build --autoflush --exe --build -O3 --trace-fst --timescale "1ns/1ns" --no-timing $(V_INCFLAGS) --top-module $(TOPNAME) +define+USE_VERILATOR=1
 
 override ARGS ?=
 override ARGS += $(ARGS_DIFF)
@@ -134,15 +134,10 @@ sim-iverilog: $(IMG) $(IV_SRC)
 	vvp build/myCPU_sim-iverilog
 
 sim-iverilog-netlist: $(IMG) $(NETLIST) $(CELLS) 
-	echo 1
 	$(MAKE) bin-to-text
-	echo 2
 	mkdir -p build
-	echo 3
 	iverilog -g2012 -Wall -o build/myCPU_sim-iverilog-netlist -s CPUTop_tb $(IV_NET_SRC) $(NETLIST) $(CELLS) -DIMG_PATH=\"$(IMG).txt\"
-	echo 和溢位在本地能跑CI跑不了
 	vvp build/myCPU_sim-iverilog-netlist
-	echo 4
 
 include $(NPC_HOME)/../Makefile
 
