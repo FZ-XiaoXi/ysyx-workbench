@@ -40,7 +40,6 @@ module ysyx_26010011_LSU(
 	output		   lsu_out_bus_rd_valid,
 	output		   lsu_out_bus_bypass_valid,
 	output		   lsu_out_bus_csr_valid,
-	output		   lsu_out_bus_csr_bypass_valid,
 	output   [3:0] lsu_out_bus_rd,
 	output  [11:0] lsu_out_bus_csrrd,
 	output	[31:0] lsu_out_bus_csr_result,
@@ -114,7 +113,6 @@ module ysyx_26010011_LSU(
 	assign lsu_out_bus_rd_valid = lsu_in_valid & ~lsu_out_bus_exception[4] & lsu_in_bus_isWGPR;
 	assign lsu_out_bus_bypass_valid = lsu_out_valid & ~lsu_out_bus_exception[4] & lsu_in_bus_isWGPR ;
 	assign lsu_out_bus_csr_valid = lsu_in_valid & ~lsu_out_bus_exception[4] & |lsu_in_bus_opCSR;
-	assign lsu_out_bus_csr_bypass_valid = lsu_out_valid & ~lsu_out_bus_exception[4] & |lsu_in_bus_opCSR;
 
 
 	assign aw_fire = awvalid && awready;

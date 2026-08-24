@@ -45,8 +45,7 @@ module ysyx_26010011_EXU(
 	output reg       exu_out_bus_dnpc_valid,
 	output           exu_out_bus_rd_valid,
 	output           exu_out_bus_bypass_valid,
-	output           exu_out_bus_csr_valid,
-	output           exu_out_bus_csr_bypass_valid
+	output           exu_out_bus_csr_valid
 );
 	
 	wire [31:0] a,b,comp_a,comp_b;
@@ -79,7 +78,6 @@ module ysyx_26010011_EXU(
 	assign exu_out_bus_rd_valid = exu_in_valid & ~exu_out_bus_exception[4] & exu_in_bus_isWGPR;
 	assign exu_out_bus_bypass_valid = exu_out_valid & ~exu_out_bus_exception[4] & exu_in_bus_isWGPR & ~exu_in_bus_isLOAD;
 	assign exu_out_bus_csr_valid = exu_in_valid & ~exu_out_bus_exception[4] & |exu_in_bus_opCSR;
-	assign exu_out_bus_csr_bypass_valid = exu_out_valid & ~exu_out_bus_exception[4] & |exu_in_bus_opCSR;
 
 	
 	always @(*) begin

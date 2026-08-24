@@ -25,10 +25,6 @@ module ysyx_26010011_RAW(
     input lsu_bypass_valid,
     input wbu_bypass_valid,
 
-    input exu_csr_bypass_valid,
-    input lsu_csr_bypass_valid,
-    input wbu_csr_bypass_valid,
-
     input [ 3:0] exu_in_bus_rd,
     input [ 3:0] lsu_in_bus_rd,
     input [ 3:0] wbu_in_bus_rd,
@@ -44,13 +40,13 @@ module ysyx_26010011_RAW(
         if(exu_rd_valid && exu_in_bus_rd != 4'b0 && ((rs1 == exu_in_bus_rd) || ((rs2 == exu_in_bus_rd) && rs2_valid)) && !exu_bypass_valid) begin
             is_RAW = 1'b1;
         end
-        if(exu_csr_valid && (csr == exu_in_bus_csr_rd) && !exu_csr_bypass_valid) begin
+        if(exu_csr_valid && (csr == exu_in_bus_csr_rd)) begin
             is_RAW = 1'b1;
         end
         if(lsu_rd_valid && lsu_in_bus_rd != 4'b0 && ((rs1 == lsu_in_bus_rd) || ((rs2 == lsu_in_bus_rd) && rs2_valid)) && !lsu_bypass_valid) begin
             is_RAW = 1'b1;
         end
-        if(lsu_csr_valid && (csr == lsu_in_bus_csr_rd) && !lsu_csr_bypass_valid) begin
+        if(lsu_csr_valid && (csr == lsu_in_bus_csr_rd)) begin
             is_RAW = 1'b1;
         end
         if(wbu_rd_valid && wbu_in_bus_rd != 4'b0 && ((rs1 == wbu_in_bus_rd) || ((rs2 == wbu_in_bus_rd) && rs2_valid)) && !wbu_bypass_valid) begin

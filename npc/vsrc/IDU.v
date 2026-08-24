@@ -20,25 +20,20 @@ module ysyx_26010011_IDU(
 	input exu_out_bus_rd_valid,
 	input exu_out_bus_bypass_valid,
 	input exu_out_bus_csr_valid,
-	input exu_out_bus_csr_bypass_valid,
 	input [3:0]exu_out_bus_rd,
 	input [11:0]exu_out_bus_csrrd,
 	input [31:0]exu_out_bus_gpr_wdata,
-	input [31:0]exu_out_bus_csr_result,
 
 	input lsu_out_bus_rd_valid,
 	input lsu_out_bus_bypass_valid,
 	input lsu_out_bus_csr_valid,
-	input lsu_out_bus_csr_bypass_valid,
 	input [3:0]lsu_out_bus_rd,
 	input [11:0]lsu_out_bus_csrrd,
 	input [31:0]lsu_out_bus_gpr_wdata,
-	input [31:0]lsu_out_bus_csr_result,
 
 	input wbu_out_bus_rd_valid,
 	input wbu_out_bus_bypass_valid,
 	input wbu_out_bus_csr_valid,
-	input wbu_out_bus_csr_bypass_valid,
 	input [3:0]wbu_out_bus_rd,
 	input [11:0]wbu_out_bus_csrrd,
 	input [31:0]wbu_out_bus_gpr_wdata,
@@ -86,12 +81,6 @@ module ysyx_26010011_IDU(
 	output       [ 1:0]idu_out_bus_perip_mask
 
 );
-	
-	reg [31:0]csr_rdata_bypass;
-	// assign w_pc = idu_in_bus_pc;
-    // assign w_tar = idu_out_bus_imm + idu_in_bus_pc;
-    // assign w_valid = idu_in_valid & idu_out_valid & ~idu_out_bus_exception[4] & (idu_out_bus_isBRANCH|isJAL);
-    // assign w_type = isJAL;
 
 	reg state, next_state;
 	parameter S_WORKING = 1'b0, S_WAITING = 1'b1;
@@ -247,7 +236,7 @@ module ysyx_26010011_IDU(
 
 	always @(*) begin
 		if((|idu_out_bus_opCSR)) begin
-			idu_out_bus_imm=csr_rdata_bypass;
+			idu_out_bus_imm=csr_rdata;
 		end else begin
 			if     (isI)    idu_out_bus_imm={{20{immI[11:11]}},immI[11:0]};
 			else if(isJ)    idu_out_bus_imm={{11{immJ[20:20]}},immJ[20:1],1'b0};
@@ -360,19 +349,6 @@ module ysyx_26010011_IDU(
 			idu_out_bus_rs2_val = gpr_rdatab;
 		end
 	end
-	always @(*) begin
-		if(idu_out_bus_csrrd == exu_out_bus_csrrd && exu_out_bus_csr_valid && exu_out_bus_csr_bypass_valid) begin
-			csr_rdata_bypass = exu_out_bus_csr_result;
-		end else if(idu_out_bus_csrrd == lsu_out_bus_csrrd && lsu_out_bus_csr_valid && lsu_out_bus_csr_bypass_valid) begin
-			csr_rdata_bypass = lsu_out_bus_csr_result;
-		// end else if(idu_out_bus_csrrd == wbu_out_bus_csrrd && wbu_out_bus_csr_valid && wbu_out_bus_csr_bypass_valid) begin
-		// 	csr_rdata_bypass = wbu_out_bus_csr_result;
-		// if(idu_out_bus_csrrd == exu_out_bus_csrrd && exu_out_bus_csr_valid && exu_out_bus_csr_bypass_valid) begin
-		// 	csr_rdata_bypass = exu_out_bus_csr_result;
-		end else begin
-			csr_rdata_bypass = csr_rdata;
-		end
-	end
 	ysyx_26010011_RAW u_RAW(
 		.rs1(idu_out_bus_rs1),
 		.rs2(idu_out_bus_rs2),
@@ -390,10 +366,6 @@ module ysyx_26010011_IDU(
 		.exu_bypass_valid(exu_out_bus_bypass_valid),
 		.lsu_bypass_valid(lsu_out_bus_bypass_valid),
 		.wbu_bypass_valid(wbu_out_bus_bypass_valid),
-
-		.exu_csr_bypass_valid(exu_out_bus_csr_bypass_valid),
-		.lsu_csr_bypass_valid(lsu_out_bus_csr_bypass_valid),
-		.wbu_csr_bypass_valid(wbu_out_bus_csr_bypass_valid),
 
 		.exu_in_bus_rd(exu_out_bus_rd),
 		.lsu_in_bus_rd(lsu_out_bus_rd),

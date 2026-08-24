@@ -225,9 +225,9 @@ module ysyx_26010011(
 	wire DRAM_rlast;
 	wire [3:0] DRAM_rid;
 
-	wire exu_out_bus_rd_valid,exu_out_bus_bypass_valid,exu_out_bus_csr_valid,exu_out_bus_csr_bypass_valid;
-	wire lsu_out_bus_rd_valid,lsu_out_bus_bypass_valid,lsu_out_bus_csr_valid,lsu_out_bus_csr_bypass_valid;
-	wire wbu_out_bus_rd_valid,wbu_out_bus_bypass_valid,wbu_out_bus_csr_valid,wbu_out_bus_csr_bypass_valid;
+	wire exu_out_bus_rd_valid,exu_out_bus_bypass_valid,exu_out_bus_csr_valid;
+	wire lsu_out_bus_rd_valid,lsu_out_bus_bypass_valid,lsu_out_bus_csr_valid;
+	wire wbu_out_bus_rd_valid,wbu_out_bus_bypass_valid,wbu_out_bus_csr_valid;
 	reg [31:0] mcycle,mcycleh;
 	always @(posedge clock) begin
 		if(reset) begin
@@ -367,25 +367,20 @@ module ysyx_26010011(
 		.exu_out_bus_rd_valid(exu_out_bus_rd_valid),
 		.exu_out_bus_bypass_valid(exu_out_bus_bypass_valid),
 		.exu_out_bus_csr_valid(exu_out_bus_csr_valid),
-		.exu_out_bus_csr_bypass_valid(exu_out_bus_csr_bypass_valid),
 		.exu_out_bus_rd(exu_out_bus_rd),
 		.exu_out_bus_csrrd(exu_out_bus_csrrd),
 		.exu_out_bus_gpr_wdata(exu_out_bus_gpr_wdata),
-		.exu_out_bus_csr_result(exu_out_bus_csr_result),
 
 		.lsu_out_bus_rd_valid(lsu_out_bus_rd_valid),
 		.lsu_out_bus_bypass_valid(lsu_out_bus_bypass_valid),
 		.lsu_out_bus_csr_valid(lsu_out_bus_csr_valid),
-		.lsu_out_bus_csr_bypass_valid(lsu_out_bus_csr_bypass_valid),
 		.lsu_out_bus_rd(lsu_out_bus_rd),
 		.lsu_out_bus_csrrd(lsu_out_bus_csrrd),
 		.lsu_out_bus_gpr_wdata(lsu_out_bus_gpr_wdata),
-		.lsu_out_bus_csr_result(lsu_out_bus_csr_result),
 
 		.wbu_out_bus_rd_valid(wbu_out_bus_rd_valid),
 		.wbu_out_bus_bypass_valid(wbu_out_bus_bypass_valid),
 		.wbu_out_bus_csr_valid(wbu_out_bus_csr_valid),
-		.wbu_out_bus_csr_bypass_valid(wbu_out_bus_csr_bypass_valid),
 		.wbu_out_bus_rd(wbu_out_bus_rd),
 		.wbu_out_bus_csrrd(wbu_out_bus_csrrd),
 		.wbu_out_bus_gpr_wdata(wbu_out_bus_gpr_wdata),
@@ -490,7 +485,6 @@ module ysyx_26010011(
 		.exu_out_bus_rd_valid(exu_out_bus_rd_valid),
 		.exu_out_bus_bypass_valid(exu_out_bus_bypass_valid),
 		.exu_out_bus_csr_valid(exu_out_bus_csr_valid),
-		.exu_out_bus_csr_bypass_valid(exu_out_bus_csr_bypass_valid),
 
 		.exu_out_valid(exu_out_valid),
 		.exu_out_bus_exception(exu_out_bus_exception),
@@ -593,7 +587,6 @@ module ysyx_26010011(
 		.lsu_out_bus_rd_valid(lsu_out_bus_rd_valid),
 		.lsu_out_bus_bypass_valid(lsu_out_bus_bypass_valid),
 		.lsu_out_bus_csr_valid(lsu_out_bus_csr_valid),
-		.lsu_out_bus_csr_bypass_valid(lsu_out_bus_csr_bypass_valid),
 
 		.lsu_out_valid(lsu_out_valid),
 		.lsu_out_bus_exception(lsu_out_bus_exception),
@@ -719,7 +712,6 @@ module ysyx_26010011(
 		.wbu_out_bus_rd_valid(wbu_out_bus_rd_valid),
 		.wbu_out_bus_bypass_valid(wbu_out_bus_bypass_valid),
 		.wbu_out_bus_csr_valid(wbu_out_bus_csr_valid),
-		.wbu_out_bus_csr_bypass_valid(wbu_out_bus_csr_bypass_valid),
 		.wbu_out_bus_rd(wbu_out_bus_rd),
 		.wbu_out_bus_csrrd(wbu_out_bus_csrrd),
 		.wbu_out_bus_gpr_wdata(wbu_out_bus_gpr_wdata),
