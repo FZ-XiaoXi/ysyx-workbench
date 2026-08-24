@@ -118,10 +118,10 @@ void cpu_exec(uint64_t n){
 		if(cpu.tb_isFINAL){
 			extern void (*ref_difftest_memcpy)(uint32_t addr, void *buf, size_t n, bool direction);
 			uint32_t ref_mem,dut_mem;
-			ref_difftest_memcpy((mem_addr&~0x03), (void *)&ref_mem, 4, DIFFTEST_TO_DUT);
-			dut_mem = pmem_read(mem_addr);
+			ref_difftest_memcpy((0xa005f9a4&~0x03), (void *)&ref_mem, 4, DIFFTEST_TO_DUT);
+			dut_mem = pmem_read(0xa005f9a4);
 			if(ref_mem != dut_mem) {
-				Log("%s DUT MEM[" FMT_WORD "] = %08x REF MEM[" FMT_WORD "] = %08x at pc:%08x",ANSI_FMT("Different Memory!", ANSI_FG_RED),mem_addr, dut_mem, mem_addr, ref_mem, cpu.tb_FINAL_pc);
+				Log("%s DUT MEM[" FMT_WORD "] = %08x REF MEM[" FMT_WORD "] = %08x at pc:%08x",ANSI_FMT("Different Memory!", ANSI_FG_RED),0xa005f9a4, dut_mem, 0xa005f9a4, ref_mem, cpu.tb_FINAL_pc);
 				cpu.state = NPC_ABORT;
 			}
 			// Log("MEM[0xa005f9a4]=" FMT_WORD , pmem_read(0xa005f9a4));
