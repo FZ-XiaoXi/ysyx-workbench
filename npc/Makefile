@@ -134,7 +134,10 @@ sim-iverilog: $(IMG) $(IV_SRC)
 	vvp build/myCPU_sim-iverilog
 
 sim-iverilog-netlist: $(IMG) $(NETLIST) $(CELLS) 
-	echo 1
+	
+	echo 11111111111111111111
+	cat $(NETLIST)
+	echo 22222222222222222222
 	$(MAKE) bin-to-text
 	echo 2
 	mkdir -p build
