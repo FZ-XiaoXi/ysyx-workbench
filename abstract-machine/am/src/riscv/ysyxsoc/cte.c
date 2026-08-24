@@ -13,6 +13,7 @@ Context* __am_irq_handle(Context *c) {
         if(syscall_num == (uintptr_t)-1){
           ev.event = EVENT_YIELD;
           c->mepc += 4;
+          printf("aaaaaaaaaaaaaaaaa");
         }
         break;
       default: ev.event = EVENT_ERROR; break;
