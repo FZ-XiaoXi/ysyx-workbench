@@ -85,7 +85,7 @@ void trace_and_difftest(){
 #ifdef CONFIG_FTRACE_ENABLE
 void func_trace(CPUState *s){
   if(!funsymtab || !ftracer_stack.is_ftrace)  return;
-  CPUState start={.pc=RESET_VECTOR,.dnpc=RESET_VECTOR};
+  CPUState start={.tb_FINAL_pc=RESET_VECTOR,.tb_FINAL_npc=RESET_VECTOR};
   if(s==NULL) s=&start;
   //PUSH
   for(int i=0;i<ftracer_stack.symtab_size;i++){
