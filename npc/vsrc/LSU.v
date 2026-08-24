@@ -24,11 +24,26 @@ module ysyx_26010011_LSU(
 	input            lsu_in_bus_isUnSigned,
 	input            lsu_in_bus_isLOAD,
 	input            lsu_in_bus_isSTORE,
+	input			 lsu_in_bus_isWGPR,
+	input		[2:0]lsu_in_bus_opCSR,
+	input		[3:0]lsu_in_bus_rd,
+	input	[11:0]lsu_in_bus_csrrd,
+	input	[31:0]lsu_in_bus_csr_result,
+
+
 
 	output           lsu_out_valid/*verilator public*/,
 	output reg [ 4:0]lsu_out_bus_exception,
 	input            lsu_out_ready,
-	output reg [31:0]lsu_out_bus_rdata,
+	output reg [31:0]lsu_out_bus_gpr_wdata,
+	
+	output		   lsu_out_bus_rd_valid,
+	output		   lsu_out_bus_bypass_valid,
+	output		   lsu_out_bus_csr_valid,
+	output   [3:0] lsu_out_bus_rd,
+	output  [11:0] lsu_out_bus_csrrd,
+	output	[31:0] lsu_out_bus_csr_result,
+	
 	
 	// AXI4 写地址通道
 	output [31:0]     awaddr,
@@ -74,7 +89,7 @@ module ysyx_26010011_LSU(
 	localparam S_WAIT_BRESP  = 3'd2; // 等待写响应(B通道)
 	localparam S_WAIT_AR     = 3'd3; // 等待读地址握手
 	localparam S_WAIT_RDATA  = 3'd4; // 等待读数据返回(R通道)
-
+	reg [31:0] lsu_out_bus_rdata;
 	reg [2:0] state/*verilator public*/, next_state;
 	reg [31:0]  awaddr_q;
 	reg [31:0]  wdata_q;
@@ -88,20 +103,17 @@ module ysyx_26010011_LSU(
 	wire ar_fire;
 	wire r_fire/*verilator public*/;
 
-	wire [31:0] val0;
-	wire [31:0] val1;
-	wire [31:0] val2;
-	wire [31:0] val3;
 	reg[31:0]val;
 
-	wire [31:0] lsu_rdata1;
-	wire [31:0] lsu_rdata2;
-	wire [31:0] lsu_rdata4;
+	assign lsu_out_bus_rd = lsu_in_bus_rd;
+	assign lsu_out_bus_csrrd = lsu_in_bus_csrrd;
+	assign lsu_out_bus_csr_result = lsu_in_bus_csr_result;
 
-	wire debug_LSU_LOADING/*verilator public*/;
-	wire debug_LSU_WRITING/*verilator public*/;
-	wire debug_LSU_WRITE_FINAL/*verilator public*/;
-	wire debug_LSU_LOAD_FINAL/*verilator public*/;
+
+	assign lsu_out_bus_rd_valid = lsu_in_valid & ~lsu_out_bus_exception[4] & lsu_in_bus_isWGPR;
+	assign lsu_out_bus_bypass_valid = lsu_out_valid & ~lsu_out_bus_exception[4] & lsu_in_bus_isWGPR ;
+	assign lsu_out_bus_csr_valid = lsu_in_valid & ~lsu_out_bus_exception[4] & |lsu_in_bus_opCSR;
+
 
 	assign aw_fire = awvalid && awready;
 	assign w_fire  = wvalid && wready;
@@ -109,39 +121,43 @@ module ysyx_26010011_LSU(
 	assign ar_fire = arvalid && arready;
 	assign r_fire = rvalid && rready;
 
-	assign awaddr  = {awaddr_q};
+	assign awaddr  = {lsu_in_bus_addr};
 	assign awid    = 4'b0;
 	assign awlen   = 8'b0;
 	
-	assign awsize  = awsize_q;
+	assign awsize  = (lsu_in_bus_perip_mask == 2'b00) ? 3'b000 :
+							(lsu_in_bus_perip_mask == 2'b01) ? 3'b001 : 3'b010;
 	assign awburst = 2'b01;   // INCR
 	// 对于 awsize=0(byte), wdata 只取 [7:0]，靠 wstrb 选 lane
 	// 对于 awsize=1(half), wdata 只取 [15:0]
 	// Fragmenter 对齐地址后 UART APB 用 paddr[1:0] 选字节，故数据必须放在对应 lane
-	assign wdata   = wdata_q;
-	assign wstrb   = wstrb_q;
-	assign wlast   = 1'b1;    // single beat
-
-	
-	always @(posedge clock) begin
-		if(reset) begin
-			// awaddr_q <= 32'b0;
-			// wdata_q  <= 32'b0;
-			// awsize_q <= 3'b0;
-			// wstrb_q  <= 4'b0;
-		end else begin
-			if(next_state == S_WAIT_BRESP || next_state == S_WAIT_AW_W) begin
-				awaddr_q <= lsu_in_bus_addr;
-				wdata_q  <= lsu_in_bus_wdata << (lsu_in_bus_addr[1:0] * 8);
-				awsize_q <= (lsu_in_bus_perip_mask == 2'b00) ? 3'b000 :
-							(lsu_in_bus_perip_mask == 2'b01) ? 3'b001 : 3'b010;
-				wstrb_q  <= (
+	assign wdata   = lsu_in_bus_wdata << (lsu_in_bus_addr[1:0] * 8);
+	assign wstrb   = (
 							(lsu_in_bus_perip_mask == 2'b00) ? 4'b0001 :
 							(lsu_in_bus_perip_mask == 2'b01) ? 4'b0011 : 
 															   4'b1111 ) << lsu_in_bus_addr[1:0];
-			end
-		end
-	end
+	assign wlast   = 1'b1;    // single beat
+
+	
+	// always @(posedge clock) begin
+	// 	if(reset) begin
+	// 		// awaddr_q <= 32'b0;
+	// 		// wdata_q  <= 32'b0;
+	// 		// awsize_q <= 3'b0;
+	// 		// wstrb_q  <= 4'b0;
+	// 	end else begin
+	// 		if(next_state == S_WAIT_BRESP || next_state == S_WAIT_AW_W) begin
+	// 			awaddr_q <= lsu_in_bus_addr;
+	// 			wdata_q  <= lsu_in_bus_wdata << (lsu_in_bus_addr[1:0] * 8);
+	// 			awsize_q <= (lsu_in_bus_perip_mask == 2'b00) ? 3'b000 :
+	// 						(lsu_in_bus_perip_mask == 2'b01) ? 3'b001 : 3'b010;
+	// 			wstrb_q  <= (
+	// 						(lsu_in_bus_perip_mask == 2'b00) ? 4'b0001 :
+	// 						(lsu_in_bus_perip_mask == 2'b01) ? 4'b0011 : 
+	// 														   4'b1111 ) << lsu_in_bus_addr[1:0];
+	// 		end
+	// 	end
+	// end
 
 	assign araddr  = lsu_in_bus_addr;
 	assign arid    = 4'b0;
@@ -240,45 +256,39 @@ module ysyx_26010011_LSU(
 							 (state == S_WAIT_BRESP && b_fire) || !(lsu_in_bus_isLOAD || lsu_in_bus_isSTORE) || lsu_out_bus_exception[4]);
 	assign lsu_in_ready = (lsu_in_valid & (lsu_in_bus_isLOAD | lsu_in_bus_isSTORE)) ? ((lsu_out_ready & (r_fire | b_fire)) | lsu_out_bus_exception[4]):(1);
 
-
-
-	assign val0 = rdata; 
-	assign val1 = {{8{val0[31]}}, val0[31:8]};
-	assign val2 = {{8{val1[31]}}, val1[31:8]};
-	assign val3 = {{8{val2[31]}}, val2[31:8]};
-
 	// assign val = val0;
 	always @(*) begin
 		case(lsu_in_bus_addr[1:0])
-			2'b00: val = val0;
-			2'b01: val = val1;
-			2'b10: val = val2;
-			2'b11: val = val3;
-			default: val = val0;
+			2'b00: val = rdata;
+			2'b01: val = {{8{rdata[31]}}, rdata[31:8]};
+			2'b10: val = {{16{rdata[31]}}, rdata[31:16]};
+			2'b11: val = {{24{rdata[31]}}, rdata[31:24]};
+			default: val = rdata;
 		endcase
 	end
 
-	assign lsu_rdata1 = (!lsu_in_bus_isUnSigned) ? {{24{val[7]}},  val[7:0]}  : {{24{1'b0}}, val[7:0]};
-	assign lsu_rdata2 = (!lsu_in_bus_isUnSigned) ? {{16{val[15]}}, val[15:0]} : {{16{1'b0}}, val[15:0]};
-	assign lsu_rdata4 = val[31:0];
+
 	
 	always @(*) begin
 		case(lsu_in_bus_perip_mask)
-			2'b00: lsu_out_bus_rdata = lsu_rdata1;
-			2'b01: lsu_out_bus_rdata = lsu_rdata2;
-			2'b10: lsu_out_bus_rdata = lsu_rdata4;
-			default: lsu_out_bus_rdata = lsu_rdata1;
-			// default: lsu_out_bus_rdata = 32'hffffffff;
+			2'b00: lsu_out_bus_rdata = (!lsu_in_bus_isUnSigned) ? {{24{val[7]}},  val[7:0]}  : {{24{1'b0}}, val[7:0]};
+			2'b01: lsu_out_bus_rdata = (!lsu_in_bus_isUnSigned) ? {{16{val[15]}}, val[15:0]} : {{16{1'b0}}, val[15:0]};
+			2'b10: lsu_out_bus_rdata = val[31:0];
+			default: lsu_out_bus_rdata = val[31:0];
 		endcase
 	end
 	
 
-
+`ifdef USE_VERILATOR
+	wire debug_LSU_LOADING/*verilator public*/;
+	wire debug_LSU_WRITING/*verilator public*/;
+	wire debug_LSU_WRITE_FINAL/*verilator public*/;
+	wire debug_LSU_LOAD_FINAL/*verilator public*/;
 	assign debug_LSU_LOADING = (state!=S_IDLE)&lsu_in_bus_isLOAD&lsu_in_valid;
 	assign debug_LSU_WRITING = (state!=S_IDLE)&lsu_in_bus_isSTORE&lsu_in_valid;
 	assign debug_LSU_WRITE_FINAL = lsu_out_ready&lsu_out_valid&lsu_in_bus_isSTORE&lsu_in_valid;
 	assign debug_LSU_LOAD_FINAL = lsu_out_ready&lsu_out_valid&lsu_in_bus_isLOAD&lsu_in_valid;
-
+`endif
 	always @(*) begin
 		if(lsu_in_bus_exception[4]) begin
 			lsu_out_bus_exception = lsu_in_bus_exception;
@@ -306,4 +316,11 @@ module ysyx_26010011_LSU(
 		end
 	end
 
+	always @(*) begin
+		if(lsu_in_bus_isLOAD) begin
+			lsu_out_bus_gpr_wdata = lsu_out_bus_rdata;
+		end else begin
+			lsu_out_bus_gpr_wdata = lsu_in_bus_addr;
+		end
+	end
 endmodule

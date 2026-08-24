@@ -165,6 +165,16 @@ module ysyx_26010011_AXI4Arbiter(
 				M2_rvalid = R_master_sel?S_rvalid:0;
 				M2_rlast  = R_master_sel?S_rlast:0;
 				M2_rid    = R_master_sel?S_rid:0;
+				// M1_rdata = S_rdata;
+				// M1_rresp = S_rresp;
+				// M1_rvalid = S_rvalid;
+				// M1_rlast  = S_rlast;
+				// M1_rid    = S_rid;
+				// M2_rdata = S_rdata;
+				// M2_rresp = S_rresp;
+				// M2_rvalid = S_rvalid;
+				// M2_rlast  = S_rlast;
+				// M2_rid    = S_rid;
 				S_rready = R_master_sel?M2_rready:M1_rready;
 			end
 			default: begin

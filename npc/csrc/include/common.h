@@ -31,6 +31,7 @@
 #include "VysyxSoCFull_ysyx_26010011_EX_LS_pipeline.h"
 #include "VysyxSoCFull_ysyx_26010011_LS_WB_pipeline.h"
 #include "VysyxSoCFull_ysyx_26010011_IFU.h"
+#include "VysyxSoCFull_ysyx_26010011_IDU.h"
 #include "VysyxSoCFull_ysyx_26010011_LSU.h"
 #include "verilated_vcd_c.h"
 
@@ -79,7 +80,7 @@ extern FILE* log_fp;
     #include "nvboard.h"
 #endif
 
-// #define CONFIG_DIFFTEST_ENABLE
+#define CONFIG_DIFFTEST_ENABLE
 #ifdef CONFIG_DIFFTEST_ENABLE
     #define CONFIG_DIFFTEST_MEM_ENABLE
 #endif
@@ -88,7 +89,7 @@ extern FILE* log_fp;
 // #define CONFIG_WAVE_ENABLE
 
 
-// #define CONFIG_TRACE_ENABLE
+#define CONFIG_TRACE_ENABLE
 #ifdef CONFIG_TRACE_ENABLE
 
     // #define CONFIG_ITRACE_ENABLE

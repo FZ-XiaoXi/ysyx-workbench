@@ -21,7 +21,7 @@ static void cpu_get_state(){
 	cpu.exu_pc = CPUTop->ID_EX_inst->exu_in_bus_pc;
 	cpu.lsu_pc = CPUTop->EX_LS_inst->lsu_in_bus_pc;
 	cpu.wbu_pc = CPUTop->LS_WB_inst->wbu_in_bus_pc;
-	cpu.isRAW  = CPUTop->idu_isRAW;
+	cpu.isRAW  = CPUTop->IDU_0->idu_isRAW;
 	cpu.ifu_valid = CPUTop->IFU_0->ifu_out_valid;
 	cpu.idu_valid = CPUTop->IF_ID_inst->idu_in_valid;
 	cpu.exu_valid = CPUTop->ID_EX_inst->exu_in_valid;
@@ -32,7 +32,6 @@ static void cpu_get_state(){
 	cpu.tb_FINAL_npc = CPUTop->tb_FINAL_npc;
 	cpu.tb_dnpc_valid = CPUTop->tb_dnpc_valid;
 	cpu.tb_isMEM = CPUTop->tb_isMEM;
-	cpu.tb_FINAL_pc = CPUTop->tb_FINAL_pc;
 	cpu.tb_FINAL_inst = CPUTop->tb_FINAL_inst;
 
 	// cpu.pc = cpu.dnpc;

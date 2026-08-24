@@ -36,6 +36,7 @@ SRC_V += vsrc/WBU.v
 SRC_V += vsrc/pipeline.v
 SRC_V += vsrc/REG.v
 SRC_V += vsrc/CPU.v
+SRC_V += vsrc/RAW.v
 SRC_V += vsrc/AXI4Arbiter.v
 SRC_V += vsrc/CLINT.v
 SRC_V += vsrc/BRIDGE.v
@@ -50,7 +51,7 @@ CXXFLAGS += $(C_INCFLAGS) -DTOP_NAME="\"V$(TOPNAME)\"" -g
 LDFLAGS += -lreadline
 
 V_INCFLAGS=$(addprefix -I, $(V_INC_PATH))
-VERILATOR_FLAGS=--cc --autoflush --exe --build -O3 --trace --timescale "1ns/1ns" --no-timing $(V_INCFLAGS) --top-module $(TOPNAME) +define+USE_VERILATOR=1
+VERILATOR_FLAGS=--cc --Mdir build --autoflush --exe --build -O3 --trace --timescale "1ns/1ns" --no-timing $(V_INCFLAGS) --top-module $(TOPNAME) +define+USE_VERILATOR=1
 
 override ARGS ?=
 override ARGS += $(ARGS_DIFF)
@@ -74,7 +75,7 @@ sim: $(SIM_C) $(SIM_V) $(NVBOARD_ARCHIVE)
 	verilator $(VERILATOR_FLAGS) --top-module $(TOPNAME) $^ $(addprefix -CFLAGS , $(CXXFLAGS)) $(addprefix -LDFLAGS , $(LDFLAGS))
 	@echo "ARGS = $(ARGS)"
 	@echo "ARGS_DIFF = $(ARGS_DIFF)"
-	env ASAN_OPTIONS=new_delete_type_mismatch=0:detect_leaks=0 LD_PRELOAD="$(shell gcc -print-file-name=libasan.so)" ./obj_dir/V$(TOPNAME) $(ARGS) $(IMG) $(ELF)
+	env ASAN_OPTIONS=new_delete_type_mismatch=0:detect_leaks=0 LD_PRELOAD="$(shell gcc -print-file-name=libasan.so)" ./build/V$(TOPNAME) $(ARGS) $(IMG) $(ELF)
 #	@echo "Write this Makefile by your self."
 wave:
 	gtkwave wave.vcd
@@ -102,7 +103,7 @@ perf-test:
 	@echo "soc git commit: $(shell cd $(NPC_HOME)/../ysyxSoC && git log -1 --format="%H")"
 
 clean:
-	rm -rf obj_dir npc-waveform.vcd wave.fst build
+	rm -rf npc-waveform.vcd wave.fst build
 
 
 
@@ -117,7 +118,7 @@ iv: concat
 verilog: concat
 
 IV_SRC = vsrc/ysyx_26010011_tb.v vsrc/ysyx_26010011_dut.v $(SIM_V_TOP)
-IV_NET_SRC = vsrc/ysyx_26010011_tb.v vsrc/ysyx_26010011_netlist_wrap.v
+IV_NET_SRC = vsrc/ysyx_26010011_tb.v vsrc/ysyx_26010011_dut.v
 NETLIST ?= $(NPC_HOME)/../yosys-sta/result/ysyx_26010011-800MHz/ysyx_26010011.v
 CELLS ?= $(NPC_HOME)/../yosys-sta/pdk/nangate45/sim/cells.v
 
