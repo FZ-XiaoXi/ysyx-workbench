@@ -11,9 +11,13 @@ module ysyx_26010011_IFU(
 	input clock,
 	input reset,
 	
-	// input flush_icache,
-	input [31:0]    dnpc,
+
 	input           flush_valid,
+
+	input [31:0] csr_mepc,
+	input [31:0] csr_mtvec,
+	input [31:0] exu_out_bus_alu_result,
+	input [4:0] wbu_out_bus_exception,
 
 	output reg          ifu_out_valid/*verilator public*/,
 	input               ifu_out_ready/*verilator public*/,
@@ -39,6 +43,7 @@ module ysyx_26010011_IFU(
 
 	input 		   fencei_flush
 );
+	wire [31:0] dnpc;
 	wire [31:0] ifu_out_bus_snpc;
 	reg ifu_out_valid_r;
 	reg [31:0]ifu_out_bus_instruction_r;
@@ -55,6 +60,13 @@ module ysyx_26010011_IFU(
 	assign debug_IFU_is_hit_inst = ifu_out_valid & ifu_out_ready & debug_IFU_is_hit;
 	assign debug_IFU_get_inst = ifu_out_valid & ifu_out_ready;
 
+	assign dnpc = (wbu_out_bus_exception[4])?
+			(
+				(wbu_out_bus_exception[3:0]==`ysyx_26010011_EXCEPTION_MRET)?(csr_mepc):(csr_mtvec)
+			):(
+				exu_out_bus_alu_result
+			);
+
 	always @(posedge clock) begin
 		if(reset | flush_valid | fencei_flush) begin
 			ifu_out_valid_r <= 0;
@@ -70,7 +82,7 @@ module ysyx_26010011_IFU(
 	assign ifu_out_valid = (((in_reqValid & in_respValid)?1:ifu_out_valid_r) | ifu_out_bus_exception[4]);
 	assign ifu_out_bus_instruction = ((in_reqValid & in_respValid)?in_rdata:ifu_out_bus_instruction_r);
 	assign ifu_out_bus_snpc = ifu_out_bus_pc + 32'd4;
-	assign ifu_out_bus_pc = ((in_reqValid & (in_respValid | ifu_out_bus_exception[4])))?PC:ifu_out_bus_pc_r;
+	assign ifu_out_bus_pc = PC;
 
 	
 	always @(posedge clock) begin
@@ -84,7 +96,7 @@ module ysyx_26010011_IFU(
 				PC <= 32'h80000000;
 				`endif
 			`endif
-		end else if(flush_valid | (ifu_out_ready & ifu_out_valid)) begin
+		end else if(flush_valid || (ifu_out_ready && ifu_out_valid)) begin
 			PC <= (flush_valid)?{dnpc[31:1],1'b0}:{ifu_out_bus_snpc[31:1],1'b0};
 		end
 	end
@@ -117,7 +129,7 @@ module ysyx_26010011_IFU(
 		.pc_flush(flush_valid),
 
 		.in_addr(PC),
-		.in_reqValid(in_reqValid & ~flush_valid & ~ifu_out_bus_exception[4]),
+		.in_reqValid(in_reqValid && !flush_valid && !ifu_out_bus_exception[4]),
 		.in_respValid(in_respValid),
 		.in_rdata(in_rdata),
 

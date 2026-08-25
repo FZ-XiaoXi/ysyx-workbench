@@ -8,34 +8,34 @@
 // ╚═╝ ╚═════╝   ╚═════╝
 `include "csr_defines.v"
 module ysyx_26010011_IDU(
-	input clock,
-	input reset,
-	input flush_valid,
-	input fencei_pass,
+	input 			   clock,
+	input 			   reset,
+	input 			   flush_valid,
+	input			   fencei_pass,
 	input        [31:0]gpr_rdataa,
 	input        [31:0]gpr_rdatab,
 	input        [31:0]csr_rdata,
 
-	input exu_out_bus_rd_valid,
-	input exu_out_bus_bypass_valid,
-	input exu_out_bus_csr_valid,
-	input [3:0]exu_out_bus_rd,
-	input [11:0]exu_out_bus_csrrd,
-	input [31:0]exu_out_bus_gpr_wdata,
+	input			   exu_out_bus_rd_valid,
+	input			   exu_out_bus_bypass_valid,
+	input 			   exu_out_bus_csr_valid,
+	input 		 [ 3:0]exu_out_bus_rd,
+	input 		 [11:0]exu_out_bus_csrrd,
+	input 		 [31:0]exu_out_bus_gpr_wdata,
 
-	input lsu_out_bus_rd_valid,
-	input lsu_out_bus_bypass_valid,
-	input lsu_out_bus_csr_valid,
-	input [3:0]lsu_out_bus_rd,
-	input [11:0]lsu_out_bus_csrrd,
-	input [31:0]lsu_out_bus_gpr_wdata,
+	input 			   lsu_out_bus_rd_valid,
+	input 			   lsu_out_bus_bypass_valid,
+	input 			   lsu_out_bus_csr_valid,
+	input 		 [ 3:0]lsu_out_bus_rd,
+	input 		 [11:0]lsu_out_bus_csrrd,
+	input 		 [31:0]lsu_out_bus_gpr_wdata,
 
-	input wbu_out_bus_rd_valid,
-	input wbu_out_bus_bypass_valid,
-	input wbu_out_bus_csr_valid,
-	input [3:0]wbu_out_bus_rd,
-	input [11:0]wbu_out_bus_csrrd,
-	input [31:0]wbu_out_bus_gpr_wdata,
+	input			   wbu_out_bus_rd_valid,
+	input 			   wbu_out_bus_bypass_valid,
+	input 			   wbu_out_bus_csr_valid,
+	input 		 [ 3:0]wbu_out_bus_rd,
+	input 		 [11:0]wbu_out_bus_csrrd,
+	input 		 [31:0]wbu_out_bus_gpr_wdata,
 
 	input        [31:0]idu_in_bus_instruction,
 	input        [31:0]idu_in_bus_pc,
@@ -65,8 +65,8 @@ module ysyx_26010011_IDU(
 	output reg   [ 3:0]idu_out_bus_alu_op,
 	output reg   [ 1:0]idu_out_bus_comp_op,
 	output       [31:0]idu_out_bus_pc,
-	output reg [31:0] idu_out_bus_rs1_val,
-	output reg [31:0] idu_out_bus_rs2_val,
+	output reg   [31:0]idu_out_bus_rs1_val,
+	output reg   [31:0]idu_out_bus_rs2_val,
 
 	output       [ 1:0]idu_out_bus_perip_mask
 );
@@ -96,7 +96,7 @@ module ysyx_26010011_IDU(
 	wire all_inst,idu_isRAW/*verilator public*/;
 
 	always @(posedge clock) begin
-		if(reset | flush_valid) state <= S_WORKING;
+		if(reset | flush_valid | fencei_pass) state <= S_WORKING;
 		else      state <= next_state;
 	end
 
@@ -130,13 +130,13 @@ module ysyx_26010011_IDU(
 					|(|idu_out_bus_opCSR)
 					|isECALL|isEBREAK|isMRET|isFENCEI);//////////////////////////
 
-	assign opcode=  idu_in_bus_instruction[ 6: 0];
+	assign opcode=				idu_in_bus_instruction[ 6: 0];
 	assign idu_out_bus_rd=      idu_in_bus_instruction[10: 7];//4bit
 	assign idu_out_bus_csrrd=   idu_in_bus_instruction[31:20];
 	assign idu_out_bus_rs1=     idu_in_bus_instruction[18:15];//4bit
 	assign idu_out_bus_rs2=     idu_in_bus_instruction[23:20];//4bit
-	assign funct3=  idu_in_bus_instruction[14:12];
-	assign funct7=  idu_in_bus_instruction[31:25];
+	assign funct3=				idu_in_bus_instruction[14:12];
+	assign funct7=				idu_in_bus_instruction[31:25];
 	
 	assign immI = {idu_in_bus_instruction[31:20]                                             };
 	assign immS = {idu_in_bus_instruction[31:25],idu_in_bus_instruction[11: 7]                              };
@@ -353,15 +353,15 @@ module ysyx_26010011_IDU(
 		.rs1(idu_out_bus_rs1),
 		.rs2(idu_out_bus_rs2),
 		.csr(idu_out_bus_csrrd),
-		.rs2_valid(isB | isS | isR),
+		.rs2_valid(isB || isS || isR),
 
 		.exu_rd_valid(exu_out_bus_rd_valid),
 		.lsu_rd_valid(lsu_out_bus_rd_valid),
 		.wbu_rd_valid(wbu_out_bus_rd_valid),
 
-		.exu_csr_valid(exu_out_bus_csr_valid & (|idu_out_bus_opCSR)),
-		.lsu_csr_valid(lsu_out_bus_csr_valid & (|idu_out_bus_opCSR)),
-		.wbu_csr_valid(wbu_out_bus_csr_valid & (|idu_out_bus_opCSR)),
+		.exu_csr_valid(exu_out_bus_csr_valid && (|idu_out_bus_opCSR)),
+		.lsu_csr_valid(lsu_out_bus_csr_valid && (|idu_out_bus_opCSR)),
+		.wbu_csr_valid(wbu_out_bus_csr_valid && (|idu_out_bus_opCSR)),
 
 		.exu_bypass_valid(exu_out_bus_bypass_valid),
 		.lsu_bypass_valid(lsu_out_bus_bypass_valid),

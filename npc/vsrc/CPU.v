@@ -226,12 +226,12 @@ module ysyx_26010011(
 	wire [31:0] mcycle;
 	wire [15:0] mcycleh;
 
-	assign dnpc=(wbu_out_bus_exception[4])?
-			(
-				(wbu_out_bus_exception[3:0]==`ysyx_26010011_EXCEPTION_MRET)?(csr_mepc):(csr_mtvec)
-			):(
-				exu_out_bus_alu_result
-			);
+	// assign dnpc=(wbu_out_bus_exception[4])?
+	// 		(
+	// 			(wbu_out_bus_exception[3:0]==`ysyx_26010011_EXCEPTION_MRET)?(csr_mepc):(csr_mtvec)
+	// 		):(
+	// 			exu_out_bus_alu_result
+	// 		);
 
 	assign csr_pc = wbu_in_bus_pc;
 	assign dnpc_valid = flush_exception_valid | exu_out_bus_dnpc_valid;
@@ -245,9 +245,12 @@ module ysyx_26010011(
 		.clock(clock),
 		.reset(reset),
 		
-		// input flush_icache,
-		.dnpc(dnpc),
+		// .dnpc(dnpc),
 		.flush_valid(flush_valid),
+		.csr_mepc(csr_mepc),
+		.csr_mtvec(csr_mtvec),
+		.exu_out_bus_alu_result(exu_out_bus_alu_result),
+		.wbu_out_bus_exception(wbu_out_bus_exception),
 
 		.ifu_out_valid(ifu_out_valid),
 		.ifu_out_ready(ifu_out_ready),
@@ -294,7 +297,7 @@ module ysyx_26010011(
 		.clock(clock),
 		.reset(reset),
 		.fencei_pass(fencei_pass),
-		.flush_valid(flush_valid | fencei_pass),
+		.flush_valid(flush_valid),
 		.idu_in_bus_instruction(idu_in_bus_instruction),
 		.idu_in_bus_pc(idu_in_bus_pc),
 		.idu_in_bus_exception(idu_in_bus_exception),

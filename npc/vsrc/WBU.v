@@ -54,12 +54,12 @@ module ysyx_26010011_WBU(
 	wire is_not_exception;
 	assign is_not_exception = !wbu_in_bus_exception[4];
 	assign gpr_address=wbu_in_bus_rd;
-	assign gpr_we=(wbu_in_bus_isWGPR & wbu_in_valid & is_not_exception)?1:0;
+	assign gpr_we=(wbu_in_bus_isWGPR & wbu_in_valid & is_not_exception);
 	
 	assign wbu_out_bus_exception=(wbu_in_valid)?wbu_in_bus_exception:5'b0;
-	assign fencei_pass = (wbu_in_valid & is_not_exception & (wbu_in_bus_exception[3:0]==`ysyx_26010011_EXCEPTION_FENCEI))?1:0;
+	assign fencei_pass = (wbu_in_valid & is_not_exception & (wbu_in_bus_exception[3:0]==`ysyx_26010011_EXCEPTION_FENCEI));
 
 	assign csr_address=wbu_in_bus_csrrd;
-	assign csr_we=(wbu_in_bus_opCSR & wbu_in_valid & is_not_exception)?1:0;
+	assign csr_we=(wbu_in_bus_opCSR & wbu_in_valid & is_not_exception);
 	assign csr_wdata=wbu_in_bus_csr_result;
 endmodule
