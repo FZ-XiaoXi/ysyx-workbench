@@ -8,9 +8,11 @@
 // ╚══════╝ ╚═╝  ╚═╝  ╚═════╝
 `include "csr_defines.v"
 module ysyx_26010011_EXU(
+/* verilator lint_off UNUSEDSIGNAL */
 	input            clock,
 	input            reset,
 	input            flush_valid,
+/* verilator lint_on UNUSEDSIGNAL */
 
 	input            exu_in_valid,
 	input      [ 4:0]exu_in_bus_exception,
@@ -38,17 +40,19 @@ module ysyx_26010011_EXU(
 	output reg [31:0]exu_out_bus_gpr_wdata,
 	output reg [31:0]exu_out_bus_csr_result,
 	
-	output reg       exu_out_bus_comp_result,
 	output reg [31:0]exu_out_bus_alu_result,
 	output 		     exu_out_bus_opCSR,
+`ifdef USE_VERILATOR
+	output 		     dbg_exu_out_bus_comp_result,
+`endif
 
 	output reg       exu_out_bus_dnpc_valid,
 	output           exu_out_bus_rd_valid,
 	output           exu_out_bus_bypass_valid,
 	output           exu_out_bus_csr_valid
 );
-
-	wire [31:0] a,b,comp_a,comp_b;
+	reg        exu_out_bus_comp_result;
+	wire [31:0]a,b,comp_a,comp_b;
 	wire [31:0]op_xor;
 	wire [31:0]op_or;
 	wire [31:0]op_and;
@@ -75,9 +79,9 @@ module ysyx_26010011_EXU(
 	assign op_ll=a << (b & 32'h1f);
 	assign op_adder = (exu_in_bus_alu_op==4'd2)?(a-b):(a+b);
 
-	assign exu_out_bus_rd_valid = exu_in_valid & exu_in_bus_isWGPR;
-	assign exu_out_bus_bypass_valid = exu_out_valid & exu_in_bus_isWGPR & ~exu_in_bus_isLOAD;
-	assign exu_out_bus_csr_valid = exu_in_valid & exu_out_bus_opCSR;
+	assign exu_out_bus_rd_valid = exu_in_valid && exu_in_bus_isWGPR;
+	assign exu_out_bus_bypass_valid = exu_out_valid && exu_in_bus_isWGPR && !exu_in_bus_isLOAD;
+	assign exu_out_bus_csr_valid = exu_in_valid && exu_out_bus_opCSR;
 
 	
 	always @(*) begin
@@ -100,8 +104,8 @@ module ysyx_26010011_EXU(
 	end
 	
 	assign {comp_suber_carry,comp_suber_out} = {1'b0,comp_a} + (~{1'b0,comp_b}) + 1;
-	assign comp_isEQUAL = ~(|comp_suber_out);
-	assign comp_isGREATER = (exu_in_bus_isUnSigned)?((!comp_isEQUAL) & ~comp_suber_carry):((~comp_a[31] & comp_b[31]) | ((comp_a[31] ~^ comp_b[31])  & ~comp_suber_out[31]));
+	assign comp_isEQUAL = (comp_suber_out == 32'b0);
+	assign comp_isGREATER = (exu_in_bus_isUnSigned)?((!comp_isEQUAL) && !comp_suber_carry):((!comp_a[31] && comp_b[31]) || ((comp_a[31] ~^ comp_b[31])  && !comp_suber_out[31]));
 	always @(*) begin
 		case (exu_in_bus_comp_op)
 			2'b00: exu_out_bus_comp_result=comp_isEQUAL | comp_isGREATER;
@@ -144,4 +148,8 @@ module ysyx_26010011_EXU(
 		end
 	end
 	assign exu_out_bus_opCSR = |exu_in_bus_opCSR;
+
+`ifdef USE_VERILATOR
+	assign dbg_exu_out_bus_comp_result = exu_out_bus_comp_result;
+`endif
 endmodule

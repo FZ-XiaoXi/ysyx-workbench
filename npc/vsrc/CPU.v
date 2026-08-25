@@ -15,7 +15,6 @@ import "DPI-C" function void pmem_write(input int waddr, input int wdata, input 
 module ysyx_26010011(
 	input clock,
 	input reset/*verilator public*/,
-	input io_interrupt,
 
 	input			io_master_awready,
 	output			io_master_awvalid,
@@ -46,7 +45,7 @@ module ysyx_26010011(
 	input	[31:0]	io_master_rdata,
 	input			io_master_rlast,
 	input	[3:0]	io_master_rid,
-
+/* verilator lint_off UNUSEDSIGNAL */
 	output			io_slave_awready,
 	input			io_slave_awvalid,
 	input	[31:0]	io_slave_awaddr,
@@ -75,7 +74,9 @@ module ysyx_26010011(
 	output	[1:0]	io_slave_rresp,
 	output	[31:0]	io_slave_rdata,
 	output			io_slave_rlast,
-	output	[3:0]	io_slave_rid
+	output	[3:0]	io_slave_rid,
+	input 			io_interrupt
+/* verilator lint_on UNUSEDSIGNAL */
 );
 
 	assign io_slave_awready = 0;
@@ -90,7 +91,7 @@ module ysyx_26010011(
 	assign io_slave_rlast=0;
 	assign io_slave_rid=0;
 
-	wire idu_out_valid,idu_out_ready,fencei_flush;
+	wire idu_out_valid,idu_out_ready;
 	wire [11:0]idu_out_bus_csrrd;
 	wire [31:0]idu_out_bus_imm,idu_out_bus_rs1_val,idu_out_bus_rs2_val;   //idu_out_bus_imm 可作CSR地址
 	wire idu_out_bus_isLOAD,idu_out_bus_isSTORE,idu_out_bus_isWGPR,idu_out_bus_isJUMP,idu_out_bus_isWCOMP,idu_out_bus_isBRANCH,idu_out_bus_isUnSigned,idu_out_bus_isUsePC,idu_out_bus_alu_isUseImm,idu_out_bus_comp_isUseImm;
@@ -115,7 +116,6 @@ module ysyx_26010011(
 	wire exu_out_bus_opCSR;
 // `ifdef USE_VERILATOR
 	
-	wire exu_out_bus_comp_result;
 // `endif
 	wire [31:0]exu_out_bus_csr_result;
 	
@@ -128,9 +128,9 @@ module ysyx_26010011(
 	wire [4:0]wbu_in_bus_exception;
 	wire [31:0]wbu_out_bus_gpr_wdata;
 `ifdef USE_VERILATOR
-	wire [31:0]/*wbu_in_bus_snpc,*/wbu_in_bus_instruction,exu_in_bus_instruction;
-	wire [31:0]wbu_in_bus_lsu_result,wbu_in_bus_alu_result;
-	wire wbu_in_bus_comp_result,wbu_in_bus_isLOAD,wbu_in_bus_isSTORE,wbu_in_bus_isJUMP,wbu_in_bus_isWCOMP,wbu_in_bus_isBRANCH;
+	wire [31:0]dbg_wbu_in_bus_instruction,dbg_exu_in_bus_instruction;
+	wire [31:0]dbg_wbu_in_bus_lsu_result,dbg_wbu_in_bus_alu_result;
+	wire dbg_wbu_in_bus_comp_result,dbg_wbu_in_bus_isLOAD,dbg_wbu_in_bus_isSTORE,dbg_wbu_in_bus_isJUMP,dbg_wbu_in_bus_isWCOMP,dbg_wbu_in_bus_isBRANCH;
 `endif
 	
 	wire lsu_in_valid,lsu_in_ready,lsu_in_bus_isWGPR,lsu_in_bus_isUnSigned;
@@ -146,9 +146,11 @@ module ysyx_26010011(
 	wire [31:0]lsu_out_bus_csr_result;
 
 `ifdef USE_VERILATOR
-	wire [31:0] lsu_in_bus_alu_result,lsu_in_bus_instruction;
-	wire lsu_in_bus_comp_result,lsu_in_bus_isJUMP,lsu_in_bus_isWCOMP,lsu_in_bus_isBRANCH,lsu_out_bus_comp_result;
-	wire [31:0] lsu_out_bus_alu_result;
+	wire [31:0] dbg_lsu_in_bus_alu_result,dbg_lsu_in_bus_instruction;
+	wire dbg_lsu_in_bus_comp_result,dbg_lsu_in_bus_isJUMP;
+	wire dbg_lsu_in_bus_isWCOMP,dbg_lsu_in_bus_isBRANCH,dbg_lsu_out_bus_comp_result;
+	wire [31:0] dbg_lsu_out_bus_alu_result;
+	wire dbg_exu_out_bus_comp_result;
 `endif
 
 	//dnpc
@@ -168,21 +170,18 @@ module ysyx_26010011(
 	wire flush_valid/*verilator public*/;
 	wire flush_exception_valid/*verilator public*/;
 
-	wire [31:0] r_pc,r_tar,w_pc,w_tar;
-	wire r_valid,w_valid,w_type,r_type;
-
 	reg [31:0] exu_out_bus_gpr_wdata;
 	wire [31:0] lsu_in_bus_gpr_wdata;
 	reg [31:0] lsu_out_bus_gpr_wdata;
 	wire [31:0] wbu_in_bus_gpr_wdata;
 
 	wire ifu_out_valid,ifu_out_ready;
-	wire [31:0]ifu_out_bus_pc,ifu_out_bus_snpc,ifu_out_bus_fetching;
+	wire [31:0]ifu_out_bus_pc;
 	wire [4:0]ifu_out_bus_exception;
 	wire [31:0]ifu_out_bus_instruction,idu_in_bus_instruction;
 
 	wire idu_in_valid,idu_in_ready;
-	wire [31:0]idu_in_bus_pc/*,idu_in_bus_snpc*/;
+	wire [31:0]idu_in_bus_pc,idu_out_bus_pc;
 	wire [4:0]idu_in_bus_exception;
 
 	wire [31:0] S_araddr,S_rdata,S_awaddr,S_wdata;
@@ -227,12 +226,12 @@ module ysyx_26010011(
 	wire [31:0] mcycle;
 	wire [15:0] mcycleh;
 
-	assign dnpc=(wbu_out_bus_exception[4])?
-			(
-				(wbu_out_bus_exception[3:0]==`ysyx_26010011_EXCEPTION_MRET)?(csr_mepc):(csr_mtvec)
-			):(
-				exu_out_bus_alu_result
-			);
+	// assign dnpc=(wbu_out_bus_exception[4])?
+	// 		(
+	// 			(wbu_out_bus_exception[3:0]==`ysyx_26010011_EXCEPTION_MRET)?(csr_mepc):(csr_mtvec)
+	// 		):(
+	// 			exu_out_bus_alu_result
+	// 		);
 
 	assign csr_pc = wbu_in_bus_pc;
 	assign dnpc_valid = flush_exception_valid | exu_out_bus_dnpc_valid;
@@ -246,14 +245,16 @@ module ysyx_26010011(
 		.clock(clock),
 		.reset(reset),
 		
-		// input flush_icache,
-		.dnpc(dnpc),
+		// .dnpc(dnpc),
 		.flush_valid(flush_valid),
+		.csr_mepc(csr_mepc),
+		.csr_mtvec(csr_mtvec),
+		.exu_out_bus_alu_result(exu_out_bus_alu_result),
+		.wbu_out_bus_exception(wbu_out_bus_exception),
 
 		.ifu_out_valid(ifu_out_valid),
 		.ifu_out_ready(ifu_out_ready),
 		.ifu_out_bus_instruction(ifu_out_bus_instruction),
-		.ifu_out_bus_fetching(ifu_out_bus_fetching),
 		.ifu_out_bus_pc(ifu_out_bus_pc),
 		.ifu_out_bus_exception(ifu_out_bus_exception),
 
@@ -283,7 +284,6 @@ module ysyx_26010011(
 		.ifu_out_ready(ifu_out_ready),
 		.ifu_out_bus_instruction(ifu_out_bus_instruction),
 		.ifu_out_bus_pc(ifu_out_bus_pc),
-		// .ifu_out_bus_snpc(ifu_out_bus_snpc),
 		.ifu_out_bus_exception(ifu_out_bus_exception),
 
 		.idu_in_valid(idu_in_valid),
@@ -297,7 +297,7 @@ module ysyx_26010011(
 		.clock(clock),
 		.reset(reset),
 		.fencei_pass(fencei_pass),
-		.flush_valid(flush_valid | fencei_pass),
+		.flush_valid(flush_valid),
 		.idu_in_bus_instruction(idu_in_bus_instruction),
 		.idu_in_bus_pc(idu_in_bus_pc),
 		.idu_in_bus_exception(idu_in_bus_exception),
@@ -332,7 +332,7 @@ module ysyx_26010011(
 		.idu_out_bus_rs2_val(idu_out_bus_rs2_val),
 		.idu_out_bus_rs1(gpr_raddra),
 		.idu_out_bus_rs2(gpr_raddrb),
-		
+		.idu_out_bus_pc(idu_out_bus_pc),
 
 		.exu_out_bus_rd_valid(exu_out_bus_rd_valid),
 		.exu_out_bus_bypass_valid(exu_out_bus_bypass_valid),
@@ -353,9 +353,7 @@ module ysyx_26010011(
 		.wbu_out_bus_csr_valid(wbu_out_bus_csr_valid),
 		.wbu_out_bus_rd(wbu_out_bus_rd),
 		.wbu_out_bus_csrrd(wbu_out_bus_csrrd),
-		.wbu_out_bus_gpr_wdata(wbu_out_bus_gpr_wdata),
-
-		.fencei_flush(fencei_flush)
+		.wbu_out_bus_gpr_wdata(wbu_out_bus_gpr_wdata)
 	);/*verilator public_module*/
 
 	ysyx_26010011_ID_EX_pipeline ID_EX_inst(
@@ -371,7 +369,7 @@ module ysyx_26010011(
 		.idu_out_bus_rs2_val(idu_out_bus_rs2_val),
 		.idu_out_bus_imm(idu_out_bus_imm),     //CSR值
 `ifdef USE_VERILATOR
-		.idu_out_bus_instruction(idu_in_bus_instruction),
+		.dbg_idu_out_bus_instruction(idu_in_bus_instruction),
 `endif
 		.idu_out_bus_isLOAD(idu_out_bus_isLOAD),
 		.idu_out_bus_isSTORE(idu_out_bus_isSTORE),
@@ -387,7 +385,7 @@ module ysyx_26010011(
 		.idu_out_bus_alu_op(idu_out_bus_alu_op),
 		.idu_out_bus_comp_op(idu_out_bus_comp_op),
 		.idu_out_bus_perip_mask(idu_out_bus_perip_mask),
-		.idu_out_bus_pc(idu_in_bus_pc),
+		.idu_out_bus_pc(idu_out_bus_pc),
 
 		.exu_in_valid(exu_in_valid),
 		.exu_in_bus_exception(exu_in_bus_exception),
@@ -398,7 +396,7 @@ module ysyx_26010011(
 		.exu_in_bus_rs2_val(exu_in_bus_rs2_val),
 		.exu_in_bus_imm(exu_in_bus_imm),
 `ifdef USE_VERILATOR
-		.exu_in_bus_instruction(exu_in_bus_instruction),
+		.dbg_exu_in_bus_instruction(dbg_exu_in_bus_instruction),
 `endif
 		.exu_in_bus_isLOAD(exu_in_bus_isLOAD),
 		.exu_in_bus_isSTORE(exu_in_bus_isSTORE),
@@ -452,7 +450,7 @@ module ysyx_26010011(
 		.exu_out_bus_alu_result(exu_out_bus_alu_result),
 		.exu_out_bus_opCSR(exu_out_bus_opCSR),
 `ifdef USE_VERILATOR
-		.exu_out_bus_comp_result(exu_out_bus_comp_result),       //暂存CSR目的地址
+		.dbg_exu_out_bus_comp_result(dbg_exu_out_bus_comp_result),       //暂存CSR目的地址
 `endif
 		.exu_out_bus_csr_result(exu_out_bus_csr_result),
 		.exu_out_bus_gpr_wdata(exu_out_bus_gpr_wdata),
@@ -485,12 +483,12 @@ module ysyx_26010011(
 		.exu_out_bus_isUnSigned(exu_in_bus_isUnSigned),
 		.exu_out_bus_perip_mask(exu_in_bus_perip_mask),
 `ifdef USE_VERILATOR
-		.exu_out_bus_alu_result(exu_out_bus_alu_result),
-		.exu_out_bus_comp_result(exu_out_bus_comp_result),
-		.exu_out_bus_instruction(exu_in_bus_instruction),
-		.exu_out_bus_isJUMP(exu_in_bus_isJUMP),
-		.exu_out_bus_isWCOMP(exu_in_bus_isWCOMP),
-		.exu_out_bus_isBRANCH(exu_in_bus_isBRANCH),
+		.dbg_exu_out_bus_alu_result(exu_out_bus_alu_result),
+		.dbg_exu_out_bus_comp_result(dbg_exu_out_bus_comp_result),
+		.dbg_exu_out_bus_instruction(dbg_exu_in_bus_instruction),
+		.dbg_exu_out_bus_isJUMP(exu_in_bus_isJUMP),
+		.dbg_exu_out_bus_isWCOMP(exu_in_bus_isWCOMP),
+		.dbg_exu_out_bus_isBRANCH(exu_in_bus_isBRANCH),
 `endif
 		.exu_out_bus_pc(exu_in_bus_pc),
 		.lsu_in_valid(lsu_in_valid),
@@ -508,19 +506,19 @@ module ysyx_26010011(
 		.lsu_in_bus_isUnSigned(lsu_in_bus_isUnSigned),
 		.lsu_in_bus_perip_mask(lsu_in_bus_perip_mask),
 `ifdef USE_VERILATOR
-		.lsu_in_bus_comp_result(lsu_in_bus_comp_result),
-		.lsu_in_bus_alu_result(lsu_in_bus_alu_result),
-		.lsu_in_bus_instruction(lsu_in_bus_instruction),
-		.lsu_in_bus_isJUMP(lsu_in_bus_isJUMP),
-		.lsu_in_bus_isWCOMP(lsu_in_bus_isWCOMP),
-		.lsu_in_bus_isBRANCH(lsu_in_bus_isBRANCH),
+		.dbg_lsu_in_bus_comp_result(dbg_lsu_in_bus_comp_result),
+		.dbg_lsu_in_bus_alu_result(dbg_lsu_in_bus_alu_result),
+		.dbg_lsu_in_bus_instruction(dbg_lsu_in_bus_instruction),
+		.dbg_lsu_in_bus_isJUMP(dbg_lsu_in_bus_isJUMP),
+		.dbg_lsu_in_bus_isWCOMP(dbg_lsu_in_bus_isWCOMP),
+		.dbg_lsu_in_bus_isBRANCH(dbg_lsu_in_bus_isBRANCH),
 `endif
 		.lsu_in_bus_pc(lsu_in_bus_pc)
 	);/*verilator public_module*/
 
 `ifdef USE_VERILATOR
-	assign lsu_out_bus_alu_result=lsu_in_bus_alu_result;
-	assign lsu_out_bus_comp_result=lsu_in_bus_comp_result;
+	assign dbg_lsu_out_bus_alu_result=dbg_lsu_in_bus_alu_result;
+	assign dbg_lsu_out_bus_comp_result=dbg_lsu_in_bus_comp_result;
 `endif
 
 	ysyx_26010011_LSU LSU_0(
@@ -599,15 +597,15 @@ module ysyx_26010011(
 		.lsu_out_bus_csr_result(lsu_out_bus_csr_result),
 
 `ifdef USE_VERILATOR
-		.lsu_out_bus_alu_result(lsu_out_bus_alu_result),
-		.lsu_out_bus_comp_result(lsu_in_bus_comp_result),
-		.lsu_out_bus_lsu_result(0),
-		.lsu_out_bus_instruction(lsu_in_bus_instruction),
-		.lsu_out_bus_isLOAD(lsu_in_bus_isLOAD),
-		.lsu_out_bus_isSTORE(lsu_in_bus_isSTORE),
-		.lsu_out_bus_isJUMP(lsu_in_bus_isJUMP),
-		.lsu_out_bus_isWCOMP(lsu_in_bus_isWCOMP),
-		.lsu_out_bus_isBRANCH(lsu_in_bus_isBRANCH),
+		.dbg_lsu_out_bus_alu_result(dbg_lsu_out_bus_alu_result),
+		.dbg_lsu_out_bus_comp_result(dbg_lsu_in_bus_comp_result),
+		.dbg_lsu_out_bus_lsu_result(0),
+		.dbg_lsu_out_bus_instruction(dbg_lsu_in_bus_instruction),
+		.dbg_lsu_out_bus_isLOAD(lsu_in_bus_isLOAD),
+		.dbg_lsu_out_bus_isSTORE(lsu_in_bus_isSTORE),
+		.dbg_lsu_out_bus_isJUMP(dbg_lsu_in_bus_isJUMP),
+		.dbg_lsu_out_bus_isWCOMP(dbg_lsu_in_bus_isWCOMP),
+		.dbg_lsu_out_bus_isBRANCH(dbg_lsu_in_bus_isBRANCH),
 `endif
 		.lsu_out_bus_pc(lsu_in_bus_pc),
 		.lsu_out_bus_opCSR(lsu_in_bus_opCSR),
@@ -616,16 +614,16 @@ module ysyx_26010011(
 		.wbu_in_ready(wbu_in_ready),
 
 `ifdef USE_VERILATOR
-		.wbu_in_bus_comp_result(wbu_in_bus_comp_result),
-		.wbu_in_bus_instruction(wbu_in_bus_instruction),
-		.wbu_in_bus_isLOAD(wbu_in_bus_isLOAD),
-		.wbu_in_bus_isSTORE(wbu_in_bus_isSTORE),
+		.dbg_wbu_in_bus_comp_result(dbg_wbu_in_bus_comp_result),
+		.dbg_wbu_in_bus_instruction(dbg_wbu_in_bus_instruction),
+		.dbg_wbu_in_bus_isLOAD(dbg_wbu_in_bus_isLOAD),
+		.dbg_wbu_in_bus_isSTORE(dbg_wbu_in_bus_isSTORE),
 		
-		.wbu_in_bus_isJUMP(wbu_in_bus_isJUMP),
-		.wbu_in_bus_isWCOMP(wbu_in_bus_isWCOMP),
-		.wbu_in_bus_isBRANCH(wbu_in_bus_isBRANCH),
-		.wbu_in_bus_lsu_result(wbu_in_bus_lsu_result),
-		.wbu_in_bus_alu_result(wbu_in_bus_alu_result),
+		.dbg_wbu_in_bus_isJUMP(dbg_wbu_in_bus_isJUMP),
+		.dbg_wbu_in_bus_isWCOMP(dbg_wbu_in_bus_isWCOMP),
+		.dbg_wbu_in_bus_isBRANCH(dbg_wbu_in_bus_isBRANCH),
+		.dbg_wbu_in_bus_lsu_result(dbg_wbu_in_bus_lsu_result),
+		.dbg_wbu_in_bus_alu_result(dbg_wbu_in_bus_alu_result),
 `endif
 		.wbu_in_bus_pc(wbu_in_bus_pc),
 		.wbu_in_bus_csr_result(wbu_in_bus_csr_result),
@@ -690,11 +688,11 @@ module ysyx_26010011(
 		end else if(wbu_in_valid) begin
 		tb_isFINAL<=1;
 		tb_FINAL_pc<=wbu_in_bus_pc;
-		// tb_FINAL_npc<=(wbu_in_bus_isJUMP | (wbu_in_bus_isBRANCH&wbu_in_bus_comp_result)) ? wbu_in_bus_alu_result : ((wbu_in_bus_exception[4])?csr_mtvec:wbu_in_bus_pc + 32'd4);//TODO MTVEC
-		tb_FINAL_npc<=(wbu_out_bus_exception[4])?((wbu_out_bus_exception[3:0]==`ysyx_26010011_EXCEPTION_MRET)?csr_mepc:csr_mtvec):((wbu_in_bus_isJUMP | (wbu_in_bus_isBRANCH&wbu_in_bus_comp_result)) ? wbu_in_bus_alu_result : wbu_in_bus_pc + 32'd4);//TODO MTVEC
-		tb_dnpc_valid<=(wbu_in_bus_isJUMP | (wbu_in_bus_isBRANCH&wbu_in_bus_comp_result) | (wbu_in_bus_exception[4]));
-		tb_isMEM<=(wbu_in_bus_isLOAD | wbu_in_bus_isSTORE)&wbu_in_valid;
-		tb_FINAL_inst<=wbu_in_bus_instruction;
+		// tb_FINAL_npc<=(dbg_wbu_in_bus_isJUMP | (dbg_wbu_in_bus_isBRANCH & dbg_wbu_in_bus_comp_result)) ? dbg_wbu_in_bus_alu_result : ((wbu_in_bus_exception[4])?csr_mtvec:wbu_in_bus_pc + 32'd4);//TODO MTVEC
+		tb_FINAL_npc<=(wbu_out_bus_exception[4])?((wbu_out_bus_exception[3:0]==`ysyx_26010011_EXCEPTION_MRET)?csr_mepc:csr_mtvec):((dbg_wbu_in_bus_isJUMP | (dbg_wbu_in_bus_isBRANCH & dbg_wbu_in_bus_comp_result)) ? dbg_wbu_in_bus_alu_result : wbu_in_bus_pc + 32'd4);//TODO MTVEC
+		tb_dnpc_valid<=(dbg_wbu_in_bus_isJUMP | (dbg_wbu_in_bus_isBRANCH&dbg_wbu_in_bus_comp_result) | (wbu_in_bus_exception[4]));
+		tb_isMEM<=(dbg_wbu_in_bus_isLOAD | dbg_wbu_in_bus_isSTORE)&wbu_in_valid;
+		tb_FINAL_inst<=dbg_wbu_in_bus_instruction;
 		end else begin
 		tb_isFINAL<=0;
 		tb_FINAL_pc<=tb_FINAL_pc;
@@ -771,8 +769,8 @@ module ysyx_26010011(
 		.MEM_bresp(io_master_bresp),    .MEM_bvalid(io_master_bvalid),   .MEM_bready(io_master_bready), .MEM_bid(io_master_bid),
 
 		//CLINT
-		.CLINT_araddr(CLINT_araddr),   .CLINT_arvalid(CLINT_arvalid),  .CLINT_arready(CLINT_arready), .CLINT_arid(), .CLINT_arlen(), .CLINT_arsize(), .CLINT_arburst(),
-		.CLINT_rdata(CLINT_rdata),    .CLINT_rresp(CLINT_rresp),    .CLINT_rvalid(CLINT_rvalid),   .CLINT_rready(CLINT_rready), .CLINT_rlast(CLINT_rlast), .CLINT_rid(4'b0)
+		.CLINT_araddr(CLINT_araddr),   .CLINT_arvalid(CLINT_arvalid),  .CLINT_arready(CLINT_arready),
+		.CLINT_rdata(CLINT_rdata),    .CLINT_rresp(CLINT_rresp),    .CLINT_rvalid(CLINT_rvalid),   .CLINT_rready(CLINT_rready), .CLINT_rlast(CLINT_rlast)
 	);	
 
 	ysyx_26010011_CLINT u_clint(

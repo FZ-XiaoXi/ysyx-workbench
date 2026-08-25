@@ -40,19 +40,19 @@ module ysyx_26010011_RAW(
         if(exu_rd_valid && ((rs1 == exu_in_bus_rd) || ((rs2 == exu_in_bus_rd) && rs2_valid)) && !exu_bypass_valid) begin
             is_RAW = 1'b1;
         end
-        if(exu_csr_valid && (csr == exu_in_bus_csr_rd)) begin
+        else if(exu_csr_valid && (csr == exu_in_bus_csr_rd)) begin
             is_RAW = 1'b1;
         end
-        if(lsu_rd_valid && ((rs1 == lsu_in_bus_rd) || ((rs2 == lsu_in_bus_rd) && rs2_valid)) && !lsu_bypass_valid) begin
+        else if(lsu_rd_valid && ((rs1 == lsu_in_bus_rd) || ((rs2 == lsu_in_bus_rd) && rs2_valid)) && !lsu_bypass_valid) begin
             is_RAW = 1'b1;
         end
-        if(lsu_csr_valid && (csr == lsu_in_bus_csr_rd)) begin
+        else if(lsu_csr_valid && (csr == lsu_in_bus_csr_rd)) begin
             is_RAW = 1'b1;
         end
-        if(wbu_rd_valid && ((rs1 == wbu_in_bus_rd) || ((rs2 == wbu_in_bus_rd) && rs2_valid)) && !wbu_bypass_valid) begin
+        else if(wbu_rd_valid && ((rs1 == wbu_in_bus_rd) || ((rs2 == wbu_in_bus_rd) && rs2_valid)) && !wbu_bypass_valid) begin
             is_RAW = 1'b1;
         end
-        if(wbu_csr_valid && (csr == wbu_in_bus_csr_rd)) begin
+        else if(wbu_csr_valid && (csr == wbu_in_bus_csr_rd)) begin
             is_RAW = 1'b1;
         end
     end
