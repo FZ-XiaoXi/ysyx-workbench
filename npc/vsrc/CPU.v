@@ -600,8 +600,8 @@ module ysyx_26010011(
 		.dbg_lsu_out_bus_isLOAD(lsu_in_bus_isLOAD),
 		.dbg_lsu_out_bus_isSTORE(lsu_in_bus_isSTORE),
 		.dbg_lsu_out_bus_isJUMP(dbg_lsu_in_bus_isJUMP),
-		.dbg_lsu_out_bus_isWCOMP(dbg_lsu_in_bus_isWCOMP),
-		.dbg_lsu_out_bus_isBRANCH(dbg_lsu_in_bus_isBRANCH),
+		.dbg_lsu_out_bus_isWCOMP(lsu_in_bus_isWCOMP),
+		.dbg_lsu_out_bus_isBRANCH(lsu_in_bus_isBRANCH),
 `endif
 		.lsu_out_bus_pc(lsu_in_bus_pc),
 		.lsu_out_bus_opCSR(lsu_in_bus_opCSR),
