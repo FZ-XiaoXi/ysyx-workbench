@@ -117,7 +117,7 @@ iv: concat
 
 verilog: concat
 
-IV_SRC = vsrc/ysyx_26010011_tb.v vsrc/ysyx_26010011_dut.v $(SIM_V_TOP)
+IV_SRC = vsrc/ysyx_26010011_tb.v vsrc/ysyx_26010011_dut.v
 IV_NET_SRC = vsrc/ysyx_26010011_tb.v vsrc/ysyx_26010011_dut.v
 NETLIST ?= $(NPC_HOME)/../yosys-sta/result/ysyx_26010011-800MHz/ysyx_26010011.v
 CELLS ?= $(NPC_HOME)/../yosys-sta/pdk/nangate45/sim/cells.v
@@ -127,10 +127,10 @@ bin-to-text: $(IMG)
 	@xxd -p -c 4 $(IMG) | sed -E 's/(..)(..)(..)(..)/\4\3\2\1/' > $(IMG).txt
 	@echo "Conversion complete. Output file: $(IMG).txt"
 
-sim-iverilog: $(IMG) $(IV_SRC)
+sim-iverilog: $(IMG) $(IV_SRC) $(SIM_V_TOP)
 	$(MAKE) bin-to-text
 	mkdir -p build
-	iverilog -g2012 -Wall -o build/myCPU_sim-iverilog -s CPUTop_tb $(IV_SRC) -DIMG_PATH=\"$(IMG).txt\"
+	iverilog -g2012 -Wall -o build/myCPU_sim-iverilog -s CPUTop_tb $(IV_SRC) $(SIM_V_TOP) -DIMG_PATH=\"$(IMG).txt\"
 	vvp build/myCPU_sim-iverilog
 
 sim-iverilog-netlist: $(IMG) $(NETLIST) $(CELLS) 

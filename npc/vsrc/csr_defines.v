@@ -39,5 +39,11 @@
 	`define ysyx_26010011_EXCEPTION_STORE_PAGE_FAULT 4'd15
 	`define ysyx_26010011_INST_NOP 32'h00000013
 
-
+	`ifdef __ICARUS__
+		`define ysyx_26010011_RESET_PC_VECTOR 32'h8000000
+	`elsif  SYNTHESIS 
+		`define ysyx_26010011_RESET_PC_VECTOR 32'h8000000
+	`else 
+		`define ysyx_26010011_RESET_PC_VECTOR 32'h3000000
+	`endif 
 `endif

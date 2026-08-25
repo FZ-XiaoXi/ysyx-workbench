@@ -47,7 +47,6 @@ module ysyx_26010011_IFU(
 	wire [31:0] ifu_out_bus_snpc;
 	reg ifu_out_valid_r;
 	reg [31:0]ifu_out_bus_instruction_r;
-	// reg [31:0]ifu_out_bus_pc_r;
 	reg [31:0] PC/*verilator public*/;
 
 	reg in_reqValid;
@@ -73,7 +72,6 @@ module ysyx_26010011_IFU(
 		end else if(in_reqValid & in_respValid & ~ifu_out_ready & ~fencei_flush) begin
 			ifu_out_valid_r <= 1;
 			ifu_out_bus_instruction_r <= in_rdata;
-			// ifu_out_bus_pc_r <= PC;
 		end else if(ifu_out_valid & ifu_out_ready)begin
 			ifu_out_valid_r <= 0;
 		end
@@ -87,15 +85,7 @@ module ysyx_26010011_IFU(
 	
 	always @(posedge clock) begin
 		if(reset) begin
-			`ifdef __ICARUS__
-			PC <= 32'h80000000;
-			`else
-				`ifdef USE_VERILATOR
-				PC <= 32'h30000000;
-				`else
-				PC <= 32'h80000000;
-				`endif
-			`endif
+			PC<=`ysyx_26010011_RESET_PC_VECTOR;
 		end else if(flush_valid || (ifu_out_ready && ifu_out_valid)) begin
 			PC <= (flush_valid)?{dnpc[31:1],1'b0}:{ifu_out_bus_snpc[31:1],1'b0};
 		end
