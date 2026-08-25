@@ -365,7 +365,7 @@ module ysyx_26010011(
 		.idu_out_bus_rs2_val(idu_out_bus_rs2_val),
 		.idu_out_bus_imm(idu_out_bus_imm),     //CSR值
 `ifdef USE_VERILATOR
-		.dbg_idu_out_bus_instruction(dbg_idu_in_bus_instruction),
+		.dbg_idu_out_bus_instruction(idu_in_bus_instruction),
 `endif
 		.idu_out_bus_isLOAD(idu_out_bus_isLOAD),
 		.idu_out_bus_isSTORE(idu_out_bus_isSTORE),

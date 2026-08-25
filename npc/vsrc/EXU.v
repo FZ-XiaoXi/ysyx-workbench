@@ -42,6 +42,9 @@ module ysyx_26010011_EXU(
 	
 	output reg [31:0]exu_out_bus_alu_result,
 	output 		     exu_out_bus_opCSR,
+/* verilator lint_off UNUSEDSIGNAL */
+	output 		     dbg_exu_out_bus_comp_result,
+/* verilator lint_on UNUSEDSIGNAL */
 
 	output reg       exu_out_bus_dnpc_valid,
 	output           exu_out_bus_rd_valid,
@@ -49,6 +52,9 @@ module ysyx_26010011_EXU(
 	output           exu_out_bus_csr_valid
 );
 	reg        exu_out_bus_comp_result;
+/* verilator lint_off UNUSEDSIGNAL */
+	assign dbg_exu_out_bus_comp_result = exu_out_bus_comp_result;
+/* verilator lint_on UNUSEDSIGNAL */
 	wire [31:0]a,b,comp_a,comp_b;
 	wire [31:0]op_xor;
 	wire [31:0]op_or;
