@@ -480,7 +480,7 @@ module ysyx_26010011(
 		.exu_out_bus_isUnSigned(exu_in_bus_isUnSigned),
 		.exu_out_bus_perip_mask(exu_in_bus_perip_mask),
 `ifdef USE_VERILATOR
-		.dbg_exu_out_bus_alu_result(dbg_exu_out_bus_alu_result),
+		.dbg_exu_out_bus_alu_result(exu_out_bus_alu_result),
 		.dbg_exu_out_bus_comp_result(dbg_exu_out_bus_comp_result),
 		.dbg_exu_out_bus_instruction(dbg_exu_in_bus_instruction),
 		.dbg_exu_out_bus_isJUMP(dbg_exu_in_bus_isJUMP),
