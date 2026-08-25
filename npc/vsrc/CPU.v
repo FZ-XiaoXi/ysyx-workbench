@@ -483,9 +483,9 @@ module ysyx_26010011(
 		.dbg_exu_out_bus_alu_result(exu_out_bus_alu_result),
 		.dbg_exu_out_bus_comp_result(dbg_exu_out_bus_comp_result),
 		.dbg_exu_out_bus_instruction(dbg_exu_in_bus_instruction),
-		.dbg_exu_out_bus_isJUMP(dbg_exu_in_bus_isJUMP),
-		.dbg_exu_out_bus_isWCOMP(dbg_exu_in_bus_isWCOMP),
-		.dbg_exu_out_bus_isBRANCH(dbg_exu_in_bus_isBRANCH),
+		.dbg_exu_out_bus_isJUMP(exu_in_bus_isJUMP),
+		.dbg_exu_out_bus_isWCOMP(exu_in_bus_isWCOMP),
+		.dbg_exu_out_bus_isBRANCH(exu_in_bus_isBRANCH),
 `endif
 		.exu_out_bus_pc(exu_in_bus_pc),
 		.lsu_in_valid(lsu_in_valid),
