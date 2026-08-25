@@ -20,7 +20,6 @@ module ysyx_26010011_IFU(
 	
 	output     [31:0]   ifu_out_bus_instruction,
 	output     [31:0]   ifu_out_bus_pc/*verilator public*/,
-	output     [31:0]   ifu_out_bus_fetching/*verilator public*/,
 	output reg [ 4:0]   ifu_out_bus_exception,
 
 
@@ -68,7 +67,6 @@ module ysyx_26010011_IFU(
 		end
 	end
 
-	assign ifu_out_bus_fetching = PC;
 	assign ifu_out_valid = (((in_reqValid & in_respValid)?1:ifu_out_valid_r) | ifu_out_bus_exception[4]);
 	assign ifu_out_bus_instruction = ((in_reqValid & in_respValid)?in_rdata:ifu_out_bus_instruction_r);
 	assign ifu_out_bus_snpc = ifu_out_bus_pc + 32'd4;
@@ -170,9 +168,12 @@ module ysyx_26010011_IFU_icache #(
 	output [31:0]     out_araddr, output            out_arvalid,input             out_arready,output [3:0]      out_arid,
 	output [7:0]      out_arlen,  output [2:0]      out_arsize, output [1:0]      out_arburst,
 
-	input  [31:0]     out_rdata,  input  [1:0]      out_rresp,  input             out_rvalid, output            out_rready,
-	input             out_rlast,  input  [3:0]      out_rid,
-
+	input  [31:0]     out_rdata,  input             out_rvalid, output            out_rready,
+	input             out_rlast,  
+/* verilator lint_off UNUSEDSIGNAL */
+	input  [1:0]      out_rresp,
+	input  [3:0]      out_rid,
+/* verilator lint_on UNUSEDSIGNAL */
 	output           debug_is_hit
 );
 	localparam BLOCK_W 		= CACHE_BLOCK_SIZE * 8;

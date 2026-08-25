@@ -60,11 +60,12 @@ module ysyx_26010011_LSU(
 	input             wready,
 	output            wlast,
 	// AXI4 写响应通道
-	input  [1:0]      bresp,
 	input             bvalid,
 	output            bready,
+/* verilator lint_off UNUSEDSIGNAL */
+	input  [1:0]      bresp,
 	input  [3:0]      bid,
-
+/* verilator lint_on UNUSEDSIGNAL */
 	// AXI4 读地址通道
 	output [31:0]     araddr,
 	output            arvalid,
@@ -75,11 +76,13 @@ module ysyx_26010011_LSU(
 	output [1:0]      arburst,
 	// AXI4 读数据通道
 	input  [31:0]     rdata,
-	input  [1:0]      rresp,
 	input             rvalid,
 	output            rready,
 	input             rlast,
+/* verilator lint_off UNUSEDSIGNAL */
+	input  [1:0]      rresp,
 	input  [3:0]      rid
+/* verilator lint_on UNUSEDSIGNAL */
 );
 	localparam S_IDLE        = 3'd0;
 	localparam S_WAIT_AW_W   = 3'd1; // 等待写地址与写数据握手
@@ -104,7 +107,7 @@ module ysyx_26010011_LSU(
 
 
 	assign lsu_out_bus_rd_valid = lsu_in_valid & lsu_in_bus_isWGPR;
-	assign lsu_out_bus_bypass_valid = lsu_out_valid & lsu_in_bus_isWGPR ;
+	assign lsu_out_bus_bypass_valid = lsu_out_valid & lsu_in_bus_isWGPR;
 	assign lsu_out_bus_csr_valid = lsu_in_valid & lsu_in_bus_opCSR;
 
 
@@ -209,7 +212,7 @@ module ysyx_26010011_LSU(
 			end
 			
 			S_WAIT_RDATA: begin
-				if (r_fire) next_state = S_IDLE;
+				if (r_fire & rlast) next_state = S_IDLE;
 			end
 			
 			default: next_state = S_IDLE;
@@ -221,7 +224,7 @@ module ysyx_26010011_LSU(
 		else     state <= (lsu_in_valid&lsu_out_bus_exception[4])?S_IDLE:next_state;
 	end
 
-	assign lsu_out_valid =  lsu_in_valid &
+	assign lsu_out_valid =  lsu_in_valid & !flush_valid &
 							((state == S_WAIT_RDATA && r_fire) ||
 							 (state == S_WAIT_BRESP && b_fire) || !(lsu_in_bus_isLOAD || lsu_in_bus_isSTORE) || lsu_out_bus_exception[4]);
 	assign lsu_in_ready = (lsu_in_valid & (lsu_in_bus_isLOAD | lsu_in_bus_isSTORE)) ? ((lsu_out_ready & (r_fire | b_fire)) | lsu_out_bus_exception[4]):(1);

@@ -7,10 +7,11 @@
 // ╚███╔███╔╝ ██████╔╝ ╚██████╔╝
 //  ╚══╝╚══╝  ╚═════╝   ╚═════╝
 module ysyx_26010011_WBU(
+/* verilator lint_off UNUSEDSIGNAL */
 	input clock,
 	input reset,
 	input flush_valid,
-
+/* verilator lint_on UNUSEDSIGNAL */
 	input wbu_in_valid,
 	output wbu_in_ready,
 	

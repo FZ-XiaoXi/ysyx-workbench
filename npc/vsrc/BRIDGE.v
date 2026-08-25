@@ -41,11 +41,9 @@ module ysyx_26010011_bridge(
 	//CLINT
 	//SLAVE AR
 	output reg [31:0] CLINT_araddr,   output reg        CLINT_arvalid,  input             CLINT_arready,
-	output reg [3:0]  CLINT_arid,     output reg [7:0]  CLINT_arlen,    output reg [2:0]  CLINT_arsize,   output reg [1:0]  CLINT_arburst,
 	//SLAVE R
 	input      [31:0] CLINT_rdata,    input      [1:0]  CLINT_rresp,    input             CLINT_rvalid,   output reg        CLINT_rready,
-	input             CLINT_rlast,    input      [3:0]  CLINT_rid
-
+	input             CLINT_rlast
 );
 
 	parameter STATE_IDLE   = 0;
@@ -101,10 +99,6 @@ module ysyx_26010011_bridge(
 	assign MEM_arburst = S_arburst;
 	assign MEM_rready = S_rready;
 	assign MEM_araddr = S_araddr;
-	assign CLINT_arid = S_arid;
-	assign CLINT_arlen = S_arlen;
-	assign CLINT_arsize = S_arsize;
-	assign CLINT_arburst = S_arburst;
 	assign CLINT_rready = S_rready;
 	assign CLINT_araddr = S_araddr;
 	always @(*) begin
@@ -133,7 +127,7 @@ module ysyx_26010011_bridge(
 
 			S_arready = CLINT_arready;
 			S_rdata = CLINT_rdata; S_rresp = CLINT_rresp; S_rvalid = CLINT_rvalid;
-			S_rlast = CLINT_rlast; S_rid = CLINT_rid;
+			S_rlast = CLINT_rlast; S_rid = 4'b0;
 		end
 	end
 

@@ -8,9 +8,11 @@
 // ╚══════╝ ╚═╝  ╚═╝  ╚═════╝
 `include "csr_defines.v"
 module ysyx_26010011_EXU(
+/* verilator lint_off UNUSEDSIGNAL */
 	input            clock,
 	input            reset,
 	input            flush_valid,
+/* verilator lint_on UNUSEDSIGNAL */
 
 	input            exu_in_valid,
 	input      [ 4:0]exu_in_bus_exception,
@@ -38,7 +40,6 @@ module ysyx_26010011_EXU(
 	output reg [31:0]exu_out_bus_gpr_wdata,
 	output reg [31:0]exu_out_bus_csr_result,
 	
-	output reg       exu_out_bus_comp_result,
 	output reg [31:0]exu_out_bus_alu_result,
 	output 		     exu_out_bus_opCSR,
 
@@ -47,8 +48,8 @@ module ysyx_26010011_EXU(
 	output           exu_out_bus_bypass_valid,
 	output           exu_out_bus_csr_valid
 );
-
-	wire [31:0] a,b,comp_a,comp_b;
+	reg        exu_out_bus_comp_result;
+	wire [31:0]a,b,comp_a,comp_b;
 	wire [31:0]op_xor;
 	wire [31:0]op_or;
 	wire [31:0]op_and;
