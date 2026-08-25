@@ -150,6 +150,7 @@ module ysyx_26010011(
 	wire dbg_lsu_in_bus_comp_result,dbg_lsu_in_bus_isJUMP;
 	wire dbg_lsu_in_bus_isWCOMP,dbg_lsu_in_bus_isBRANCH,dbg_lsu_out_bus_comp_result;
 	wire [31:0] dbg_lsu_out_bus_alu_result;
+	wire dbg_exu_out_bus_comp_result;
 `endif
 
 	//dnpc
