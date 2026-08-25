@@ -91,7 +91,7 @@ module ysyx_26010011_IFU(
 				`ifdef USE_VERILATOR
 				PC <= 32'h30000000;
 				`else
-				PC <= 32'h80000000;
+				PC <= 32'h30000000;
 				`endif
 			`endif
 		end else if(flush_valid || (ifu_out_ready && ifu_out_valid)) begin
