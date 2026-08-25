@@ -85,15 +85,7 @@ module ysyx_26010011_IFU(
 	
 	always @(posedge clock) begin
 		if(reset) begin
-			`ifdef __ICARUS__
-			PC <= 32'h80000000;
-			`else
-				`ifdef USE_VERILATOR
-				PC <= 32'h30000000;
-				`else
-				PC <= 32'h30000000;
-				`endif
-			`endif
+			PC<=`ysyx_26010011_RESET_PC_VECTOR;
 		end else if(flush_valid || (ifu_out_ready && ifu_out_valid)) begin
 			PC <= (flush_valid)?{dnpc[31:1],1'b0}:{ifu_out_bus_snpc[31:1],1'b0};
 		end
