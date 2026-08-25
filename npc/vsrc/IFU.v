@@ -47,7 +47,7 @@ module ysyx_26010011_IFU(
 	wire [31:0] ifu_out_bus_snpc;
 	reg ifu_out_valid_r;
 	reg [31:0]ifu_out_bus_instruction_r;
-	reg [31:0]ifu_out_bus_pc_r;
+	// reg [31:0]ifu_out_bus_pc_r;
 	reg [31:0] PC/*verilator public*/;
 
 	reg in_reqValid;
@@ -73,7 +73,7 @@ module ysyx_26010011_IFU(
 		end else if(in_reqValid & in_respValid & ~ifu_out_ready & ~fencei_flush) begin
 			ifu_out_valid_r <= 1;
 			ifu_out_bus_instruction_r <= in_rdata;
-			ifu_out_bus_pc_r <= PC;
+			// ifu_out_bus_pc_r <= PC;
 		end else if(ifu_out_valid & ifu_out_ready)begin
 			ifu_out_valid_r <= 0;
 		end
